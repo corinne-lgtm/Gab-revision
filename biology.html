@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology Hub</title>
+<style>
+
+:root{
+  --bg:#f6f7fb; --ink:#1f2937; --muted:#64748b; --card:#ffffff; --line:#e5e7eb;
+  --navy:#34415c; --shadow:0 16px 40px rgba(30,41,59,.10); --radius:26px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+.hero{background:linear-gradient(135deg,var(--navy),#20283b);color:white;padding:34px 26px 28px}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;opacity:.78}
+h1{font-size:clamp(2.1rem,5vw,4.4rem);line-height:.95;margin:12px 0 10px;font-weight:950;letter-spacing:-.05em}
+.hero p{max-width:760px;font-size:1.08rem;margin:0;color:#e7edf8}
+.topbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.10);color:white;border-radius:999px;padding:9px 13px;text-decoration:none;font-weight:750;font-size:.92rem}
+.main{padding:28px 26px 54px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.subject-card{grid-column:span 6;min-height:190px;position:relative;overflow:hidden;text-decoration:none;color:inherit}
+.subject-card:before{content:"";position:absolute;inset:0 0 auto 0;height:10px;background:var(--accent)}
+.subject-card h2,.topic-card h2{font-size:1.65rem;margin:8px 0 8px;letter-spacing:-.03em}
+.subject-card p,.topic-card p,.chapter p{color:var(--muted);margin:0 0 14px}
+.big-number{position:absolute;right:22px;bottom:12px;font-weight:950;font-size:4.8rem;color:rgba(15,23,42,.06);line-height:1}
+.badge{display:inline-flex;border-radius:999px;background:color-mix(in srgb, var(--accent) 13%, white);color:var(--accent-dark);font-weight:850;font-size:.8rem;padding:7px 10px;margin:2px 6px 6px 0}
+.section-title{display:flex;align-items:end;justify-content:space-between;margin:18px 0 14px;gap:12px}
+.section-title h2{font-size:1.55rem;margin:0;letter-spacing:-.03em}
+.section-title p{margin:0;color:var(--muted)}
+.topic-card{grid-column:span 12;border-top:10px solid var(--accent)}
+.topic-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;padding:10px 13px;text-decoration:none;font-weight:850;border:1px solid var(--line);background:white;color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:white}
+.chapter-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.chapter{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff}
+.chapter strong{display:block;font-size:1rem;margin-bottom:4px}
+.chapter small{display:block;color:var(--accent-dark);font-weight:850;margin-bottom:6px}
+.link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mini{font-size:.82rem;padding:7px 9px;border-radius:11px}
+.soon{opacity:.62}
+.note{border-left:6px solid var(--accent);background:white;border-radius:18px;padding:18px 20px;margin:18px 0;color:#334155;box-shadow:var(--shadow)}
+.footer{color:var(--muted);font-size:.9rem;margin-top:28px;text-align:center}
+@media(max-width:800px){.subject-card{grid-column:span 12}.chapter-list{grid-template-columns:1fr}.hero{padding-top:28px}h1{font-size:2.4rem}}
+@media print{.topbar,.actions,.btn,.footer{display:none}.card{box-shadow:none}.main{padding:10px}.hero{background:#34415c!important}}
+
+:root{--accent:#9DBA13;--accent-dark:#60750b;}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+<div class="eyebrow">Biology</div><h1>Biology Hub</h1>
+<p>AQA GCSE Combined Science: Trilogy. Each chapter will lead to a visual revision page and a GCSE-style quiz page.</p>
+<nav class="topbar"><a class="pill" href="index.html">Home</a></nav>
+</div></header>
+<main class="main"><div class="wrap">
+<div class="note"><strong>Chapter structure:</strong> Summary page first, then quiz page with quick recall and GCSE exam-style questions.</div>
+<div class="chapter-list">
+<div class="chapter soon"><small>B1</small><strong>Cell structure and transport</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b1-cell-structure-and-transport-summary.html">Summary</a><a class="btn mini" href="biology-b1-cell-structure-and-transport-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B2</small><strong>Cell division</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b2-cell-division-summary.html">Summary</a><a class="btn mini" href="biology-b2-cell-division-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B3</small><strong>Organisation and the digestive system</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b3-organisation-and-the-digestive-system-summary.html">Summary</a><a class="btn mini" href="biology-b3-organisation-and-the-digestive-system-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B4</small><strong>Organising animals and plants</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b4-organising-animals-and-plants-summary.html">Summary</a><a class="btn mini" href="biology-b4-organising-animals-and-plants-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B5</small><strong>Communicable diseases</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b5-communicable-diseases-summary.html">Summary</a><a class="btn mini" href="biology-b5-communicable-diseases-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B6</small><strong>Preventing and treating disease</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b6-preventing-and-treating-disease-summary.html">Summary</a><a class="btn mini" href="biology-b6-preventing-and-treating-disease-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B7</small><strong>Non-communicable diseases</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b7-non-communicable-diseases-summary.html">Summary</a><a class="btn mini" href="biology-b7-non-communicable-diseases-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B8</small><strong>Photosynthesis</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b8-photosynthesis-summary.html">Summary</a><a class="btn mini" href="biology-b8-photosynthesis-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B9</small><strong>Respiration</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b9-respiration-summary.html">Summary</a><a class="btn mini" href="biology-b9-respiration-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B10</small><strong>The human nervous system</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b10-the-human-nervous-system-summary.html">Summary</a><a class="btn mini" href="biology-b10-the-human-nervous-system-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B11</small><strong>Hormonal coordination</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b11-hormonal-coordination-summary.html">Summary</a><a class="btn mini" href="biology-b11-hormonal-coordination-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B12</small><strong>Reproduction</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b12-reproduction-summary.html">Summary</a><a class="btn mini" href="biology-b12-reproduction-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B13</small><strong>Variation and evolution</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b13-variation-and-evolution-summary.html">Summary</a><a class="btn mini" href="biology-b13-variation-and-evolution-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B14</small><strong>Genetics and evolution</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b14-genetics-and-evolution-summary.html">Summary</a><a class="btn mini" href="biology-b14-genetics-and-evolution-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B15</small><strong>Adaptations, interdependence and competition</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b15-adaptations-interdependence-and-competition-summary.html">Summary</a><a class="btn mini" href="biology-b15-adaptations-interdependence-and-competition-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B16</small><strong>Organising an ecosystem</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b16-organising-an-ecosystem-summary.html">Summary</a><a class="btn mini" href="biology-b16-organising-an-ecosystem-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>B17</small><strong>Biodiversity and ecosystems</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="biology-b17-biodiversity-and-ecosystems-summary.html">Summary</a><a class="btn mini" href="biology-b17-biodiversity-and-ecosystems-quiz.html">Quiz</a></div></div>
+</div>
+<div class="footer">Biology colour: green.</div>
+</div></main>
+</body>
+</html>

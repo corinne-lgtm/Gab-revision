@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics Hub</title>
+<style>
+
+:root{
+  --bg:#f6f7fb; --ink:#1f2937; --muted:#64748b; --card:#ffffff; --line:#e5e7eb;
+  --navy:#34415c; --shadow:0 16px 40px rgba(30,41,59,.10); --radius:26px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+.hero{background:linear-gradient(135deg,var(--navy),#20283b);color:white;padding:34px 26px 28px}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;opacity:.78}
+h1{font-size:clamp(2.1rem,5vw,4.4rem);line-height:.95;margin:12px 0 10px;font-weight:950;letter-spacing:-.05em}
+.hero p{max-width:760px;font-size:1.08rem;margin:0;color:#e7edf8}
+.topbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.10);color:white;border-radius:999px;padding:9px 13px;text-decoration:none;font-weight:750;font-size:.92rem}
+.main{padding:28px 26px 54px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.subject-card{grid-column:span 6;min-height:190px;position:relative;overflow:hidden;text-decoration:none;color:inherit}
+.subject-card:before{content:"";position:absolute;inset:0 0 auto 0;height:10px;background:var(--accent)}
+.subject-card h2,.topic-card h2{font-size:1.65rem;margin:8px 0 8px;letter-spacing:-.03em}
+.subject-card p,.topic-card p,.chapter p{color:var(--muted);margin:0 0 14px}
+.big-number{position:absolute;right:22px;bottom:12px;font-weight:950;font-size:4.8rem;color:rgba(15,23,42,.06);line-height:1}
+.badge{display:inline-flex;border-radius:999px;background:color-mix(in srgb, var(--accent) 13%, white);color:var(--accent-dark);font-weight:850;font-size:.8rem;padding:7px 10px;margin:2px 6px 6px 0}
+.section-title{display:flex;align-items:end;justify-content:space-between;margin:18px 0 14px;gap:12px}
+.section-title h2{font-size:1.55rem;margin:0;letter-spacing:-.03em}
+.section-title p{margin:0;color:var(--muted)}
+.topic-card{grid-column:span 12;border-top:10px solid var(--accent)}
+.topic-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;padding:10px 13px;text-decoration:none;font-weight:850;border:1px solid var(--line);background:white;color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:white}
+.chapter-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.chapter{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff}
+.chapter strong{display:block;font-size:1rem;margin-bottom:4px}
+.chapter small{display:block;color:var(--accent-dark);font-weight:850;margin-bottom:6px}
+.link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mini{font-size:.82rem;padding:7px 9px;border-radius:11px}
+.soon{opacity:.62}
+.note{border-left:6px solid var(--accent);background:white;border-radius:18px;padding:18px 20px;margin:18px 0;color:#334155;box-shadow:var(--shadow)}
+.footer{color:var(--muted);font-size:.9rem;margin-top:28px;text-align:center}
+@media(max-width:800px){.subject-card{grid-column:span 12}.chapter-list{grid-template-columns:1fr}.hero{padding-top:28px}h1{font-size:2.4rem}}
+@media print{.topbar,.actions,.btn,.footer{display:none}.card{box-shadow:none}.main{padding:10px}.hero{background:#34415c!important}}
+
+:root{--accent:#08afd0;--accent-dark:#08788e;}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+<div class="eyebrow">Physics</div><h1>Physics Hub</h1>
+<p>AQA GCSE Combined Science: Trilogy. Each chapter will lead to a visual revision page and a GCSE-style quiz page.</p>
+<nav class="topbar"><a class="pill" href="index.html">Home</a></nav>
+</div></header>
+<main class="main"><div class="wrap">
+<div class="note"><strong>Chapter structure:</strong> Summary page first, then quiz page with quick recall and GCSE exam-style questions.</div>
+<div class="chapter-list">
+<div class="chapter soon"><small>P1</small><strong>Conservation and dissipation of energy</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p1-conservation-and-dissipation-of-energy-summary.html">Summary</a><a class="btn mini" href="physics-p1-conservation-and-dissipation-of-energy-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P2</small><strong>Energy transfer by heating</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p2-energy-transfer-by-heating-summary.html">Summary</a><a class="btn mini" href="physics-p2-energy-transfer-by-heating-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P3</small><strong>Energy resources</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p3-energy-resources-summary.html">Summary</a><a class="btn mini" href="physics-p3-energy-resources-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P4</small><strong>Electric circuits</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p4-electric-circuits-summary.html">Summary</a><a class="btn mini" href="physics-p4-electric-circuits-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P5</small><strong>Electricity in the home</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p5-electricity-in-the-home-summary.html">Summary</a><a class="btn mini" href="physics-p5-electricity-in-the-home-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P6</small><strong>Molecules and matter</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p6-molecules-and-matter-summary.html">Summary</a><a class="btn mini" href="physics-p6-molecules-and-matter-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P7</small><strong>Radioactivity</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p7-radioactivity-summary.html">Summary</a><a class="btn mini" href="physics-p7-radioactivity-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P8</small><strong>Forces in balance</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p8-forces-in-balance-summary.html">Summary</a><a class="btn mini" href="physics-p8-forces-in-balance-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P9</small><strong>Motion</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p9-motion-summary.html">Summary</a><a class="btn mini" href="physics-p9-motion-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P10</small><strong>Force and motion</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p10-force-and-motion-summary.html">Summary</a><a class="btn mini" href="physics-p10-force-and-motion-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P11</small><strong>Wave properties</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p11-wave-properties-summary.html">Summary</a><a class="btn mini" href="physics-p11-wave-properties-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P12</small><strong>Electromagnetic waves</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p12-electromagnetic-waves-summary.html">Summary</a><a class="btn mini" href="physics-p12-electromagnetic-waves-quiz.html">Quiz</a></div></div>
+<div class="chapter soon"><small>P13</small><strong>Electromagnetism</strong><p>Revision page and GCSE-style quiz will be added here.</p><div class="link-row"><a class="btn mini" href="physics-p13-electromagnetism-summary.html">Summary</a><a class="btn mini" href="physics-p13-electromagnetism-quiz.html">Quiz</a></div></div>
+</div>
+<div class="footer">Physics colour: blue.</div>
+</div></main>
+</body>
+</html>
