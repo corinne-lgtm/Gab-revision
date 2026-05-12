@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GCSE History – Germany 7.4 Questions</title><style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+var(--bg);font-family:Arial, Helvetica, sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(32px,5vw,58px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:19px;color:rgba(255,255,255,.86);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px}
+.panel{background:rgba(255,255,255,.78);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 9px 26px rgba(0,0,0,.06)}
+h2{font-size:clamp(24px,3vw,36px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:21px}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:30px;font-weight:900;line-height:1.08}
+.statement .good{color:var(--green)} .statement .bad{color:var(--red)} .statement .key{color:var(--orange)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+.tile .icon{font-size:34px;margin-bottom:6px}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e6aaa4}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8bd7c}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a9c6df}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#9cca9f}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#b9a6d9}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.event{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:15px;min-height:130px}
+.date{font-weight:1000;color:var(--red);font-size:22px}
+.micro{font-size:13px;color:var(--muted);font-weight:900;text-transform:uppercase;margin:5px 0}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.step{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:16px;text-align:center;font-weight:900}
+.arrow{display:grid;place-items:center;font-size:28px;color:var(--muted)}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:6px 10px;font-weight:900;font-size:13px;margin:3px}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+ul{padding-left:20px;margin:8px 0} li{margin:6px 0}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.table-like{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.role{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px;text-align:center}
+.role strong{display:block;font-size:18px;margin-bottom:8px;color:var(--red)}
+.question{background:white;border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:7px solid var(--orange)}
+.question.answered{border-left-color:var(--red)}
+.q-header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.q-title{font-weight:900;font-size:16px;flex:1}
+.marks{background:#ffe0dd;color:#9a2f28;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px}
+label{display:block;font-weight:900;margin-bottom:8px}
+textarea,input[type=text]{width:100%;border:2px solid #b8c1c8;border-radius:12px;padding:12px;font-size:16px;background:#fbfbfb;font-family:Arial, Helvetica, sans-serif}
+textarea{min-height:90px;resize:vertical}
+.submit-row{text-align:center;margin:28px 0 20px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn-done{background:linear-gradient(135deg,#d94b42,#7c382f);color:#fff;font-weight:900;font-size:17px;border:none;padding:14px 44px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(217,75,66,.3);width:100%;max-width:380px}
+.btn-done:disabled{opacity:.5;cursor:default}
+.done-msg{display:none;background:#fff7d6;border:2px solid #f1c44d;border-radius:14px;padding:18px 22px;text-align:center;width:100%;max-width:520px}
+.done-msg h3{margin:0 0 6px;color:#7c382f}
+.done-msg p{margin:0;color:#444;line-height:1.6}
+.btn-send{background:#fff;color:#333;font-weight:900;font-size:17px;border:2px solid #ddd;padding:14px 28px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;width:100%;max-width:430px;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn-send img{width:22px;height:22px}
+.answer{border-left:8px solid var(--green)}
+.must{background:#eef8ef;border:2px dashed #6fae75;border-radius:14px;padding:12px;margin-top:10px}
+.warning{background:#fff7d6;border:2px solid #f1c44d}
+.small{font-size:14px;color:var(--muted)}
+@media(max-width:850px){.big-idea,.timeline,.flow,.compare,.table-like{grid-template-columns:1fr}.arrow{display:none}.statement{font-size:25px}.wrap{padding:14px}}
+@media print{.nav,button,.submit-row{display:none}body{background:white}.panel,.hero,.tile,.question{box-shadow:none}}
+</style></head><body><div class="wrap"><section class="hero"><div class="kicker">AQA GCSE History · Germany 1890–1945</div><h1>7.4 Questions</h1><p>Answer in full sentences. Use evidence from the revision page.</p><div class="nav"><a href="index.html">🏠 Main hub</a><a href="history-index.html">📚 History index</a><a href="history-germany-ch7-4-revision.html">Revision</a><a href="history-germany-ch7-4-questions.html">Questions</a></div></section>
+<section class="panel"><h2>Test yourself</h2>
+<div class="question"><div class="q-header"><div class="q-num">1</div><div class="q-title">What does “rationing” mean, and why was it introduced in Germany during the war?</div><div class="marks">4 marks</div></div><label for="q1">Your answer</label><textarea id="q1" data-question="What does rationing mean, and why was it introduced in Germany during the war?" data-marks="4 marks"></textarea></div>
+<div class="question"><div class="q-header"><div class="q-num">2</div><div class="q-title">Describe two ways bombing affected German civilians.</div><div class="marks">4 marks</div></div><label for="q2">Your answer</label><textarea id="q2" data-question="Describe two ways bombing affected German civilians." data-marks="4 marks"></textarea></div>
+<div class="question"><div class="q-header"><div class="q-num">3</div><div class="q-title">Explain what Total War meant for people working in Germany.</div><div class="marks">4 marks</div></div><label for="q3">Your answer</label><textarea id="q3" data-question="Explain what Total War meant for people working in Germany." data-marks="4 marks"></textarea></div>
+<div class="question"><div class="q-header"><div class="q-num">4</div><div class="q-title">How did the attack on the USSR and the Battle of Stalingrad change the mood in Germany?</div><div class="marks">6 marks</div></div><label for="q4">Your answer</label><textarea id="q4" data-question="How did the attack on the USSR and the Battle of Stalingrad change the mood in Germany?" data-marks="6 marks"></textarea></div>
+<div class="question"><div class="q-header"><div class="q-num">5</div><div class="q-title">Explain why support for the Nazis began to weaken during the war.</div><div class="marks">8 marks</div></div><label for="q5">Your answer</label><textarea id="q5" data-question="Explain why support for the Nazis began to weaken during the war." data-marks="8 marks"></textarea></div>
+<div class="question"><div class="q-header"><div class="q-num">6</div><div class="q-title">“The Second World War made life much worse for ordinary Germans.” How far do you agree? Explain your answer.</div><div class="marks">12 marks</div></div><label for="q6">Your answer</label><textarea id="q6" data-question="The Second World War made life much worse for ordinary Germans. How far do you agree?" data-marks="12 marks"></textarea></div>
+<div class="submit-row"><button class="btn-done" onclick="prepareEmail()">✅ Finished? Prepare Gmail email</button><div class="done-msg" id="doneMsg"><h3>Email ready</h3><p>Click the Gmail button to open an email with your answers.</p></div><a class="btn-send" id="gmailBtn" target="_blank" rel="noopener"><span style="font-size:24px">📧</span> Send via Gmail</a></div></section>
+<script>
+function prepareEmail(){
+  const areas=[...document.querySelectorAll('textarea')];
+  let body='GCSE History Germany 7.4 – The impact of war%0D%0A%0D%0A';
+  areas.forEach((a,i)=>{body+='Q'+(i+1)+'. '+encodeURIComponent(a.dataset.question)+' ('+a.dataset.marks+')%0D%0A';body+=encodeURIComponent(a.value.trim()||'[no answer written]')+'%0D%0A%0D%0A';});
+  const subject=encodeURIComponent('History Germany 7.4 answers');
+  const btn=document.getElementById('gmailBtn'); btn.href='https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+body; btn.style.display='flex'; document.getElementById('doneMsg').style.display='block';
+}
+</script></div></body></html>

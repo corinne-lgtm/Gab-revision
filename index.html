@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My GCSE Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:#1f2a33;
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    #f4eee6}
+.wrap{max-width:900px;margin:0 auto;padding:48px 24px 60px}
+header{text-align:center;margin-bottom:52px}
+.logo{font-family:'Poppins',sans-serif;font-size:clamp(36px,7vw,68px);font-weight:900;line-height:1;color:#1f2a33;letter-spacing:-2px}
+.logo span{color:#d94b42}
+.subtitle{margin-top:10px;font-size:15px;color:#67737b;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.section-label{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#b0bac0;margin-bottom:18px}
+.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{position:relative;border-radius:24px;padding:26px 22px;text-decoration:none;background:#fffdf7;border:2px solid #dbcfc0;transition:transform .18s,box-shadow .18s;overflow:hidden;color:#1f2a33}
+.card:not(.card-soon):hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:24px 24px 0 0}
+.card-history::before{background:linear-gradient(90deg,#d94b42,#f29a2e)}
+.card-computing::before{background:linear-gradient(90deg,#3f6f9a,#5eb8e0)}
+.card-biology::before{background:linear-gradient(90deg,#5e9f6b,#a0d4a8)}
+.card-chemistry::before{background:linear-gradient(90deg,#f29a2e,#f4cf55)}
+.card-physics::before{background:linear-gradient(90deg,#7353a6,#b09de0)}
+.card-arrow{position:absolute;top:22px;right:22px;font-size:20px;color:#dbcfc0;transition:color .2s,transform .2s}
+.card:hover .card-arrow{color:#d94b42;transform:translate(2px,-2px)}
+.card-icon{font-size:40px;margin-bottom:12px;display:block}
+.card-name{font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;margin-bottom:4px}
+.card-desc{font-size:13px;color:#67737b;font-weight:700;line-height:1.5}
+.badge{display:inline-block;margin-top:10px;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.badge-on{background:#dff0e2;color:#2e6b40}
+.badge-soon{background:#f0ece6;color:#a0aab0}
+.card-soon{opacity:.55;cursor:default;pointer-events:none}
+footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">My GCSE<br><span>Revision</span></div>
+    <div class="subtitle">Choose your subject</div>
+  </header>
+  <div class="section-label">Subjects</div>
+  <div class="subjects">
+    <a href="history-index.html" class="card card-history">
+      <span class="card-icon">🏛️</span>
+      <div class="card-name">History</div>
+      <div class="card-desc">AQA · Germany 1890–1945 and more</div>
+      <div class="badge badge-on">✅ Available</div>
+      <span class="card-arrow">↗</span>
+    </a>
+    <div class="card card-computing card-soon">
+      <span class="card-icon">💻</span>
+      <div class="card-name">Computing Science</div>
+      <div class="card-desc">Algorithms, programming, networks</div>
+      <div class="badge badge-soon">Coming soon</div>
+    </div>
+    <div class="card card-biology card-soon">
+      <span class="card-icon">🧬</span>
+      <div class="card-name">Biology</div>
+      <div class="card-desc">Cells, genetics, ecology</div>
+      <div class="badge badge-soon">Coming soon</div>
+    </div>
+    <div class="card card-chemistry card-soon">
+      <span class="card-icon">⚗️</span>
+      <div class="card-name">Chemistry</div>
+      <div class="card-desc">Atoms, reactions, bonding</div>
+      <div class="badge badge-soon">Coming soon</div>
+    </div>
+    <div class="card card-physics card-soon">
+      <span class="card-icon">⚡</span>
+      <div class="card-name">Physics</div>
+      <div class="card-desc">Forces, energy, waves</div>
+      <div class="badge badge-soon">Coming soon</div>
+    </div>
+  </div>
+  <footer>My GCSE Revision · All subjects</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE History – Germany 5.1 How did Hitler become Chancellor?</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+var(--bg);font-family:Arial, Helvetica, sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(32px,5vw,58px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:19px;color:rgba(255,255,255,.86);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px}
+.panel{background:rgba(255,255,255,.78);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 9px 26px rgba(0,0,0,.06)}
+h2{font-size:clamp(24px,3vw,36px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:21px}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:30px;font-weight:900;line-height:1.08}
+.statement .good{color:var(--green)} .statement .bad{color:var(--red)} .statement .key{color:var(--orange)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+.tile .icon{font-size:34px;margin-bottom:6px}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e6aaa4}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8bd7c}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a9c6df}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#9cca9f}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#b9a6d9}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.event{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:15px;min-height:130px}
+.date{font-weight:1000;color:var(--red);font-size:22px}
+.micro{font-size:13px;color:var(--muted);font-weight:900;text-transform:uppercase;margin:5px 0}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.step{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:16px;text-align:center;font-weight:900}
+.arrow{display:grid;place-items:center;font-size:28px;color:var(--muted)}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:6px 10px;font-weight:900;font-size:13px;margin:3px}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+ul{padding-left:20px;margin:8px 0} li{margin:6px 0}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.table-like{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.role{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px;text-align:center}
+.role strong{display:block;font-size:18px;margin-bottom:8px;color:var(--red)}
+.question{background:white;border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:7px solid var(--orange)}
+.question.answered{border-left-color:var(--red)}
+.q-header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.q-title{font-weight:900;font-size:16px;flex:1}
+.marks{background:#ffe0dd;color:#9a2f28;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px}
+label{display:block;font-weight:900;margin-bottom:8px}
+textarea,input[type=text]{width:100%;border:2px solid #b8c1c8;border-radius:12px;padding:12px;font-size:16px;background:#fbfbfb;font-family:Arial, Helvetica, sans-serif}
+textarea{min-height:90px;resize:vertical}
+.submit-row{text-align:center;margin:28px 0 20px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn-done{background:linear-gradient(135deg,#d94b42,#7c382f);color:#fff;font-weight:900;font-size:17px;border:none;padding:14px 44px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(217,75,66,.3);width:100%;max-width:380px}
+.btn-done:disabled{opacity:.5;cursor:default}
+.done-msg{display:none;background:#fff7d6;border:2px solid #f1c44d;border-radius:14px;padding:18px 22px;text-align:center;width:100%;max-width:520px}
+.done-msg h3{margin:0 0 6px;color:#7c382f}
+.done-msg p{margin:0;color:#444;line-height:1.6}
+.btn-send{background:#fff;color:#333;font-weight:900;font-size:17px;border:2px solid #ddd;padding:14px 28px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;width:100%;max-width:430px;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn-send img{width:22px;height:22px}
+.answer{border-left:8px solid var(--green)}
+.must{background:#eef8ef;border:2px dashed #6fae75;border-radius:14px;padding:12px;margin-top:10px}
+.warning{background:#fff7d6;border:2px solid #f1c44d}
+.small{font-size:14px;color:var(--muted)}
+@media(max-width:850px){.big-idea,.timeline,.flow,.compare,.table-like{grid-template-columns:1fr}.arrow{display:none}.statement{font-size:25px}.wrap{padding:14px}}
+@media print{.nav,button,.submit-row{display:none}body{background:white}.panel,.hero,.tile,.question{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>5.1 How did Hitler become Chancellor?</h1>
+  <p>From 1930 to January 1933, weak coalition governments, election results, violence and backroom deals helped Hitler move from party leader to Chancellor.</p>
+  <div class="nav"><a href="index.html">🏠 Main hub</a><a href="history-index.html">📚 History index</a><a href="history-germany-ch5-1-revision.html">Revision</a><a href="history-germany-ch5-1-questions.html">Questions</a></div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Hitler did not become Chancellor because the Nazis won a majority. He became Chancellor because the Nazis became a major political force and conservative politicians thought they could <span class="bad">control him</span>.</div>
+  <div class="tile green"><div class="icon">🎯</div><h3>Objectives</h3><ul><li>Describe the events from 1930 to 1933 that helped Hitler gain power.</li><li>Explain the roles of Hindenburg and von Papen.</li><li>Understand why weak democracy helped the Nazis.</li></ul></div>
+</section>
+
+<section class="panel">
+  <h2>1. Why was Weimar politics weak?</h2>
+  <div class="grid">
+    <div class="tile red"><div class="icon">🏛️</div><h3>Too many parties</h3><p>There were about 30 political parties. It was difficult for one party to win a majority, so governments were usually coalitions.</p></div>
+    <div class="tile orange"><div class="icon">🤝</div><h3>Coalitions disagreed</h3><p>Coalition governments were made of different parties. They often argued and found it hard to make quick decisions during the Depression.</p></div>
+    <div class="tile purple"><div class="icon">📜</div><h3>Article 48</h3><p>President Hindenburg could use emergency powers to rule without the Reichstag. This made democracy look weaker.</p></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>2. The 1930 Reichstag election</h2>
+  <div class="compare">
+    <div class="tile blue"><h3>What happened?</h3><ul><li>There was an election in September 1930.</li><li>Unemployment had risen to about 3 million.</li><li>Chancellor Brüning was unpopular because he reduced unemployment pay and increased taxes.</li><li>The Nazis gained far more seats and became the second largest party.</li></ul></div>
+    <div class="tile green"><h3>Key result</h3><div class="table-like"><div class="role"><strong>SPD</strong>143 seats</div><div class="role"><strong>Nazis</strong>107 seats</div><div class="role"><strong>KPD</strong>77 seats</div><div class="role"><strong>Centre</strong>68 seats</div></div><p class="small">The Nazis were not in power yet, but their support was growing quickly.</p></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>3. How did the Nazis build support?</h2>
+  <div class="grid">
+    <div class="tile orange"><div class="icon">📣</div><h3>Mass rallies</h3><p>Hitler gave speeches at huge meetings with posters, flags and dramatic organisation. This made him look powerful and popular.</p></div>
+    <div class="tile red"><div class="icon">🥾</div><h3>SA violence</h3><p>The SA disrupted opponents’ meetings and fought Communists. This created fear but also made the Nazis look strong to some voters.</p></div>
+    <div class="tile blue"><div class="icon">🛡️</div><h3>Reichsbanner clashes</h3><p>Other political groups also had street armies. The Reichsbanner supported the SPD and Centre Party. Street fighting made Weimar seem chaotic.</p></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>4. The 1932 elections</h2>
+  <div class="timeline">
+    <div class="event"><div class="date">July 1932</div><div class="micro">Election</div><p>Nazis won <b>230 seats</b>, becoming the largest party in the Reichstag.</p></div>
+    <div class="event"><div class="date">After July</div><div class="micro">Hitler demands power</div><p>Hitler demanded the Chancellorship, but Hindenburg refused because he disliked the Nazis and thought they were violent.</p></div>
+    <div class="event"><div class="date">Nov 1932</div><div class="micro">Election</div><p>Nazis fell slightly to <b>196 seats</b>, but they were still the largest party.</p></div>
+    <div class="event"><div class="date">Late 1932</div><div class="micro">Papen loses support</div><p>Von Papen could not get enough support and resigned.</p></div>
+    <div class="event"><div class="date">Jan 1933</div><div class="micro">Deal</div><p>Von Papen persuaded Hindenburg to appoint Hitler Chancellor, believing they could control him.</p></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>5. How Hitler became Chancellor</h2>
+  <div class="flow">
+    <div class="step">Weak coalitions and Article 48 made democracy look unstable</div><div class="arrow">→</div>
+    <div class="step">Nazis became the largest party in July 1932</div><div class="arrow">→</div>
+    <div class="step">Papen and Hindenburg made Hitler Chancellor on 30 January 1933</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key points to remember</h2>
+  <div class="grid">
+    <div class="tile"><div class="icon">🧩</div><p>Germany had many political parties, so coalition governments were weak.</p></div>
+    <div class="tile"><div class="icon">📉</div><p>The Depression made people lose faith in Weimar democracy.</p></div>
+    <div class="tile"><div class="icon">📊</div><p>The Nazis gained 107 seats in 1930 and 230 seats in July 1932.</p></div>
+    <div class="tile"><div class="icon">👴</div><p>Hindenburg refused Hitler at first, but later appointed him Chancellor.</p></div>
+    <div class="tile"><div class="icon">⚠️</div><p>Von Papen thought Hitler could be controlled. This was a huge mistake.</p></div>
+  </div>
+  <div class="exam"><b>Exam tip:</b> Do not write that Hitler simply “won power”. The Nazis never won a majority. Explain the political weakness, elections and the deal with Hindenburg and von Papen.</div>
+</section>
+
+</div>
+</body>
+</html>

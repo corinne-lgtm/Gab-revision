@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE History – Germany 9.2 Questions</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+var(--bg);font-family:Arial, Helvetica, sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(32px,5vw,58px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:19px;color:rgba(255,255,255,.86);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px}
+label{display:block;font-weight:900;margin-bottom:8px}
+textarea,input[type=text]{width:100%;border:2px solid #b8c1c8;border-radius:12px;padding:12px;font-size:16px;background:#fbfbfb;font-family:Arial, Helvetica, sans-serif}
+textarea{min-height:90px;resize:vertical}
+.question{background:white;border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:7px solid var(--orange)}
+.question.answered{border-left-color:var(--green)}
+.q-header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.q-title{font-weight:900;font-size:16px;flex:1}
+.marks{background:#ffe0dd;color:#9a2f28;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px}
+.submit-row{text-align:center;margin:28px 0 20px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn-done{background:linear-gradient(135deg,#d94b42,#7c382f);color:#fff;font-weight:900;font-size:17px;border:none;padding:14px 44px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(217,75,66,.3);width:100%;max-width:380px}
+.btn-done:disabled{opacity:.5;cursor:default}
+.done-msg{display:none;background:#fff7d6;border:2px solid #f1c44d;border-radius:14px;padding:18px 22px;text-align:center;width:100%;max-width:520px}
+.done-msg h3{margin:0 0 6px;color:#7c382f}
+.done-msg p{margin:0;color:#444;line-height:1.6}
+.btn-send{background:#fff;color:#333;font-weight:900;font-size:17px;border:2px solid #ddd;padding:14px 28px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;width:100%;max-width:430px;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn-send img{width:22px;height:22px}
+@media(max-width:850px){.wrap{padding:14px}}
+@media print{.nav,button,.submit-row{display:none}body{background:white}.question{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>9.2 Questions</h1>
+  <p>'Winning' people over — propaganda and censorship</p>
+  <div class="nav">
+    <a href="history-germany-ch9-2-revision.html">📖 Revision</a>
+    <a href="history-germany-ch9-2-questions.html">✏️ Questions</a>
+    <a href="history-germany-ch9-2-answers.html">✅ Answers</a>
+  </div>
+</section>
+
+<form>
+<div class="question"><label for="studentName">Student name</label><input type="text" id="studentName" placeholder="Type your name"></div>
+
+<div class="question" id="box1">
+  <div class="q-header">
+    <div class="q-num">1</div>
+    <div class="q-title">What is the difference between 'propaganda' and 'censorship'?</div>
+    <span class="marks">[2 marks]</span>
+  </div>
+  <textarea id="a1" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box1', this.value)"></textarea>
+</div>
+
+<div class="question" id="box2">
+  <div class="q-header">
+    <div class="q-num">2</div>
+    <div class="q-title">Who was Joseph Goebbels? Give two facts about him.</div>
+    <span class="marks">[2 marks]</span>
+  </div>
+  <textarea id="a2" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box2', this.value)"></textarea>
+</div>
+
+<div class="question" id="box3">
+  <div class="q-header">
+    <div class="q-num">3</div>
+    <div class="q-title">Give three key messages the Nazis used in their propaganda.</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a3" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box3', this.value)"></textarea>
+</div>
+
+<div class="question" id="box4">
+  <div class="q-header">
+    <div class="q-num">4</div>
+    <div class="q-title">How did the Nazis use radio to control what people heard?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a4" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box4', this.value)"></textarea>
+</div>
+
+<div class="question" id="box5">
+  <div class="q-header">
+    <div class="q-num">5</div>
+    <div class="q-title">How did the Nazis control newspapers and films?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a5" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box5', this.value)"></textarea>
+</div>
+
+<div class="question" id="box6">
+  <div class="q-header">
+    <div class="q-num">6</div>
+    <div class="q-title">What were mass rallies and what were they designed to show?</div>
+    <span class="marks">[2 marks]</span>
+  </div>
+  <textarea id="a6" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box6', this.value)"></textarea>
+</div>
+
+<div class="question" id="box7">
+  <div class="q-header">
+    <div class="q-num">7</div>
+    <div class="q-title">Read Interpretation B (von Kleist-Schmenzin). What point does the writer make about propaganda?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a7" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box7', this.value)"></textarea>
+</div>
+
+<div class="question" id="box8">
+  <div class="q-header">
+    <div class="q-num">8</div>
+    <div class="q-title">Here are four real-life situations. For each one, say whether the person was controlled by: (i) fear, (ii) propaganda, or (iii) a combination of both. Briefly explain why.<br><br>
+    a) A famous musician and his family fleeing Germany because they are Jews and fear the Nazis.<br>
+    b) A woman in Munich donating money to the Nazi Party because she is impressed by Hitler's speeches.<br>
+    c) A teacher giving the Nazi salute every morning even though he hates Hitler.<br>
+    d) An eight-year-old boy informing on his teacher for telling anti-Hitler jokes.</div>
+    <span class="marks">[4 marks]</span>
+  </div>
+  <textarea id="a8" rows="7" placeholder="Write your answer here…" oninput="markAnswered('box8', this.value)"></textarea>
+</div>
+
+<div class="question" id="box9">
+  <div class="q-header">
+    <div class="q-num">9</div>
+    <div class="q-title">Explain how the Nazis gained control of all radio and newspapers after 1933.</div>
+    <span class="marks">[4 marks]</span>
+  </div>
+  <textarea id="a9" rows="5" placeholder="Write your answer here…" oninput="markAnswered('box9', this.value)"></textarea>
+</div>
+
+<div class="question" id="box10">
+  <div class="q-header">
+    <div class="q-num">10</div>
+    <div class="q-title">"Propaganda was more important than censorship in helping the Nazis control Germany." How far do you agree?</div>
+    <span class="marks">[8 marks]</span>
+  </div>
+  <textarea id="a10" rows="8" placeholder="Write your answer here…" oninput="markAnswered('box10', this.value)"></textarea>
+</div>
+
+<div class="submit-row">
+  <button class="btn-done" id="btn-done" type="button" onclick="finish()">✅ I'm done!</button>
+  <div class="done-msg" id="done-msg">
+    <h3>🎉 Great work!</h3>
+    <p>Click below to send your answers to Mum via Gmail.</p>
+  </div>
+  <a class="btn-send" id="btn-send" target="_blank" rel="noopener">
+    <img src="https://www.google.com/favicon.ico" alt="Gmail"> Send my answers to Mum via Gmail
+  </a>
+</div>
+</form>
+</div>
+
+<script>
+function markAnswered(id,val){
+  const box=document.getElementById(id);
+  if(box) box.classList.toggle('answered', val.trim().length>2);
+}
+
+function finish(){
+  const doneMsg=document.getElementById('done-msg');
+  const doneBtn=document.getElementById('btn-done');
+  const sendBtn=document.getElementById('btn-send');
+
+  doneMsg.style.display='block';
+  doneBtn.disabled=true;
+
+  const q=(id)=>document.getElementById(id)?.value.trim()||'(no answer)';
+  const name=document.getElementById('studentName')?.value.trim()||'Student';
+
+  const body=
+    'Hi Mum! Here are my answers for GCSE History — Germany 9.2 🇩🇪\n\n'+
+    'Student: '+name+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q1 — What is the difference between propaganda and censorship? [2 marks]\n'+q('a1')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q2 — Who was Joseph Goebbels? Give two facts. [2 marks]\n'+q('a2')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q3 — Give three key messages in Nazi propaganda. [3 marks]\n'+q('a3')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q4 — How did the Nazis use radio to control what people heard? [3 marks]\n'+q('a4')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q5 — How did the Nazis control newspapers and films? [3 marks]\n'+q('a5')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q6 — What were mass rallies and what were they designed to show? [2 marks]\n'+q('a6')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q7 — Interpretation B: What point does the writer make about propaganda? [3 marks]\n'+q('a7')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q8 — Four situations: fear, propaganda, or both? [4 marks]\n'+q('a8')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q9 — How did the Nazis gain control of radio and newspapers after 1933? [4 marks]\n'+q('a9')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q10 — "Propaganda was more important than censorship." How far do you agree? [8 marks]\n'+q('a10')+'\n\n'+
+    '══════════════════════════════\n'+
+    'My score: __ / 34 marks';
+
+  const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1'+
+    '&to=corinne@marcault.com'+
+    '&su='+encodeURIComponent('📚 GCSE History Germany 9.2 — My Answers')+
+    '&body='+encodeURIComponent(body);
+
+  sendBtn.href=gmailUrl;
+  sendBtn.style.display='flex';
+  sendBtn.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

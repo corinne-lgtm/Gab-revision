@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE History – Germany 7.3 Questions</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+var(--bg);font-family:Arial, Helvetica, sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(32px,5vw,58px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:19px;color:rgba(255,255,255,.86);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px}
+label{display:block;font-weight:900;margin-bottom:8px}
+textarea,input[type=text]{width:100%;border:2px solid #b8c1c8;border-radius:12px;padding:12px;font-size:16px;background:#fbfbfb;font-family:Arial, Helvetica, sans-serif}
+textarea{min-height:90px;resize:vertical}
+.question{background:white;border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:7px solid var(--orange)}
+.question.answered{border-left-color:var(--green)}
+.q-header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.q-title{font-weight:900;font-size:16px;flex:1}
+.marks{background:#ffe0dd;color:#9a2f28;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px}
+.submit-row{text-align:center;margin:28px 0 20px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn-done{background:linear-gradient(135deg,#d94b42,#7c382f);color:#fff;font-weight:900;font-size:17px;border:none;padding:14px 44px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(217,75,66,.3);width:100%;max-width:380px}
+.btn-done:disabled{opacity:.5;cursor:default}
+.done-msg{display:none;background:#fff7d6;border:2px solid #f1c44d;border-radius:14px;padding:18px 22px;text-align:center;width:100%;max-width:520px}
+.done-msg h3{margin:0 0 6px;color:#7c382f}
+.done-msg p{margin:0;color:#444;line-height:1.6}
+.btn-send{background:#fff;color:#333;font-weight:900;font-size:17px;border:2px solid #ddd;padding:14px 28px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;width:100%;max-width:430px;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn-send img{width:22px;height:22px}
+@media(max-width:850px){.wrap{padding:14px}}
+@media print{.nav,button,.submit-row{display:none}body{background:white}.question{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>7.3 Questions</h1>
+  <p>Were Germans better off under the Nazis?</p>
+  <div class="nav">
+    <a href="history-germany-ch7-3-revision.html">📖 Revision</a>
+    <a href="history-germany-ch7-3-questions.html">✏️ Questions</a>
+    <a href="history-germany-ch7-3-answers.html">✅ Answers</a>
+  </div>
+</section>
+
+<form>
+<div class="question"><label for="studentName">Student name</label><input type="text" id="studentName" placeholder="Type your name"></div>
+
+<div class="question" id="box1">
+  <div class="q-header">
+    <div class="q-num">1</div>
+    <div class="q-title">Who made up the largest social group in Germany in the 1930s?</div>
+    <span class="marks">[1 mark]</span>
+  </div>
+  <textarea id="a1" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box1', this.value)"></textarea>
+</div>
+
+<div class="question" id="box2">
+  <div class="q-header">
+    <div class="q-num">2</div>
+    <div class="q-title">What was the DAF and why did it replace trade unions?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a2" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box2', this.value)"></textarea>
+</div>
+
+<div class="question" id="box3">
+  <div class="q-header">
+    <div class="q-num">3</div>
+    <div class="q-title">Describe what the SDA (Beauty of Labour) scheme did.</div>
+    <span class="marks">[2 marks]</span>
+  </div>
+  <textarea id="a3" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box3', this.value)"></textarea>
+</div>
+
+<div class="question" id="box4">
+  <div class="q-header">
+    <div class="q-num">4</div>
+    <div class="q-title">Describe what the KDF (Strength through Joy) scheme offered workers.</div>
+    <span class="marks">[2 marks]</span>
+  </div>
+  <textarea id="a4" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box4', this.value)"></textarea>
+</div>
+
+<div class="question" id="box5">
+  <div class="q-header">
+    <div class="q-num">5</div>
+    <div class="q-title">What was the Volkswagen savings scheme? Was it a genuine benefit for workers?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a5" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box5', this.value)"></textarea>
+</div>
+
+<div class="question" id="box6">
+  <div class="q-header">
+    <div class="q-num">6</div>
+    <div class="q-title">Give two rights that workers lost under the Nazis.</div>
+    <span class="marks">[2 marks]</span>
+  </div>
+  <textarea id="a6" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box6', this.value)"></textarea>
+</div>
+
+<div class="question" id="box7">
+  <div class="q-header">
+    <div class="q-num">7</div>
+    <div class="q-title">Look at Interpretation B (Konrad Morgen). What does he suggest about why workers supported Hitler?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a7" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box7', this.value)"></textarea>
+</div>
+
+<div class="question" id="box8">
+  <div class="q-header">
+    <div class="q-num">8</div>
+    <div class="q-title">Look at Interpretation D (Ernest Bromberg). What does his account suggest about how some workers felt about Nazi organisations?</div>
+    <span class="marks">[3 marks]</span>
+  </div>
+  <textarea id="a8" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box8', this.value)"></textarea>
+</div>
+
+<div class="question" id="box9">
+  <div class="q-header">
+    <div class="q-num">9</div>
+    <div class="q-title">How do Interpretations B and D differ in what they suggest about workers' attitudes to the Nazis?</div>
+    <span class="marks">[4 marks]</span>
+  </div>
+  <textarea id="a9" rows="5" placeholder="Write your answer here…" oninput="markAnswered('box9', this.value)"></textarea>
+</div>
+
+<div class="question" id="box10">
+  <div class="q-header">
+    <div class="q-num">10</div>
+    <div class="q-title">Which of the following groups were more affected by Nazi policies — farmers and agricultural workers, or industrial and factory workers? Explain your answer with reference to both groups.</div>
+    <span class="marks">[12 marks]</span>
+  </div>
+  <textarea id="a10" rows="8" placeholder="Write your answer here…" oninput="markAnswered('box10', this.value)"></textarea>
+</div>
+
+<div class="submit-row">
+  <button class="btn-done" id="btn-done" type="button" onclick="finish()">✅ I'm done!</button>
+  <div class="done-msg" id="done-msg">
+    <h3>🎉 Great work!</h3>
+    <p>Click below to send your answers to Mum via Gmail.</p>
+  </div>
+  <a class="btn-send" id="btn-send" target="_blank" rel="noopener">
+    <img src="https://www.google.com/favicon.ico" alt="Gmail"> Send my answers to Mum via Gmail
+  </a>
+</div>
+</form>
+</div>
+
+<script>
+function markAnswered(id,val){
+  const box=document.getElementById(id);
+  if(box) box.classList.toggle('answered', val.trim().length>2);
+}
+
+function finish(){
+  const doneMsg=document.getElementById('done-msg');
+  const doneBtn=document.getElementById('btn-done');
+  const sendBtn=document.getElementById('btn-send');
+
+  doneMsg.style.display='block';
+  doneBtn.disabled=true;
+
+  const q=(id)=>document.getElementById(id)?.value.trim()||'(no answer)';
+  const name=document.getElementById('studentName')?.value.trim()||'Student';
+
+  const body=
+    'Hi Mum! Here are my answers for GCSE History — Germany 7.3 🇩🇪\n\n'+
+    'Student: '+name+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q1 — Who made up the largest social group in Germany in the 1930s? [1 mark]\n'+q('a1')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q2 — What was the DAF and why did it replace trade unions? [3 marks]\n'+q('a2')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q3 — Describe what the SDA (Beauty of Labour) scheme did. [2 marks]\n'+q('a3')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q4 — Describe what the KDF (Strength through Joy) scheme offered workers. [2 marks]\n'+q('a4')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q5 — What was the Volkswagen savings scheme? Was it a genuine benefit? [3 marks]\n'+q('a5')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q6 — Give two rights that workers lost under the Nazis. [2 marks]\n'+q('a6')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q7 — Interpretation B (Konrad Morgen): What does he suggest about why workers supported Hitler? [3 marks]\n'+q('a7')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q8 — Interpretation D (Ernest Bromberg): What does his account suggest about how some workers felt? [3 marks]\n'+q('a8')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q9 — How do Interpretations B and D differ? [4 marks]\n'+q('a9')+'\n\n'+
+    '══════════════════════════════\n'+
+    'Q10 — Farmers vs industrial workers: which group was more affected by Nazi policies? [12 marks]\n'+q('a10')+'\n\n'+
+    '══════════════════════════════\n'+
+    'My score: __ / 35 marks';
+
+  const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1'+
+    '&to=corinne@marcault.com'+
+    '&su='+encodeURIComponent('📚 GCSE History Germany 7.3 — My Answers')+
+    '&body='+encodeURIComponent(body);
+
+  sendBtn.href=gmailUrl;
+  sendBtn.style.display='flex';
+  sendBtn.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

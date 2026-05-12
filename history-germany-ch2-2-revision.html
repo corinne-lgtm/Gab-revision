@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE History – Germany 2.2 What was the Weimar Republic?</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+var(--bg);font-family:Arial, Helvetica, sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(32px,5vw,58px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:19px;color:rgba(255,255,255,.86);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px}
+.panel{background:rgba(255,255,255,.78);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 9px 26px rgba(0,0,0,.06)}
+h2{font-size:clamp(24px,3vw,36px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:21px}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:30px;font-weight:900;line-height:1.08}
+.statement .good{color:var(--green)} .statement .bad{color:var(--red)} .statement .key{color:var(--orange)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+.tile .icon{font-size:34px;margin-bottom:6px}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e6aaa4}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8bd7c}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a9c6df}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#9cca9f}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#b9a6d9}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.event{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:15px;min-height:130px}
+.date{font-weight:1000;color:var(--red);font-size:22px}
+.micro{font-size:13px;color:var(--muted);font-weight:900;text-transform:uppercase;margin:5px 0}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.step{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:16px;text-align:center;font-weight:900}
+.arrow{display:grid;place-items:center;font-size:28px;color:var(--muted)}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:6px 10px;font-weight:900;font-size:13px;margin:3px}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+ul{padding-left:20px;margin:8px 0} li{margin:6px 0}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.table-like{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.role{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px;text-align:center}
+.role strong{display:block;font-size:18px;margin-bottom:8px;color:var(--red)}
+.question{background:white;border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:7px solid var(--orange)}
+.question.answered{border-left-color:var(--red)}
+.q-header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.q-title{font-weight:900;font-size:16px;flex:1}
+.marks{background:#ffe0dd;color:#9a2f28;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px}
+label{display:block;font-weight:900;margin-bottom:8px}
+textarea,input[type=text]{width:100%;border:2px solid #b8c1c8;border-radius:12px;padding:12px;font-size:16px;background:#fbfbfb;font-family:Arial, Helvetica, sans-serif}
+textarea{min-height:90px;resize:vertical}
+.submit-row{text-align:center;margin:28px 0 20px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn-done{background:linear-gradient(135deg,#d94b42,#7c382f);color:#fff;font-weight:900;font-size:17px;border:none;padding:14px 44px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(217,75,66,.3);width:100%;max-width:380px}
+.btn-done:disabled{opacity:.5;cursor:default}
+.done-msg{display:none;background:#fff7d6;border:2px solid #f1c44d;border-radius:14px;padding:18px 22px;text-align:center;width:100%;max-width:520px}
+.done-msg h3{margin:0 0 6px;color:#7c382f}
+.done-msg p{margin:0;color:#444;line-height:1.6}
+.btn-send{background:#fff;color:#333;font-weight:900;font-size:17px;border:2px solid #ddd;padding:14px 28px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;width:100%;max-width:430px;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn-send img{width:22px;height:22px}
+.answer{border-left:8px solid var(--green)}
+.must{background:#eef8ef;border:2px dashed #6fae75;border-radius:14px;padding:12px;margin-top:10px}
+.warning{background:#fff7d6;border:2px solid #f1c44d}
+.small{font-size:14px;color:var(--muted)}
+@media(max-width:850px){.big-idea,.timeline,.flow,.compare,.table-like{grid-template-columns:1fr}.arrow{display:none}.statement{font-size:25px}.wrap{padding:14px}}
+@media print{.nav,button,.submit-row{display:none}body{background:white}.panel,.hero,.tile,.question{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>2.2 What was the Weimar Republic?</h1>
+  <p>How Germany changed from Kaiser rule to a democratic republic — and why the new system had problems from the start.</p>
+  
+<div class="nav">
+  <a href="index.html">🏠 Main hub</a>
+  <a href="history-index.html">📚 History index</a>
+  <a href="history-germany-ch2-2-revision.html">Revision</a>
+  <a href="history-germany-ch2-2-questions.html">Questions</a>
+</div>
+
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">
+    Germany became a <span class="good">democracy</span> in 1919 —
+    <br>but the new republic was born in <span class="bad">chaos</span>, with enemies on the <span class="key">left</span> and <span class="key">right</span>.
+  </div>
+  <div class="grid">
+    <div class="tile green"><div class="icon">🗳️</div><h3>Democratic Republic</h3><p>Germany would now choose leaders by voting, instead of being ruled by a Kaiser.</p></div>
+    <div class="tile blue"><div class="icon">🏛️</div><h3>Weimar Constitution</h3><p>A new system with a President, Chancellor, Reichstag and voting rights.</p></div>
+    <div class="tile red"><div class="icon">⚠️</div><h3>Weak start</h3><p>Many people blamed the new leaders for defeat, the armistice and disorder.</p></div>
+    <div class="tile orange"><div class="icon">🔥</div><h3>Political violence</h3><p>Communists and right-wing groups both challenged the new republic.</p></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Timeline: how the Republic was born</h2>
+  <div class="timeline">
+    <div class="event"><div class="date">9 Nov 1918</div><div class="micro">Kaiser gone</div>Wilhelm II abdicates. Friedrich Ebert becomes temporary leader.</div>
+    <div class="event"><div class="date">Nov 1918</div><div class="micro">Armistice</div>Germany surrenders and the war ends.</div>
+    <div class="event"><div class="date">Jan 1919</div><div class="micro">Spartacist Revolt</div>Communists try to take power in Berlin.</div>
+    <div class="event"><div class="date">Jan 1919</div><div class="micro">Election</div>The SPD wins the most votes in the new election.</div>
+    <div class="event"><div class="date">Feb 1919</div><div class="micro">Weimar</div>Politicians meet in Weimar. The Weimar Republic begins.</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Government structure: who did what?</h2>
+  <div class="table-like">
+    <div class="role"><strong>People</strong>Voted for the President and Reichstag.</div>
+    <div class="role"><strong>President</strong>Head of state. Could use emergency powers under Article 48.</div>
+    <div class="role"><strong>Chancellor</strong>Ran the government day-to-day. Needed Reichstag support.</div>
+    <div class="role"><strong>Reichstag</strong>Parliament. Discussed and introduced laws.</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Strengths vs weaknesses</h2>
+  <div class="compare">
+    <div class="tile green">
+      <div class="icon">✅</div>
+      <h3>Strengths</h3>
+      <ul>
+        <li>More democratic than Kaiser rule.</li>
+        <li>Men and women over 20 could vote.</li>
+        <li>Basic freedoms were promised, such as free speech.</li>
+        <li>Proportional representation gave smaller parties seats.</li>
+      </ul>
+    </div>
+    <div class="tile red">
+      <div class="icon">❌</div>
+      <h3>Weaknesses</h3>
+      <ul>
+        <li>Proportional representation made coalitions common and unstable.</li>
+        <li>Article 48 could let the President rule in an emergency.</li>
+        <li>Many Germans disliked democracy or blamed the republic for defeat.</li>
+        <li>Extreme groups tried to overthrow the new government.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Political enemies</h2>
+  <div class="grid">
+    <div class="tile red"><div class="icon">🌹</div><h3>Spartacists</h3><p>Left-wing communist group. Wanted workers’ councils and a communist Germany. Led by Rosa Luxemburg and Karl Liebknecht.</p></div>
+    <div class="tile orange"><div class="icon">🪖</div><h3>Free Corps</h3><p>Right-wing ex-soldiers. They hated communists and used violence to crush the Spartacist Revolt.</p></div>
+    <div class="tile purple"><div class="icon">⚖️</div><h3>Centre ground</h3><p>Ebert and the SPD wanted a democratic republic, but were attacked by both extremes.</p></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Cause → consequence chain</h2>
+  <div class="flow">
+    <div class="step">Kaiser abdicates<br>👑</div><div class="arrow">→</div>
+    <div class="step">Ebert creates democracy<br>🗳️</div><div class="arrow">→</div>
+    <div class="step">New republic faces enemies<br>⚠️</div>
+  </div>
+  <p><b>Exam sentence:</b> The Weimar Republic was democratic, but it was weak from the beginning because it was linked to defeat and faced opposition from both communists and right-wing nationalists.</p>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">democratic republic</span>
+  <span class="keyword">constitution</span>
+  <span class="keyword">proportional representation</span>
+  <span class="keyword">Article 48</span>
+  <span class="keyword">Spartacists</span>
+  <span class="keyword">Free Corps</span>
+  <span class="keyword">communism</span>
+  <span class="keyword">left-wing</span>
+  <span class="keyword">right-wing</span>
+</section>
+
+<section class="panel">
+  <h2>Exam brain</h2>
+  <div class="grid">
+    <div class="exam"><b>If asked “how was Germany governed?”</b><br>Use: President + Chancellor + Reichstag + people voting.</div>
+    <div class="exam"><b>If asked “strengths of Weimar”</b><br>Use: voting rights + freedoms + proportional representation.</div>
+    <div class="exam"><b>If asked “weaknesses of Weimar”</b><br>Use: coalitions + Article 48 + extremists + blame for defeat.</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
