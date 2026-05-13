@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.8 Osmosis in plants</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:22px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+
+/* State cards */
+.state-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.state-card{border-radius:20px;padding:18px;text-align:center;border:2px solid var(--line)}
+.state-name{font-size:18px;font-weight:900;margin-bottom:6px}
+.state-emoji{font-size:44px;display:block;margin:8px 0}
+.state-desc{font-size:13px;font-weight:700}
+.state-turgid{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.state-flaccid{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.state-plasm{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+
+@media(max-width:750px){.big-idea,.state-grid{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.8 Osmosis in plants</h1>
+  <p>Why osmosis is essential in plant cells, the states of turgid, flaccid and plasmolysed, and how to investigate osmosis in plant tissue.</p>
+  <div class="nav">
+    <a href="biology-b1-8-revision.html">📖 Revision</a>
+    <a href="biology-b1-8-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Osmosis keeps plant cells <span class="g">turgid</span> — giving stems and leaves their <span class="b">rigidity and support</span>. Without it, plants <span class="o">wilt</span>.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Why osmosis is so important in plant cells</li>
+      <li>How to investigate the effect of osmosis on plant tissues</li>
+      <li>The meaning of turgid, flaccid and plasmolysed</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Osmosis in plant cells — the three states</h2>
+  <div class="state-grid">
+    <div class="state-card state-turgid">
+      <div class="state-name">🌿 Turgid</div>
+      <span class="state-emoji">💪</span>
+      <div class="state-desc"><b>Normal, healthy state.</b> Water moves in by osmosis → vacuole swells → pushes cytoplasm against the cell wall → pressure builds up (turgor pressure) → cell hard and rigid.</div>
+    </div>
+    <div class="state-card state-flaccid">
+      <div class="state-name">😞 Flaccid</div>
+      <span class="state-emoji">🥀</span>
+      <div class="state-desc"><b>Cell loses water.</b> Surrounding solution is hypertonic → water leaves cell → vacuole shrinks → no pressure on cell wall → cell soft. Plant wilts as turgor no longer supports tissues.</div>
+    </div>
+    <div class="state-card state-plasm">
+      <div class="state-name">☠️ Plasmolysed</div>
+      <span class="state-emoji">💀</span>
+      <div class="state-desc"><b>More severe water loss.</b> Even more water leaves → vacuole and cytoplasm shrink → <b>cell membrane pulls away from cell wall.</b> Usually only in lab experiments. Cell dies unless balance is restored.</div>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">⚠️ Turgid = good. Flaccid = wilting. Plasmolysed = cell membrane detached from wall = usually fatal.</div>
+</section>
+
+<section class="panel">
+  <h2>Why turgor pressure matters</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🌱</div>
+      <h3>Support for plant tissues</h3>
+      <p>Plants need the fluid surrounding cells to always be <b>hypotonic</b> to the cytoplasm — so water keeps moving in by osmosis, keeping cells <b>turgid</b>.</p>
+      <p style="margin-top:8px">Turgid cells press against each other — this gives leaves and stems their <b>rigidity and firmness</b>.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🏗️</div>
+      <h3>Structural importance</h3>
+      <p>Turgor pressure is the main source of support for <b>non-woody plants</b>. If a plant is deprived of water, cells become flaccid → the plant wilts → leaves droop → stems collapse.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">💧</div>
+      <h3>Water moves in when…</h3>
+      <p>The surrounding solution is <b>hypotonic</b> (more dilute than the cytoplasm). Water concentration outside is higher → osmosis moves water into the cell → vacuole swells → turgor pressure builds.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">🌵</div>
+      <h3>Water moves out when…</h3>
+      <p>The surrounding solution is <b>hypertonic</b> (more concentrated than cytoplasm). Water moves out → cells become flaccid → if severe, plasmolysis occurs.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Investigating osmosis in plant cells</h2>
+  <div class="tile blue">
+    <h3>🔬 Method — measuring mass change</h3>
+    <p>Plant tissue (e.g. <b>potato cylinders</b>) is placed in different concentrations of salt or sugar solutions for 30 minutes. The mass change is measured:</p>
+    <ul>
+      <li><b>Gain in mass</b> → solution was hypotonic → water moved IN by osmosis</li>
+      <li><b>Loss in mass</b> → solution was hypertonic → water moved OUT by osmosis</li>
+      <li><b>No change</b> → solution was isotonic → no net movement of water</li>
+    </ul>
+    <div class="must">⚠️ Always dry the surface of plant tissue before measuring mass — any liquid left on the outside will affect your results.</div>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile lime">
+      <h3>🥔 Why potato?</h3>
+      <p>Potato is used because it is cheap, easy to cut into uniform shapes (cylinders, chips, discs), widely available, and reacts strongly to changes in osmotic concentration.</p>
+    </div>
+    <div class="tile orange">
+      <h3>🧪 Salt vs sugar solutions</h3>
+      <p>Both create concentration gradients. Sugar solutions may be more accurate as they are less likely to affect cell chemistry. Potato reacts visibly and measurably to both.</p>
+    </div>
+    <div class="tile purple">
+      <h3>📐 Surface area effect</h3>
+      <p>Smaller pieces (larger surface area to volume ratio) → faster osmosis. Cylinders vs discs vs chips all give different rates — shape and size must be kept consistent within an experiment.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Define osmosis [1 mark]</li>
+      <li>Explain beetroot results (gained/lost/no change in mass) in terms of osmosis [6 marks]</li>
+      <li>Suggest and explain why osmosis is important in the structural support of plants [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Top tip for 6-mark questions:</b> Link each point clearly — mention turgid, turgor pressure, vacuole swelling, cell wall, support of stem/leaves, and what happens when cells become flaccid (plant wilts).</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">osmosis</span>
+  <span class="keyword">turgor</span>
+  <span class="keyword">turgor pressure</span>
+  <span class="keyword">turgid</span>
+  <span class="keyword">flaccid</span>
+  <span class="keyword">plasmolysis</span>
+  <span class="keyword">plasmolysed</span>
+  <span class="keyword">hypotonic</span>
+  <span class="keyword">hypertonic</span>
+  <span class="keyword">vacuole</span>
+  <span class="keyword">cell wall</span>
+  <span class="keyword">partially permeable membrane</span>
+</section>
+
+</div>
+</body>
+</html>

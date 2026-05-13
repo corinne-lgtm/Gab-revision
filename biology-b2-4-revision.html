@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B2.4 Stem cell dilemmas</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:21px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+@media(max-width:750px){.big-idea,.compare{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>B2.4 Stem cell dilemmas</h1>
+  <p>The process of therapeutic cloning, potential benefits, risks, and social and ethical issues raised by the use of stem cells.</p>
+  <div class="nav">
+    <a href="biology-b2-4-revision.html">📖 Revision</a>
+    <a href="biology-b2-4-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Stem cell treatments offer <span class="g">huge potential</span> — but raise serious <span class="o">ethical, social</span> and <span class="b">practical concerns</span> that scientists and society must weigh carefully.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>The process of therapeutic cloning</li>
+      <li>Potential benefits, risks, and ethical issues of stem cell use</li>
+      <li>Current areas of stem cell research in the UK</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Arguments for and against embryonic stem cells</h2>
+  <div class="compare">
+    <div class="tile green">
+      <div class="icon">✅</div>
+      <h3>Arguments FOR</h3>
+      <ul>
+        <li>Huge potential to <b>treat many serious diseases</b> — paralysis, diabetes, blindness, heart damage</li>
+        <li>Many embryos come from <b>fertility treatment</b> and would otherwise be destroyed</li>
+        <li>Embryos used are tiny balls of cells with <b>no brain or nervous system</b></li>
+        <li>Could allow growth of <b>whole organs for transplant</b></li>
+        <li>Could benefit <b>millions of people</b> worldwide</li>
+      </ul>
+    </div>
+    <div class="tile red">
+      <div class="icon">❌</div>
+      <h3>Arguments AGAINST</h3>
+      <ul>
+        <li>An embryo is a <b>potential human life</b> — using it as a source of cells destroys it</li>
+        <li>Embryo cannot <b>give consent</b> — seen as a violation of human rights</li>
+        <li>Religious beliefs: some cannot accept <b>any interference</b> with human reproduction</li>
+        <li>Research is <b>slow, expensive and difficult</b> to control — money could be better spent</li>
+        <li>Embryonic stem cells may <b>cause cancer</b> — shown in some mice and early human trials</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Practical risks of stem cell treatments</h2>
+  <div class="grid">
+    <div class="tile orange">
+      <div class="icon">⚠️</div>
+      <h3>Cancer risk</h3>
+      <p>Embryonic stem cells divide and grow rapidly — which is partly why they are so useful, but also why there is concern they might <b>cause cancer</b> if used to treat people. This has been a problem in mice and early human autoimmune trials.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🦠</div>
+      <h3>Virus transfer (adult stem cells)</h3>
+      <p>Adult stem cells may be <b>infected with viruses</b> and could transfer infections to patients. If stem cells from an adult are used to treat an unrelated person, they may also trigger an <b>immune response</b> — the patient may need immunosuppressant drugs.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🧪</div>
+      <h3>Control and understanding</h3>
+      <p>The signals that control cell differentiation are <b>still not completely understood</b>. It is proving difficult to persuade embryonic stem cells to differentiate into the specific type of cells needed for treatment.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Therapeutic cloning</h2>
+  <div class="tile blue">
+    <div class="icon">🔬</div>
+    <h3>What is therapeutic cloning?</h3>
+    <p><b>Therapeutic cloning</b> involves using cells from an adult patient to produce a cloned early embryo of themselves. This provides a source of <b>perfectly matched embryonic stem cells</b>.</p>
+    <p style="margin-top:8px">These stem cells could then be used for medical treatments — the new organs/tissues would <b>not be rejected</b> by the body because they were made from the body's own cells and have the same genes.</p>
+    <p style="margin-top:8px">The process: Adult cell → nucleus extracted → inserted into enucleated egg → embryo develops → stem cells harvested → differentiated into needed tissues → transplanted back into patient.</p>
+  </div>
+  <div class="must" style="margin-top:14px">💡 Therapeutic cloning is different from reproductive cloning — it is used to produce cells/organs for medicine, NOT to create a whole human being.</div>
+</section>
+
+<section class="panel">
+  <h2>Future of stem cell research — UK current areas</h2>
+  <div class="grid">
+    <div class="tile lime"><div class="icon">🩺</div><p><b>Spinal cord</b> after injuries</p></div>
+    <div class="tile blue"><div class="icon">🩸</div><p><b>Diabetes</b> — insulin-producing cells</p></div>
+    <div class="tile orange"><div class="icon">❤️</div><p><b>Heart</b> after damage in a heart attack</p></div>
+    <div class="tile green"><div class="icon">👁️</div><p><b>Eyesight</b> in the blind</p></div>
+    <div class="tile purple"><div class="icon">🦴</div><p><b>Damaged bone and cartilage</b></p></div>
+  </div>
+  <div class="must" style="margin-top:14px">🌟 Scientists have also found embryonic stem cells in umbilical cord blood and amniotic fluid — using these instead of cells from spare embryos may help overcome ethical concerns.</div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Give three examples where stem cells could provide new treatments [3 marks]</li>
+      <li>Summarise the main arguments for and against the use of embryonic stem cells [4 marks]</li>
+      <li>Explain how scientists are hoping to overcome the ethical objections to using embryonic stem cells [5 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>For the 5-mark question</b> — mention: therapeutic cloning (own cells = no rejection), umbilical cord blood, amniotic fluid, adult stem cells from bone marrow, and ongoing research to control differentiation better.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">therapeutic cloning</span>
+  <span class="keyword">embryonic stem cells</span>
+  <span class="keyword">adult stem cells</span>
+  <span class="keyword">immune response</span>
+  <span class="keyword">immunosuppressant</span>
+  <span class="keyword">rejection</span>
+  <span class="keyword">ethical</span>
+  <span class="keyword">umbilical cord blood</span>
+  <span class="keyword">amniotic fluid</span>
+  <span class="keyword">differentiation</span>
+</section>
+
+</div>
+</body>
+</html>

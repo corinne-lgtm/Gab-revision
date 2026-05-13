@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B3.1 Tissues and organs</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:21px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+
+/* Hierarchy ladder */
+.ladder{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.rung{border-radius:16px;padding:14px 20px;text-align:center;font-weight:900;font-size:17px;border:3px solid}
+.rung.r1{background:var(--blue2);border-color:#a0c8e0;color:var(--blue)}
+.rung.r2{background:var(--green2);border-color:#a8d4b0;color:var(--green)}
+.rung.r3{background:var(--orange2);border-color:#e8b878;color:var(--orange)}
+.rung.r4{background:var(--purple2);border-color:#c0a0d8;color:var(--purple)}
+.rung.r5{background:var(--lime2);border-color:#b8d88a;color:#3a6a10}
+.arrow-down{text-align:center;font-size:22px;color:var(--muted)}
+
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>B3.1 Tissues and organs</h1>
+  <p>How specialised cells become organised into tissues, and how tissues work together to form organs and organ systems.</p>
+  <div class="nav">
+    <a href="biology-b3-1-revision.html">📖 Revision</a>
+    <a href="biology-b3-1-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Cells → <span class="b">Tissues</span> → <span class="o">Organs</span> → <span class="g">Organ systems</span> → Organism. Each level of organisation carries out more complex functions.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How specialised cells become organised into tissues</li>
+      <li>How several different tissues work together to form an organ</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>The hierarchy of organisation</h2>
+  <div class="ladder">
+    <div class="rung r1">🔬 Cells — the basic building blocks of all living organisms</div>
+    <div class="arrow-down">⬇️</div>
+    <div class="rung r2">🧱 Tissues — groups of cells with similar structure and function</div>
+    <div class="arrow-down">⬇️</div>
+    <div class="rung r3">🫁 Organs — collections of tissues performing a specific function</div>
+    <div class="arrow-down">⬇️</div>
+    <div class="rung r4">🔄 Organ systems — groups of organs working together</div>
+    <div class="arrow-down">⬇️</div>
+    <div class="rung r5">🧬 Organism — the whole multicellular living thing</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Tissues</h2>
+  <div class="tile blue">
+    <p>A <b>tissue</b> is a group of cells with <b>similar structure and function</b> working together. Examples in animals:</p>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile lime">
+      <div class="icon">💪</div>
+      <h3>Muscular tissue</h3>
+      <p>Can <b>contract</b> to bring about movement. Found in the stomach wall — churns food and digestive juices together.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🧪</div>
+      <h3>Glandular tissue</h3>
+      <p>Contains secretory cells that <b>produce and release substances</b> such as enzymes and hormones. Found in the stomach — produces digestive juices.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🛡️</div>
+      <h3>Epithelial tissue</h3>
+      <p><b>Covers</b> the outside of the body and internal organs. Forms a lining/covering layer. Found on the inside and outside of the stomach.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Organs</h2>
+  <div class="tile green">
+    <p><b>Organs</b> are <b>collections of tissues</b>, all working together to perform a specific function. Each organ contains several different tissues.</p>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile orange">
+      <div class="icon">🫃</div>
+      <h3>The stomach</h3>
+      <p>An organ involved in the digestion of food. It contains:</p>
+      <ul>
+        <li><b>Muscular tissue</b> — churns food and digestive juices</li>
+        <li><b>Glandular tissue</b> — produces digestive juices</li>
+        <li><b>Epithelial tissue</b> — covers the inside and outside</li>
+      </ul>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🫀</div>
+      <h3>The pancreas</h3>
+      <p>An organ with <b>two important functions</b>:</p>
+      <ul>
+        <li>Makes <b>hormones</b> (e.g. insulin) to control blood sugar</li>
+        <li>Makes <b>enzymes</b> to digest food</li>
+      </ul>
+      <p style="margin-top:6px">Contains two very different types of tissue producing these different secretions.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🫘</div>
+      <h3>The kidney</h3>
+      <p>An organ that <b>filters the blood</b> and produces urine. Contains several types of tissue including specialised tubule cells, blood vessel tissue, and connective tissue.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Organ systems</h2>
+  <div class="tile lime">
+    <p><b>Organ systems</b> are groups of organs that all work together to perform specific functions. A whole multicellular organism is made up of a number of organ systems working together.</p>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile green"><div class="icon">🍽️</div><h3>Digestive system</h3><p>Breaks down food and absorbs nutrients into the blood.</p></div>
+    <div class="tile red"><div class="icon">❤️</div><h3>Circulatory system</h3><p>Transports substances around the body in the blood.</p></div>
+    <div class="tile blue"><div class="icon">💨</div><h3>Gas exchange system</h3><p>Takes in oxygen and removes carbon dioxide via the lungs.</p></div>
+  </div>
+  <div class="must" style="margin-top:14px">💡 Organ systems have adaptations to increase effectiveness as exchange surfaces — e.g. large surface area, rich blood supply, short diffusion distances, and mechanisms to increase concentration gradients.</div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Define the word tissue [1 mark]</li>
+      <li>Define the word organ [1 mark]</li>
+      <li>For sperm / kidney / stomach — state whether each is a specialised cell, tissue, or organ, and explain [2 marks each]</li>
+      <li>Describe how the stomach is adapted for its role in the digestion of food [5 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key tip:</b> Sperm = specialised cell. Kidney = organ (contains several different tissues). Stomach = organ (muscular + glandular + epithelial tissue).</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">tissue</span>
+  <span class="keyword">organ</span>
+  <span class="keyword">organ system</span>
+  <span class="keyword">muscular tissue</span>
+  <span class="keyword">glandular tissue</span>
+  <span class="keyword">epithelial tissue</span>
+  <span class="keyword">differentiation</span>
+  <span class="keyword">specialised cell</span>
+  <span class="keyword">digestive system</span>
+  <span class="keyword">pancreas</span>
+</section>
+
+</div>
+</body>
+</html>

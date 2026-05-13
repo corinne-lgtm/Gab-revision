@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B3.5 Factors affecting enzyme action</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+/* temp graph visual */
+.graph-desc{background:var(--dark);color:white;border-radius:18px;padding:18px;margin-top:14px}
+.graph-desc b{color:var(--yellow)}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>B3.5 Factors affecting enzyme action</h1>
+  <p>How temperature and pH affect enzyme action, and why different enzymes work best at different conditions.</p>
+  <div class="nav">
+    <a href="biology-b3-5-revision.html">📖 Revision</a>
+    <a href="biology-b3-5-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement"><span class="o">Temperature</span> and <span class="b">pH</span> both affect the shape of an enzyme's <span class="g">active site</span> — changing them too much <span class="o">denatures</span> the enzyme.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How temperature and pH affect enzyme action</li>
+      <li>Why different enzymes work best at different temperatures and pH values</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Effect of temperature on enzyme action</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🌡️</div>
+      <h3>Low temperature</h3>
+      <p>As temperature <b>increases</b>, molecules move faster — more collisions between enzyme and substrate → <b>rate of reaction increases</b>.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">✅</div>
+      <h3>Optimum temperature</h3>
+      <p>The temperature at which the enzyme works <b>fastest</b>. Most human enzymes have an optimum of <b>~37°C</b> (body temperature). At this point the active site and substrate collide most effectively.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">🔥</div>
+      <h3>Above optimum → denaturation</h3>
+      <p>Above the optimum, high temperatures cause the amino acid chains to <b>unravel</b> — the shape of the active site <b>changes</b>. The substrate can no longer fit. The enzyme is <b>denatured</b> and stops working. The rate drops dramatically.</p>
+    </div>
+  </div>
+  <div class="graph-desc">
+    <b>Reading the temperature graph (Figure 1):</b> Rate rises as temperature increases → peaks at optimum (~37–40°C for most enzymes) → drops sharply as enzyme is denatured above optimum. The drop is rapid, not gradual — denaturation is irreversible.
+  </div>
+  <div class="must" style="margin-top:12px">⚠️ <b>Study tip:</b> Enzymes are not "killed" — they are molecules, not living things. Always say they are <b>denatured</b>. At 41°C, human enzymes begin to denature — this is why a dangerously high fever can be fatal.</div>
+</section>
+
+<section class="panel">
+  <h2>Effect of pH on enzyme action</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">⚗️</div>
+      <h3>How pH affects enzymes</h3>
+      <p>The shape of an enzyme's active site is held in place by <b>forces between parts of the protein molecule</b>. A change in pH affects these forces — changing the shape of the molecule. If the shape of the active site changes, the substrate <b>no longer fits</b> and the enzyme stops working.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🎯</div>
+      <h3>Optimum pH</h3>
+      <p>Each enzyme has an <b>optimum pH</b> at which it works fastest. Different enzymes work best at different pH values:</p>
+      <ul>
+        <li><b>Pepsin</b> (stomach protease) — optimum pH ~2 (acidic)</li>
+        <li><b>Amylase</b> (saliva) — optimum pH ~7 (neutral)</li>
+        <li><b>Trypsin</b> (pancreas) — optimum pH ~8 (alkaline)</li>
+      </ul>
+    </div>
+    <div class="tile red">
+      <div class="icon">❌</div>
+      <h3>Wrong pH → stops working</h3>
+      <p>A pH that is too far from the optimum changes the shape of the active site — the enzyme is denatured (or its activity is greatly reduced). The substrate no longer fits.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Different enzymes, different optima</h2>
+  <div class="tile purple">
+    <p>Not all enzymes work best at 37°C or pH 7. <b>Extremophiles</b> are organisms that live in extreme environments — their enzymes are adapted for those conditions:</p>
+    <ul>
+      <li>Bacteria in <b>hot springs</b> survive at 80°C+ — their enzymes have a high optimum temperature</li>
+      <li>Bacteria in <b>very cold, deep seas</b> have enzymes that work effectively at 0°C</li>
+      <li>Enzymes from extremophile bacteria are used in <b>PCR</b> (polymerase chain reaction) for DNA fingerprinting and genome analysis</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Fever — why it's dangerous</h2>
+  <div class="tile orange">
+    <div class="icon">🤒</div>
+    <p>When you get an infectious disease, your body temperature rises (fever). This is a defence mechanism — <b>many microorganisms cannot reproduce at high temperatures</b>. However, if the body temperature rises too high (above ~41°C), <b>human enzymes begin to denature</b> — the reactions needed to keep the body alive slow down dangerously. This is why doctors try to bring down a very high fever.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Describe the effect of temperature on an enzyme-controlled reaction (use Figure 1) [3 marks]</li>
+      <li>Explain the effect of temperature AND pH on enzyme action [4 marks]</li>
+      <li>Explain why raising temperature to fight infection could be dangerous [4 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Structure for temperature question:</b> 1) Rate increases as temp rises (more collisions) 2) Maximum rate at optimum temperature 3) Above optimum → active site changes shape (denatured) → rate drops sharply.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">optimum temperature</span>
+  <span class="keyword">optimum pH</span>
+  <span class="keyword">denatured</span>
+  <span class="keyword">active site</span>
+  <span class="keyword">rate of reaction</span>
+  <span class="keyword">extremophile</span>
+  <span class="keyword">enzyme activity</span>
+  <span class="keyword">temperature</span>
+  <span class="keyword">pH</span>
+</section>
+
+</div>
+</body>
+</html>

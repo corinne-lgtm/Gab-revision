@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.6 Diffusion</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,4vw,52px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:24px;font-weight:900;line-height:1.15}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+.formula{background:var(--dark);color:var(--yellow);border-radius:18px;padding:18px;text-align:center;font-size:20px;font-weight:900;margin:14px 0}
+.formula small{display:block;font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;font-weight:400}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rate-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.rate-table th{background:var(--green);color:white;padding:10px 14px;text-align:left}
+.rate-table td{padding:10px 14px;border-bottom:1px solid var(--line)}
+.rate-table tr:last-child td{border-bottom:none}
+.rate-table tr:nth-child(even) td{background:rgba(58,125,68,.04)}
+@media(max-width:750px){.big-idea,.compare{grid-template-columns:1fr}.statement{font-size:19px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.6 Diffusion</h1>
+  <p>How diffusion takes place, why it is important in living organisms, and what affects the rate of diffusion.</p>
+  <div class="nav">
+    <a href="biology-b1-6-revision.html">📖 Revision</a>
+    <a href="biology-b1-6-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Diffusion is the <span class="g">net movement</span> of particles from an area of <span class="o">higher concentration</span> to an area of <span class="b">lower concentration</span> — down a concentration gradient.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How diffusion takes place and why it is important in living organisms</li>
+      <li>What affects the rate of diffusion</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>What is diffusion?</h2>
+  <div class="tile blue">
+    <p>Diffusion is the <b>spreading out of particles</b> of a gas, or of any substance in solution (a solute). This results in the <b>net movement</b> (overall movement) of particles from an area of higher concentration to an area of lower concentration.</p>
+    <p style="margin-top:10px">It happens because of the <b>random movement</b> of particles (molecules or ions). Particles bump into each other and move in all directions — but overall more move from high to low concentration than the other way.</p>
+  </div>
+  <div class="formula">
+    net movement = particles moving in − particles moving out
+    <small>Net movement is always from HIGH concentration → LOW concentration</small>
+  </div>
+  <div class="must">⚠️ <b>Study tip:</b> Particles move randomly, but the <b>net movement</b> is always from a region of high concentration to a region of low concentration. This is called moving <b>down</b> a concentration gradient.</div>
+</section>
+
+<section class="panel">
+  <h2>Factors affecting the rate of diffusion</h2>
+  <table class="rate-table">
+    <tr>
+      <th>Factor</th>
+      <th>Effect on rate</th>
+      <th>Why?</th>
+    </tr>
+    <tr>
+      <td><b>Concentration gradient</b></td>
+      <td>Bigger difference → faster diffusion</td>
+      <td>More particles move towards the low-concentration area; fewer moving back. Steeper gradient = faster net movement.</td>
+    </tr>
+    <tr>
+      <td><b>Temperature</b></td>
+      <td>Higher temperature → faster diffusion</td>
+      <td>Particles have more energy and move around more quickly — random movement speeds up, so diffusion is faster.</td>
+    </tr>
+    <tr>
+      <td><b>Surface area</b></td>
+      <td>Larger surface area → faster diffusion</td>
+      <td>More area over which diffusion can take place at the same time — much more substance moves in a given time.</td>
+    </tr>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Diffusion in living organisms</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🍬</div>
+      <h3>Glucose &amp; food</h3>
+      <p>Digested food products (e.g. glucose, amino acids) move from the <b>gut into the bloodstream</b> by diffusion — from high concentration in the gut to low concentration in the blood.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">💨</div>
+      <h3>Oxygen &amp; CO₂ — lungs</h3>
+      <p><b>Oxygen</b> moves from the air in the lungs into the red blood cells (high → low concentration). <b>CO₂</b> moves from blood into the air in the lungs in the opposite direction. This is called <b>gas exchange</b>.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🧪</div>
+      <h3>Urea — waste</h3>
+      <p>Urea is made from the breakdown of amino acids in the <b>liver</b>. It passes from liver cells into the blood plasma and is excreted by the kidneys.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🦋</div>
+      <h3>Pheromones — moths</h3>
+      <p>Male moths can track down a mate from up to 3 miles away because <b>chemical molecules</b> produced by the female diffuse through the air down a concentration gradient.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Surface area adaptations</h2>
+  <div class="compare">
+    <div class="tile green">
+      <div class="icon">🔬</div>
+      <h3>Folded cell membranes</h3>
+      <p>Individual cells may be adapted to increase their surface area by <b>folding up the membrane</b> to form <b>microvilli</b>. This greatly increases the area over which diffusion can take place — so much more substance moves in a given time.</p>
+      <p style="margin-top:8px"><b>Example:</b> intestinal cells have microvilli (the "brush border") to absorb digested food rapidly.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🫁</div>
+      <h3>Why surface area matters</h3>
+      <p>The most common adaptation to increase diffusion rate is to <b>increase the surface area of the cell membrane</b>. By folding up the membrane of a cell or the tissue lining an organ, the area over which diffusion can take place is greatly increased.</p>
+      <p style="margin-top:8px">This is also why the lungs have <b>alveoli</b> (air sacs) — massive surface area for gas exchange.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Define diffusion in terms of particles involved [2 marks]</li>
+      <li>Explain why diffusion is faster when temperature increases [3 marks]</li>
+      <li>Explain why cells have folded membranes [2 marks]</li>
+      <li>Describe diffusion occurring in a specific biological situation [3 marks each]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key phrase to use:</b> "net movement of particles from a region of <b>high</b> concentration to a region of <b>low</b> concentration, down a concentration gradient."</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">diffusion</span>
+  <span class="keyword">net movement</span>
+  <span class="keyword">concentration gradient</span>
+  <span class="keyword">solute</span>
+  <span class="keyword">random movement</span>
+  <span class="keyword">surface area</span>
+  <span class="keyword">microvilli</span>
+  <span class="keyword">gas exchange</span>
+  <span class="keyword">temperature</span>
+  <span class="keyword">partially permeable membrane</span>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B2.3 Stem cells</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,4vw,52px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:21px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>B2.3 Stem cells</h1>
+  <p>How stem cells differ from other body cells, their functions in embryos, adults and plants, and how they may be used to treat disease.</p>
+  <div class="nav">
+    <a href="biology-b2-3-revision.html">📖 Revision</a>
+    <a href="biology-b2-3-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Stem cells are <span class="b">unspecialised cells</span> that can divide and <span class="o">differentiate</span> into many <span class="g">different cell types</span> — making them vital for growth, repair, and potential medical treatments.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How stem cells differ from other body cells</li>
+      <li>Functions of stem cells in embryos, adults and plants</li>
+      <li>How stem cells may treat medical conditions</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>What makes stem cells special?</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🔬</div>
+      <h3>Unspecialised</h3>
+      <p>Stem cells are <b>undifferentiated</b> — they have not yet become a specific cell type. They can divide by mitosis and then differentiate into specialised cells.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">♾️</div>
+      <h3>Self-renewing</h3>
+      <p>Stem cells can divide to produce <b>more stem cells</b>, staying in tissues for years — only dividing when cells are injured or diseased and need replacing.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">🔄</div>
+      <h3>Pluripotent / multipotent</h3>
+      <p>Embryonic stem cells can form <b>almost any cell type</b>. Adult stem cells are more limited — they form certain types within one tissue (e.g. blood cells from bone marrow).</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Three sources of stem cells</h2>
+  <div class="grid">
+    <div class="tile purple">
+      <div class="icon">🐣</div>
+      <h3>1. Embryonic stem cells</h3>
+      <p>An egg and sperm fuse to form a <b>zygote</b>. This divides to form a hollow ball — the embryo. The inner cells are <b>embryonic stem cells</b> that can differentiate into all the specialised cells of the body.</p>
+      <p style="margin-top:8px">These are the most flexible but also the most controversial to use.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🦴</div>
+      <h3>2. Adult stem cells</h3>
+      <p>Found in specific tissues of adults — <b>bone marrow</b> is a key source. Adult stem cells are undifferentiated cells that can form certain specific cell types.</p>
+      <p style="margin-top:8px">Scientists now think there may be tiny numbers of stem cells in most tissues including blood, brain, muscle, and liver.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🌱</div>
+      <h3>3. Plant meristem stem cells</h3>
+      <p>Stem cells found at the <b>meristems</b> (tips of shoots and roots) of plants. They divide almost continuously and can differentiate into all types of plant cells.</p>
+      <p style="margin-top:8px">Used to clone large numbers of identical plants quickly and economically.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Using stem cells to treat disease</h2>
+  <div class="grid">
+    <div class="tile orange">
+      <div class="icon">🦿</div>
+      <h3>Paralysis (spinal injuries)</h3>
+      <p>Spinal injuries cause paralysis because spinal nerves cannot repair themselves. Scientists have used <b>nerve cells grown from embryonic stem cells</b> to restore some movement to the legs of paralysed rats. Trials in humans began in 2010.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">👁️</div>
+      <h3>Macular degeneration (blindness)</h3>
+      <p>In 2014, doctors transplanted embryonic stem cells into the eyes of people going blind from macular degeneration. All patients could see better. Larger trials are now taking place.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🩸</div>
+      <h3>Diabetes</h3>
+      <p>Scientists are using stem cells to try to grow cells sensitive to blood sugar that produce <b>insulin</b> — potentially treating people with type 1 diabetes who must inject insulin daily.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">🏥</div>
+      <h3>Future possibilities</h3>
+      <p>Whole new <b>organs</b> could potentially be grown from embryonic stem cells for use in transplant surgery. Conditions from infertility to dementia may eventually be treated using stem cells.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Stem cells in plants — uses</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🌸</div>
+      <h3>Horticulture</h3>
+      <p>Plant stem cells from meristems are used to clone large numbers of <b>identical plants quickly and cheaply</b>. For example, every orchid sold in a shop is produced by cloning from plant stem cells.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">🌾</div>
+      <h3>Agriculture</h3>
+      <p>Used to produce large numbers of identical <b>crop plants with special features</b> such as disease resistance. Every banana you eat is a cloned plant.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🦺</div>
+      <h3>Conservation</h3>
+      <p>Plant cloning from stem cells can <b>save rare plants from extinction</b> — large populations of identical plants can be produced for conservation and research.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🧪</div>
+      <h3>Research</h3>
+      <p>Cloning produces <b>genetically identical individuals</b> — scientists can change one variable and observe effects without genetic variation confusing results.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Identify the differences between a stem cell and a normal body cell [4 marks]</li>
+      <li>Give three sources of stem cells [3 marks]</li>
+      <li>Identify the advantages of using stem cells to treat diseases [4 marks]</li>
+      <li>Explain why the ability to clone large numbers of individual plants is such an advantage in plant research [3 marks]</li>
+      <li>Suggest how cloning may enable us to save rare species of plants from extinction [3 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">stem cell</span>
+  <span class="keyword">zygote</span>
+  <span class="keyword">embryonic stem cell</span>
+  <span class="keyword">adult stem cell</span>
+  <span class="keyword">bone marrow</span>
+  <span class="keyword">meristem</span>
+  <span class="keyword">differentiate</span>
+  <span class="keyword">unspecialised</span>
+  <span class="keyword">cloning</span>
+  <span class="keyword">macular degeneration</span>
+  <span class="keyword">paralysis</span>
+</section>
+
+</div>
+</body>
+</html>

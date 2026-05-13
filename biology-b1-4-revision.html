@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.4 Specialisation in animal cells</title>
+<style>
+:root{
+  --bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;
+  --green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;
+  --blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;
+  --purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;
+  --red:#c0392b;--red2:#fde8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:24px;font-weight:900;line-height:1.15}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+
+/* Cell feature cards */
+.cell-card{border-radius:22px;padding:20px;border:2px solid var(--line);margin-bottom:16px}
+.cell-card-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.cell-icon{font-size:36px}
+.cell-name{font-family:Arial,sans-serif;font-size:22px;font-weight:900}
+.cell-sub{font-size:13px;color:var(--muted);font-weight:700}
+.adapt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px}
+.adapt{background:rgba(255,255,255,.7);border:1.5px solid var(--line);border-radius:14px;padding:12px}
+.adapt-title{font-weight:900;font-size:13px;margin-bottom:4px}
+.adapt-detail{font-size:13px;color:#3a4a3a}
+
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:19px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.4 Specialisation in animal cells</h1>
+  <p>How cells differentiate to become specialised, and how the structure of nerve, muscle and sperm cells relates to their function.</p>
+  <div class="nav">
+    <a href="biology-b1-4-revision.html">📖 Revision</a>
+    <a href="biology-b1-4-questions.html">✏️ Questions</a>
+    
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">As cells <span class="g">differentiate</span>, they develop <span class="b">sub-cellular structures</span> that allow them to carry out a <span class="o">specific function</span>.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How cells differentiate to form specialised cells</li>
+      <li>Animal cells that are specialised to carry out a particular function</li>
+      <li>How structure relates to function in specialised cells</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>What is cell differentiation?</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🔄</div>
+      <h3>The process</h3>
+      <p>As an organism develops, cells <b>differentiate</b> — they change to form different types of specialised cells. Each specialised cell acquires different <b>sub-cellular structures</b> to enable it to carry out a specific function.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🐣</div>
+      <h3>When does it happen?</h3>
+      <p>Most animal cells differentiate at an <b>early stage of development</b>. Many types of plant cells retain the ability to differentiate <b>throughout life</b>.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🏢</div>
+      <h3>Organisation</h3>
+      <p>Specialised cells can work <b>individually</b> (like sperm and eggs) or as part of a <b>tissue, organ</b> or <b>whole organism</b> (like nerve or muscle cells).</p>
+    </div>
+  </div>
+  <div class="must">⚠️ When looking at a specialised cell, ask yourself: <b>How is it different from a generalised cell? How does that difference help it carry out its function?</b></div>
+</section>
+
+<section class="panel">
+  <h2>Nerve cells (neurons)</h2>
+  <div class="cell-card" style="background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0">
+    <div class="cell-card-header">
+      <div class="cell-icon">⚡</div>
+      <div><div class="cell-name">Nerve cell</div><div class="cell-sub">Function: carry electrical impulses rapidly around the body</div></div>
+    </div>
+    <div class="adapt-grid">
+      <div class="adapt">
+        <div class="adapt-title">🌿 Many dendrites</div>
+        <div class="adapt-detail">Make connections to other nerve cells, allowing impulses to be received from many sources.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">📏 Long axon</div>
+        <div class="adapt-detail">Carries impulses from one place to another. Can be up to <b>25 m long</b> in a blue whale! Yours runs from spine to big toe.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">🔗 Synapses</div>
+        <div class="adapt-detail">Nerve endings adapted to pass impulses to other cells using special <b>transmitter chemicals</b>.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">⚡ Mitochondria</div>
+        <div class="adapt-detail">Lots of mitochondria at synapses to provide energy for making transmitter chemicals.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">🛡️ Myelin sheath</div>
+        <div class="adapt-detail">Insulating layer around the axon that speeds up the transmission of electrical impulses.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Muscle cells</h2>
+  <div class="cell-card" style="background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0">
+    <div class="cell-card-header">
+      <div class="cell-icon">💪</div>
+      <div><div class="cell-name">Striated muscle cell</div><div class="cell-sub">Function: contract and relax to move bones and organs</div></div>
+    </div>
+    <div class="adapt-grid">
+      <div class="adapt">
+        <div class="adapt-title">🔗 Special proteins</div>
+        <div class="adapt-detail">Contain proteins that <b>slide over each other</b>, making the fibres contract.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">⚡ Many mitochondria</div>
+        <div class="adapt-detail">Transfer the energy needed for the <b>chemical reactions</b> as cells contract and relax.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">🍬 Glycogen stores</div>
+        <div class="adapt-detail">Store glycogen which can be broken down and used in <b>cellular respiration</b> to provide energy for contraction.</div>
+      </div>
+    </div>
+    <div class="must" style="margin-top:12px">Muscles contract and relax in <b>pairs</b> to move bones. Smooth muscle cells form layers in the digestive system and squeeze food through the gut.</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Sperm cells</h2>
+  <div class="cell-card" style="background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8">
+    <div class="cell-card-header">
+      <div class="cell-icon">🏊</div>
+      <div><div class="cell-name">Sperm cell</div><div class="cell-sub">Function: carry genetic information from male parent and fertilise an egg</div></div>
+    </div>
+    <div class="adapt-grid">
+      <div class="adapt">
+        <div class="adapt-title">🌀 Long tail</div>
+        <div class="adapt-detail">Whips from side to side to move the sperm through water or the female reproductive system towards the egg.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">⚡ Middle section — mitochondria</div>
+        <div class="adapt-detail">Full of mitochondria to transfer the energy needed for the <b>tail to work</b>.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">🧪 Acrosome</div>
+        <div class="adapt-detail">Stores <b>digestive enzymes</b> used to break down the outer layers of the egg so the sperm can enter.</div>
+      </div>
+      <div class="adapt">
+        <div class="adapt-title">🧬 Large nucleus</div>
+        <div class="adapt-detail">Contains the <b>genetic information</b> (DNA) to be passed on to the offspring.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>How to answer a 6-mark question about an unknown specialised cell:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Look at what structures the cell has in large quantities (e.g. many mitochondria → needs lots of energy)</li>
+      <li>Look at the cell's shape (e.g. long and thin → carries things over distances)</li>
+      <li>Consider what sub-cellular structures are present or absent</li>
+      <li>Link each feature to a specific function</li>
+      <li>Use the phrase: <b>"This adaptation allows the cell to... because..."</b></li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">differentiation</span>
+  <span class="keyword">specialised cell</span>
+  <span class="keyword">nerve cell / neuron</span>
+  <span class="keyword">axon</span>
+  <span class="keyword">dendrite</span>
+  <span class="keyword">synapse</span>
+  <span class="keyword">myelin sheath</span>
+  <span class="keyword">muscle cell</span>
+  <span class="keyword">glycogen</span>
+  <span class="keyword">sperm cell</span>
+  <span class="keyword">acrosome</span>
+  <span class="keyword">adaptation</span>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.2 Animal and plant cells</title>
+<style>
+:root{
+  --bg:#f0f7ee; --ink:#1a2e1a; --muted:#5a7a5a; --paper:#f9fdf7; --line:#c8dfc8;
+  --green:#3a7d44; --green2:#d4edda; --lime:#7ab648; --lime2:#e8f5d8;
+  --blue:#2e6b8a; --blue2:#d4eaf5; --orange:#e07b2a; --orange2:#fde8cc;
+  --purple:#6b4a9a; --purple2:#e8daf5; --dark:#1a2e1a; --yellow:#c8e040;
+  --red:#c0392b; --red2:#fde8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),
+  radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:24px;font-weight:900;line-height:1.15}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+
+/* Organelle cards */
+.organelle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.org{border-radius:18px;padding:15px;border:2px solid var(--line);background:var(--paper)}
+.org-name{font-weight:900;font-size:15px;margin-bottom:5px}
+.org-found{font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;padding:3px 8px;border-radius:999px;display:inline-block}
+.both{background:#dff0e2;color:#1a5c28}
+.plant-only{background:#d4eaf5;color:#1a3c5a}
+.org p{font-size:13px;color:#3a4a3a;margin:0}
+
+/* comparison table */
+.comp-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.comp-table th{background:var(--green);color:white;padding:10px 14px;text-align:left}
+.comp-table td{padding:10px 14px;border-bottom:1px solid var(--line)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:nth-child(even) td{background:rgba(58,125,68,.04)}
+.tick{color:#3a7d44;font-weight:900} .cross{color:#c0392b;font-weight:900}
+
+@media(max-width:750px){.big-idea,.compare{grid-template-columns:1fr}.statement{font-size:19px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.2 Animal and plant cells</h1>
+  <p>The main parts of animal and plant cells, their functions, and what makes plant cells unique.</p>
+  <div class="nav">
+    <a href="biology-b1-2-revision.html">📖 Revision</a>
+    <a href="biology-b1-2-questions.html">✏️ Questions</a>
+    
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">All cells share <span class="g">common features</span> — but plant cells have <span class="b">extra structures</span> for <span class="o">photosynthesis</span> and support.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Know the main parts of animal cells</li>
+      <li>Know the similarities and differences between plant and animal cells</li>
+      <li>Understand the function of each organelle</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Organelles — structure and function</h2>
+  <div class="organelle-grid">
+
+    <div class="org">
+      <div class="org-name">🧬 Nucleus</div>
+      <span class="org-found both">Animal &amp; Plant</span>
+      <p>Controls all cell activities. Contains chromosomes made of DNA — the instructions for making proteins. Average diameter ~10 μm.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">💧 Cytoplasm</div>
+      <span class="org-found both">Animal &amp; Plant</span>
+      <p>Liquid gel where organelles are suspended. Most chemical reactions for life take place here.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">🚪 Cell membrane</div>
+      <span class="org-found both">Animal &amp; Plant</span>
+      <p>Controls what enters and leaves the cell — glucose, mineral ions, urea, hormones. Selectively permeable.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">⚡ Mitochondria</div>
+      <span class="org-found both">Animal &amp; Plant</span>
+      <p>Where <b>aerobic respiration</b> takes place, releasing energy. Very small: 1–2 μm long, 0.2–0.7 μm diameter.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">🔩 Ribosomes</div>
+      <span class="org-found both">Animal &amp; Plant</span>
+      <p>Where <b>protein synthesis</b> takes place. Found in the cytoplasm. Extremely small — only visible with electron microscopes.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">🌿 Chloroplasts</div>
+      <span class="org-found plant-only">Plant only</span>
+      <p>Found in green parts of plants. Contain <b>chlorophyll</b> which absorbs light for photosynthesis. Size: 3–5 μm. <b>Not in root cells</b> (underground, no light).</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">🧱 Cell wall</div>
+      <span class="org-found plant-only">Plant only</span>
+      <p>Made of <b>cellulose</b>. Strengthens and supports the cell. Also present in algal cells.</p>
+    </div>
+
+    <div class="org">
+      <div class="org-name">💦 Permanent vacuole</div>
+      <span class="org-found plant-only">Plant only</span>
+      <p>Filled with <b>cell sap</b>. Keeps cells rigid and helps support the plant. Important for maintaining turgor pressure.</p>
+    </div>
+
+  </div>
+  <div class="must">⚠️ <b>Study tip:</b> Not all plant cells have chloroplasts — root cells are underground and don't photosynthesise. Don't confuse <b>chloroplasts</b> (the organelle) with <b>chlorophyll</b> (the green pigment inside them).</div>
+</section>
+
+<section class="panel">
+  <h2>Animal vs Plant cells — comparison</h2>
+  <table class="comp-table">
+    <tr>
+      <th>Structure</th>
+      <th>Animal cell</th>
+      <th>Plant cell</th>
+    </tr>
+    <tr><td>Nucleus</td><td class="tick">✅ Yes</td><td class="tick">✅ Yes</td></tr>
+    <tr><td>Cytoplasm</td><td class="tick">✅ Yes</td><td class="tick">✅ Yes</td></tr>
+    <tr><td>Cell membrane</td><td class="tick">✅ Yes</td><td class="tick">✅ Yes</td></tr>
+    <tr><td>Mitochondria</td><td class="tick">✅ Yes</td><td class="tick">✅ Yes</td></tr>
+    <tr><td>Ribosomes</td><td class="tick">✅ Yes</td><td class="tick">✅ Yes</td></tr>
+    <tr><td>Cell wall (cellulose)</td><td class="cross">❌ No</td><td class="tick">✅ Yes</td></tr>
+    <tr><td>Chloroplasts</td><td class="cross">❌ No</td><td>⚠️ Some (not root cells)</td></tr>
+    <tr><td>Permanent vacuole</td><td class="cross">❌ No</td><td>⚠️ Many (not all)</td></tr>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Size facts to remember</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">📏</div>
+      <h3>Animal cells</h3>
+      <p>Average size: <b>10–30 μm</b> long</p>
+      <p>Nucleus diameter: ~<b>10 μm</b></p>
+      <p>100,000–300,000 could fit along 1 metre ruler</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🌱</div>
+      <h3>Plant cells</h3>
+      <p>Larger: <b>10–100 μm</b> long</p>
+      <p>Chloroplast: <b>3–5 μm</b></p>
+      <p>Mitochondria: <b>1–2 μm</b> long</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🔬</div>
+      <h3>Algal cells</h3>
+      <p>Simple aquatic organisms. Have a <b>cell wall, nucleus and chloroplasts</b> — very similar to plant cells.</p>
+      <p>Now classified as <b>protists</b>, not plants.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>List the structures found in animal cells [5 marks]</li>
+      <li>State the THREE extra features found in plant cells but not animal cells [3 marks]</li>
+      <li>Describe the function of each extra structure [3 marks]</li>
+      <li>Suggest why root cells have no chloroplasts [2 marks]</li>
+      <li>Suggest types of plant cells unlikely to have chloroplasts [4 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Top tip:</b> When asked to "suggest" why a cell lacks a structure, think about what that structure does and whether that cell needs it.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">nucleus</span>
+  <span class="keyword">cytoplasm</span>
+  <span class="keyword">cell membrane</span>
+  <span class="keyword">mitochondria</span>
+  <span class="keyword">ribosomes</span>
+  <span class="keyword">cell wall</span>
+  <span class="keyword">cellulose</span>
+  <span class="keyword">chloroplast</span>
+  <span class="keyword">chlorophyll</span>
+  <span class="keyword">permanent vacuole</span>
+  <span class="keyword">cell sap</span>
+  <span class="keyword">algae</span>
+  <span class="keyword">protist</span>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.10 Exchanging materials</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:21px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+
+/* SA:V ratio visual */
+.ratio-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ratio-card{border-radius:20px;padding:18px;text-align:center;border:2px solid var(--line)}
+.ratio-card.small{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.ratio-card.big{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.ratio-num{font-size:36px;font-weight:900;margin:8px 0}
+
+@media(max-width:750px){.big-idea,.ratio-grid{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.10 Exchanging materials</h1>
+  <p>How the surface area to volume ratio affects exchange, and why large organisms need specialised exchange surfaces.</p>
+  <div class="nav">
+    <a href="biology-b1-10-revision.html">📖 Revision</a>
+    <a href="biology-b1-10-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">As organisms get <span class="o">bigger</span>, their surface area to volume ratio gets <span class="b">smaller</span> — making it <span class="o">harder</span> to exchange materials by <span class="g">simple diffusion</span> alone.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How SA:V ratio varies with size</li>
+      <li>Why large multicellular organisms need special exchange surfaces</li>
+      <li>Adaptations of effective exchange surfaces</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Surface area to volume ratio (SA:V)</h2>
+  <div class="ratio-grid">
+    <div class="ratio-card small">
+      <div class="icon">🔬</div>
+      <h3>Small organism (1 cm cube)</h3>
+      <div class="ratio-num" style="color:var(--green)">6 : 1</div>
+      <p><b>High SA:V ratio</b> — large surface relative to volume. Simple diffusion is <b>sufficient</b>. Substances can reach every cell quickly.</p>
+    </div>
+    <div class="ratio-card big">
+      <div class="icon">🐘</div>
+      <h3>Large organism (3 cm cube)</h3>
+      <div class="ratio-num" style="color:var(--red)">2 : 1</div>
+      <p><b>Low SA:V ratio</b> — small surface relative to volume. Simple diffusion is <b>not enough</b>. Cells deep inside cannot be supplied fast enough.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">💡 As size doubles, volume increases much faster than surface area — so SA:V ratio falls. Large organisms need <b>specialised exchange surfaces</b> and <b>transport systems</b>.</div>
+</section>
+
+<section class="panel">
+  <h2>Why large organisms need special surfaces</h2>
+  <div class="grid">
+    <div class="tile red">
+      <div class="icon">🚫</div>
+      <h3>Problems for large organisms</h3>
+      <ul>
+        <li>Gases and food molecules can <b>no longer reach every cell</b> by simple diffusion</li>
+        <li>Metabolic waste cannot be removed fast enough</li>
+        <li>The distance from surface to centre is too large</li>
+      </ul>
+    </div>
+    <div class="tile blue">
+      <div class="icon">✅</div>
+      <h3>The solution</h3>
+      <p>Large organisms have <b>specialised exchange surfaces</b> adapted to be as effective as possible, plus <b>transport systems</b> (e.g. blood) to move substances to and from cells.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Adaptations of effective exchange surfaces</h2>
+  <div class="grid">
+    <div class="tile green">
+      <div class="icon">📐</div>
+      <h3>Large surface area</h3>
+      <p>More area means more exchange can happen at the same time — substances can move in and out much faster overall.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">📏</div>
+      <h3>Thin walls / membrane</h3>
+      <p>Thin walls provide a <b>short diffusion path</b> — substances don't have to travel far, so exchange is faster.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🩸</div>
+      <h3>Efficient blood supply (animals)</h3>
+      <p>Blood constantly carries substances away from the exchange surface, maintaining a <b>steep concentration gradient</b> — keeping diffusion fast.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">💨</div>
+      <h3>Ventilation (animals)</h3>
+      <p>Moving air or water over the surface (e.g. breathing) maintains a <b>steep concentration gradient</b> for gas exchange.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Examples of exchange surfaces</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🫁</div>
+      <h3>Human alveoli (lungs)</h3>
+      <p>Millions of tiny air sacs give an enormous surface area. Very thin walls, rich blood supply, and constant ventilation maintain steep concentration gradients for O₂ and CO₂.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">🐟</div>
+      <h3>Fish gills</h3>
+      <p>Stacks of thin filaments give a large surface area with a rich blood supply. Fish pump water over gills using an operculum flap to maintain concentration gradients.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🌱</div>
+      <h3>Plant leaves</h3>
+      <p>Flat, thin leaves with air spaces in leaf tissue and <b>stomata</b> provide a large surface area and maintain steep concentration gradients for gas and water exchange.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🌿</div>
+      <h3>Plant root hair cells</h3>
+      <p>Long, hair-like extensions give a large surface area to absorb water and mineral ions more efficiently from the soil.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🐢</div>
+      <h3>Fitzroy river turtle</h3>
+      <p>Has two large sacs lined with finger-like folds at its rear opening — giving a large surface area and rich blood supply for absorbing oxygen from water. A muscular opening pumps water in and out, ventilating the folds.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">🧫</div>
+      <h3>Small intestine villi</h3>
+      <p>Finger-like projections (villi) give a large surface area, short diffusion paths, and a rich blood supply to absorb digested food efficiently.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Describe two adaptations of an effective exchange surface [2 marks]</li>
+      <li>Explain how SA:V ratio affects the way an organism exchanges materials [2 marks]</li>
+      <li>Compare the gas exchange system of fish with that of the Fitzroy river turtle [5 marks]</li>
+      <li>Summarise the adaptations of effective exchange surfaces and explain the importance of each [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Remember:</b> For every adaptation, always explain <b>why</b> it helps — don't just name it. E.g. "thin walls → short diffusion distance → faster exchange".</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">surface area to volume ratio</span>
+  <span class="keyword">SA:V ratio</span>
+  <span class="keyword">exchange surface</span>
+  <span class="keyword">diffusion path</span>
+  <span class="keyword">concentration gradient</span>
+  <span class="keyword">ventilation</span>
+  <span class="keyword">alveoli</span>
+  <span class="keyword">gills</span>
+  <span class="keyword">stomata</span>
+  <span class="keyword">villi</span>
+  <span class="keyword">multicellular</span>
+</section>
+
+</div>
+</body>
+</html>

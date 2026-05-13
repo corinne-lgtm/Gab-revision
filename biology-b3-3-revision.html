@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B3.3 The chemistry of food</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+/* food tests table */
+.test-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.test-table th{background:var(--green);color:white;padding:10px 14px;text-align:left}
+.test-table td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.test-table tr:last-child td{border-bottom:none}
+.test-table tr:nth-child(even) td{background:rgba(58,125,68,.04)}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>B3.3 The chemistry of food</h1>
+  <p>The basic structures of carbohydrates, proteins, and lipids.</p>
+  <div class="nav">
+    <a href="biology-b3-3-revision.html">📖 Revision</a>
+    <a href="biology-b3-3-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">The three main food groups — <span class="o">carbohydrates</span>, <span class="b">lipids</span>, and <span class="g">proteins</span> — are large molecules made up of smaller building blocks joined together.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objective</h3>
+    <ul>
+      <li>The basic structures of carbohydrates, proteins, and lipids</li>
+      <li>How to test foods for each type</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Carbohydrates</h2>
+  <div class="tile orange">
+    <div class="icon">🍞</div>
+    <p>Carbohydrates provide <b>fuel for cellular respiration</b> — they are the body's main energy source. They contain the elements <b>carbon, hydrogen, and oxygen</b>.</p>
+    <p style="margin-top:8px">All carbohydrates are made up of <b>units of sugars</b>.</p>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile lime">
+      <h3>🍬 Simple sugars (monosaccharides)</h3>
+      <ul>
+        <li>Contain only <b>one or two sugar units</b></li>
+        <li>Best known single sugar: <b>glucose</b> (C₆H₁₂O₆)</li>
+        <li>Two sugar units joined: e.g. <b>sucrose</b> (table sugar)</li>
+        <li>Turn Benedict's solution <b>brick red</b> on heating</li>
+      </ul>
+    </div>
+    <div class="tile orange">
+      <h3>🌾 Complex carbohydrates</h3>
+      <ul>
+        <li>Made of <b>long chains of simple sugar units</b> bonded together</li>
+        <li>Examples: <b>starch</b> (energy store in plants), <b>cellulose</b> (structural in plants)</li>
+        <li>Most carbohydrates are broken down to <b>glucose</b> for respiration</li>
+        <li>Starch turns iodine solution <b>yellow-red → blue-black</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Lipids</h2>
+  <div class="tile blue">
+    <div class="icon">🧈</div>
+    <p>Lipids are <b>fats (solids) and oils (liquids)</b>. They are the most <b>efficient energy store</b> in the body and an important source of energy in the diet. They also form cell membranes, hormones, and components of the nervous system.</p>
+    <p style="margin-top:8px">Like carbohydrates, lipids are made of <b>carbon, hydrogen, and oxygen</b>. All lipids are <b>insoluble in water</b>.</p>
+    <p style="margin-top:8px">A lipid molecule = <b>3 fatty acid molecules</b> joined to a molecule of <b>glycerol</b>. The glycerol is always the same — the different fatty acid combinations determine whether the lipid is a solid fat or a liquid oil.</p>
+  </div>
+  <div class="must" style="margin-top:10px">💡 Glycerol + 3 fatty acids = 1 lipid molecule. Always remember: THREE fatty acids joined to ONE glycerol.</div>
+</section>
+
+<section class="panel">
+  <h2>Proteins</h2>
+  <div class="tile purple">
+    <div class="icon">💪</div>
+    <p>Proteins are used for <b>building cells and tissues</b> and as the basis of all your <b>enzymes</b>. About 15–16% of body mass is protein. Proteins contain <b>carbon, hydrogen, oxygen, and nitrogen</b>.</p>
+    <p style="margin-top:8px">A protein molecule is made up of <b>long chains of amino acids</b>. There are around <b>20 different amino acids</b>, joined by special bonds. Different arrangements produce different proteins.</p>
+    <p style="margin-top:8px">Chains of amino acids are <b>folded, coiled, and twisted</b> into specific 3D shapes — which allow other molecules to fit into the protein (e.g. enzymes and substrates).</p>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile lime">
+      <h3>Functions of proteins</h3>
+      <ul>
+        <li><b>Structural</b> — muscles, tendons, hair, skin</li>
+        <li><b>Hormones</b> — e.g. insulin</li>
+        <li><b>Antibodies</b> — destroy pathogens (immune system)</li>
+        <li><b>Enzymes</b> — catalyse reactions in cells</li>
+      </ul>
+    </div>
+    <div class="tile red">
+      <h3>Denaturation</h3>
+      <p>The bonds holding the 3D shape of a protein are <b>very sensitive to temperature and pH</b>. If conditions change too much, the shape is lost — the protein is <b>denatured</b> and can no longer function.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Food tests</h2>
+  <table class="test-table">
+    <tr>
+      <th>Food type</th>
+      <th>Test</th>
+      <th>Positive result</th>
+      <th>Notes</th>
+    </tr>
+    <tr>
+      <td><b>Starch</b> (complex carbohydrate)</td>
+      <td>Add iodine solution</td>
+      <td>Yellow-red → <b>blue-black</b></td>
+      <td>Simple sugars give no colour change</td>
+    </tr>
+    <tr>
+      <td><b>Sugars</b> (simple carbohydrates)</td>
+      <td>Add Benedict's solution + heat</td>
+      <td>Blue → <b>brick red</b></td>
+      <td>Must be heated. Tests for reducing sugars (e.g. glucose)</td>
+    </tr>
+    <tr>
+      <td><b>Proteins</b></td>
+      <td>Biuret test — add Biuret reagent (NaOH + CuSO₄)</td>
+      <td>Blue → <b>purple</b></td>
+      <td>Biuret solution is corrosive — wear eye protection</td>
+    </tr>
+    <tr>
+      <td><b>Lipids</b></td>
+      <td>Ethanol test — add ethanol, then pour into water</td>
+      <td>Cloudy <b>white layer</b> forms</td>
+      <td>Ethanol is highly flammable and harmful — handle with care</td>
+    </tr>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State what a protein is [1 mark] + how proteins are used in the body [4 marks]</li>
+      <li>Describe the main similarities and differences between carbohydrates, proteins, and lipids [6 marks]</li>
+      <li>Describe how you would test a food sample for starch / lipids [2 marks each]</li>
+      <li>Explain why lipids can be either fats or oils [3 marks]</li>
+      <li>Explain how simple sugars are related to complex carbohydrates [3 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">carbohydrate</span>
+  <span class="keyword">simple sugar</span>
+  <span class="keyword">glucose</span>
+  <span class="keyword">starch</span>
+  <span class="keyword">cellulose</span>
+  <span class="keyword">lipid</span>
+  <span class="keyword">fatty acid</span>
+  <span class="keyword">glycerol</span>
+  <span class="keyword">protein</span>
+  <span class="keyword">amino acid</span>
+  <span class="keyword">denatured</span>
+  <span class="keyword">Benedict's test</span>
+  <span class="keyword">iodine test</span>
+  <span class="keyword">Biuret test</span>
+  <span class="keyword">ethanol test</span>
+</section>
+
+</div>
+</body>
+</html>

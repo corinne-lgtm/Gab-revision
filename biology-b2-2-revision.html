@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B2.2 Growth and differentiation</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:21px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:750px){.big-idea,.compare{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>B2.2 Growth and differentiation</h1>
+  <p>How cell differentiation varies in animals and plants, and the production and use of plant clones.</p>
+  <div class="nav">
+    <a href="biology-b2-2-revision.html">📖 Revision</a>
+    <a href="biology-b2-2-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">As cells <span class="b">divide and develop</span>, they <span class="o">differentiate</span> — switching genes on and off to become <span class="g">specialised</span> for a specific function.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How cell differentiation varies in animals and plants</li>
+      <li>The production and use of plant clones</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>What is differentiation?</h2>
+  <div class="tile blue">
+    <p><b>Differentiation</b> is the process by which a cell becomes specialised for its job. As cells divide, grow and develop, they begin to differentiate — certain genes are switched on and others are switched off. As a result, different types of specialised cells have different sub-cellular structures to carry out specific functions.</p>
+    <div class="must" style="margin-top:10px">💡 At conception, a human being starts as just <b>one cell</b>. By adulthood, the body contains around <b>37.2 trillion cells</b> — almost all produced by mitosis.</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Differentiation in animals vs plants</h2>
+  <div class="compare">
+    <div class="tile orange">
+      <div class="icon">🐾</div>
+      <h3>Animal cells</h3>
+      <ul>
+        <li>In early development, cells are <b>unspecialised stem cells</b> that can become any cell type</li>
+        <li>Most cells become specialised <b>very early in life</b> — by the time a baby is born, most cells are already specialised</li>
+        <li>Most specialised cells can only divide to make <b>more of the same type</b></li>
+        <li>Some cells (e.g. red blood cells, skin cells) <b>cannot divide at all</b> — adult stem cells replace them</li>
+        <li>Nerve cells <b>do not divide</b> once differentiated — so are not usually replaced if damaged</li>
+        <li>In mature animals, cell division is mainly for <b>repair and replacement</b></li>
+      </ul>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🌱</div>
+      <h3>Plant cells</h3>
+      <ul>
+        <li>Most plant cells retain the ability to <b>differentiate throughout their lives</b></li>
+        <li>Undifferentiated cells are found at <b>meristems</b> — active growing regions at tips of shoots and roots</li>
+        <li>Mitosis takes place almost <b>continuously</b> in meristems</li>
+        <li>Cells elongate and grow, then finally differentiate</li>
+        <li>Differentiation in plants is <b>not permanent</b> — a plant cell can be moved and redifferentiate into a completely different type</li>
+        <li>Plants keep growing at these <b>'growing points'</b> throughout their lives</li>
+      </ul>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">⚠️ Key difference: Animal cells lose the ability to differentiate early; plant cells retain it throughout life. This is why cloning plants is much easier than cloning animals.</div>
+</section>
+
+<section class="panel">
+  <h2>Stem cells</h2>
+  <div class="grid">
+    <div class="tile purple">
+      <div class="icon">🔬</div>
+      <h3>Embryonic stem cells</h3>
+      <p>In the early development of animal and plant embryos, cells are <b>unspecialised</b>. Each one (a <b>stem cell</b>) can become any type of cell that is needed.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🩺</div>
+      <h3>Adult stem cells</h3>
+      <p><b>Adult stem cells</b> replace dead or damaged cells in animals. They are already partially differentiated — they can only form certain cell types. For example, stem cells in bone marrow produce blood cells.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Cloning plants</h2>
+  <div class="tile green">
+    <div class="icon">🌿</div>
+    <h3>How plant cloning works</h3>
+    <p>Producing identical offspring is called <b>cloning</b>. Huge numbers of identical plant clones can be produced from a tiny piece of leaf tissue:</p>
+    <ul>
+      <li>In the right conditions, a plant cell becomes <b>unspecialised</b> and undergoes mitosis many times</li>
+      <li>Each undifferentiated cell then <b>differentiates</b> to form tissues such as xylem, phloem, photosynthetic cells, and root hair cells</li>
+      <li>A tiny new plant forms that is <b>genetically identical</b> to the original parent plant</li>
+    </ul>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="tile lime">
+      <div class="icon">✅</div>
+      <h3>Why plant cloning is easy</h3>
+      <p>Plant cells can redifferentiate — they can revert to an unspecialised state and then differentiate again into new cell types. This is what makes cloning possible.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">❌</div>
+      <h3>Why animal cloning is hard</h3>
+      <p>Most animal cells differentiate <b>permanently</b> early in embryo development — the cells cannot change back. So artificial animal clones can only be made by cloning embryos, although adult cells can sometimes be used to make an embryo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Define differentiation [1 mark]</li>
+      <li>Describe why differentiation is important in living organisms [2 marks]</li>
+      <li>Explain how differentiation differs in animal and plant cells [4 marks]</li>
+      <li>Discuss how the difference in differentiation patterns affects our ability to clone plants and animals [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key definition:</b> "Differentiation is the process by which a cell becomes specialised for its function, as certain genes are switched on and others are switched off."</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">differentiation</span>
+  <span class="keyword">specialised cell</span>
+  <span class="keyword">stem cell</span>
+  <span class="keyword">embryonic stem cell</span>
+  <span class="keyword">adult stem cell</span>
+  <span class="keyword">meristem</span>
+  <span class="keyword">cloning</span>
+  <span class="keyword">undifferentiated</span>
+  <span class="keyword">redifferentiate</span>
+  <span class="keyword">growth</span>
+</section>
+
+</div>
+</body>
+</html>

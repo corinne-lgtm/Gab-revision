@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B2.1 Cell division</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:21px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .o{color:var(--orange)} .statement .b{color:var(--blue)}
+
+/* Cell cycle flow */
+.cycle{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.stage{border-radius:22px;padding:18px;text-align:center;border:3px solid var(--line)}
+.stage-num{font-size:36px;font-weight:900;margin-bottom:6px}
+.stage-name{font-weight:900;font-size:16px;margin-bottom:8px}
+.stage1{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.stage2{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.stage3{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+
+@media(max-width:750px){.big-idea,.cycle{grid-template-columns:1fr}.statement{font-size:18px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>B2.1 Cell division</h1>
+  <p>The role of cells, the cell cycle, and how cells divide by mitosis.</p>
+  <div class="nav">
+    <a href="biology-b2-1-revision.html">📖 Revision</a>
+    <a href="biology-b2-1-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">During the <span class="b">cell cycle</span>, genetic material is <span class="o">doubled</span>, then the nucleus divides by <span class="g">mitosis</span> to produce <span class="g">two identical cells</span>.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>The role of cells in organisms</li>
+      <li>The importance of the cell cycle</li>
+      <li>How cells divide by mitosis</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key definitions</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🧬</div>
+      <h3>Chromosome</h3>
+      <p>A thread-like structure found in the nucleus, made of DNA. Human body cells have <b>46 chromosomes</b> arranged in <b>23 pairs</b>. One chromosome in each pair comes from the mother, one from the father.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🔬</div>
+      <h3>Gene</h3>
+      <p>A small section of DNA on a chromosome. A gene is a packet of information that controls a characteristic (or part of one). A chromosome may carry hundreds or thousands of genes.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🧪</div>
+      <h3>DNA</h3>
+      <p>Deoxyribonucleic acid — the unique molecule that makes up your chromosomes. It carries the genetic instructions for making and running every cell in your body.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">💡 <b>Remember:</b> DNA → makes up chromosomes → chromosomes carry genes → genes control characteristics.</div>
+</section>
+
+<section class="panel">
+  <h2>Why cells divide</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">📈</div>
+      <h3>Growth</h3>
+      <p>New cells are needed for an organism to grow. Cell division produces additional cells for growth and development in multicellular organisms.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">🔄</div>
+      <h3>Replacement</h3>
+      <p>Cells wear out and are replaced. About 300 million body cells die every minute — mitosis constantly produces new cells to replace them.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🩹</div>
+      <h3>Repair</h3>
+      <p>New cells replace worn out or damaged tissue. The new cells must have the <b>same genetic information</b> as the originals so they can do the same job.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>The cell cycle — 3 stages</h2>
+  <div class="cycle">
+    <div class="stage stage1">
+      <div class="stage-num" style="color:var(--blue)">1</div>
+      <div class="stage-name">Growth & DNA replication</div>
+      <p style="font-size:14px">The <b>longest stage</b>. Cells grow bigger, increase their mass, and carry out normal activities. Most importantly, they <b>replicate their DNA</b> to form two copies of each chromosome. They also increase the number of sub-cellular structures (mitochondria, ribosomes, chloroplasts).</p>
+    </div>
+    <div class="stage stage2">
+      <div class="stage-num" style="color:var(--purple)">2</div>
+      <div class="stage-name">Mitosis (nucleus divides)</div>
+      <p style="font-size:14px">One set of chromosomes is pulled to <b>each end</b> of the dividing cell. The <b>nucleus divides</b> into two identical nuclei. Each nucleus contains the same number and type of chromosomes as the original.</p>
+    </div>
+    <div class="stage stage3">
+      <div class="stage-num" style="color:var(--green)">3</div>
+      <div class="stage-name">Cytoplasm & membranes divide</div>
+      <p style="font-size:14px">The <b>cytoplasm and cell membranes</b> divide to form <b>two identical daughter cells</b>. Each has a nucleus with identical chromosomes to the original parent cell.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">⚠️ <b>Study tip:</b> Cells produced when the nucleus divides by mitosis are <b>genetically identical</b> to each other and to the parent cell.</div>
+</section>
+
+<section class="panel">
+  <h2>Mitosis — key facts</h2>
+  <div class="grid">
+    <div class="tile green">
+      <div class="icon">✅</div>
+      <h3>Genetically identical</h3>
+      <p>Mitosis produces two cells with <b>exactly the same</b> genetic information as each other and as the parent cell. No genetic variation.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">📋</div>
+      <h3>Same chromosome number</h3>
+      <p>It is important that chromosome number stays the same. If daughter cells had different numbers of chromosomes, they could not carry out the same functions as the parent.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🌱</div>
+      <h3>Asexual reproduction</h3>
+      <p>In asexual reproduction, offspring cells are produced by mitosis from the parent. They contain <b>exactly the same genes</b> — little or no genetic variation.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🐟</div>
+      <h3>Sex cells (gametes)</h3>
+      <p>Sex cells (sperm and eggs) only have <b>23 chromosomes</b> — one from each pair. This is because they are produced by a different type of division (meiosis — covered later).</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Define: chromosome, gene, DNA [1 mark each]</li>
+      <li>Describe what happens during the three stages of the cell cycle [6 marks]</li>
+      <li>Explain why cell division by mitosis is so important in the body [2 marks]</li>
+      <li>Suggest why it is important for the chromosome number to stay the same when cells divide [3 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key phrase:</b> "Mitosis produces two genetically identical daughter cells from one parent cell."</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">chromosome</span>
+  <span class="keyword">gene</span>
+  <span class="keyword">DNA</span>
+  <span class="keyword">cell cycle</span>
+  <span class="keyword">mitosis</span>
+  <span class="keyword">daughter cells</span>
+  <span class="keyword">genetically identical</span>
+  <span class="keyword">nucleus</span>
+  <span class="keyword">gametes</span>
+  <span class="keyword">karyotype</span>
+</section>
+
+</div>
+</body>
+</html>
