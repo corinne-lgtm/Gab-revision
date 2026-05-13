@@ -82,16 +82,23 @@ textarea{min-height:90px;resize:vertical}
 
 <section class="hero"><div class="kicker">AQA GCSE History · Germany 1890–1945</div><h1>5.1 Questions</h1><p>How did Hitler become Chancellor?</p><div class="nav"><a href="index.html">🏠 Main hub</a><a href="history-index.html">📚 History index</a><a href="history-germany-ch5-1-revision.html">Revision</a><a href="history-germany-ch5-1-questions.html">Questions</a></div></section>
 <section class="panel"><h2>Answer the questions</h2><div class="question"><div class="q-header"><div class="q-num">1</div><div class="q-title">What is meant by a coalition government?</div><div class="marks">2 marks</div></div><label for="q1">Your answer</label><textarea id="q1" name="q1"></textarea></div><div class="question"><div class="q-header"><div class="q-num">2</div><div class="q-title">Explain why coalition governments were weak in Weimar Germany.</div><div class="marks">4 marks</div></div><label for="q2">Your answer</label><textarea id="q2" name="q2"></textarea></div><div class="question"><div class="q-header"><div class="q-num">3</div><div class="q-title">Describe how the Nazis built support after the 1930 Reichstag election.</div><div class="marks">4 marks</div></div><label for="q3">Your answer</label><textarea id="q3" name="q3"></textarea></div><div class="question"><div class="q-header"><div class="q-num">4</div><div class="q-title">Explain why Hindenburg refused to make Hitler Chancellor after the July 1932 election.</div><div class="marks">4 marks</div></div><label for="q4">Your answer</label><textarea id="q4" name="q4"></textarea></div><div class="question"><div class="q-header"><div class="q-num">5</div><div class="q-title">Describe the role of von Papen in Hitler becoming Chancellor.</div><div class="marks">4 marks</div></div><label for="q5">Your answer</label><textarea id="q5" name="q5"></textarea></div><div class="question"><div class="q-header"><div class="q-num">6</div><div class="q-title">Explain two problems Hitler faced as Germany’s leader when he became Chancellor in January 1933.</div><div class="marks">4 marks</div></div><label for="q6">Your answer</label><textarea id="q6" name="q6"></textarea></div><div class="question"><div class="q-header"><div class="q-num">7</div><div class="q-title">Write a clear summary explaining how Hitler became Chancellor by 30 January 1933.</div><div class="marks">8 marks</div></div><label for="q7">Your answer</label><textarea id="q7" name="q7"></textarea></div>
-<div class="submit-row"><button class="btn-done" onclick="prepareEmail()">✅ Finished? Prepare Gmail</button><div id="doneMsg" class="done-msg"><h3>Ready to send</h3><p>Click the Gmail button below to send your answers.</p></div><a id="gmailBtn" class="btn-send" href="#" target="_blank">📧 Send via Gmail</a></div></section>
+<div class="submit-row"><button class="btn-done" onclick="prepareEmail()">✅ Finished? Prepare Gmail</button><div id="doneMsg" class="done-msg"><h3>Ready to send</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b> in the email body.</p></div><a id="gmailBtn" class="btn-send" href="#" target="_blank">📋 Open Gmail → then paste (Cmd+V)</a></div></section>
 <script>
 function prepareEmail(){
  const qs=[...document.querySelectorAll('.question')];
  let body='GCSE History Germany 5.1 - How did Hitler become Chancellor?%0D%0A%0D%0A';
  qs.forEach((q,i)=>{const title=q.querySelector('.q-title').innerText; const ans=q.querySelector('textarea').value; body += 'Q'+(i+1)+'. '+encodeURIComponent(title)+'%0D%0A'+encodeURIComponent(ans||'[no answer written]')+'%0D%0A%0D%0A';});
  const subject=encodeURIComponent('GCSE History Germany 5.1 answers');
- document.getElementById('gmailBtn').href='https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+body;
- document.getElementById('gmailBtn').style.display='flex';
- document.getElementById('doneMsg').style.display='block';
+   navigator.clipboard.writeText(decodeURIComponent(body)).then(()=>{
+    document.getElementById('gmailBtn').href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    document.getElementById('gmailBtn').style.display='flex';
+    document.getElementById('doneMsg').style.display='block';
+    document.getElementById('doneMsg').innerHTML='<h3>Ready to send</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b>.</p>';
+  }).catch(()=>{
+    document.getElementById('gmailBtn').href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    document.getElementById('gmailBtn').style.display='flex';
+    document.getElementById('doneMsg').style.display='block';
+  });
 }
 </script>
 

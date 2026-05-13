@@ -106,8 +106,8 @@ textarea{min-height:90px;resize:vertical}
 
 <div class="submit-row">
   <button class="btn-done" id="btn-done" onclick="prepareEmail()">✅ Finished — prepare Gmail email</button>
-  <div class="done-msg" id="done-msg"><h3>Ready to send</h3><p>Click the Gmail button below to send your answers.</p></div>
-  <a class="btn-send" id="btn-send" target="_blank" rel="noopener"><span>📧</span> Send via Gmail</a>
+  <div class="done-msg" id="done-msg"><h3>Ready to send</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b> in the email body.</p></div>
+  <a class="btn-send" id="btn-send" target="_blank" rel="noopener">📋 Open Gmail → then paste (Cmd+V)</a>
 </div>
 
 <script>
@@ -127,8 +127,13 @@ function prepareEmail(){
  '══════════════════════════════\nQ5 — What is meant by “invisible unemployment”? Give examples. [4 marks]\n' + q('a5') + '\n\n' +
  '══════════════════════════════\nQ6 — How successful were the Nazis in reducing unemployment? Explain your answer. [8 marks]\n' + q('a6') + '\n\n' +
  'My score: __ / 26 marks';
- const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1' + '&to=corinne@marcault.com' + '&su=' + encodeURIComponent('📚 GCSE History Germany 7.1 — My Answers') + '&body=' + encodeURIComponent(body);
- sendBtn.href = gmailUrl; sendBtn.style.display = 'flex'; sendBtn.scrollIntoView({behavior:'smooth'});
+ navigator.clipboard.writeText(body).then(()=>{
+    const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+encodeURIComponent('📚 GCSE History Germany 7.1 — My Answers');
+    sendBtn.href=gmailUrl; sendBtn.style.display='flex'; sendBtn.scrollIntoView({behavior:'smooth'});
+  }).catch(()=>{
+    const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+encodeURIComponent('📚 GCSE History Germany 7.1 — My Answers');
+    sendBtn.href=gmailUrl; sendBtn.style.display='flex'; sendBtn.scrollIntoView({behavior:'smooth'});
+  });
 }
 </script>
 

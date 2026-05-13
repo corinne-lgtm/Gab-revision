@@ -75,6 +75,16 @@ function prepareEmail(){
  let body='GCSE History Germany 8.5 – The journey to the Final Solution%0D%0A%0D%0A';
  areas.forEach((a,i)=>{body+='Q'+(i+1)+'. '+encodeURIComponent(a.dataset.question)+' ('+a.dataset.marks+')%0D%0A';body+=encodeURIComponent(a.value.trim()||'[no answer written]')+'%0D%0A%0D%0A';});
  const subject=encodeURIComponent('History Germany 8.5 answers');
- const btn=document.getElementById('gmailBtn'); btn.href='https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+body; btn.style.display='flex'; document.getElementById('doneMsg').style.display='block';
+ const btn=document.getElementById('gmailBtn');
+  navigator.clipboard.writeText(decodeURIComponent(body)).then(()=>{
+    btn.href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    btn.style.display='flex';
+    document.getElementById('doneMsg').innerHTML='<h3>Ready to send ✅</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b>.</p>';
+    document.getElementById('doneMsg').style.display='block';
+  }).catch(()=>{
+    btn.href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    btn.style.display='flex';
+    document.getElementById('doneMsg').style.display='block';
+  });
 }
 </script></div></body></html>

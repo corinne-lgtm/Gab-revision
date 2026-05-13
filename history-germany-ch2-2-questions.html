@@ -199,10 +199,10 @@ textarea{min-height:90px;resize:vertical}
     <button class="btn-done" id="btn-done" type="button" onclick="finish()">✅ I'm done!</button>
     <div class="done-msg" id="done-msg">
       <h3>🎉 Great work!</h3>
-      <p>Click below to send your answers to Mum via Gmail.<br>It will open in a new tab — just click Send! 📧</p>
+      <p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b> in the email body.</p>
     </div>
     <a class="btn-send" id="btn-send" target="_blank" rel="noopener">
-      <img src="https://www.google.com/favicon.ico" alt="Gmail"> Send my answers to Mum via Gmail
+      <img src="https://www.google.com/favicon.ico" alt="Gmail"> Open Gmail → then paste (Cmd+V)
     </a>
   </div>
 </form>
@@ -257,14 +257,17 @@ textarea{min-height:90px;resize:vertical}
       '══════════════════════════════\n' +
       'My score: __ / 29 marks';
 
-    const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1' +
-      '&to=corinne@marcault.com' +
-      '&su=' + encodeURIComponent('📚 GCSE History Germany 2.2 — My Answers') +
-      '&body=' + encodeURIComponent(body);
-
-    sendBtn.href = gmailUrl;
-    sendBtn.style.display = 'flex';
+    navigator.clipboard.writeText(body).then(()=>{
+    const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+encodeURIComponent('📚 GCSE History Germany 2.2 — My Answers');
+    sendBtn.href=gmailUrl;
+    sendBtn.style.display='flex';
     sendBtn.scrollIntoView({behavior:'smooth'});
+  }).catch(()=>{
+    const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+encodeURIComponent('📚 GCSE History Germany 2.2 — My Answers');
+    sendBtn.href=gmailUrl;
+    sendBtn.style.display='flex';
+    sendBtn.scrollIntoView({behavior:'smooth'});
+  });
   }
 </script>
 </body>

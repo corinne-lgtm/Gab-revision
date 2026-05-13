@@ -94,8 +94,8 @@ textarea{min-height:90px;resize:vertical}
 <div class="question"><div class="q-header"><div class="q-num">6</div><div class="q-title">Explain why different types of Germans voted for the Nazis. You should use several groups in your answer.</div><div class="marks">8 marks</div></div><label for="q6">Your answer</label><textarea id="q6" name="q6"></textarea></div>
 <div class="submit-row">
 <button class="btn-done" onclick="prepareEmail()">✅ Finished? Prepare Gmail</button>
-<div id="doneMsg" class="done-msg"><h3>Ready to send</h3><p>Click the Gmail button below to send your answers.</p></div>
-<a id="gmailBtn" class="btn-send" href="#" target="_blank">📧 Send via Gmail</a>
+<div id="doneMsg" class="done-msg"><h3>Ready to send</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b> in the email body.</p></div>
+<a id="gmailBtn" class="btn-send" href="#" target="_blank">📋 Open Gmail → then paste (Cmd+V)</a>
 </div></section>
 <script>
 function prepareEmail(){
@@ -103,9 +103,16 @@ function prepareEmail(){
  let body='GCSE History Germany 4.3 - Who voted for the Nazis?%0D%0A%0D%0A';
  qs.forEach((q,i)=>{const title=q.querySelector('.q-title').innerText; const ans=q.querySelector('textarea').value; body += 'Q'+(i+1)+'. '+encodeURIComponent(title)+'%0D%0A'+encodeURIComponent(ans||'[no answer written]')+'%0D%0A%0D%0A';});
  const subject=encodeURIComponent('GCSE History Germany 4.3 answers');
- document.getElementById('gmailBtn').href='https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+body;
- document.getElementById('gmailBtn').style.display='flex';
- document.getElementById('doneMsg').style.display='block';
+   navigator.clipboard.writeText(decodeURIComponent(body)).then(()=>{
+    document.getElementById('gmailBtn').href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    document.getElementById('gmailBtn').style.display='flex';
+    document.getElementById('doneMsg').style.display='block';
+    document.getElementById('doneMsg').innerHTML='<h3>Ready to send</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b>.</p>';
+  }).catch(()=>{
+    document.getElementById('gmailBtn').href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    document.getElementById('gmailBtn').style.display='flex';
+    document.getElementById('doneMsg').style.display='block';
+  });
 }
 </script>
 

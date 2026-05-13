@@ -81,7 +81,13 @@ function prepareEmail(){
   const subject=encodeURIComponent('History Germany 7.2 answers');
   const url='https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+body;
   const btn=document.getElementById('gmailBtn');
-  btn.href=url; btn.style.display='flex';
-  document.getElementById('doneMsg').style.display='block';
+  navigator.clipboard.writeText(decodeURIComponent(body)).then(()=>{
+    btn.href='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+subject;
+    btn.style.display='flex';
+    document.getElementById('doneMsg').innerHTML='<h3>Ready to send ✅</h3><p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V</b>.</p>';
+    document.getElementById('doneMsg').style.display='block';
+  }).catch(()=>{
+    btn.href=url; btn.style.display='flex'; document.getElementById('doneMsg').style.display='block';
+  });
 }
 </script></div></body></html>
