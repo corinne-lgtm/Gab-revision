@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B7.4 Diet, exercise, and disease</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* BMI data table */
+.bmi-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.bmi-table th{background:var(--dark);color:white;padding:9px 14px;text-align:left}
+.bmi-table td{padding:9px 14px;border-bottom:1px solid var(--line);text-align:center}
+.bmi-table tr:last-child td{border-bottom:none}
+.bmi-table tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B7 Non-communicable diseases</div>
+  <h1>B7.4 Diet, exercise, and disease</h1>
+  <p>The effect of diet and exercise on the development of obesity, cardiovascular disease, and type 2 diabetes.</p>
+  <div class="nav">
+    <a href="biology-b7-4-revision.html">📖 Revision</a>
+    <a href="biology-b7-4-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Poor diet and lack of exercise → <span style="color:#c0392b">obesity</span> → increased risk of cardiovascular disease and <span style="color:#2e6b8a">type 2 diabetes</span>. Exercise directly lowers these risks too.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Effect of diet and exercise on obesity</li>
+      <li>How diet and exercise affect risk of cardiovascular disease</li>
+      <li>Obesity as a risk factor for type 2 diabetes</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Diet and obesity -->
+<section class="panel">
+  <h2>Diet, exercise, and obesity</h2>
+  <div class="grid">
+    <div class="tile orange">
+      <div class="icon">🍔</div>
+      <h3>How obesity develops</h3>
+      <p>If you eat more food than you need, the excess is <b>stored as fat</b>. Some body fat is normal and useful. However, regularly eating too much → <b>overweight → obese</b>.</p>
+      <p style="margin-top:6px">Obesity leads to serious health problems: type 2 diabetes, high blood pressure, heart disease.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🏃</div>
+      <h3>Exercise and body weight</h3>
+      <p>Exercise increases the amount of respiration in muscles → <b>more energy used from food</b>. Regular exercise makes bigger muscles (up to 40% of body mass) — muscle needs much more energy than fat. This raises your <b>metabolic rate</b>.</p>
+      <p style="margin-top:6px">60–75% of daily food is needed for basic body reactions; ~10% to digest food; only 15–30% is affected by physical activity level.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How exercise helps health -->
+<section class="panel">
+  <h2>How exercise directly protects health</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">❤️</div>
+      <h3>Fitter heart and lungs</h3>
+      <p>Regular exercise gives you a <b>fitter heart</b> (pumps blood more efficiently) and <b>bigger lungs</b> — both reduce cardiovascular disease risk.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">📉</div>
+      <h3>Lower cholesterol</h3>
+      <p>Regular exercise <b>lowers blood cholesterol levels</b> and helps maintain a better balance of cholesterol types. Reduces risk of <b>fatty deposits building up</b> in coronary arteries → lower heart disease risk.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🩸</div>
+      <h3>Lower blood pressure</h3>
+      <p>Exercise <b>lowers blood pressure</b> — reducing strain on the heart and arteries. Reduces risk of heart attacks and strokes.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">⚖️</div>
+      <h3>Healthy weight</h3>
+      <p>Exercise helps maintain a <b>healthy body weight</b> — reducing risk of obesity, type 2 diabetes, arthritis, and other health problems.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">💡 People who exercise regularly are <b>much less likely to develop cardiovascular disease</b> and many other health problems. The least active people have approximately 5x the relative risk of cardiovascular death compared to the most active.</div>
+</section>
+
+<!-- Type 2 diabetes -->
+<section class="panel">
+  <h2>Obesity and type 2 diabetes</h2>
+  <div class="tile red">
+    <p>In <b>type 2 diabetes</b>, either:</p>
+    <ul>
+      <li>Your body doesn't make <b>enough insulin</b> to control blood sugar levels, OR</li>
+      <li>Your cells <b>stop responding to insulin</b> (insulin resistance)</li>
+    </ul>
+    <p style="margin-top:8px">This leads to problems with: <b>circulation, kidney function, and eyesight</b> — and may eventually lead to death.</p>
+    <p style="margin-top:8px">Type 2 diabetes is more common with <b>age</b>. Some people have a genetic tendency. But being <b>overweight/obese and doing little exercise</b> are strong risk factors at any age.</p>
+    <p style="margin-top:8px">By 2025, an estimated <b>4 million people in the UK</b> will have diabetes — 90% type 2. Many cases can be managed or reversed by: eating a balanced diet, controlling carbohydrate intake, <b>losing weight</b>, and regular exercise.</p>
+  </div>
+
+  <h3 style="margin-top:14px">BMI and type 2 diabetes risk (from Figure 2)</h3>
+  <table class="bmi-table">
+    <tr><th>BMI category</th><th>% men developing T2D</th><th>% women developing T2D</th></tr>
+    <tr><td>Healthy weight (&lt;23)</td><td>1.0</td><td>1.0</td></tr>
+    <tr><td>Overweight (25)</td><td>2.2</td><td>8.1</td></tr>
+    <tr><td>Obese (31)</td><td>12</td><td>40</td></tr>
+    <tr><td>Very obese (≥35)</td><td>42</td><td>93</td></tr>
+  </table>
+  <div class="must" style="margin-top:10px">⚠️ Women appear at greater risk from the same BMI — possibly because women have a higher percentage body fat at the same BMI than men, or hormonal differences affect insulin sensitivity. The trend is clear in both sexes: obesity dramatically increases type 2 diabetes risk.</div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Explain why people who exercise regularly are usually healthier than those who take little exercise [5 marks]</li>
+      <li>Exercise and obesity levels are often linked — suggest reasons [4 marks]</li>
+      <li>From Figure 1, what is the relative risk of cardiovascular disease in men who exercise least vs most? [2 marks]</li>
+      <li>Type 2 diabetes particularly affects women — look at Figure 2 data and discuss [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">obesity</span>
+  <span class="keyword">BMI</span>
+  <span class="keyword">metabolic rate</span>
+  <span class="keyword">cholesterol</span>
+  <span class="keyword">cardiovascular disease</span>
+  <span class="keyword">type 2 diabetes</span>
+  <span class="keyword">insulin</span>
+  <span class="keyword">insulin resistance</span>
+  <span class="keyword">blood glucose</span>
+  <span class="keyword">carbohydrate</span>
+  <span class="keyword">body fat</span>
+</section>
+
+</div>
+</body>
+</html>

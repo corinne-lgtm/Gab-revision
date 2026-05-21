@@ -19,25 +19,17 @@ header{margin-bottom:44px}
 .logo{font-family:'Poppins',sans-serif;font-size:clamp(32px,6vw,58px);font-weight:900;line-height:1;color:#1a2e1a;letter-spacing:-2px}
 .logo span{color:#3a7d44}
 .subtitle{margin-top:8px;font-size:14px;color:#5a7a5a;font-weight:900;letter-spacing:2px;text-transform:uppercase}
-
-/* Sections */
 .section-block{margin-bottom:44px}
 .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid #c8dfc8}
 .section-num{background:linear-gradient(135deg,#3a7d44,#1a2e1a);color:white;font-family:'Poppins',sans-serif;font-weight:900;font-size:13px;padding:6px 14px;border-radius:999px;letter-spacing:1px;white-space:nowrap}
 .section-title{font-family:'Poppins',sans-serif;font-size:clamp(18px,2.5vw,26px);font-weight:900;color:#1a2e1a}
 .section-available{font-size:12px;font-weight:900;color:#5a7a5a;background:#e8f5d8;border-radius:999px;padding:3px 10px;margin-left:auto}
-
-/* Chapter blocks */
 .chapter-block{background:rgba(255,255,255,.7);border:2px solid #c8dfc8;border-radius:22px;padding:18px 20px;margin-bottom:12px}
 .chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .chapter-dot{width:10px;height:10px;border-radius:50%;background:#7ab648;flex-shrink:0}
-.chapter-dot.soon{background:#c8dfc8}
 .chapter-name{font-family:'Poppins',sans-serif;font-weight:900;font-size:17px;color:#1a2e1a;flex:1}
 .chapter-badge{font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:999px}
 .badge-on{background:#d4edda;color:#2e6b40}
-.badge-soon{background:#f0ece6;color:#a0aab0}
-
-/* Lesson cards */
 .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
 .lesson{border-radius:14px;padding:12px 14px;text-decoration:none;display:flex;flex-direction:column;gap:4px;border:2px solid;transition:transform .15s,box-shadow .15s}
 .lesson:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.09)}
@@ -47,14 +39,8 @@ header{margin-bottom:44px}
 .btn{font-size:11px;font-weight:900;padding:4px 9px;border-radius:999px;text-decoration:none;letter-spacing:.5px}
 .btn-rev{background:#1a2e1a;color:white}
 .btn-q{background:#3a7d44;color:white}
-
-/* Available lessons — green */
 .lesson-on{background:linear-gradient(135deg,#e8f5d8,#f9fdf7);border-color:#b8d88a;color:#1a2e1a}
 .lesson-on .lesson-num{color:#5a7a5a}
-/* Coming soon lessons — grey */
-.lesson-soon{background:#f5f5f0;border-color:#ddd;color:#aaa;pointer-events:none;opacity:.6}
-.lesson-soon .lesson-num{color:#bbb}
-
 footer{text-align:center;margin-top:60px;font-size:13px;color:#7ab648;font-weight:700}
 @media(max-width:600px){.lessons{grid-template-columns:1fr 1fr}.wrap{padding:24px 16px 48px}}
 </style>
@@ -67,9 +53,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#7ab648;font-weigh
     <div class="subtitle">Choose a topic to revise</div>
   </header>
 
-  <!-- ═══════════════════════════════════ -->
-  <!-- SECTION 1: CELLS AND ORGANISATION  -->
-  <!-- ═══════════════════════════════════ -->
+  <!-- SECTION 1 -->
   <div class="section-block">
     <div class="section-header">
       <span class="section-num">Section 1</span>
@@ -77,246 +61,129 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#7ab648;font-weigh
       <span class="section-available">✅ Available now</span>
     </div>
 
-    <!-- Chapter B1 -->
+    <!-- B1 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot"></div>
-        <div class="chapter-name">Chapter B1 — Cell structure and transport</div>
-        <span class="chapter-badge badge-on">✅ Available</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B1 — Cell structure and transport</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.1</span>
-          <span class="lesson-title">The world of the microscope</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-1-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.2</span>
-          <span class="lesson-title">Animal and plant cells</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-2-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.3</span>
-          <span class="lesson-title">Eukaryotic and prokaryotic cells</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-3-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.4</span>
-          <span class="lesson-title">Specialisation in animal cells</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-4-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.5</span>
-          <span class="lesson-title">Specialisation in plant cells</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-5-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.6</span>
-          <span class="lesson-title">Diffusion</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-6-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-6-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.7</span>
-          <span class="lesson-title">Osmosis</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-7-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-7-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.8</span>
-          <span class="lesson-title">Osmosis in plants</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-8-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-8-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.9</span>
-          <span class="lesson-title">Active transport</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-9-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-9-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B1.10</span>
-          <span class="lesson-title">Exchanging materials</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-10-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-10-questions.html">✏️ Questions</a></div>
-        </div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.1</span><span class="lesson-title">The world of the microscope</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.2</span><span class="lesson-title">Animal and plant cells</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.3</span><span class="lesson-title">Eukaryotic and prokaryotic cells</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.4</span><span class="lesson-title">Specialisation in animal cells</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-4-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.5</span><span class="lesson-title">Specialisation in plant cells</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-5-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.6</span><span class="lesson-title">Diffusion</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-6-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-6-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.7</span><span class="lesson-title">Osmosis</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-7-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-7-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.8</span><span class="lesson-title">Osmosis in plants</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-8-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-8-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.9</span><span class="lesson-title">Active transport</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-9-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-9-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B1.10</span><span class="lesson-title">Exchanging materials</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b1-10-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b1-10-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
-    <!-- Chapter B2 -->
+    <!-- B2 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot"></div>
-        <div class="chapter-name">Chapter B2 — Cell division</div>
-        <span class="chapter-badge badge-on">✅ Available</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B2 — Cell division</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B2.1</span>
-          <span class="lesson-title">Cell division</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-1-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B2.2</span>
-          <span class="lesson-title">Growth and differentiation</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-2-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B2.3</span>
-          <span class="lesson-title">Stem cells</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-3-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B2.4</span>
-          <span class="lesson-title">Stem cell dilemmas</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-4-questions.html">✏️ Questions</a></div>
-        </div>
+        <div class="lesson lesson-on"><span class="lesson-num">B2.1</span><span class="lesson-title">Cell division</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B2.2</span><span class="lesson-title">Growth and differentiation</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B2.3</span><span class="lesson-title">Stem cells</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B2.4</span><span class="lesson-title">Stem cell dilemmas</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b2-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b2-4-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
-    <!-- Chapter B3 -->
+    <!-- B3 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot"></div>
-        <div class="chapter-name">Chapter B3 — Organisation and the digestive system</div>
-        <span class="chapter-badge badge-on">✅ Available</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B3 — Organisation and the digestive system</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.1</span>
-          <span class="lesson-title">Tissues and organs</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-1-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.2</span>
-          <span class="lesson-title">The human digestive system</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-2-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.3</span>
-          <span class="lesson-title">The chemistry of food</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-3-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.4</span>
-          <span class="lesson-title">Catalysts and enzymes</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-4-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.5</span>
-          <span class="lesson-title">Factors affecting enzyme action</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-5-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.6</span>
-          <span class="lesson-title">How the digestive system works</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-6-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-6-questions.html">✏️ Questions</a></div>
-        </div>
-        <div class="lesson lesson-on">
-          <span class="lesson-num">B3.7</span>
-          <span class="lesson-title">Making digestion efficient</span>
-          <div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-7-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-7-questions.html">✏️ Questions</a></div>
-        </div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.1</span><span class="lesson-title">Tissues and organs</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.2</span><span class="lesson-title">The human digestive system</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.3</span><span class="lesson-title">The chemistry of food</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.4</span><span class="lesson-title">Catalysts and enzymes</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-4-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.5</span><span class="lesson-title">Factors affecting enzyme action</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-5-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.6</span><span class="lesson-title">How the digestive system works</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-6-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-6-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B3.7</span><span class="lesson-title">Making digestion efficient</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b3-7-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b3-7-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
-    <!-- Chapter B4 — Coming soon -->
+    <!-- B4 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot soon"></div>
-        <div class="chapter-name">Chapter B4 — Organising animals and plants</div>
-        <span class="chapter-badge badge-soon">Coming soon</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B4 — Organising animals and plants</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.1</span><span class="lesson-title">The blood</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.2</span><span class="lesson-title">The blood vessels</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.3</span><span class="lesson-title">The heart</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.4</span><span class="lesson-title">Helping the heart</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.5</span><span class="lesson-title">Breathing and gas exchange</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.6</span><span class="lesson-title">Tissues and organs in plants</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.7</span><span class="lesson-title">Transport systems in plants</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.8</span><span class="lesson-title">Evaporation and transpiration</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B4.9</span><span class="lesson-title">Factors affecting transpiration</span></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.1</span><span class="lesson-title">The blood</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.2</span><span class="lesson-title">The blood vessels</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.3</span><span class="lesson-title">The heart</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.4</span><span class="lesson-title">Helping the heart</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-4-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.5</span><span class="lesson-title">Breathing and gas exchange</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-5-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.6</span><span class="lesson-title">Tissues and organs in plants</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-6-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-6-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.7</span><span class="lesson-title">Transport systems in plants</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-7-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-7-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.8</span><span class="lesson-title">Evaporation and transpiration</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-8-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-8-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B4.9</span><span class="lesson-title">Factors affecting transpiration</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b4-9-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b4-9-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SECTION 2: DISEASE AND BIOENERGETICS    -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- SECTION 2 -->
   <div class="section-block">
     <div class="section-header">
       <span class="section-num">Section 2</span>
       <span class="section-title">Disease and Bioenergetics</span>
-      <span class="section-available" style="background:#f0ece6;color:#a0aab0">Coming soon</span>
+      <span class="section-available">✅ Available now</span>
     </div>
 
+    <!-- B5 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot soon"></div>
-        <div class="chapter-name">Chapter B5 — Communicable diseases</div>
-        <span class="chapter-badge badge-soon">Coming soon</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B5 — Communicable diseases</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.1</span><span class="lesson-title">Health and disease</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.2</span><span class="lesson-title">Pathogens and disease</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.3</span><span class="lesson-title">Preventing infections</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.4</span><span class="lesson-title">Viral diseases</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.5</span><span class="lesson-title">Bacterial diseases</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.6</span><span class="lesson-title">Diseases caused by fungi and protists</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B5.7</span><span class="lesson-title">Human defence responses</span></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.1</span><span class="lesson-title">Health and disease</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.2</span><span class="lesson-title">Pathogens and disease</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.3</span><span class="lesson-title">Preventing infections</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.4</span><span class="lesson-title">Viral diseases</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-4-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.5</span><span class="lesson-title">Bacterial diseases</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-5-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.6</span><span class="lesson-title">Diseases caused by fungi and protists</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-6-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-6-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B5.7</span><span class="lesson-title">Human defence responses</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b5-7-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b5-7-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
+    <!-- B6 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot soon"></div>
-        <div class="chapter-name">Chapter B6 — Preventing and treating disease</div>
-        <span class="chapter-badge badge-soon">Coming soon</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B6 — Preventing and treating disease</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-soon"><span class="lesson-num">B6.1</span><span class="lesson-title">Vaccination</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B6.2</span><span class="lesson-title">Antibiotics and painkillers</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B6.3</span><span class="lesson-title">Discovering drugs</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B6.4</span><span class="lesson-title">Developing drugs</span></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B6.1</span><span class="lesson-title">Vaccination</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b6-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b6-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B6.2</span><span class="lesson-title">Antibiotics and painkillers</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b6-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b6-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B6.3</span><span class="lesson-title">Discovering drugs</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b6-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b6-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B6.4</span><span class="lesson-title">Developing drugs</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b6-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b6-4-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
+    <!-- B7 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot soon"></div>
-        <div class="chapter-name">Chapter B7 — Non-communicable diseases</div>
-        <span class="chapter-badge badge-soon">Coming soon</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B7 — Non-communicable diseases</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-soon"><span class="lesson-num">B7.1</span><span class="lesson-title">Non-communicable diseases</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B7.2</span><span class="lesson-title">Cancer</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B7.3</span><span class="lesson-title">Smoking and the risk of disease</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B7.4</span><span class="lesson-title">Diet, exercise, and disease</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B7.5</span><span class="lesson-title">Alcohol and other carcinogens</span></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B7.1</span><span class="lesson-title">Non-communicable diseases</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b7-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b7-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B7.2</span><span class="lesson-title">Cancer</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b7-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b7-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B7.3</span><span class="lesson-title">Smoking and the risk of disease</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b7-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b7-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B7.4</span><span class="lesson-title">Diet, exercise, and disease</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b7-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b7-4-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B7.5</span><span class="lesson-title">Alcohol and other carcinogens</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b7-5-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b7-5-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
+    <!-- B8 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot soon"></div>
-        <div class="chapter-name">Chapter B8 — Photosynthesis</div>
-        <span class="chapter-badge badge-soon">Coming soon</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B8 — Photosynthesis</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-soon"><span class="lesson-num">B8.1</span><span class="lesson-title">Photosynthesis</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B8.2</span><span class="lesson-title">The rate of photosynthesis</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B8.3</span><span class="lesson-title">How plants use glucose</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B8.4</span><span class="lesson-title">Making the most of photosynthesis</span></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B8.1</span><span class="lesson-title">Photosynthesis</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b8-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b8-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B8.2</span><span class="lesson-title">The rate of photosynthesis</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b8-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b8-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B8.3</span><span class="lesson-title">How plants use glucose</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b8-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b8-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B8.4</span><span class="lesson-title">Making the most of photosynthesis</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b8-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b8-4-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
 
+    <!-- B9 -->
     <div class="chapter-block">
-      <div class="chapter-header">
-        <div class="chapter-dot soon"></div>
-        <div class="chapter-name">Chapter B9 — Respiration</div>
-        <span class="chapter-badge badge-soon">Coming soon</span>
-      </div>
+      <div class="chapter-header"><div class="chapter-dot"></div><div class="chapter-name">Chapter B9 — Respiration</div><span class="chapter-badge badge-on">✅ Available</span></div>
       <div class="lessons">
-        <div class="lesson lesson-soon"><span class="lesson-num">B9.1</span><span class="lesson-title">Aerobic respiration</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B9.2</span><span class="lesson-title">The response to exercise</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B9.3</span><span class="lesson-title">Anaerobic respiration</span></div>
-        <div class="lesson lesson-soon"><span class="lesson-num">B9.4</span><span class="lesson-title">Metabolism and the liver</span></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B9.1</span><span class="lesson-title">Aerobic respiration</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b9-1-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b9-1-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B9.2</span><span class="lesson-title">The response to exercise</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b9-2-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b9-2-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B9.3</span><span class="lesson-title">Anaerobic respiration</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b9-3-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b9-3-questions.html">✏️ Questions</a></div></div>
+        <div class="lesson lesson-on"><span class="lesson-num">B9.4</span><span class="lesson-title">Metabolism and the liver</span><div class="lesson-btns"><a class="btn btn-rev" href="biology-b9-4-revision.html">📖 Revise</a><a class="btn btn-q" href="biology-b9-4-questions.html">✏️ Questions</a></div></div>
       </div>
     </div>
   </div>

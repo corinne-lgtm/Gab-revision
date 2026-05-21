@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.4 Helping the heart</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pro{color:#2e6b40;font-weight:900}
+.con{color:#c0392b;font-weight:900}
+@media(max-width:750px){.big-idea,.compare{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.4 Helping the heart</h1>
+  <p>How the heart keeps its natural rhythm, how artificial pacemakers work, and what artificial hearts can do.</p>
+  <div class="nav">
+    <a href="biology-b4-4-revision.html">📖 Revision</a>
+    <a href="biology-b4-4-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">When the heart has problems — leaky valves, irregular rhythm, or complete failure — medicine and technology can <span style="color:#3a7d44">replace, regulate</span> or <span style="color:#c0392b">support</span> it.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How the heart keeps its natural rhythm</li>
+      <li>How artificial pacemakers work</li>
+      <li>What artificial hearts can do</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Natural pacemaker</h2>
+  <div class="tile blue">
+    <div class="icon">⚡</div>
+    <p>The resting heart rate of ~<b>70 beats/min</b> is controlled by a group of cells in the <b>right atrium</b> — the <b>natural pacemaker</b>. These send electrical signals through conducting fibres to make the heart beat in a coordinated rhythm.</p>
+    <p style="margin-top:8px">If the natural pacemaker stops working properly:</p>
+    <ul>
+      <li>Heart beats <b>too slowly</b> → person doesn't get enough oxygen</li>
+      <li>Heart beats <b>too fast</b> → cannot pump blood properly</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Leaky heart valves</h2>
+  <div class="tile orange">
+    <p>Heart valves must withstand enormous pressure. Over time they can <b>leak or become stiff</b> and not open fully — making the heart less efficient. People may become breathless and, without treatment, will eventually die.</p>
+    <p style="margin-top:8px">Faulty valves can be <b>replaced surgically</b> with two types:</p>
+  </div>
+  <div class="compare" style="margin-top:12px">
+    <div class="tile lime">
+      <h3>🔩 Mechanical valves</h3>
+      <ul>
+        <li>Made of <b>titanium and polymers</b></li>
+        <li>Last a <b>very long time</b></li>
+        <li>Patient must take <b>blood-thinning medication</b> for life to prevent clotting around the valve</li>
+      </ul>
+    </div>
+    <div class="tile purple">
+      <h3>🐷 Biological valves</h3>
+      <ul>
+        <li>Based on valves from <b>animals</b> (pigs, cattle) or human donors</li>
+        <li>Work extremely well — <b>no medication needed</b></li>
+        <li>Only last approximately <b>12–15 years</b> before needing replacement</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Artificial pacemakers</h2>
+  <div class="tile blue">
+    <div class="icon">🔋</div>
+    <p>An artificial pacemaker is an <b>electrical device</b> used to correct irregularities in the heart rate. It is <b>implanted under the skin of the chest</b> and attached to the heart by two wires.</p>
+    <ul>
+      <li>Weighs only <b>20–50 g</b></li>
+      <li>Sends strong, regular <b>electrical signals</b> to the heart to stimulate it to beat properly</li>
+      <li>Modern pacemakers are <b>sensitive to body needs</b> — only work when the natural rhythm goes wrong</li>
+      <li>Some stimulate the heart to <b>beat faster during exercise</b></li>
+      <li>Patient needs <b>regular medical check-ups</b> throughout life</li>
+    </ul>
+    <div class="must" style="margin-top:8px">💡 A pacemaker is a small price to pay for the improved quality and length of life it brings.</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Artificial hearts</h2>
+  <div class="grid">
+    <div class="tile orange">
+      <div class="icon">🤖</div>
+      <h3>What they are</h3>
+      <p>Mechanical devices that <b>replace the heart</b> when it fails completely. They need a lot of machinery to keep them working. By 2015 almost <b>1500 people worldwide</b> had been fitted with a completely artificial heart.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">⏳</div>
+      <h3>Temporary use</h3>
+      <p>Most commonly used to <b>keep patients alive while waiting</b> for a donor heart transplant, or to give a diseased heart a <b>rest</b> so it can recover. Most patients must stay in hospital until transplant.</p>
+    </div>
+    <div class="tile green">
+      <div class="icon">🎒</div>
+      <h3>Progress</h3>
+      <p>In 2011, Matthew Green became the first UK patient to <b>leave hospital</b> with a fully artificial heart carried in a backpack — keeping him alive for two years until a donor heart became available.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">⚠️ A key risk of artificial hearts: <b>blood clotting</b> can occur inside the device, which can be fatal.</div>
+</section>
+
+<section class="panel">
+  <h2>Arguments for and against artificial hearts</h2>
+  <div class="compare">
+    <div class="tile green">
+      <div class="icon">✅</div>
+      <h3>For</h3>
+      <ul>
+        <li>Keep patients <b>alive while waiting</b> for a donor</li>
+        <li>Give a diseased heart time to <b>rest and recover</b></li>
+        <li>Allow a relatively <b>normal life</b> (portable versions)</li>
+        <li>Reduce pressure on <b>donor waiting lists</b></li>
+        <li>Technology is <b>rapidly improving</b></li>
+      </ul>
+    </div>
+    <div class="tile red">
+      <div class="icon">❌</div>
+      <h3>Against</h3>
+      <ul>
+        <li>Risk of <b>blood clotting</b> inside device → can be fatal</li>
+        <li>Need a lot of <b>machinery</b> to operate</li>
+        <li>Most patients must <b>remain in hospital</b></li>
+        <li>Very <b>expensive</b> to develop and use</li>
+        <li>Permanent replacement still a <b>long way off</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Describe what a natural pacemaker is [2 marks]</li>
+      <li>Describe how an artificial pacemaker works [3 marks]</li>
+      <li>Explain how a leaky heart valve can cause health issues [4 marks]</li>
+      <li>Give one advantage and one disadvantage of: a biological valve [2] and a mechanical valve [2]</li>
+      <li>Evaluate scientific and social arguments for and against continued development of artificial hearts [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">natural pacemaker</span>
+  <span class="keyword">artificial pacemaker</span>
+  <span class="keyword">conducting fibres</span>
+  <span class="keyword">heart rate</span>
+  <span class="keyword">leaky valve</span>
+  <span class="keyword">mechanical valve</span>
+  <span class="keyword">biological valve</span>
+  <span class="keyword">artificial heart</span>
+  <span class="keyword">heart transplant</span>
+  <span class="keyword">blood clotting</span>
+  <span class="keyword">titanium</span>
+</section>
+
+</div>
+</body>
+</html>

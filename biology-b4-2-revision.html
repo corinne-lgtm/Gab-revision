@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.2 The blood vessels</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,52px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:var(--yellow)}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.statement .g{color:var(--green)} .statement .r{color:var(--red)} .statement .b{color:var(--blue)}
+/* vessel comparison table */
+.vessel-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.vessel-table th{padding:10px 14px;text-align:left;color:white;font-weight:900}
+.vessel-table th:nth-child(1){background:#2e2e2e;border-radius:12px 0 0 0}
+.vessel-table th:nth-child(2){background:#c0392b}
+.vessel-table th:nth-child(3){background:#2e6b8a}
+.vessel-table th:nth-child(4){background:#3a7d44}
+.vessel-table td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+.vessel-table tr:last-child td{border-bottom:none}
+.vessel-table tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+/* double circ diagram */
+.circ{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.circ-box{border-radius:18px;padding:16px;text-align:center;font-weight:900}
+.circ-pulm{background:var(--blue2);border:2px solid #a0c8e0}
+.circ-syst{background:var(--red2);border:2px solid #e0a8a0}
+@media(max-width:750px){.big-idea,.circ{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.2 The blood vessels</h1>
+  <p>How the blood flows round the body, the different types of blood vessels, the importance of valves, and the double circulatory system.</p>
+  <div class="nav">
+    <a href="biology-b4-2-revision.html">📖 Revision</a>
+    <a href="biology-b4-2-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Blood travels in three types of vessel: <span class="r">arteries</span> carry blood away from the heart, <span class="b">veins</span> return it, and <span class="g">capillaries</span> link them — exchanging substances with every cell.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How blood flows round the body</li>
+      <li>The different types of blood vessels</li>
+      <li>Why valves are important</li>
+      <li>The importance of a double circulatory system</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Comparison table -->
+<section class="panel">
+  <h2>Comparing the three blood vessels</h2>
+  <div style="overflow-x:auto">
+  <table class="vessel-table">
+    <tr>
+      <th>Feature</th>
+      <th>🔴 Artery</th>
+      <th>🔵 Vein</th>
+      <th>🟢 Capillary</th>
+    </tr>
+    <tr>
+      <td><b>Direction</b></td>
+      <td>Away from heart → organs</td>
+      <td>Organs → back to heart</td>
+      <td>Links arteries to veins</td>
+    </tr>
+    <tr>
+      <td><b>Blood type</b></td>
+      <td>Usually oxygenated (bright red)</td>
+      <td>Usually deoxygenated (dark purple-red)</td>
+      <td>Transitions oxygenated → deoxygenated</td>
+    </tr>
+    <tr>
+      <td><b>Wall thickness</b></td>
+      <td><b>Thick</b> — muscle + elastic fibres</td>
+      <td><b>Thinner</b> walls</td>
+      <td><b>One cell thick</b> (very thin)</td>
+    </tr>
+    <tr>
+      <td><b>Lumen size</b></td>
+      <td>Small lumen (relative to wall)</td>
+      <td>Large lumen</td>
+      <td>Tiny, narrow lumen</td>
+    </tr>
+    <tr>
+      <td><b>Pressure</b></td>
+      <td>High — blood under pressure from heart</td>
+      <td>Low — blood returning to heart</td>
+      <td>Very low</td>
+    </tr>
+    <tr>
+      <td><b>Valves?</b></td>
+      <td>No</td>
+      <td>Yes — prevent backflow</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><b>Pulse?</b></td>
+      <td>Yes — you can feel it at wrist, neck</td>
+      <td>No pulse</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><b>Key function</b></td>
+      <td>Transport blood at high pressure to organs. Elastic walls stretch + recoil with each heartbeat.</td>
+      <td>Return blood to heart. Valves + skeletal muscle contractions squeeze blood towards heart.</td>
+      <td>Exchange of O₂, CO₂, glucose, urea with body cells by diffusion through walls.</td>
+    </tr>
+  </table>
+  </div>
+  <div class="must" style="margin-top:12px">⚠️ <b>Study tip:</b> <b>A</b>rteries carry blood <b>A</b>way from the heart. This applies to BOTH the pulmonary and aortic arteries — even the pulmonary artery (which carries deoxygenated blood to the lungs) carries blood AWAY from the heart.</div>
+</section>
+
+<!-- Valves in veins -->
+<section class="panel">
+  <h2>Why valves are important</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🚪</div>
+      <h3>Valves in veins</h3>
+      <p>Blood in veins is at <b>low pressure</b> — there is a risk it could flow backwards. Valves <b>open</b> when blood flows towards the heart, and <b>close</b> when blood starts to flow backwards — preventing backflow.</p>
+      <p style="margin-top:8px">Blood in veins is also squeezed forwards by the <b>contraction of skeletal muscles</b> surrounding the veins.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">💧</div>
+      <h3>Capillary exchange</h3>
+      <p>Capillaries have <b>walls only one cell thick</b> — substances can easily <b>diffuse</b> in and out:</p>
+      <ul>
+        <li>O₂ and glucose → <b>out</b> to body cells</li>
+        <li>CO₂ and urea → <b>in</b> from body cells into blood</li>
+      </ul>
+      <p style="margin-top:6px">Every cell in your body is within <b>0.05 mm</b> of a capillary.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Double circulation -->
+<section class="panel">
+  <h2>Double circulatory system</h2>
+  <div class="tile purple">
+    <p>Humans have a <b>double circulatory system</b> — two separate loops that both pass through the heart:</p>
+  </div>
+  <div class="circ" style="margin-top:12px">
+    <div class="circ-box circ-pulm">
+      <div style="font-size:24px;margin-bottom:6px">🫁</div>
+      <b>Pulmonary circulation</b>
+      <p style="font-size:13px;margin-top:6px;font-weight:400">Heart → <b>lungs</b> → heart<br>Allows O₂ and CO₂ to be exchanged with the air in the lungs.</p>
+    </div>
+    <div class="circ-box circ-syst">
+      <div style="font-size:24px;margin-bottom:6px">🫀</div>
+      <b>Systemic circulation</b>
+      <p style="font-size:13px;margin-top:6px;font-weight:400">Heart → <b>all other organs</b> → heart<br>Delivers fully oxygenated blood to all body organs at high pressure.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">💡 <b>Why is double circulation better?</b> Fully oxygenated blood returns to the heart from the lungs, is pumped again at full pressure, and can be sent quickly to all parts of the body. A single circulation (like fish) means blood loses pressure as it passes through the gills — it reaches body organs at low pressure, making active animals less efficient.</div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State the function of arteries / veins / capillaries + relate structure to function [3+3+2 marks]</li>
+      <li>Describe how heart, arteries, veins, capillaries are linked [2 marks]</li>
+      <li>Describe what happens in capillaries in a cell [2 marks]</li>
+      <li>Fish have a single circulation — describe the disadvantages for an active land mammal [4 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">artery</span>
+  <span class="keyword">vein</span>
+  <span class="keyword">capillary</span>
+  <span class="keyword">lumen</span>
+  <span class="keyword">valve</span>
+  <span class="keyword">pulse</span>
+  <span class="keyword">double circulatory system</span>
+  <span class="keyword">pulmonary circulation</span>
+  <span class="keyword">systemic circulation</span>
+  <span class="keyword">oxygenated</span>
+  <span class="keyword">deoxygenated</span>
+  <span class="keyword">diffusion</span>
+  <span class="keyword">elastic fibres</span>
+</section>
+
+</div>
+</body>
+</html>

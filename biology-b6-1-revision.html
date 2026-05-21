@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B6.1 Vaccination</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,58px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* vaccination steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.step{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:14px;text-align:center}
+.step .snum{background:var(--green);color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;margin:0 auto 8px}
+@media(max-width:750px){.big-idea,.steps{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B6 Preventing and treating disease</div>
+  <h1>B6.1 Vaccination</h1>
+  <p>How your immune system works and how vaccination protects you against disease.</p>
+  <div class="nav">
+    <a href="biology-b6-1-revision.html">📖 Revision</a>
+    <a href="biology-b6-1-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Vaccination trains your <span style="color:#3a7d44">immune system</span> without making you ill — so when the real pathogen arrives, your body <span style="color:#2e6b8a">responds immediately</span>.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How your immune system works</li>
+      <li>How vaccination protects you against disease</li>
+    </ul>
+  </div>
+</section>
+
+<!-- How the immune system works -->
+<section class="panel">
+  <h2>How the immune system works</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🔵</div>
+      <h3>Antigens</h3>
+      <p>Every cell has unique proteins on its surface called <b>antigens</b>. The antigens on pathogens are different to those on your own cells — this is how your immune system recognises them as foreign.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">💉</div>
+      <h3>Antibodies</h3>
+      <p>White blood cells produce specific <b>antibodies</b> that join up with and destroy a particular antigen. You need a <b>unique antibody</b> for each type of pathogen.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🧠</div>
+      <h3>Memory cells</h3>
+      <p>Some white blood cells (memory cells) <b>remember</b> the right antibody for a pathogen. If that pathogen returns, memory cells can produce the correct antibody very quickly — <b>before you feel ill</b>.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">⚠️ <b>Study tip:</b> High antibody levels don't stay forever. Immunity is the ability of memory cells to produce the right antibodies quickly — not a constantly high level of antibodies.</div>
+</section>
+
+<!-- How vaccination works -->
+<section class="panel">
+  <h2>How vaccination works — 3 steps</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="snum">1</div>
+      <b>Small amount of dead/inactive pathogen</b> introduced into body (often by injection)
+    </div>
+    <div class="step">
+      <div class="snum">2</div>
+      <b>White blood cells produce antibodies</b> to destroy the antigens — without you getting ill
+    </div>
+    <div class="step">
+      <div class="snum">3</div>
+      <b>Memory cells remain</b> — if the real pathogen enters, antibodies are made rapidly → you are <b>immune</b>
+    </div>
+  </div>
+  <div class="must" style="margin-top:14px">💡 Vaccines work against <b>both bacterial and viral diseases</b> — because both types of pathogen have antigens that the immune system can recognise (e.g. tetanus and diphtheria = bacterial; MMR, polio = viral). Smallpox has been completely wiped out by vaccination.</div>
+</section>
+
+<!-- Herd immunity -->
+<section class="panel">
+  <h2>Herd immunity</h2>
+  <div class="tile lime">
+    <div class="icon">👥</div>
+    <p>If a <b>large proportion of the population is immune</b> to a disease, the spread of the pathogen is greatly reduced — even non-immune people are protected because there are so few people to catch it from. This is <b>herd immunity</b>.</p>
+    <p style="margin-top:8px">If vaccination rates fall too low, herd immunity is lost and the disease can return. This happened in the UK in the 1970s with whooping cough — when a vaccine scare cut vaccination rates from over 80% to ~30%, thousands of children got whooping cough and some died. The WHO wants 95% of children vaccinated for measles herd immunity.</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Describe what an antigen is [1] + what an antibody is [1]</li>
+      <li>Give one example of a bacterial and one viral disease you can be immunised against [2]</li>
+      <li>Explain how the immune system works [5 marks]</li>
+      <li>Explain how vaccines use your natural immune system to protect you against serious diseases [5 marks]</li>
+      <li>Explain why vaccines can be used against both bacterial and viral diseases [5 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">antigen</span>
+  <span class="keyword">antibody</span>
+  <span class="keyword">memory cells</span>
+  <span class="keyword">immune</span>
+  <span class="keyword">vaccine</span>
+  <span class="keyword">vaccination / immunisation</span>
+  <span class="keyword">herd immunity</span>
+  <span class="keyword">white blood cells</span>
+  <span class="keyword">MMR</span>
+  <span class="keyword">smallpox</span>
+</section>
+
+</div>
+</body>
+</html>

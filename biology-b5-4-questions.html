@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.4 Questions</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--dark:#1a2e1a;--yellow:#c8e040}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+label{display:block;font-weight:900;margin-bottom:8px}
+textarea,input[type=text]{width:100%;border:2px solid #b0ccb0;border-radius:12px;padding:12px;font-size:16px;background:#f9fdf7;font-family:Arial,Helvetica,sans-serif}
+textarea{min-height:90px;resize:vertical}
+.question{background:white;border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.05);border-left:7px solid var(--lime)}
+.question.answered{border-left-color:var(--green)}
+.q-header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.q-num{background:var(--green);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.q-title{font-weight:900;font-size:16px;flex:1}
+.marks{background:var(--green2);color:#1a5c28;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px}
+.submit-row{text-align:center;margin:28px 0 20px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn-done{background:linear-gradient(135deg,#3a7d44,#1a2e1a);color:#fff;font-weight:900;font-size:17px;border:none;padding:14px 44px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(58,125,68,.3);width:100%;max-width:380px}
+.btn-done:disabled{opacity:.5;cursor:default}
+.done-msg{display:none;background:#e8f5d8;border:2px solid #7ab648;border-radius:14px;padding:18px 22px;text-align:center;width:100%;max-width:520px}
+.done-msg h3{margin:0 0 6px;color:#1a5c28}
+.done-msg p{margin:0;color:#2a4a2a;line-height:1.6}
+.btn-send{background:#fff;color:#333;font-weight:900;font-size:17px;border:2px solid #ddd;padding:14px 28px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;width:100%;max-width:430px;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn-send img{width:22px;height:22px}
+@media(max-width:750px){.wrap{padding:14px}}
+@media print{.nav,button,.submit-row{display:none}body{background:white}.question{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.4 Viral diseases</h1>
+  <p>Questions</p>
+  <div class="nav">
+    <a href="biology-b5-4-revision.html">📖 Revision</a>
+    <a href="biology-b5-4-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<form>
+<div class="question"><label for="studentName">Student name</label><input type="text" id="studentName" placeholder="Type your name"></div>
+
+<div class="question" id="box1">
+  <div class="q-header"><div class="q-num">1</div><div class="q-title">a) State the main symptoms of measles. [2] b) Suggest why measles is now rare in the UK. [2]</div><span class="marks">[4 marks]</span></div>
+  <textarea id="a1" rows="5" placeholder="Write your answer here…" oninput="markAnswered('box1',this.value)"></textarea>
+</div>
+
+<div class="question" id="box2">
+  <div class="q-header"><div class="q-num">2</div><div class="q-title">a) Describe the link between HIV and AIDS. [1] b) Explain why untreated HIV is usually fatal. [4]</div><span class="marks">[5 marks]</span></div>
+  <textarea id="a2" rows="7" placeholder="Write your answer here…" oninput="markAnswered('box2',this.value)"></textarea>
+</div>
+
+<div class="question" id="box3">
+  <div class="q-header"><div class="q-num">3</div><div class="q-title">Using Figure 2 (measles vaccination data from the revision page), calculate the following. a i) The number of cases of measles globally between 1980 and 1985. [3] a ii) The number of cases of measles globally between 2000 and 2005. [3] b) Assuming that 5% of patients (cases) will die, calculate how many people died of measles in each time period. [4] c) Discuss the apparent link between vaccination rates and cases of measles globally. [4]</div><span class="marks">[14 marks]</span></div>
+  <textarea id="a3" rows="12" placeholder="Write your working and answer here…" oninput="markAnswered('box3',this.value)"></textarea>
+</div>
+
+<div class="question" id="box4">
+  <div class="q-header"><div class="q-num">4</div><div class="q-title">Discuss the similarities and differences between tobacco mosaic virus in plants and measles in people.</div><span class="marks">[6 marks]</span></div>
+  <textarea id="a4" rows="9" placeholder="Write your answer here…" oninput="markAnswered('box4',this.value)"></textarea>
+</div>
+
+<div class="question" id="box5">
+  <div class="q-header"><div class="q-num">5</div><div class="q-title">Explain why HIV remains hidden in the immune system for years before AIDS develops.</div><span class="marks">[3 marks]</span></div>
+  <textarea id="a5" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box5',this.value)"></textarea>
+</div>
+
+<div class="question" id="box6">
+  <div class="q-header"><div class="q-num">6</div><div class="q-title">Describe three ways in which the spread of HIV can be prevented.</div><span class="marks">[3 marks]</span></div>
+  <textarea id="a6" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box6',this.value)"></textarea>
+</div>
+
+<div class="question" id="box7">
+  <div class="q-header"><div class="q-num">7</div><div class="q-title">Explain how tobacco mosaic virus (TMV) affects the growth of a plant.</div><span class="marks">[3 marks]</span></div>
+  <textarea id="a7" rows="4" placeholder="Write your answer here…" oninput="markAnswered('box7',this.value)"></textarea>
+</div>
+
+<div class="question" id="box8">
+  <div class="q-header"><div class="q-num">8</div><div class="q-title">Why is HIV particularly dangerous compared to most other viruses, in terms of the body's ability to fight other diseases?</div><span class="marks">[2 marks]</span></div>
+  <textarea id="a8" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box8',this.value)"></textarea>
+</div>
+
+<div class="question" id="box9">
+  <div class="q-header"><div class="q-num">9</div><div class="q-title">Life expectancy for people with HIV/AIDS is very low in sub-Saharan Africa compared to the UK. Suggest why.</div><span class="marks">[2 marks]</span></div>
+  <textarea id="a9" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box9',this.value)"></textarea>
+</div>
+
+<div class="question" id="box10">
+  <div class="q-header"><div class="q-num">10</div><div class="q-title">TMV can remain infectious in soil for about 50 years. Explain why this makes it difficult for farmers to control the disease.</div><span class="marks">[2 marks]</span></div>
+  <textarea id="a10" rows="3" placeholder="Write your answer here…" oninput="markAnswered('box10',this.value)"></textarea>
+</div>
+
+<div class="submit-row">
+  <button class="btn-done" id="btn-done" type="button" onclick="finish()">✅ I'm done!</button>
+  <div class="done-msg" id="done-msg">
+    <h3>🎉 Great work!</h3>
+    <p>Your answers have been <b>copied to your clipboard</b> 📋<br>Click below to open Gmail, then <b>paste with Cmd+V (or Ctrl+V)</b> in the email body.</p>
+  </div>
+  <a class="btn-send" id="btn-send" target="_blank" rel="noopener">
+    <img src="https://www.google.com/favicon.ico" alt="Gmail"> Open Gmail → then paste (Cmd+V)
+  </a>
+</div>
+</form>
+</div>
+<script>
+function markAnswered(id,val){const box=document.getElementById(id);if(box)box.classList.toggle('answered',val.trim().length>2)}
+function finish(){
+  const doneMsg=document.getElementById('done-msg'),doneBtn=document.getElementById('btn-done'),sendBtn=document.getElementById('btn-send');
+  doneMsg.style.display='block';doneBtn.disabled=true;
+  const q=(id)=>document.getElementById(id)?.value.trim()||'(no answer)';
+  const name=document.getElementById('studentName')?.value.trim()||'Student';
+  const body='Hi Mum! Here are my answers for GCSE Biology \u2014 B5.4 \uD83E\uDDA0\n\nStudent: '+name+'\n\n'+
+    '==============================\nQ1 \u2014 Measles symptoms + why rare in UK [4]\n'+q('a1')+'\n\n'+
+    '==============================\nQ2 \u2014 HIV and AIDS link + why untreated HIV is fatal [5]\n'+q('a2')+'\n\n'+
+    '==============================\nQ3 \u2014 Measles graph calculations + vaccination link [14]\n'+q('a3')+'\n\n'+
+    '==============================\nQ4 \u2014 TMV vs measles: similarities and differences [6]\n'+q('a4')+'\n\n'+
+    '==============================\nQ5 \u2014 Why HIV hidden for years [3]\n'+q('a5')+'\n\n'+
+    '==============================\nQ6 \u2014 Three ways to prevent HIV spread [3]\n'+q('a6')+'\n\n'+
+    '==============================\nQ7 \u2014 How TMV affects plant growth [3]\n'+q('a7')+'\n\n'+
+    '==============================\nQ8 \u2014 Why HIV is particularly dangerous [2]\n'+q('a8')+'\n\n'+
+    '==============================\nQ9 \u2014 Why HIV life expectancy low in sub-Saharan Africa [2]\n'+q('a9')+'\n\n'+
+    '==============================\nQ10 \u2014 TMV in soil for 50 years \u2014 why difficult to control [2]\n'+q('a10')+'\n\n'+
+    '==============================\nMy score: __ / 44 marks';
+  navigator.clipboard.writeText(body).then(()=>{
+    const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+encodeURIComponent('📚 GCSE Biology B5.4 — My Answers');
+    sendBtn.href=gmailUrl;sendBtn.style.display='flex';sendBtn.scrollIntoView({behavior:'smooth'});
+  }).catch(()=>{
+    const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=corinne@marcault.com&su='+encodeURIComponent('📚 GCSE Biology B5.4 — My Answers');
+    sendBtn.href=gmailUrl;sendBtn.style.display='flex';sendBtn.scrollIntoView({behavior:'smooth'});
+  });
+}
+</script>
+</body>
+</html>

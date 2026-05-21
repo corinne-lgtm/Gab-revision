@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.7 Human defence responses</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* WBC table */
+.wbc-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.wbc-table th{background:var(--dark);color:white;padding:9px 14px;text-align:left}
+.wbc-table td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.wbc-table tr:last-child td{border-bottom:none}
+.wbc-table tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+/* defence layers */
+.layers{display:flex;flex-direction:column;gap:8px}
+.layer{display:flex;gap:12px;align-items:flex-start}
+.lnum{background:var(--green);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0;margin-top:4px}
+.lbody{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 16px;flex:1}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.7 Human defence responses</h1>
+  <p>How your body stops pathogens getting in, and how white blood cells protect you from disease.</p>
+  <div class="nav">
+    <a href="biology-b5-7-revision.html">📖 Revision</a>
+    <a href="biology-b5-7-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Your body has <span style="color:#3a7d44">physical barriers</span> to keep pathogens out, and <span style="color:#2e6b8a">white blood cells</span> as a second line of defence if they get in.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>How your body stops pathogens getting in</li>
+      <li>How white blood cells protect you from disease</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Defence layers overview -->
+<section class="panel">
+  <h2>First line of defence — keeping pathogens out</h2>
+  <div class="layers">
+    <div class="layer">
+      <div class="lnum">1</div>
+      <div class="lbody">
+        <b>🧱 Skin</b> — acts as a physical barrier. Prevents bacteria and viruses reaching tissues. If cut or damaged, <b>platelets form a clot → scab</b> seals the wound. Skin also produces <b>antimicrobial secretions</b> to destroy pathogenic bacteria. Healthy skin is also covered in harmless microorganisms that act as an extra barrier.
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lnum">2</div>
+      <div class="lbody">
+        <b>👃 Nose — mucus and hairs</b> — nose is full of hairs and produces sticky <b>mucus</b>. Hairs and mucus trap particles (including pathogens) from the air. If you breathe in polluted air, mucus blown from your nose is blackened — showing the system works.
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lnum">3</div>
+      <div class="lbody">
+        <b>🫁 Trachea and bronchi — mucus + cilia</b> — lining secretes sticky mucus that traps pathogens. <b>Cilia</b> (tiny hair-like projections on cells) beat to waft the mucus <b>up to the back of the throat</b> where it is swallowed.
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lnum">4</div>
+      <div class="lbody">
+        <b>🫁 Stomach — acid</b> — stomach produces <b>acid</b> that destroys most microorganisms in the mucus you swallow and in your food and drink.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- White blood cells -->
+<section class="panel">
+  <h2>Second line of defence — white blood cells</h2>
+  <p style="margin-bottom:12px">If pathogens get past the first line of defence, white blood cells are waiting. They protect you in three ways:</p>
+  <table class="wbc-table">
+    <tr><th>Role of white blood cell</th><th>How it protects you</th></tr>
+    <tr>
+      <td><b>🍽️ Ingesting microorganisms (phagocytosis)</b></td>
+      <td>Some white blood cells engulf (take in) pathogens, digesting and destroying them so they cannot make you ill.</td>
+    </tr>
+    <tr>
+      <td><b>💉 Producing antibodies</b></td>
+      <td>Some white blood cells produce special chemicals called <b>antibodies</b> that target specific pathogens (matching the <b>antigen</b> on the pathogen's surface). You need a unique antibody for each type of pathogen. Once produced, the same antibodies can be made very quickly if that pathogen appears again — <b>stopping you getting the disease twice</b>.</td>
+    </tr>
+    <tr>
+      <td><b>🧪 Producing antitoxins</b></td>
+      <td>Some white blood cells produce <b>antitoxins</b> that counteract (cancel out) the toxins released by bacteria, preventing them from damaging body cells.</td>
+    </tr>
+  </table>
+  <div class="must" style="margin-top:12px">💡 <b>Green mucus during a cold:</b> Some white blood cells contain green enzymes. When you have a cold, these cells destroy cold viruses and bacteria trapped in nasal mucus. The dead white blood cells and bacteria make the mucus look green.</div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State how each action prevents spread of disease: washing hands [1]; throwing away tissues [1]; sewage not getting into drinking water [1]</li>
+      <li>Explain why blood not clotting properly increases risk of infections [2]</li>
+      <li>Explain why fewer white blood cells increases risk of infections [3]</li>
+      <li>Discuss how white blood cells help prevent suffering from communicable diseases [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key for 6-mark question:</b> Cover all three WBC roles: phagocytosis (ingesting and destroying pathogens) + antibodies (specific to each antigen, memory means quicker response) + antitoxins (counteract bacterial toxins).</p>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">skin barrier</span>
+  <span class="keyword">mucus</span>
+  <span class="keyword">cilia</span>
+  <span class="keyword">platelets</span>
+  <span class="keyword">blood clot</span>
+  <span class="keyword">antimicrobial</span>
+  <span class="keyword">white blood cells</span>
+  <span class="keyword">phagocytosis</span>
+  <span class="keyword">antibody</span>
+  <span class="keyword">antigen</span>
+  <span class="keyword">antitoxin</span>
+  <span class="keyword">immune system</span>
+  <span class="keyword">memory cells</span>
+</section>
+
+</div>
+</body>
+</html>

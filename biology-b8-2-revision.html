@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B8.2 The rate of photosynthesis</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* graph shape table */
+.gstable{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.gstable th{background:var(--dark);color:white;padding:9px 14px;text-align:left}
+.gstable td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.gstable tr:last-child td{border-bottom:none}
+.gstable tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+/* inverse square law box */
+.isl{background:#1a2e1a;color:#c8e040;border-radius:20px;padding:18px;margin-top:12px;text-align:center;font-size:16px;font-weight:900;font-family:monospace}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B8 Photosynthesis</div>
+  <h1>B8.2 The rate of photosynthesis</h1>
+  <p>Which factors limit the rate of photosynthesis in plants.</p>
+  <div class="nav">
+    <a href="biology-b8-2-revision.html">📖 Revision</a>
+    <a href="biology-b8-2-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">The rate of photosynthesis is limited by whichever factor is in <span style="color:#c0392b">shortest supply</span> — light, temperature, CO₂, or chlorophyll.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objective</h3>
+    <ul><li>Which factors limit the rate of photosynthesis in plants</li></ul>
+    <div class="must" style="margin-top:8px">💡 A <b>limiting factor</b> is any factor that is in short supply and prevents photosynthesis going faster, even if other conditions are ideal.</div>
+  </div>
+</section>
+
+<!-- Four limiting factors -->
+<section class="panel">
+  <h2>The four limiting factors</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">💡</div>
+      <h3>Light intensity</h3>
+      <p>Most obvious factor. More light → faster photosynthesis. No light → photosynthesis stops completely. For most plants, <b>brighter = faster</b>.</p>
+      <p style="margin-top:6px;font-size:13px"><b>Graph shape:</b> Rises steeply, then levels off (limited by another factor — CO₂ or temperature).</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🌡️</div>
+      <h3>Temperature</h3>
+      <p>As temperature rises, rate increases — reactions speed up. BUT photosynthesis is controlled by <b>enzymes</b>. Above 40–50°C enzymes are denatured → rate falls sharply.</p>
+      <p style="margin-top:6px;font-size:13px"><b>Graph shape:</b> Rises, reaches a peak, then falls sharply at high temperatures.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">💨</div>
+      <h3>CO₂ concentration</h3>
+      <p>CO₂ is needed to make glucose. Atmosphere is only ~0.04% CO₂ — often the most common limiting factor on a sunny day. Increasing CO₂ → faster photosynthesis.</p>
+      <p style="margin-top:6px;font-size:13px"><b>Graph shape:</b> Rises, then levels off when CO₂ is no longer the limiting factor (light or temperature becomes limiting).</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🟢</div>
+      <h3>Chlorophyll levels</h3>
+      <p>If chlorophyll is limited (e.g. variegated leaves, magnesium deficiency), <b>less light energy can be absorbed</b> → slower photosynthesis. Without magnesium, chlorophyll cannot be made.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Graph shapes compared -->
+<section class="panel">
+  <h2>Understanding the graph shapes</h2>
+  <table class="gstable">
+    <tr><th>Graph (Figure)</th><th>Factor</th><th>What section a–b shows</th><th>What section b–c shows</th></tr>
+    <tr>
+      <td><b>Figure 1 (light)</b></td>
+      <td>Light intensity</td>
+      <td>Rate rising — light is the limiting factor (more light → faster PS)</td>
+      <td>Rate levels off — another factor is now limiting (e.g. CO₂ or temperature), not light</td>
+    </tr>
+    <tr>
+      <td><b>Figure 2 (temperature)</b></td>
+      <td>Temperature</td>
+      <td>Rate rising — higher temperature speeds up enzyme-controlled reactions</td>
+      <td>Rate falls sharply — enzymes are denatured above ~40–50°C; active sites permanently changed</td>
+    </tr>
+    <tr>
+      <td><b>Figure 3 (CO₂)</b></td>
+      <td>CO₂ concentration</td>
+      <td>Rate rising — more CO₂ available → faster rate</td>
+      <td>Rate levels off — CO₂ no longer limiting; light or temperature is now limiting</td>
+    </tr>
+  </table>
+</section>
+
+<!-- CO₂ at day and night -->
+<section class="panel">
+  <h2>CO₂ levels around a plant — day and night</h2>
+  <div class="tile blue">
+    <p>On a sunny day, CO₂ concentration is often the <b>most common limiting factor</b>.</p>
+    <ul>
+      <li><b>During the day:</b> As light and temperature increase, most CO₂ around the plant <b>gets used up</b> — CO₂ becomes limiting</li>
+      <li><b>At night:</b> The plant respires but doesn't photosynthesise → CO₂ levels <b>rise again</b></li>
+    </ul>
+    <p style="margin-top:8px">In a science lab or greenhouse, CO₂ levels can be <b>increased artificially</b> — then CO₂ is no longer limiting and the rate increases further with light and temperature.</p>
+    <p style="margin-top:8px">In a garden, woodland, or field, <b>any one of the three factors</b> might be limiting at any time.</p>
+  </div>
+</section>
+
+<!-- Inverse square law -->
+<section class="panel">
+  <h2>Light intensity and the inverse square law (Higher)</h2>
+  <div class="tile red">
+    <p>Light intensity is <b>not linearly related</b> to distance — it follows the <b>inverse square law</b>:</p>
+    <div class="isl">Light intensity ∝ 1 / distance²</div>
+    <p style="margin-top:10px">If you <b>double the distance</b> between the light and plant, light intensity falls to <b>¼</b> (not ½):</p>
+    <div class="isl">At distance 2: 1/2² = 1/4</div>
+    <p style="margin-top:8px">This means moving a lamp slightly further away has a <b>much bigger effect</b> than you might expect.</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State the three main limiting factors [3 marks]</li>
+      <li>Figure 1 graph: explain what is happening between points a and b [2] and between points b and c [2]</li>
+      <li>Figure 2: explain why it is a different shape to Figures 1 and 3 [4 marks]</li>
+      <li>Explain in terms of limiting factors why tropical rainforest plants are so much bigger than UK woodland plants, and why both are bigger than Arctic tundra plants [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key for 6-mark question:</b> Tropical = high light + high temp + high CO₂ → all factors optimal → fastest rate → biggest plants. UK = moderate light + moderate temp. Arctic = low light + low temp → most limiting → slowest rate → smallest plants.</p>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">limiting factor</span>
+  <span class="keyword">light intensity</span>
+  <span class="keyword">temperature</span>
+  <span class="keyword">CO₂ concentration</span>
+  <span class="keyword">chlorophyll</span>
+  <span class="keyword">enzyme denaturation</span>
+  <span class="keyword">inverse square law</span>
+  <span class="keyword">variegated leaves</span>
+  <span class="keyword">magnesium deficiency</span>
+</section>
+
+</div>
+</body>
+</html>

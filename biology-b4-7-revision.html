@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.7 Transport systems in plants</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* Compare table */
+.compare-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.compare-table th{padding:10px 14px;text-align:left;color:white;font-weight:900}
+.compare-table th:nth-child(1){background:#555;width:28%}
+.compare-table th:nth-child(2){background:#2e6b8a}
+.compare-table th:nth-child(3){background:#3a7d44}
+.compare-table td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.7 Transport systems in plants</h1>
+  <p>The substances transported in plants, and how transport in xylem differs from transport in phloem.</p>
+  <div class="nav">
+    <a href="biology-b4-7-revision.html">📖 Revision</a>
+    <a href="biology-b4-7-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Plants have <span style="color:#2e6b8a">xylem</span> (transports water &amp; minerals <b>upwards</b>) and <span style="color:#3a7d44">phloem</span> (transports dissolved sugars <b>in both directions</b>) — two separate systems, both vital for life.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>The substances transported in plants</li>
+      <li>How transport in xylem differs from transport in phloem</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Why transport is needed -->
+<section class="panel">
+  <h2>Why plants need a transport system</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🍬</div>
+      <h3>Glucose (sugars)</h3>
+      <p>Made by photosynthesis in the <b>leaves and green parts</b> — but needed by every cell in the plant for respiration, growth, and storage. Must be transported everywhere.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">💧</div>
+      <h3>Water</h3>
+      <p>Absorbed by <b>roots</b> from the soil — but needed by every cell. Required for photosynthesis, to keep cells turgid (upright), and for chemical reactions.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">⚗️</div>
+      <h3>Mineral ions</h3>
+      <p>Absorbed by <b>roots</b> from the soil — needed throughout the plant to make proteins and other molecules for growth. Cannot be made by the plant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison table -->
+<section class="panel">
+  <h2>Xylem vs Phloem — comparison</h2>
+  <div style="overflow-x:auto">
+  <table class="compare-table">
+    <tr><th>Feature</th><th>💧 Xylem</th><th>🍬 Phloem</th></tr>
+    <tr><td><b>What is transported</b></td><td>Water and dissolved mineral ions</td><td>Dissolved sugars (food — mainly sucrose)</td></tr>
+    <tr><td><b>Direction</b></td><td>Upwards only — roots → stem → leaves</td><td>Both directions — from leaves to rest of plant (up or down)</td></tr>
+    <tr><td><b>Living or dead?</b></td><td>Mature xylem cells are <b>dead</b></td><td>Phloem cells are <b>living</b></td></tr>
+    <tr><td><b>Cell structure</b></td><td>Hollow tubes — no cell contents; thick, lignified walls for support</td><td>Sieve tubes with sieve plates; companion cells provide energy</td></tr>
+    <tr><td><b>How it moves</b></td><td>Pulled up by transpiration (water evaporating from leaves)</td><td>Active transport — requires energy (translocation)</td></tr>
+    <tr><td><b>Name for the process</b></td><td>Transpiration stream</td><td>Translocation</td></tr>
+    <tr><td><b>Where found in stem</b></td><td>Vascular bundles (towards centre)</td><td>Vascular bundles (towards outside, under bark in trees)</td></tr>
+  </table>
+  </div>
+  <div class="must" style="margin-top:12px">⚠️ <b>Study tip:</b> <b>P</b>hloem transports food (<b>P</b>hotosynthate). <b>X</b>ylem transports water (think X-shaped cross-sections). Phloem is LIVING; Xylem is DEAD.</div>
+</section>
+
+<!-- Phloem detail -->
+<section class="panel">
+  <h2>Phloem — moving food (translocation)</h2>
+  <div class="tile green">
+    <div class="icon">🍬</div>
+    <p>Phloem transports sugars made by photosynthesis from the leaves to:</p>
+    <ul>
+      <li><b>Growing areas</b> of stems and roots — where sugars are needed to make new plant cells</li>
+      <li><b>Storage organs</b> — e.g. roots, tubers, fruits — where sugars are stored as starch for the winter</li>
+    </ul>
+    <p style="margin-top:8px">The movement of dissolved sugars from leaves to the rest of the plant is called <b>translocation</b>. Phloem is a <b>living tissue</b> — the process requires energy from the companion cells.</p>
+    <div class="must" style="margin-top:8px">🐛 <b>Aphids</b> push their mouthparts directly into the phloem and feed on the sugary fluid. A major infestation can kill a plant by taking all of its food.</div>
+  </div>
+</section>
+
+<!-- Xylem detail -->
+<section class="panel">
+  <h2>Xylem — moving water and minerals</h2>
+  <div class="tile blue">
+    <div class="icon">💧</div>
+    <p>Xylem carries water and dissolved mineral ions from the soil (via roots) up through the stem to the leaves. Mature xylem cells are <b>dead</b> — hollow tubes with no cell contents to block flow. Thick <b>lignified walls</b> provide strength and support.</p>
+    <p style="margin-top:8px">In woody plants like trees, xylem makes up the <b>bulk of the wood</b>. Phloem is found in a ring just <b>under the bark</b>. If a complete ring of bark is removed or eaten (by deer etc.), the phloem is destroyed and the tree <b>dies</b> — this is why tree trunks need protection.</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State why a plant needs a transport system [1 mark]</li>
+      <li>Describe the main differences between xylem and phloem [3 marks]</li>
+      <li>A woodland trust puts protective covers on young tree trunks — explain exactly why this is necessary and the impact if trees were not protected [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key for 6-mark question:</b> Phloem is under the bark (ring) → deer eat bark → phloem destroyed → translocation stops → no sugars reach roots/growing areas → cells cannot respire/grow → tree dies.</p>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">xylem</span>
+  <span class="keyword">phloem</span>
+  <span class="keyword">translocation</span>
+  <span class="keyword">transpiration</span>
+  <span class="keyword">vascular bundle</span>
+  <span class="keyword">mineral ions</span>
+  <span class="keyword">sucrose</span>
+  <span class="keyword">companion cell</span>
+  <span class="keyword">sieve tube</span>
+  <span class="keyword">lignified</span>
+  <span class="keyword">aphid</span>
+  <span class="keyword">turgid</span>
+</section>
+
+</div>
+</body>
+</html>

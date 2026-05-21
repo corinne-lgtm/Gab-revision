@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B9.1 Aerobic respiration</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.equation{background:var(--dark);color:#c8e040;border-radius:18px;padding:16px 22px;text-align:center;font-size:17px;font-weight:900;font-family:monospace;margin:12px 0;letter-spacing:1px}
+.equation .arrow{color:white;font-style:italic}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B9 Respiration</div>
+  <h1>B9.1 Aerobic respiration</h1>
+  <p>The chemistry of aerobic respiration and why cellular respiration is so important.</p>
+  <div class="nav">
+    <a href="biology-b9-1-revision.html">📖 Revision</a>
+    <a href="biology-b9-1-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Aerobic respiration is an <span style="color:#c0392b">exothermic reaction</span> — glucose + oxygen → CO₂ + water. It happens <span style="color:#3a7d44">continuously</span> in every living cell and provides all the energy for life.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>The chemistry of aerobic respiration</li>
+      <li>Why cellular respiration is so important</li>
+    </ul>
+  </div>
+</section>
+
+<!-- The equations -->
+<section class="panel">
+  <h2>The respiration equation</h2>
+  <div class="equation">glucose + oxygen <span class="arrow">→</span> carbon dioxide + water (+ energy transferred to environment)</div>
+  <div class="equation" style="font-size:15px">C₆H₁₂O₆ + 6O₂ <span class="arrow">→</span> 6CO₂ + 6H₂O (+ energy transferred to environment)</div>
+  <div class="must" style="margin-top:10px">⚠️ <b>Study tip:</b> Aerobic respiration is an <b>exothermic reaction</b> — it transfers energy TO the environment (opposite of endothermic photosynthesis). More energy is transferred when bonds form in the products than is taken in to break bonds in the reactants.</div>
+</section>
+
+<!-- Where it happens -->
+<section class="panel">
+  <h2>Where aerobic respiration takes place</h2>
+  <div class="grid">
+    <div class="tile orange">
+      <div class="icon">🔋</div>
+      <h3>Mitochondria</h3>
+      <p>Most aerobic respiration reactions take place in the <b>mitochondria</b> — tiny rod-shaped organelles in almost all plant and animal cells. They have a <b>folded inner membrane</b> — large surface area for the enzymes involved.</p>
+      <p style="margin-top:6px">The <b>number of mitochondria</b> in a cell shows how active it is — muscle cells have many; fat cells have very few.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🧫</div>
+      <h3>Cytoplasm</h3>
+      <p>Some reactions of respiration (especially the early stages) take place in the <b>cytoplasm</b>. This is also where enzymes are made. Anaerobic respiration also takes place here.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why respiration is important -->
+<section class="panel">
+  <h2>Why cellular respiration is so important</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🧱</div>
+      <h3>Building molecules</h3>
+      <p>Energy is used for <b>synthesis reactions</b> — building up large molecules from smaller ones to make new cell material (e.g. proteins from amino acids, cellulose from glucose).</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">💪</div>
+      <h3>Muscle contraction (animals)</h3>
+      <p>Energy from respiration makes <b>muscles contract</b>. Muscles are working ALL the time — heart beating, breathing, stomach churning — even when you sleep.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🌡️</div>
+      <h3>Maintaining body temperature</h3>
+      <p>Mammals and birds maintain a constant internal body temperature. On <b>cold days</b>, energy from respiration keeps you warm. On <b>hot days</b>, you sweat and transfer energy to surroundings to keep cool.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🌱</div>
+      <h3>Active transport (plants)</h3>
+      <p>In plants, energy from respiration moves <b>mineral ions</b> (e.g. nitrates) from soil into root hair cells by active transport. Also converts sugars, nitrates, and nutrients into <b>amino acids → proteins</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Energy needs -->
+<section class="panel">
+  <h2>Energy needs</h2>
+  <div class="tile blue">
+    <p>Average energy needs per day: teenage <b>boys ≈ 11,510 kJ</b>; teenage <b>girls ≈ 8,830 kJ</b>. Boys need more because:</p>
+    <ul>
+      <li>Boys are generally <b>larger</b> than girls</li>
+      <li>Boys have <b>more muscle cells</b> — muscle cells have more mitochondria, require more fuel for aerobic respiration</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Investigating respiration -->
+<section class="panel">
+  <h2>Investigating aerobic respiration</h2>
+  <div class="tile green">
+    <p>To show that oxygen is taken up and carbon dioxide is released during aerobic respiration:</p>
+    <ul>
+      <li><b>Limewater</b> turns cloudy when CO₂ bubbles through it — the higher the CO₂ concentration, the faster it turns cloudy</li>
+      <li>Measure <b>temperature rise</b> — respiration is exothermic, so the surroundings get warmer</li>
+      <li>Deprive the organism of food or O₂ to observe reduced CO₂ production</li>
+    </ul>
+    <p style="margin-top:8px">For a planned investigation: design controls, measure O₂ consumption and CO₂ production, ensure an ethical approach (using living organisms).</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>a) Give the word equation for aerobic respiration [2] b) Give the symbol equation [2] c) Explain why muscle cells have many mitochondria while fat cells have very few [4]</li>
+      <li>a) State the three main uses of energy transferred in the body during aerobic respiration [3] b) Suggest how this explains the symptoms of starvation described [4]</li>
+      <li>Plan an experiment to show that oxygen is taken up and carbon dioxide is released during aerobic respiration [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">aerobic respiration</span>
+  <span class="keyword">exothermic reaction</span>
+  <span class="keyword">mitochondria</span>
+  <span class="keyword">cytoplasm</span>
+  <span class="keyword">glucose</span>
+  <span class="keyword">oxygen</span>
+  <span class="keyword">carbon dioxide</span>
+  <span class="keyword">synthesis reaction</span>
+  <span class="keyword">muscle contraction</span>
+  <span class="keyword">active transport</span>
+  <span class="keyword">limewater</span>
+</section>
+
+</div>
+</body>
+</html>

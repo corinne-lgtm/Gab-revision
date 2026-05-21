@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.8 Evaporation and transpiration</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* transpiration stream flow */
+.stream{display:flex;flex-direction:column;gap:4px;margin:12px 0}
+.stream-box{border-radius:14px;padding:12px 18px;font-weight:900;font-size:14px;text-align:center;border:2px solid}
+.sb-soil{background:#fde8cc;border-color:#e07b2a}
+.sb-root{background:#d4edda;border-color:#a8d4b0}
+.sb-stem{background:#d4eaf5;border-color:#a0c8e0}
+.sb-leaf{background:#e8f5d8;border-color:#b8d88a}
+.sb-air{background:#f9fdf7;border-color:#c8dfc8}
+.s-arrow{text-align:center;font-size:20px;color:#5a7a5a}
+/* maths box */
+.maths{background:#1a2e1a;color:white;border-radius:22px;padding:18px}
+.maths b{color:#c8e040}
+.maths .calc{background:rgba(255,255,255,.1);border-radius:12px;padding:12px;margin-top:10px;font-family:monospace;font-size:15px}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.8 Evaporation and transpiration</h1>
+  <p>What transpiration is, and the role of stomata and guard cells in controlling gas exchange and water loss.</p>
+  <div class="nav">
+    <a href="biology-b4-8-revision.html">📖 Revision</a>
+    <a href="biology-b4-8-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement"><span style="color:#3a7d44">Transpiration</span> is the loss of water vapour from leaves through stomata — this drives a constant <span style="color:#2e6b8a">transpiration stream</span> pulling water up from the roots.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>What transpiration is</li>
+      <li>The role of stomata and guard cells in controlling gas exchange and water loss</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Stomata and guard cells -->
+<section class="panel">
+  <h2>Stomata and guard cells</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🔵</div>
+      <h3>Stomata (singular: stoma)</h3>
+      <p>Small pores (openings) found all over the leaf surface — mostly on the <b>lower epidermis</b>. They allow:</p>
+      <ul>
+        <li><b>CO₂ in</b> (for photosynthesis)</li>
+        <li><b>O₂ out</b> (product of photosynthesis)</li>
+        <li><b>Water vapour out</b> (transpiration)</li>
+      </ul>
+    </div>
+    <div class="tile lime">
+      <div class="icon">🟢</div>
+      <h3>Guard cells</h3>
+      <p>Specialised cells that <b>control the opening and closing</b> of each stoma:</p>
+      <ul>
+        <li><b>Open</b> when the plant needs CO₂ for photosynthesis (daytime) or has plenty of water</li>
+        <li><b>Close</b> to limit water loss when the plant is short of water or in hot/dry conditions</li>
+      </ul>
+      <p style="margin-top:6px">Guard cells change shape by taking in or losing water — when full of water (turgid) they bow outward, opening the stoma.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Transpiration -->
+<section class="panel">
+  <h2>Transpiration</h2>
+  <div class="tile orange">
+    <p><b>Transpiration</b> is the loss of water vapour from the surface of plant leaves. When stomata are open:</p>
+    <ul>
+      <li>Water vapour <b>evaporates</b> from cells lining the air spaces inside the leaf</li>
+      <li>Water vapour passes out through the <b>stomata by diffusion</b> (down a concentration gradient — moist inside, drier outside)</li>
+    </ul>
+    <p style="margin-top:8px">Most water vapour is lost from leaves through stomata when they are open. This is one reason plants close stomata — to <b>limit water loss</b>.</p>
+  </div>
+</section>
+
+<!-- Transpiration stream -->
+<section class="panel">
+  <h2>The transpiration stream</h2>
+  <div class="stream">
+    <div class="stream-box sb-air">☁️ Water vapour leaves through open stomata by diffusion</div>
+    <div class="s-arrow">⬆️</div>
+    <div class="stream-box sb-leaf">🍃 Water evaporates from cells lining air spaces in leaf</div>
+    <div class="s-arrow">⬆️</div>
+    <div class="stream-box sb-stem">🌿 Water moves up through xylem in stem</div>
+    <div class="s-arrow">⬆️</div>
+    <div class="stream-box sb-root">🌱 Water moves from roots into xylem</div>
+    <div class="s-arrow">⬆️</div>
+    <div class="stream-box sb-soil">🌍 Water absorbed from soil into roots by osmosis</div>
+  </div>
+  <div class="must" style="margin-top:10px">💡 The transpiration stream is <b>driven by evaporation</b> from the leaves. As water is lost from the top, more is pulled up behind it — like water moving up a drinking straw. Anything that affects the rate of evaporation affects transpiration rate.</div>
+</section>
+
+<!-- Maths: mean stomata calculation -->
+<section class="panel">
+  <h2>Maths: calculating mean stomata count</h2>
+  <div class="maths">
+    <b>Finding the mean:</b> Add all values and divide by the number of samples.
+    <div class="calc">Example: counts were 10, 12, 15, 8, 10
+Mean = (10 + 12 + 15 + 8 + 10) ÷ 5 = 55 ÷ 5 = <b>11</b> stomata per 0.1 mm²</div>
+    <p style="margin-top:10px"><b>Estimating total stomata on a leaf:</b></p>
+    <div class="calc">If mean = 11 per 0.1 mm²  →  per 1 mm² = 11 × 10 = 110
+If leaf area = 5 cm² = 500 mm²  →  total = 110 × 500 = <b>55,000 stomata</b></div>
+    <p style="margin-top:8px">Give answers to <b>3 significant figures</b> when asked.</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>a) What are stomata? [1] b) Describe their role in the plant [2]</li>
+      <li>Describe the process of transpiration [3 marks]</li>
+      <li>Explain how water moves up a plant in the transpiration stream [3 marks]</li>
+      <li>Calculate the mean number of stomata (to 3 significant figures) [3 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key for transpiration stream [3 marks]:</b> Water evaporates from leaf surface → passes out of stomata by diffusion → more water drawn up through xylem → water absorbed by roots from soil by osmosis.</p>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">stomata (stoma)</span>
+  <span class="keyword">guard cells</span>
+  <span class="keyword">transpiration</span>
+  <span class="keyword">transpiration stream</span>
+  <span class="keyword">evaporation</span>
+  <span class="keyword">diffusion</span>
+  <span class="keyword">concentration gradient</span>
+  <span class="keyword">xylem</span>
+  <span class="keyword">osmosis</span>
+  <span class="keyword">turgid</span>
+  <span class="keyword">water vapour</span>
+</section>
+
+</div>
+</body>
+</html>

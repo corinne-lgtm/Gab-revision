@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.3 The heart</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(30px,5vw,58px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.flow{display:flex;flex-direction:column;gap:4px}
+.flow-box{border-radius:14px;padding:11px 16px;font-weight:900;font-size:14px;text-align:center;border:2px solid}
+.flow-arrow{text-align:center;font-size:20px;color:#5a7a5a;line-height:1.2}
+.fb-deox{background:var(--blue2);border-color:#a0c8e0;color:var(--blue)}
+.fb-oxy{background:var(--red2);border-color:#e0a8a0;color:var(--red)}
+.treat-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.treat-table th{background:var(--dark);color:white;padding:10px 14px;text-align:left}
+.treat-table td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.treat-table tr:last-child td{border-bottom:none}
+.treat-table tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+.pro{color:#2e6b40;font-weight:900}
+.con{color:#c0392b;font-weight:900}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.3 The heart</h1>
+  <p>The structure and functions of the heart, and ways of solving problems with blood supply and valves.</p>
+  <div class="nav">
+    <a href="biology-b4-3-revision.html">📖 Revision</a>
+    <a href="biology-b4-3-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">The heart is a <span style="color:#c0392b">double pump</span> — the right side sends blood to the <span style="color:#2e6b8a">lungs</span>, the left pumps it <span style="color:#3a7d44">around the whole body</span>. Four chambers, four valves.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Structure and functions of the heart</li>
+      <li>Ways of solving problems with blood supply and valves</li>
+    </ul>
+    <div class="must" style="margin-top:8px">❤️ ~70 beats/min. Walls almost entirely muscle, supplied by <b>coronary arteries</b>.</div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>The four chambers</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">🔵</div>
+      <h3>Right atrium</h3>
+      <p>Receives <b>deoxygenated blood</b> from the body via the <b>vena cava</b>. Contracts → pushes blood into right ventricle.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🔷</div>
+      <h3>Right ventricle</h3>
+      <p>Pumps <b>deoxygenated blood</b> to the lungs via the <b>pulmonary artery</b>. Thinner walls — only pumps to nearby lungs.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">🔴</div>
+      <h3>Left atrium</h3>
+      <p>Receives <b>oxygenated blood</b> from the lungs via the <b>pulmonary vein</b>. Contracts → pushes blood into left ventricle.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">❤️</div>
+      <h3>Left ventricle</h3>
+      <p>Pumps <b>oxygenated blood</b> around the whole body via the <b>aorta</b>. <b>Thickest muscular wall</b> — generates highest pressure to reach all organs.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">⚠️ Atria fill from veins → contract together to fill ventricles → ventricles contract to pump blood OUT. Valves close to prevent backflow — this is the heartbeat sound.</div>
+</section>
+
+<section class="panel">
+  <h2>Blood flow through the heart</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div>
+      <h3 style="color:#2e6b8a;margin-bottom:8px">🔵 Right side (deoxygenated)</h3>
+      <div class="flow">
+        <div class="flow-box fb-deox">Body → Vena cava</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box fb-deox">Right atrium</div>
+        <div class="flow-arrow">↓ valve</div>
+        <div class="flow-box fb-deox">Right ventricle</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box fb-deox">Pulmonary artery → Lungs</div>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:#c0392b;margin-bottom:8px">🔴 Left side (oxygenated)</h3>
+      <div class="flow">
+        <div class="flow-box fb-oxy">Lungs → Pulmonary vein</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box fb-oxy">Left atrium</div>
+        <div class="flow-arrow">↓ valve</div>
+        <div class="flow-box fb-oxy">Left ventricle</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box fb-oxy">Aorta → Body</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Coronary heart disease (CHD)</h2>
+  <div class="tile orange">
+    <p><b>Coronary arteries</b> supply the heart muscle with oxygen and glucose. In CHD, <b>fatty material</b> builds up on the artery lining — narrowing the vessels. Reduced blood flow → less oxygen → pain, heart attack, or death.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Treatments for CHD</h2>
+  <div style="overflow-x:auto">
+  <table class="treat-table">
+    <tr><th>Treatment</th><th>How it works</th><th>Advantages ✅</th><th>Disadvantages ❌</th></tr>
+    <tr>
+      <td><b>Stent</b></td>
+      <td>Metal mesh inserted into narrowed artery. Balloon inflates to open artery and fix stent in place, then removed. Stent holds artery open permanently.</td>
+      <td><span class="pro">No general anaesthetic. Quick recovery. Many release drugs to prevent clotting.</span></td>
+      <td><span class="con">Risk of blood clot around stent. Not suitable for very blocked arteries.</span></td>
+    </tr>
+    <tr>
+      <td><b>Bypass surgery</b></td>
+      <td>Blocked coronary artery replaced with a section of vein from elsewhere (e.g. leg), re-routing blood around the blockage.</td>
+      <td><span class="pro">Works for badly blocked arteries. Long-lasting solution.</span></td>
+      <td><span class="con">Expensive. General anaesthetic needed. Major surgery — longer recovery, higher risk.</span></td>
+    </tr>
+    <tr>
+      <td><b>Statins</b></td>
+      <td>Drugs that reduce blood cholesterol levels, slowing the rate of fatty deposit build-up in coronary arteries.</td>
+      <td><span class="pro">Non-invasive. Preventative. Easy daily tablet.</span></td>
+      <td><span class="con">Long-term medication. Possible side effects. Don't fix existing blockages.</span></td>
+    </tr>
+  </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Draw a flow chart showing blood passing through the heart [4 marks]</li>
+      <li>Explain the importance of: heart valves [2] / coronary arteries [2] / thickened left ventricle wall [3]</li>
+      <li>Why is blood in arteries bright red — but not in pulmonary arteries? [3 marks]</li>
+      <li>Describe what a stent is [2 marks]</li>
+      <li>Table: advantages and disadvantages of stents vs bypass surgery [4 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key:</b> Left ventricle wall is THICKER because it pumps blood the full distance around the body — needs much higher pressure than the right ventricle (which only pumps to the lungs).</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">atrium / atria</span>
+  <span class="keyword">ventricle</span>
+  <span class="keyword">vena cava</span>
+  <span class="keyword">aorta</span>
+  <span class="keyword">pulmonary artery</span>
+  <span class="keyword">pulmonary vein</span>
+  <span class="keyword">heart valve</span>
+  <span class="keyword">coronary artery</span>
+  <span class="keyword">coronary heart disease</span>
+  <span class="keyword">stent</span>
+  <span class="keyword">bypass surgery</span>
+  <span class="keyword">statins</span>
+</section>
+
+</div>
+</body>
+</html>

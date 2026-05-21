@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B6.4 Developing drugs</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* drug development flow */
+.flow-stages{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+.stage{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 10px;min-width:110px;text-align:center;font-size:13px;flex-shrink:0}
+.stage .snum{background:var(--green);color:white;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;margin:0 auto 6px}
+.stage .compounds{font-size:10px;color:var(--muted);margin-top:4px}
+.arrow{align-self:center;color:var(--muted);font-size:18px;flex-shrink:0}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B6 Preventing and treating disease</div>
+  <h1>B6.4 Developing drugs</h1>
+  <p>The stages involved in testing and trialling new drugs, and why testing is so important.</p>
+  <div class="nav">
+    <a href="biology-b6-4-revision.html">📖 Revision</a>
+    <a href="biology-b6-4-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Before a drug can be prescribed, it must be proven to be <span style="color:#3a7d44">effective</span>, <span style="color:#c0392b">safe</span>, and the right <span style="color:#2e6b8a">dosage</span> — through a series of stages taking up to 12 years.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>The stages involved in testing and trialling new drugs</li>
+      <li>Why testing new drugs is so important</li>
+    </ul>
+  </div>
+</section>
+
+<!-- What a good medicine needs -->
+<section class="panel">
+  <h2>What makes a good medicine?</h2>
+  <div class="grid">
+    <div class="tile lime"><div class="icon">💊</div><h3>Effective</h3><p>Must <b>prevent or cure</b> a disease, or at least make you feel better.</p></div>
+    <div class="tile red"><div class="icon">⚠️</div><h3>Safe</h3><p>Must not be too <b>toxic (poisonous)</b> or have unacceptable side effects.</p></div>
+    <div class="tile blue"><div class="icon">🏺</div><h3>Stable</h3><p>Must be usable under <b>normal conditions</b> and can be stored for some time.</p></div>
+    <div class="tile orange"><div class="icon">🎯</div><h3>Absorbable</h3><p>Must reach its <b>target</b> in the body and be cleared from your system once it has done its work.</p></div>
+  </div>
+</section>
+
+<!-- Drug development stages -->
+<section class="panel">
+  <h2>Stages of drug development</h2>
+  <div class="flow-stages">
+    <div class="stage"><div class="snum">1</div><b>Drug discovery</b><br>5,000–10,000 compounds<div class="compounds">~4.5 yrs</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="snum">2</div><b>Preclinical trials</b><br>10–20 compounds<div class="compounds">~1.5 yrs</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="snum">3</div><b>Phase 1</b><br>Clinical trials<br>5–10 compounds<div class="compounds">~1.5 yrs</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="snum">4</div><b>Phase 2</b><br>Clinical trials<br>2–5 compounds<div class="compounds">~2.5 yrs</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="snum">5</div><b>Phase 3</b><br>Clinical trials<br>1–2 compounds<div class="compounds">~1.5 yrs</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="snum">6</div><b>Licencing</b><br>1 medicine<div class="compounds">~1.5 yrs</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="snum">7</div><b>Phase 4</b><br>Ongoing monitoring</div>
+  </div>
+
+  <h3 style="margin-top:16px">Stage details</h3>
+  <div class="tile blue" style="margin-top:8px">
+    <b>Preclinical testing (stages 1–2):</b>
+    <ul>
+      <li>Tested in the laboratory on <b>cells, tissues, and live animals</b></li>
+      <li>Finds out if chemicals are <b>toxic</b> and if they have any <b>efficacy</b></li>
+      <li>Also gives information on possible doses and side effects</li>
+      <li>Animals used as models to predict how the drug may behave in humans</li>
+      <li>Many chemicals <b>fail at this stage</b></li>
+    </ul>
+  </div>
+  <div class="tile orange" style="margin-top:10px">
+    <b>Clinical trials (stages 3–5):</b>
+    <ul>
+      <li><b>Phase 1:</b> Very low doses given to <b>healthy volunteers</b> — checks for safety and side effects</li>
+      <li><b>Phase 2:</b> Tested on a <b>small number of patients</b> — checks if it treats the disease</li>
+      <li><b>Phase 3:</b> <b>Larger-scale trials</b> — finds optimum dose; safety and efficacy confirmed on larger population</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Double blind trials -->
+<section class="panel">
+  <h2>Double blind trials</h2>
+  <div class="tile purple">
+    <div class="icon">🎭</div>
+    <p>In human trials, a <b>double blind trial</b> is used to measure effectiveness accurately:</p>
+    <ul>
+      <li>Patients randomly allocated to receive either the <b>real drug</b> or a <b>placebo</b></li>
+      <li><b>Neither the patient nor the doctor</b> knows who has the real drug until the trial is complete</li>
+      <li>The <b>placebo</b> often contains a different drug already used to treat the disease — so patients are not deprived of treatment</li>
+      <li>This removes <b>bias</b> — results are based on the drug's effect, not on psychological expectation</li>
+    </ul>
+    <div class="must" style="margin-top:8px">💡 Results are published in peer-reviewed journals — other scientists can check the results to prevent false claims. National bodies like NICE decide if a drug gives good value for money and should be prescribed by the NHS.</div>
+  </div>
+</section>
+
+<!-- Why testing is important — thalidomide -->
+<section class="panel">
+  <h2>Why testing matters — the thalidomide case</h2>
+  <div class="tile red">
+    <p>Thalidomide was used in the 1950s–60s as a sedative and anti-nausea drug for pregnant women — <b>without adequate testing for safety in pregnancy</b>. It caused <b>limb deformities</b> in developing foetuses. Thousands of children were born with severely shortened or absent limbs.</p>
+    <p style="margin-top:8px">Florey and Chain had tested penicillin directly on a human volunteer — this would no longer be acceptable. The thalidomide disaster showed the need for <b>full, rigorous pre-clinical and clinical trialling</b> of all drugs before use in patients.</p>
+    <p style="margin-top:8px">Today, drug development takes up to <b>12 years</b> and costs ~<b>£1700 million</b>. This long process exists to prevent similar disasters.</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Define efficacy, toxicity, and dosage [3 marks]</li>
+      <li>Draw a flow chart of the main stages in testing new drugs [6 marks]</li>
+      <li>Explain why an active drug is often used as the placebo instead of a sugar pill [3 marks]</li>
+      <li>Discuss the need for full trialling — consider Florey/Chain and thalidomide — how the process has changed over time [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">efficacy</span>
+  <span class="keyword">toxicity</span>
+  <span class="keyword">dosage</span>
+  <span class="keyword">preclinical testing</span>
+  <span class="keyword">clinical trial</span>
+  <span class="keyword">placebo</span>
+  <span class="keyword">double blind trial</span>
+  <span class="keyword">peer review</span>
+  <span class="keyword">NICE</span>
+  <span class="keyword">thalidomide</span>
+  <span class="keyword">licencing</span>
+</section>
+
+</div>
+</body>
+</html>

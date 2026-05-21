@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B6.3 Discovering drugs</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* fleming timeline */
+.tl{display:flex;flex-direction:column;gap:8px}
+.tl-item{display:flex;gap:12px;align-items:flex-start}
+.tl-dot{background:var(--green);color:white;border-radius:999px;padding:4px 10px;font-weight:900;font-size:12px;flex-shrink:0;margin-top:4px}
+.tl-body{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 14px;flex:1}
+/* pros/cons */
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:750px){.big-idea,.pc{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B6 Preventing and treating disease</div>
+  <h1>B6.3 Discovering drugs</h1>
+  <p>Drugs from plants, how penicillin was discovered, and how scientists look for new drugs.</p>
+  <div class="nav">
+    <a href="biology-b6-3-revision.html">📖 Revision</a>
+    <a href="biology-b6-3-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Drugs have traditionally come from <span style="color:#3a7d44">plants</span> or <span style="color:#2e6b8a">microorganisms</span> — most are now synthesised by chemists, but living organisms remain an important <span style="color:#e07b2a">starting point</span>.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Some drugs traditionally extracted from plants</li>
+      <li>How penicillin was discovered</li>
+      <li>How scientists look for new drugs</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Drugs from plants -->
+<section class="panel">
+  <h2>Drugs from plants</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🌿</div>
+      <h3>Digitalis / Digoxin</h3>
+      <p>Extracted from <b>foxgloves</b>. Used since the 18th century to <b>strengthen the heartbeat</b>. Several drugs including digoxin are still used for older patients with heart problems. Large amounts can act as poisons.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🌳</div>
+      <h3>Aspirin</h3>
+      <p>Originated from a compound in the <b>bark of willow trees</b>. Anti-inflammatory and pain-relieving properties first recorded in 400BC. In 1897 Felix Hoffmann synthesised <b>acetyl salicylic acid (aspirin)</b> — relieves pain and inflammation better than willow bark with fewer side effects. Still widely used today.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🍋</div>
+      <h3>Noni fruit</h3>
+      <p>Used in <b>traditional medicine</b> in Costa Rica and many other countries to treat infections and non-communicable diseases. Recent research shows it has <b>antibiotic properties</b>. May be the source of new antibiotics or other medicines.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Discovery of penicillin -->
+<section class="panel">
+  <h2>How penicillin was discovered</h2>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-dot">1928</div>
+      <div class="tl-body"><b>Alexander Fleming</b> was growing bacteria on culture plates. He was careless and often left the lids off. After one holiday, he noticed <b>mould (Penicillium) growing on his plates</b> — and a clear ring where bacteria had been killed around the mould. He realised something in the mould was killing bacteria and called it <b>'penicillin'</b>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">1928–38</div>
+      <div class="tl-body">Fleming tried unsuccessfully for several years to <b>extract an active penicillin juice</b> from the mould. Eventually gave up and moved on.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">~1938</div>
+      <div class="tl-body"><b>Ernst Chain and Howard Florey</b> set about extracting penicillin — and succeeded. They gave some to a man dying of a blood infection → he recovered almost miraculously — until the penicillin ran out. He died, but they had proven penicillin could cure bacterial infections in people.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">WWII</div>
+      <div class="tl-body">Working with the company <b>Pfizer</b> in the USA, Florey and Chain produced penicillin on an industrial scale — enough to supply the demands of World War II. It is still used today.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Modern drug discovery -->
+<section class="panel">
+  <h2>Medicines for the future — synthetic drugs</h2>
+  <div class="tile blue">
+    <p>Most drugs are now <b>synthesised by research chemists</b> using chemical banks and computer models — much faster and cheaper than extracting from organisms. However, the <b>starting point may still be a chemical from a plant or microorganism</b> — compounds can be modified to produce more powerful, easily synthesised molecules.</p>
+    <p style="margin-top:8px">Scientists are also <b>collecting soil samples globally</b> — searching for new antibiotics from soil microorganisms. Only ~1% of soil microorganisms can be cultured in the lab, but a special unit now grows them in controlled ways. In 2015 a new antibiotic from soil bacteria destroyed all bacteria in tests — including MRSA and other antibiotic-resistant pathogens. It worked in mice — but will it work in humans?</p>
+  </div>
+</section>
+
+<!-- Advantages/disadvantages of searching living organisms -->
+<section class="panel">
+  <h2>Advantages and disadvantages of looking for new antibiotics in living organisms</h2>
+  <div class="pc">
+    <div class="tile green">
+      <div class="icon">✅</div>
+      <h3>Advantages</h3>
+      <ul>
+        <li>Living organisms have evolved chemicals that kill other organisms — they are <b>natural and proven</b> starting points</li>
+        <li>Traditional medicines have been used safely for centuries — provides a safety record</li>
+        <li>Compounds from organisms can be <b>synthesised and modified</b> to be more effective</li>
+        <li>Soil microorganisms represent an <b>untapped source</b> of novel antibiotics</li>
+      </ul>
+    </div>
+    <div class="tile red" style="background:linear-gradient(135deg,#fde8e6,var(--paper));border-color:#e0a8a0">
+      <div class="icon">❌</div>
+      <h3>Disadvantages</h3>
+      <ul>
+        <li><b>Difficult to find</b> — only ~1% of soil microorganisms can be cultured; many traditional plants haven't been tested</li>
+        <li>Long, expensive development and <b>clinical trial process</b> before use in humans</li>
+        <li>Extracting directly from organisms is <b>not easily scalable</b> — small amounts only</li>
+        <li>Compounds may work in mice but <b>fail in human trials</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Describe how Alexander Fleming discovered penicillin [3 marks]</li>
+      <li>Suggest reasons for using synthetic forms of drugs rather than using plant extracts directly [4 marks]</li>
+      <li>Discuss the advantages and disadvantages of looking for new antibiotic compounds in living organisms — using the noni fruit as an example [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">digitalis / digoxin</span>
+  <span class="keyword">aspirin</span>
+  <span class="keyword">willow bark</span>
+  <span class="keyword">penicillin</span>
+  <span class="keyword">Alexander Fleming</span>
+  <span class="keyword">Penicillium mould</span>
+  <span class="keyword">Chain and Florey</span>
+  <span class="keyword">synthesised</span>
+  <span class="keyword">noni fruit</span>
+  <span class="keyword">MRSA</span>
+  <span class="keyword">soil microorganisms</span>
+</section>
+
+</div>
+</body>
+</html>

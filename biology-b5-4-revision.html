@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.4 Viral diseases</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* disease comparison table */
+.dis-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.dis-table th{background:var(--green);color:white;padding:9px 14px;text-align:left}
+.dis-table td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.dis-table tr:last-child td{border-bottom:none}
+.dis-table tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.4 Viral diseases</h1>
+  <p>Examples of plant and animal diseases caused by viruses: measles, HIV/AIDS, and tobacco mosaic virus.</p>
+  <div class="nav">
+    <a href="biology-b5-4-revision.html">📖 Revision</a>
+    <a href="biology-b5-4-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Viruses <span style="color:#c0392b">damage and destroy cells</span> — there are no medicines to cure viral diseases. Prevention through <span style="color:#3a7d44">vaccination, isolation</span> and <span style="color:#2e6b8a">hygiene</span> is the key.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objective</h3>
+    <ul><li>Examples of viral diseases in animals and plants: measles, HIV/AIDS, tobacco mosaic virus (TMV)</li></ul>
+  </div>
+</section>
+
+<!-- Comparison table -->
+<section class="panel">
+  <h2>Three viral diseases at a glance</h2>
+  <div style="overflow-x:auto">
+  <table class="dis-table">
+    <tr><th>Feature</th><th>🔴 Measles</th><th>🟣 HIV/AIDS</th><th>🌿 Tobacco Mosaic Virus</th></tr>
+    <tr><td><b>Organism affected</b></td><td>Humans (especially children)</td><td>Humans</td><td>Plants (~150 species incl. tomatoes, tobacco)</td></tr>
+    <tr><td><b>Symptoms</b></td><td>Fever, red skin rash. Can cause blindness, brain damage. May be fatal.</td><td>Initially mild flu-like illness. Late stage (AIDS): immune system so damaged it can no longer fight infections or certain cancers.</td><td>Distinctive 'mosaic' discolouration pattern on leaves. Reduces photosynthesis → stunts growth → reduces crop yield.</td></tr>
+    <tr><td><b>How spread</b></td><td>Droplet infection — inhalation of droplets from coughs/sneezes. Very infectious.</td><td>Direct sexual contact; exchange of body fluids (blood); sharing needles; mother to child in breast milk.</td><td>Contact between diseased and healthy plants; insects (vectors); can remain infectious in soil for ~50 years.</td></tr>
+    <tr><td><b>Treatment?</b></td><td>❌ No treatment / no cure</td><td>No cure, no vaccine. Antiretroviral drugs can prevent development of AIDS and give near-normal life expectancy.</td><td>❌ No treatment</td></tr>
+    <tr><td><b>Prevention</b></td><td>Vaccination ✅; isolation of infected; improved living conditions</td><td>Condoms; not sharing needles; screening blood; HIV+ mothers bottle-feed (not breastfeed)</td><td>Field hygiene; pest control (kill insect vectors); grow TMV-resistant crop strains</td></tr>
+    <tr><td><b>Global facts</b></td><td>145,700 deaths in 2013. Now rare in UK due to vaccination programme.</td><td>~35 million infected globally. ~1.5 million deaths in 2013. Antiretroviral drugs hard to access in sub-Saharan Africa.</td><td>First virus ever to be isolated. Widespread plant pathogen.</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- HIV detail -->
+<section class="panel">
+  <h2>HIV/AIDS in detail</h2>
+  <div class="tile purple">
+    <div class="icon">🟣</div>
+    <p>HIV attacks the <b>immune cells</b>. After initial mild illness, the virus remains <b>hidden in the immune system for years</b> — many people don't know they are infected. Gradually the immune system is so damaged that it can no longer deal with other infections or certain cancers — at this point the patient has developed <b>AIDS</b>.</p>
+    <p style="margin-top:8px">The time between HIV infection and AIDS depends on: <b>level of nutrition, overall health, access to antiretroviral drugs</b>.</p>
+    <div class="must" style="margin-top:8px">💡 Antiretroviral drugs must be started <b>as soon as possible</b> after infection for the best chance of long-term survival. In sub-Saharan Africa, access to these drugs is difficult → life expectancy for HIV+ people is still very low.</div>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State main symptoms of measles [2] + suggest why measles is now rare in UK [2]</li>
+      <li>Describe the link between HIV and AIDS [1] + explain why untreated HIV is usually fatal [4]</li>
+      <li>Calculate number of measles cases from graph between dates [3 marks each]</li>
+      <li>Assuming 5% of patients will die, calculate how many people died from measles [4 marks]</li>
+      <li>Discuss the link between vaccination rates and cases of measles globally [4 marks]</li>
+      <li>Discuss similarities and differences between TMV in plants and measles in people [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">measles</span>
+  <span class="keyword">HIV</span>
+  <span class="keyword">AIDS</span>
+  <span class="keyword">tobacco mosaic virus (TMV)</span>
+  <span class="keyword">antiretroviral drugs</span>
+  <span class="keyword">immune cells</span>
+  <span class="keyword">droplet infection</span>
+  <span class="keyword">vaccination</span>
+  <span class="keyword">mosaic pattern</span>
+  <span class="keyword">photosynthesis</span>
+  <span class="keyword">vector</span>
+  <span class="keyword">body fluids</span>
+</section>
+
+</div>
+</body>
+</html>

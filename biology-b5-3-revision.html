@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.3 Preventing infections</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* timeline */
+.timeline{display:flex;flex-direction:column;gap:8px}
+.tl-item{display:flex;gap:14px;align-items:flex-start}
+.tl-dot{background:var(--green);color:white;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;margin-top:4px}
+.tl-body{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 16px;flex:1}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.3 Preventing infections</h1>
+  <p>How the spread of disease can be reduced or prevented.</p>
+  <div class="nav">
+    <a href="biology-b5-3-revision.html">📖 Revision</a>
+    <a href="biology-b5-3-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Disease spread can be <span style="color:#3a7d44">prevented</span> by hygiene, isolating the infected, destroying vectors, and <span style="color:#2e6b8a">vaccination</span> — many of these ideas came from 19th century pioneers.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objective</h3>
+    <ul><li>How the spread of disease can be reduced or prevented</li></ul>
+  </div>
+</section>
+
+<!-- Historical pioneers -->
+<section class="panel">
+  <h2>19th century pioneers</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">1850s</div>
+      <div class="tl-body">
+        <b>Ignaz Semmelweis</b> — noticed women delivered by medical students (who went straight from dissecting corpses) died far more often than those delivered by midwives. He insisted doctors <b>wash hands before delivering babies</b> → fewer mothers died from childbed fever. Other doctors were very resistant — germ theory was not yet established.
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">1860s</div>
+      <div class="tl-body">
+        <b>Louis Pasteur</b> — proved that microorganisms cause disease (germ theory). Developed <b>vaccines</b> against anthrax and rabies.
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">1860s</div>
+      <div class="tl-body">
+        <b>Joseph Lister</b> — started using <b>antiseptic chemicals</b> to destroy pathogens before they caused infection in operating theatres — greatly reducing post-surgery deaths.
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">Later</div>
+      <div class="tl-body">
+        Improved <b>microscopes</b> allowed pathogens to be seen — convincing people they were really there. Understanding how diseases spread helped us prevent transmission.
+      </div>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">⚠️ Why were other doctors resistant to Semmelweis? At the time there was no germ theory — no scientific framework to explain WHY handwashing would help. Doctors considered themselves clean and professional — the idea of being the cause of their patients' deaths was offensive. There was no way to see microorganisms.</div>
+</section>
+
+<!-- Prevention methods -->
+<section class="panel">
+  <h2>Preventing the spread of communicable diseases</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🧼</div>
+      <h3>Hygiene</h3>
+      <ul>
+        <li>Washing hands — after toilet, before cooking, after contact with infected person</li>
+        <li>Disinfectants on kitchen surfaces, toilets</li>
+        <li>Keeping raw meat away from ready-to-eat food</li>
+        <li>Coughing/sneezing into a tissue, then washing hands</li>
+        <li>Hygiene of agricultural machinery (plant diseases)</li>
+      </ul>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🏥</div>
+      <h3>Isolating infected individuals</h3>
+      <p>People (or plants) with serious infectious diseases are <b>kept away from healthy people</b>. The fewer contacts, the less likely pathogens are passed on.</p>
+      <p style="margin-top:6px">For plants: smaller infected plants can be moved and destroyed easily.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">🦟</div>
+      <h3>Destroying or controlling vectors</h3>
+      <p>Some diseases are spread by vectors. For example:</p>
+      <ul>
+        <li><b>Mosquitoes</b> carry malaria and dengue fever</li>
+        <li><b>Houseflies</b> carry 100+ human diseases</li>
+        <li><b>Rats</b> act as vectors</li>
+        <li><b>Aphids</b> transmit 150+ plant diseases</li>
+      </ul>
+      <p style="margin-top:6px">Destroying or controlling vectors reduces the spread of the diseases they carry.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">💉</div>
+      <h3>Vaccination</h3>
+      <p>A small amount of a <b>harmless form of a pathogen</b> is introduced into the body. The immune system responds and becomes <b>prepared</b> — if the real pathogen is encountered later, the person will not become ill.</p>
+      <p style="margin-top:6px">Very effective for humans and animals. <b>Cannot protect plants</b> — they have no immune system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Give three examples of things people can do to reduce spread of pathogens [3 marks]</li>
+      <li>For each example, explain how it helps prevent spread [6 marks]</li>
+      <li>Suggest why other doctors were so resistant to Semmelweis's ideas [6 marks]</li>
+    </ul>
+    <p style="margin-top:10px"><b>Key for Semmelweis resistance [6 marks]:</b> No germ theory yet / could not see microorganisms / no scientific explanation WHY it would work / doctors offended at idea they caused deaths / Semmelweis had no professional authority to enforce change / no controlled trials / ideas challenged the medical establishment.</p>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">Semmelweis</span>
+  <span class="keyword">Pasteur</span>
+  <span class="keyword">Lister</span>
+  <span class="keyword">germ theory</span>
+  <span class="keyword">hygiene</span>
+  <span class="keyword">isolation</span>
+  <span class="keyword">vector control</span>
+  <span class="keyword">vaccination</span>
+  <span class="keyword">antiseptic</span>
+  <span class="keyword">handwashing</span>
+  <span class="keyword">disinfectant</span>
+</section>
+
+</div>
+</body>
+</html>

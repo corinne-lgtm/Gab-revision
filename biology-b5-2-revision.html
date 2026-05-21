@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.2 Pathogens and disease</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,52px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* bacteria vs virus comparison */
+.bv{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:750px){.big-idea,.bv{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.2 Pathogens and disease</h1>
+  <p>What pathogens are, how they cause disease, and how they are spread.</p>
+  <div class="nav">
+    <a href="biology-b5-2-revision.html">📖 Revision</a>
+    <a href="biology-b5-2-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Pathogens are <span style="color:#c0392b">microorganisms</span> that cause disease — they enter the body and <span style="color:#3a7d44">reproduce rapidly</span>, producing toxins or <span style="color:#2e6b8a">damaging cells</span> directly.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>What pathogens are</li>
+      <li>How they cause disease</li>
+      <li>How pathogens are spread</li>
+    </ul>
+  </div>
+</section>
+
+<!-- What are pathogens -->
+<section class="panel">
+  <h2>What are pathogens?</h2>
+  <div class="tile red">
+    <p>Pathogens are <b>microorganisms that cause communicable (infectious) diseases</b>. They include:</p>
+    <div class="grid" style="margin-top:10px">
+      <div style="background:#fde8e6;border-radius:14px;padding:12px"><b>🦠 Bacteria</b> — single-celled living organisms</div>
+      <div style="background:#fde8e6;border-radius:14px;padding:12px"><b>🔴 Viruses</b> — even smaller than bacteria</div>
+      <div style="background:#fde8e6;border-radius:14px;padding:12px"><b>🍄 Fungi</b> — common in plant diseases</div>
+      <div style="background:#fde8e6;border-radius:14px;padding:12px"><b>🔵 Protists</b> — single-celled organisms (e.g. malaria)</div>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">💡 Most bacteria are harmless or beneficial (e.g. making yoghurt, cheese, treating sewage, decomposers). Scientists estimate most people have 1–2 kg of bacteria in their gut! Pathogenic bacteria are the minority.</div>
+</section>
+
+<!-- Bacteria vs viruses -->
+<section class="panel">
+  <h2>Bacteria vs Viruses — differences</h2>
+  <div class="bv">
+    <div class="tile orange">
+      <div class="icon">🦠</div>
+      <h3>Bacteria</h3>
+      <ul>
+        <li>Single-celled <b>living organisms</b></li>
+        <li><b>Much smaller</b> than animal/plant cells</li>
+        <li>Reproduce by <b>binary fission</b> (splitting in two)</li>
+        <li>Can live <b>outside</b> cells</li>
+        <li>May produce <b>toxins (poisons)</b> that affect the body</li>
+        <li>May also <b>directly damage cells</b></li>
+        <li>Example diseases: tuberculosis, tetanus, salmonella, chlamydia</li>
+      </ul>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🔴</div>
+      <h3>Viruses</h3>
+      <ul>
+        <li><b>Not cells</b> — even smaller than bacteria</li>
+        <li>Usually have <b>regular shapes</b></li>
+        <li><b>Take over</b> host cells to reproduce — live and replicate <b>inside cells</b></li>
+        <li><b>Burst out</b> of cells (cell lysis) — causing cell damage and death</li>
+        <li>Cause diseases in <b>every type of living organism</b></li>
+        <li>Example diseases: flu, HIV, measles, COVID-19</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- How pathogens cause disease -->
+<section class="panel">
+  <h2>How pathogens cause disease</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">☠️</div>
+      <h3>Toxins</h3>
+      <p>Bacteria may produce <b>toxins (poisons)</b> that damage body cells and cause symptoms like high temperature, headaches, and rashes.</p>
+    </div>
+    <div class="tile red">
+      <div class="icon">💥</div>
+      <h3>Cell damage</h3>
+      <p>Both bacteria and viruses can <b>directly damage cells</b>. Viruses replicate inside cells and <b>burst out</b> — destroying them. This triggers the immune response.</p>
+    </div>
+    <div class="tile purple">
+      <div class="icon">🤒</div>
+      <h3>Symptoms</h3>
+      <p>Common symptoms — high temperature, headaches, rashes — are mostly caused by the body's <b>immune response</b> to the damage and toxins, not always the pathogen itself.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How pathogens are spread -->
+<section class="panel">
+  <h2>How pathogens are spread</h2>
+  <div class="grid">
+    <div class="tile blue">
+      <div class="icon">💨</div>
+      <h3>By air (droplet infection)</h3>
+      <p>When you cough, sneeze, or talk, you expel tiny <b>droplets full of pathogens</b>. Others breathe them in. Droplets travel at up to 100 miles per hour when you sneeze.</p>
+      <p style="margin-top:6px">Examples: flu, tuberculosis, common cold.</p>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🤝</div>
+      <h3>By direct contact</h3>
+      <p>Diseases spread by <b>skin contact, sexual contact, cuts/scratches</b>, or needle sharing. Animals can act as <b>vectors</b> carrying pathogens between hosts.</p>
+      <p style="margin-top:6px">Examples: HIV, hepatitis, syphilis, chlamydia, rabies. Plant diseases: direct contact of infected plant material.</p>
+    </div>
+    <div class="tile lime">
+      <div class="icon">💧</div>
+      <h3>By water</h3>
+      <p>Fungal spores in water, or drinking/eating <b>contaminated food or water</b> (with sewage). The pathogen enters the body through the digestive system.</p>
+      <p style="margin-top:6px">Examples: cholera, diarrhoeal diseases, salmonella.</p>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">💡 Lifestyle factors affect spread — overcrowded conditions with no sewage system mean infectious diseases spread much more rapidly.</div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>a) What causes infectious diseases? [1] b) How do pathogens make you ill? [2]</li>
+      <li>Give two ways diseases spread person to person [2] + plant to plant [2]</li>
+      <li>For each method, explain how pathogens are passed [4 marks]</li>
+      <li>Describe and explain main differences between bacteria and viruses, and how they cause disease [6 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">pathogen</span>
+  <span class="keyword">bacteria</span>
+  <span class="keyword">virus</span>
+  <span class="keyword">fungi</span>
+  <span class="keyword">protist</span>
+  <span class="keyword">toxin</span>
+  <span class="keyword">binary fission</span>
+  <span class="keyword">droplet infection</span>
+  <span class="keyword">direct contact</span>
+  <span class="keyword">vector</span>
+  <span class="keyword">contaminated water</span>
+  <span class="keyword">infectious disease</span>
+</section>
+
+</div>
+</body>
+</html>

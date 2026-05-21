@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B8.1 Photosynthesis</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,58px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+/* equation box */
+.equation{background:var(--dark);color:#c8e040;border-radius:18px;padding:18px 24px;text-align:center;font-size:18px;font-weight:900;font-family:monospace;margin:12px 0;letter-spacing:1px}
+.equation .arrow{color:white;font-style:italic}
+/* carbon pathway */
+.pathway{display:flex;flex-direction:column;gap:6px}
+.pstep{display:flex;gap:12px;align-items:flex-start}
+.pdot{background:var(--green);color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;margin-top:4px}
+.pbody{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 14px;flex:1}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B8 Photosynthesis</div>
+  <h1>B8.1 Photosynthesis</h1>
+  <p>The raw materials and energy source for photosynthesis, that it is an endothermic reaction, and the equations that summarise it.</p>
+  <div class="nav">
+    <a href="biology-b8-1-revision.html">📖 Revision</a>
+    <a href="biology-b8-1-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Photosynthesis converts <span style="color:#3a7d44">CO₂ + water</span> into <span style="color:#2e6b8a">glucose + oxygen</span> using <span style="color:#e07b2a">light energy</span> — it is an endothermic reaction taking place in chloroplasts.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Raw materials and energy source for photosynthesis</li>
+      <li>Photosynthesis is an endothermic reaction</li>
+      <li>The equations that summarise photosynthesis</li>
+    </ul>
+  </div>
+</section>
+
+<!-- The equation -->
+<section class="panel">
+  <h2>The photosynthesis equation</h2>
+  <div class="equation">carbon dioxide + water <span class="arrow">—light→</span> glucose + oxygen</div>
+  <div class="equation" style="font-size:16px">6CO₂ + 6H₂O <span class="arrow">—light→</span> C₆H₁₂O₆ + 6O₂</div>
+  <div class="must" style="margin-top:10px">⚠️ <b>Study tip:</b> Photosynthesis is <b>endothermic</b> — energy is transferred FROM the environment TO the chloroplasts by light. The energy input (breaking CO₂ and H₂O bonds) is greater than the energy output (forming glucose and O₂ bonds). The extra energy is stored in the glucose.</div>
+</section>
+
+<!-- What and where -->
+<section class="panel">
+  <h2>Where photosynthesis happens</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🟢</div>
+      <h3>Chloroplasts</h3>
+      <p>Cells in algae and plant leaves contain <b>chloroplasts</b> filled with the green pigment <b>chlorophyll</b>. Chlorophyll absorbs light energy to power the reaction.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">💧</div>
+      <h3>Raw materials</h3>
+      <ul>
+        <li><b>Carbon dioxide (CO₂)</b> — from the air, through stomata</li>
+        <li><b>Water (H₂O)</b> — absorbed from the soil through roots, carried up in the xylem</li>
+        <li><b>Light energy</b> — from the sun, absorbed by chlorophyll</li>
+      </ul>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🍬</div>
+      <h3>Products</h3>
+      <ul>
+        <li><b>Glucose (C₆H₁₂O₆)</b> — used immediately for respiration, or converted to starch for storage</li>
+        <li><b>Oxygen (O₂)</b> — released into the air as a by-product</li>
+      </ul>
+    </div>
+  </div>
+  <div class="must" style="margin-top:12px">💡 Every year plants produce about <b>368,000,000,000 tonnes of oxygen</b> — so there is plenty to go around!</div>
+</section>
+
+<!-- Carbon atom pathway -->
+<section class="panel">
+  <h2>Path of a carbon atom — from CO₂ to starch</h2>
+  <div class="pathway">
+    <div class="pstep"><div class="pdot">1</div><div class="pbody"><b>Carbon dioxide (CO₂)</b> in the air enters the leaf through the <b>stomata</b> by diffusion down a concentration gradient</div></div>
+    <div class="pstep"><div class="pdot">2</div><div class="pbody">CO₂ diffuses into the <b>mesophyll cells</b> and into the chloroplasts</div></div>
+    <div class="pstep"><div class="pdot">3</div><div class="pbody">In the chloroplast, CO₂ reacts with water → <b>glucose (C₆H₁₂O₆)</b> — the carbon is now part of the glucose molecule</div></div>
+    <div class="pstep"><div class="pdot">4</div><div class="pbody">Glucose molecules are joined together to form <b>insoluble starch</b> — stored in the leaf and elsewhere in the plant. The carbon atom is now part of the starch molecule.</div></div>
+  </div>
+</section>
+
+<!-- Leaf adaptations -->
+<section class="panel">
+  <h2>Leaf adaptations for photosynthesis</h2>
+  <div class="grid">
+    <div class="tile lime"><div class="icon">📐</div><h3>Broad and flat</h3><p>Large surface area for maximum <b>light absorption</b></p></div>
+    <div class="tile green"><div class="icon">📏</div><h3>Thin</h3><p>Short diffusion distances for CO₂ to reach cells — and for O₂ to leave</p></div>
+    <div class="tile blue"><div class="icon">💧</div><h3>Veins (xylem + phloem)</h3><p>Xylem brings <b>water</b> to leaf cells; phloem removes glucose products</p></div>
+    <div class="tile orange"><div class="icon">💨</div><h3>Air spaces</h3><p>Allow CO₂ to diffuse to cells and O₂ to diffuse out — through stomata</p></div>
+    <div class="tile purple"><div class="icon">🔵</div><h3>Guard cells + stomata</h3><p>Open and close to <b>regulate gas exchange</b> and water loss</p></div>
+    <div class="tile lime"><div class="icon">🟢</div><h3>Chlorophyll in chloroplasts</h3><p>Absorbs light energy — palisade cells near top, closest to light source</p></div>
+  </div>
+</section>
+
+<!-- Algae -->
+<section class="panel">
+  <h2>Algae and photosynthesis</h2>
+  <div class="tile blue">
+    <p>Algae are aquatic — adapted to photosynthesise in water. They absorb <b>CO₂ dissolved in the water</b> around them. They have a <b>large surface area</b>. The oxygen they produce also dissolves in the water as it is released — vital for aquatic life.</p>
+    <p style="margin-top:8px">To demonstrate that a plant is photosynthesising: use aquatic plants such as <b>Cabomba or Elodea</b> — you can see the oxygen bubbles they produce. The gas relights a glowing splint, confirming it is rich in oxygen.</p>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>State where a plant gets CO₂ and water for photosynthesis [2] + where algae get CO₂, water, and light [3]</li>
+      <li>Describe the path taken by a carbon atom from CO₂ in the air to being part of a starch molecule in a plant [5 marks]</li>
+      <li>Explain why a leaf kept in the light for 24 hours tests blue-black for starch, but one kept in the dark for 24 hours has no effect on iodine [4 marks]</li>
+      <li>a) Give the word equation for photosynthesis [2] b) Explain why photosynthesis is an endothermic reaction [3 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">photosynthesis</span>
+  <span class="keyword">chloroplast</span>
+  <span class="keyword">chlorophyll</span>
+  <span class="keyword">endothermic</span>
+  <span class="keyword">carbon dioxide</span>
+  <span class="keyword">glucose</span>
+  <span class="keyword">starch</span>
+  <span class="keyword">stomata</span>
+  <span class="keyword">by-product</span>
+  <span class="keyword">algae</span>
+  <span class="keyword">Cabomba / Elodea</span>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B9.3 Anaerobic respiration</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,54px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(20px,2.5vw,30px);margin:0 0 14px;letter-spacing:-.5px}
+h3{margin:0 0 8px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.tile.green{background:linear-gradient(135deg,var(--green2),var(--paper));border-color:#a8d4b0}
+.tile.lime{background:linear-gradient(135deg,var(--lime2),var(--paper));border-color:#b8d88a}
+.tile.blue{background:linear-gradient(135deg,var(--blue2),var(--paper));border-color:#a0c8e0}
+.tile.orange{background:linear-gradient(135deg,var(--orange2),var(--paper));border-color:#e8b878}
+.tile.purple{background:linear-gradient(135deg,var(--purple2),var(--paper));border-color:#c0a0d8}
+.tile.red{background:linear-gradient(135deg,var(--red2),var(--paper));border-color:#e0a8a0}
+.icon{font-size:32px;margin-bottom:8px}
+.keyword{display:inline-block;background:var(--dark);color:white;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px;margin:3px}
+.must{background:#e8f5d8;border:2px dashed #7ab648;border-radius:14px;padding:12px;margin-top:10px}
+ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
+.exam{background:var(--dark);color:white;border-radius:22px;padding:18px}
+.exam b{color:#c8e040}
+.big-idea{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.statement{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;font-size:20px;font-weight:900;line-height:1.2}
+.equation{background:var(--dark);color:#c8e040;border-radius:18px;padding:14px 22px;text-align:center;font-size:16px;font-weight:900;font-family:monospace;margin:10px 0;letter-spacing:1px}
+.equation .arrow{color:white;font-style:italic}
+/* comparison table */
+.ctab{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.ctab th{background:var(--dark);color:white;padding:9px 14px;text-align:left}
+.ctab td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.ctab tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+.ctab tr:last-child td{border-bottom:none}
+.ctab td:first-child{font-weight:700}
+@media(max-width:750px){.big-idea{grid-template-columns:1fr}.statement{font-size:17px}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B9 Respiration</div>
+  <h1>B9.3 Anaerobic respiration</h1>
+  <p>Why less energy is transferred by anaerobic than aerobic respiration, what an oxygen debt is, and anaerobic respiration in different organisms.</p>
+  <div class="nav">
+    <a href="biology-b9-3-revision.html">📖 Revision</a>
+    <a href="biology-b9-3-questions.html">✏️ Questions</a>
+  </div>
+</section>
+
+<section class="panel big-idea">
+  <div class="statement">Anaerobic respiration provides energy <span style="color:#c0392b">without oxygen</span> — but is less efficient. In animals it produces <span style="color:#e07b2a">lactic acid</span>; in yeast it produces <span style="color:#2e6b8a">ethanol + CO₂</span>.</div>
+  <div class="tile green">
+    <div class="icon">🎯</div>
+    <h3>Learning objectives</h3>
+    <ul>
+      <li>Why less energy is transferred by anaerobic than aerobic respiration</li>
+      <li>What is meant by an oxygen debt (Higher)</li>
+      <li>That anaerobic respiration takes place in different organisms</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Equations -->
+<section class="panel">
+  <h2>The equations</h2>
+  <h3>Animals (including humans):</h3>
+  <div class="equation">glucose <span class="arrow">→</span> lactic acid (+ energy transferred to environment)</div>
+  <h3>Plants and yeast (fermentation):</h3>
+  <div class="equation">glucose <span class="arrow">→</span> ethanol + carbon dioxide (+ energy transferred to environment)</div>
+  <div class="must" style="margin-top:10px">⚠️ <b>Key difference:</b> Animals produce <b>lactic acid</b>; plants and yeast produce <b>ethanol + CO₂</b>. Both are less efficient than aerobic respiration — the glucose is incompletely broken down.</div>
+</section>
+
+<!-- Comparison table -->
+<section class="panel">
+  <h2>Aerobic vs Anaerobic respiration</h2>
+  <table class="ctab">
+    <tr><th></th><th>Aerobic</th><th>Anaerobic (animals)</th><th>Anaerobic (yeast)</th></tr>
+    <tr><td>Oxygen needed?</td><td>Yes</td><td>No</td><td>No</td></tr>
+    <tr><td>Products</td><td>CO₂ + water</td><td>Lactic acid</td><td>Ethanol + CO₂</td></tr>
+    <tr><td>Energy transferred</td><td>Much more (complete breakdown)</td><td>Less (incomplete)</td><td>Less (incomplete)</td></tr>
+    <tr><td>Where?</td><td>Mitochondria + cytoplasm</td><td>Cytoplasm</td><td>Cytoplasm</td></tr>
+    <tr><td>Glucose breakdown</td><td>Complete</td><td>Incomplete</td><td>Incomplete</td></tr>
+  </table>
+</section>
+
+<!-- Muscle fatigue and oxygen debt -->
+<section class="panel">
+  <h2>Muscle fatigue and oxygen debt (Higher)</h2>
+  <div class="tile red">
+    <p>When muscles work very hard, lactic acid builds up. This causes <b>muscle fatigue</b> — fibres stop contracting efficiently, muscles ache.</p>
+    <p style="margin-top:8px">The build-up of lactic acid creates an <b>oxygen debt</b> — the amount of oxygen needed to convert the accumulated lactic acid back to glucose (in the liver). This process also produces CO₂ and water.</p>
+  </div>
+  <div class="equation">lactic acid + oxygen <span class="arrow">→</span> carbon dioxide + water</div>
+  <div class="must" style="margin-top:10px">💡 This is why you keep <b>puffing and panting</b> after you stop exercising — your heart rate and breathing rate stay high to supply the extra O₂ needed to pay off the oxygen debt. The bigger the debt (more lactic acid), the longer you pant. A <b>fit person</b> pays off the debt faster because their heart and lungs are more efficient.</div>
+</section>
+
+<!-- Anaerobic in other organisms -->
+<section class="panel">
+  <h2>Anaerobic respiration in other organisms</h2>
+  <div class="grid">
+    <div class="tile lime">
+      <div class="icon">🍞</div>
+      <h3>Yeast (fermentation)</h3>
+      <p>Yeast produces <b>ethanol + CO₂</b> during anaerobic respiration — known as <b>fermentation</b>. Used globally to make:</p>
+      <ul>
+        <li><b>Bread</b> — CO₂ makes the dough rise</li>
+        <li><b>Alcoholic drinks</b> — beer, wine, spirits</li>
+      </ul>
+    </div>
+    <div class="tile orange">
+      <div class="icon">🥛</div>
+      <h3>Bacteria</h3>
+      <p>Some bacteria produce <b>lactic acid</b> during anaerobic respiration — used to make <b>yoghurt</b> from milk. The lactic acid curdles the milk proteins.</p>
+    </div>
+    <div class="tile blue">
+      <div class="icon">🌿</div>
+      <h3>Plants</h3>
+      <p>Plant cells also respire anaerobically in waterlogged or low-oxygen conditions — producing <b>ethanol + CO₂</b> (like yeast), not lactic acid.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Exam tip -->
+<section class="panel">
+  <h2>Exam tip</h2>
+  <div class="exam">
+    <b>Common questions:</b>
+    <ul style="color:rgba(255,255,255,.85);margin-top:8px">
+      <li>Muscles ache after hard exercise — explain why [4 marks]</li>
+      <li>a) Define anaerobic respiration [1] b) Explain how it differs between animals, plants, and yeast — including benefits of each [6 marks] c) Write the word equations for animals, plants, and yeast [3 marks]</li>
+      <li>(Higher) Explain what happens when you puff and pant after exercise stops [4 marks]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Keywords -->
+<section class="panel">
+  <h2>Key words</h2>
+  <span class="keyword">anaerobic respiration</span>
+  <span class="keyword">lactic acid</span>
+  <span class="keyword">muscle fatigue</span>
+  <span class="keyword">oxygen debt</span>
+  <span class="keyword">fermentation</span>
+  <span class="keyword">ethanol</span>
+  <span class="keyword">yeast</span>
+  <span class="keyword">incomplete breakdown</span>
+  <span class="keyword">cytoplasm</span>
+</section>
+
+</div>
+</body>
+</html>
