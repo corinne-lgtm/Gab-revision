@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 4.2 The growth of the Nazi Party</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,50px);line-height:.95;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.86);margin:0 0 18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:10px;margin-top:18px;overflow:hidden}
+.progress-bar{height:10px;border-radius:999px;background:var(--yellow);width:0%;transition:width .4s}
+.progress-label{color:rgba(255,255,255,.75);font-size:13px;margin-top:6px;font-weight:900}
+
+/* SECTION LABEL */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 10px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px 22px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.05);transition:border-color .2s}
+.q-card.correct{border-color:#6fae75;background:#f2faf3}
+.q-card.wrong{border-color:#d94b42;background:#fff6f5}
+.q-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0}
+.q-num.tf{background:var(--blue)}
+.q-text{font-weight:900;font-size:16px;line-height:1.35;flex:1}
+.options{display:grid;gap:8px;margin-top:12px}
+.opt{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 16px;cursor:pointer;font-size:15px;font-weight:700;transition:background .15s,border-color .15s;text-align:left;width:100%}
+.opt:hover:not(:disabled){background:#f0f4f8;border-color:#a9b8c5}
+.opt:disabled{cursor:default}
+.opt.correct-ans{background:#dff0e2;border-color:#6fae75;color:#2e6b37}
+.opt.wrong-ans{background:#ffe0dd;border-color:#d94b42;color:#7c2a25}
+.opt.missed-ans{background:#ffe4bd;border-color:#f29a2e;color:#7a4d09}
+.tf-row{display:flex;gap:10px;margin-top:12px}
+.tf-row .opt{flex:1;text-align:center;font-size:16px}
+.feedback{font-size:13px;margin-top:8px;font-weight:900;display:none}
+.feedback.show{display:block}
+.feedback.ok{color:var(--green)}
+.feedback.no{color:var(--red)}
+
+/* RESULT BOX */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;margin-top:24px;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.22)}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:12px}
+.result-score{font-size:52px;font-weight:900;letter-spacing:-2px;color:var(--yellow)}
+.result-label{font-size:20px;font-weight:900;margin:8px 0 6px}
+.result-msg{color:rgba(255,255,255,.8);font-size:16px;line-height:1.5;max-width:480px;margin:0 auto 18px}
+.result-mum{background:var(--yellow);color:var(--dark);font-weight:900;border-radius:14px;padding:14px 20px;display:inline-block;font-size:17px;margin-top:6px}
+.btn-retry{background:white;color:var(--dark);font-weight:900;border:none;padding:12px 32px;border-radius:999px;cursor:pointer;font-size:15px;margin-top:16px}
+
+@media(max-width:600px){.tf-row{flex-direction:column}.wrap{padding:14px}}
+@media print{.nav,button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>4.2 The growth of the Nazi Party</h1>
+    <p>20 questions · Answer each one to see your score instantly.</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch4-2-revision.html">📖 Revision notes</a>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="pbar"></div></div>
+    <div class="progress-label" id="plabel">0 of 20 answered</div>
+  </section>
+
+  <!-- MULTIPLE CHOICE -->
+  <div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+
+  <div id="questions"></div>
+
+  <!-- RESULT -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="rEmoji"></div>
+    <div class="result-score" id="rScore"></div>
+    <div class="result-label" id="rLabel"></div>
+    <div class="result-msg" id="rMsg"></div>
+    <div class="result-mum" id="rMum"></div>
+    <br>
+    <button class="btn-retry" onclick="location.reload()">↩ Try again</button>
+  </div>
+
+</div>
+
+<script>
+const QS = [
+  // ---- MULTIPLE CHOICE ----
+  {
+    type:"mc",
+    q:"Approximately how many Germans were unemployed by 1932?",
+    opts:["2 million","4 million","6 million","8 million"],
+    ans:2
+  },
+  {
+    type:"mc",
+    q:"How many Reichstag seats did the Nazis win in 1928?",
+    opts:["12","107","196","230"],
+    ans:0
+  },
+  {
+    type:"mc",
+    q:"Which article of the Weimar constitution allowed the President to pass emergency laws?",
+    opts:["Article 12","Article 25","Article 48","Article 54"],
+    ans:2
+  },
+  {
+    type:"mc",
+    q:"How many Reichstag seats did the Nazis win in July 1932?",
+    opts:["107","148","196","230"],
+    ans:3
+  },
+  {
+    type:"mc",
+    q:"Which of the following was NOT listed as a way Goebbels spread Nazi propaganda?",
+    opts:["Posters and leaflets","Radio and cinema newsreels","University lectures","Rallies and newspapers"],
+    ans:2
+  },
+  {
+    type:"mc",
+    q:"What was Nazi Party membership approximately in 1928?",
+    opts:["10,000","100,000","400,000","1,000,000"],
+    ans:1
+  },
+  {
+    type:"mc",
+    q:"Which group was NOT mentioned as being attracted to the Nazis because of fear of communism?",
+    opts:["Business owners","Farmers","Churchgoers","Factory workers"],
+    ans:3
+  },
+  {
+    type:"mc",
+    q:"What modern campaign method did Hitler use in 1932 to visit many cities quickly?",
+    opts:["Trains","Motorcycles","Aeroplanes","Radio broadcasts only"],
+    ans:2
+  },
+  {
+    type:"mc",
+    q:"In November 1932, how many Reichstag seats did the Nazis hold?",
+    opts:["107","196","230","270"],
+    ans:1
+  },
+  {
+    type:"mc",
+    q:"What did the SA primarily do at Nazi meetings?",
+    opts:["Counted votes","Distributed leaflets","Protected meetings and disrupted opponents","Organised aeroplane tours"],
+    ans:2
+  },
+
+  // ---- TRUE / FALSE ----
+  {
+    type:"tf",
+    q:"The Nazis created the Great Depression, which helped them gain support.",
+    ans:false,
+    explain:"False — the Nazis did not create the Depression; they used it to their advantage by blaming others and promising solutions."
+  },
+  {
+    type:"tf",
+    q:"Between 1928 and 1932, the Nazi Party grew from a small party into Germany's largest party.",
+    ans:true,
+    explain:"True — this is the central fact of section 4.2."
+  },
+  {
+    type:"tf",
+    q:"Hitler's speeches were described as calm and factual rather than emotional.",
+    ans:false,
+    explain:"False — Hitler gave emotional speeches that made him seem confident and full of hope."
+  },
+  {
+    type:"tf",
+    q:"Many middle-class Germans feared communism partly because of the Russian Revolution.",
+    ans:true,
+    explain:"True — the Russian Revolution made many property owners fear that communists would take what they owned."
+  },
+  {
+    type:"tf",
+    q:"Nazi Party membership rose from about 100,000 in 1928 to around 400,000 by 1932.",
+    ans:true,
+    explain:"True — this is stated directly in section 5 of the revision notes."
+  },
+  {
+    type:"tf",
+    q:"The Weimar government was praised for its strong and decisive handling of the Depression.",
+    ans:false,
+    explain:"False — Weimar politicians argued and struggled to agree, which made many people lose trust in democracy."
+  },
+  {
+    type:"tf",
+    q:"The SA was the Nazi paramilitary organisation that protected meetings and intimidated opponents.",
+    ans:true,
+    explain:"True — the SA made the Nazis look organised and powerful."
+  },
+  {
+    type:"tf",
+    q:"The Nazis won the most seats in the Reichstag in both July and November 1932.",
+    ans:true,
+    explain:"True — even though seats fell from 230 to 196 in November, they remained the largest party both times."
+  },
+  {
+    type:"tf",
+    q:"The Nazis won 107 Reichstag seats in 1928 as the Depression began to deepen.",
+    ans:false,
+    explain:"False — 107 seats was the result in 1930. In 1928 they won only 12 seats."
+  },
+  {
+    type:"tf",
+    q:"According to the revision notes, no single factor alone explains Nazi growth.",
+    ans:true,
+    explain:"True — the revision notes explicitly state 'No single factor explains Nazi growth. The best answer links several reasons together.'"
+  }
+];
+
+let answered = 0;
+let score = 0;
+const total = QS.length;
+
+function buildQuiz(){
+  const container = document.getElementById("questions");
+  let mcCount = 0, tfCount = 0;
+  QS.forEach((q, i) => {
+    const isTF = q.type === "tf";
+    if(isTF && mcCount === 10 && tfCount === 0){
+      const lbl = document.createElement("div");
+      lbl.className = "section-label";
+      lbl.textContent = "Part 2 — True or False (10 questions)";
+      container.appendChild(lbl);
+    }
+    if(!isTF) mcCount++; else tfCount++;
+
+    const card = document.createElement("div");
+    card.className = "q-card";
+    card.id = "card-"+i;
+
+    const meta = document.createElement("div");
+    meta.className = "q-meta";
+
+    const num = document.createElement("div");
+    num.className = "q-num" + (isTF?" tf":"");
+    num.textContent = i+1;
+    meta.appendChild(num);
+
+    const qtxt = document.createElement("div");
+    qtxt.className = "q-text";
+    qtxt.textContent = q.q;
+    meta.appendChild(qtxt);
+    card.appendChild(meta);
+
+    const opts = document.createElement("div");
+    opts.className = isTF ? "tf-row" : "options";
+
+    const choices = isTF ? ["True","False"] : q.opts;
+    choices.forEach((opt, oi) => {
+      const btn = document.createElement("button");
+      btn.className = "opt";
+      btn.textContent = opt;
+      btn.onclick = () => handleAnswer(i, oi, btn, opts, card, q);
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+
+    const fb = document.createElement("div");
+    fb.className = "feedback";
+    fb.id = "fb-"+i;
+    card.appendChild(fb);
+
+    container.appendChild(card);
+  });
+}
+
+function handleAnswer(qi, chosen, btn, optsEl, card, q){
+  const btns = optsEl.querySelectorAll(".opt");
+  btns.forEach(b => b.disabled = true);
+
+  let isCorrect = false;
+  if(q.type === "mc"){
+    isCorrect = (chosen === q.ans);
+    btns.forEach((b,bi) => {
+      if(bi === q.ans) b.className += " correct-ans";
+      else if(bi === chosen && !isCorrect) b.className += " wrong-ans";
+    });
+  } else {
+    // tf: 0=True, 1=False
+    const userBool = (chosen === 0);
+    isCorrect = (userBool === q.ans);
+    btns.forEach((b,bi) => {
+      const bval = (bi === 0); // True btn
+      if(bval === q.ans) b.className += " correct-ans";
+      else if(bi === chosen && !isCorrect) b.className += " wrong-ans";
+    });
+  }
+
+  if(isCorrect) score++;
+
+  card.classList.add(isCorrect ? "correct" : "wrong");
+
+  const fb = document.getElementById("fb-"+qi);
+  fb.className = "feedback show " + (isCorrect ? "ok" : "no");
+  if(q.type === "tf" && q.explain){
+    fb.textContent = isCorrect ? "✓ Correct! " + q.explain : "✗ Incorrect. " + q.explain;
+  } else {
+    fb.textContent = isCorrect ? "✓ Correct!" : "✗ Incorrect — the right answer is highlighted in orange.";
+    if(!isCorrect){
+      btns[q.ans].className = btns[q.ans].className.replace("correct-ans","missed-ans");
+    }
+  }
+
+  answered++;
+  updateProgress();
+  if(answered === total) setTimeout(showResult, 500);
+}
+
+function updateProgress(){
+  const pct = (answered/total)*100;
+  document.getElementById("pbar").style.width = pct+"%";
+  document.getElementById("plabel").textContent = answered+" of "+total+" answered";
+}
+
+function showResult(){
+  const box = document.getElementById("resultBox");
+  box.classList.add("show");
+  box.scrollIntoView({behavior:"smooth",block:"center"});
+
+  document.getElementById("rScore").textContent = score+"/"+total;
+
+  let emoji, label, msg;
+  if(score >= 18){
+    emoji="🏆"; label="Outstanding!";
+    msg="Exceptional work — you clearly know this topic inside out. Keep revising at this level and the exam will be no problem at all.";
+  } else if(score >= 14){
+    emoji="👍"; label="Good effort!";
+    msg="Solid understanding of the key ideas. Go back over any questions you got wrong and you'll be ready to ace the real thing.";
+  } else {
+    emoji="📖"; label="Keep revising!";
+    msg="Some gaps to fill — that's fine! Head back to the revision notes, re-read the sections you found tricky, then try the quiz again.";
+  }
+
+  document.getElementById("rEmoji").textContent = emoji;
+  document.getElementById("rLabel").textContent = label;
+  document.getElementById("rMsg").textContent = msg;
+  document.getElementById("rMum").textContent = "Show this to mum — "+score+"/20 "+emoji;
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

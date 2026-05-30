@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 6.2 The Night of the Long Knives</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,50px);line-height:.95;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px;font-size:13px}
+
+/* Progress bar */
+.progress-wrap{background:rgba(255,255,255,.15);border-radius:999px;height:8px;margin-top:18px}
+.progress-bar{background:var(--yellow);height:8px;border-radius:999px;width:0%;transition:width .4s ease}
+.progress-label{color:rgba(255,255,255,.75);font-size:13px;font-weight:900;margin-top:6px}
+
+/* Section labels */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 12px;padding-left:4px}
+
+/* Question cards */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:20px 22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .2s}
+.q-card.correct{border-color:#6fae75}
+.q-card.wrong{border-color:#d94b42}
+.q-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0}
+.q-num.done-correct{background:var(--green)}
+.q-num.done-wrong{background:var(--red)}
+.q-text{font-weight:900;font-size:16px;line-height:1.35}
+
+/* Options */
+.options{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;background:white;border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;font-weight:700;transition:background .15s,border-color .15s;text-align:left;width:100%}
+.opt:hover:not(:disabled){background:#f0eae0;border-color:#b8aa9a}
+.opt:disabled{cursor:default}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;border:2px solid var(--line)}
+.opt.correct-ans{background:var(--green2);border-color:#6fae75}
+.opt.correct-ans .opt-letter{background:var(--green);color:white;border-color:var(--green)}
+.opt.wrong-ans{background:var(--red2);border-color:#d94b42}
+.opt.wrong-ans .opt-letter{background:var(--red);color:white;border-color:var(--red)}
+.opt.missed-ans{background:var(--orange2);border-color:#d4873a}
+.opt.missed-ans .opt-letter{background:var(--orange);color:white;border-color:var(--orange)}
+
+/* True/False */
+.tf-wrap{display:flex;gap:10px}
+.tf-btn{flex:1;padding:13px;border-radius:14px;border:2px solid var(--line);background:white;font-weight:900;font-size:16px;cursor:pointer;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:#f0eae0;border-color:#b8aa9a}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct-ans{background:var(--green2);border-color:#6fae75;color:#2e6b36}
+.tf-btn.wrong-ans{background:var(--red2);border-color:#d94b42;color:#8a2020}
+.tf-btn.missed-ans{background:var(--orange2);border-color:#d4873a;color:#7a4a00}
+
+/* Feedback blurb */
+.feedback{display:none;margin-top:10px;font-size:13px;font-weight:700;padding:8px 12px;border-radius:10px}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#2e6b36}
+.feedback.ko{background:var(--red2);color:#8a2020}
+
+/* Results box */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:28px;margin-top:28px;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.22)}
+.result-box.show{display:block}
+.result-emoji{font-size:60px;margin-bottom:10px}
+.result-score{font-size:clamp(42px,8vw,72px);font-weight:900;color:var(--yellow);line-height:1}
+.result-label{font-size:20px;font-weight:900;color:rgba(255,255,255,.85);margin:8px 0 4px}
+.result-msg{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:18px}
+.result-mum{background:var(--yellow);color:var(--dark);font-weight:900;font-size:17px;border-radius:14px;padding:14px 20px;display:inline-block;margin-top:4px}
+.retry-btn{margin-top:18px;background:white;color:var(--dark);font-weight:900;border:none;border-radius:50px;padding:12px 32px;font-size:15px;cursor:pointer}
+
+@media(max-width:600px){.wrap{padding:14px}.opt{font-size:14px}}
+@media print{.nav,button,.retry-btn{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+  <h1>6.2 The Night of the Long Knives</h1>
+  <p>20 questions — answer every one to see your score.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch6-2-revision.html">📖 Revision notes</a>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
+  <div class="progress-label" id="prog-label">0 / 20 answered</div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MULTIPLE CHOICE  (Q1–Q10)
+═══════════════════════════════════════ -->
+<div class="section-label">Part A — Multiple Choice</div>
+
+<!-- Q1 -->
+<div class="q-card" id="qc1">
+  <div class="q-header">
+    <div class="q-num" id="qn1">1</div>
+    <div class="q-text">Approximately how many members did the SA have by 1934?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(1,'A')" id="q1A"><span class="opt-letter">A</span>100,000</button>
+    <button class="opt" onclick="answerMC(1,'B')" id="q1B"><span class="opt-letter">B</span>500,000</button>
+    <button class="opt" onclick="answerMC(1,'C')" id="q1C"><span class="opt-letter">C</span>3 million</button>
+    <button class="opt" onclick="answerMC(1,'D')" id="q1D"><span class="opt-letter">D</span>10 million</button>
+  </div>
+  <div class="feedback" id="fb1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="q-card" id="qc2">
+  <div class="q-header">
+    <div class="q-num" id="qn2">2</div>
+    <div class="q-text">Who led the SA at the time of the Night of the Long Knives?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(2,'A')" id="q2A"><span class="opt-letter">A</span>Heinrich Himmler</button>
+    <button class="opt" onclick="answerMC(2,'B')" id="q2B"><span class="opt-letter">B</span>Ernst Röhm</button>
+    <button class="opt" onclick="answerMC(2,'C')" id="q2C"><span class="opt-letter">C</span>Kurt von Schleicher</button>
+    <button class="opt" onclick="answerMC(2,'D')" id="q2D"><span class="opt-letter">D</span>Hermann Göring</button>
+  </div>
+  <div class="feedback" id="fb2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="q-card" id="qc3">
+  <div class="q-header">
+    <div class="q-num" id="qn3">3</div>
+    <div class="q-text">What did Röhm want the SA to do with the German army?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(3,'A')" id="q3A"><span class="opt-letter">A</span>Dissolve it completely</button>
+    <button class="opt" onclick="answerMC(3,'B')" id="q3B"><span class="opt-letter">B</span>Merge with or take over the army</button>
+    <button class="opt" onclick="answerMC(3,'C')" id="q3C"><span class="opt-letter">C</span>Train alongside the army</button>
+    <button class="opt" onclick="answerMC(3,'D')" id="q3D"><span class="opt-letter">D</span>Reduce the army's funding</button>
+  </div>
+  <div class="feedback" id="fb3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="q-card" id="qc4">
+  <div class="q-header">
+    <div class="q-num" id="qn4">4</div>
+    <div class="q-text">Why did Hitler urgently need the army's support in 1934?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(4,'A')" id="q4A"><span class="opt-letter">A</span>Germany was at war with France</button>
+    <button class="opt" onclick="answerMC(4,'B')" id="q4B"><span class="opt-letter">B</span>The Reichstag had voted to remove him</button>
+    <button class="opt" onclick="answerMC(4,'C')" id="q4C"><span class="opt-letter">C</span>President Hindenburg was old and ill and Hitler needed them to accept him as supreme leader</button>
+    <button class="opt" onclick="answerMC(4,'D')" id="q4D"><span class="opt-letter">D</span>The SA was planning to invade Austria</button>
+  </div>
+  <div class="feedback" id="fb4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="q-card" id="qc5">
+  <div class="q-header">
+    <div class="q-num" id="qn5">5</div>
+    <div class="q-text">On which date did the main killings of the Night of the Long Knives begin?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(5,'A')" id="q5A"><span class="opt-letter">A</span>30 January 1933</button>
+    <button class="opt" onclick="answerMC(5,'B')" id="q5B"><span class="opt-letter">B</span>30 June 1934</button>
+    <button class="opt" onclick="answerMC(5,'C')" id="q5C"><span class="opt-letter">C</span>2 August 1934</button>
+    <button class="opt" onclick="answerMC(5,'D')" id="q5D"><span class="opt-letter">D</span>9 November 1938</button>
+  </div>
+  <div class="feedback" id="fb5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="q-card" id="qc6">
+  <div class="q-header">
+    <div class="q-num" id="qn6">6</div>
+    <div class="q-text">Approximately how many people were killed during the Night of the Long Knives?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(6,'A')" id="q6A"><span class="opt-letter">A</span>Around 40</button>
+    <button class="opt" onclick="answerMC(6,'B')" id="q6B"><span class="opt-letter">B</span>Around 400</button>
+    <button class="opt" onclick="answerMC(6,'C')" id="q6C"><span class="opt-letter">C</span>Around 4,000</button>
+    <button class="opt" onclick="answerMC(6,'D')" id="q6D"><span class="opt-letter">D</span>Around 40,000</button>
+  </div>
+  <div class="feedback" id="fb6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="q-card" id="qc7">
+  <div class="q-header">
+    <div class="q-num" id="qn7">7</div>
+    <div class="q-text">Which of the following was also killed during the purge even though he was not an SA member?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(7,'A')" id="q7A"><span class="opt-letter">A</span>Paul von Hindenburg</button>
+    <button class="opt" onclick="answerMC(7,'B')" id="q7B"><span class="opt-letter">B</span>Kurt von Schleicher</button>
+    <button class="opt" onclick="answerMC(7,'C')" id="q7C"><span class="opt-letter">C</span>Heinrich Himmler</button>
+    <button class="opt" onclick="answerMC(7,'D')" id="q7D"><span class="opt-letter">D</span>Joseph Goebbels</button>
+  </div>
+  <div class="feedback" id="fb7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="q-card" id="qc8">
+  <div class="q-header">
+    <div class="q-num" id="qn8">8</div>
+    <div class="q-text">Which organisation gained power and importance as a direct result of carrying out the purge?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(8,'A')" id="q8A"><span class="opt-letter">A</span>The SA</button>
+    <button class="opt" onclick="answerMC(8,'B')" id="q8B"><span class="opt-letter">B</span>The Reichstag</button>
+    <button class="opt" onclick="answerMC(8,'C')" id="q8C"><span class="opt-letter">C</span>The SS</button>
+    <button class="opt" onclick="answerMC(8,'D')" id="q8D"><span class="opt-letter">D</span>The regular German army</button>
+  </div>
+  <div class="feedback" id="fb8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="q-card" id="qc9">
+  <div class="q-header">
+    <div class="q-num" id="qn9">9</div>
+    <div class="q-text">Who led the SS at the time of the Night of the Long Knives?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(9,'A')" id="q9A"><span class="opt-letter">A</span>Ernst Röhm</button>
+    <button class="opt" onclick="answerMC(9,'B')" id="q9B"><span class="opt-letter">B</span>Adolf Hitler</button>
+    <button class="opt" onclick="answerMC(9,'C')" id="q9C"><span class="opt-letter">C</span>Kurt von Schleicher</button>
+    <button class="opt" onclick="answerMC(9,'D')" id="q9D"><span class="opt-letter">D</span>Heinrich Himmler</button>
+  </div>
+  <div class="feedback" id="fb9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="q-card" id="qc10">
+  <div class="q-header">
+    <div class="q-num" id="qn10">10</div>
+    <div class="q-text">How did Hitler publicly justify the killings afterwards?</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="answerMC(10,'A')" id="q10A"><span class="opt-letter">A</span>He admitted the murders were illegal but necessary</button>
+    <button class="opt" onclick="answerMC(10,'B')" id="q10B"><span class="opt-letter">B</span>He said the army had ordered the action without his knowledge</button>
+    <button class="opt" onclick="answerMC(10,'C')" id="q10C"><span class="opt-letter">C</span>He claimed he had saved Germany from a dangerous SA plot and that the action was legal</button>
+    <button class="opt" onclick="answerMC(10,'D')" id="q10D"><span class="opt-letter">D</span>He blamed communist agents for the violence</button>
+  </div>
+  <div class="feedback" id="fb10"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TRUE / FALSE  (Q11–Q20)
+═══════════════════════════════════════ -->
+<div class="section-label">Part B — True or False</div>
+
+<!-- Q11 -->
+<div class="q-card" id="qc11">
+  <div class="q-header"><div class="q-num" id="qn11">11</div>
+  <div class="q-text">The SA had around 3 million members by 1934.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(11,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(11,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb11"></div>
+</div>
+
+<!-- Q12 -->
+<div class="q-card" id="qc12">
+  <div class="q-header"><div class="q-num" id="qn12">12</div>
+  <div class="q-text">The German regular army had approximately 3 million soldiers in 1934.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(12,false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(12,true)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb12"></div>
+</div>
+
+<!-- Q13 -->
+<div class="q-card" id="qc13">
+  <div class="q-header"><div class="q-num" id="qn13">13</div>
+  <div class="q-text">Conservative business leaders and landowners were concerned about the SA's violence and revolutionary behaviour.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(13,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(13,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb13"></div>
+</div>
+
+<!-- Q14 -->
+<div class="q-card" id="qc14">
+  <div class="q-header"><div class="q-num" id="qn14">14</div>
+  <div class="q-text">SA leaders were arrested from a hotel near Munich on 30 June 1934.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(14,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(14,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb14"></div>
+</div>
+
+<!-- Q15 -->
+<div class="q-card" id="qc15">
+  <div class="q-header"><div class="q-num" id="qn15">15</div>
+  <div class="q-text">Every person killed during the Night of the Long Knives was a member of the SA.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(15,false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(15,true)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb15"></div>
+</div>
+
+<!-- Q16 -->
+<div class="q-card" id="qc16">
+  <div class="q-header"><div class="q-num" id="qn16">16</div>
+  <div class="q-text">The Night of the Long Knives made the army more willing to support Hitler after Hindenburg died.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(16,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(16,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb16"></div>
+</div>
+
+<!-- Q17 -->
+<div class="q-card" id="qc17">
+  <div class="q-header"><div class="q-num" id="qn17">17</div>
+  <div class="q-text">After the purge, the SS became responsible for Hitler's security and helped run the Nazi police state.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(17,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(17,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb17"></div>
+</div>
+
+<!-- Q18 -->
+<div class="q-card" id="qc18">
+  <div class="q-header"><div class="q-num" id="qn18">18</div>
+  <div class="q-text">The Night of the Long Knives caused many Germans to turn against Hitler.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(18,false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(18,true)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb18"></div>
+</div>
+
+<!-- Q19 -->
+<div class="q-card" id="qc19">
+  <div class="q-header"><div class="q-num" id="qn19">19</div>
+  <div class="q-text">The Gestapo became more powerful as Germany moved towards a police state following the purge.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(19,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(19,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb19"></div>
+</div>
+
+<!-- Q20 -->
+<div class="q-card" id="qc20">
+  <div class="q-header"><div class="q-num" id="qn20">20</div>
+  <div class="q-text">The Night of the Long Knives proved that violence and murder were tools of Nazi government.</div></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(20,true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(20,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb20"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     RESULTS BOX
+═══════════════════════════════════════ -->
+<div class="result-box" id="results">
+  <div class="result-emoji" id="res-emoji"></div>
+  <div class="result-score" id="res-score"></div>
+  <div class="result-label" id="res-label"></div>
+  <div class="result-msg" id="res-msg"></div>
+  <div class="result-mum" id="res-mum"></div>
+  <br>
+  <button class="retry-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ─── Answer key ───────────────────────────────────────────────
+// MC: correct option letter
+const MC_ANSWERS = {
+  1:'C', 2:'B', 3:'B', 4:'C', 5:'B',
+  6:'B', 7:'B', 8:'C', 9:'D', 10:'C'
+};
+
+// TF: correct boolean value
+// Q12: false (army had ~100,000, not 3m)
+// Q15: false (some victims weren't SA members)
+// Q18: false (many accepted Hitler's explanation)
+const TF_ANSWERS = {
+  11:true, 12:false, 13:true, 14:true, 15:false,
+  16:true, 17:true, 18:false, 19:true, 20:true
+};
+
+const MC_CORRECT_TEXT = {
+  1:'Correct! The SA had around 3 million members by 1934.',
+  2:'Correct! Ernst Röhm led the SA.',
+  3:'Correct! Röhm wanted the SA to merge with or take over the army.',
+  4:'Correct! Hindenburg was old and ill — Hitler needed the army to accept him as leader.',
+  5:'Correct! The killings began on 30 June 1934.',
+  6:'Correct! Around 400 people were killed.',
+  7:'Correct! Kurt von Schleicher (former Chancellor) was killed despite not being in the SA.',
+  8:'Correct! The SS gained power after carrying out the purge.',
+  9:'Correct! Heinrich Himmler led the SS.',
+  10:'Correct! Hitler claimed he had stopped a dangerous SA plot and that the action was legal.'
+};
+const MC_WRONG_TEXT = {
+  1:'Not quite. The SA had around 3 million members (option C).',
+  2:'Not quite. The SA was led by Ernst Röhm (option B).',
+  3:'Not quite. Röhm wanted to merge with or take over the army (option B).',
+  4:'Not quite. Hitler needed the army because Hindenburg was old and ill (option C).',
+  5:'Not quite. The killings began on 30 June 1934 (option B).',
+  6:'Not quite. Around 400 people were killed (option B).',
+  7:'Not quite. Kurt von Schleicher was killed despite not being in the SA (option B).',
+  8:'Not quite. The SS gained power from the purge (option C).',
+  9:'Not quite. The SS was led by Heinrich Himmler (option D).',
+  10:'Not quite. Hitler claimed he had stopped a dangerous SA plot and the action was legal (option C).'
+};
+const TF_CORRECT_TEXT = {
+  11:'Correct! The SA had around 3 million members.',
+  12:'Correct! The army had only about 100,000 soldiers, not 3 million.',
+  13:'Correct! Conservative groups were alarmed by the SA\'s violence.',
+  14:'Correct! SA leaders were arrested from a hotel near Munich.',
+  15:'Correct! Some victims, like Kurt von Schleicher, were not SA members.',
+  16:'Correct! The army was pleased Röhm was gone and backed Hitler when Hindenburg died.',
+  17:'Correct! The SS took over security and helped build the police state.',
+  18:'Correct! Many Germans accepted Hitler\'s explanation and saw him as a strong leader.',
+  19:'Correct! The Gestapo grew in power as Germany moved towards a police state.',
+  20:'Correct! The purge showed that Nazi rule relied on violence and murder.'
+};
+const TF_WRONG_TEXT = {
+  11:'Not quite. The SA did have around 3 million members — that\'s True.',
+  12:'Not quite. The army had only about 100,000 soldiers — that\'s False.',
+  13:'Not quite. Conservatives were indeed worried about the SA — that\'s True.',
+  14:'Not quite. SA leaders were arrested from a hotel near Munich — that\'s True.',
+  15:'Not quite. Some victims were not SA members at all — that\'s False.',
+  16:'Not quite. The army was pleased Röhm was gone and supported Hitler — that\'s True.',
+  17:'Not quite. The SS did become the key security force — that\'s True.',
+  18:'Not quite. Many Germans actually accepted Hitler\'s version of events — that\'s False.',
+  19:'Not quite. The Gestapo did grow in power after the purge — that\'s True.',
+  20:'Not quite. The purge did prove that Nazi rule used violence and murder — that\'s True.'
+};
+
+// ─── State ─────────────────────────────────────────────────────
+let answered = 0;
+const scores = {};
+
+// ─── Multiple choice handler ───────────────────────────────────
+function answerMC(qNum, chosen) {
+  if (scores[qNum] !== undefined) return;
+  const correct = MC_ANSWERS[qNum];
+  const isRight = chosen === correct;
+  scores[qNum] = isRight ? 1 : 0;
+
+  // Disable all options
+  ['A','B','C','D'].forEach(letter => {
+    const btn = document.getElementById('q'+qNum+letter);
+    btn.disabled = true;
+    if (letter === correct) btn.classList.add('correct-ans');
+    else if (letter === chosen && !isRight) btn.classList.add('wrong-ans');
+  });
+
+  // Feedback
+  const fb = document.getElementById('fb'+qNum);
+  fb.textContent = isRight ? MC_CORRECT_TEXT[qNum] : MC_WRONG_TEXT[qNum];
+  fb.className = 'feedback show ' + (isRight ? 'ok' : 'ko');
+
+  // Card border
+  document.getElementById('qc'+qNum).classList.add(isRight ? 'correct' : 'wrong');
+  // Number circle
+  document.getElementById('qn'+qNum).classList.add(isRight ? 'done-correct' : 'done-wrong');
+
+  tick();
+}
+
+// ─── True/False handler ────────────────────────────────────────
+function answerTF(qNum, chosen) {
+  if (scores[qNum] !== undefined) return;
+  const correct = TF_ANSWERS[qNum];
+  const isRight = chosen === correct;
+  scores[qNum] = isRight ? 1 : 0;
+
+  // Button styling
+  const btns = document.querySelectorAll('#qc'+qNum+' .tf-btn');
+  btns.forEach(btn => {
+    btn.disabled = true;
+    const btnVal = btn.textContent.includes('True');
+    if (btnVal === correct) {
+      btn.classList.add('correct-ans');
+    } else if (btnVal === chosen && !isRight) {
+      btn.classList.add('wrong-ans');
+    }
+  });
+
+  const fb = document.getElementById('fb'+qNum);
+  fb.textContent = isRight ? TF_CORRECT_TEXT[qNum] : TF_WRONG_TEXT[qNum];
+  fb.className = 'feedback show ' + (isRight ? 'ok' : 'ko');
+
+  document.getElementById('qc'+qNum).classList.add(isRight ? 'correct' : 'wrong');
+  document.getElementById('qn'+qNum).classList.add(isRight ? 'done-correct' : 'done-wrong');
+
+  tick();
+}
+
+// ─── Progress & results ────────────────────────────────────────
+function tick() {
+  answered = Object.keys(scores).length;
+  const pct = (answered / 20) * 100;
+  document.getElementById('bar').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = answered + ' / 20 answered';
+
+  if (answered === 20) showResults();
+}
+
+function showResults() {
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  let emoji, label, msg;
+
+  if (total >= 18) {
+    emoji = '🏆'; label = 'Outstanding!';
+    msg = 'You really know your Night of the Long Knives!';
+  } else if (total >= 14) {
+    emoji = '👍'; label = 'Good work!';
+    msg = 'Solid knowledge — revisit any red questions to push higher.';
+  } else {
+    emoji = '📖'; label = 'Keep revising!';
+    msg = 'Head back to the revision notes and try again — you can do this!';
+  }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = total + '/20';
+  document.getElementById('res-label').textContent = label;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-mum').textContent = 'Show this to mum — ' + total + '/20 ' + emoji;
+
+  const box = document.getElementById('results');
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ─── Reset ─────────────────────────────────────────────────────
+function resetQuiz() {
+  location.reload();
+}
+</script>
+</body>
+</html>

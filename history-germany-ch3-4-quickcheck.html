@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 3.4 Golden Age</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#2a3644,#7c382f);
+  color:white;border-radius:30px;padding:30px;margin-bottom:22px;
+  box-shadow:0 14px 35px rgba(0,0,0,.18)
+}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,50px);line-height:.95;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.nav a:hover{background:var(--yellow)}
+
+/* PROGRESS BAR */
+.progress-wrap{background:rgba(255,255,255,.2);border-radius:999px;height:10px;margin-top:18px}
+.progress-bar{background:var(--yellow);height:10px;border-radius:999px;width:0%;transition:width .4s ease}
+
+/* SECTION LABELS */
+.section-label{
+  font-weight:900;text-transform:uppercase;letter-spacing:2px;
+  font-size:12px;color:var(--muted);margin:28px 0 10px
+}
+
+/* QUESTION CARD */
+.q-card{
+  background:var(--paper);border:2px solid var(--line);border-radius:22px;
+  padding:20px 22px;margin-bottom:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.04);
+  transition:border-color .2s
+}
+.q-card.correct{border-color:var(--green)}
+.q-card.wrong{border-color:var(--red)}
+.q-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{
+  background:var(--dark);color:white;border-radius:50%;
+  width:32px;height:32px;min-width:32px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:14px
+}
+.q-text{font-weight:700;font-size:16px;line-height:1.35}
+.q-type{
+  background:var(--orange2);color:#7a4a00;
+  border-radius:999px;padding:3px 10px;font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:1px;white-space:nowrap;margin-left:auto
+}
+.q-type.tf{background:var(--blue2);color:#1e3a55}
+
+/* OPTIONS */
+.options{display:grid;gap:9px}
+.opt{
+  width:100%;text-align:left;
+  background:white;border:2px solid var(--line);border-radius:14px;
+  padding:11px 16px;font-size:15px;font-weight:600;
+  cursor:pointer;transition:background .15s,border-color .15s;
+  display:flex;align-items:center;gap:10px
+}
+.opt:hover:not(:disabled){background:#f0ece5;border-color:#bbb}
+.opt:disabled{cursor:default}
+.opt .badge{
+  width:24px;height:24px;min-width:24px;border-radius:50%;
+  background:var(--line);display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:900;color:var(--muted)
+}
+.opt.correct-ans{background:var(--green2);border-color:var(--green);color:#2a5c31}
+.opt.correct-ans .badge{background:var(--green);color:white}
+.opt.wrong-ans{background:var(--red2);border-color:var(--red);color:#7a1f1b}
+.opt.wrong-ans .badge{background:var(--red);color:white}
+.opt.reveal-ans{background:var(--orange2);border-color:var(--orange);color:#7a4a00}
+.opt.reveal-ans .badge{background:var(--orange);color:white}
+
+/* TF buttons */
+.tf-row{display:flex;gap:10px}
+.tf-btn{
+  flex:1;padding:12px;border-radius:14px;border:2px solid var(--line);
+  background:white;font-size:16px;font-weight:900;cursor:pointer;
+  transition:background .15s,border-color .15s
+}
+.tf-btn:hover:not(:disabled){background:#f0ece5;border-color:#bbb}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct-ans{background:var(--green2);border-color:var(--green);color:#2a5c31}
+.tf-btn.wrong-ans{background:var(--red2);border-color:var(--red);color:#7a1f1b}
+.tf-btn.reveal-ans{background:var(--orange2);border-color:var(--orange);color:#7a4a00}
+
+/* FEEDBACK LINE */
+.feedback{display:none;font-size:13px;font-weight:700;margin-top:10px;padding:8px 12px;border-radius:10px}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#2a5c31}
+.feedback.bad{background:var(--red2);color:#7a1f1b}
+
+/* RESULT BOX */
+#result-box{
+  display:none;background:var(--dark);color:white;
+  border-radius:28px;padding:32px;text-align:center;margin-top:30px;
+  box-shadow:0 14px 40px rgba(0,0,0,.22)
+}
+#result-box h2{font-size:clamp(22px,4vw,36px);margin:0 0 8px;letter-spacing:-.5px}
+#result-box .score{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--yellow);line-height:1}
+#result-box .out-of{font-size:18px;color:rgba(255,255,255,.6);margin-bottom:16px}
+#result-box .msg{font-size:18px;background:rgba(255,255,255,.1);border-radius:16px;padding:16px 20px;line-height:1.5}
+#result-box .mum-msg{font-size:22px;font-weight:900;margin:16px 0 0;color:var(--yellow)}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{gap:7px}}
+@media print{.nav,#result-box{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>3.4 Germany's Golden Age<br><span style="color:var(--yellow)">Quick Check</span></h1>
+  <p>20 questions · 10 multiple choice + 10 true/false · answers revealed instantly</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch3-4-revision.html">📖 Revision notes</a>
+  </div>
+  <div class="progress-wrap" style="margin-top:20px">
+    <div class="progress-bar" id="prog"></div>
+  </div>
+  <div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,.6)" id="prog-label">0 / 20 answered</div>
+</section>
+
+<!-- MULTIPLE CHOICE -->
+<div class="section-label">Part A — Multiple Choice (10 questions)</div>
+
+<!-- Q1 -->
+<div class="q-card" id="qc1">
+  <div class="q-header">
+    <div class="q-num">1</div>
+    <div class="q-text">What term describes the late 1920s period of cultural growth in Weimar Germany?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc1','fb1')"><span class="badge">A</span>The Silver Age</button>
+    <button class="opt" onclick="mcq(this,'correct','qc1','fb1')"><span class="badge">B</span>The Golden Age</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc1','fb1')"><span class="badge">C</span>The Enlightenment</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc1','fb1')"><span class="badge">D</span>The Renaissance</button>
+  </div>
+  <div class="feedback" id="fb1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="q-card" id="qc2">
+  <div class="q-header">
+    <div class="q-num">2</div>
+    <div class="q-text">Under which previous ruler had censorship restricted German culture before the Weimar era?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc2','fb2')"><span class="badge">A</span>Hitler</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc2','fb2')"><span class="badge">B</span>Bismarck</button>
+    <button class="opt" onclick="mcq(this,'correct','qc2','fb2')"><span class="badge">C</span>The Kaiser</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc2','fb2')"><span class="badge">D</span>Hindenburg</button>
+  </div>
+  <div class="feedback" id="fb2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="q-card" id="qc3">
+  <div class="q-header">
+    <div class="q-num">3</div>
+    <div class="q-text">Which German film is mentioned as an example of the innovative cinema of the Golden Age?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc3','fb3')"><span class="badge">A</span>Nosferatu</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc3','fb3')"><span class="badge">B</span>The Blue Angel</button>
+    <button class="opt" onclick="mcq(this,'correct','qc3','fb3')"><span class="badge">C</span>Metropolis</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc3','fb3')"><span class="badge">D</span>Cabaret</button>
+  </div>
+  <div class="feedback" id="fb3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="q-card" id="qc4">
+  <div class="q-header">
+    <div class="q-num">4</div>
+    <div class="q-text">Which city became a major European cultural centre during the Golden Age?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc4','fb4')"><span class="badge">A</span>Munich</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc4','fb4')"><span class="badge">B</span>Hamburg</button>
+    <button class="opt" onclick="mcq(this,'correct','qc4','fb4')"><span class="badge">C</span>Berlin</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc4','fb4')"><span class="badge">D</span>Frankfurt</button>
+  </div>
+  <div class="feedback" id="fb4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="q-card" id="qc5">
+  <div class="q-header">
+    <div class="q-num">5</div>
+    <div class="q-text">What was the Bauhaus movement primarily focused on?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc5','fb5')"><span class="badge">A</span>Traditional religious painting</button>
+    <button class="opt" onclick="mcq(this,'correct','qc5','fb5')"><span class="badge">B</span>Modern architecture and design focused on simplicity and function</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc5','fb5')"><span class="badge">C</span>Romantic landscape art</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc5','fb5')"><span class="badge">D</span>Military propaganda posters</button>
+  </div>
+  <div class="feedback" id="fb5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="q-card" id="qc6">
+  <div class="q-header">
+    <div class="q-num">6</div>
+    <div class="q-text">Marlene Dietrich was associated with which aspect of the Golden Age?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc6','fb6')"><span class="badge">A</span>Literature exploring war trauma</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc6','fb6')"><span class="badge">B</span>Bauhaus architecture</button>
+    <button class="opt" onclick="mcq(this,'correct','qc6','fb6')"><span class="badge">C</span>Modern film, glamour and changing roles for women</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc6','fb6')"><span class="badge">D</span>Political satire theatre</button>
+  </div>
+  <div class="feedback" id="fb6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="q-card" id="qc7">
+  <div class="q-header">
+    <div class="q-num">7</div>
+    <div class="q-text">What did the artist Otto Dix depict in his work?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc7','fb7')"><span class="badge">A</span>Idealised portraits of German leaders</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc7','fb7')"><span class="badge">B</span>Fantasy and mythological scenes</button>
+    <button class="opt" onclick="mcq(this,'correct','qc7','fb7')"><span class="badge">C</span>Inequality, war trauma and social contrasts</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc7','fb7')"><span class="badge">D</span>Rural German landscapes</button>
+  </div>
+  <div class="feedback" id="fb7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="q-card" id="qc8">
+  <div class="q-header">
+    <div class="q-num">8</div>
+    <div class="q-text">Which writer is mentioned as exploring war and modern life during the Golden Age?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc8','fb8')"><span class="badge">A</span>Franz Kafka</button>
+    <button class="opt" onclick="mcq(this,'correct','qc8','fb8')"><span class="badge">B</span>Erich Remarque</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc8','fb8')"><span class="badge">C</span>Bertolt Brecht</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc8','fb8')"><span class="badge">D</span>Thomas Mann</button>
+  </div>
+  <div class="feedback" id="fb8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="q-card" id="qc9">
+  <div class="q-header">
+    <div class="q-num">9</div>
+    <div class="q-text">Conservative critics of Weimar culture believed that nightlife and new art demonstrated what?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc9','fb9')"><span class="badge">A</span>National strength and confidence</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc9','fb9')"><span class="badge">B</span>Germany's international prestige</button>
+    <button class="opt" onclick="mcq(this,'correct','qc9','fb9')"><span class="badge">C</span>Moral decline and weakness</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc9','fb9')"><span class="badge">D</span>Economic recovery</button>
+  </div>
+  <div class="feedback" id="fb9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="q-card" id="qc10">
+  <div class="q-header">
+    <div class="q-num">10</div>
+    <div class="q-text">Which of the following is listed as a keyword for this topic?</div>
+    <div class="q-type">MCQ</div>
+  </div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,'wrong','qc10','fb10')"><span class="badge">A</span>Totalitarianism</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc10','fb10')"><span class="badge">B</span>Reparations</button>
+    <button class="opt" onclick="mcq(this,'correct','qc10','fb10')"><span class="badge">C</span>Avant-garde</button>
+    <button class="opt" onclick="mcq(this,'wrong','qc10','fb10')"><span class="badge">D</span>Hyperinflation</button>
+  </div>
+  <div class="feedback" id="fb10"></div>
+</div>
+
+<!-- TRUE / FALSE -->
+<div class="section-label">Part B — True or False (10 questions)</div>
+
+<!-- TF1 -->
+<div class="q-card" id="qt1">
+  <div class="q-header">
+    <div class="q-num">11</div>
+    <div class="q-text">The Weimar "Golden Age" mainly took place in the early 1920s.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'False','qt1','fbt1')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'True','qt1','fbt1')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt1"></div>
+</div>
+
+<!-- TF2 -->
+<div class="q-card" id="qt2">
+  <div class="q-header">
+    <div class="q-num">12</div>
+    <div class="q-text">Under the Kaiser, Germany had experienced censorship that restricted cultural expression.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'True','qt2','fbt2')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt2','fbt2')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt2"></div>
+</div>
+
+<!-- TF3 -->
+<div class="q-card" id="qt3">
+  <div class="q-header">
+    <div class="q-num">13</div>
+    <div class="q-text">Marlene Dietrich was primarily known as a painter rather than a film star.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'False','qt3','fbt3')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt3','fbt3')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt3"></div>
+</div>
+
+<!-- TF4 -->
+<div class="q-card" id="qt4">
+  <div class="q-header">
+    <div class="q-num">14</div>
+    <div class="q-text">The Bauhaus movement focused on simplicity and function in architecture and design.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'True','qt4','fbt4')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt4','fbt4')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt4"></div>
+</div>
+
+<!-- TF5 -->
+<div class="q-card" id="qt5">
+  <div class="q-header">
+    <div class="q-num">15</div>
+    <div class="q-text">Otto Dix was known for painting idealised, flattering portraits of German society.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'False','qt5','fbt5')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt5','fbt5')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt5"></div>
+</div>
+
+<!-- TF6 -->
+<div class="q-card" id="qt6">
+  <div class="q-header">
+    <div class="q-num">16</div>
+    <div class="q-text">Supporters of Weimar culture believed Germany was modern and progressive.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'True','qt6','fbt6')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt6','fbt6')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt6"></div>
+</div>
+
+<!-- TF7 -->
+<div class="q-card" id="qt7">
+  <div class="q-header">
+    <div class="q-num">17</div>
+    <div class="q-text">Conservative critics of Weimar culture believed traditional values were being destroyed.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'True','qt7','fbt7')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt7','fbt7')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt7"></div>
+</div>
+
+<!-- TF8 -->
+<div class="q-card" id="qt8">
+  <div class="q-header">
+    <div class="q-num">18</div>
+    <div class="q-text">Jazz clubs and cabarets were a feature of Golden Age nightlife in Berlin.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'True','qt8','fbt8')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt8','fbt8')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt8"></div>
+</div>
+
+<!-- TF9 -->
+<div class="q-card" id="qt9">
+  <div class="q-header">
+    <div class="q-num">19</div>
+    <div class="q-text">"Subversion" is one of the key vocabulary words for this topic.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'True','qt9','fbt9')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt9','fbt9')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt9"></div>
+</div>
+
+<!-- TF10 -->
+<div class="q-card" id="qt10">
+  <div class="q-header">
+    <div class="q-num">20</div>
+    <div class="q-text">All Germans enthusiastically supported the cultural changes of the Golden Age.</div>
+    <div class="q-type tf">True/False</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(this,'False','qt10','fbt10')">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,'False','qt10','fbt10')">❌ False</button>
+  </div>
+  <div class="feedback" id="fbt10"></div>
+</div>
+
+<!-- RESULT BOX -->
+<div id="result-box">
+  <div style="font-size:40px;margin-bottom:10px" id="result-emoji"></div>
+  <h2>Quiz Complete!</h2>
+  <div class="score" id="result-score">–</div>
+  <div class="out-of">out of 20</div>
+  <div class="msg" id="result-msg"></div>
+  <div class="mum-msg" id="result-mum"></div>
+</div>
+
+</div><!-- /.wrap -->
+
+<script>
+const TOTAL = 20;
+let answered = 0;
+let correct = 0;
+
+function disableCard(cardId){
+  document.querySelectorAll('#'+cardId+' button').forEach(b=>b.disabled=true);
+}
+
+function showFeedback(fbId, isCorrect){
+  const fb = document.getElementById(fbId);
+  fb.textContent = isCorrect ? '✓ Correct!' : '✗ Not quite — check the revision notes.';
+  fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'bad');
+}
+
+function updateProgress(){
+  const pct = (answered/TOTAL)*100;
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = answered+' / '+TOTAL+' answered';
+  if(answered === TOTAL) showResult();
+}
+
+function mcq(btn, result, cardId, fbId){
+  const isCorrect = result === 'correct';
+  // Style clicked button
+  btn.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+  btn.querySelector('.badge').textContent = isCorrect ? '✓' : '✗';
+  // If wrong, reveal correct option
+  if(!isCorrect){
+    const opts = document.querySelectorAll('#'+cardId+' .opt');
+    opts.forEach(o=>{
+      if(o.getAttribute('onclick').includes("'correct'")){
+        o.classList.add('reveal-ans');
+        o.querySelector('.badge').textContent = '→';
+      }
+    });
+  }
+  // Mark card border
+  document.getElementById(cardId).classList.add(isCorrect ? 'correct' : 'wrong');
+  disableCard(cardId);
+  showFeedback(fbId, isCorrect);
+  if(isCorrect) correct++;
+  answered++;
+  updateProgress();
+}
+
+function tf(btn, correctAnswer, cardId, fbId){
+  // Determine what was clicked: first button = True, second = False
+  const clickedValue = btn.textContent.includes('True') ? 'True' : 'False';
+  const isCorrect = clickedValue === correctAnswer;
+  btn.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+  // Reveal correct if wrong
+  if(!isCorrect){
+    const btns = document.querySelectorAll('#'+cardId+' .tf-btn');
+    btns.forEach(b=>{
+      const bVal = b.textContent.includes('True') ? 'True' : 'False';
+      if(bVal === correctAnswer) b.classList.add('reveal-ans');
+    });
+  }
+  document.getElementById(cardId).classList.add(isCorrect ? 'correct' : 'wrong');
+  disableCard(cardId);
+  showFeedback(fbId, isCorrect);
+  if(isCorrect) correct++;
+  answered++;
+  updateProgress();
+}
+
+function showResult(){
+  const box = document.getElementById('result-box');
+  box.style.display='block';
+  document.getElementById('result-score').textContent = correct;
+  let emoji, msg, mumMsg;
+  if(correct >= 18){
+    emoji = '🏆';
+    msg = 'Brilliant work! You\'ve clearly mastered Germany\'s Golden Age. Keep this up and exam day will be a breeze.';
+    mumMsg = 'Show this to mum — '+correct+'/20 🏆';
+  } else if(correct >= 14){
+    emoji = '👍';
+    msg = 'Good effort! You know the key ideas — just go back over any questions you missed and you\'ll be exam-ready.';
+    mumMsg = 'Show this to mum — '+correct+'/20 👍';
+  } else {
+    emoji = '📖';
+    msg = 'Keep going — read through the revision notes again, focusing on the Bauhaus, key individuals and why critics disliked Weimar culture. You can do this!';
+    mumMsg = 'Show this to mum — '+correct+'/20 📖';
+  }
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-mum').textContent = mumMsg;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>

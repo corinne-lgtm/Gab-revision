@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 4.1 How did the Depression affect Germany?</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;
+}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4.5vw,46px);line-height:1;letter-spacing:-.5px;margin-bottom:10px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86)}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px;font-size:14px}
+.nav a:hover{background:var(--yellow)}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--line);border-radius:999px;height:10px;margin:0 0 22px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),#3a8f4a);border-radius:999px;width:0%;transition:width .4s ease}
+.progress-label{text-align:right;font-size:13px;font-weight:900;color:var(--muted);margin-bottom:6px}
+
+/* SECTION HEADING */
+.section-head{font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:28px 0 10px;border-bottom:2px solid var(--line);padding-bottom:8px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .25s}
+.q-card.answered{border-color:#b8c9b8}
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--red);color:white;border-radius:50%;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0}
+.q-text{font-weight:900;font-size:17px;flex:1;line-height:1.3}
+
+/* OPTIONS */
+.options{display:grid;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;background:white;border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;font-weight:600;transition:background .15s,border-color .15s,transform .1s;user-select:none}
+.opt:hover:not(.locked){background:#f0ede8;border-color:#c4b8a8;transform:translateY(-1px)}
+.opt .bubble{min-width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;background:#f5f2ee;transition:background .2s,border-color .2s;flex-shrink:0}
+
+/* States after answer */
+.opt.correct{background:var(--green2);border-color:#6fae75}
+.opt.correct .bubble{background:var(--green);border-color:var(--green);color:white}
+.opt.wrong{background:var(--red2);border-color:#d08080}
+.opt.wrong .bubble{background:var(--red);border-color:var(--red);color:white}
+.opt.missed{background:var(--orange2);border-color:#d4a050}
+.opt.missed .bubble{background:var(--orange);border-color:var(--orange);color:white}
+.opt.locked{cursor:default;transform:none}
+
+/* TRUE/FALSE */
+.tf-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-opt{display:flex;align-items:center;justify-content:center;gap:10px;background:white;border:2px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;font-size:16px;font-weight:900;transition:background .15s,border-color .15s,transform .1s;user-select:none}
+.tf-opt:hover:not(.locked){background:#f0ede8;border-color:#c4b8a8;transform:translateY(-1px)}
+.tf-opt.correct{background:var(--green2);border-color:#6fae75;color:var(--green)}
+.tf-opt.wrong{background:var(--red2);border-color:#d08080;color:var(--red)}
+.tf-opt.missed{background:var(--orange2);border-color:#d4a050;color:#b87000}
+.tf-opt.locked{cursor:default;transform:none}
+
+/* FEEDBACK LINE */
+.q-feedback{font-size:13px;font-weight:900;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+.q-feedback.show{display:block}
+.q-feedback.ok{background:var(--green2);color:#2e6e37}
+.q-feedback.no{background:var(--red2);color:#8c2a24}
+
+/* RESULT BOX */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:32px;margin-top:28px;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,.22)}
+.result-box.show{display:block;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popIn{from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)}}
+.result-emoji{font-size:72px;margin-bottom:12px}
+.result-score{font-size:clamp(40px,8vw,72px);font-weight:900;color:var(--yellow);letter-spacing:-2px;line-height:1}
+.result-label{font-size:18px;color:rgba(255,255,255,.8);margin:6px 0 16px}
+.result-msg{background:rgba(255,255,255,.1);border-radius:16px;padding:16px 20px;font-size:17px;font-weight:900;color:white;margin-bottom:18px}
+.result-show{font-size:20px;font-weight:900;color:var(--yellow);border:3px dashed var(--yellow);border-radius:16px;padding:14px 22px;display:inline-block}
+.btn-retry{background:white;color:var(--dark);font-weight:900;font-size:16px;border:none;padding:12px 32px;border-radius:50px;cursor:pointer;margin-top:18px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.btn-retry:hover{background:var(--yellow)}
+
+@media(max-width:640px){
+  .tf-options{grid-template-columns:1fr 1fr}
+  .wrap{padding:14px}
+}
+@media print{.nav,button,.result-box{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>4.1 How did the Depression affect Germany?</h1>
+    <p>20 questions · Self-marking · See how much you know!</p>
+    <nav class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch4-1-revision.html">📖 Revision notes</a>
+    </nav>
+  </section>
+
+  <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+
+  <!-- ═══════════════════════ MULTIPLE CHOICE ═══════════════════════ -->
+  <div class="section-head">Part A — Multiple Choice (Questions 1–10)</div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="qc-1">
+    <div class="q-top"><div class="q-num">1</div><div class="q-text">In which month and year did the Wall Street Crash occur?</div></div>
+    <div class="options">
+      <div class="opt" data-q="1" data-val="A"><div class="bubble">A</div>January 1928</div>
+      <div class="opt" data-q="1" data-val="B"><div class="bubble">B</div>October 1929</div>
+      <div class="opt" data-q="1" data-val="C"><div class="bubble">C</div>March 1930</div>
+      <div class="opt" data-q="1" data-val="D"><div class="bubble">D</div>November 1932</div>
+    </div>
+    <div class="q-feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="qc-2">
+    <div class="q-top"><div class="q-num">2</div><div class="q-text">Approximately how many Germans were unemployed at the peak of the crisis in 1932?</div></div>
+    <div class="options">
+      <div class="opt" data-q="2" data-val="A"><div class="bubble">A</div>1 million</div>
+      <div class="opt" data-q="2" data-val="B"><div class="bubble">B</div>3 million</div>
+      <div class="opt" data-q="2" data-val="C"><div class="bubble">C</div>6 million</div>
+      <div class="opt" data-q="2" data-val="D"><div class="bubble">D</div>10 million</div>
+    </div>
+    <div class="q-feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="qc-3">
+    <div class="q-top"><div class="q-num">3</div><div class="q-text">Why did the Wall Street Crash hit Germany so hard?</div></div>
+    <div class="options">
+      <div class="opt" data-q="3" data-val="A"><div class="bubble">A</div>Germany had declared war on the USA</div>
+      <div class="opt" data-q="3" data-val="B"><div class="bubble">B</div>American banks demanded repayment of loans they had made to Germany</div>
+      <div class="opt" data-q="3" data-val="C"><div class="bubble">C</div>Germany had invested all its money in American farms</div>
+      <div class="opt" data-q="3" data-val="D"><div class="bubble">D</div>The German government refused to print more money</div>
+    </div>
+    <div class="q-feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="qc-4">
+    <div class="q-top"><div class="q-num">4</div><div class="q-text">What was Germany's unemployment figure already before the Wall Street Crash?</div></div>
+    <div class="options">
+      <div class="opt" data-q="4" data-val="A"><div class="bubble">A</div>Over 5 million</div>
+      <div class="opt" data-q="4" data-val="B"><div class="bubble">B</div>Zero — Germany was fully employed</div>
+      <div class="opt" data-q="4" data-val="C"><div class="bubble">C</div>Over 1 million</div>
+      <div class="opt" data-q="4" data-val="D"><div class="bubble">D</div>Around 500,000</div>
+    </div>
+    <div class="q-feedback" id="fb-4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="qc-5">
+    <div class="q-top"><div class="q-num">5</div><div class="q-text">Which two political groups gained the most support in Germany because of the Depression?</div></div>
+    <div class="options">
+      <div class="opt" data-q="5" data-val="A"><div class="bubble">A</div>The Social Democrats and the Centre Party</div>
+      <div class="opt" data-q="5" data-val="B"><div class="bubble">B</div>The Nazis and the Communists</div>
+      <div class="opt" data-q="5" data-val="C"><div class="bubble">C</div>The Liberal Party and the Conservatives</div>
+      <div class="opt" data-q="5" data-val="D"><div class="bubble">D</div>The Weimar Republic and the Free Democrats</div>
+    </div>
+    <div class="q-feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="qc-6">
+    <div class="q-top"><div class="q-num">6</div><div class="q-text">According to the revision notes, why did some Germans support the Nazis out of fear rather than desperation?</div></div>
+    <div class="options">
+      <div class="opt" data-q="6" data-val="A"><div class="bubble">A</div>They feared a communist revolution and class conflict</div>
+      <div class="opt" data-q="6" data-val="B"><div class="bubble">B</div>They feared another world war starting</div>
+      <div class="opt" data-q="6" data-val="C"><div class="bubble">C</div>They feared American banks taking over Germany</div>
+      <div class="opt" data-q="6" data-val="D"><div class="bubble">D</div>They feared the collapse of the monarchy</div>
+    </div>
+    <div class="q-feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="qc-7">
+    <div class="q-top"><div class="q-num">7</div><div class="q-text">What did the Nazis promise that appealed to desperate unemployed Germans?</div></div>
+    <div class="options">
+      <div class="opt" data-q="7" data-val="A"><div class="bubble">A</div>Free housing for all and immediate withdrawal from Europe</div>
+      <div class="opt" data-q="7" data-val="B"><div class="bubble">B</div>To solve unemployment, restore German pride and attack communism</div>
+      <div class="opt" data-q="7" data-val="C"><div class="bubble">C</div>To bring the Kaiser back and restore the old empire</div>
+      <div class="opt" data-q="7" data-val="D"><div class="bubble">D</div>To join a workers' revolution across Europe</div>
+    </div>
+    <div class="q-feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="qc-8">
+    <div class="q-top"><div class="q-num">8</div><div class="q-text">In the first example in the revision notes, why did a German worker join the Nazi Party in 1930?</div></div>
+    <div class="options">
+      <div class="opt" data-q="8" data-val="A"><div class="bubble">A</div>He was ordered to join by his employer</div>
+      <div class="opt" data-q="8" data-val="B"><div class="bubble">B</div>He wanted a career in politics</div>
+      <div class="opt" data-q="8" data-val="C"><div class="bubble">C</div>He had lost everything and hoped for a better future</div>
+      <div class="opt" data-q="8" data-val="D"><div class="bubble">D</div>He was paid by the Nazi Party to recruit members</div>
+    </div>
+    <div class="q-feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="qc-9">
+    <div class="q-top"><div class="q-num">9</div><div class="q-text">What happened to American share prices that triggered the Wall Street Crash?</div></div>
+    <div class="options">
+      <div class="opt" data-q="9" data-val="A"><div class="bubble">A</div>They rose too fast, causing inflation</div>
+      <div class="opt" data-q="9" data-val="B"><div class="bubble">B</div>They collapsed, and people rushed to sell</div>
+      <div class="opt" data-q="9" data-val="C"><div class="bubble">C</div>The government froze all share trading</div>
+      <div class="opt" data-q="9" data-val="D"><div class="bubble">D</div>Foreign investors bought all American shares</div>
+    </div>
+    <div class="q-feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="qc-10">
+    <div class="q-top"><div class="q-num">10</div><div class="q-text">Which government did many Germans blame for failing to solve the problems of the Depression?</div></div>
+    <div class="options">
+      <div class="opt" data-q="10" data-val="A"><div class="bubble">A</div>The American government</div>
+      <div class="opt" data-q="10" data-val="B"><div class="bubble">B</div>The Nazi government</div>
+      <div class="opt" data-q="10" data-val="C"><div class="bubble">C</div>The Weimar government</div>
+      <div class="opt" data-q="10" data-val="D"><div class="bubble">D</div>The Communist government</div>
+    </div>
+    <div class="q-feedback" id="fb-10"></div>
+  </div>
+
+  <!-- ═══════════════════════ TRUE / FALSE ═══════════════════════ -->
+  <div class="section-head">Part B — True or False? (Questions 11–20)</div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="qc-11">
+    <div class="q-top"><div class="q-num">11</div><div class="q-text">Before the Wall Street Crash, America had grown rich by selling goods such as cars and fridges.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="11" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="11" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="qc-12">
+    <div class="q-top"><div class="q-num">12</div><div class="q-text">German unemployment fell to zero between 1929 and 1933 because of Weimar government policies.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="12" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="12" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="qc-13">
+    <div class="q-top"><div class="q-num">13</div><div class="q-text">By 1932, unemployment in Germany had reached almost 6 million.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="13" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="13" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="qc-14">
+    <div class="q-top"><div class="q-num">14</div><div class="q-text">The Communists promised a workers' revolution and appealed to those who felt capitalism had failed them.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="14" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="14" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="qc-15">
+    <div class="q-top"><div class="q-num">15</div><div class="q-text">The second example worker in the revision notes had a railway job and was mainly worried about hunger.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="15" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="15" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="qc-16">
+    <div class="q-top"><div class="q-num">16</div><div class="q-text">German factories reduced production or shut down because foreign factories stopped buying German goods.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="16" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="16" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="qc-17">
+    <div class="q-top"><div class="q-num">17</div><div class="q-text">"Wall Street Crash" and "radical" are listed as key words in the revision notes for this topic.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="17" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="17" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="qc-18">
+    <div class="q-top"><div class="q-num">18</div><div class="q-text">The Depression affected all Germans in exactly the same way, with everyone becoming unemployed and hungry.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="18" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="18" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="qc-19">
+    <div class="q-top"><div class="q-num">19</div><div class="q-text">In 1933, German unemployment was still nearly 5 million even though the peak crisis was in 1932.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="19" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="19" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="qc-20">
+    <div class="q-top"><div class="q-num">20</div><div class="q-text">According to the exam focus in the revision notes, to answer well you should only define the Depression without discussing its impact.</div></div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="20" data-val="T">✅ True</div>
+      <div class="tf-opt" data-q="20" data-val="F">❌ False</div>
+    </div>
+    <div class="q-feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-label">out of 20</div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-show" id="resultShow"></div>
+    <br>
+    <button class="btn-retry" onclick="retryQuiz()">🔄 Try again</button>
+  </div>
+
+</div>
+
+<script>
+// ── Answer key ──────────────────────────────────────────────────
+const answers = {
+  1:'B', 2:'C', 3:'B', 4:'C', 5:'B',
+  6:'A', 7:'B', 8:'C', 9:'B', 10:'C',
+  11:'T', 12:'F', 13:'T', 14:'T', 15:'F',
+  16:'T', 17:'T', 18:'F', 19:'T', 20:'F'
+};
+
+// Feedback text
+const feedbackOk = {
+  1:'Correct! The Wall Street Crash happened in October 1929.',
+  2:'Correct! Unemployment peaked at almost 6 million in 1932.',
+  3:'Correct! American banks demanded repayment, hitting German banks and businesses.',
+  4:'Correct! Unemployment was already over 1 million even before the crash.',
+  5:'Correct! Both the Nazis and the Communists grew rapidly.',
+  6:'Correct! Fear of communism and class conflict drove some to the Nazis.',
+  7:'Correct! The Nazis promised jobs, national pride, and anti-communism.',
+  8:'Correct! He had lost everything and hoped Nazism would give him a better future.',
+  9:'Correct! Share prices collapsed and people rushed to sell.',
+  10:'Correct! Many Germans blamed the Weimar government.',
+  11:'Correct! America had sold many goods and people had spare money to invest.',
+  12:'Correct! This is false — unemployment kept rising sharply through this period.',
+  13:'Correct! Almost 6 million were unemployed at the peak in 1932.',
+  14:'Correct! The Communists promised a workers\' revolution.',
+  15:'Correct! This is false — the second worker had a railway job and feared communism, not hunger.',
+  16:'Correct! Foreign factories stopped buying German goods, so German factories closed.',
+  17:'Correct! Both appear in the key words list.',
+  18:'Correct! This is false — the revision notes show the Depression affected people differently.',
+  19:'Correct! Unemployment was still nearly 5 million in 1933.',
+  20:'Correct! This is false — the exam focus says you must explain the impact, not just define the Depression.',
+};
+const feedbackNo = {
+  1:'Not quite. The Wall Street Crash was in October 1929.',
+  2:'Not quite. Unemployment peaked at almost 6 million in 1932.',
+  3:'Not quite. It was because American banks demanded repayment of loans to Germany.',
+  4:'Not quite. Unemployment was already over 1 million before the crash.',
+  5:'Not quite. It was the Nazis and the Communists who gained most support.',
+  6:'Not quite. The second worker feared communism and class conflict, not war or banks.',
+  7:'Not quite. The Nazis promised to solve unemployment, restore pride and fight communism.',
+  8:'Not quite. He joined because he had lost everything and wanted a better future.',
+  9:'Not quite. Share prices collapsed and people rushed to sell their shares.',
+  10:'Not quite. Many Germans blamed the Weimar government.',
+  11:'This is true — before the crash, America sold goods and people invested spare money.',
+  12:'This is false — unemployment rose sharply between 1929 and 1932.',
+  13:'This is true — unemployment was almost 6 million in 1932.',
+  14:'This is true — the Communists promised a workers\' revolution.',
+  15:'This is false — the second worker had a railway job and feared communism, not hunger.',
+  16:'This is true — German factories shut because foreign factories stopped buying their goods.',
+  17:'This is true — both appear in the key words list.',
+  18:'This is false — the Depression affected different Germans in different ways.',
+  19:'This is true — unemployment was still nearly 5 million in 1933.',
+  20:'This is false — the exam focus says you must explain impact, not just define the Depression.',
+};
+
+// ── State ────────────────────────────────────────────────────────
+let answered = {};
+let score = 0;
+
+// ── Attach listeners ─────────────────────────────────────────────
+document.querySelectorAll('.opt, .tf-opt').forEach(el => {
+  el.addEventListener('click', () => handleClick(el));
+});
+
+function handleClick(el) {
+  const q = parseInt(el.dataset.q);
+  if (answered[q]) return; // already answered
+  answered[q] = true;
+
+  const chosen = el.dataset.val;
+  const correct = answers[q];
+  const isCorrect = chosen === correct;
+
+  // Mark all options in this question
+  const isTF = el.classList.contains('tf-opt');
+  const selector = isTF ? `.tf-opt[data-q="${q}"]` : `.opt[data-q="${q}"]`;
+  document.querySelectorAll(selector).forEach(opt => {
+    opt.classList.add('locked');
+    if (opt.dataset.val === correct) {
+      opt.classList.add(isCorrect ? 'correct' : 'missed');
+    } else if (opt.dataset.val === chosen && !isCorrect) {
+      opt.classList.add('wrong');
+    }
+  });
+
+  // Show feedback
+  const fb = document.getElementById(`fb-${q}`);
+  if (isCorrect) {
+    fb.textContent = '✅ ' + feedbackOk[q];
+    fb.className = 'q-feedback show ok';
+    score++;
+  } else {
+    fb.textContent = '❌ ' + feedbackNo[q];
+    fb.className = 'q-feedback show no';
+  }
+
+  // Mark card answered
+  document.getElementById(`qc-${q}`).classList.add('answered');
+
+  // Update progress
+  updateProgress();
+
+  // Check if done
+  if (Object.keys(answered).length === 20) {
+    showResult();
+  }
+}
+
+function updateProgress() {
+  const n = Object.keys(answered).length;
+  document.getElementById('progressLabel').textContent = `${n} / 20 answered`;
+  document.getElementById('progressBar').style.width = (n / 20 * 100) + '%';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  document.getElementById('resultScore').textContent = score;
+
+  let emoji, msg;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding! You really know this topic inside out.';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good work! A bit more revision and you\'ll be flying.';
+  } else {
+    emoji = '📖';
+    msg = 'Keep going — read through the revision notes again and retry!';
+  }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultShow').textContent = `Show this to mum — ${score}/20 ${emoji}`;
+
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function retryQuiz() {
+  answered = {};
+  score = 0;
+
+  document.querySelectorAll('.opt, .tf-opt').forEach(el => {
+    el.className = el.classList.contains('tf-opt') ? 'tf-opt' : 'opt';
+  });
+  document.querySelectorAll('.q-feedback').forEach(fb => {
+    fb.className = 'q-feedback';
+    fb.textContent = '';
+  });
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered'));
+  document.getElementById('resultBox').classList.remove('show');
+  updateProgress();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 6.1 | Gab Revision</title>
+<style>
+:root{
+  --bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;
+  --red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;
+  --blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;
+  --purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55;
+  --correct:#5e9f6b;--wrong:#d94b42;--missed:#f29a2e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+             radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+             var(--bg);
+  font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;
+  min-height:100vh;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:28px 30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(24px,4vw,42px);line-height:1;letter-spacing:-.5px;margin-bottom:8px}
+.hero p{font-size:16px;color:rgba(255,255,255,.82);margin-bottom:16px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px;transition:opacity .15s}
+.nav a:hover{opacity:.8}
+
+/* PROGRESS BAR */
+.progress-bar-wrap{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.progress-bar-track{flex:1;height:12px;background:#e8ddd4;border-radius:999px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--red));border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-weight:900;font-size:15px;color:var(--muted);white-space:nowrap}
+
+/* SECTION HEADERS */
+.section-header{display:flex;align-items:center;gap:10px;margin:24px 0 12px}
+.section-badge{background:var(--dark);color:var(--yellow);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;padding:5px 12px;border-radius:999px}
+.section-title{font-size:20px;font-weight:900;color:var(--ink)}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .2s}
+.q-card.correct{border-color:var(--correct)}
+.q-card.wrong{border-color:var(--wrong)}
+.q-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.q-num{background:var(--red);color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0}
+.q-num.done-correct{background:var(--correct)}
+.q-num.done-wrong{background:var(--wrong)}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.q-text{font-weight:700;font-size:16px;margin-bottom:14px;line-height:1.4}
+
+/* MC OPTIONS */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt-btn{
+  background:white;border:2px solid var(--line);border-radius:14px;
+  padding:10px 14px;font-size:14px;font-weight:700;text-align:left;
+  cursor:pointer;transition:all .15s;line-height:1.3;
+}
+.opt-btn:hover:not(:disabled){background:#f0ebe3;border-color:var(--orange)}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{background:var(--green2);border-color:var(--correct);color:#2a5c32}
+.opt-btn.wrong{background:var(--red2);border-color:var(--wrong);color:#7c1f1c}
+.opt-btn.missed{background:var(--orange2);border-color:var(--orange);color:#7a4800}
+
+/* TRUE/FALSE */
+.tf-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-btn{
+  background:white;border:2px solid var(--line);border-radius:14px;
+  padding:12px;font-size:15px;font-weight:900;text-align:center;
+  cursor:pointer;transition:all .15s;
+}
+.tf-btn:hover:not(:disabled){border-color:var(--orange);background:#f0ebe3}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:var(--green2);border-color:var(--correct);color:#2a5c32}
+.tf-btn.wrong{background:var(--red2);border-color:var(--wrong);color:#7c1f1c}
+.tf-btn.missed{background:var(--orange2);border-color:var(--orange);color:#7a4800}
+
+/* FEEDBACK */
+.feedback{margin-top:10px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:var(--green2);color:#2a5c32}
+.feedback.wrong{background:var(--red2);color:#7c1f1c}
+
+/* RESULT BOX */
+.result-box{
+  display:none;background:var(--dark);color:white;
+  border-radius:28px;padding:32px;text-align:center;
+  margin:28px 0;box-shadow:0 14px 40px rgba(0,0,0,.2);
+}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:12px;line-height:1}
+.result-score{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--yellow);line-height:1;margin-bottom:8px}
+.result-label{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:18px}
+.result-msg{background:rgba(255,255,255,.12);border-radius:16px;padding:18px;font-size:18px;font-weight:900;line-height:1.4;margin-bottom:18px}
+.result-sub{font-size:14px;color:rgba(255,255,255,.6)}
+.try-again-btn{
+  background:var(--yellow);color:var(--dark);border:none;
+  font-weight:900;font-size:16px;padding:12px 32px;border-radius:999px;
+  cursor:pointer;margin-top:18px;transition:opacity .15s;
+}
+.try-again-btn:hover{opacity:.85}
+
+/* LEGEND */
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;font-size:13px;font-weight:700}
+.legend-item{display:flex;align-items:center;gap:6px}
+.legend-dot{width:12px;height:12px;border-radius:50%}
+.legend-dot.c{background:var(--correct)}
+.legend-dot.w{background:var(--wrong)}
+.legend-dot.m{background:var(--missed)}
+
+@media(max-width:600px){
+  .options,.tf-options{grid-template-columns:1fr}
+  .wrap{padding:14px}
+  .hero{padding:20px}
+}
+@media print{.nav,.legend,.try-again-btn{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>6.1 How did Hitler begin to eliminate his opposition?</h1>
+    <p>20 questions · Answer every question to see your score</p>
+    <nav class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch6-1-revision.html">📖 Revision notes</a>
+    </nav>
+  </section>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <span style="font-size:20px">📝</span>
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    <span class="progress-label" id="progress-label">0 / 20</span>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot c"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot w"></div> Wrong</div>
+    <div class="legend-item"><div class="legend-dot m"></div> Correct answer you missed</div>
+  </div>
+
+  <!-- ======================== MULTIPLE CHOICE ======================== -->
+  <div class="section-header">
+    <span class="section-badge">Part A</span>
+    <span class="section-title">Multiple Choice — 10 Questions</span>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="qc1">
+    <div class="q-meta"><div class="q-num" id="num-1">1</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Why did Hitler call a new election for March 1933?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(1,this,'a')">A. To give all parties a fair chance to campaign</button>
+      <button class="opt-btn" onclick="answerMC(1,this,'b')">B. Because Hindenburg ordered him to</button>
+      <button class="opt-btn" onclick="answerMC(1,this,'c')">C. To try to win a Nazi majority in the Reichstag</button>
+      <button class="opt-btn" onclick="answerMC(1,this,'d')">D. To comply with the Weimar Constitution</button>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="qc2">
+    <div class="q-meta"><div class="q-num" id="num-2">2</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Who was blamed for the Reichstag Fire of 27 February 1933?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(2,this,'a')">A. A Social Democrat politician</button>
+      <button class="opt-btn" onclick="answerMC(2,this,'b')">B. A young communist called Marinus van der Lubbe</button>
+      <button class="opt-btn" onclick="answerMC(2,this,'c')">C. A senior SA officer</button>
+      <button class="opt-btn" onclick="answerMC(2,this,'d')">D. A Jewish journalist</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="qc3">
+    <div class="q-meta"><div class="q-num" id="num-3">3</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What did the Decree for the Protection of the People and State (28 February 1933) allow?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(3,this,'a')">A. Hitler to merge the roles of President and Chancellor</button>
+      <button class="opt-btn" onclick="answerMC(3,this,'b')">B. The Reichstag to be permanently closed</button>
+      <button class="opt-btn" onclick="answerMC(3,this,'c')">C. The Nazis to remove civil rights and arrest opponents</button>
+      <button class="opt-btn" onclick="answerMC(3,this,'d')">D. All political parties except the Nazis to be banned</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="qc4">
+    <div class="q-meta"><div class="q-num" id="num-4">4</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Why was the March 1933 election considered unfair?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(4,this,'a')">A. Voting was compulsory and results were falsified</button>
+      <button class="opt-btn" onclick="answerMC(4,this,'b')">B. Communist candidates were banned or arrested</button>
+      <button class="opt-btn" onclick="answerMC(4,this,'c')">C. Women were not allowed to vote</button>
+      <button class="opt-btn" onclick="answerMC(4,this,'d')">D. The election took place in secret</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="qc5">
+    <div class="q-meta"><div class="q-num" id="num-5">5</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What did the Enabling Act (23 March 1933) give Hitler?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(5,this,'a')">A. Control of the German army</button>
+      <button class="opt-btn" onclick="answerMC(5,this,'b')">B. The power to make laws without the Reichstag</button>
+      <button class="opt-btn" onclick="answerMC(5,this,'c')">C. Permission to ban the Communist Party only</button>
+      <button class="opt-btn" onclick="answerMC(5,this,'d')">D. The title of Der Führer</button>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="qc6">
+    <div class="q-meta"><div class="q-num" id="num-6">6</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Where did the Nazis open their first concentration camp in April 1933?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(6,this,'a')">A. Berlin</button>
+      <button class="opt-btn" onclick="answerMC(6,this,'b')">B. Munich</button>
+      <button class="opt-btn" onclick="answerMC(6,this,'c')">C. Dachau</button>
+      <button class="opt-btn" onclick="answerMC(6,this,'d')">D. Nuremberg</button>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="qc7">
+    <div class="q-meta"><div class="q-num" id="num-7">7</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What happened to trade unions on 2 May 1933?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(7,this,'a')">A. They were placed under government supervision</button>
+      <button class="opt-btn" onclick="answerMC(7,this,'b')">B. They were merged into one pro-Nazi union</button>
+      <button class="opt-btn" onclick="answerMC(7,this,'c')">C. They were closed, their money taken and leaders imprisoned</button>
+      <button class="opt-btn" onclick="answerMC(7,this,'d')">D. They were allowed to continue if they supported the Nazis</button>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="qc8">
+    <div class="q-meta"><div class="q-num" id="num-8">8</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">When did Germany officially become a one-party state?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(8,this,'a')">A. 23 March 1933</button>
+      <button class="opt-btn" onclick="answerMC(8,this,'b')">B. 2 May 1933</button>
+      <button class="opt-btn" onclick="answerMC(8,this,'c')">C. 14 July 1933</button>
+      <button class="opt-btn" onclick="answerMC(8,this,'d')">D. 2 August 1934</button>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="qc9">
+    <div class="q-meta"><div class="q-num" id="num-9">9</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What happened on 2 August 1934 to complete Hitler's seizure of power?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(9,this,'a')">A. The Enabling Act was extended permanently</button>
+      <button class="opt-btn" onclick="answerMC(9,this,'b')">B. Hindenburg died and Hitler combined President and Chancellor into Der Führer</button>
+      <button class="opt-btn" onclick="answerMC(9,this,'c')">C. The last opposition newspaper was closed</button>
+      <button class="opt-btn" onclick="answerMC(9,this,'d')">D. The Gestapo officially replaced the regular police</button>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="qc10">
+    <div class="q-meta"><div class="q-num" id="num-10">10</div><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Why do historians often describe the Enabling Act as the most important step towards dictatorship?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(10,this,'a')">A. It was the first time the Nazis used violence</button>
+      <button class="opt-btn" onclick="answerMC(10,this,'b')">B. It made Hitler's dictatorship appear legal</button>
+      <button class="opt-btn" onclick="answerMC(10,this,'c')">C. It gave the Nazis control of the army</button>
+      <button class="opt-btn" onclick="answerMC(10,this,'d')">D. It removed Hindenburg from power immediately</button>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+  <!-- ======================== TRUE / FALSE ======================== -->
+  <div class="section-header" style="margin-top:32px">
+    <span class="section-badge">Part B</span>
+    <span class="section-title">True or False — 10 Questions</span>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="qc11">
+    <div class="q-meta"><div class="q-num" id="num-11">11</div><span class="q-type">True / False</span></div>
+    <div class="q-text">As Chancellor, Hitler used his influence over newspapers and radio to help the Nazis in the March 1933 election campaign.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(11,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(11,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="qc12">
+    <div class="q-meta"><div class="q-num" id="num-12">12</div><span class="q-type">True / False</span></div>
+    <div class="q-text">The SA played no role in intimidating political opponents during 1933.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(12,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(12,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="qc13">
+    <div class="q-meta"><div class="q-num" id="num-13">13</div><span class="q-type">True / False</span></div>
+    <div class="q-text">Hindenburg agreed to sign the emergency decree that removed civil rights after the Reichstag Fire.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(13,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(13,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="qc14">
+    <div class="q-meta"><div class="q-num" id="num-14">14</div><span class="q-type">True / False</span></div>
+    <div class="q-text">The Nazis won a full majority in the Reichstag in the March 1933 election.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(14,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(14,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="qc15">
+    <div class="q-meta"><div class="q-num" id="num-15">15</div><span class="q-type">True / False</span></div>
+    <div class="q-text">The Gestapo was formed in April 1933 as the Nazis took control of local government and police.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(15,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(15,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="qc16">
+    <div class="q-meta"><div class="q-num" id="num-16">16</div><span class="q-type">True / False</span></div>
+    <div class="q-text">Before the Enabling Act, Hitler could make laws without needing the Reichstag's agreement.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(16,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(16,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="qc17">
+    <div class="q-meta"><div class="q-num" id="num-17">17</div><span class="q-type">True / False</span></div>
+    <div class="q-text">Some Germans supported Hitler because they believed he had restored order and fought communism.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(17,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(17,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="qc18">
+    <div class="q-meta"><div class="q-num" id="num-18">18</div><span class="q-type">True / False</span></div>
+    <div class="q-text">Workers benefited from the banning of trade unions because wages increased afterwards.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(18,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(18,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="qc19">
+    <div class="q-meta"><div class="q-num" id="num-19">19</div><span class="q-type">True / False</span></div>
+    <div class="q-text">After the Enabling Act, Hitler still needed Hindenburg's approval before passing new laws.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(19,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(19,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="qc20">
+    <div class="q-meta"><div class="q-num" id="num-20">20</div><span class="q-type">True / False</span></div>
+    <div class="q-text">The army swore personal loyalty to Hitler (as Der Führer) after Hindenburg's death in August 1934.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(20,this,true)">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(20,this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="result-box">
+    <div class="result-emoji" id="result-emoji">🏆</div>
+    <div class="result-score" id="result-score">0/20</div>
+    <div class="result-label">Quick Check Complete!</div>
+    <div class="result-msg" id="result-msg">Show this to mum — 0/20</div>
+    <div class="result-sub">Scroll back up to review any questions you missed (shown in orange).</div>
+    <button class="try-again-btn" onclick="resetQuiz()">🔄 Try Again</button>
+  </div>
+
+</div><!-- end .wrap -->
+
+<script>
+// ── Answer data ──────────────────────────────────────────────
+const MC_ANSWERS = {
+  1:{correct:'c', explain:'Hitler called the election hoping to win a Nazi majority so he could govern more freely.'},
+  2:{correct:'b', explain:'Marinus van der Lubbe, a young Dutch communist, was blamed. Hitler used it to claim a communist plot.'},
+  3:{correct:'c', explain:'The decree removed civil rights and allowed the Nazis to arrest opponents without normal legal protections.'},
+  4:{correct:'b', explain:'Communist candidates were banned or arrested before the election, making it unfair.'},
+  5:{correct:'b', explain:'The Enabling Act gave Hitler the power to make laws without the Reichstag\'s agreement.'},
+  6:{correct:'c', explain:'The first concentration camp was opened at Dachau in April 1933.'},
+  7:{correct:'c', explain:'Trade unions were closed, their money was taken and their leaders were imprisoned.'},
+  8:{correct:'c', explain:'On 14 July 1933 all political parties except the Nazi Party were banned, making Germany a one-party state.'},
+  9:{correct:'b', explain:'After Hindenburg died on 2 August 1934, Hitler combined the posts of President and Chancellor and took the title Der Führer.'},
+  10:{correct:'b', explain:'The Enabling Act is seen as the key turning point because it gave Hitler\'s dictatorship a legal appearance.'},
+};
+
+const TF_ANSWERS = {
+  11:{correct:true,  explain:'As Chancellor, Hitler could use newspapers and radio to favour the Nazis during the campaign.'},
+  12:{correct:false, explain:'The SA actively intimidated political opponents throughout 1933.'},
+  13:{correct:true,  explain:'Hindenburg signed the emergency decree the day after the fire, removing important civil rights.'},
+  14:{correct:false, explain:'The Nazis won more seats but still did not achieve a full majority.'},
+  15:{correct:true,  explain:'The Gestapo was formed and the first concentration camp at Dachau opened when the Nazis took control of local government in April 1933.'},
+  16:{correct:false, explain:'Before the Enabling Act, laws still required Reichstag agreement. It was the Act itself that changed this.'},
+  17:{correct:true,  explain:'Some Germans supported Hitler because they felt he had restored order, ended political chaos and stood against communism.'},
+  18:{correct:false, explain:'Banning trade unions meant workers could no longer organise to protect pay and conditions — it harmed, not helped, them.'},
+  19:{correct:false, explain:'After the Enabling Act, Hitler could ignore Hindenburg and Parliament in practice when making laws.'},
+  20:{correct:true,  explain:'After Hindenburg\'s death in August 1934 the army swore an oath of personal loyalty to Hitler as Der Führer.'},
+};
+
+// ── State ─────────────────────────────────────────────────────
+let answered = {};
+const TOTAL = 20;
+
+function updateProgress(){
+  const n = Object.keys(answered).length;
+  document.getElementById('progress-fill').style.width = (n/TOTAL*100)+'%';
+  document.getElementById('progress-label').textContent = n+' / '+TOTAL;
+  if(n===TOTAL) showResult();
+}
+
+// ── Multiple choice ───────────────────────────────────────────
+function answerMC(qNum, btn, choice){
+  if(answered[qNum]) return;
+  answered[qNum] = true;
+
+  const data = MC_ANSWERS[qNum];
+  const card = document.getElementById('qc'+qNum);
+  const numEl = document.getElementById('num-'+qNum);
+  const fb = document.getElementById('fb'+qNum);
+  const allBtns = card.querySelectorAll('.opt-btn');
+
+  allBtns.forEach(b => b.disabled = true);
+
+  const isCorrect = (choice === data.correct);
+
+  allBtns.forEach(b => {
+    const letter = b.getAttribute('onclick').match(/'([a-d])'\)/)[1];
+    if(letter === data.correct){
+      if(!isCorrect) b.classList.add('missed');
+      else b.classList.add('correct');
+    }
+  });
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    card.classList.add('correct');
+    numEl.classList.add('done-correct');
+    fb.textContent = '✅ Correct! '+data.explain;
+    fb.className = 'feedback show correct';
+  } else {
+    btn.classList.add('wrong');
+    card.classList.add('wrong');
+    numEl.classList.add('done-wrong');
+    fb.textContent = '❌ Not quite. '+data.explain;
+    fb.className = 'feedback show wrong';
+  }
+
+  updateProgress();
+}
+
+// ── True / False ──────────────────────────────────────────────
+function answerTF(qNum, btn, choice){
+  if(answered[qNum]) return;
+  answered[qNum] = true;
+
+  const data = TF_ANSWERS[qNum];
+  const card = document.getElementById('qc'+qNum);
+  const numEl = document.getElementById('num-'+qNum);
+  const fb = document.getElementById('fb'+qNum);
+  const allBtns = card.querySelectorAll('.tf-btn');
+
+  allBtns.forEach(b => b.disabled = true);
+
+  const isCorrect = (choice === data.correct);
+
+  // Mark correct answer
+  allBtns.forEach(b => {
+    const isTrue = b.textContent.includes('True');
+    if(isTrue === data.correct){
+      if(!isCorrect) b.classList.add('missed');
+      else b.classList.add('correct');
+    }
+  });
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    card.classList.add('correct');
+    numEl.classList.add('done-correct');
+    fb.textContent = '✅ Correct! '+data.explain;
+    fb.className = 'feedback show correct';
+  } else {
+    btn.classList.add('wrong');
+    card.classList.add('wrong');
+    numEl.classList.add('done-wrong');
+    fb.textContent = '❌ Not quite. '+data.explain;
+    fb.className = 'feedback show wrong';
+  }
+
+  updateProgress();
+}
+
+// ── Result ────────────────────────────────────────────────────
+function countCorrect(){
+  let score = 0;
+  for(let q=1;q<=10;q++){
+    const card = document.getElementById('qc'+q);
+    if(card && card.classList.contains('correct')) score++;
+  }
+  for(let q=11;q<=20;q++){
+    const card = document.getElementById('qc'+q);
+    if(card && card.classList.contains('correct')) score++;
+  }
+  return score;
+}
+
+function showResult(){
+  const score = countCorrect();
+  const box = document.getElementById('result-box');
+  const emoji = document.getElementById('result-emoji');
+  const scoreEl = document.getElementById('result-score');
+  const msgEl = document.getElementById('result-msg');
+
+  scoreEl.textContent = score+'/20';
+
+  let em, encouragement;
+  if(score >= 18){
+    em = '🏆';
+    encouragement = 'Outstanding — you really know this topic! Show this to mum — '+score+'/20';
+  } else if(score >= 14){
+    em = '👍';
+    encouragement = 'Solid work — a few more review sessions and you\'ll nail it! Show this to mum — '+score+'/20';
+  } else {
+    em = '📖';
+    encouragement = 'Keep going — read the revision notes again and try once more! Show this to mum — '+score+'/20';
+  }
+
+  emoji.textContent = em;
+  msgEl.textContent = em+' '+encouragement;
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ── Reset ─────────────────────────────────────────────────────
+function resetQuiz(){
+  answered = {};
+  document.getElementById('progress-fill').style.width='0%';
+  document.getElementById('progress-label').textContent='0 / 20';
+  document.getElementById('result-box').classList.remove('show');
+
+  for(let q=1;q<=20;q++){
+    const card = document.getElementById('qc'+q);
+    if(!card) continue;
+    card.classList.remove('correct','wrong');
+    const numEl = document.getElementById('num-'+q);
+    numEl.className='q-num';
+
+    const fb = document.getElementById('fb'+q);
+    fb.className='feedback';
+    fb.textContent='';
+
+    card.querySelectorAll('button').forEach(b=>{
+      b.disabled=false;
+      b.classList.remove('correct','wrong','missed');
+    });
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

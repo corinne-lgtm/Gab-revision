@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 8.4 Nazi ideas and racial policy</title>
+<style>
+:root{--bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;--red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;--blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;--purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,4.5vw,50px);line-height:.95;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 16px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.78);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 9px 26px rgba(0,0,0,.06)}
+h2{font-size:clamp(20px,3vw,30px);margin:0 0 18px;letter-spacing:-.5px}
+.progress-bar{background:#e2d8ce;border-radius:999px;height:12px;margin-bottom:20px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,var(--red),var(--orange));height:100%;border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-size:13px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.question-block{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.question-block.locked{opacity:.9}
+.q-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;font-size:15px}
+.q-num.mc{background:var(--red)}
+.q-num.tf{background:var(--blue)}
+.q-text{font-weight:900;font-size:16px;line-height:1.35;flex:1}
+.q-type-badge{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:999px;flex-shrink:0;margin-top:3px}
+.q-type-badge.mc{background:var(--red2);color:#9a2f28}
+.q-type-badge.tf{background:var(--blue2);color:#2a5070}
+.options{display:grid;gap:8px}
+.opt-btn{width:100%;text-align:left;padding:11px 16px;border:2px solid var(--line);border-radius:14px;background:white;font-size:15px;cursor:pointer;font-family:Arial,Helvetica,sans-serif;color:var(--ink);transition:border-color .15s,background .15s;font-weight:600}
+.opt-btn:hover:not(:disabled){border-color:var(--orange);background:var(--orange2)}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#2a5e30!important}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a2220!important}
+.opt-btn.missed{background:var(--orange2)!important;border-color:var(--orange)!important;color:#7a4d10!important}
+.tf-row{display:flex;gap:10px}
+.tf-row .opt-btn{flex:1;text-align:center;font-weight:900;font-size:16px}
+.result-box{display:none;background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:28px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 14px 35px rgba(0,0,0,.2)}
+.result-box h2{color:var(--yellow);margin-bottom:8px;font-size:clamp(22px,4vw,38px)}
+.result-box .big-score{font-size:clamp(48px,8vw,80px);font-weight:900;line-height:1;margin:10px 0}
+.result-box .msg{font-size:18px;margin:10px 0 0;color:rgba(255,255,255,.9);line-height:1.5}
+.result-box .mum-msg{background:rgba(255,255,255,.12);border-radius:18px;padding:16px 20px;margin:18px 0 0;font-size:17px;font-weight:900;color:white}
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}.hero{padding:22px}}
+@media print{.nav,button{display:none}body{background:white}.panel,.hero,.question-block,.result-box{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>8.4 Quick Check Quiz</h1>
+  <p>Nazi ideas and racial policy · 20 questions · instant feedback</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch8.html">Chapter 8</a>
+    <a href="history-germany-ch8-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="progress-label">Progress: <span id="prog-text">0 / 20 answered</span></div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+  <div id="quiz-container"></div>
+  <div class="result-box" id="result-box">
+    <h2>Quiz complete!</h2>
+    <div class="big-score" id="score-display"></div>
+    <div class="msg" id="score-msg"></div>
+    <div class="mum-msg" id="mum-msg"></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+const questions = [
+  // ── 10 MULTIPLE CHOICE ──
+  {
+    type: 'mc',
+    q: 'What term did the Nazis use to describe the group they claimed were a "master race" and rightful rulers of Europe?',
+    opts: ['Slavic', 'Aryan', 'Germanic Brotherhood', 'Nordic Order'],
+    ans: 1
+  },
+  {
+    type: 'mc',
+    q: 'Which of the following groups was NOT listed in the revision notes as a group the Nazis described as "inferior"?',
+    opts: ['Jewish people', 'Roma and Sinti people', 'Irish people', 'Slavs'],
+    ans: 2
+  },
+  {
+    type: 'mc',
+    q: 'What did the Nuremberg Laws of September 1935 do to Jewish people?',
+    opts: [
+      'Banned them from owning businesses',
+      'Forced them into ghettos',
+      'Removed their German citizenship and banned marriage to non-Jews',
+      'Sent them to concentration camps'
+    ],
+    ans: 2
+  },
+  {
+    type: 'mc',
+    q: 'What happened on Kristallnacht in November 1938?',
+    opts: [
+      'Jewish people were stripped of citizenship',
+      'Jewish homes, synagogues and businesses were attacked; around 100 Jews were killed and 20,000 sent to camps',
+      'All Jewish lawyers and judges were sacked',
+      'Jewish children were banned from German schools'
+    ],
+    ans: 1
+  },
+  {
+    type: 'mc',
+    q: 'In what year were all Jewish lawyers and judges sacked?',
+    opts: ['1930', '1931', '1933', '1936'],
+    ans: 2
+  },
+  {
+    type: 'mc',
+    q: 'What visual symbol was used from 1934 to mark Jewish shops as a warning to others not to shop there?',
+    opts: ['A red cross', 'A yellow Star of David', 'A black swastika', 'A white circle'],
+    ans: 1
+  },
+  {
+    type: 'mc',
+    q: 'Approximately how many people with hereditary illnesses were forcibly sterilised under Nazi racial policy?',
+    opts: ['40,000', '200,000', '400,000', '1,000,000'],
+    ans: 2
+  },
+  {
+    type: 'mc',
+    q: 'What did the 1936 restrictions prevent Jewish people from owning?',
+    opts: [
+      'Land and property',
+      'Electrical equipment such as cameras, bicycles, typewriters and music records',
+      'Motor vehicles and horses',
+      'Businesses with more than five employees'
+    ],
+    ans: 1
+  },
+  {
+    type: 'mc',
+    q: 'What was the main purpose of concentration camps, according to the revision notes?',
+    opts: [
+      'To re-educate prisoners into Nazi ideology',
+      'To provide labour for the war effort',
+      'To imprison, terrorise and remove people the Nazis saw as enemies or "undesirable"',
+      'To house Jewish refugees from other countries'
+    ],
+    ans: 2
+  },
+  {
+    type: 'mc',
+    q: 'Which of the following groups is listed among those persecuted as Nazi "undesirables"?',
+    opts: ['Roman Catholics', 'Jehovah\'s Witnesses', 'Lutherans', 'Anglicans'],
+    ans: 1
+  },
+
+  // ── 10 TRUE / FALSE ──
+  {
+    type: 'tf',
+    q: 'The Nazis\' belief that some races were superior and others inferior was scientifically correct.',
+    ans: false
+  },
+  {
+    type: 'tf',
+    q: 'Jewish teachers were sacked and Jews were banned from sports clubs in April 1933.',
+    ans: true
+  },
+  {
+    type: 'tf',
+    q: '"Race studies" were introduced into German schools in September 1933.',
+    ans: true
+  },
+  {
+    type: 'tf',
+    q: 'The Nuremberg Laws were passed in 1936.',
+    ans: false // they were passed Sep 1935
+  },
+  {
+    type: 'tf',
+    q: 'Over 200,000 people with disabilities were killed under Nazi euthanasia policies.',
+    ans: true
+  },
+  {
+    type: 'tf',
+    q: 'Jewish children were banned from playing with non-Jewish children between 1938 and 1939.',
+    ans: true
+  },
+  {
+    type: 'tf',
+    q: 'The Nazis only persecuted Jewish people and did not target any other groups.',
+    ans: false
+  },
+  {
+    type: 'tf',
+    q: 'A 1939 British report described thousands of men in German camps, including political prisoners and Bible Students.',
+    ans: true
+  },
+  {
+    type: 'tf',
+    q: 'Mobile killing squads and poison gas were used to murder Jewish people after war began in 1939.',
+    ans: true
+  },
+  {
+    type: 'tf',
+    q: 'The exam tip advises students to only say "the Nazis were racist" when answering questions on racial policy.',
+    ans: false
+  }
+];
+
+let answered = 0;
+const total = questions.length;
+const userAnswers = new Array(total).fill(null);
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.id = `qblock-${i}`;
+
+    const isMC = q.type === 'mc';
+    const numLabel = isMC ? `Q${i+1}` : `Q${i+1}`;
+    const typeClass = isMC ? 'mc' : 'tf';
+    const typeLabel = isMC ? 'Multiple choice' : 'True / False';
+
+    let optionsHTML = '';
+    if (isMC) {
+      optionsHTML = '<div class="options">' +
+        q.opts.map((o, j) =>
+          `<button class="opt-btn" data-q="${i}" data-idx="${j}" onclick="handleAnswer(${i},${j})">${o}</button>`
+        ).join('') +
+        '</div>';
+    } else {
+      optionsHTML = `<div class="tf-row">
+        <button class="opt-btn" data-q="${i}" data-idx="true" onclick="handleTF(${i},true)">✓ True</button>
+        <button class="opt-btn" data-q="${i}" data-idx="false" onclick="handleTF(${i},false)">✗ False</button>
+      </div>`;
+    }
+
+    block.innerHTML = `
+      <div class="q-header">
+        <div class="q-num ${typeClass}">${i+1}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="q-type-badge ${typeClass}">${typeLabel}</div>
+      </div>
+      ${optionsHTML}
+    `;
+    container.appendChild(block);
+  });
+}
+
+function lockBlock(qi) {
+  const block = document.getElementById(`qblock-${qi}`);
+  block.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  block.classList.add('locked');
+}
+
+function handleAnswer(qi, idx) {
+  if (userAnswers[qi] !== null) return;
+  userAnswers[qi] = idx;
+  const q = questions[qi];
+  const buttons = document.querySelectorAll(`[data-q="${qi}"]`);
+  buttons.forEach(b => {
+    const bidx = parseInt(b.getAttribute('data-idx'));
+    if (bidx === q.ans) b.classList.add('correct');
+    else if (bidx === idx) b.classList.add('wrong');
+  });
+  lockBlock(qi);
+  updateProgress();
+}
+
+function handleTF(qi, userVal) {
+  if (userAnswers[qi] !== null) return;
+  userAnswers[qi] = userVal;
+  const q = questions[qi];
+  const buttons = document.querySelectorAll(`[data-q="${qi}"]`);
+  buttons.forEach(b => {
+    const bval = b.getAttribute('data-idx') === 'true';
+    if (bval === q.ans) b.classList.add('correct');
+    else if (bval === userVal) b.classList.add('wrong');
+  });
+  lockBlock(qi);
+  updateProgress();
+}
+
+function updateProgress() {
+  answered = userAnswers.filter(a => a !== null).length;
+  document.getElementById('prog-text').textContent = `${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width = `${(answered / total) * 100}%`;
+  if (answered === total) showResult();
+}
+
+function showResult() {
+  let score = 0;
+  questions.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (q.type === 'mc' && ua === q.ans) score++;
+    if (q.type === 'tf' && ua === q.ans) score++;
+  });
+
+  // Also highlight any missed correct answers for MC (already done for clicked wrong, but show missed)
+  questions.forEach((q, i) => {
+    if (q.type === 'mc') {
+      const buttons = document.querySelectorAll(`[data-q="${i}"]`);
+      buttons.forEach(b => {
+        const bidx = parseInt(b.getAttribute('data-idx'));
+        if (bidx === q.ans && !b.classList.contains('correct')) {
+          b.classList.add('missed');
+        }
+      });
+    }
+  });
+
+  let emoji, msg;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding! You\'ve really nailed this topic.';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good work — keep reviewing the bits you missed!';
+  } else {
+    emoji = '📖';
+    msg = 'Keep going — re-read the revision notes and try again.';
+  }
+
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  document.getElementById('score-display').textContent = `${score} / 20`;
+  document.getElementById('score-msg').textContent = msg;
+  document.getElementById('mum-msg').textContent = `${emoji} Show this to mum — ${score}/20`;
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

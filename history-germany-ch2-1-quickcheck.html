@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 2.1 Germany and the First World War</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+  --correct:#5e9f6b; --wrong:#d94b42; --missed:#f29a2e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4.5vw,46px);line-height:.95;margin:0 0 12px;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.82);margin:0 0 16px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 13px;border-radius:999px;font-size:14px}
+.nav a:hover{background:var(--yellow)}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:8px;margin-top:18px;overflow:hidden}
+.progress-bar{height:100%;background:var(--yellow);border-radius:999px;width:0%;transition:width .4s ease}
+.progress-label{font-size:13px;color:rgba(255,255,255,.7);margin-top:6px}
+
+/* SECTION LABEL */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 10px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:20px 22px;margin-bottom:14px;transition:border-color .2s}
+.q-card.answered{border-color:var(--line)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.35}
+
+/* MULTIPLE CHOICE OPTIONS */
+.options{display:grid;gap:8px}
+.opt{
+  display:block;width:100%;text-align:left;
+  background:#f6f0e8;border:2px solid var(--line);border-radius:14px;
+  padding:11px 15px;font-size:15px;font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;transition:background .15s,border-color .15s,transform .1s;
+  color:var(--ink);font-weight:600;
+}
+.opt:hover:not(:disabled){background:#ede5d8;border-color:#c2b6a8;transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.correct{background:var(--green2)!important;border-color:#8fc493!important;color:#1e4d26}
+.opt.wrong{background:var(--red2)!important;border-color:#e08882!important;color:#6b1c18}
+.opt.missed{background:var(--orange2)!important;border-color:#e0a060!important;color:#6b3800}
+
+/* TRUE / FALSE */
+.tf-options{display:flex;gap:10px}
+.tf-btn{
+  flex:1;padding:12px;border-radius:14px;border:2px solid var(--line);
+  background:#f6f0e8;font-size:15px;font-weight:900;font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;transition:background .15s,border-color .15s,transform .1s;color:var(--ink);
+}
+.tf-btn:hover:not(:disabled){background:#ede5d8;border-color:#c2b6a8;transform:translateY(-1px)}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:var(--green2)!important;border-color:#8fc493!important;color:#1e4d26}
+.tf-btn.wrong{background:var(--red2)!important;border-color:#e08882!important;color:#6b1c18}
+.tf-btn.missed{background:var(--orange2)!important;border-color:#e0a060!important;color:#6b3800}
+
+/* FEEDBACK TEXT */
+.feedback{font-size:13px;margin-top:9px;font-weight:700;min-height:18px;display:none}
+.feedback.show{display:block}
+.feedback.correct{color:#1e6e28} .feedback.wrong{color:#8c1c18}
+
+/* RESULT BOX */
+.result-box{
+  display:none;background:var(--dark);color:white;border-radius:28px;
+  padding:32px;text-align:center;margin-top:28px;
+  box-shadow:0 14px 35px rgba(0,0,0,.18)
+}
+.result-box.show{display:block;animation:fadeUp .5s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.result-emoji{font-size:60px;margin-bottom:12px}
+.result-score{font-size:52px;font-weight:900;color:var(--yellow);letter-spacing:-2px}
+.result-msg{font-size:20px;font-weight:900;margin:10px 0 6px}
+.result-sub{font-size:15px;color:rgba(255,255,255,.72);margin-bottom:20px}
+.result-mum{display:inline-block;background:var(--yellow);color:var(--dark);font-weight:900;font-size:16px;border-radius:999px;padding:10px 22px;margin-bottom:16px}
+.retry-btn{background:white;color:var(--dark);border:none;border-radius:999px;padding:11px 26px;font-weight:900;font-size:15px;cursor:pointer;font-family:Arial,Helvetica,sans-serif}
+.retry-btn:hover{background:var(--yellow)}
+
+/* LEGEND */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-bottom:8px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:5px}
+.dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-options{flex-direction:column}}
+@media print{.nav,button,.retry-btn{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>2.1 Germany and the First World War</h1>
+    <p>20 questions · Answer each one to see your score instantly. Try to get them all!</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History</a>
+      <a href="history-germany-index.html">🇩🇪 Germany</a>
+      <a href="history-germany-ch2-1-revision.html">📖 Revision notes</a>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+  </section>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span><span class="dot" style="background:#5e9f6b"></span> Correct</span>
+    <span><span class="dot" style="background:#d94b42"></span> Wrong choice</span>
+    <span><span class="dot" style="background:#f29a2e"></span> Correct answer (you missed it)</span>
+  </div>
+
+  <!-- SECTION: MULTIPLE CHOICE -->
+  <div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+  <div id="mcSection"></div>
+
+  <!-- SECTION: TRUE / FALSE -->
+  <div class="section-label">Part 2 — True or False (10 questions)</div>
+  <div id="tfSection"></div>
+
+  <!-- RESULT -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <br>
+    <button class="retry-btn" onclick="resetQuiz()">🔄 Try again</button>
+  </div>
+
+</div>
+
+<script>
+// ─── QUESTION DATA ────────────────────────────────────────────────────────────
+
+const mcQuestions = [
+  {
+    q: "What event triggered Germany joining the First World War?",
+    opts: ["The assassination of Archduke Franz Ferdinand", "A British naval blockade", "A German invasion of France", "Russia declaring war on Germany"],
+    correct: 0,
+    feedback: "Germany joined WWI in August 1914 following the chain of events triggered by the assassination of Archduke Franz Ferdinand."
+  },
+  {
+    q: "How did Britain's navy affect the German home front during WWI?",
+    opts: ["It destroyed German factories", "It blocked supply ships, causing food shortages", "It sank German warships at Kiel", "It bombed German cities"],
+    correct: 1,
+    feedback: "The British navy blocked supply ships reaching Germany, meaning Germans survived on turnips and bread."
+  },
+  {
+    q: "Which city saw the first major naval mutiny in October 1918?",
+    opts: ["Hamburg", "Berlin", "Munich", "Kiel"],
+    correct: 3,
+    feedback: "Sailors at Kiel refused orders to attack Britain and mutinied on 28 October 1918, sparking a wider revolution."
+  },
+  {
+    q: "Who was the leader of the SPD who took temporary power after the Kaiser abdicated?",
+    opts: ["General Ludendorff", "Friedrich Ebert", "Kaiser Wilhelm II", "Otto von Bismarck"],
+    correct: 1,
+    feedback: "Friedrich Ebert, leader of Germany's largest party (the SPD), took temporary power after the Kaiser abdicated."
+  },
+  {
+    q: "Approximately how many widows did Germany have by the end of WWI?",
+    opts: ["200,000", "600,000", "1 million", "2 million"],
+    correct: 1,
+    feedback: "The war left around 600,000 widows and 2 million fatherless children in Germany."
+  },
+  {
+    q: "What did General Ludendorff tell the Kaiser about Germany's chances of winning the war?",
+    opts: ["Victory was still possible with more troops", "Germany could never win the war", "An armistice would be signed within weeks", "The navy would turn the tide"],
+    correct: 1,
+    feedback: "General Ludendorff told the Kaiser that Germany could never win the war, which was a key reason he abdicated."
+  },
+  {
+    q: "What term did many ex-soldiers use to blame the politicians who ended WWI?",
+    opts: ["War Criminals", "November Criminals", "Traitors of the Reich", "Stab-in-the-back generals"],
+    correct: 1,
+    feedback: "Many ex-soldiers blamed politicians they called 'November Criminals' for ending the war and refusing to support them."
+  },
+  {
+    q: "In what year did approximately 10,000 workers protest on the German home front?",
+    opts: ["1914", "1915", "1916", "1918"],
+    correct: 2,
+    feedback: "Around 10,000 workers were protesting by 1916, following 500 women who had marched in 1915."
+  },
+  {
+    q: "On what date did Kaiser Wilhelm II abdicate?",
+    opts: ["28 October 1918", "9 November 1918", "11 November 1918", "1 December 1918"],
+    correct: 1,
+    feedback: "Kaiser Wilhelm II abdicated on 9 November 1918, two days before the war officially ended."
+  },
+  {
+    q: "Why did the author of Interpretation A say hunger had become so important to Germans by 1918?",
+    opts: ["Germans were angry about the treaty terms", "Victory still seemed possible so morale was high", "Patriotism and the war effort had faded; hunger mattered more than victory", "Food had been rationed fairly by the government"],
+    correct: 2,
+    feedback: "The Berlin resident's account shows that by 1918 Germans were exhausted and demoralised — hunger mattered far more than patriotism or victory."
+  }
+];
+
+const tfQuestions = [
+  {
+    q: "Germany's entry into WWI in August 1914 was initially popular among young, patriotic Germans.",
+    correct: true,
+    feedback: "True. At the start, many young Germans were patriotic and enthusiastic about the war."
+  },
+  {
+    q: "Germany funded WWI entirely from its own reserves without borrowing any money.",
+    correct: false,
+    feedback: "False. Germany borrowed money abroad — including from the USA — and also lent money to its allies with no guarantee of repayment."
+  },
+  {
+    q: "The naval mutiny at Kiel spread to workers' and soldiers' councils governing cities across Germany within just six days.",
+    correct: true,
+    feedback: "True. Within six days of the Kiel mutiny, councils were governing cities all over Germany."
+  },
+  {
+    q: "During the war, all German factory owners faced the same wage restrictions as their workers.",
+    correct: false,
+    feedback: "False. Some factory owners grew rich while workers had wage restrictions — this created social division."
+  },
+  {
+    q: "Friedrich Ebert promised to hold elections so the German people could choose their government.",
+    correct: true,
+    feedback: "True. Ebert promised to hold elections soon, giving people the chance to vote for him if they wished."
+  },
+  {
+    q: "The Kaiser's army generals fully supported him right up until his abdication.",
+    correct: false,
+    feedback: "False. His army generals refused to support him, which was one of the key reasons he abdicated."
+  },
+  {
+    q: "Germany's WWI defeat left it virtually bankrupt, with exhausted factories that had nothing left to sell abroad.",
+    correct: true,
+    feedback: "True. Germany had borrowed and spent enormous sums, and factories had been making weapons rather than goods to sell."
+  },
+  {
+    q: "The war ended on 9 November 1918 when Kaiser Wilhelm abdicated.",
+    correct: false,
+    feedback: "False. The war ended on 11 November 1918. The Kaiser abdicated two days earlier, on 9 November."
+  },
+  {
+    q: "Some Germans believed that women working in factories during the war damaged traditional family values.",
+    correct: true,
+    feedback: "True. While women did work in factories during the war, some people felt this damaged family values."
+  },
+  {
+    q: "Germany's political situation was broadly stable and unchanged from before the war right through to 1918.",
+    correct: false,
+    feedback: "False. Germany was stable before the war, but by 1918 there was mutiny and revolution in the streets."
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let answered = 0;
+let score = 0;
+const total = mcQuestions.length + tfQuestions.length;
+
+// ─── BUILD UI ─────────────────────────────────────────────────────────────────
+function buildMC() {
+  const section = document.getElementById('mcSection');
+  mcQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `mc-${i}`;
+    let optsHTML = q.opts.map((o, oi) =>
+      `<button class="opt" onclick="answerMC(${i},${oi})">${o}</button>`
+    ).join('');
+    card.innerHTML = `
+      <div class="q-num">Question ${i+1} of 20</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="mc-opts-${i}">${optsHTML}</div>
+      <div class="feedback" id="mc-fb-${i}"></div>
+    `;
+    section.appendChild(card);
+  });
+}
+
+function buildTF() {
+  const section = document.getElementById('tfSection');
+  tfQuestions.forEach((q, i) => {
+    const qNum = mcQuestions.length + i + 1;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `tf-${i}`;
+    card.innerHTML = `
+      <div class="q-num">Question ${qNum} of 20</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">❌ False</button>
+      </div>
+      <div class="feedback" id="tf-fb-${i}"></div>
+    `;
+    section.appendChild(card);
+  });
+}
+
+// ─── ANSWER HANDLERS ──────────────────────────────────────────────────────────
+function answerMC(qIndex, chosen) {
+  const optsEl = document.getElementById(`mc-opts-${qIndex}`);
+  const buttons = optsEl.querySelectorAll('.opt');
+  buttons.forEach(b => b.disabled = true);
+
+  const correct = mcQuestions[qIndex].correct;
+  const fb = document.getElementById(`mc-fb-${qIndex}`);
+
+  buttons[correct].classList.add('correct');
+  if (chosen === correct) {
+    score++;
+    fb.textContent = '✓ Correct! ' + mcQuestions[qIndex].feedback;
+    fb.className = 'feedback show correct';
+  } else {
+    buttons[chosen].classList.add('wrong');
+    fb.textContent = '✗ Not quite. ' + mcQuestions[qIndex].feedback;
+    fb.className = 'feedback show wrong';
+  }
+
+  answered++;
+  updateProgress();
+  if (answered === total) showResult();
+}
+
+function answerTF(qIndex, chosen) {
+  const card = document.getElementById(`tf-${qIndex}`);
+  const buttons = card.querySelectorAll('.tf-btn');
+  buttons.forEach(b => b.disabled = true);
+
+  const correct = tfQuestions[qIndex].correct;
+  const fb = document.getElementById(`tf-fb-${qIndex}`);
+
+  // True = index 0, False = index 1
+  const correctIdx = correct ? 0 : 1;
+  const chosenIdx = chosen ? 0 : 1;
+
+  buttons[correctIdx].classList.add('correct');
+  if (chosen === correct) {
+    score++;
+    fb.textContent = '✓ Correct! ' + tfQuestions[qIndex].feedback;
+    fb.className = 'feedback show correct';
+  } else {
+    buttons[chosenIdx].classList.add('wrong');
+    fb.textContent = '✗ Not quite. ' + tfQuestions[qIndex].feedback;
+    fb.className = 'feedback show wrong';
+  }
+
+  answered++;
+  updateProgress();
+  if (answered === total) showResult();
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const pct = (answered / total) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${answered} / ${total} answered`;
+}
+
+// ─── RESULT ───────────────────────────────────────────────────────────────────
+function showResult() {
+  const box = document.getElementById('resultBox');
+  document.getElementById('resultScore').textContent = `${score} / ${total}`;
+
+  let emoji, msg, sub;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding work!';
+    sub = 'You really know your stuff about Germany and WWI.';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good effort!';
+    sub = 'A solid score — go back over the questions you missed.';
+  } else {
+    emoji = '📖';
+    msg = 'Keep revising!';
+    sub = 'Read through the revision notes again, then have another go.';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultSub').textContent = sub;
+  document.getElementById('resultMum').textContent = `Show this to mum — ${score}/20 ${emoji}`;
+
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetQuiz() {
+  answered = 0;
+  score = 0;
+  document.getElementById('mcSection').innerHTML = '';
+  document.getElementById('tfSection').innerHTML = '';
+  document.getElementById('resultBox').classList.remove('show');
+  updateProgress();
+  buildMC();
+  buildTF();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildMC();
+buildTF();
+</script>
+</body>
+</html>

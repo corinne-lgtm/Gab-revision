@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 7.1 Work and Bread</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+  --correct:#5e9f6b; --wrong:#d94b42; --missed:#f29a2e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.38
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,50px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:18px;color:rgba(255,255,255,.86);max-width:680px;margin:10px 0 0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS BAR */
+.progress-wrap{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:16px}
+.progress-label{font-weight:900;font-size:15px;white-space:nowrap;min-width:90px}
+.bar-track{flex:1;height:14px;background:#e8dfd4;border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:99px;width:0%;transition:width .4s ease}
+.progress-count{font-weight:900;color:var(--muted);font-size:15px;white-space:nowrap}
+
+/* SECTION HEADERS */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 10px;padding-left:4px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,.05);transition:border-color .2s}
+.q-card.locked{opacity:.95}
+.q-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0}
+.q-num.mc{background:var(--blue)}
+.q-num.tf{background:var(--purple)}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.4}
+
+/* OPTIONS */
+.options{display:grid;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;background:white;border:2px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;font-size:15px;font-weight:600;transition:all .15s;user-select:none;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--blue);background:#f0f6ff}
+.opt .opt-letter{width:26px;height:26px;border-radius:50%;background:#ece5dc;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;transition:all .15s}
+.opt.correct-answer{background:var(--green2)!important;border-color:var(--correct)!important}
+.opt.correct-answer .opt-letter{background:var(--correct);color:white}
+.opt.wrong-answer{background:var(--red2)!important;border-color:var(--wrong)!important}
+.opt.wrong-answer .opt-letter{background:var(--wrong);color:white}
+.opt.missed-answer{background:var(--orange2)!important;border-color:var(--missed)!important}
+.opt.missed-answer .opt-letter{background:var(--missed);color:white}
+.opt.disabled{cursor:default}
+
+/* TRUE/FALSE */
+.tf-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-btn{border:2px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;font-size:16px;font-weight:900;text-align:center;background:white;transition:all .15s;user-select:none}
+.tf-btn:hover:not(.disabled){border-color:var(--blue);background:#f0f6ff}
+.tf-btn.correct-answer{background:var(--green2)!important;border-color:var(--correct)!important;color:var(--correct)}
+.tf-btn.wrong-answer{background:var(--red2)!important;border-color:var(--wrong)!important;color:var(--wrong)}
+.tf-btn.missed-answer{background:var(--orange2)!important;border-color:var(--missed)!important;color:var(--missed)}
+.tf-btn.disabled{cursor:default}
+
+/* FEEDBACK ICON */
+.q-card .feedback{display:none;font-size:13px;margin-top:11px;padding:9px 13px;border-radius:10px;font-weight:700}
+.q-card .feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#2d6b38}
+.feedback.bad{background:var(--red2);color:#8a2920}
+
+/* RESULT BOX */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;margin:28px 0;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.22)}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:8px}
+.result-score{font-size:clamp(48px,10vw,80px);font-weight:900;color:var(--yellow);letter-spacing:-2px}
+.result-denom{font-size:28px;color:rgba(255,255,255,.6)}
+.result-msg{font-size:22px;font-weight:900;color:white;margin:10px 0 6px}
+.result-sub{font-size:16px;color:rgba(255,255,255,.75)}
+.result-mum{background:var(--yellow);color:#1d2935;font-weight:900;font-size:18px;border-radius:14px;padding:14px 20px;margin-top:20px;display:inline-block}
+.btn-retry{background:white;color:var(--dark);font-weight:900;font-size:15px;border:none;padding:12px 30px;border-radius:50px;cursor:pointer;margin-top:16px}
+
+@media(max-width:600px){.tf-options{grid-template-columns:1fr}.wrap{padding:12px}.opt{font-size:14px}}
+@media print{.nav,button,.result-box{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>7.1 Work and bread</h1>
+    <p>20 questions · Auto-marked · See how much you know!</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch7-1-revision.html">📖 Revision notes</a>
+    </div>
+  </section>
+
+  <div class="progress-wrap">
+    <span class="progress-label">Progress</span>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <span class="progress-count" id="progressCount">0 / 20</span>
+  </div>
+
+  <div id="quizArea"></div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resEmoji"></div>
+    <div><span class="result-score" id="resScore"></span><span class="result-denom"> / 20</span></div>
+    <div class="result-msg" id="resMsg"></div>
+    <div class="result-sub" id="resSub"></div>
+    <div class="result-mum" id="resMum"></div>
+    <br>
+    <button class="btn-retry" onclick="location.reload()">🔁 Try again</button>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  // ── MULTIPLE CHOICE (1–10) ──────────────────────────────────────────────
+  {
+    type:"mc",
+    text:"Approximately how many Germans were unemployed when Hitler came to power in 1933?",
+    options:["Around 1 million","Around 3 million","Around 6.1 million","Around 9 million"],
+    answer:2
+  },
+  {
+    type:"mc",
+    text:"What did the RAD stand for, and what did it require?",
+    options:[
+      "Reich Army Division – military training for all Germans",
+      "National Labour Service – six months of manual work for men aged 18–25",
+      "National Labour Service – two years of factory work for men aged 18–30",
+      "Reich Aid Department – welfare payments to unemployed workers"
+    ],
+    answer:1
+  },
+  {
+    type:"mc",
+    text:"Which of the following was NOT a type of work carried out by men in the RAD?",
+    options:[
+      "Digging drainage ditches",
+      "Planting forests",
+      "Building aircraft",
+      "Working on farms"
+    ],
+    answer:2
+  },
+  {
+    type:"mc",
+    text:"Approximately how many kilometres of autobahn had been built by 1938?",
+    options:["1,200 km","2,500 km","3,800 km","5,000 km"],
+    answer:2
+  },
+  {
+    type:"mc",
+    text:"In which year did Hitler introduce conscription?",
+    options:["1933","1934","1935","1937"],
+    answer:2
+  },
+  {
+    type:"mc",
+    text:"How much did the German army grow as a result of conscription within five years?",
+    options:[
+      "From 100,000 to around 500,000",
+      "From 100,000 to around 1.4 million",
+      "From 250,000 to around 2 million",
+      "From 50,000 to around 800,000"
+    ],
+    answer:1
+  },
+  {
+    type:"mc",
+    text:"Why did rearmament help to reduce official unemployment figures?",
+    options:[
+      "It paid unemployed workers welfare wages",
+      "It created work in factories and gave contracts to business owners",
+      "It forced all unemployed men to join the navy",
+      "It replaced public works schemes which had failed"
+    ],
+    answer:1
+  },
+  {
+    type:"mc",
+    text:"Which group was often excluded from Germany's unemployment statistics, making the figures misleading?",
+    options:[
+      "Factory workers on low wages",
+      "Women who left work to have a family",
+      "Farmers living in rural areas",
+      "Men who retired early"
+    ],
+    answer:1
+  },
+  {
+    type:"mc",
+    text:"The Nazi promise of 'work and bread' referred to:",
+    options:[
+      "Providing free food parcels to all German families",
+      "Giving jobs and economic security to German people",
+      "Distributing bread rationing cards during the war",
+      "A propaganda poster campaign only"
+    ],
+    answer:1
+  },
+  {
+    type:"mc",
+    text:"Which international agreement did rearmament break?",
+    options:[
+      "The Munich Agreement",
+      "The Locarno Treaties",
+      "The Treaty of Versailles",
+      "The Dawes Plan"
+    ],
+    answer:2
+  },
+
+  // ── TRUE / FALSE (11–20) ────────────────────────────────────────────────
+  {
+    type:"tf",
+    text:"The autobahn network built by the Nazis linked major towns and cities across Germany.",
+    answer:true
+  },
+  {
+    type:"tf",
+    text:"Men who served in the RAD were counted as unemployed in official statistics.",
+    answer:false
+  },
+  {
+    type:"tf",
+    text:"Jews who were removed from their jobs were usually included in Germany's official unemployment figures.",
+    answer:false
+  },
+  {
+    type:"tf",
+    text:"Conscription required all men aged 18–25 to join the armed forces for at least two years.",
+    answer:true
+  },
+  {
+    type:"tf",
+    text:"The Nazis only used public works schemes to reduce unemployment; they did not rearm Germany.",
+    answer:false
+  },
+  {
+    type:"tf",
+    text:"Nazi propaganda helped make employment policies look like a major success to the German public.",
+    answer:true
+  },
+  {
+    type:"tf",
+    text:"Men in the RAD received large salaries equivalent to normal factory wages.",
+    answer:false
+  },
+  {
+    type:"tf",
+    text:"By 1939, official unemployment in Germany had fallen dramatically from its 1933 peak.",
+    answer:true
+  },
+  {
+    type:"tf",
+    text:"Public works schemes such as building autobahns only created jobs for architects, not construction workers.",
+    answer:false
+  },
+  {
+    type:"tf",
+    text:"Some Germans genuinely supported Nazi employment policies because they believed Hitler had kept his promise of 'work and bread'.",
+    answer:true
+  }
+];
+
+let answered = 0;
+const total = questions.length;
+const userAnswers = new Array(total).fill(null);
+
+function render(){
+  const area = document.getElementById("quizArea");
+  area.innerHTML="";
+
+  // MC section
+  const mcLabel = document.createElement("div");
+  mcLabel.className="section-label";
+  mcLabel.textContent="Part A – Multiple Choice (Questions 1–10)";
+  area.appendChild(mcLabel);
+
+  questions.forEach((q,i)=>{
+    const card = document.createElement("div");
+    card.className="q-card";
+    card.id="card-"+i;
+
+    const meta = document.createElement("div");
+    meta.className="q-meta";
+    const num = document.createElement("div");
+    num.className="q-num "+(q.type==="mc"?"mc":"tf");
+    num.textContent=i+1;
+    const typ = document.createElement("div");
+    typ.className="q-type";
+    typ.textContent=q.type==="mc"?"Multiple choice":"True / False";
+    meta.appendChild(num); meta.appendChild(typ);
+    card.appendChild(meta);
+
+    const txt = document.createElement("div");
+    txt.className="q-text";
+    txt.textContent=q.text;
+    card.appendChild(txt);
+
+    if(q.type==="mc"){
+      const opts = document.createElement("div");
+      opts.className="options";
+      const letters=["A","B","C","D"];
+      q.options.forEach((o,j)=>{
+        const btn = document.createElement("div");
+        btn.className="opt";
+        btn.dataset.qi=i; btn.dataset.oi=j;
+        const ltr = document.createElement("span");
+        ltr.className="opt-letter"; ltr.textContent=letters[j];
+        btn.appendChild(ltr);
+        btn.appendChild(document.createTextNode(o));
+        btn.addEventListener("click",()=>pickMC(i,j));
+        opts.appendChild(btn);
+      });
+      card.appendChild(opts);
+    } else {
+      const tfo = document.createElement("div");
+      tfo.className="tf-options";
+      ["✅ True","❌ False"].forEach((label,j)=>{
+        const btn = document.createElement("div");
+        btn.className="tf-btn";
+        btn.dataset.qi=i; btn.dataset.oi=j;
+        btn.textContent=label;
+        btn.addEventListener("click",()=>pickTF(i,j===0));
+        tfo.appendChild(btn);
+      });
+      card.appendChild(tfo);
+    }
+
+    const fb = document.createElement("div");
+    fb.className="feedback";
+    fb.id="fb-"+i;
+    card.appendChild(fb);
+
+    // TF section label
+    if(i===9){
+      area.appendChild(card);
+      const tfLabel = document.createElement("div");
+      tfLabel.className="section-label";
+      tfLabel.textContent="Part B – True or False (Questions 11–20)";
+      area.appendChild(tfLabel);
+    } else {
+      area.appendChild(card);
+    }
+  });
+}
+
+function lockCard(qi){
+  const card = document.getElementById("card-"+qi);
+  card.querySelectorAll(".opt,.tf-btn").forEach(el=>el.classList.add("disabled"));
+}
+
+function showFeedback(qi, correct){
+  const fb = document.getElementById("fb-"+qi);
+  fb.className="feedback show "+(correct?"ok":"bad");
+  fb.textContent=correct?"✓ Correct!":"✗ Incorrect.";
+}
+
+function pickMC(qi,oi){
+  if(userAnswers[qi]!==null) return;
+  userAnswers[qi]=oi;
+  answered++;
+  lockCard(qi);
+  const card = document.getElementById("card-"+qi);
+  const opts = card.querySelectorAll(".opt");
+  const correct = questions[qi].answer;
+  if(oi===correct){
+    opts[oi].classList.add("correct-answer");
+    showFeedback(qi,true);
+  } else {
+    opts[oi].classList.add("wrong-answer");
+    opts[correct].classList.add("missed-answer");
+    showFeedback(qi,false);
+  }
+  updateProgress();
+  if(answered===total) setTimeout(showResult,600);
+}
+
+function pickTF(qi,val){
+  if(userAnswers[qi]!==null) return;
+  userAnswers[qi]=val;
+  answered++;
+  lockCard(qi);
+  const card = document.getElementById("card-"+qi);
+  const btns = card.querySelectorAll(".tf-btn");
+  const correct = questions[qi].answer;
+  const pickedIdx = val?0:1;
+  const correctIdx = correct?0:1;
+  if(val===correct){
+    btns[pickedIdx].classList.add("correct-answer");
+    showFeedback(qi,true);
+  } else {
+    btns[pickedIdx].classList.add("wrong-answer");
+    btns[correctIdx].classList.add("missed-answer");
+    showFeedback(qi,false);
+  }
+  updateProgress();
+  if(answered===total) setTimeout(showResult,600);
+}
+
+function updateProgress(){
+  const pct=(answered/total*100).toFixed(0);
+  document.getElementById("barFill").style.width=pct+"%";
+  document.getElementById("progressCount").textContent=answered+" / "+total;
+}
+
+function showResult(){
+  let score=0;
+  questions.forEach((q,i)=>{
+    if(q.type==="mc" && userAnswers[i]===q.answer) score++;
+    if(q.type==="tf" && userAnswers[i]===q.answer) score++;
+  });
+  const box=document.getElementById("resultBox");
+  box.classList.add("show");
+  document.getElementById("resScore").textContent=score;
+  let emoji,msg,sub;
+  if(score>=18){emoji="🏆";msg="Outstanding!";sub="You've really nailed this topic.";}
+  else if(score>=14){emoji="👍";msg="Good work!";sub="Solid understanding — keep it up.";}
+  else{emoji="📖";msg="Keep revising!";sub="Go back over the revision notes and try again.";}
+  document.getElementById("resEmoji").textContent=emoji;
+  document.getElementById("resMsg").textContent=msg;
+  document.getElementById("resSub").textContent=sub;
+  document.getElementById("resMum").textContent=emoji+" Show this to mum — "+score+"/20";
+  box.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+render();
+</script>
+</body>
+</html>

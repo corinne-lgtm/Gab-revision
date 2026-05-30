@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 2.2 What was the Weimar Republic?</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,50px);line-height:.95;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 16px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.2);border-radius:999px;height:10px;margin:16px 0 4px}
+.progress-bar{background:var(--yellow);border-radius:999px;height:10px;width:0%;transition:width .4s ease}
+.progress-label{font-size:13px;color:rgba(255,255,255,.7);text-align:right}
+
+/* SECTION LABEL */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-size:12px;margin:28px 0 12px}
+
+/* QUESTION CARD */
+.question{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;margin:14px 0;box-shadow:0 4px 16px rgba(0,0,0,.05);transition:border-color .2s}
+.question.correct{border-color:#5e9f6b;background:#f4fbf5}
+.question.wrong{border-color:var(--red);background:#fff8f7}
+.q-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;font-size:14px}
+.q-num.mc{background:var(--blue)}
+.q-num.tf{background:var(--purple)}
+.q-text{font-weight:900;font-size:16px;flex:1}
+
+/* OPTIONS */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:white;border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:15px;font-weight:700;text-align:left;transition:all .15s;width:100%}
+.opt:hover:not(:disabled){background:#f0f0f0;border-color:#aaa}
+.opt.correct-ans{background:var(--green2);border-color:var(--green);color:#1f5c27}
+.opt.wrong-ans{background:var(--red2);border-color:var(--red);color:#7c1a16}
+.opt.missed-ans{background:var(--orange2);border-color:var(--orange);color:#6b3c00}
+.opt:disabled{cursor:default}
+
+/* TRUE / FALSE */
+.tf-options{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border-radius:14px;border:2px solid var(--line);background:white;font-size:16px;font-weight:900;cursor:pointer;transition:all .15s}
+.tf-btn:hover:not(:disabled){background:#f0f0f0}
+.tf-btn.correct-ans{background:var(--green2);border-color:var(--green);color:#1f5c27}
+.tf-btn.wrong-ans{background:var(--red2);border-color:var(--red);color:#7c1a16}
+.tf-btn.missed-ans{background:var(--orange2);border-color:var(--orange);color:#6b3c00}
+.tf-btn:disabled{cursor:default}
+
+/* FEEDBACK */
+.feedback{margin-top:12px;font-size:14px;font-weight:700;padding:10px 14px;border-radius:12px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1f5c27}
+.feedback.bad{background:var(--red2);color:#7c1a16}
+
+/* RESULT BOX */
+#result-box{display:none;background:var(--dark);color:white;border-radius:30px;padding:30px;margin-top:28px;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,.2)}
+#result-box .big-emoji{font-size:64px;margin-bottom:10px}
+#result-box h2{font-size:38px;margin:0 0 8px;color:var(--yellow)}
+#result-box .show-mum{font-size:22px;font-weight:900;color:white;margin:10px 0}
+#result-box .encouragement{font-size:16px;color:rgba(255,255,255,.8);margin:0 0 20px}
+#result-box .retry-btn{background:var(--yellow);color:var(--dark);font-weight:900;font-size:16px;border:none;padding:13px 36px;border-radius:50px;cursor:pointer}
+
+@media(max-width:600px){.options{grid-template-columns:1fr}.tf-options{flex-direction:column}.wrap{padding:14px}}
+@media print{.nav,#result-box .retry-btn{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>2.2 What was the Weimar Republic?</h1>
+    <p>20 questions — 10 multiple choice + 10 true/false. Click an answer to lock it in.</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch2-index.html">Germany Ch.2</a>
+      <a href="history-germany-ch2-2-revision.html">📖 Revision notes</a>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="progress-label" id="progress-label">0 / 20 answered</div>
+  </section>
+
+  <!-- MULTIPLE CHOICE -->
+  <div class="section-label">🔵 Multiple Choice — Questions 1–10</div>
+
+  <!-- Q1 -->
+  <div class="question" id="q1">
+    <div class="q-header">
+      <div class="q-num mc">1</div>
+      <div class="q-text">On what date did Kaiser Wilhelm II abdicate?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q1','a')">11 November 1918</button>
+      <button class="opt" onclick="answer(this,'q1','b')">9 November 1918</button>
+      <button class="opt" onclick="answer(this,'q1','c')">4 August 1914</button>
+      <button class="opt" onclick="answer(this,'q1','d')">28 June 1919</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question" id="q2">
+    <div class="q-header">
+      <div class="q-num mc">2</div>
+      <div class="q-text">Who became Germany's temporary leader after the Kaiser abdicated?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q2','a')">Karl Liebknecht</button>
+      <button class="opt" onclick="answer(this,'q2','b')">Rosa Luxemburg</button>
+      <button class="opt" onclick="answer(this,'q2','c')">Friedrich Ebert</button>
+      <button class="opt" onclick="answer(this,'q2','d')">Paul von Hindenburg</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question" id="q3">
+    <div class="q-header">
+      <div class="q-num mc">3</div>
+      <div class="q-text">Where did politicians meet in February 1919 to establish the new republic?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q3','a')">Berlin</button>
+      <button class="opt" onclick="answer(this,'q3','b')">Munich</button>
+      <button class="opt" onclick="answer(this,'q3','c')">Hamburg</button>
+      <button class="opt" onclick="answer(this,'q3','d')">Weimar</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question" id="q4">
+    <div class="q-header">
+      <div class="q-num mc">4</div>
+      <div class="q-text">What was Article 48 of the Weimar Constitution?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q4','a')">The right of all adults to vote</button>
+      <button class="opt" onclick="answer(this,'q4','b')">The rule requiring proportional representation</button>
+      <button class="opt" onclick="answer(this,'q4','c')">The President's power to rule by emergency decree</button>
+      <button class="opt" onclick="answer(this,'q4','d')">A law banning extreme political parties</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question" id="q5">
+    <div class="q-header">
+      <div class="q-num mc">5</div>
+      <div class="q-text">Which of these was a strength of the Weimar Republic?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q5','a')">Coalition governments were very stable</button>
+      <button class="opt" onclick="answer(this,'q5','b')">Men and women over 20 could vote</button>
+      <button class="opt" onclick="answer(this,'q5','c')">Extreme parties were banned from elections</button>
+      <button class="opt" onclick="answer(this,'q5','d')">Germany won the First World War</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question" id="q6">
+    <div class="q-header">
+      <div class="q-num mc">6</div>
+      <div class="q-text">Who led the Spartacist Revolt in January 1919?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q6','a')">Friedrich Ebert and Paul von Hindenburg</button>
+      <button class="opt" onclick="answer(this,'q6','b')">Rosa Luxemburg and Karl Liebknecht</button>
+      <button class="opt" onclick="answer(this,'q6','c')">Wilhelm II and the Free Corps</button>
+      <button class="opt" onclick="answer(this,'q6','d')">The SPD and the Centre Party</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="question" id="q7">
+    <div class="q-header">
+      <div class="q-num mc">7</div>
+      <div class="q-text">What was the Free Corps?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q7','a')">A left-wing communist group</button>
+      <button class="opt" onclick="answer(this,'q7','b')">A democratic political party founded in 1918</button>
+      <button class="opt" onclick="answer(this,'q7','c')">Right-wing ex-soldiers who hated communists</button>
+      <button class="opt" onclick="answer(this,'q7','d')">The new German army created by the Weimar constitution</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="question" id="q8">
+    <div class="q-header">
+      <div class="q-num mc">8</div>
+      <div class="q-text">What was a weakness caused by proportional representation in the Weimar Republic?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q8','a')">It gave too much power to the President</button>
+      <button class="opt" onclick="answer(this,'q8','b')">It made coalition governments common and unstable</button>
+      <button class="opt" onclick="answer(this,'q8','c')">It stopped women from voting</button>
+      <button class="opt" onclick="answer(this,'q8','d')">It banned smaller parties from the Reichstag</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="question" id="q9">
+    <div class="q-header">
+      <div class="q-num mc">9</div>
+      <div class="q-text">What was the role of the Chancellor in the Weimar Republic?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q9','a')">Head of state who could use emergency powers</button>
+      <button class="opt" onclick="answer(this,'q9','b')">Commander of the German armed forces</button>
+      <button class="opt" onclick="answer(this,'q9','c')">Ran the government day-to-day, needing Reichstag support</button>
+      <button class="opt" onclick="answer(this,'q9','d')">Introduced all new laws independently</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="question" id="q10">
+    <div class="q-header">
+      <div class="q-num mc">10</div>
+      <div class="q-text">Which party won the most votes in the January 1919 election?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,'q10','a')">The Free Corps</button>
+      <button class="opt" onclick="answer(this,'q10','b')">The Spartacists</button>
+      <button class="opt" onclick="answer(this,'q10','c')">The SPD</button>
+      <button class="opt" onclick="answer(this,'q10','d')">The Communist Party of Germany</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- TRUE / FALSE -->
+  <div class="section-label">🟣 True or False — Questions 11–20</div>
+
+  <!-- Q11 -->
+  <div class="question" id="q11">
+    <div class="q-header">
+      <div class="q-num tf">11</div>
+      <div class="q-text">The Weimar Republic was established in 1919.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q11','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q11','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="question" id="q12">
+    <div class="q-header">
+      <div class="q-num tf">12</div>
+      <div class="q-text">The Spartacists were a right-wing group who wanted to keep the Kaiser in power.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q12','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q12','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="question" id="q13">
+    <div class="q-header">
+      <div class="q-num tf">13</div>
+      <div class="q-text">Under the Weimar constitution, both men and women over 20 had the right to vote.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q13','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q13','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="question" id="q14">
+    <div class="q-header">
+      <div class="q-num tf">14</div>
+      <div class="q-text">The Reichstag was the President's personal advisory council with no lawmaking role.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q14','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q14','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="question" id="q15">
+    <div class="q-header">
+      <div class="q-num tf">15</div>
+      <div class="q-text">The Free Corps helped to crush the Spartacist Revolt.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q15','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q15','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="question" id="q16">
+    <div class="q-header">
+      <div class="q-num tf">16</div>
+      <div class="q-text">Many Germans blamed the new Weimar leaders for Germany's defeat in the First World War.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q16','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q16','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="question" id="q17">
+    <div class="q-header">
+      <div class="q-num tf">17</div>
+      <div class="q-text">The Spartacist Revolt took place in January 1919.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q17','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q17','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="question" id="q18">
+    <div class="q-header">
+      <div class="q-num tf">18</div>
+      <div class="q-text">Proportional representation meant that only two large parties could ever win seats in the Reichstag.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q18','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q18','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="question" id="q19">
+    <div class="q-header">
+      <div class="q-num tf">19</div>
+      <div class="q-text">The Weimar Republic replaced a system in which Germany was ruled by a Kaiser.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q19','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q19','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="question" id="q20">
+    <div class="q-header">
+      <div class="q-num tf">20</div>
+      <div class="q-text">Ebert and the SPD wanted to establish a communist state in Germany.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(this,'q20','true')">✅ True</button>
+      <button class="tf-btn" onclick="answer(this,'q20','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div id="result-box">
+    <div class="big-emoji" id="result-emoji"></div>
+    <h2 id="result-score"></h2>
+    <div class="show-mum" id="result-mum"></div>
+    <div class="encouragement" id="result-msg"></div>
+    <button class="retry-btn" onclick="location.reload()">🔄 Try again</button>
+  </div>
+
+</div>
+
+<script>
+const ANSWERS = {
+  q1:  { correct:'b', explain:'The Kaiser abdicated on 9 November 1918, and Friedrich Ebert took over as temporary leader.' },
+  q2:  { correct:'c', explain:'Friedrich Ebert became Germany\'s temporary leader after the Kaiser abdicated.' },
+  q3:  { correct:'d', explain:'Politicians met in Weimar in February 1919 — that\'s why it\'s called the Weimar Republic.' },
+  q4:  { correct:'c', explain:'Article 48 gave the President the power to rule by emergency decree, bypassing the Reichstag.' },
+  q5:  { correct:'b', explain:'Men and women over 20 could vote — more democratic than under the Kaiser.' },
+  q6:  { correct:'b', explain:'Rosa Luxemburg and Karl Liebknecht led the Spartacist communist revolt in January 1919.' },
+  q7:  { correct:'c', explain:'The Free Corps were right-wing ex-soldiers who violently opposed communism.' },
+  q8:  { correct:'b', explain:'Proportional representation meant many parties shared seats, leading to weak coalition governments.' },
+  q9:  { correct:'c', explain:'The Chancellor ran the government day-to-day but needed support from the Reichstag.' },
+  q10: { correct:'c', explain:'The SPD (Social Democratic Party) won the most votes in the January 1919 election.' },
+  q11: { correct:'true',  explain:'The Weimar Republic began when politicians met in Weimar in February 1919.' },
+  q12: { correct:'false', explain:'The Spartacists were a left-wing communist group who wanted workers\' councils and a communist Germany.' },
+  q13: { correct:'true',  explain:'The Weimar Constitution gave the vote to both men and women aged 20 and over.' },
+  q14: { correct:'false', explain:'The Reichstag was Germany\'s parliament — it discussed and introduced laws.' },
+  q15: { correct:'true',  explain:'The Free Corps (right-wing ex-soldiers) used violence to crush the Spartacist Revolt.' },
+  q16: { correct:'true',  explain:'Many Germans blamed Weimar leaders for the armistice and defeat — the "stab in the back" myth.' },
+  q17: { correct:'true',  explain:'The Spartacist Revolt happened in January 1919 in Berlin.' },
+  q18: { correct:'false', explain:'Proportional representation actually gave smaller parties a share of seats, making it harder to form stable governments.' },
+  q19: { correct:'true',  explain:'The Weimar Republic replaced Kaiser rule — Germany moved from an empire to a democratic republic.' },
+  q20: { correct:'false', explain:'Ebert and the SPD wanted a democratic republic, not a communist state. They even used the Free Corps against the communists.' },
+};
+
+let answered = {};
+
+function answer(btn, qid, chosen) {
+  if (answered[qid] !== undefined) return;
+  answered[qid] = chosen;
+
+  const correct = ANSWERS[qid].correct;
+  const explain = ANSWERS[qid].explain;
+  const card = document.getElementById(qid);
+  const fb = document.getElementById('fb-' + qid);
+  const allBtns = card.querySelectorAll('.opt, .tf-btn');
+
+  allBtns.forEach(b => { b.disabled = true; });
+
+  allBtns.forEach(b => {
+    const val = b.getAttribute('onclick').match(/'([^']+)'\)$/)[1];
+    if (val === correct) {
+      b.classList.add('correct-ans');
+    }
+  });
+
+  if (chosen === correct) {
+    btn.classList.add('correct-ans');
+    card.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct! ' + explain;
+  } else {
+    btn.classList.add('wrong-ans');
+    card.classList.add('wrong');
+    // highlight missed correct
+    allBtns.forEach(b => {
+      const val = b.getAttribute('onclick').match(/'([^']+)'\)$/)[1];
+      if (val === correct) b.classList.add('missed-ans');
+    });
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Not quite. ' + explain;
+  }
+
+  updateProgress();
+  if (Object.keys(answered).length === 20) showResult();
+}
+
+function updateProgress() {
+  const n = Object.keys(answered).length;
+  document.getElementById('progress-bar').style.width = (n / 20 * 100) + '%';
+  document.getElementById('progress-label').textContent = n + ' / 20 answered';
+}
+
+function showResult() {
+  let score = 0;
+  for (const [qid, chosen] of Object.entries(answered)) {
+    if (chosen === ANSWERS[qid].correct) score++;
+  }
+
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  document.getElementById('result-score').textContent = score + ' / 20';
+
+  let emoji, msg;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding work — you really know the Weimar Republic!';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good effort! A quick look back at the revision notes will push you to the top.';
+  } else {
+    emoji = '📖';
+    msg = 'Keep going — revisit the notes and try again. You\'ve got this!';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-mum').textContent = 'Show this to mum — ' + score + '/20 ' + emoji;
+  document.getElementById('result-msg').textContent = msg;
+
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>

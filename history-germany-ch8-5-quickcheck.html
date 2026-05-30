@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 8.5 The Final Solution</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(26px,4.5vw,46px);line-height:1;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:6px;overflow:hidden}
+.progress-bar{height:10px;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:999px;width:0%;transition:width .4s ease}
+.progress-label{font-size:13px;color:var(--muted);font-weight:900;text-align:right;margin-bottom:20px}
+
+/* SECTION LABEL */
+.section-label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:28px 0 10px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px 22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .3s}
+.q-card.correct{border-color:var(--green)}
+.q-card.wrong{border-color:var(--red)}
+.q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.q-num{background:var(--dark);color:var(--yellow);border-radius:50%;width:32px;height:32px;min-width:32px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.q-text{font-weight:700;font-size:16px;flex:1;padding-top:5px}
+
+/* OPTIONS */
+.options{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;background:#f7f3ee;border:2px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;font-size:15px;font-weight:600;transition:background .15s,border-color .15s;user-select:none}
+.opt:hover:not(.locked){background:#eee8de;border-color:#c2b7a8}
+.opt.selected-correct{background:var(--green2);border-color:var(--green);color:#234a29}
+.opt.selected-wrong{background:var(--red2);border-color:var(--red);color:#6e1f1b}
+.opt.missed-correct{background:var(--orange2);border-color:var(--orange);color:#6b4200}
+.opt.locked{cursor:default}
+.opt-icon{font-size:16px;min-width:20px}
+.feedback{font-size:13px;font-weight:700;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:var(--green2);color:#234a29}
+.feedback.wrong{background:var(--red2);color:#6e1f1b}
+
+/* TRUE/FALSE */
+.tf-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* RESULT BOX */
+#result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;margin-top:28px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+#result-box .trophy{font-size:64px;margin-bottom:10px}
+#result-box h2{font-size:clamp(28px,5vw,48px);margin:0 0 8px;letter-spacing:-1px;color:var(--yellow)}
+#result-box .show-mum{font-size:20px;font-weight:900;background:rgba(255,255,255,.12);border-radius:16px;padding:14px 20px;margin:16px 0 10px}
+#result-box .encourage{font-size:16px;color:rgba(255,255,255,.8);margin:0}
+
+@media(max-width:600px){.tf-options{grid-template-columns:1fr}.wrap{padding:14px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+  <h1>8.5 The journey to the 'Final Solution'</h1>
+  <p>20 questions — answer each one to see your score instantly.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch8-5-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+<div class="progress-label" id="progress-label">0 / 20 answered</div>
+
+<!-- ═══════════════ MULTIPLE CHOICE ═══════════════ -->
+<div class="section-label">Part A — Multiple Choice (10 questions)</div>
+
+<!-- Q1 -->
+<div class="q-card" id="qc-1">
+  <div class="q-header">
+    <div class="q-num">1</div>
+    <div class="q-text">What does the term <em>antisemitism</em> mean?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="1" data-val="a"><span class="opt-icon">○</span>Hatred or prejudice against Jewish people</div>
+    <div class="opt" data-q="1" data-val="b"><span class="opt-icon">○</span>Support for the creation of a Jewish state</div>
+    <div class="opt" data-q="1" data-val="c"><span class="opt-icon">○</span>A policy of racial separation in schools</div>
+    <div class="opt" data-q="1" data-val="d"><span class="opt-icon">○</span>Opposition to the Nazi Party</div>
+  </div>
+  <div class="feedback" id="fb-1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="q-card" id="qc-2">
+  <div class="q-header">
+    <div class="q-num">2</div>
+    <div class="q-text">What did the Nuremberg Laws of 1935 do?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="2" data-val="a"><span class="opt-icon">○</span>Ordered the construction of concentration camps</div>
+    <div class="opt" data-q="2" data-val="b"><span class="opt-icon">○</span>Removed citizenship rights from Jews and banned marriage between Jews and non-Jews</div>
+    <div class="opt" data-q="2" data-val="c"><span class="opt-icon">○</span>Expelled all Jewish people from Germany immediately</div>
+    <div class="opt" data-q="2" data-val="d"><span class="opt-icon">○</span>Forced Jewish people to move into ghettos</div>
+  </div>
+  <div class="feedback" id="fb-2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="q-card" id="qc-3">
+  <div class="q-header">
+    <div class="q-num">3</div>
+    <div class="q-text">Approximately how many Jewish people were killed during the Holocaust?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="3" data-val="a"><span class="opt-icon">○</span>One million</div>
+    <div class="opt" data-q="3" data-val="b"><span class="opt-icon">○</span>Three million</div>
+    <div class="opt" data-q="3" data-val="c"><span class="opt-icon">○</span>Six million</div>
+    <div class="opt" data-q="3" data-val="d"><span class="opt-icon">○</span>Ten million</div>
+  </div>
+  <div class="feedback" id="fb-3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="q-card" id="qc-4">
+  <div class="q-header">
+    <div class="q-num">4</div>
+    <div class="q-text">What were the <em>Einsatzgruppen</em>?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="4" data-val="a"><span class="opt-icon">○</span>Nazi propaganda units that produced anti-Jewish films</div>
+    <div class="opt" data-q="4" data-val="b"><span class="opt-icon">○</span>Special killing squads that carried out mass shootings in eastern Europe</div>
+    <div class="opt" data-q="4" data-val="c"><span class="opt-icon">○</span>Guards who ran the concentration camps inside Germany</div>
+    <div class="opt" data-q="4" data-val="d"><span class="opt-icon">○</span>Railway workers who transported prisoners to camps</div>
+  </div>
+  <div class="feedback" id="fb-4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="q-card" id="qc-5">
+  <div class="q-header">
+    <div class="q-num">5</div>
+    <div class="q-text">The Wannsee Conference took place in January 1942. What was its purpose?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="5" data-val="a"><span class="opt-icon">○</span>To plan the invasion of the Soviet Union</div>
+    <div class="opt" data-q="5" data-val="b"><span class="opt-icon">○</span>To organise the mass murder of Europe's Jewish population</div>
+    <div class="opt" data-q="5" data-val="c"><span class="opt-icon">○</span>To negotiate a peace deal with Britain</div>
+    <div class="opt" data-q="5" data-val="d"><span class="opt-icon">○</span>To discuss new propaganda laws across occupied Europe</div>
+  </div>
+  <div class="feedback" id="fb-5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="q-card" id="qc-6">
+  <div class="q-header">
+    <div class="q-num">6</div>
+    <div class="q-text">Which of the following was an extermination camp used primarily for mass murder with gas chambers?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="6" data-val="a"><span class="opt-icon">○</span>Dachau</div>
+    <div class="opt" data-q="6" data-val="b"><span class="opt-icon">○</span>Sachsenhausen</div>
+    <div class="opt" data-q="6" data-val="c"><span class="opt-icon">○</span>Auschwitz-Birkenau</div>
+    <div class="opt" data-q="6" data-val="d"><span class="opt-icon">○</span>Bergen-Belsen</div>
+  </div>
+  <div class="feedback" id="fb-6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="q-card" id="qc-7">
+  <div class="q-header">
+    <div class="q-num">7</div>
+    <div class="q-text">What happened during Kristallnacht in 1938?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="7" data-val="a"><span class="opt-icon">○</span>The Nuremberg Laws were announced to the German public</div>
+    <div class="opt" data-q="7" data-val="b"><span class="opt-icon">○</span>Jewish shops, homes and synagogues were attacked and destroyed</div>
+    <div class="opt" data-q="7" data-val="c"><span class="opt-icon">○</span>The first ghettos were established in Polish cities</div>
+    <div class="opt" data-q="7" data-val="d"><span class="opt-icon">○</span>Mass deportations to extermination camps began</div>
+  </div>
+  <div class="feedback" id="fb-7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="q-card" id="qc-8">
+  <div class="q-header">
+    <div class="q-num">8</div>
+    <div class="q-text">Why did Germany's invasion of Poland make the persecution of Jewish people worse?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="8" data-val="a"><span class="opt-icon">○</span>It gave the Nazis access to more resources to build propaganda films</div>
+    <div class="opt" data-q="8" data-val="b"><span class="opt-icon">○</span>It brought millions more Jewish people under Nazi control</div>
+    <div class="opt" data-q="8" data-val="c"><span class="opt-icon">○</span>It led Britain and France to impose new restrictions on Jewish immigration</div>
+    <div class="opt" data-q="8" data-val="d"><span class="opt-icon">○</span>It caused Jewish people across Europe to begin armed resistance</div>
+  </div>
+  <div class="feedback" id="fb-8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="q-card" id="qc-9">
+  <div class="q-header">
+    <div class="q-num">9</div>
+    <div class="q-text">The Warsaw Ghetto Uprising of 1943 is an example of which type of resistance?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="9" data-val="a"><span class="opt-icon">○</span>Spiritual and cultural resistance</div>
+    <div class="opt" data-q="9" data-val="b"><span class="opt-icon">○</span>Armed resistance</div>
+    <div class="opt" data-q="9" data-val="c"><span class="opt-icon">○</span>Economic resistance</div>
+    <div class="opt" data-q="9" data-val="d"><span class="opt-icon">○</span>Political resistance through legal channels</div>
+  </div>
+  <div class="feedback" id="fb-9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="q-card" id="qc-10">
+  <div class="q-header">
+    <div class="q-num">10</div>
+    <div class="q-text">Which organisation is most associated with organising the killing during the Holocaust?</div>
+  </div>
+  <div class="options">
+    <div class="opt" data-q="10" data-val="a"><span class="opt-icon">○</span>The Gestapo</div>
+    <div class="opt" data-q="10" data-val="b"><span class="opt-icon">○</span>The SS</div>
+    <div class="opt" data-q="10" data-val="c"><span class="opt-icon">○</span>The Hitler Youth</div>
+    <div class="opt" data-q="10" data-val="d"><span class="opt-icon">○</span>The Wehrmacht</div>
+  </div>
+  <div class="feedback" id="fb-10"></div>
+</div>
+
+<!-- ═══════════════ TRUE / FALSE ═══════════════ -->
+<div class="section-label">Part B — True or False (10 questions)</div>
+
+<!-- Q11 -->
+<div class="q-card" id="qc-11">
+  <div class="q-header">
+    <div class="q-num">11</div>
+    <div class="q-text">Antisemitism only began in Germany after Hitler came to power in 1933.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="11" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="11" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-11"></div>
+</div>
+
+<!-- Q12 -->
+<div class="q-card" id="qc-12">
+  <div class="q-header">
+    <div class="q-num">12</div>
+    <div class="q-text">Ghettos were crowded, sealed areas of cities where Jewish people were forced to live in terrible conditions.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="12" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="12" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-12"></div>
+</div>
+
+<!-- Q13 -->
+<div class="q-card" id="qc-13">
+  <div class="q-header">
+    <div class="q-num">13</div>
+    <div class="q-text">The Nuremberg Laws of 1935 were introduced to give Jewish people protected status in Germany.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="13" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="13" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-13"></div>
+</div>
+
+<!-- Q14 -->
+<div class="q-card" id="qc-14">
+  <div class="q-header">
+    <div class="q-num">14</div>
+    <div class="q-text">Concentration camps and extermination camps had exactly the same purpose.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="14" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="14" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-14"></div>
+</div>
+
+<!-- Q15 -->
+<div class="q-card" id="qc-15">
+  <div class="q-header">
+    <div class="q-num">15</div>
+    <div class="q-text">Only Jewish people were persecuted and sent to Nazi camps — no other groups were targeted.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="15" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="15" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-15"></div>
+</div>
+
+<!-- Q16 -->
+<div class="q-card" id="qc-16">
+  <div class="q-header">
+    <div class="q-num">16</div>
+    <div class="q-text">Jewish people resisted Nazi persecution in many different ways, including secretly teaching and preserving culture.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="16" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="16" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-16"></div>
+</div>
+
+<!-- Q17 -->
+<div class="q-card" id="qc-17">
+  <div class="q-header">
+    <div class="q-num">17</div>
+    <div class="q-text">The Wannsee Conference took place in 1939, before the Second World War began.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="17" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="17" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-17"></div>
+</div>
+
+<!-- Q18 -->
+<div class="q-card" id="qc-18">
+  <div class="q-header">
+    <div class="q-num">18</div>
+    <div class="q-text">Keeping religion, education and family life alive was considered a form of resistance to Nazi persecution.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="18" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="18" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-18"></div>
+</div>
+
+<!-- Q19 -->
+<div class="q-card" id="qc-19">
+  <div class="q-header">
+    <div class="q-num">19</div>
+    <div class="q-text">Only Hitler and the very top Nazi leaders were responsible for the Holocaust — ordinary people played no role.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="19" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="19" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-19"></div>
+</div>
+
+<!-- Q20 -->
+<div class="q-card" id="qc-20">
+  <div class="q-header">
+    <div class="q-num">20</div>
+    <div class="q-text">Treblinka, Belzec, Sobibor and Chelmno were all extermination camps used during the Holocaust.</div>
+  </div>
+  <div class="options tf-options">
+    <div class="opt" data-q="20" data-val="true"><span class="opt-icon">○</span>True</div>
+    <div class="opt" data-q="20" data-val="false"><span class="opt-icon">○</span>False</div>
+  </div>
+  <div class="feedback" id="fb-20"></div>
+</div>
+
+<!-- RESULT BOX -->
+<div id="result-box">
+  <div class="trophy" id="result-trophy"></div>
+  <h2 id="result-score"></h2>
+  <div class="show-mum" id="result-mum"></div>
+  <p class="encourage" id="result-msg"></p>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+const ANSWERS = {
+  1:  { correct:'a', explain:'Antisemitism means hatred or prejudice against Jewish people. It existed in Europe for centuries before the Nazis.' },
+  2:  { correct:'b', explain:'The Nuremberg Laws removed citizenship rights from Jews and banned marriage between Jews and non-Jews.' },
+  3:  { correct:'c', explain:'Around six million Jewish people were murdered by the Nazis and their collaborators during the Holocaust.' },
+  4:  { correct:'b', explain:'The Einsatzgruppen were special killing squads that followed the German army and carried out mass shootings in eastern Europe.' },
+  5:  { correct:'b', explain:'At Wannsee, Nazi leaders discussed organising the mass murder of Europe\'s Jewish population — the \'Final Solution\'.' },
+  6:  { correct:'c', explain:'Auschwitz-Birkenau was one of several extermination camps, including Treblinka, Belzec, Chelmno, Sobibor and Majdanek, designed for mass murder using gas chambers.' },
+  7:  { correct:'b', explain:'On Kristallnacht, Jewish shops, homes and synagogues were attacked; around 100 Jews were killed and thousands sent to concentration camps.' },
+  8:  { correct:'b', explain:'The invasion of Poland and other countries brought millions more Jewish people under Nazi control, worsening persecution.' },
+  9:  { correct:'b', explain:'The Warsaw Ghetto Uprising of 1943 was an example of armed resistance by Jewish people against the Nazis.' },
+  10: { correct:'b', explain:'The SS organised much of the killing during the Holocaust, though many others including railway workers and local officials also played roles.' },
+  11: { correct:'false', explain:'Antisemitism had existed in Europe for centuries — it long pre-dated Hitler and the Nazi Party.' },
+  12: { correct:'true',  explain:'Ghettos were crowded, sealed areas of cities with terrible conditions, hunger and disease.' },
+  13: { correct:'false', explain:'The Nuremberg Laws stripped Jewish people of their citizenship rights and excluded them from public life.' },
+  14: { correct:'false', explain:'Concentration camps imprisoned and used forced labour; extermination camps like Auschwitz-Birkenau were designed specifically for mass murder.' },
+  15: { correct:'false', explain:'The Nazis also persecuted Roma and Sinti people, political opponents, disabled people and other groups.' },
+  16: { correct:'true',  explain:'Jewish people resisted by secretly teaching, preserving culture, sharing information, hiding people and smuggling food.' },
+  17: { correct:'false', explain:'The Wannsee Conference took place in January 1942, more than two years after the Second World War began in 1939.' },
+  18: { correct:'true',  explain:'Spiritual and cultural resistance — keeping religion, education, family life and records alive — was a recognised form of resistance.' },
+  19: { correct:'false', explain:'Many ordinary people were involved: railway workers, police, companies using forced labour, local officials and some local people who collaborated.' },
+  20: { correct:'true',  explain:'Treblinka, Belzec, Sobibor and Chelmno were all extermination camps, along with Auschwitz-Birkenau and Majdanek.' },
+};
+
+let answered = {};
+
+function updateProgress(){
+  const n = Object.keys(answered).length;
+  document.getElementById('progress-bar').style.width = (n/20*100)+'%';
+  document.getElementById('progress-label').textContent = n+' / 20 answered';
+  if(n===20) showResult();
+}
+
+function showResult(){
+  const score = Object.values(answered).filter(v=>v).length;
+  const box = document.getElementById('result-box');
+  box.style.display='block';
+  document.getElementById('result-score').textContent = score+' / 20';
+  let trophy,mum,msg;
+  if(score>=18){
+    trophy='🏆'; mum='Show this to mum — '+score+'/20 🏆';
+    msg='Outstanding! You really know this topic inside out. Keep it up!';
+  } else if(score>=14){
+    trophy='👍'; mum='Show this to mum — '+score+'/20 👍';
+    msg='Great effort! A little more revision on the tricky bits and you\'ll be flying.';
+  } else {
+    trophy='📖'; mum='Show this to mum — '+score+'/20 📖';
+    msg='Time to go back to the revision notes — you\'ve got this with a bit more practice!';
+  }
+  document.getElementById('result-trophy').textContent=trophy;
+  document.getElementById('result-mum').textContent=mum;
+  document.getElementById('result-msg').textContent=msg;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+document.querySelectorAll('.opt').forEach(opt=>{
+  opt.addEventListener('click',function(){
+    const q = this.dataset.q;
+    if(answered.hasOwnProperty(q)) return; // already answered
+
+    const chosen = this.dataset.val;
+    const {correct, explain} = ANSWERS[q];
+    const isCorrect = chosen===correct;
+    answered[q] = isCorrect;
+
+    // lock all opts for this question
+    document.querySelectorAll('.opt[data-q="'+q+'"]').forEach(o=>{
+      o.classList.add('locked');
+      if(o.dataset.val===correct){
+        if(o===this && isCorrect){
+          o.classList.add('selected-correct');
+          o.querySelector('.opt-icon').textContent='✓';
+        } else if(o.dataset.val===correct && !isCorrect){
+          o.classList.add('missed-correct');
+          o.querySelector('.opt-icon').textContent='→';
+        }
+      }
+      if(o===this && !isCorrect){
+        o.classList.add('selected-wrong');
+        o.querySelector('.opt-icon').textContent='✗';
+      }
+    });
+
+    // card border
+    document.getElementById('qc-'+q).classList.add(isCorrect?'correct':'wrong');
+
+    // feedback
+    const fb = document.getElementById('fb-'+q);
+    fb.textContent = (isCorrect ? '✓ Correct! ' : '✗ Not quite. ') + explain;
+    fb.className = 'feedback show '+(isCorrect?'correct':'wrong');
+
+    updateProgress();
+  });
+});
+</script>
+</body>
+</html>

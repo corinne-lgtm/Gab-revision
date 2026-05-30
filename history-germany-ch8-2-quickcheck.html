@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 8.2 Women in Nazi Germany</title>
+<style>
+:root{--bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;--red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;--blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;--purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,50px);line-height:.97;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.82);margin:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:10px;margin-top:18px;overflow:hidden}
+.progress-bar{height:100%;background:var(--yellow);border-radius:999px;width:0;transition:width .4s ease}
+.score-badge{background:rgba(255,255,255,.15);border-radius:999px;padding:6px 16px;font-weight:900;font-size:15px;display:inline-block;margin-top:10px}
+.panel{background:rgba(255,255,255,.78);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 9px 26px rgba(0,0,0,.06)}
+h2{font-size:clamp(20px,3vw,28px);margin:0 0 18px;letter-spacing:-.4px}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin-bottom:14px}
+
+/* Question cards */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.q-card.correct{border-color:var(--green)}
+.q-card.wrong{border-color:var(--red)}
+.q-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;font-size:15px}
+.q-num.correct{background:var(--green)}
+.q-num.wrong{background:var(--red)}
+.q-text{font-weight:700;font-size:16px;line-height:1.4}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:999px;margin-left:auto;flex-shrink:0}
+.q-type.mc{background:var(--blue2);color:var(--blue)}
+.q-type.tf{background:var(--purple2);color:var(--purple)}
+
+/* Options */
+.options{display:grid;gap:9px}
+.opt{background:#f7f4f0;border:2px solid #e0d8ce;border-radius:14px;padding:12px 16px;font-size:15px;font-weight:600;cursor:pointer;transition:all .18s;text-align:left;width:100%}
+.opt:hover:not(:disabled){background:#ede8e0;border-color:#c8bead}
+.opt:disabled{cursor:default}
+.opt.correct{background:#dff0e2;border-color:var(--green);color:#2d6b38}
+.opt.wrong{background:#ffe0dd;border-color:var(--red);color:#8a2a24}
+.opt.missed{background:var(--orange2);border-color:var(--orange);color:#7a4800}
+.feedback{margin-top:10px;font-size:14px;font-weight:700;display:none;padding:8px 12px;border-radius:10px}
+.feedback.show{display:block}
+.feedback.correct{background:#dff0e2;color:#2d6b38}
+.feedback.wrong{background:#ffe0dd;color:#8a2a24}
+
+/* Results */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;margin-top:24px;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,.22)}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:8px}
+.result-score{font-size:clamp(40px,8vw,72px);font-weight:900;color:var(--yellow);letter-spacing:-2px;line-height:1}
+.result-msg{font-size:19px;margin:10px 0 6px;color:rgba(255,255,255,.9)}
+.result-sub{color:rgba(255,255,255,.6);font-size:15px}
+.show-mum{background:var(--yellow);color:var(--dark);font-weight:900;font-size:18px;border-radius:18px;padding:14px 24px;margin-top:20px;display:inline-block;border:none}
+
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:20px}.q-card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+    <h1>8.2 Women in Nazi Germany — Quick Check</h1>
+    <p>20 questions · Answer all to see your score</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch8.html">Chapter 8</a>
+      <a href="history-germany-ch8-2-revision.html">📖 Revision notes</a>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="score-badge" id="scoreBadge">0 / 20 answered</div>
+  </section>
+
+  <section class="panel">
+    <div class="section-label">Part A — Multiple Choice (10 questions)</div>
+
+    <!-- Q1 -->
+    <div class="q-card" id="qc1">
+      <div class="q-header">
+        <div class="q-num" id="qn1">1</div>
+        <div class="q-text">What did the Nazi slogan "Kinder, Kirche, Küche" mean in English?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,1,'A')">A. Blood, soil and honour</button>
+        <button class="opt" onclick="answer(this,1,'B')">B. Children, church and cooking</button>
+        <button class="opt" onclick="answer(this,1,'C')">C. Work, war and will</button>
+        <button class="opt" onclick="answer(this,1,'D')">D. Faith, family and fatherland</button>
+      </div>
+      <div class="feedback" id="fb1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" id="qc2">
+      <div class="q-header">
+        <div class="q-num" id="qn2">2</div>
+        <div class="q-text">Why did Hitler want German women to have as many children as possible?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,2,'A')">A. To reduce unemployment among women</button>
+        <button class="opt" onclick="answer(this,2,'B')">B. To replace soldiers killed in the First World War</button>
+        <button class="opt" onclick="answer(this,2,'C')">C. So Germany could expand and needed a larger population</button>
+        <button class="opt" onclick="answer(this,2,'D')">D. To compete with the birth rate in the Soviet Union</button>
+      </div>
+      <div class="feedback" id="fb2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" id="qc3">
+      <div class="q-header">
+        <div class="q-num" id="qn3">3</div>
+        <div class="q-text">What happened to part of a married couple's state loan for each child they had?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,3,'A')">A. It was doubled</button>
+        <button class="opt" onclick="answer(this,3,'B')">B. It was cancelled</button>
+        <button class="opt" onclick="answer(this,3,'C')">C. It was transferred to the child's name</button>
+        <button class="opt" onclick="answer(this,3,'D')">D. It was paid back early with interest</button>
+      </div>
+      <div class="feedback" id="fb3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="qc4">
+      <div class="q-header">
+        <div class="q-num" id="qn4">4</div>
+        <div class="q-text">What medal could a mother receive for having eight children?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,4,'A')">A. The Iron Cross</button>
+        <button class="opt" onclick="answer(this,4,'B')">B. The Silver Star of Motherhood</button>
+        <button class="opt" onclick="answer(this,4,'C')">C. The Gold Cross</button>
+        <button class="opt" onclick="answer(this,4,'D')">D. The Order of the German Mother</button>
+      </div>
+      <div class="feedback" id="fb4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="qc5">
+      <div class="q-header">
+        <div class="q-num" id="qn5">5</div>
+        <div class="q-text">Approximately how many women had attended motherhood training courses by 1939?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,5,'A')">A. 170,000</button>
+        <button class="opt" onclick="answer(this,5,'B')">B. 700,000</button>
+        <button class="opt" onclick="answer(this,5,'C')">C. 1.7 million</button>
+        <button class="opt" onclick="answer(this,5,'D')">D. 3.5 million</button>
+      </div>
+      <div class="feedback" id="fb5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" id="qc6">
+      <div class="q-header">
+        <div class="q-num" id="qn6">6</div>
+        <div class="q-text">Roughly how many babies were born in Germany in 1939?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,6,'A')">A. 970,000</button>
+        <button class="opt" onclick="answer(this,6,'B')">B. 1,050,000</button>
+        <button class="opt" onclick="answer(this,6,'C')">C. 1,413,000</button>
+        <button class="opt" onclick="answer(this,6,'D')">D. 2,100,000</button>
+      </div>
+      <div class="feedback" id="fb6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" id="qc7">
+      <div class="q-header">
+        <div class="q-num" id="qn7">7</div>
+        <div class="q-text">Which organisation spread Nazi ideas about family, motherhood and childcare among women?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,7,'A')">A. The Hitler Youth</button>
+        <button class="opt" onclick="answer(this,7,'B')">B. The German Women's League</button>
+        <button class="opt" onclick="answer(this,7,'C')">C. The Gestapo Women's Division</button>
+        <button class="opt" onclick="answer(this,7,'D')">D. The League of German Girls only</button>
+      </div>
+      <div class="feedback" id="fb7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" id="qc8">
+      <div class="q-header">
+        <div class="q-num" id="qn8">8</div>
+        <div class="q-text">Under the 1933 law, some women were sterilised if the Nazis judged them to have hereditary illness. What term describes this policy of controlling who could have children?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,8,'A')">A. Lebensborn</button>
+        <button class="opt" onclick="answer(this,8,'B')">B. Eugenics</button>
+        <button class="opt" onclick="answer(this,8,'C')">C. Volksgemeinschaft</button>
+        <button class="opt" onclick="answer(this,8,'D')">D. Gleichschaltung</button>
+      </div>
+      <div class="feedback" id="fb8"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="qc9">
+      <div class="q-header">
+        <div class="q-num" id="qn9">9</div>
+        <div class="q-text">A 1936 newspaper advert described the "ideal" Nazi wife as which of the following?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,9,'A')">A. Educated, slim and independent</button>
+        <button class="opt" onclick="answer(this,9,'B')">B. Wealthy, fashionable and ambitious</button>
+        <button class="opt" onclick="answer(this,9,'C')">C. Undemanding, able to do heavy work, plain and broad-hipped</button>
+        <button class="opt" onclick="answer(this,9,'D')">D. Athletic, politically aware and well-read</button>
+      </div>
+      <div class="feedback" id="fb9"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="qc10">
+      <div class="q-header">
+        <div class="q-num" id="qn10">10</div>
+        <div class="q-text">Which of the following was a major contradiction in Nazi policy towards women?</div>
+        <span class="q-type mc">MC</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,10,'A')">A. Women were told to stay at home, yet as war approached more women were needed in factories</button>
+        <button class="opt" onclick="answer(this,10,'B')">B. Women were encouraged to vote but then denied election results</button>
+        <button class="opt" onclick="answer(this,10,'C')">C. Women were given university places but banned from graduating</button>
+        <button class="opt" onclick="answer(this,10,'D')">D. Women were praised for small families while being taxed for having children</button>
+      </div>
+      <div class="feedback" id="fb10"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-label">Part B — True or False (10 questions)</div>
+
+    <!-- Q11 -->
+    <div class="q-card" id="qc11">
+      <div class="q-header">
+        <div class="q-num" id="qn11">11</div>
+        <div class="q-text">The Nazis believed women should have equal roles to men in public and political life.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,11,'A')">True</button>
+        <button class="opt" onclick="answer(this,11,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb11"></div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" id="qc12">
+      <div class="q-header">
+        <div class="q-num" id="qn12">12</div>
+        <div class="q-text">The Nazi slogan "Kinder, Kirche, Küche" translates as "children, church and cooking".</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,12,'A')">True</button>
+        <button class="opt" onclick="answer(this,12,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb12"></div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" id="qc13">
+      <div class="q-header">
+        <div class="q-num" id="qn13">13</div>
+        <div class="q-text">The Nazis encouraged women to smoke because it was seen as sophisticated and modern.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,13,'A')">True</button>
+        <button class="opt" onclick="answer(this,13,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb13"></div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" id="qc14">
+      <div class="q-header">
+        <div class="q-num" id="qn14">14</div>
+        <div class="q-text">The birth rate in Germany rose between 1933 and 1939.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,14,'A')">True</button>
+        <button class="opt" onclick="answer(this,14,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb14"></div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" id="qc15">
+      <div class="q-header">
+        <div class="q-num" id="qn15">15</div>
+        <div class="q-text">Approximately 970,000 babies were born in Germany in 1933.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,15,'A')">True</button>
+        <button class="opt" onclick="answer(this,15,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb15"></div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card" id="qc16">
+      <div class="q-header">
+        <div class="q-num" id="qn16">16</div>
+        <div class="q-text">Some women who lived under Nazi rule remembered it positively, noting that children were obedient and unemployment seemed to end.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,16,'A')">True</button>
+        <button class="opt" onclick="answer(this,16,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb16"></div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card" id="qc17">
+      <div class="q-header">
+        <div class="q-num" id="qn17">17</div>
+        <div class="q-text">The Nazis actively promoted contraception and abortion to give women more control over their lives.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,17,'A')">True</button>
+        <button class="opt" onclick="answer(this,17,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb17"></div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card" id="qc18">
+      <div class="q-header">
+        <div class="q-num" id="qn18">18</div>
+        <div class="q-text">Women who did not fit the Nazi ideal — for example those judged to have hereditary illness — could be sterilised under a 1933 law.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,18,'A')">True</button>
+        <button class="opt" onclick="answer(this,18,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb18"></div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card" id="qc19">
+      <div class="q-header">
+        <div class="q-num" id="qn19">19</div>
+        <div class="q-text">Under Nazi rule, women gained more opportunities in work, education and politics than they had before.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,19,'A')">True</button>
+        <button class="opt" onclick="answer(this,19,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb19"></div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card" id="qc20">
+      <div class="q-header">
+        <div class="q-num" id="qn20">20</div>
+        <div class="q-text">"Lebensborn" and "eugenics" are both key words linked to Nazi policies about race and reproduction.</div>
+        <span class="q-type tf">T/F</span>
+      </div>
+      <div class="options">
+        <button class="opt" onclick="answer(this,20,'A')">True</button>
+        <button class="opt" onclick="answer(this,20,'B')">False</button>
+      </div>
+      <div class="feedback" id="fb20"></div>
+    </div>
+  </section>
+
+  <!-- Result box -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <div style="margin-top:18px;background:var(--yellow);color:var(--dark);font-weight:900;font-size:18px;border-radius:18px;padding:14px 24px;display:inline-block" id="showMum"></div>
+  </div>
+
+</div>
+
+<script>
+// correct answers: key = question number, value = correct option letter
+const answers = {
+  1:'B', 2:'C', 3:'B', 4:'C', 5:'C',
+  6:'C', 7:'B', 8:'B', 9:'C', 10:'A',
+  11:'B', 12:'A', 13:'B', 14:'A', 15:'A',
+  16:'A', 17:'B', 18:'A', 19:'B', 20:'A'
+};
+
+const explanations = {
+  1: 'Correct! "Kinder, Kirche, Küche" = children, church and cooking — the Nazi summary of a woman\'s role.',
+  2: 'Correct! Hitler wanted Germany to expand, so he needed a larger population.',
+  3: 'Correct! For each child born, part of the marriage loan was cancelled.',
+  4: 'Correct! Mothers of eight children could receive the Gold Cross.',
+  5: 'Correct! By 1939, approximately 1.7 million women had attended motherhood training.',
+  6: 'Correct! Around 1,413,000 babies were born in Germany in 1939, up from 970,000 in 1933.',
+  7: 'Correct! The German Women\'s League spread Nazi ideas about family and motherhood.',
+  8: 'Correct! Eugenics is the policy of controlling reproduction based on supposed hereditary traits.',
+  9: 'Correct! The 1936 advert described the ideal wife as undemanding, able to do heavy work, plain and broad-hipped.',
+  10:'Correct! The Nazis told women to stay home, yet war and falling unemployment meant more women were needed to work.',
+  11:'The Nazis did NOT believe women should have equal public or political roles to men.',
+  12:'True — "Kinder, Kirche, Küche" does mean children, church and cooking.',
+  13:'False — smoking was discouraged as "unfeminine". Women were told not to smoke.',
+  14:'True — the birth rate rose, from around 970,000 babies in 1933 to over 1.4 million by 1939.',
+  15:'True — approximately 970,000 babies were born in Germany in 1933.',
+  16:'True — some women did recall positives such as obedient children and the apparent end of unemployment.',
+  17:'False — the Nazis actively discouraged contraception and abortion because they wanted more "Aryan" children.',
+  18:'True — a 1933 law allowed sterilisation of those the Nazis judged to have hereditary illness or "anti-social" behaviour.',
+  19:'False — many women actually lost opportunities in work, education and politics under the Nazis.',
+  20:'True — both terms appear in the key words for Nazi policies on race and reproduction.'
+};
+
+let answered = {};
+let score = 0;
+
+function answer(btn, qNum, chosen) {
+  if (answered[qNum]) return; // already answered
+  answered[qNum] = true;
+
+  const correct = answers[qNum];
+  const allOpts = btn.parentElement.querySelectorAll('.opt');
+  allOpts.forEach(b => b.disabled = true);
+
+  const isCorrect = (chosen === correct);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    // highlight the missed correct answer
+    allOpts.forEach(b => {
+      // identify correct button by its onclick attribute or position
+      const letter = b.getAttribute('onclick').match(/'([A-D])'\)/)[1];
+      if (letter === correct) b.classList.add('missed');
+    });
+  }
+
+  // colour the number badge
+  const numEl = document.getElementById('qn' + qNum);
+  numEl.classList.add(isCorrect ? 'correct' : 'wrong');
+  const card = document.getElementById('qc' + qNum);
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // feedback
+  const fb = document.getElementById('fb' + qNum);
+  fb.textContent = explanations[qNum];
+  fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+
+  updateProgress();
+
+  if (Object.keys(answered).length === 20) {
+    showResult();
+  }
+}
+
+function updateProgress() {
+  const done = Object.keys(answered).length;
+  document.getElementById('progressBar').style.width = (done / 20 * 100) + '%';
+  document.getElementById('scoreBadge').textContent = done + ' / 20 answered';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  let emoji, msg, sub;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding! You really know your stuff.';
+    sub = 'Top marks territory — keep it up!';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good solid work — well done!';
+    sub = 'A few to polish, but you\'re on track.';
+  } else {
+    emoji = '📖';
+    msg = 'Time to revisit the revision notes.';
+    sub = 'Go back through the page, then try again!';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = score + ' / 20';
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultSub').textContent = sub;
+  document.getElementById('showMum').textContent = emoji + ' Show this to mum — ' + score + '/20';
+
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+</script>
+</body>
+</html>

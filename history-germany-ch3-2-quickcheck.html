@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 3.2 Hitler and the Munich Putsch</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(26px,4.5vw,46px);line-height:1;letter-spacing:-1px;margin-bottom:10px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin-bottom:18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:16px}
+.progress-track{flex:1;height:12px;background:#e8dfd4;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-weight:900;font-size:14px;color:var(--muted);white-space:nowrap}
+
+/* SECTION HEADERS */
+.section-head{font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:28px 0 12px;padding-left:4px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .3s}
+.q-card.correct{border-color:#6fae75;background:linear-gradient(135deg,var(--green2),var(--paper))}
+.q-card.wrong{border-color:#e6aaa4;background:linear-gradient(135deg,var(--red2),var(--paper))}
+.q-meta{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
+.q-num.mc{background:var(--blue)}
+.q-num.tf{background:var(--purple)}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.q-text{font-weight:900;font-size:17px;line-height:1.3;margin-bottom:16px}
+
+/* OPTIONS */
+.options{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;background:white;border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-weight:700;font-size:15px;transition:all .2s;text-align:left;width:100%}
+.opt:hover:not(:disabled){border-color:var(--orange);background:var(--orange2)}
+.opt:disabled{cursor:default}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;transition:all .2s}
+.opt.state-correct{background:var(--green2);border-color:#6fae75}
+.opt.state-correct .opt-letter{background:var(--green);color:white}
+.opt.state-wrong{background:var(--red2);border-color:#e6aaa4}
+.opt.state-wrong .opt-letter{background:var(--red);color:white}
+.opt.state-missed{background:var(--orange2);border-color:#e8bd7c}
+.opt.state-missed .opt-letter{background:var(--orange);color:white}
+
+/* TF */
+.tf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:14px;font-weight:900;font-size:16px;cursor:pointer;transition:all .2s;text-align:center}
+.tf-btn:hover:not(:disabled){border-color:var(--orange);background:var(--orange2)}
+.tf-btn:disabled{cursor:default}
+.tf-btn.state-correct{background:var(--green2);border-color:#6fae75}
+.tf-btn.state-wrong{background:var(--red2);border-color:#e6aaa4}
+.tf-btn.state-missed{background:var(--orange2);border-color:#e8bd7c}
+
+/* FEEDBACK */
+.feedback{display:none;margin-top:12px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700}
+.feedback.show{display:block}
+.feedback.correct{background:var(--green2);color:#2e6b36}
+.feedback.wrong{background:var(--red2);color:#7c2b26}
+
+/* RESULT BOX */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;margin-top:28px;text-align:center;box-shadow:0 12px 36px rgba(0,0,0,.18)}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:12px}
+.result-score{font-size:clamp(40px,8vw,72px);font-weight:900;color:var(--yellow);line-height:1}
+.result-total{font-size:18px;color:rgba(255,255,255,.6);margin-bottom:10px}
+.result-msg{font-size:22px;font-weight:900;color:white;margin-bottom:8px}
+.result-sub{font-size:16px;color:rgba(255,255,255,.76);line-height:1.5}
+
+@media(max-width:600px){
+  .tf-row{grid-template-columns:1fr}
+  .progress-bar-wrap{flex-direction:column;align-items:stretch;gap:10px}
+}
+@media print{.nav,button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>3.2 Hitler &amp; the Munich Putsch</h1>
+    <p>20 questions — answer them all to get your score. Each answer is marked instantly.</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch3-2-revision.html">📖 Revision notes</a>
+    </div>
+  </section>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+  </div>
+
+  <!-- ===== MULTIPLE CHOICE ===== -->
+  <div class="section-head">📝 Multiple Choice — pick the correct answer</div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="card-1">
+    <div class="q-meta"><div class="q-num mc">1</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">In which year was Hitler born?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(1,'A')" id="1-A"><span class="opt-letter">A</span>1879</button>
+      <button class="opt" onclick="answer(1,'B')" id="1-B"><span class="opt-letter">B</span>1885</button>
+      <button class="opt" onclick="answer(1,'C')" id="1-C"><span class="opt-letter">C</span>1889</button>
+      <button class="opt" onclick="answer(1,'D')" id="1-D"><span class="opt-letter">D</span>1895</button>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="card-2">
+    <div class="q-meta"><div class="q-num mc">2</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">What was the original name of the party Hitler joined in 1919?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(2,'A')" id="2-A"><span class="opt-letter">A</span>The National Socialist Party</button>
+      <button class="opt" onclick="answer(2,'B')" id="2-B"><span class="opt-letter">B</span>The German Workers' Party</button>
+      <button class="opt" onclick="answer(2,'C')" id="2-C"><span class="opt-letter">C</span>The Weimar Republican Party</button>
+      <button class="opt" onclick="answer(2,'D')" id="2-D"><span class="opt-letter">D</span>The Freikorps</button>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="card-3">
+    <div class="q-meta"><div class="q-num mc">3</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">What does NSDAP stand for (in English)?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(3,'A')" id="3-A"><span class="opt-letter">A</span>National Social Democratic Alliance Party</button>
+      <button class="opt" onclick="answer(3,'B')" id="3-B"><span class="opt-letter">B</span>National Socialist German Workers' Party</button>
+      <button class="opt" onclick="answer(3,'C')" id="3-C"><span class="opt-letter">C</span>New Social Democratic Aryan People</button>
+      <button class="opt" onclick="answer(3,'D')" id="3-D"><span class="opt-letter">D</span>Northern States Democratic Alliance Party</button>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="card-4">
+    <div class="q-meta"><div class="q-num mc">4</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">On which date did Hitler launch the Munich Putsch?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(4,'A')" id="4-A"><span class="opt-letter">A</span>8 November 1921</button>
+      <button class="opt" onclick="answer(4,'B')" id="4-B"><span class="opt-letter">B</span>8 November 1923</button>
+      <button class="opt" onclick="answer(4,'C')" id="4-C"><span class="opt-letter">C</span>9 January 1923</button>
+      <button class="opt" onclick="answer(4,'D')" id="4-D"><span class="opt-letter">D</span>11 November 1918</button>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="card-5">
+    <div class="q-meta"><div class="q-num mc">5</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">What was the SA also known as?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(5,'A')" id="5-A"><span class="opt-letter">A</span>The Secret Army</button>
+      <button class="opt" onclick="answer(5,'B')" id="5-B"><span class="opt-letter">B</span>The Stormtroopers</button>
+      <button class="opt" onclick="answer(5,'C')" id="5-C"><span class="opt-letter">C</span>The Schutzstaffel</button>
+      <button class="opt" onclick="answer(5,'D')" id="5-D"><span class="opt-letter">D</span>The Freikorps</button>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="card-6">
+    <div class="q-meta"><div class="q-num mc">6</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">What was the book Hitler wrote while in prison called?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(6,'A')" id="6-A"><span class="opt-letter">A</span>Das Kapital</button>
+      <button class="opt" onclick="answer(6,'B')" id="6-B"><span class="opt-letter">B</span>Mein Kampf</button>
+      <button class="opt" onclick="answer(6,'C')" id="6-C"><span class="opt-letter">C</span>Der Angriff</button>
+      <button class="opt" onclick="answer(6,'D')" id="6-D"><span class="opt-letter">D</span>Die Fackel</button>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="card-7">
+    <div class="q-meta"><div class="q-num mc">7</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">Which of the following was a key reason the Munich Putsch failed?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(7,'A')" id="7-A"><span class="opt-letter">A</span>Hitler was already in prison at the time</button>
+      <button class="opt" onclick="answer(7,'B')" id="7-B"><span class="opt-letter">B</span>The Nazi Party had no symbol or flag</button>
+      <button class="opt" onclick="answer(7,'C')" id="7-C"><span class="opt-letter">C</span>Hitler did not win over enough powerful military leaders</button>
+      <button class="opt" onclick="answer(7,'D')" id="7-D"><span class="opt-letter">D</span>The Weimar Government sent tanks to Munich</button>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="card-8">
+    <div class="q-meta"><div class="q-num mc">8</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">What did Hitler plan to do after taking Bavaria?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(8,'A')" id="8-A"><span class="opt-letter">A</span>Flee to Austria</button>
+      <button class="opt" onclick="answer(8,'B')" id="8-B"><span class="opt-letter">B</span>March on Berlin</button>
+      <button class="opt" onclick="answer(8,'C')" id="8-C"><span class="opt-letter">C</span>Declare Bavaria independent</button>
+      <button class="opt" onclick="answer(8,'D')" id="8-D"><span class="opt-letter">D</span>Appeal to the League of Nations</button>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="card-9">
+    <div class="q-meta"><div class="q-num mc">9</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">Which of the following was a long-term benefit of the Munich Putsch for Hitler?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(9,'A')" id="9-A"><span class="opt-letter">A</span>The Nazi Party immediately doubled in size</button>
+      <button class="opt" onclick="answer(9,'B')" id="9-B"><span class="opt-letter">B</span>Hitler became nationally famous through his trial</button>
+      <button class="opt" onclick="answer(9,'C')" id="9-C"><span class="opt-letter">C</span>Hitler was made Chancellor of Germany</button>
+      <button class="opt" onclick="answer(9,'D')" id="9-D"><span class="opt-letter">D</span>The Weimar Republic collapsed immediately</button>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="card-10">
+    <div class="q-meta"><div class="q-num mc">10</div><div class="q-type">Multiple choice</div></div>
+    <div class="q-text">After the Munich Putsch, what new strategy did Hitler adopt?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(10,'A')" id="10-A"><span class="opt-letter">A</span>To build a larger private army and try again</button>
+      <button class="opt" onclick="answer(10,'B')" id="10-B"><span class="opt-letter">B</span>To ally with communist groups to gain power</button>
+      <button class="opt" onclick="answer(10,'C')" id="10-C"><span class="opt-letter">C</span>To win votes and enter the Reichstag legally</button>
+      <button class="opt" onclick="answer(10,'D')" id="10-D"><span class="opt-letter">D</span>To leave Germany and organise from Austria</button>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- ===== TRUE / FALSE ===== -->
+  <div class="section-head">✅ True or False — decide quickly</div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="card-11">
+    <div class="q-meta"><div class="q-num tf">11</div><div class="q-type">True or False</div></div>
+    <div class="q-text">Hitler was born in Germany.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(11,'True')" id="11-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(11,'False')" id="11-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="card-12">
+    <div class="q-meta"><div class="q-num tf">12</div><div class="q-type">True or False</div></div>
+    <div class="q-text">Hitler served in the German army during the First World War.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(12,'True')" id="12-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(12,'False')" id="12-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="card-13">
+    <div class="q-meta"><div class="q-num tf">13</div><div class="q-type">True or False</div></div>
+    <div class="q-text">The swastika was a symbol created by Hitler for the Nazi Party.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(13,'True')" id="13-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(13,'False')" id="13-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="card-14">
+    <div class="q-meta"><div class="q-num tf">14</div><div class="q-type">True or False</div></div>
+    <div class="q-text">The SA was made up of ex-soldiers who protected Nazi meetings and intimidated opponents.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(14,'True')" id="14-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(14,'False')" id="14-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="card-15">
+    <div class="q-meta"><div class="q-num tf">15</div><div class="q-type">True or False</div></div>
+    <div class="q-text">The Munich Putsch took place in 1925.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(15,'True')" id="15-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(15,'False')" id="15-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="card-16">
+    <div class="q-meta"><div class="q-num tf">16</div><div class="q-type">True or False</div></div>
+    <div class="q-text">The police opened fire and stopped the Nazi march during the Putsch.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(16,'True')" id="16-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(16,'False')" id="16-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="card-17">
+    <div class="q-meta"><div class="q-num tf">17</div><div class="q-type">True or False</div></div>
+    <div class="q-text">As a short-term result of the Putsch, the Nazi Party was banned.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(17,'True')" id="17-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(17,'False')" id="17-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="card-18">
+    <div class="q-meta"><div class="q-num tf">18</div><div class="q-type">True or False</div></div>
+    <div class="q-text">Hitler was imprisoned in Landsberg Prison after the Putsch.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(18,'True')" id="18-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(18,'False')" id="18-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="card-19">
+    <div class="q-meta"><div class="q-num tf">19</div><div class="q-type">True or False</div></div>
+    <div class="q-text">Hitler used propaganda including meetings, newspapers and symbols to spread Nazi ideas.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(19,'True')" id="19-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(19,'False')" id="19-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="card-20">
+    <div class="q-meta"><div class="q-num tf">20</div><div class="q-type">True or False</div></div>
+    <div class="q-text">In his speeches, Hitler blamed the Treaty of Versailles and Weimar politicians for Germany's problems.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(20,'True')" id="20-True">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(20,'False')" id="20-False">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-total">out of 20</div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// Correct answers
+const CORRECT = {
+  1:'C', 2:'B', 3:'B', 4:'B', 5:'B',
+  6:'B', 7:'C', 8:'B', 9:'B', 10:'C',
+  11:'False', 12:'True', 13:'True', 14:'True', 15:'False',
+  16:'True', 17:'True', 18:'True', 19:'True', 20:'True'
+};
+
+// Feedback text
+const FEEDBACK = {
+  1:'Hitler was born in 1889 in Austria-Hungary.',
+  2:'Hitler joined the German Workers\' Party in 1919.',
+  3:'NSDAP stands for National Socialist German Workers\' Party — the Nazi Party.',
+  4:'Hitler launched the Munich Putsch on 8 November 1923.',
+  5:'The SA were also known as the Stormtroopers.',
+  6:'Hitler wrote Mein Kampf while in prison.',
+  7:'A key reason it failed was that Hitler did not win over enough powerful military leaders.',
+  8:'Hitler planned to take Bavaria and then march on Berlin.',
+  9:'The trial gave Hitler national publicity — a long-term benefit.',
+  10:'After the Putsch, Hitler decided to win votes and enter the Reichstag legally.',
+  11:'False — Hitler was born in Austria-Hungary, not Germany.',
+  12:'True — Hitler served in the German army during WWI and was wounded.',
+  13:'True — Hitler created the swastika flag and symbol for the Nazi Party.',
+  14:'True — ex-soldiers in the SA protected meetings and intimidated opponents.',
+  15:'False — the Munich Putsch happened in 1923, not 1925.',
+  16:'True — police opened fire and stopped the Nazi march.',
+  17:'True — the Nazi Party was banned as a short-term consequence.',
+  18:'True — Hitler was held in Landsberg Prison.',
+  19:'True — the Nazis used meetings, newspapers and symbols as propaganda.',
+  20:'True — Hitler blamed the Treaty of Versailles and Weimar politicians in his speeches.'
+};
+
+const answered = {};
+let score = 0;
+
+function answer(qNum, choice) {
+  if (answered[qNum]) return;
+  answered[qNum] = true;
+  const correct = CORRECT[qNum];
+  const isRight = choice === correct;
+  if (isRight) score++;
+
+  ['A','B','C','D'].forEach(letter => {
+    const btn = document.getElementById(`${qNum}-${letter}`);
+    btn.disabled = true;
+    if (letter === correct) btn.classList.add('state-correct');
+    else if (letter === choice) btn.classList.add('state-wrong');
+  });
+
+  const card = document.getElementById(`card-${qNum}`);
+  card.classList.add(isRight ? 'correct' : 'wrong');
+
+  const fb = document.getElementById(`fb-${qNum}`);
+  fb.textContent = (isRight ? '✅ ' : '❌ ') + FEEDBACK[qNum];
+  fb.className = 'feedback show ' + (isRight ? 'correct' : 'wrong');
+
+  updateProgress();
+}
+
+function answerTF(qNum, choice) {
+  if (answered[qNum]) return;
+  answered[qNum] = true;
+  const correct = CORRECT[qNum];
+  const isRight = choice === correct;
+  if (isRight) score++;
+
+  ['True','False'].forEach(val => {
+    const btn = document.getElementById(`${qNum}-${val}`);
+    btn.disabled = true;
+    if (val === correct) {
+      btn.classList.add(val === choice ? 'state-correct' : 'state-missed');
+    } else if (val === choice) {
+      btn.classList.add('state-wrong');
+    }
+  });
+
+  const card = document.getElementById(`card-${qNum}`);
+  card.classList.add(isRight ? 'correct' : 'wrong');
+
+  const fb = document.getElementById(`fb-${qNum}`);
+  fb.textContent = (isRight ? '✅ ' : '❌ ') + FEEDBACK[qNum];
+  fb.className = 'feedback show ' + (isRight ? 'correct' : 'wrong');
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = Object.keys(answered).length;
+  document.getElementById('progressLabel').textContent = `${total} / 20 answered`;
+  document.getElementById('progressFill').style.width = `${(total / 20) * 100}%`;
+  if (total === 20) showResult();
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  let emoji, msg, sub;
+  if (score >= 18) {
+    emoji = '🏆'; msg = `Show this to mum — ${score}/20`; sub = 'Outstanding! You\'ve really nailed this topic. Keep it up!';
+  } else if (score >= 14) {
+    emoji = '👍'; msg = `Show this to mum — ${score}/20`; sub = 'Great work! A few things to review but you\'re well on track.';
+  } else {
+    emoji = '📖'; msg = `Show this to mum — ${score}/20`; sub = 'Time to revisit the revision notes — you\'ve got this if you go again!';
+  }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = score;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultSub').textContent = sub;
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+</script>
+</body>
+</html>

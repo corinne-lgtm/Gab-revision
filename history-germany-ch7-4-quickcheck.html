@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 7.4 The impact of war</title>
+<style>
+:root{
+  --bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;
+  --red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;
+  --blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;
+  --purple:#7353a6;--dark:#1d2935;--yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,52px);line-height:.95;letter-spacing:-1px;margin-bottom:10px}
+.hero p{font-size:17px;color:rgba(255,255,255,.82);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:13px}
+
+/* PROGRESS */
+.prog-track{background:rgba(0,0,0,.08);border-radius:999px;height:12px;overflow:hidden;margin-bottom:6px}
+.prog-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),#3d8a4c);border-radius:999px;transition:width .35s ease}
+.prog-label{font-size:13px;color:var(--muted);font-weight:900;text-align:right;margin-bottom:20px}
+
+/* SECTION DIVIDER */
+.sec-head{display:flex;align-items:center;gap:12px;margin:30px 0 14px}
+.sec-head .sec-line{flex:1;height:2px;background:var(--line);border-radius:2px}
+.sec-head span{font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:2px;color:var(--muted);white-space:nowrap}
+
+/* QUESTION CARD */
+.qcard{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px 22px 18px;margin-bottom:14px;transition:border-color .25s,box-shadow .25s;box-shadow:0 3px 14px rgba(0,0,0,.05)}
+.qcard.done-right{border-color:var(--green);box-shadow:0 3px 14px rgba(94,159,107,.15)}
+.qcard.done-wrong{border-color:var(--red);box-shadow:0 3px 14px rgba(217,75,66,.12)}
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+.q-badge{width:34px;height:34px;border-radius:50%;background:var(--dark);color:white;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .25s}
+.qcard.done-right .q-badge{background:var(--green)}
+.qcard.done-wrong .q-badge{background:var(--red)}
+.q-text{font-weight:900;font-size:17px;line-height:1.35;flex:1}
+
+/* MC OPTIONS */
+.opts{display:grid;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:11px 16px;cursor:pointer;font-size:15px;font-weight:700;background:white;width:100%;text-align:left;transition:background .15s,border-color .15s,transform .1s}
+.opt:not([disabled]):hover{background:var(--orange2);border-color:var(--orange);transform:translateY(-1px)}
+.opt[disabled]{cursor:default}
+.opt-letter{width:27px;height:27px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;transition:background .15s,color .15s}
+.opt.opt-correct{background:var(--green2)!important;border-color:var(--green)!important}
+.opt.opt-correct .opt-letter{background:var(--green);color:white}
+.opt.opt-wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.opt.opt-wrong .opt-letter{background:var(--red);color:white}
+
+/* TF OPTIONS */
+.tf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-btn{padding:14px 10px;border:2px solid var(--line);border-radius:14px;cursor:pointer;font-weight:900;font-size:15px;background:white;transition:background .15s,border-color .15s,transform .1s}
+.tf-btn:not([disabled]):hover{transform:translateY(-1px)}
+.tf-true:not([disabled]):hover{background:var(--green2);border-color:var(--green)}
+.tf-false:not([disabled]):hover{background:var(--red2);border-color:var(--red)}
+.tf-btn[disabled]{cursor:default}
+.tf-btn.opt-correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.opt-wrong{background:var(--red2)!important;border-color:var(--red)!important}
+
+/* FEEDBACK */
+.feedback{display:none;margin-top:12px;padding:11px 15px;border-radius:12px;font-size:14px;font-weight:700;line-height:1.5}
+.feedback.show-right{display:block;background:var(--green2);border:1.5px solid var(--green);color:#246b30}
+.feedback.show-wrong{display:block;background:var(--red2);border:1.5px solid var(--red);color:#8a2820}
+
+/* RESULT */
+.result{display:none;background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:28px;padding:36px 28px;text-align:center;margin:30px 0;box-shadow:0 14px 40px rgba(0,0,0,.22)}
+.result h2{font-size:clamp(24px,4vw,40px);letter-spacing:-.5px;margin-bottom:4px}
+.result-score{font-size:clamp(64px,16vw,110px);font-weight:900;line-height:1;color:var(--yellow);margin:8px 0}
+.result-msg{font-size:19px;color:rgba(255,255,255,.9);margin:8px 0 4px}
+.mum-pill{display:inline-block;background:var(--yellow);color:var(--dark);font-weight:900;padding:11px 26px;border-radius:999px;font-size:17px;margin-top:16px}
+.retry{background:white;color:var(--dark);border:none;font-weight:900;font-size:15px;padding:12px 30px;border-radius:999px;cursor:pointer;margin-top:14px;display:inline-block}
+.retry:hover{background:var(--orange2)}
+
+@media(max-width:560px){.tf-row{grid-template-columns:1fr}.q-text{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+  <h1>7.4 The impact of war</h1>
+  <p>20 questions · 10 multiple choice + 10 true / false · Instant self-marking</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch7.html">Chapter 7</a>
+    <a href="history-germany-ch7-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+<div class="prog-label" id="progLabel">0 / 20 answered</div>
+
+<div id="quizRoot"></div>
+
+<div class="result" id="result">
+  <h2>Quiz complete! 🎉</h2>
+  <div class="result-score" id="rScore"></div>
+  <div class="result-msg" id="rMsg"></div>
+  <div class="mum-pill" id="rMum"></div><br>
+  <button class="retry" onclick="location.reload()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+var Q = [
+  {type:'mc',q:'In which year did Germany invade the Soviet Union (USSR)?',opts:['1939','1940','1941','1942'],ans:2,fb:'Germany launched Operation Barbarossa against the USSR in June 1941.'},
+  {type:'mc',q:'Which battle is described as the clear turning point when the war began to go against Germany?',opts:['Battle of Britain','Battle of the Bulge','Battle of Stalingrad','Battle of Kursk'],ans:2,fb:'After the defeat at Stalingrad (1942–43), the war was clearly turning against Germany.'},
+  {type:'mc',q:'Who became Armaments Minister in 1942 and reorganised Germany\'s economy for war production?',opts:['Joseph Goebbels','Heinrich Himmler','Hermann Göring','Albert Speer'],ans:3,fb:'Albert Speer was appointed Armaments Minister in 1942 and directed the economy towards Total War.'},
+  {type:'mc',q:'By which year had clothing been rationed in Germany?',opts:['1937','1938','1939','1940'],ans:2,fb:'Clothing was rationed by 1939, as Germany prepared its economy for wartime demands.'},
+  {type:'mc',q:'From which year did Britain and America begin heavily bombing German cities?',opts:['1940','1941','1942','1944'],ans:2,fb:'The Allied strategic bombing campaign against German cities intensified from 1942 onwards.'},
+  {type:'mc',q:'Which groups filled the labour shortage in German factories when men went to fight?',opts:['Teenagers and students only','Women, older people and foreign workers','Prisoners of war only','Children and clergy'],ans:1,fb:'With men at the front, factories relied on women, older people and millions of foreign workers.'},
+  {type:'mc',q:'Which of the following was NOT a direct result of Allied bombing of German cities?',opts:['Homelessness','Fires and flooding','Clothing rationing being introduced','Gas explosions'],ans:2,fb:'Clothing rationing was a separate wartime measure — not a direct consequence of bombing raids.'},
+  {type:'mc',q:'What term describes the policy of directing Germany\'s entire economy and society towards winning the war?',opts:['Blitzkrieg','Lebensraum','Total War','Autarky'],ans:2,fb:'"Total War" meant non-essential activities were closed and all resources focused on the war effort.'},
+  {type:'mc',q:'How did Germany\'s early victories affect the mood of some Germans?',opts:['It caused widespread panic','It had no noticeable effect on morale','It made some feel proud and believe Hitler was making Germany powerful','It led most people to oppose the Nazis'],ans:2,fb:'Quick early victories boosted confidence and made some Germans feel proud of the Nazi regime.'},
+  {type:'mc',q:'Why did some Germans remain loyal to the Nazis even late in the war?',opts:['They were unaware of the bombing','They had no experience of rationing','They believed propaganda, feared defeat or felt Germany had to keep fighting','They all lived far from any cities'],ans:2,fb:'Some trusted Nazi propaganda, feared what defeat would mean, or felt the country had to fight on.'},
+  {type:'tf',q:'Germany defeated many European countries quickly in the first years of the Second World War.',ans:true,fb:'True. Germany\'s early Blitzkrieg victories gave the impression of an unstoppable military force.'},
+  {type:'tf',q:'The German invasion of the USSR was immediately and completely successful.',ans:false,fb:'False. The campaign became a disaster — Germans faced fierce Soviet resistance, extreme cold and enormous losses.'},
+  {type:'tf',q:'Food was among the goods rationed in Germany during the war.',ans:true,fb:'True. Food and a wide range of everyday goods were rationed, forcing Germans to make do with less.'},
+  {type:'tf',q:'Hot water was restricted in Germany during the war to save fuel.',ans:true,fb:'True. Hot water restrictions were among several fuel-saving measures introduced on the home front.'},
+  {type:'tf',q:'Dance halls and some shops were kept open throughout the war to maintain public morale.',ans:false,fb:'False. Non-essential activities including dance halls and some shops were closed under the Total War policy.'},
+  {type:'tf',q:'Bombing raids caused some Germans to lose their homes and become refugees.',ans:true,fb:'True. Widespread destruction from bombing created homelessness and turned many Germans into refugees.'},
+  {type:'tf',q:'All Germans openly opposed the Nazis as the war made life harder.',ans:false,fb:'False. While many became disillusioned, not everyone opposed the Nazis openly — some remained loyal or stayed silent.'},
+  {type:'tf',q:'Support for the Nazis generally weakened as the war went on and conditions worsened.',ans:true,fb:'True. Rationing, bombing, deaths and shortages eroded Nazi promises of greatness and weakened popular support.'},
+  {type:'tf',q:'Albert Speer became Armaments Minister in 1940.',ans:false,fb:'False. Speer was appointed Armaments Minister in 1942, not 1940.'},
+  {type:'tf',q:'Germans were forced to use substitutes for everyday goods such as poor-quality soap during the war.',ans:true,fb:'True. Shortages meant people had to use inferior substitutes for basic household goods.'}
+];
+
+var answered = 0, score = 0, TOTAL = Q.length;
+
+function el(tag,cls){ var e=document.createElement(tag); if(cls)e.className=cls; return e; }
+
+function build(){
+  var root = document.getElementById('quizRoot');
+  root.innerHTML = '';
+  Q.forEach(function(q,i){
+    if(i===0) root.appendChild(secHead('Part 1 — Multiple choice (10 questions)'));
+    if(i===10) root.appendChild(secHead('Part 2 — True or false (10 questions)'));
+
+    var card = el('div','qcard'); card.id='card'+i;
+    var top = el('div','q-top');
+    var badge = el('div','q-badge'); badge.id='badge'+i; badge.textContent=i+1;
+    var qtext = el('div','q-text'); qtext.textContent=q.q;
+    top.appendChild(badge); top.appendChild(qtext); card.appendChild(top);
+
+    if(q.type==='mc'){
+      var opts = el('div','opts');
+      var letters=['A','B','C','D'];
+      q.opts.forEach(function(o,j){
+        var btn = el('button','opt'); btn.id='opt'+i+'_'+j;
+        var ltr = el('span','opt-letter'); ltr.textContent=letters[j];
+        btn.appendChild(ltr); btn.appendChild(document.createTextNode(o));
+        btn.addEventListener('click',function(){ pickMC(i,j); });
+        opts.appendChild(btn);
+      });
+      card.appendChild(opts);
+    } else {
+      var row = el('div','tf-row');
+      var tBtn = el('button','tf-btn tf-true'); tBtn.id='tf'+i+'_t'; tBtn.textContent='✅  True';
+      tBtn.addEventListener('click',function(){ pickTF(i,true); });
+      var fBtn = el('button','tf-btn tf-false'); fBtn.id='tf'+i+'_f'; fBtn.textContent='❌  False';
+      fBtn.addEventListener('click',function(){ pickTF(i,false); });
+      row.appendChild(tBtn); row.appendChild(fBtn); card.appendChild(row);
+    }
+
+    var fb = el('div','feedback'); fb.id='fb'+i; card.appendChild(fb);
+    root.appendChild(card);
+  });
+}
+
+function secHead(text){
+  var d = el('div','sec-head');
+  var s = el('span'); s.textContent=text; d.appendChild(s);
+  var line = el('span','sec-line'); d.appendChild(line);
+  return d;
+}
+
+function pickMC(qi,chosen){
+  var q=Q[qi];
+  for(var j=0;j<4;j++){
+    var b=document.getElementById('opt'+qi+'_'+j);
+    b.disabled=true;
+    if(j===q.ans) b.classList.add('opt-correct');
+    else if(j===chosen) b.classList.add('opt-wrong');
+  }
+  var right=chosen===q.ans; if(right)score++;
+  done(qi,right);
+}
+
+function pickTF(qi,chosen){
+  var q=Q[qi];
+  var tBtn=document.getElementById('tf'+qi+'_t');
+  var fBtn=document.getElementById('tf'+qi+'_f');
+  tBtn.disabled=true; fBtn.disabled=true;
+  var right=chosen===q.ans; if(right)score++;
+  if(q.ans===true){ tBtn.classList.add('opt-correct'); if(!right)fBtn.classList.add('opt-wrong'); }
+  else { fBtn.classList.add('opt-correct'); if(!right)tBtn.classList.add('opt-wrong'); }
+  done(qi,right);
+}
+
+function done(qi,right){
+  answered++;
+  var card=document.getElementById('card'+qi);
+  card.classList.add(right?'done-right':'done-wrong');
+  var fb=document.getElementById('fb'+qi);
+  fb.className='feedback '+(right?'show-right':'show-wrong');
+  fb.textContent=(right?'✅ Correct! ':'❌ Not quite. ')+Q[qi].fb;
+  document.getElementById('progFill').style.width=(answered/TOTAL*100)+'%';
+  document.getElementById('progLabel').textContent=answered+' / '+TOTAL+' answered';
+  if(answered===TOTAL) setTimeout(showResult,700);
+}
+
+function showResult(){
+  var box=document.getElementById('result'); box.style.display='block';
+  document.getElementById('rScore').textContent=score+'/20';
+  var msg,mum;
+  if(score>=18){ msg='🏆 Outstanding — you really know this topic!'; mum='🏆 Show this to mum — '+score+'/20'; }
+  else if(score>=14){ msg='👍 Good effort! A little more revision and you\'ll nail it.'; mum='👍 Show this to mum — '+score+'/20'; }
+  else { msg='📖 Keep going — re-read your revision notes and try again.'; mum='📖 Show this to mum — '+score+'/20'; }
+  document.getElementById('rMsg').textContent=msg;
+  document.getElementById('rMum').textContent=mum;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+build();
+</script>
+</body>
+</html>

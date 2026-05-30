@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 9.4 Resistance and Opposition</title>
+<style>
+:root{--bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;--red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;--blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;--purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,48px);line-height:.95;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:14px}
+.panel{background:rgba(255,255,255,.78);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 9px 26px rgba(0,0,0,.06)}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 14px;padding:0}
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 3px 12px rgba(0,0,0,.04);transition:border-color .2s}
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:34px;height:34px;min-width:34px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px}
+.q-text{font-weight:700;font-size:16px;line-height:1.4}
+.options{display:grid;gap:8px}
+.opt-btn{background:white;border:2px solid var(--line);border-radius:12px;padding:11px 16px;font-size:15px;font-family:Arial,Helvetica,sans-serif;text-align:left;cursor:pointer;transition:background .15s,border-color .15s;width:100%;font-weight:600;color:var(--ink)}
+.opt-btn:hover:not(:disabled){background:#f0e8dd;border-color:#b8a898}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{background:#dff0e2;border-color:#5e9f6b;color:#2d5c36}
+.opt-btn.wrong{background:#ffe0dd;border-color:#d94b42;color:#7c1f1c}
+.opt-btn.missed{background:#ffe4bd;border-color:#f29a2e;color:#7a4700}
+/* True/False */
+.tf-options{display:flex;gap:10px}
+.tf-btn{flex:1;background:white;border:2px solid var(--line);border-radius:12px;padding:12px;font-size:15px;font-family:Arial,Helvetica,sans-serif;cursor:pointer;font-weight:700;color:var(--ink);transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:#f0e8dd;border-color:#b8a898}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:#dff0e2;border-color:#5e9f6b;color:#2d5c36}
+.tf-btn.wrong{background:#ffe0dd;border-color:#d94b42;color:#7c1f1c}
+.tf-btn.missed{background:#ffe4bd;border-color:#f29a2e;color:#7a4700}
+/* Result */
+.result-box{display:none;background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:28px;padding:30px;margin:24px 0;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.2)}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:8px}
+.result-score{font-size:52px;font-weight:900;color:var(--yellow);margin:8px 0}
+.result-msg{font-size:20px;font-weight:700;color:rgba(255,255,255,.9);margin:0 0 6px}
+.result-sub{font-size:16px;color:rgba(255,255,255,.7)}
+.progress-bar{background:rgba(255,255,255,.15);border-radius:999px;height:10px;margin-top:20px}
+.progress-fill{background:var(--yellow);height:10px;border-radius:999px;transition:width .4s ease}
+.tally{font-size:14px;color:rgba(255,255,255,.7);margin-top:8px}
+@media(max-width:600px){.wrap{padding:14px}.tf-options{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+  <h1>9.4 Resistance &amp; Opposition to Hitler</h1>
+  <p>20 questions · Answer all to see your score</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch9-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="panel">
+  <p class="section-label">Part 1 — Multiple Choice (10 questions)</p>
+
+  <!-- Q1 -->
+  <div class="q-card" id="qc1">
+    <div class="q-top">
+      <div class="q-num">1</div>
+      <div class="q-text">Which student group wrote and distributed anti-Nazi leaflets and was executed in 1943?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc1',false)">Kreisau Circle</button>
+      <button class="opt-btn" onclick="answer(this,'qc1',false)">Edelweiss Pirates</button>
+      <button class="opt-btn" onclick="answer(this,'qc1',true)">White Rose group</button>
+      <button class="opt-btn" onclick="answer(this,'qc1',false)">Swing Youth</button>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="qc2">
+    <div class="q-top">
+      <div class="q-num">2</div>
+      <div class="q-text">On what date did Colonel von Stauffenberg attempt to assassinate Hitler with a bomb?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc2',false)">12 March 1938</button>
+      <button class="opt-btn" onclick="answer(this,'qc2',false)">9 November 1923</button>
+      <button class="opt-btn" onclick="answer(this,'qc2',true)">20 July 1944</button>
+      <button class="opt-btn" onclick="answer(this,'qc2',false)">30 January 1933</button>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="qc3">
+    <div class="q-top">
+      <div class="q-num">3</div>
+      <div class="q-text">Why did Hitler survive the July Bomb Plot?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc3',false)">The bomb failed to go off</button>
+      <button class="opt-btn" onclick="answer(this,'qc3',true)">The bomb was moved and a table reduced the blast</button>
+      <button class="opt-btn" onclick="answer(this,'qc3',false)">The Gestapo warned him in advance</button>
+      <button class="opt-btn" onclick="answer(this,'qc3',false)">He was not in the building at the time</button>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="qc4">
+    <div class="q-top">
+      <div class="q-num">4</div>
+      <div class="q-text">Approximately how many people were killed by the Nazis in revenge after the July Bomb Plot?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc4',false)">500</button>
+      <button class="opt-btn" onclick="answer(this,'qc4',false)">1,000</button>
+      <button class="opt-btn" onclick="answer(this,'qc4',true)">5,000</button>
+      <button class="opt-btn" onclick="answer(this,'qc4',false)">20,000</button>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="qc5">
+    <div class="q-top">
+      <div class="q-num">5</div>
+      <div class="q-text">What did the Edelweiss Pirates do to resist Nazi rule?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc5',false)">Plotted to assassinate Hitler directly</button>
+      <button class="opt-btn" onclick="answer(this,'qc5',false)">Organised trade union strikes</button>
+      <button class="opt-btn" onclick="answer(this,'qc5',true)">Spread anti-Nazi graffiti and helped deserters and escaped prisoners</button>
+      <button class="opt-btn" onclick="answer(this,'qc5',false)">Published a secret underground newspaper</button>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="qc6">
+    <div class="q-top">
+      <div class="q-num">6</div>
+      <div class="q-text">The Kreisau Circle mainly consisted of which types of people?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc6',false)">Factory workers and trade unionists</button>
+      <button class="opt-btn" onclick="answer(this,'qc6',true)">Army officers, aristocrats, intellectuals and religious figures</button>
+      <button class="opt-btn" onclick="answer(this,'qc6',false)">Students and university lecturers</button>
+      <button class="opt-btn" onclick="answer(this,'qc6',false)">Journalists and radio broadcasters</button>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="qc7">
+    <div class="q-top">
+      <div class="q-num">7</div>
+      <div class="q-text">Which of the following is an example of passive resistance?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc7',false)">Planting a bomb at a Nazi meeting</button>
+      <button class="opt-btn" onclick="answer(this,'qc7',false)">Writing and handing out anti-Nazi leaflets</button>
+      <button class="opt-btn" onclick="answer(this,'qc7',true)">Refusing to give the "Heil Hitler" salute</button>
+      <button class="opt-btn" onclick="answer(this,'qc7',false)">Sheltering a wanted political prisoner</button>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="qc8">
+    <div class="q-top">
+      <div class="q-num">8</div>
+      <div class="q-text">What style of music did the Swing Youth use to express their rejection of Nazi culture?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc8',false)">Classical opera</button>
+      <button class="opt-btn" onclick="answer(this,'qc8',true)">Jazz</button>
+      <button class="opt-btn" onclick="answer(this,'qc8',false)">Folk music</button>
+      <button class="opt-btn" onclick="answer(this,'qc8',false)">Military marches</button>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="qc9">
+    <div class="q-top">
+      <div class="q-num">9</div>
+      <div class="q-text">Which church body was formed to oppose Nazi control of religion in Germany?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc9',false)">The Vatican Council</button>
+      <button class="opt-btn" onclick="answer(this,'qc9',false)">The Anglican Communion</button>
+      <button class="opt-btn" onclick="answer(this,'qc9',true)">The Confessional Church</button>
+      <button class="opt-btn" onclick="answer(this,'qc9',false)">The Evangelical Alliance</button>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="qc10">
+    <div class="q-top">
+      <div class="q-num">10</div>
+      <div class="q-text">Which of the following best explains why resistance groups were not very effective?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'qc10',false)">Hitler was liked by almost nobody in Germany</button>
+      <button class="opt-btn" onclick="answer(this,'qc10',false)">The groups were too large to operate secretly</button>
+      <button class="opt-btn" onclick="answer(this,'qc10',true)">Groups had different aims and did not work together effectively</button>
+      <button class="opt-btn" onclick="answer(this,'qc10',false)">Foreign governments helped the Nazis crush resistance</button>
+    </div>
+  </div>
+
+  <p class="section-label">Part 2 — True or False (10 questions)</p>
+
+  <!-- Q11 -->
+  <div class="q-card" id="qtf11">
+    <div class="q-top">
+      <div class="q-num">11</div>
+      <div class="q-text">Hans and Sophie Scholl were the leaders of the White Rose group.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf11',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf11',false)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="qtf12">
+    <div class="q-top">
+      <div class="q-num">12</div>
+      <div class="q-text">The Kreisau Circle took direct violent action against Hitler before plotting his assassination.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf12',false)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf12',true)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="qtf13">
+    <div class="q-top">
+      <div class="q-num">13</div>
+      <div class="q-text">Political parties and trade unions were banned under Nazi rule, making resistance harder to organise.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf13',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf13',false)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="qtf14">
+    <div class="q-top">
+      <div class="q-num">14</div>
+      <div class="q-text">Some young people genuinely enjoyed Hitler Youth activities, which is one reason not everyone opposed the Nazis.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf14',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf14',false)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="qtf15">
+    <div class="q-top">
+      <div class="q-num">15</div>
+      <div class="q-text">Listening to banned radio broadcasts counted as a form of passive resistance.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf15',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf15',false)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="qtf16">
+    <div class="q-top">
+      <div class="q-num">16</div>
+      <div class="q-text">Catholic leaders praised the Nazis for their treatment of disabled people.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf16',false)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf16',true)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="qtf17">
+    <div class="q-top">
+      <div class="q-num">17</div>
+      <div class="q-text">The Edelweiss Pirates only resisted by wearing unusual clothing — they did not help escaped prisoners.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf17',false)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf17',true)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="qtf18">
+    <div class="q-top">
+      <div class="q-num">18</div>
+      <div class="q-text">Passive resistance was usually too small and private to seriously threaten the Nazi regime.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf18',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf18',false)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="qtf19">
+    <div class="q-top">
+      <div class="q-num">19</div>
+      <div class="q-text">Some businesses supported the Nazi regime because they benefited from rearmament contracts.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf19',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf19',false)">✗ False</button>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="qtf20">
+    <div class="q-top">
+      <div class="q-num">20</div>
+      <div class="q-text">The Gestapo, SS, courts and concentration camps made opposition to the Nazis extremely dangerous.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf20',true)">✓ True</button>
+      <button class="tf-btn" onclick="tfAnswer(this,'qtf20',false)">✗ False</button>
+    </div>
+  </div>
+
+</div><!-- end panel -->
+
+<!-- Result box -->
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-sub" id="resultSub"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="tally" id="resultTally"></div>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+const TOTAL = 20;
+let answered = 0;
+let score = 0;
+
+function disableCard(cardId) {
+  const card = document.getElementById(cardId);
+  card.querySelectorAll('button').forEach(b => b.disabled = true);
+}
+
+function answer(btn, cardId, isCorrect) {
+  disableCard(cardId);
+  const card = document.getElementById(cardId);
+  const btns = card.querySelectorAll('.opt-btn');
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    // highlight the correct one
+    btns.forEach(b => {
+      if (b.getAttribute('onclick').includes('true')) {
+        b.classList.add('missed');
+      }
+    });
+  }
+  answered++;
+  checkDone();
+}
+
+function tfAnswer(btn, cardId, isCorrect) {
+  disableCard(cardId);
+  const card = document.getElementById(cardId);
+  const btns = card.querySelectorAll('.tf-btn');
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => {
+      if (b.getAttribute('onclick').includes('true)')) {
+        b.classList.add('missed');
+      }
+    });
+  }
+  answered++;
+  checkDone();
+}
+
+function checkDone() {
+  if (answered < TOTAL) return;
+
+  const box = document.getElementById('resultBox');
+  const pct = Math.round((score / TOTAL) * 100);
+
+  let emoji, msg, sub;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding work!';
+    sub = 'You really know your stuff on resistance and opposition.';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good effort!';
+    sub = 'A few gaps to tighten up — check the revision notes.';
+  } else {
+    emoji = '📖';
+    msg = 'Keep going!';
+    sub = 'Head back to the revision notes and try again soon.';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = score + '/20';
+  document.getElementById('resultMsg').textContent = 'Show this to mum — ' + score + '/20 ' + emoji;
+  document.getElementById('resultSub').textContent = msg + ' ' + sub;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('resultTally').textContent = score + ' correct · ' + (TOTAL - score) + ' to revisit';
+
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+</script>
+</body>
+</html>

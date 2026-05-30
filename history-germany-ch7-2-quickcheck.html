@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 7.2 Self-sufficiency</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,46px);line-height:.97;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 13px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:10px;margin:20px 0 6px}
+.progress-bar{background:var(--yellow);height:10px;border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-size:13px;color:var(--muted);text-align:right;margin-bottom:18px}
+
+/* SECTION HEADER */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 10px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .2s}
+.q-card.correct{border-color:var(--green)}
+.q-card.wrong{border-color:var(--red)}
+.q-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;font-size:15px}
+.q-num.correct{background:var(--green)}
+.q-num.wrong{background:var(--red)}
+.q-text{font-weight:900;font-size:16px;flex:1}
+
+/* OPTIONS */
+.options{display:grid;gap:9px}
+.opt-btn{width:100%;text-align:left;background:#f6f1eb;border:2px solid var(--line);border-radius:14px;padding:11px 16px;font-size:15px;font-family:Arial,Helvetica,sans-serif;cursor:pointer;transition:background .15s,border-color .15s;font-weight:600;color:var(--ink)}
+.opt-btn:hover:not(:disabled){background:var(--blue2);border-color:#a9c6df}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#2d5f35!important}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7c1f1a!important}
+.opt-btn.missed{background:var(--orange2)!important;border-color:var(--orange)!important;color:#7a4a00!important}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;padding:13px 10px;border-radius:14px;border:2px solid var(--line);font-weight:900;font-size:15px;font-family:Arial,Helvetica,sans-serif;cursor:pointer;background:#f6f1eb;color:var(--ink);transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--blue2);border-color:#a9c6df}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#2d5f35!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7c1f1a!important}
+.tf-btn.missed{background:var(--orange2)!important;border-color:var(--orange)!important;color:#7a4a00!important}
+
+/* FEEDBACK */
+.feedback{display:none;margin-top:10px;font-size:14px;font-weight:700;border-radius:10px;padding:8px 12px}
+.feedback.correct{display:block;background:var(--green2);color:#2d5f35}
+.feedback.wrong{display:block;background:var(--red2);color:#7c1f1a}
+
+/* RESULT */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:28px;margin:28px 0;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.2)}
+.result-box .emoji{font-size:64px;margin-bottom:10px}
+.result-box h2{font-size:clamp(28px,5vw,52px);margin:0 0 8px;color:var(--yellow);letter-spacing:-1px}
+.result-box .show-mum{font-size:20px;font-weight:900;color:white;margin:10px 0 6px}
+.result-box .encouragement{font-size:16px;color:rgba(255,255,255,.8);margin:0}
+.result-box .retry-btn{margin-top:20px;background:var(--yellow);color:var(--dark);font-weight:900;font-size:16px;border:none;padding:13px 36px;border-radius:50px;cursor:pointer}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav,button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Quick Check Quiz</div>
+    <h1>7.2 Did Hitler make Germany self-sufficient?</h1>
+    <p>20 questions — answer each one to see your score instantly.</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch7.html">Chapter 7 index</a>
+      <a href="history-germany-ch7-2-revision.html">📖 Revision notes</a>
+    </div>
+  </section>
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+
+  <!-- ── MULTIPLE CHOICE ── -->
+  <div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-header">
+      <div class="q-num" id="qn1">1</div>
+      <div class="q-text">Who did Hitler appoint as Minister of Economics to rebuild Germany's economy?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(1,'A')">A) Hermann Goering</button>
+      <button class="opt-btn" onclick="answer(1,'B')">B) Joseph Goebbels</button>
+      <button class="opt-btn" onclick="answer(1,'C')">C) Hjalmar Schacht</button>
+      <button class="opt-btn" onclick="answer(1,'D')">D) Heinrich Himmler</button>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-header">
+      <div class="q-num" id="qn2">2</div>
+      <div class="q-text">What did Schacht arrange with countries in South America and south-east Europe?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(2,'A')">A) Military alliances</button>
+      <button class="opt-btn" onclick="answer(2,'B')">B) Trade deals — German goods in exchange for raw materials</button>
+      <button class="opt-btn" onclick="answer(2,'C')">C) Loans of gold and foreign currency</button>
+      <button class="opt-btn" onclick="answer(2,'D')">D) Tourist exchange programmes</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-header">
+      <div class="q-num" id="qn3">3</div>
+      <div class="q-text">Why did Schacht lose influence and get replaced?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(3,'A')">A) He was found to be corrupt</button>
+      <button class="opt-btn" onclick="answer(3,'B')">B) He publicly opposed Hitler</button>
+      <button class="opt-btn" onclick="answer(3,'C')">C) Hitler wanted faster rearmament and Germany still needed foreign raw materials</button>
+      <button class="opt-btn" onclick="answer(3,'D')">D) He failed to reduce unemployment</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-header">
+      <div class="q-num" id="qn4">4</div>
+      <div class="q-text">In which year was the Four Year Plan introduced?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(4,'A')">A) 1933</button>
+      <button class="opt-btn" onclick="answer(4,'B')">B) 1934</button>
+      <button class="opt-btn" onclick="answer(4,'C')">C) 1935</button>
+      <button class="opt-btn" onclick="answer(4,'D')">D) 1936</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-header">
+      <div class="q-num" id="qn5">5</div>
+      <div class="q-text">Who led the Four Year Plan?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(5,'A')">A) Hjalmar Schacht</button>
+      <button class="opt-btn" onclick="answer(5,'B')">B) Hermann Goering</button>
+      <button class="opt-btn" onclick="answer(5,'C')">C) Rudolf Hess</button>
+      <button class="opt-btn" onclick="answer(5,'D')">D) Albert Speer</button>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-header">
+      <div class="q-num" id="qn6">6</div>
+      <div class="q-text">What does the term "autarky" mean?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(6,'A')">A) A type of military alliance</button>
+      <button class="opt-btn" onclick="answer(6,'B')">B) Economic self-sufficiency — producing your own food and raw materials</button>
+      <button class="opt-btn" onclick="answer(6,'C')">C) A form of democratic government</button>
+      <button class="opt-btn" onclick="answer(6,'D')">D) The policy of expanding territory</button>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-header">
+      <div class="q-num" id="qn7">7</div>
+      <div class="q-text">Which of the following was one of the artificial substitutes Germany tried to develop?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(7,'A')">A) Sugar from potatoes</button>
+      <button class="opt-btn" onclick="answer(7,'B')">B) Petrol from coal</button>
+      <button class="opt-btn" onclick="answer(7,'C')">C) Steel from sand</button>
+      <button class="opt-btn" onclick="answer(7,'D')">D) Wool from hemp</button>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-header">
+      <div class="q-num" id="qn8">8</div>
+      <div class="q-text">What does the phrase "Guns or butter?" illustrate about Nazi economic policy?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(8,'A')">A) Germany rationed food but freely sold weapons abroad</button>
+      <button class="opt-btn" onclick="answer(8,'B')">B) The government chose military spending over consumer goods, reducing ordinary people's living standards</button>
+      <button class="opt-btn" onclick="answer(8,'C')">C) The Nazis banned all imports of dairy products</button>
+      <button class="opt-btn" onclick="answer(8,'D')">D) Farmers were forced to produce weapons</button>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-header">
+      <div class="q-num" id="qn9">9</div>
+      <div class="q-text">Approximately what percentage of Germans worked in agriculture or forestry?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(9,'A')">A) 10%</button>
+      <button class="opt-btn" onclick="answer(9,'B')">B) 20%</button>
+      <button class="opt-btn" onclick="answer(9,'C')">C) 30%</button>
+      <button class="opt-btn" onclick="answer(9,'D')">D) 50%</button>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-header">
+      <div class="q-num" id="qn10">10</div>
+      <div class="q-text">What was one problem caused by Nazi farming laws?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(10,'A')">A) Farms were taken over entirely by the state</button>
+      <button class="opt-btn" onclick="answer(10,'B')">B) Laws forced farmers to divide land between children, making farms too small to be profitable</button>
+      <button class="opt-btn" onclick="answer(10,'C')">C) All farm produce had to be exported</button>
+      <button class="opt-btn" onclick="answer(10,'D')">D) Farmers were not allowed to own their own land</button>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+  <!-- ── TRUE / FALSE ── -->
+  <div class="section-label">Part 2 — True or False (10 questions)</div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-header">
+      <div class="q-num" id="qn11">11</div>
+      <div class="q-text">Hjalmar Schacht was a respected banker before Hitler appointed him as Minister of Economics.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(11,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(11,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="q12">
+    <div class="q-header">
+      <div class="q-num" id="qn12">12</div>
+      <div class="q-text">The Four Year Plan aimed to prepare Germany for war within ten years.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(12,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(12,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="q13">
+    <div class="q-header">
+      <div class="q-num" id="qn13">13</div>
+      <div class="q-text">Rearmament under the Four Year Plan created thousands of jobs in Germany.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(13,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(13,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="q14">
+    <div class="q-header">
+      <div class="q-num" id="qn14">14</div>
+      <div class="q-text">Germany was fully self-sufficient in oil production by the time war began in 1939.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(14,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(14,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="q15">
+    <div class="q-header">
+      <div class="q-num" id="qn15">15</div>
+      <div class="q-text">German scientists attempted to make rubber from coal as part of the drive for self-sufficiency.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(15,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(15,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="q16">
+    <div class="q-header">
+      <div class="q-num" id="qn16">16</div>
+      <div class="q-text">The anti-Nazi artist John Heartfield mocked Goering's claims about butter and iron.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(16,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(16,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="q17">
+    <div class="q-header">
+      <div class="q-num" id="qn17">17</div>
+      <div class="q-text">The Nazis offered farmers guaranteed prices for their produce.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(17,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(17,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="q18">
+    <div class="q-header">
+      <div class="q-num" id="qn18">18</div>
+      <div class="q-text">Many farmers had supported the Nazis because the party promised to protect traditional rural family life.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(18,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(18,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="q19">
+    <div class="q-header">
+      <div class="q-num" id="qn19">19</div>
+      <div class="q-text">Under Schacht, production increased and unemployment fell in Germany.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(19,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(19,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="q20">
+    <div class="q-header">
+      <div class="q-num" id="qn20">20</div>
+      <div class="q-text">Despite Nazi policies, Germany still depended on imported raw materials and was not fully self-sufficient.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answer(20,'T')">✅ True</button>
+      <button class="tf-btn" onclick="answer(20,'F')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="emoji" id="resultEmoji"></div>
+    <h2 id="resultScore"></h2>
+    <div class="show-mum" id="resultMum"></div>
+    <p class="encouragement" id="resultMsg"></p>
+    <button class="retry-btn" onclick="retry()">🔄 Try again</button>
+  </div>
+
+</div>
+
+<script>
+// Correct answers
+const answers = {
+  1:'C', 2:'B', 3:'C', 4:'D', 5:'B',
+  6:'B', 7:'B', 8:'B', 9:'C', 10:'B',
+  11:'T', 12:'F', 13:'T', 14:'F', 15:'T',
+  16:'T', 17:'T', 18:'T', 19:'T', 20:'T'
+};
+
+// Feedback text
+const feedback = {
+  1:'Correct! Hjalmar Schacht was a respected banker appointed as Minister of Economics.',
+  2:'Correct! Schacht arranged barter-style trade deals — German goods for raw materials.',
+  3:'Correct! Hitler wanted faster rearmament, and Germany still needed foreign raw materials.',
+  4:'Correct! The Four Year Plan was introduced in 1936.',
+  5:'Correct! Hermann Goering led the Four Year Plan.',
+  6:'Correct! Autarky means economic self-sufficiency — producing your own food and materials.',
+  7:'Correct! Petrol from coal was one of the key artificial substitutes Germany tried to develop.',
+  8:'Correct! "Guns or butter?" shows the Nazis prioritised military spending over consumer goods.',
+  9:'Correct! About 30% of Germans worked in agriculture or forestry.',
+  10:'Correct! Dividing land between children made many farms too small to be profitable.',
+  11:'Correct! Schacht was indeed a respected banker before his appointment.',
+  12:'Correct! The aim was to prepare Germany for war within FOUR years, not ten.',
+  13:'Correct! Rearmament created thousands of jobs, especially in weapons manufacture.',
+  14:'Correct! Oil production targets were not met — Germany was NOT fully self-sufficient by 1939.',
+  15:'Correct! Making rubber from coal was one of several artificial substitute programmes.',
+  16:'Correct! John Heartfield mocked Goering\'s claim that iron made a country strong while butter only made people fat.',
+  17:'Correct! The Nazis offered guaranteed prices for farm produce.',
+  18:'Correct! Many farmers supported the Nazis because of promises to protect rural family life.',
+  19:'Correct! Under Schacht, production did increase and unemployment fell.',
+  20:'Correct! Despite all efforts, Germany still relied on imported raw materials.'
+};
+
+const wrongFeedback = {
+  1:'Not quite. Hitler appointed Hjalmar Schacht, a respected banker, as Minister of Economics.',
+  2:'Not quite. Schacht\'s key strategy was arranging trade deals — German goods exchanged for raw materials.',
+  3:'Not quite. Schacht lost influence because Hitler wanted faster rearmament and Germany still needed raw materials from abroad.',
+  4:'Not quite. The Four Year Plan was introduced in 1936.',
+  5:'Not quite. The Four Year Plan was led by Hermann Goering.',
+  6:'Not quite. Autarky means economic self-sufficiency — producing your own food and raw materials.',
+  7:'Not quite. Petrol from coal was one of the key artificial substitutes developed.',
+  8:'Not quite. "Guns or butter?" means the government chose military spending over consumer goods, hurting ordinary living standards.',
+  9:'Not quite. About 30% of Germans worked in agriculture or forestry.',
+  10:'Not quite. Laws forcing farmers to divide land between children made many farms too small to be profitable.',
+  11:'FALSE — Schacht was indeed a respected banker. This statement is TRUE.',
+  12:'TRUE — The Four Year Plan aimed to prepare for war within FOUR years, not ten. The statement is FALSE.',
+  13:'FALSE — Rearmament did create thousands of jobs. This statement is TRUE.',
+  14:'TRUE — Oil production targets were NOT met. Germany was not fully self-sufficient. The statement is FALSE.',
+  15:'FALSE — Making rubber from coal was one of the substitute programmes. This statement is TRUE.',
+  16:'FALSE — John Heartfield did mock Goering\'s claims. This statement is TRUE.',
+  17:'FALSE — Guaranteed prices for farm produce were offered. This statement is TRUE.',
+  18:'FALSE — Many farmers did support the Nazis for this reason. This statement is TRUE.',
+  19:'FALSE — Production did increase and unemployment did fall under Schacht. This statement is TRUE.',
+  20:'FALSE — Germany did still depend on imported raw materials. This statement is TRUE.'
+};
+
+let answered = {};
+let score = 0;
+
+function answer(qNum, chosen) {
+  if (answered[qNum]) return;
+  answered[qNum] = chosen;
+
+  const correct = answers[qNum];
+  const isCorrect = chosen === correct;
+  if (isCorrect) score++;
+
+  const card = document.getElementById('q' + qNum);
+  const numEl = document.getElementById('qn' + qNum);
+  const fbEl = document.getElementById('fb' + qNum);
+
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+  numEl.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // Disable all buttons in this card
+  card.querySelectorAll('button').forEach(btn => btn.disabled = true);
+
+  // Highlight buttons
+  if (qNum <= 10) {
+    // Multiple choice
+    const opts = card.querySelectorAll('.opt-btn');
+    const labels = ['A','B','C','D'];
+    opts.forEach((btn, i) => {
+      if (labels[i] === correct) {
+        btn.classList.add(isCorrect ? 'correct' : 'missed');
+      } else if (labels[i] === chosen && !isCorrect) {
+        btn.classList.add('wrong');
+      }
+    });
+  } else {
+    // True/False
+    const btns = card.querySelectorAll('.tf-btn');
+    const vals = ['T','F'];
+    btns.forEach((btn, i) => {
+      if (vals[i] === correct) {
+        btn.classList.add(isCorrect ? 'correct' : 'missed');
+      } else if (vals[i] === chosen && !isCorrect) {
+        btn.classList.add('wrong');
+      }
+    });
+  }
+
+  // Feedback
+  fbEl.textContent = isCorrect ? '✅ ' + feedback[qNum] : '❌ ' + wrongFeedback[qNum];
+  fbEl.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+
+  updateProgress();
+
+  if (Object.keys(answered).length === 20) {
+    setTimeout(showResult, 500);
+  }
+}
+
+function updateProgress() {
+  const count = Object.keys(answered).length;
+  document.getElementById('progressBar').style.width = (count / 20 * 100) + '%';
+  document.getElementById('progressLabel').textContent = count + ' / 20 answered';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  const emoji = document.getElementById('resultEmoji');
+  const scoreEl = document.getElementById('resultScore');
+  const mumEl = document.getElementById('resultMum');
+  const msgEl = document.getElementById('resultMsg');
+
+  scoreEl.textContent = score + ' / 20';
+
+  if (score >= 18) {
+    emoji.textContent = '🏆';
+    mumEl.textContent = 'Show this to mum — ' + score + '/20';
+    msgEl.textContent = 'Outstanding! You\'ve clearly mastered this topic. Keep it up!';
+  } else if (score >= 14) {
+    emoji.textContent = '👍';
+    mumEl.textContent = 'Show this to mum — ' + score + '/20';
+    msgEl.textContent = 'Great work! A few more revision sessions and you\'ll be flying.';
+  } else {
+    emoji.textContent = '📖';
+    mumEl.textContent = 'Show this to mum — ' + score + '/20';
+    msgEl.textContent = 'Keep going — head back to the revision notes and try again. You\'ve got this!';
+  }
+
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function retry() {
+  location.reload();
+}
+</script>
+</body>
+</html>

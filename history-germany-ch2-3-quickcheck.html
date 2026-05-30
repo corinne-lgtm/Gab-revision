@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 2.3 Treaty of Versailles</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,46px);line-height:.97;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0 0 18px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 13px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:10px;margin-top:18px}
+.progress-bar{height:10px;border-radius:999px;background:var(--yellow);transition:width .4s ease;width:0%}
+.progress-label{color:rgba(255,255,255,.75);font-size:13px;font-weight:900;margin-top:6px}
+
+/* SECTION LABEL */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 10px}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .3s}
+.q-card.correct{border-color:var(--green)}
+.q-card.wrong{border-color:var(--red)}
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--dark);color:var(--yellow);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0;margin-top:1px}
+.q-text{font-weight:700;font-size:16px;line-height:1.35}
+
+/* OPTIONS */
+.options{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;background:#f8f4ef;border:2px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;font-size:15px;font-weight:600;transition:background .18s,border-color .18s;user-select:none}
+.opt:hover:not(.locked){background:#eee8e0;border-color:#b8a898}
+.opt .badge{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);background:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0;transition:background .18s,border-color .18s}
+.opt.chosen-correct{background:var(--green2);border-color:var(--green)}
+.opt.chosen-correct .badge{background:var(--green);border-color:var(--green);color:white}
+.opt.chosen-wrong{background:var(--red2);border-color:var(--red)}
+.opt.chosen-wrong .badge{background:var(--red);border-color:var(--red);color:white}
+.opt.reveal-correct{background:#e8f7ea;border-color:var(--green)}
+.opt.reveal-correct .badge{background:var(--green);border-color:var(--green);color:white}
+.opt.locked{cursor:default}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;padding:13px;border-radius:14px;border:2px solid var(--line);background:#f8f4ef;font-size:16px;font-weight:900;cursor:pointer;transition:background .18s,border-color .18s}
+.tf-btn:hover:not(.locked){background:#eee8e0}
+.tf-btn.chosen-correct{background:var(--green2);border-color:var(--green);color:#2d6e38}
+.tf-btn.chosen-wrong{background:var(--red2);border-color:var(--red);color:#8a1f1a}
+.tf-btn.reveal-correct{background:#e8f7ea;border-color:var(--green);color:#2d6e38}
+.tf-btn.locked{cursor:default}
+
+/* FEEDBACK PILL */
+.feedback{display:none;margin-top:10px;font-size:14px;font-weight:700;padding:7px 13px;border-radius:999px;width:fit-content}
+.feedback.ok{background:var(--green2);color:#1e5c28}
+.feedback.no{background:var(--red2);color:#7c1f1a}
+
+/* RESULT BOX */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;margin:30px 0;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.2)}
+.result-box .emoji{font-size:64px;line-height:1;margin-bottom:10px}
+.result-box .score-big{font-size:clamp(52px,8vw,90px);font-weight:900;color:var(--yellow);line-height:1;letter-spacing:-2px}
+.result-box .out-of{font-size:20px;color:rgba(255,255,255,.6);margin-top:4px}
+.result-box .mum-msg{font-size:20px;font-weight:900;margin:16px 0 8px;color:var(--yellow)}
+.result-box .encour{font-size:16px;color:rgba(255,255,255,.8);max-width:480px;margin:0 auto}
+
+@media(max-width:600px){.nav a{font-size:12px;padding:7px 10px}.q-text{font-size:15px}.tf-row{flex-direction:column}}
+@media print{.nav,.progress-bar-wrap,.progress-label{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+  <h1>2.3 Treaty of Versailles ⚡ Quick Check</h1>
+  <p>20 questions — answer them all to get your score. Answers are marked instantly.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History index</a>
+    <a href="history-germany-ch2-3-revision.html">📖 Revision notes</a>
+  </div>
+  <div class="progress-bar-wrap" style="margin-top:18px">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+</section>
+
+<!-- ===== MULTIPLE CHOICE ===== -->
+<div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+
+<div class="q-card" id="q1">
+  <div class="q-top">
+    <div class="q-num">1</div>
+    <div class="q-text">How much did Germany have to pay in reparations under the Treaty of Versailles?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q1',false)"><div class="badge">A</div>£3.3 billion</div>
+    <div class="opt" onclick="answerMC(this,'q1',true)"><div class="badge">B</div>£6.6 billion</div>
+    <div class="opt" onclick="answerMC(this,'q1',false)"><div class="badge">C</div>£9.9 billion</div>
+    <div class="opt" onclick="answerMC(this,'q1',false)"><div class="badge">D</div>£12 billion</div>
+  </div>
+  <div class="feedback" id="q1-fb"></div>
+</div>
+
+<div class="q-card" id="q2">
+  <div class="q-top">
+    <div class="q-num">2</div>
+    <div class="q-text">What was the maximum size Germany's army was limited to under the treaty?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q2',false)"><div class="badge">A</div>50,000 soldiers</div>
+    <div class="opt" onclick="answerMC(this,'q2',true)"><div class="badge">B</div>100,000 soldiers</div>
+    <div class="opt" onclick="answerMC(this,'q2',false)"><div class="badge">C</div>200,000 soldiers</div>
+    <div class="opt" onclick="answerMC(this,'q2',false)"><div class="badge">D</div>500,000 soldiers</div>
+  </div>
+  <div class="feedback" id="q2-fb"></div>
+</div>
+
+<div class="q-card" id="q3">
+  <div class="q-top">
+    <div class="q-num">3</div>
+    <div class="q-text">Which article of the treaty forced Germany to accept blame for the war?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q3',false)"><div class="badge">A</div>Article 48</div>
+    <div class="opt" onclick="answerMC(this,'q3',false)"><div class="badge">B</div>Article 119</div>
+    <div class="opt" onclick="answerMC(this,'q3',true)"><div class="badge">C</div>Article 231</div>
+    <div class="opt" onclick="answerMC(this,'q3',false)"><div class="badge">D</div>Article 314</div>
+  </div>
+  <div class="feedback" id="q3-fb"></div>
+</div>
+
+<div class="q-card" id="q4">
+  <div class="q-top">
+    <div class="q-num">4</div>
+    <div class="q-text">Which of the following pieces of territory was NOT specifically mentioned as lost by Germany?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q4',false)"><div class="badge">A</div>Alsace-Lorraine</div>
+    <div class="opt" onclick="answerMC(this,'q4',false)"><div class="badge">B</div>The Polish Corridor</div>
+    <div class="opt" onclick="answerMC(this,'q4',true)"><div class="badge">C</div>The Rhineland</div>
+    <div class="opt" onclick="answerMC(this,'q4',false)"><div class="badge">D</div>Germany's overseas colonies</div>
+  </div>
+  <div class="feedback" id="q4-fb"></div>
+</div>
+
+<div class="q-card" id="q5">
+  <div class="q-top">
+    <div class="q-num">5</div>
+    <div class="q-text">What does the term "diktat" mean in the context of the Treaty of Versailles?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q5',false)"><div class="badge">A</div>Germany chose to sign the treaty voluntarily</div>
+    <div class="opt" onclick="answerMC(this,'q5',true)"><div class="badge">B</div>Germany was forced to accept the terms without negotiation</div>
+    <div class="opt" onclick="answerMC(this,'q5',false)"><div class="badge">C</div>The Allies offered Germany a generous peace deal</div>
+    <div class="opt" onclick="answerMC(this,'q5',false)"><div class="badge">D</div>Germany helped write the treaty terms</div>
+  </div>
+  <div class="feedback" id="q5-fb"></div>
+</div>
+
+<div class="q-card" id="q6">
+  <div class="q-top">
+    <div class="q-num">6</div>
+    <div class="q-text">Who were the "November Criminals" according to the stab-in-the-back myth?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q6',false)"><div class="badge">A</div>German generals who refused to fight</div>
+    <div class="opt" onclick="answerMC(this,'q6',false)"><div class="badge">B</div>Allied leaders who imposed harsh terms</div>
+    <div class="opt" onclick="answerMC(this,'q6',true)"><div class="badge">C</div>Politicians who signed the treaty and ended the war</div>
+    <div class="opt" onclick="answerMC(this,'q6',false)"><div class="badge">D</div>German soldiers who deserted the front line</div>
+  </div>
+  <div class="feedback" id="q6-fb"></div>
+</div>
+
+<div class="q-card" id="q7">
+  <div class="q-top">
+    <div class="q-num">7</div>
+    <div class="q-text">Which military equipment was Germany specifically forbidden from having under the treaty?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q7',false)"><div class="badge">A</div>Rifles and artillery</div>
+    <div class="opt" onclick="answerMC(this,'q7',true)"><div class="badge">B</div>Tanks, submarines and an air force</div>
+    <div class="opt" onclick="answerMC(this,'q7',false)"><div class="badge">C</div>Cavalry horses and bayonets</div>
+    <div class="opt" onclick="answerMC(this,'q7',false)"><div class="badge">D</div>Machine guns and grenades</div>
+  </div>
+  <div class="feedback" id="q7-fb"></div>
+</div>
+
+<div class="q-card" id="q8">
+  <div class="q-top">
+    <div class="q-num">8</div>
+    <div class="q-text">How does the modern historian view of the Treaty of Versailles differ from the German view of 1919?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q8',false)"><div class="badge">A</div>Modern historians agree it was far too harsh</div>
+    <div class="opt" onclick="answerMC(this,'q8',false)"><div class="badge">B</div>Modern historians say it was actually very fair</div>
+    <div class="opt" onclick="answerMC(this,'q8',true)"><div class="badge">C</div>Modern historians say it was harsh but not as severe as Germany claimed</div>
+    <div class="opt" onclick="answerMC(this,'q8',false)"><div class="badge">D</div>Modern historians say Germany deserved even harsher punishment</div>
+  </div>
+  <div class="feedback" id="q8-fb"></div>
+</div>
+
+<div class="q-card" id="q9">
+  <div class="q-top">
+    <div class="q-num">9</div>
+    <div class="q-text">Which of the following was NOT listed as a reason why Germans hated the Treaty of Versailles?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q9',false)"><div class="badge">A</div>National humiliation from the war guilt clause</div>
+    <div class="opt" onclick="answerMC(this,'q9',false)"><div class="badge">B</div>Economic pain from reparations</div>
+    <div class="opt" onclick="answerMC(this,'q9',true)"><div class="badge">C</div>Being forced to join the League of Nations</div>
+    <div class="opt" onclick="answerMC(this,'q9',false)"><div class="badge">D</div>Having no say in the treaty terms (diktat)</div>
+  </div>
+  <div class="feedback" id="q9-fb"></div>
+</div>
+
+<div class="q-card" id="q10">
+  <div class="q-top">
+    <div class="q-num">10</div>
+    <div class="q-text">What overall effect did the Treaty of Versailles have on the new German republic, according to the revision page?</div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="answerMC(this,'q10',false)"><div class="badge">A</div>It increased public trust in the new government</div>
+    <div class="opt" onclick="answerMC(this,'q10',true)"><div class="badge">B</div>It weakened support for the new republic</div>
+    <div class="opt" onclick="answerMC(this,'q10',false)"><div class="badge">C</div>It had little political impact inside Germany</div>
+    <div class="opt" onclick="answerMC(this,'q10',false)"><div class="badge">D</div>It united German political parties against the Allies</div>
+  </div>
+  <div class="feedback" id="q10-fb"></div>
+</div>
+
+<!-- ===== TRUE / FALSE ===== -->
+<div class="section-label">Part 2 — True or False (10 questions)</div>
+
+<div class="q-card" id="q11">
+  <div class="q-top">
+    <div class="q-num">11</div>
+    <div class="q-text">Germany had to accept full blame for the First World War under Article 231, known as the War Guilt Clause.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q11',true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q11',false)">❌ False</button>
+  </div>
+  <div class="feedback" id="q11-fb"></div>
+</div>
+
+<div class="q-card" id="q12">
+  <div class="q-top">
+    <div class="q-num">12</div>
+    <div class="q-text">Germany was allowed to keep its navy of submarines under the Treaty of Versailles.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q12',false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q12',true)">❌ False</button>
+  </div>
+  <div class="feedback" id="q12-fb"></div>
+</div>
+
+<div class="q-card" id="q13">
+  <div class="q-top">
+    <div class="q-num">13</div>
+    <div class="q-text">The "stab in the back" myth claimed that Germany's army had not truly lost the war on the battlefield.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q13',true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q13',false)">❌ False</button>
+  </div>
+  <div class="feedback" id="q13-fb"></div>
+</div>
+
+<div class="q-card" id="q14">
+  <div class="q-top">
+    <div class="q-num">14</div>
+    <div class="q-text">Germany was given a full opportunity to negotiate the treaty terms before being made to sign.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q14',false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q14',true)">❌ False</button>
+  </div>
+  <div class="feedback" id="q14-fb"></div>
+</div>
+
+<div class="q-card" id="q15">
+  <div class="q-top">
+    <div class="q-num">15</div>
+    <div class="q-text">Reparations created economic hardship and anger inside Germany.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q15',true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q15',false)">❌ False</button>
+  </div>
+  <div class="feedback" id="q15-fb"></div>
+</div>
+
+<div class="q-card" id="q16">
+  <div class="q-top">
+    <div class="q-num">16</div>
+    <div class="q-text">Alsace-Lorraine was territory that Germany lost under the Treaty of Versailles.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q16',true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q16',false)">❌ False</button>
+  </div>
+  <div class="feedback" id="q16-fb"></div>
+</div>
+
+<div class="q-card" id="q17">
+  <div class="q-top">
+    <div class="q-num">17</div>
+    <div class="q-text">Modern historians agree completely with the German view that the Treaty of Versailles was extremely harsh and permanently damaging.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q17',false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q17',true)">❌ False</button>
+  </div>
+  <div class="feedback" id="q17-fb"></div>
+</div>
+
+<div class="q-card" id="q18">
+  <div class="q-top">
+    <div class="q-num">18</div>
+    <div class="q-text">Loss of territory under the treaty meant Germany also lost factories, farms and people.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q18',true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q18',false)">❌ False</button>
+  </div>
+  <div class="feedback" id="q18-fb"></div>
+</div>
+
+<div class="q-card" id="q19">
+  <div class="q-top">
+    <div class="q-num">19</div>
+    <div class="q-text">The term "reparations" refers to military restrictions placed on Germany's armed forces.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q19',false)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q19',true)">❌ False</button>
+  </div>
+  <div class="feedback" id="q19-fb"></div>
+</div>
+
+<div class="q-card" id="q20">
+  <div class="q-top">
+    <div class="q-num">20</div>
+    <div class="q-text">The War Guilt Clause damaged German national pride as well as the country's economy.</div>
+  </div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="answerTF(this,'q20',true)">✅ True</button>
+    <button class="tf-btn" onclick="answerTF(this,'q20',false)">❌ False</button>
+  </div>
+  <div class="feedback" id="q20-fb"></div>
+</div>
+
+<!-- ===== RESULT BOX ===== -->
+<div class="result-box" id="resultBox">
+  <div class="emoji" id="resultEmoji"></div>
+  <div class="score-big" id="scoreNum"></div>
+  <div class="out-of">out of 20</div>
+  <div class="mum-msg" id="mumMsg"></div>
+  <div class="encour" id="encour"></div>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+const state = {};
+let answered = 0;
+const TOTAL = 20;
+
+function updateProgress(){
+  const pct = (answered/TOTAL)*100;
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = answered+' / '+TOTAL+' answered';
+  if(answered === TOTAL) showResult();
+}
+
+function lockCard(id){
+  const card = document.getElementById(id);
+  card.querySelectorAll('.opt,.tf-btn').forEach(el=>el.classList.add('locked'));
+}
+
+function showFeedback(id, correct, correctMsg){
+  const fb = document.getElementById(id+'-fb');
+  fb.style.display='block';
+  if(correct){
+    fb.className='feedback ok';
+    fb.textContent='✓ Correct!';
+  } else {
+    fb.className='feedback no';
+    fb.textContent='✗ Incorrect — '+correctMsg;
+  }
+}
+
+function answerMC(el, id, isCorrect){
+  if(state[id]) return;
+  state[id]=true;
+  answered++;
+  lockCard(id);
+  const card = document.getElementById(id);
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach(opt=>{
+    const wasClicked = opt === el;
+    if(wasClicked && isCorrect){
+      opt.classList.add('chosen-correct');
+    } else if(wasClicked && !isCorrect){
+      opt.classList.add('chosen-wrong');
+    }
+  });
+  // reveal correct if wrong chosen
+  if(!isCorrect){
+    opts.forEach(opt=>{
+      if(opt.getAttribute('onclick') && opt.getAttribute('onclick').includes(',true)')){
+        opt.classList.add('reveal-correct');
+      }
+    });
+  }
+  card.classList.add(isCorrect?'correct':'wrong');
+  // find correct text for feedback
+  let correctText='';
+  opts.forEach(opt=>{
+    if(opt.getAttribute('onclick').includes(',true)')){
+      correctText = opt.textContent.trim().substring(1).trim();
+    }
+  });
+  showFeedback(id, isCorrect, correctText);
+  updateProgress();
+}
+
+function answerTF(el, id, isCorrect){
+  if(state[id]) return;
+  state[id]=true;
+  answered++;
+  lockCard(id);
+  const card = document.getElementById(id);
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(btn=>{
+    const wasClicked = btn===el;
+    if(wasClicked && isCorrect){
+      btn.classList.add('chosen-correct');
+    } else if(wasClicked && !isCorrect){
+      btn.classList.add('chosen-wrong');
+    } else if(!wasClicked && !isCorrect){
+      // reveal the correct button
+      btn.classList.add('reveal-correct');
+    }
+  });
+  card.classList.add(isCorrect?'correct':'wrong');
+  const correctAnswer = el.getAttribute('onclick').includes(',true)') ? el.textContent.trim() :
+    Array.from(btns).find(b=>b!==el).textContent.trim();
+  showFeedback(id, isCorrect, 'The answer is '+correctAnswer);
+  updateProgress();
+}
+
+function showResult(){
+  const score = Object.values(state).filter(v=>v===true).length;
+  // actually count correct
+  let correct = 0;
+  document.querySelectorAll('.q-card.correct').forEach(()=>correct++);
+
+  const box = document.getElementById('resultBox');
+  box.style.display='block';
+  document.getElementById('scoreNum').textContent=correct;
+
+  let emoji, mum, encour;
+  if(correct>=18){
+    emoji='🏆';
+    mum='Show this to mum — '+correct+'/20';
+    encour='Outstanding! You really know this topic inside out. Keep it up!';
+  } else if(correct>=14){
+    emoji='👍';
+    mum='Show this to mum — '+correct+'/20';
+    encour='Great work — solid knowledge here. Go back over any you missed and you\'ll be flying!';
+  } else {
+    emoji='📖';
+    mum='Show this to mum — '+correct+'/20';
+    encour='Keep going! Read through the revision notes again and try once more — you\'ve got this.';
+  }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('mumMsg').textContent=mum;
+  document.getElementById('encour').textContent=encour;
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>

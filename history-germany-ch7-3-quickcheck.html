@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 7.3 Were Germans better off under the Nazis?</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+  min-height:100vh;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#2a3644,#7c382f);
+  color:white;border-radius:30px;padding:28px 30px;
+  margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)
+}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:12px;margin-bottom:8px}
+.hero h1{font-size:clamp(22px,3.5vw,40px);line-height:1;letter-spacing:-.5px;margin-bottom:10px}
+.hero p{font-size:16px;color:rgba(255,255,255,.82);margin-bottom:16px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  background:white;color:#26313d;text-decoration:none;
+  font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px;
+  transition:opacity .15s
+}
+.nav a:hover{opacity:.8}
+
+/* PROGRESS BAR */
+.progress-wrap{background:var(--paper);border:2px solid var(--line);border-radius:999px;height:14px;margin-bottom:20px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--blue));border-radius:999px;width:0%;transition:width .4s ease}
+.progress-label{text-align:right;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+
+/* SECTION HEADER */
+.section-head{
+  background:var(--dark);color:white;border-radius:18px 18px 0 0;
+  padding:14px 20px;font-weight:900;font-size:15px;letter-spacing:.5px;
+  display:flex;align-items:center;gap:10px
+}
+.section-head .badge{
+  background:var(--yellow);color:var(--dark);border-radius:999px;
+  padding:2px 10px;font-size:13px
+}
+
+/* QUESTION CARD */
+.q-card{
+  background:var(--paper);border:2px solid var(--line);
+  border-top:none;padding:20px;margin-bottom:0;
+}
+.q-card:last-of-type{border-radius:0 0 18px 18px;margin-bottom:22px}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.35}
+
+/* OPTIONS */
+.options{display:grid;gap:8px}
+.opt{
+  background:white;border:2px solid var(--line);border-radius:12px;
+  padding:11px 15px;cursor:pointer;font-size:14px;font-weight:600;
+  text-align:left;width:100%;transition:border-color .15s,background .15s;
+  display:flex;align-items:center;gap:10px;
+}
+.opt:hover:not([disabled]){border-color:var(--blue);background:var(--blue2)}
+.opt .opt-letter{
+  min-width:24px;height:24px;border-radius:50%;background:var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:900;color:var(--muted);transition:background .15s,color .15s
+}
+
+/* TRUE / FALSE */
+.tf-row{display:flex;gap:10px}
+.tf-row .opt{flex:1;justify-content:center;text-align:center;font-size:15px}
+
+/* STATES */
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.opt.correct .opt-letter{background:var(--green);color:white}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.opt.wrong .opt-letter{background:var(--red);color:white}
+.opt.missed{background:var(--orange2)!important;border-color:var(--orange)!important}
+.opt.missed .opt-letter{background:var(--orange);color:white}
+.opt[disabled]{cursor:default}
+.tick-icon{margin-left:auto;font-size:16px;opacity:0;transition:opacity .2s}
+.opt.correct .tick-icon,.opt.wrong .tick-icon,.opt.missed .tick-icon{opacity:1}
+
+/* RESULT BOX */
+#result{
+  display:none;
+  background:linear-gradient(135deg,#2a3644,#7c382f);
+  color:white;border-radius:28px;padding:30px;text-align:center;
+  margin-top:10px;box-shadow:0 14px 35px rgba(0,0,0,.2);
+  animation:popIn .4s cubic-bezier(.34,1.56,.64,1)
+}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+#result .score-big{font-size:clamp(48px,10vw,80px);font-weight:900;line-height:1;color:var(--yellow);letter-spacing:-2px}
+#result .score-label{font-size:18px;color:rgba(255,255,255,.8);margin-bottom:12px}
+#result .mum-msg{
+  background:rgba(255,255,255,.12);border-radius:16px;
+  padding:16px 20px;font-size:20px;font-weight:900;margin:16px 0;
+}
+#result .encouragement{font-size:16px;color:rgba(255,255,255,.75)}
+#result .emoji-big{font-size:52px;display:block;margin-bottom:8px}
+
+@media(max-width:600px){
+  .wrap{padding:14px}
+  .tf-row{flex-direction:column}
+}
+@media print{.nav,button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Quick Check Quiz</div>
+  <h1>7.3 Were Germans better off under the Nazis?</h1>
+  <p>20 questions · answer every question to see your score</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History</a>
+    <a href="history-germany-index.html">🇩🇪 Germany</a>
+    <a href="history-germany-ch7-3-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-label" id="prog-label">0 / 20 answered</div>
+<div class="progress-wrap"><div class="progress-bar" id="prog-bar"></div></div>
+
+<!-- ========== SECTION A: MULTIPLE CHOICE ========== -->
+<div class="section-head">
+  <span>Section A — Multiple Choice</span>
+  <span class="badge">10 questions</span>
+</div>
+
+<!-- Q1 -->
+<div class="q-card">
+  <div class="q-num">Question 1</div>
+  <div class="q-text">Before 1933, which political parties did most working-class Germans support?</div>
+  <div class="options">
+    <button class="opt" data-q="1" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>The Nazis and the Nationalists<span class="tick-icon"></span></button>
+    <button class="opt" data-q="1" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>The Centre Party and the Liberals<span class="tick-icon"></span></button>
+    <button class="opt" data-q="1" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>The Social Democrats or Communists<span class="tick-icon"></span></button>
+    <button class="opt" data-q="1" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>The Conservative Party and the DAF<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="q-card">
+  <div class="q-num">Question 2</div>
+  <div class="q-text">What did the DAF (Deutsche Arbeitsfront) replace after 1933?</div>
+  <div class="options">
+    <button class="opt" data-q="2" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>The German army<span class="tick-icon"></span></button>
+    <button class="opt" data-q="2" data-correct="true"  onclick="answer(this)"><span class="opt-letter">B</span>Trade unions<span class="tick-icon"></span></button>
+    <button class="opt" data-q="2" data-correct="false" onclick="answer(this)"><span class="opt-letter">C</span>The Reichstag<span class="tick-icon"></span></button>
+    <button class="opt" data-q="2" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>The National Labour Service<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="q-card">
+  <div class="q-num">Question 3</div>
+  <div class="q-text">What does SDA stand for (in English)?</div>
+  <div class="options">
+    <button class="opt" data-q="3" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>Strength through Joy<span class="tick-icon"></span></button>
+    <button class="opt" data-q="3" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>State Defence Agency<span class="tick-icon"></span></button>
+    <button class="opt" data-q="3" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>Beauty of Labour<span class="tick-icon"></span></button>
+    <button class="opt" data-q="3" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>National Labour Service<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="q-card">
+  <div class="q-num">Question 4</div>
+  <div class="q-text">Which of the following was an activity offered by KDF (Kraft durch Freude)?</div>
+  <div class="options">
+    <button class="opt" data-q="4" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>Free housing for factory workers<span class="tick-icon"></span></button>
+    <button class="opt" data-q="4" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>Paid sick leave and pensions<span class="tick-icon"></span></button>
+    <button class="opt" data-q="4" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>Cheap holidays abroad and theatre trips<span class="tick-icon"></span></button>
+    <button class="opt" data-q="4" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>The right to vote on working hours<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="q-card">
+  <div class="q-num">Question 5</div>
+  <div class="q-text">Who designed the Volkswagen (People's Car)?</div>
+  <div class="options">
+    <button class="opt" data-q="5" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>Albert Speer<span class="tick-icon"></span></button>
+    <button class="opt" data-q="5" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>Heinrich Himmler<span class="tick-icon"></span></button>
+    <button class="opt" data-q="5" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>Ferdinand Porsche<span class="tick-icon"></span></button>
+    <button class="opt" data-q="5" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>Josef Goebbels<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="q-card">
+  <div class="q-num">Question 6</div>
+  <div class="q-text">How much did workers need to save each week in the Volkswagen stamp book scheme?</div>
+  <div class="options">
+    <button class="opt" data-q="6" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>2 marks<span class="tick-icon"></span></button>
+    <button class="opt" data-q="6" data-correct="true"  onclick="answer(this)"><span class="opt-letter">B</span>5 marks<span class="tick-icon"></span></button>
+    <button class="opt" data-q="6" data-correct="false" onclick="answer(this)"><span class="opt-letter">C</span>10 marks<span class="tick-icon"></span></button>
+    <button class="opt" data-q="6" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>20 marks<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="q-card">
+  <div class="q-num">Question 7</div>
+  <div class="q-text">What was the set price of the Volkswagen?</div>
+  <div class="options">
+    <button class="opt" data-q="7" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>750 marks<span class="tick-icon"></span></button>
+    <button class="opt" data-q="7" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>850 marks<span class="tick-icon"></span></button>
+    <button class="opt" data-q="7" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>990 marks<span class="tick-icon"></span></button>
+    <button class="opt" data-q="7" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>1,200 marks<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="q-card">
+  <div class="q-num">Question 8</div>
+  <div class="q-text">Why did the Nazis need working-class Germans to support them?</div>
+  <div class="options">
+    <button class="opt" data-q="8" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>They were the wealthiest group in Germany<span class="tick-icon"></span></button>
+    <button class="opt" data-q="8" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>They controlled the German press<span class="tick-icon"></span></button>
+    <button class="opt" data-q="8" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>They were the largest social group and needed to be kept under control<span class="tick-icon"></span></button>
+    <button class="opt" data-q="8" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>They had led the 1918 revolution and could do so again<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="q-card">
+  <div class="q-num">Question 9</div>
+  <div class="q-text">What did the SDA (Beauty of Labour) scheme aim to improve?</div>
+  <div class="options">
+    <button class="opt" data-q="9" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>Workers' wages and bonuses<span class="tick-icon"></span></button>
+    <button class="opt" data-q="9" data-correct="false" onclick="answer(this)"><span class="opt-letter">B</span>The rights of workers to strike<span class="tick-icon"></span></button>
+    <button class="opt" data-q="9" data-correct="true"  onclick="answer(this)"><span class="opt-letter">C</span>The working environment — lighting, safety, canteens and sports facilities<span class="tick-icon"></span></button>
+    <button class="opt" data-q="9" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>The number of holidays workers received each year<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="q-card">
+  <div class="q-num">Question 10</div>
+  <div class="q-text">According to Interpretation B, what did Hitler promise that made it sound "like a promise of paradise" to desperate people?</div>
+  <div class="options">
+    <button class="opt" data-q="10" data-correct="false" onclick="answer(this)"><span class="opt-letter">A</span>Military glory and empire<span class="tick-icon"></span></button>
+    <button class="opt" data-q="10" data-correct="true"  onclick="answer(this)"><span class="opt-letter">B</span>Work and bread for the unemployed and hungry<span class="tick-icon"></span></button>
+    <button class="opt" data-q="10" data-correct="false" onclick="answer(this)"><span class="opt-letter">C</span>Free housing and education<span class="tick-icon"></span></button>
+    <button class="opt" data-q="10" data-correct="false" onclick="answer(this)"><span class="opt-letter">D</span>Higher wages than before the depression<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- ========== SECTION B: TRUE / FALSE ========== -->
+<div class="section-head" style="margin-top:10px">
+  <span>Section B — True or False</span>
+  <span class="badge">10 questions</span>
+</div>
+
+<!-- Q11 -->
+<div class="q-card">
+  <div class="q-num">Question 11</div>
+  <div class="q-text">Trade unions were banned in Germany in 1933.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="11" data-correct="true"  onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="11" data-correct="false" onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="q-card">
+  <div class="q-num">Question 12</div>
+  <div class="q-text">Under the Nazis, workers were free to quit their jobs at any time without government permission.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="12" data-correct="false" onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="12" data-correct="true"  onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="q-card">
+  <div class="q-num">Question 13</div>
+  <div class="q-text">The KDF scheme included skiing trips to Switzerland.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="13" data-correct="true"  onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="13" data-correct="false" onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="q-card">
+  <div class="q-num">Question 14</div>
+  <div class="q-text">Workers who saved 750 marks in the Volkswagen stamp book scheme eventually received their car.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="14" data-correct="false" onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="14" data-correct="true"  onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="q-card">
+  <div class="q-num">Question 15</div>
+  <div class="q-text">Wages for workers increased significantly during the early years of Nazi rule.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="15" data-correct="false" onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="15" data-correct="true"  onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="q-card">
+  <div class="q-num">Question 16</div>
+  <div class="q-text">The Nazis used rearmament and public works such as roads, schools and hospitals to create jobs.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="16" data-correct="true"  onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="16" data-correct="false" onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="q-card">
+  <div class="q-num">Question 17</div>
+  <div class="q-text">All KDF holidays were affordable for ordinary working-class Germans.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="17" data-correct="false" onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="17" data-correct="true"  onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="q-card">
+  <div class="q-num">Question 18</div>
+  <div class="q-text">The money saved in the Volkswagen scheme was used to produce weapons instead of cars.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="18" data-correct="true"  onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="18" data-correct="false" onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="q-card">
+  <div class="q-num">Question 19</div>
+  <div class="q-text">The steelworker Ernest Bromberg, quoted in Interpretation D, said he was very active in Nazi politics and the Labour Front.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="19" data-correct="false" onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="19" data-correct="true"  onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="q-card">
+  <div class="q-num">Question 20</div>
+  <div class="q-text">Under Nazi rule, workers could be forced to work as many hours as the Nazis required.</div>
+  <div class="tf-row">
+    <button class="opt" data-q="20" data-correct="true"  onclick="answer(this)"><span class="opt-letter">T</span>True<span class="tick-icon"></span></button>
+    <button class="opt" data-q="20" data-correct="false" onclick="answer(this)"><span class="opt-letter">F</span>False<span class="tick-icon"></span></button>
+  </div>
+</div>
+
+<!-- RESULT BOX -->
+<div id="result">
+  <span class="emoji-big" id="res-emoji"></span>
+  <div class="score-big" id="res-score"></div>
+  <div class="score-label">out of 20</div>
+  <div class="mum-msg" id="res-mum"></div>
+  <div class="encouragement" id="res-enc"></div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const answered = {};
+const correct  = {};
+const TOTAL    = 20;
+
+function answer(btn) {
+  const q   = btn.dataset.q;
+  if (answered[q]) return;          // already locked
+  answered[q] = true;
+
+  const isCorrect = btn.dataset.correct === 'true';
+  const siblings  = btn.closest('.options, .tf-row').querySelectorAll('.opt');
+
+  siblings.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.correct === 'true') {
+      if (b !== btn) {
+        // highlight the missed correct answer in orange
+        b.classList.add('missed');
+        b.querySelector('.tick-icon').textContent = '⬅️';
+      }
+    }
+  });
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    btn.querySelector('.tick-icon').textContent = '✓';
+    correct[q] = true;
+  } else {
+    btn.classList.add('wrong');
+    btn.querySelector('.tick-icon').textContent = '✗';
+    correct[q] = false;
+  }
+
+  updateProgress();
+
+  if (Object.keys(answered).length === TOTAL) {
+    setTimeout(showResult, 500);
+  }
+}
+
+function updateProgress() {
+  const done = Object.keys(answered).length;
+  document.getElementById('prog-label').textContent = done + ' / ' + TOTAL + ' answered';
+  document.getElementById('prog-bar').style.width = (done / TOTAL * 100) + '%';
+}
+
+function showResult() {
+  const score = Object.values(correct).filter(Boolean).length;
+  const box   = document.getElementById('result');
+
+  document.getElementById('res-score').textContent = score;
+
+  let emoji, mum, enc;
+  if (score >= 18) {
+    emoji = '🏆';
+    mum   = 'Show this to mum — ' + score + '/20';
+    enc   = 'Outstanding! You really know your stuff on the Nazis and workers.';
+  } else if (score >= 14) {
+    emoji = '👍';
+    mum   = 'Show this to mum — ' + score + '/20';
+    enc   = 'Good effort! Check the questions you missed and you\'ll nail it next time.';
+  } else {
+    emoji = '📖';
+    mum   = 'Show this to mum — ' + score + '/20';
+    enc   = 'Go back to the revision notes, then try again — you\'ve got this!';
+  }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-mum').textContent   = emoji + ' ' + mum;
+  document.getElementById('res-enc').textContent   = enc;
+
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+</script>
+</body>
+</html>

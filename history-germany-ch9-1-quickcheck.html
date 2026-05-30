@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 9.1 Fear and Terror</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:
+  radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;padding-bottom:60px}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,48px);line-height:.95;letter-spacing:-1px;margin-bottom:8px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86)}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--line);border-radius:999px;height:10px;margin:20px 0 6px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:999px;width:0%;transition:width .4s ease}
+.progress-label{font-size:13px;color:var(--muted);font-weight:900;text-align:right;margin-bottom:18px}
+
+/* SECTION HEADER */
+.section-head{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+.section-head::after{content:'';flex:1;height:2px;background:var(--line)}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .2s}
+.q-card.correct{border-color:#6fae75}
+.q-card.wrong{border-color:var(--red)}
+.q-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.q-num{background:var(--dark);color:white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0;margin-top:2px}
+.q-text{font-weight:900;font-size:17px;line-height:1.35}
+.q-badge{margin-left:auto;background:var(--orange2);color:#8a5200;padding:4px 10px;border-radius:999px;font-weight:900;font-size:11px;text-transform:uppercase;flex-shrink:0}
+.q-badge.tf{background:var(--blue2);color:#1a3f5c}
+
+/* OPTIONS */
+.options{display:grid;gap:9px}
+.opt{background:white;border:2px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;font-size:15px;font-weight:700;text-align:left;transition:background .15s,border-color .15s;width:100%}
+.opt:hover:not(:disabled){background:#f0ece5;border-color:#b8afa2}
+.opt:disabled{cursor:default}
+.opt.correct{background:var(--green2);border-color:#6fae75;color:#2a5c32}
+.opt.wrong{background:var(--red2);border-color:#c47570;color:#7a1f1a}
+.opt.missed{background:var(--orange2);border-color:#d4882a;color:#6a3d00}
+
+/* FEEDBACK */
+.feedback{margin-top:12px;font-size:14px;font-weight:900;padding:10px 14px;border-radius:12px;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:var(--green2);color:#2a5c32}
+.feedback.wrong{background:var(--red2);color:#7a1f1a}
+
+/* RESULT BOX */
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:32px;margin-top:28px;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,.2)}
+.result-box.show{display:block;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.result-emoji{font-size:64px;margin-bottom:12px}
+.result-score{font-size:52px;font-weight:900;color:var(--yellow);line-height:1}
+.result-label{font-size:18px;color:rgba(255,255,255,.75);margin:8px 0 16px}
+.result-msg{background:rgba(255,255,255,.1);border-radius:16px;padding:16px 20px;font-size:18px;font-weight:900;color:white;line-height:1.4}
+.result-sub{font-size:14px;color:rgba(255,255,255,.6);margin-top:10px}
+.btn-retry{margin-top:20px;background:var(--yellow);color:var(--dark);font-weight:900;font-size:16px;border:none;padding:13px 36px;border-radius:50px;cursor:pointer}
+
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:15px}.opt{font-size:14px}}
+@media print{.nav,button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>9.1 Fear and Terror</h1>
+    <p>20 questions · Multiple choice + True or False · Self-marking</p>
+    <nav class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch9-1-revision.html">📖 Revision notes</a>
+    </nav>
+  </section>
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+
+  <div id="quiz"></div>
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-label">out of 20</div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <button class="btn-retry" onclick="location.reload()">🔄 Try again</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // ── MULTIPLE CHOICE (10) ──
+  {
+    type:'mc',
+    text:'Who was in charge of all police forces in Nazi Germany and head of the SS?',
+    options:['Hermann Göring','Joseph Goebbels','Heinrich Himmler','Reinhard Heydrich'],
+    correct:2,
+    feedback:'Himmler controlled all police forces and reported directly to Hitler.'
+  },
+  {
+    type:'mc',
+    text:'What colour uniforms did the SS wear?',
+    options:['Brown','Grey','Green','Black'],
+    correct:3,
+    feedback:'The SS wore black uniforms, making them instantly recognisable and feared.'
+  },
+  {
+    type:'mc',
+    text:'What was the Gestapo?',
+    options:['The regular German army police','Hitler\'s personal bodyguard unit','The Nazi secret police','The SS security intelligence service'],
+    correct:2,
+    feedback:'The Gestapo were the secret police — they did not wear uniforms and could arrest people without trial.'
+  },
+  {
+    type:'mc',
+    text:'What was the SD (Sicherheitsdienst)?',
+    options:['A division of the German army','The SS security service that gathered intelligence','The regular uniformed police','A special unit that ran concentration camps'],
+    correct:1,
+    feedback:'The SD was the SS security service — it gathered information, spied on people and searched homes.'
+  },
+  {
+    type:'mc',
+    text:'Which of the following could result in imprisonment or the death penalty in Nazi Germany?',
+    options:['Attending a church service','Listening to foreign radio stations','Owning a non-German car','Wearing traditional German clothing'],
+    correct:1,
+    feedback:'Listening to foreign radio, telling anti-Hitler jokes, or hiding banned books could all lead to serious punishment.'
+  },
+  {
+    type:'mc',
+    text:'Why were the Gestapo so feared despite having relatively few officers?',
+    options:['They carried out public executions every week','People believed they could find out anything, so many self-censored','They wore bright red uniforms that stood out','They arrested every person who criticised the government'],
+    correct:1,
+    feedback:'The Gestapo\'s real strength was fear — people censored themselves because they believed the Gestapo was everywhere.'
+  },
+  {
+    type:'mc',
+    text:'Who could be sent to a concentration camp?',
+    options:['Only Jewish people','Only Communist politicians','Anyone who criticised Hitler, including political opponents, Roma and Sinti','Only soldiers who refused orders'],
+    correct:2,
+    feedback:'Concentration camps held Jews, Roma and Sinti, political opponents and anyone deemed an "enemy of the state".'
+  },
+  {
+    type:'mc',
+    text:'What happened to crimes committed by Nazis under the regular police?',
+    options:['They were tried in special Nazi courts','They were often ignored','They were always punished more harshly','They were referred to the Gestapo'],
+    correct:1,
+    feedback:'The regular police increasingly worked for Nazi goals, and crimes committed by Nazis were often ignored.'
+  },
+  {
+    type:'mc',
+    text:'Heinrich Himmler reported directly to which person?',
+    options:['Hermann Göring','Joseph Goebbels','Rudolf Hess','Adolf Hitler'],
+    correct:3,
+    feedback:'Himmler reported directly to Hitler, making him one of the most powerful men in Nazi Germany.'
+  },
+  {
+    type:'mc',
+    text:'What did the SS eventually run, in addition to security duties?',
+    options:['The German railway network','Concentration camps and later death camps','All radio and newspaper propaganda','The Hitler Youth programme'],
+    correct:1,
+    feedback:'The SS ran security, concentration camps and later death camps.'
+  },
+
+  // ── TRUE OR FALSE (10) ──
+  {
+    type:'tf',
+    text:'The Gestapo wore distinctive uniforms so that people could easily identify them.',
+    correct:1, // 0=True, 1=False
+    feedback:'False. The Gestapo were the secret police and did NOT wear uniforms.'
+  },
+  {
+    type:'tf',
+    text:'Under the Nazi police state, people could freely criticise Hitler in public without consequences.',
+    correct:1,
+    feedback:'False. Criticising Hitler could result in arrest, loss of job, being sent to a concentration camp, or worse.'
+  },
+  {
+    type:'tf',
+    text:'Telling an anti-Hitler joke could be punishable by prison or death in Nazi Germany.',
+    correct:0,
+    feedback:'True. The courts were under Nazi control and such offences could carry severe penalties.'
+  },
+  {
+    type:'tf',
+    text:'Himmler was Head of the SS.',
+    correct:0,
+    feedback:'True. Himmler controlled all police forces and was Head of the SS.'
+  },
+  {
+    type:'tf',
+    text:'The regular courts and judges in Nazi Germany were completely independent from Nazi influence.',
+    correct:1,
+    feedback:'False. Courts and judges came under Nazi control.'
+  },
+  {
+    type:'tf',
+    text:'Many Germans reported their neighbours or colleagues to the authorities to protect themselves.',
+    correct:0,
+    feedback:'True. Fear made people distrust each other — neighbours, friends, even children could report someone.'
+  },
+  {
+    type:'tf',
+    text:'Prisoners in concentration camps were given comfortable conditions and light duties.',
+    correct:1,
+    feedback:'False. Prisoners were forced to work and many were tortured or killed.'
+  },
+  {
+    type:'tf',
+    text:'The SD was the intelligence service of the SS.',
+    correct:0,
+    feedback:'True. The Sicherheitsdienst (SD) gathered information, spied on people and searched homes.'
+  },
+  {
+    type:'tf',
+    text:'Nazi Germany appeared peaceful from the outside even though people were not truly free.',
+    correct:0,
+    feedback:'True. The revision notes state that Nazi Germany "looked peaceful from the outside" but people were not free.'
+  },
+  {
+    type:'tf',
+    text:'The Gestapo had so many officers that they could personally watch every German citizen.',
+    correct:1,
+    feedback:'False. There were not actually enough Gestapo officers to watch everyone — their power came from the fear they created.'
+  }
+];
+
+let answered = 0;
+let score = 0;
+const total = questions.length;
+
+function buildQuiz(){
+  const quiz = document.getElementById('quiz');
+
+  const mcHead = document.createElement('div');
+  mcHead.className = 'section-head';
+  mcHead.textContent = '✦ Multiple Choice — 10 questions';
+  quiz.appendChild(mcHead);
+
+  questions.forEach((q,i)=>{
+    if(i===10){
+      const tfHead = document.createElement('div');
+      tfHead.className = 'section-head';
+      tfHead.textContent = '✦ True or False — 10 questions';
+      quiz.appendChild(tfHead);
+    }
+
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-'+i;
+
+    const top = document.createElement('div');
+    top.className = 'q-top';
+
+    const num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = i+1;
+
+    const txt = document.createElement('div');
+    txt.className = 'q-text';
+    txt.textContent = q.text;
+
+    const badge = document.createElement('div');
+    badge.className = q.type==='tf' ? 'q-badge tf' : 'q-badge';
+    badge.textContent = q.type==='tf' ? 'True / False' : 'Multiple Choice';
+
+    top.appendChild(num);
+    top.appendChild(txt);
+    top.appendChild(badge);
+    card.appendChild(top);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+
+    const choices = q.type==='tf' ? ['True','False'] : q.options;
+    choices.forEach((label,oi)=>{
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = label;
+      btn.addEventListener('click',()=>handleAnswer(i,oi,choices.length));
+      opts.appendChild(btn);
+    });
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = 'fb-'+i;
+    fb.textContent = q.feedback;
+
+    card.appendChild(opts);
+    card.appendChild(fb);
+    quiz.appendChild(card);
+  });
+}
+
+function handleAnswer(qi,chosen,numOpts){
+  const card = document.getElementById('card-'+qi);
+  const fb = document.getElementById('fb-'+qi);
+  const buttons = card.querySelectorAll('.opt');
+  const q = questions[qi];
+  const isCorrect = chosen === q.correct;
+
+  buttons.forEach((b,bi)=>{
+    b.disabled = true;
+    if(bi===q.correct) b.classList.add('correct');
+    else if(bi===chosen && !isCorrect) b.classList.add('wrong');
+  });
+
+  fb.classList.add('show','feedback');
+  if(isCorrect){
+    fb.classList.add('correct');
+    card.classList.add('correct');
+    score++;
+  } else {
+    fb.classList.add('wrong');
+    card.classList.add('wrong');
+  }
+
+  answered++;
+  updateProgress();
+
+  if(answered===total) setTimeout(showResult,500);
+}
+
+function updateProgress(){
+  const pct = (answered/total)*100;
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = answered+' / '+total+' answered';
+}
+
+function showResult(){
+  const box = document.getElementById('resultBox');
+  const emoji = document.getElementById('resultEmoji');
+  const scoreEl = document.getElementById('resultScore');
+  const msg = document.getElementById('resultMsg');
+  const sub = document.getElementById('resultSub');
+
+  scoreEl.textContent = score+'/20';
+
+  if(score>=18){
+    emoji.textContent = '🏆';
+    msg.textContent = 'Show this to mum — '+score+'/20';
+    sub.textContent = 'Outstanding! You clearly know your police state inside out. Keep it up!';
+  } else if(score>=14){
+    emoji.textContent = '👍';
+    msg.textContent = 'Show this to mum — '+score+'/20';
+    sub.textContent = 'Good work! Solid knowledge — review the ones you missed and you\'ll be flying.';
+  } else {
+    emoji.textContent = '📖';
+    msg.textContent = 'Show this to mum — '+score+'/20';
+    sub.textContent = 'Time to revisit the revision notes — you\'ve got this with a bit more practice!';
+  }
+
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

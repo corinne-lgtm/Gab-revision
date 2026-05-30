@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Germany 1.1 – Quick Check</title>
+<style>
+:root{--bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;--red:#d94b42;--red2:#ffe0dd;--green:#5e9f6b;--green2:#dff0e2;--orange:#f29a2e;--orange2:#ffe4bd;--purple:#7353a6;--dark:#1d2935;--yellow:#f4cf55}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:24px;padding:24px 28px;margin-bottom:20px}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:12px;margin-bottom:8px}
+h1{font-size:clamp(24px,4vw,38px);line-height:1;margin:0 0 8px;letter-spacing:-1px}
+.hero p{font-size:15px;color:rgba(255,255,255,.82);margin:0 0 14px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px}
+.score-bar{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px}
+.score-num{font-size:28px;font-weight:900;color:var(--ink)}
+.score-label{font-size:13px;color:var(--muted);font-weight:700}
+.progress{flex:1;height:8px;background:var(--line);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:var(--purple);border-radius:999px;transition:width .3s}
+.q-block{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:18px 20px;margin-bottom:12px}
+.q-num{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:900;margin:0 0 14px;color:var(--ink)}
+.options{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:#fafaf8;cursor:pointer;font-size:14px;font-weight:700;color:var(--ink);transition:background .15s}
+.opt:hover{background:#f0ece6}
+.opt input{accent-color:var(--purple);width:16px;height:16px;flex-shrink:0}
+.opt.correct{background:var(--green2);border-color:#9cca9f;color:#1a4d22}
+.opt.wrong{background:var(--red2);border-color:#e6aaa4;color:#7c1a16}
+.opt.missed{background:var(--orange2);border-color:#e8bd7c;color:#7a4a00}
+.tf-row{display:flex;gap:8px}
+.tf-btn{flex:1;padding:12px;border-radius:14px;border:2px solid var(--line);background:#fafaf8;cursor:pointer;font-size:15px;font-weight:900;color:var(--ink);transition:background .15s}
+.tf-btn:hover{background:#f0ece6}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:var(--green2);border-color:#9cca9f;color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:#e6aaa4;color:#7c1a16}
+.tf-btn.missed{background:var(--orange2);border-color:#e8bd7c;color:#7a4a00}
+.feedback{font-size:13px;font-weight:700;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+.fb-ok{background:var(--green2);color:#1a4d22}
+.fb-no{background:var(--red2);color:#7c1a16}
+.reset-btn{display:block;margin:20px auto 0;background:linear-gradient(135deg,#7353a6,#3f2a6e);color:white;font-weight:900;font-size:15px;border:none;padding:12px 36px;border-radius:50px;cursor:pointer}
+.reset-btn:hover{opacity:.9}
+.result-box{display:none;margin-top:24px;border-radius:24px;padding:28px;text-align:center}
+.result-box.great{background:linear-gradient(135deg,#dff0e2,#b8e0c0);border:2px solid #9cca9f}
+.result-box.ok{background:linear-gradient(135deg,#ffe4bd,#ffd08a);border:2px solid #e8bd7c}
+.result-box.retry{background:linear-gradient(135deg,#ffe0dd,#ffb8b0);border:2px solid #e6aaa4}
+.result-emoji{font-size:52px;margin-bottom:10px}
+.result-title{font-size:26px;font-weight:900;margin:0 0 8px}
+.result-score{font-size:18px;font-weight:700;margin:0 0 16px;color:var(--muted)}
+.result-msg{font-size:16px;font-weight:900;background:white;border-radius:16px;padding:16px 20px;display:inline-block;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+@media(max-width:600px){.wrap{padding:14px}.score-num{font-size:22px}}
+@media print{.nav,.reset-btn{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>1.1 Quick Check</h1>
+  <p>20 questions · multiple choice &amp; true/false</p>
+  <nav class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History</a>
+    <a href="history-germany.html">🇩🇪 Germany</a>
+    <a href="history-germany-ch1-1-revision.html">📖 Revision notes</a>
+  </nav>
+</section>
+
+<div class="score-bar">
+  <div>
+    <div class="score-num"><span id="score">0</span>/20</div>
+    <div class="score-label">correct answers</div>
+  </div>
+  <div class="progress"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+</div>
+
+<div id="quiz"></div>
+
+<div class="result-box" id="result-box">
+  <div class="result-emoji" id="result-emoji"></div>
+  <div class="result-title" id="result-title"></div>
+  <div class="result-score" id="result-score"></div>
+  <div class="result-msg" id="result-msg"></div>
+</div>
+
+<button class="reset-btn" onclick="buildQuiz()">Try again</button>
+
+</div>
+<script>
+const Qs=[
+  {type:'mcq',q:"In which year was the German Empire formed?",opts:["1848","1866","1871","1890"],ans:2},
+  {type:'mcq',q:"What was the name of the parliament elected by men over 25 in Germany?",opts:["Bundesrat","Reichstag","Chancellery","Landtag"],ans:1},
+  {type:'mcq',q:"Who chose the Chancellor in Germany before 1914?",opts:["The Reichstag","The people","The Kaiser","The Bundesrat"],ans:2},
+  {type:'mcq',q:"What was the name of Wilhelm II's policy to make Germany a global power?",opts:["Realpolitik","Ostpolitik","Weltpolitik","Kulturkampf"],ans:2},
+  {type:'mcq',q:"Whose grandson was Kaiser Wilhelm II?",opts:["Napoleon III","Queen Victoria","Tsar Nicholas II","Emperor Franz Joseph"],ans:1},
+  {type:'mcq',q:"What was the German Empire created in 1871 known as?",opts:["The First Reich","The Third Reich","The Second Reich","The Grand Reich"],ans:2},
+  {type:'mcq',q:"Which socialist party worried the Kaiser because it was growing?",opts:["KPD","SPD","NSDAP","CDU"],ans:1},
+  {type:'mcq',q:"From which year did the Naval Laws begin rapidly expanding Germany's navy?",opts:["1871","1888","1898","1912"],ans:2},
+  {type:'mcq',q:"Which German state led the wars of unification?",opts:["Bavaria","Saxony","Prussia","Hamburg"],ans:2},
+  {type:'mcq',q:"What was a key consequence of industrialisation that worried the Kaiser?",opts:["More wealth for everyone","Fewer factory workers","Growth of the SPD and trade unions","Lower taxes"],ans:2},
+  {type:'tf',q:"The Reichstag could overrule the Kaiser's decisions.",ans:false},
+  {type:'tf',q:"Wilhelm II became Kaiser in 1888.",ans:true},
+  {type:'tf',q:"Germany before 1914 was a full democracy.",ans:false},
+  {type:'tf',q:"Weltpolitik aimed to gain colonies and global influence for Germany.",ans:true},
+  {type:'tf',q:"Funding the army and navy left Germany in debt.",ans:true},
+  {type:'tf',q:"Before 1871, there was one unified German state.",ans:false},
+  {type:'tf',q:"The Bundesrat represented the different German states.",ans:true},
+  {type:'tf',q:"Factory workers generally had good wages and working conditions.",ans:false},
+  {type:'tf',q:"By 1913, Germany was producing large amounts of iron, steel and coal.",ans:true},
+  {type:'tf',q:"The Chancellor was directly elected by the people.",ans:false}
+];
+
+let answered=new Array(20).fill(false);
+let correct=new Array(20).fill(false);
+
+function updateScore(){
+  const s=correct.filter(Boolean).length;
+  document.getElementById('score').textContent=s;
+  document.getElementById('prog').style.width=(s/20*100)+'%';
+  if(answered.every(Boolean)) showResult(s);
+}
+
+function showResult(s){
+  const box=document.getElementById('result-box');
+  const emoji=document.getElementById('result-emoji');
+  const title=document.getElementById('result-title');
+  const scoreEl=document.getElementById('result-score');
+  const msg=document.getElementById('result-msg');
+  box.style.display='block';
+  scoreEl.textContent='You scored '+s+' out of 20';
+  if(s>=18){
+    box.className='result-box great';
+    emoji.textContent='🏆';
+    title.textContent='Excellent work!';
+    msg.textContent='Amazing! Show this to mum — '+s+'/20 🎉';
+  } else if(s>=14){
+    box.className='result-box ok';
+    emoji.textContent='👍';
+    title.textContent='Good effort!';
+    msg.textContent='Not bad at all! Show this to mum — '+s+'/20. A little more revision and you\'ll nail it!';
+  } else {
+    box.className='result-box retry';
+    emoji.textContent='📖';
+    title.textContent='Keep going!';
+    msg.textContent='Show this to mum — '+s+'/20. Go back to the revision notes and try again!';
+  }
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function buildQuiz(){
+  answered=new Array(20).fill(false);
+  correct=new Array(20).fill(false);
+  document.getElementById('result-box').style.display='none';
+  updateScore();
+  const c=document.getElementById('quiz');
+  c.innerHTML='';
+  Qs.forEach((q,i)=>{
+    const d=document.createElement('div');
+    d.className='q-block';
+    if(q.type==='mcq'){
+      d.innerHTML=`<div class="q-num">Question ${i+1} of 20 &nbsp;·&nbsp; Multiple choice</div><div class="q-text">${q.q}</div><div class="options">${q.opts.map((o,j)=>`<label class="opt" id="opt${i}_${j}"><input type="radio" name="q${i}" value="${j}" onchange="checkMcq(${i},${j},${q.ans})"> ${o}</label>`).join('')}</div><div class="feedback" id="fb${i}"></div>`;
+    } else {
+      d.innerHTML=`<div class="q-num">Question ${i+1} of 20 &nbsp;·&nbsp; True or False</div><div class="q-text">${q.q}</div><div class="tf-row"><button class="tf-btn" id="t${i}" onclick="checkTf(${i},true,${q.ans})">✓ True</button><button class="tf-btn" id="f${i}" onclick="checkTf(${i},false,${q.ans})">✗ False</button></div><div class="feedback" id="fb${i}"></div>`;
+    }
+    c.appendChild(d);
+  });
+}
+
+function checkMcq(qi,chosen,correct_idx){
+  if(answered[qi])return;
+  answered[qi]=true;
+  const isOk=chosen===correct_idx;
+  correct[qi]=isOk;
+  for(let j=0;j<4;j++){
+    const el=document.getElementById('opt'+qi+'_'+j);
+    if(!el)continue;
+    el.querySelector('input').disabled=true;
+    if(j===correct_idx)el.className='opt correct';
+    else if(j===chosen&&!isOk)el.className='opt wrong';
+  }
+  const fb=document.getElementById('fb'+qi);
+  fb.style.display='block';
+  fb.className='feedback '+(isOk?'fb-ok':'fb-no');
+  fb.textContent=isOk?'✓ Correct!':'✗ The correct answer was: '+Qs[qi].opts[correct_idx];
+  updateScore();
+}
+
+function checkTf(qi,chosen,ans){
+  if(answered[qi])return;
+  answered[qi]=true;
+  const isOk=chosen===ans;
+  correct[qi]=isOk;
+  const tb=document.getElementById('t'+qi);
+  const fb2=document.getElementById('f'+qi);
+  tb.disabled=true;fb2.disabled=true;
+  if(ans===true)tb.className='tf-btn correct';else tb.className='tf-btn missed';
+  if(ans===false)fb2.className='tf-btn correct';else fb2.className='tf-btn missed';
+  if(!isOk){if(chosen)tb.className='tf-btn wrong';else fb2.className='tf-btn wrong';}
+  const fb=document.getElementById('fb'+qi);
+  fb.style.display='block';
+  fb.className='feedback '+(isOk?'fb-ok':'fb-no');
+  fb.textContent=isOk?'✓ Correct!':'✗ The correct answer was: '+(ans?'True':'False');
+  updateScore();
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 8.3 The Nazis and Religion</title>
+<style>
+:root{
+  --bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;
+  --red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;
+  --blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;
+  --purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55;
+  --correct:#5e9f6b;--wrong:#d94b42;--missed:#f29a2e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+             radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+             var(--bg);
+  font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38;
+}
+.wrap{max-width:880px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#2a3644,#7c382f);
+  color:white;border-radius:30px;padding:30px;margin-bottom:22px;
+  box-shadow:0 14px 35px rgba(0,0,0,.18);
+}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,5vw,48px);line-height:.95;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:10px 0 0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:10px 14px;border-radius:999px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--line);border-radius:999px;height:10px;margin:0 0 22px;overflow:hidden}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:999px;transition:width .4s ease}
+.progress-label{font-size:13px;color:var(--muted);font-weight:900;text-align:right;margin-bottom:6px}
+
+/* SECTION HEADER */
+.section-head{
+  background:var(--dark);color:white;border-radius:20px;padding:14px 20px;
+  margin:28px 0 14px;display:flex;align-items:center;gap:12px;
+}
+.section-head .badge{
+  background:var(--yellow);color:var(--dark);font-weight:900;
+  border-radius:999px;padding:4px 14px;font-size:13px;flex-shrink:0;
+}
+.section-head h2{margin:0;font-size:18px;letter-spacing:-.3px}
+
+/* QUESTION CARD */
+.q-card{
+  background:var(--paper);border:2px solid var(--line);border-radius:24px;
+  padding:20px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.05);
+  transition:border-color .2s;
+}
+.q-card.done{border-color:#b8d4bc}
+.q-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.q-num{
+  background:var(--red);color:white;border-radius:50%;width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:15px;flex-shrink:0;
+}
+.q-text{font-weight:700;font-size:16px;line-height:1.4}
+
+/* OPTIONS */
+.options{display:grid;gap:8px}
+.opt{
+  background:#f8f5f0;border:2px solid var(--line);border-radius:14px;
+  padding:12px 16px;cursor:pointer;font-size:15px;font-weight:600;
+  display:flex;align-items:center;gap:10px;
+  transition:background .15s,border-color .15s,transform .1s;
+  user-select:none;
+}
+.opt:hover:not(.locked){background:#efe9e0;border-color:#c0b09e;transform:translateY(-1px)}
+.opt.correct{background:var(--green2);border-color:var(--correct);color:#2a5e34}
+.opt.wrong{background:var(--red2);border-color:var(--wrong);color:#7c382f}
+.opt.missed{background:var(--orange2);border-color:var(--missed);color:#7a4a00}
+.opt.locked{cursor:default;transform:none}
+.opt .marker{
+  width:22px;height:22px;border-radius:50%;border:2px solid currentColor;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;flex-shrink:0;
+}
+.opt.correct .marker{background:var(--correct);border-color:var(--correct);color:white}
+.opt.wrong .marker{background:var(--wrong);border-color:var(--wrong);color:white}
+.opt.missed .marker{background:var(--missed);border-color:var(--missed);color:white}
+
+/* FEEDBACK */
+.feedback{
+  margin-top:10px;padding:10px 14px;border-radius:12px;font-size:14px;
+  font-weight:700;display:none;
+}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#2a5e34;border:1px solid #9cca9f}
+.feedback.bad{background:var(--red2);color:#7c382f;border:1px solid #e6aaa4}
+
+/* RESULT BOX */
+#result-box{
+  display:none;background:var(--dark);color:white;border-radius:28px;
+  padding:30px;margin-top:30px;text-align:center;
+  box-shadow:0 14px 40px rgba(0,0,0,.25);
+}
+#result-box.show{display:block;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275) both}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+#result-box .emoji{font-size:64px;display:block;margin-bottom:10px}
+#result-box .score{font-size:54px;font-weight:900;color:var(--yellow);line-height:1}
+#result-box .out-of{font-size:20px;color:rgba(255,255,255,.6);margin-bottom:14px}
+#result-box .mum-msg{
+  background:rgba(255,255,255,.1);border-radius:16px;padding:14px 18px;
+  font-size:18px;font-weight:900;margin-bottom:10px;
+}
+#result-box .encourage{font-size:15px;color:rgba(255,255,255,.8);line-height:1.5}
+
+@media(max-width:600px){
+  .wrap{padding:14px}
+  .nav a{font-size:12px;padding:8px 11px}
+}
+@media print{.nav,#result-box{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>8.3 The Nazis and Religion</h1>
+    <p>20 questions — answer every one to see your score!</p>
+    <nav class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History index</a>
+      <a href="history-germany-ch8-index.html">Chapter 8 index</a>
+      <a href="history-germany-ch8-3-revision.html">📖 Revision notes</a>
+    </nav>
+  </section>
+
+  <!-- PROGRESS -->
+  <div class="progress-label"><span id="answered-count">0</span> / 20 answered</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar"></div></div>
+
+  <!-- MULTIPLE CHOICE -->
+  <div class="section-head">
+    <span class="badge">Part A</span>
+    <h2>Multiple Choice — pick the best answer</h2>
+  </div>
+
+  <div id="questions-mc"></div>
+
+  <!-- TRUE / FALSE -->
+  <div class="section-head">
+    <span class="badge">Part B</span>
+    <h2>True or False</h2>
+  </div>
+
+  <div id="questions-tf"></div>
+
+  <!-- RESULT -->
+  <div id="result-box">
+    <span class="emoji" id="res-emoji"></span>
+    <div class="score" id="res-score"></div>
+    <div class="out-of">out of 20</div>
+    <div class="mum-msg" id="res-mum"></div>
+    <div class="encourage" id="res-encourage"></div>
+  </div>
+
+</div>
+
+<script>
+const MC = [
+  {
+    q: "About what fraction of Germans were Catholic before the Nazis came to power?",
+    opts: ["One half","One quarter","One third","Two thirds"],
+    ans: 2
+  },
+  {
+    q: "What was the name of the agreement Hitler signed with the Pope in 1933?",
+    opts: ["The Papal Treaty","The Concordat","The Munich Agreement","The Church Pact"],
+    ans: 1
+  },
+  {
+    q: "Which Catholic Archbishop publicly criticised Nazi terror, euthanasia and concentration camps in 1941?",
+    opts: ["Cardinal Faulhaber","Pope Pius XI","Archbishop Galen","Bishop Sproll"],
+    ans: 2
+  },
+  {
+    q: "What slogan was used by the German Christians movement?",
+    opts: [
+      "\"Faith, Hope and Fatherland\"",
+      "\"God and Führer\"",
+      "\"The swastika on our chests and the Cross in our hearts\"",
+      "\"One people, one Reich, one faith\""
+    ],
+    ans: 2
+  },
+  {
+    q: "Which Protestant pastor helped to form the Confessional Church?",
+    opts: ["Dietrich Bonhoeffer","Karl Barth","Martin Niemöller","Wilhelm Müller"],
+    ans: 2
+  },
+  {
+    q: "Approximately how many Confessional Church pastors were arrested by the Nazis?",
+    opts: ["Around 80","Around 800","Around 8 000","Around 80 000"],
+    ans: 1
+  },
+  {
+    q: "Why did many Christians initially support Hitler's Nazi Party?",
+    opts: [
+      "Because Hitler promised to make Christianity the state religion",
+      "Because they feared communism and admired Nazi family values",
+      "Because the Pope ordered Catholics to vote for the Nazis",
+      "Because the Nazis promised to rebuild German churches"
+    ],
+    ans: 1
+  },
+  {
+    q: "About what percentage of Jewish people in Germany had fled as refugees by 1941?",
+    opts: ["Around 20%","Around 40%","Around 60%","Around 80%"],
+    ans: 3
+  },
+  {
+    q: "Roughly what proportion of Jehovah's Witnesses were killed in concentration camps?",
+    opts: ["One tenth","One quarter","One third","One half"],
+    ans: 2
+  },
+  {
+    q: "For approximately how many years had Jewish people lived in German lands before the Nazi period?",
+    opts: ["Around 400 years","Around 800 years","Around 1 600 years","Around 3 000 years"],
+    ans: 2
+  }
+];
+
+const TF = [
+  { q: "Nazi ideology and Christianity shared similar values such as equality and forgiveness.", ans: false,
+    explain: "Nazi ideas (racial superiority, violence, leader-worship) directly contradicted Christian teaching on love, forgiveness and equality before God." },
+  { q: "Hitler signed the Concordat with the Pope in 1933.", ans: true,
+    explain: "Correct — the Concordat was signed in 1933, promising mutual non-interference." },
+  { q: "Hitler kept every promise he made to the Catholic Church in the Concordat.", ans: false,
+    explain: "Hitler broke the agreement: Catholics were harassed, priests arrested and Catholic schools and youth clubs closed." },
+  { q: "German Christians supported Hitler and sometimes wore Nazi uniforms.", ans: true,
+    explain: "Correct — German Christians were Protestants who backed the Nazis and adopted Nazi symbols and dress." },
+  { q: "The Confessional Church fully supported Nazi control of religion.", ans: false,
+    explain: "The opposite is true — the Confessional Church was set up to oppose Nazi control of Protestant churches." },
+  { q: "The Salvation Army continued to operate normally throughout Nazi Germany.", ans: false,
+    explain: "The Salvation Army disappeared from Germany under Nazi rule, along with other Christian groups." },
+  { q: "Jewish people made up less than one per cent of Germany's population.", ans: true,
+    explain: "Correct — despite being a tiny minority, Jews were made a main target of Nazi persecution." },
+  { q: "Archbishop Galen was executed by the Nazis for his 1941 sermons.", ans: false,
+    explain: "Galen was placed under house arrest but was not executed — he survived until the end of the war." },
+  { q: "Jehovah's Witnesses were persecuted partly because they were pacifists who refused military service.", ans: true,
+    explain: "Correct — their pacifist beliefs and refusal to serve in the army made them targets of Nazi violence." },
+  { q: "Martin Niemöller wrote a famous poem warning about the consequences of staying silent when others are persecuted.", ans: true,
+    explain: "Correct — Niemöller's poem is one of the most quoted warnings about the dangers of political indifference." }
+];
+
+let answeredCount = 0;
+const totalQ = MC.length + TF.length;
+const userAnswers = {}; // keyed by "mc-i" or "tf-i"
+
+function updateProgress(){
+  answeredCount = Object.keys(userAnswers).length;
+  document.getElementById('answered-count').textContent = answeredCount;
+  document.getElementById('prog-bar').style.width = (answeredCount / totalQ * 100) + '%';
+  if(answeredCount === totalQ) showResult();
+}
+
+function buildMC(){
+  const container = document.getElementById('questions-mc');
+  MC.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'mc-card-' + i;
+
+    const opts = item.opts.map((o, oi) => `
+      <div class="opt" id="mc-${i}-opt-${oi}" onclick="pickMC(${i},${oi})">
+        <span class="marker">${String.fromCharCode(65+oi)}</span>
+        ${o}
+      </div>`).join('');
+
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-num">${i+1}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div class="options">${opts}</div>
+      <div class="feedback" id="mc-fb-${i}"></div>`;
+    container.appendChild(card);
+  });
+}
+
+function pickMC(qi, chosen){
+  if(userAnswers['mc-'+qi] !== undefined) return;
+  userAnswers['mc-'+qi] = chosen;
+
+  const correct = MC[qi].ans;
+  for(let oi = 0; oi < MC[qi].opts.length; oi++){
+    const el = document.getElementById(`mc-${qi}-opt-${oi}`);
+    el.classList.add('locked');
+    if(oi === correct) el.classList.add('correct');
+    else if(oi === chosen && chosen !== correct) el.classList.add('wrong');
+  }
+
+  const fb = document.getElementById('mc-fb-'+qi);
+  fb.classList.add('show');
+  if(chosen === correct){
+    fb.className = 'feedback show ok';
+    fb.textContent = '✓ Correct!';
+  } else {
+    fb.className = 'feedback show bad';
+    fb.textContent = `✗ The correct answer is: "${MC[qi].opts[correct]}"`;
+  }
+  document.getElementById('mc-card-'+qi).classList.add('done');
+  updateProgress();
+}
+
+function buildTF(){
+  const container = document.getElementById('questions-tf');
+  TF.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'tf-card-'+i;
+    const qNum = MC.length + i + 1;
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-num">${qNum}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div class="options">
+        <div class="opt" id="tf-${i}-true" onclick="pickTF(${i}, true)">
+          <span class="marker">T</span> True
+        </div>
+        <div class="opt" id="tf-${i}-false" onclick="pickTF(${i}, false)">
+          <span class="marker">F</span> False
+        </div>
+      </div>
+      <div class="feedback" id="tf-fb-${i}"></div>`;
+    container.appendChild(card);
+  });
+}
+
+function pickTF(qi, chosen){
+  if(userAnswers['tf-'+qi] !== undefined) return;
+  userAnswers['tf-'+qi] = chosen;
+
+  const correct = TF[qi].ans;
+  const trueEl  = document.getElementById(`tf-${qi}-true`);
+  const falseEl = document.getElementById(`tf-${qi}-false`);
+  trueEl.classList.add('locked');
+  falseEl.classList.add('locked');
+
+  if(correct === true){
+    trueEl.classList.add('correct');
+    if(chosen === false) falseEl.classList.add('wrong');
+  } else {
+    falseEl.classList.add('correct');
+    if(chosen === true) trueEl.classList.add('wrong');
+  }
+
+  const fb = document.getElementById('tf-fb-'+qi);
+  fb.classList.add('show');
+  if(chosen === correct){
+    fb.className = 'feedback show ok';
+    fb.textContent = '✓ Correct! ' + TF[qi].explain;
+  } else {
+    fb.className = 'feedback show bad';
+    fb.textContent = '✗ ' + TF[qi].explain;
+  }
+  document.getElementById('tf-card-'+qi).classList.add('done');
+  updateProgress();
+}
+
+function calcScore(){
+  let s = 0;
+  MC.forEach((item, i) => { if(userAnswers['mc-'+i] === item.ans) s++; });
+  TF.forEach((item, i) => { if(userAnswers['tf-'+i] === item.ans) s++; });
+  return s;
+}
+
+function showResult(){
+  const score = calcScore();
+  const box = document.getElementById('result-box');
+  box.classList.add('show');
+
+  document.getElementById('res-score').textContent = score;
+
+  let emoji, mum, encourage;
+  if(score >= 18){
+    emoji = '🏆';
+    mum = `Show this to mum — ${score}/20 🏆`;
+    encourage = 'Outstanding! You clearly know this topic inside out. Keep it up!';
+  } else if(score >= 14){
+    emoji = '👍';
+    mum = `Show this to mum — ${score}/20 👍`;
+    encourage = 'Good work! A solid score — go back over any you missed and you\'ll nail this topic.';
+  } else {
+    emoji = '📖';
+    mum = `Show this to mum — ${score}/20 📖`;
+    encourage = 'Not there yet — head back to the revision notes, then try again. You\'ve got this!';
+  }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-mum').textContent = mum;
+  document.getElementById('res-encourage').textContent = encourage;
+
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+buildMC();
+buildTF();
+</script>
+</body>
+</html>

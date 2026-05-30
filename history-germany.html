@@ -22,6 +22,15 @@ header{margin-bottom:44px}
 h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,4.5vw,46px);font-weight:900;line-height:1.05;color:#1f2a33;letter-spacing:-1px;margin-bottom:8px}
 .tagline{font-size:15px;color:#67737b;font-weight:700}
 
+/* ── Tools section ── */
+.tools-heading{font-size:11px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:#a0aab0;margin:0 0 12px 2px}
+.tools-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.tool-card{display:flex;align-items:center;gap:12px;background:#fffdf7;border:2px solid #dbcfc0;border-radius:18px;padding:14px 18px;text-decoration:none;color:#1f2a33;font-weight:900;font-size:14px;transition:border-color .15s,box-shadow .15s,transform .15s;flex:1;min-width:200px}
+.tool-card:hover{border-color:#d94b42;box-shadow:0 4px 16px rgba(217,75,66,.1);transform:translateY(-1px)}
+.tool-icon{font-size:26px;flex-shrink:0}
+.tool-label{font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#a0aab0;margin-bottom:2px}
+.tool-name{font-size:14px;font-weight:900;color:#1f2a33}
+
 .part-banner{border-radius:18px;padding:14px 20px;margin:36px 0 18px;display:flex;align-items:center;gap:14px}
 .p1{background:linear-gradient(135deg,rgba(217,75,66,.15),rgba(242,154,46,.08));border:2px solid rgba(217,75,66,.25)}
 .p2{background:linear-gradient(135deg,rgba(63,111,154,.15),rgba(63,111,154,.05));border:2px solid rgba(63,111,154,.25)}
@@ -49,6 +58,8 @@ h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,4.5vw,46px);font-weight
 .btn-rev:hover{background:#f0b0a8}
 .btn-q{background:#ffe4bd;color:#7a4800;border:1.5px solid #e8c07c}
 .btn-q:hover{background:#e8c07c}
+.btn-qz{background:#dff0e2;color:#2d5c36;border:1.5px solid #9cca9f}
+.btn-qz:hover{background:#9cca9f}
 
 footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weight:700}
 
@@ -57,6 +68,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
   .sub-name{font-size:13px}
   .sub{padding:11px 12px;flex-wrap:wrap}
   .btn-group{margin-top:6px;width:100%}
+  .tool-card{min-width:100%}
 }
 </style>
 </head>
@@ -70,6 +82,25 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
     <h1>Germany 1890–1945:<br>Democracy &amp; Dictatorship</h1>
     <div class="tagline">All chapters and sub-chapters</div>
   </header>
+
+  <!-- ══════════════ REVISION TOOLS ══════════════ -->
+  <div class="tools-heading">Revision tools</div>
+  <div class="tools-row">
+    <a href="history-germany-timeline.html" class="tool-card">
+      <div class="tool-icon">🗓️</div>
+      <div>
+        <div class="tool-label">Reference</div>
+        <div class="tool-name">Full timeline 1890–1945</div>
+      </div>
+    </a>
+    <a href="history-germany-quickcheck-all.html" class="tool-card">
+      <div class="tool-icon">⚡</div>
+      <div>
+        <div class="tool-label">Quick check</div>
+        <div class="tool-name">All chapters combined quiz</div>
+      </div>
+    </a>
+  </div>
 
   <!-- ══════════════ PART ONE ══════════════ -->
   <div class="part-banner p1">
@@ -88,6 +119,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch1-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch1-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch1-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -100,6 +132,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch2-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch2-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch2-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -108,6 +141,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch2-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch2-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch2-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -116,6 +150,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch2-3-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch2-3-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch2-3-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -124,6 +159,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch2-4-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch2-4-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch2-4-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -136,6 +172,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch3-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch3-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch3-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -144,6 +181,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch3-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch3-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch3-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -152,6 +190,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch3-3-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch3-3-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch3-3-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -160,6 +199,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch3-4-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch3-4-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch3-4-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -181,6 +221,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch4-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch4-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch4-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -189,6 +230,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch4-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch4-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch4-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -197,6 +239,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch4-3-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch4-3-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch4-3-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -209,6 +252,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch5-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch5-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch5-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -221,6 +265,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch6-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch6-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch6-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -229,6 +274,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch6-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch6-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch6-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -250,6 +296,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch7-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch7-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch7-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -258,6 +305,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch7-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch7-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch7-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -266,6 +314,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch7-3-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch7-3-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch7-3-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -274,6 +323,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch7-4-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch7-4-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch7-4-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -286,6 +336,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch8-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch8-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch8-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -294,6 +345,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch8-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch8-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch8-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -302,6 +354,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch8-3-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch8-3-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch8-3-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -310,6 +363,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch8-4-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch8-4-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch8-4-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -318,6 +372,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch8-5-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch8-5-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch8-5-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>
@@ -330,6 +385,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch9-1-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch9-1-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch9-1-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -338,6 +394,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch9-2-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch9-2-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch9-2-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -346,6 +403,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch9-3-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch9-3-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch9-3-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
     <div class="sub">
@@ -354,6 +412,7 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="btn-group">
         <a href="history-germany-ch9-4-revision.html" class="btn btn-rev">📖 Revision</a>
         <a href="history-germany-ch9-4-questions.html" class="btn btn-q">✏️ Questions</a>
+        <a href="history-germany-ch9-4-quickcheck.html" class="btn btn-qz">⚡ Quiz</a>
       </div>
     </div>
   </div>

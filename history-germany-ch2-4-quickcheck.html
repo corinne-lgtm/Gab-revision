@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 2.4 Weimar in Trouble</title>
+<style>
+:root{
+  --bg:#f4eee6; --ink:#1f2a33; --muted:#67737b; --paper:#fffdf7; --line:#dbcfc0;
+  --red:#d94b42; --red2:#ffe0dd; --orange:#f29a2e; --orange2:#ffe4bd;
+  --blue:#3f6f9a; --blue2:#dfefff; --green:#5e9f6b; --green2:#dff0e2;
+  --purple:#7353a6; --purple2:#eadff7; --dark:#1d2935; --yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+  min-height:100vh;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#2a3644,#7c382f);
+  color:white;border-radius:30px;
+  padding:28px 30px 24px;margin-bottom:22px;
+  box-shadow:0 14px 35px rgba(0,0,0,.18)
+}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(26px,4.5vw,46px);line-height:1;letter-spacing:-1px;margin-bottom:10px}
+.hero p{font-size:17px;color:rgba(255,255,255,.82);margin-bottom:16px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  background:white;color:#26313d;text-decoration:none;
+  font-weight:900;padding:8px 14px;border-radius:999px;font-size:14px;
+  transition:background .15s
+}
+.nav a:hover{background:var(--yellow)}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:8px;margin:18px 0 4px}
+.progress-bar{height:8px;border-radius:999px;background:var(--yellow);width:0%;transition:width .4s ease}
+.progress-label{font-size:13px;color:var(--muted);font-weight:900;margin-bottom:20px}
+
+/* SECTION LABELS */
+.section-label{
+  font-weight:900;text-transform:uppercase;letter-spacing:2px;
+  font-size:12px;color:var(--muted);
+  margin:28px 0 12px;padding-left:4px
+}
+
+/* QUESTION CARDS */
+.q-card{
+  background:var(--paper);border:2px solid var(--line);
+  border-radius:22px;padding:20px 22px;margin-bottom:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+  transition:border-color .2s
+}
+.q-card.answered{border-color:#bcd4be}
+.q-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.q-num{
+  background:var(--dark);color:white;border-radius:50%;
+  width:30px;height:30px;min-width:30px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:14px
+}
+.q-text{font-weight:700;font-size:16px;line-height:1.4}
+
+/* OPTIONS */
+.options{display:grid;gap:8px}
+.opt{
+  background:#f5f2ed;border:2px solid var(--line);
+  border-radius:14px;padding:12px 16px;
+  cursor:pointer;font-size:15px;font-weight:700;
+  transition:background .15s,border-color .15s,transform .1s;
+  text-align:left;width:100%;
+  display:flex;align-items:center;gap:10px
+}
+.opt:hover:not(:disabled){background:#ece7de;border-color:#bfb4a5;transform:translateX(3px)}
+.opt:disabled{cursor:default}
+.opt.correct{background:var(--green2);border-color:#6fae75;color:#2d5e35}
+.opt.wrong{background:var(--red2);border-color:#c97b76;color:#7a1f1b}
+.opt.missed{background:var(--orange2);border-color:#c8964a;color:#6b4108}
+.opt .badge{
+  width:22px;height:22px;min-width:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900
+}
+.opt.correct .badge{background:#5e9f6b;color:white}
+.opt.wrong .badge{background:var(--red);color:white}
+.opt.missed .badge{background:var(--orange);color:white}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:10px}
+.tf-row .opt{flex:1;justify-content:center;font-size:16px}
+
+/* FEEDBACK CHIP */
+.feedback{
+  margin-top:10px;font-size:14px;font-weight:900;
+  padding:8px 14px;border-radius:999px;display:inline-block;
+}
+.feedback.ok{background:var(--green2);color:#2d5e35}
+.feedback.bad{background:var(--red2);color:#7a1f1b}
+
+/* RESULT BOX */
+.result-box{
+  display:none;
+  background:linear-gradient(135deg,#2a3644,#7c382f);
+  color:white;border-radius:28px;padding:32px;
+  text-align:center;margin:28px 0;
+  box-shadow:0 14px 35px rgba(0,0,0,.22)
+}
+.result-box.show{display:block}
+.result-emoji{font-size:64px;margin-bottom:12px}
+.result-score{font-size:clamp(42px,8vw,72px);font-weight:900;color:var(--yellow);line-height:1}
+.result-msg{font-size:19px;color:rgba(255,255,255,.9);margin:10px 0 6px}
+.result-mum{font-size:22px;font-weight:900;color:var(--yellow);margin-top:12px;border:2px dashed rgba(255,255,255,.3);border-radius:16px;padding:12px 20px;display:inline-block}
+.retry-btn{
+  margin-top:20px;background:var(--yellow);color:var(--dark);
+  font-weight:900;font-size:16px;border:none;
+  padding:13px 36px;border-radius:999px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.15)
+}
+
+@media(max-width:600px){
+  .wrap{padding:14px}
+  .tf-row{flex-direction:column}
+}
+@media print{.nav,button{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+  <h1>2.4 Weimar in Trouble – 1923</h1>
+  <p>20 questions · answer every question to see your score</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History</a>
+    <a href="history-germany-ch2-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="bar"></div></div>
+<div class="progress-label" id="prog-label">0 / 20 answered</div>
+
+<!-- ───── MULTIPLE CHOICE ───── -->
+<div class="section-label">Part A – Multiple Choice (10 questions)</div>
+
+<div id="q1" class="q-card">
+  <div class="q-top"><div class="q-num">1</div><div class="q-text">Why did the French and Belgian governments invade the Ruhr in 1923?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q1',false)"><span class="badge"></span>To capture territory after World War One</button>
+    <button class="opt" onclick="answer(this,'q1',true)"><span class="badge"></span>Germany had fallen behind on reparations payments</button>
+    <button class="opt" onclick="answer(this,'q1',false)"><span class="badge"></span>To support the Weimar government against rebels</button>
+    <button class="opt" onclick="answer(this,'q1',false)"><span class="badge"></span>To prevent Germany re-arming</button>
+  </div>
+</div>
+
+<div id="q2" class="q-card">
+  <div class="q-top"><div class="q-num">2</div><div class="q-text">What was "passive resistance" during the Ruhr crisis?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q2',false)"><span class="badge"></span>German soldiers fighting the French army</button>
+    <button class="opt" onclick="answer(this,'q2',false)"><span class="badge"></span>The German government refusing to pay reparations</button>
+    <button class="opt" onclick="answer(this,'q2',true)"><span class="badge"></span>Workers going on strike to refuse co-operation with the occupiers</button>
+    <button class="opt" onclick="answer(this,'q2',false)"><span class="badge"></span>Closing the German borders to French goods</button>
+  </div>
+</div>
+
+<div id="q3" class="q-card">
+  <div class="q-top"><div class="q-num">3</div><div class="q-text">What was the main economic consequence of the German government printing huge amounts of money?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q3',false)"><span class="badge"></span>Deflation – prices fell sharply</button>
+    <button class="opt" onclick="answer(this,'q3',false)"><span class="badge"></span>A brief economic boom</button>
+    <button class="opt" onclick="answer(this,'q3',true)"><span class="badge"></span>Hyperinflation – money rapidly lost its value</button>
+    <button class="opt" onclick="answer(this,'q3',false)"><span class="badge"></span>Germany paid off its reparations debt</button>
+  </div>
+</div>
+
+<div id="q4" class="q-card">
+  <div class="q-top"><div class="q-num">4</div><div class="q-text">Which social group suffered most from hyperinflation?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q4',false)"><span class="badge"></span>Large exporters</button>
+    <button class="opt" onclick="answer(this,'q4',false)"><span class="badge"></span>People with large mortgages</button>
+    <button class="opt" onclick="answer(this,'q4',true)"><span class="badge"></span>Middle-class savers and pensioners</button>
+    <button class="opt" onclick="answer(this,'q4',false)"><span class="badge"></span>Borrowers with bank loans</button>
+  </div>
+</div>
+
+<div id="q5" class="q-card">
+  <div class="q-top"><div class="q-num">5</div><div class="q-text">Approximately how much did a loaf of bread cost in November 1923?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q5',false)"><span class="badge"></span>1 million marks</button>
+    <button class="opt" onclick="answer(this,'q5',false)"><span class="badge"></span>50 billion marks</button>
+    <button class="opt" onclick="answer(this,'q5',true)"><span class="badge"></span>201 billion marks</button>
+    <button class="opt" onclick="answer(this,'q5',false)"><span class="badge"></span>500 marks</button>
+  </div>
+</div>
+
+<div id="q6" class="q-card">
+  <div class="q-top"><div class="q-num">6</div><div class="q-text">Which two countries invaded the Ruhr in 1923?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q6',false)"><span class="badge"></span>Britain and France</button>
+    <button class="opt" onclick="answer(this,'q6',true)"><span class="badge"></span>France and Belgium</button>
+    <button class="opt" onclick="answer(this,'q6',false)"><span class="badge"></span>Poland and France</button>
+    <button class="opt" onclick="answer(this,'q6',false)"><span class="badge"></span>Italy and Belgium</button>
+  </div>
+</div>
+
+<div id="q7" class="q-card">
+  <div class="q-top"><div class="q-num">7</div><div class="q-text">Who actually benefited from hyperinflation?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q7',false)"><span class="badge"></span>Pensioners living on fixed incomes</button>
+    <button class="opt" onclick="answer(this,'q7',false)"><span class="badge"></span>Small businesses</button>
+    <button class="opt" onclick="answer(this,'q7',true)"><span class="badge"></span>Borrowers and people with debts or mortgages</button>
+    <button class="opt" onclick="answer(this,'q7',false)"><span class="badge"></span>Workers paid monthly</button>
+  </div>
+</div>
+
+<div id="q8" class="q-card">
+  <div class="q-top"><div class="q-num">8</div><div class="q-text">What was the political impact of the 1923 crisis on the Weimar Republic?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q8',false)"><span class="badge"></span>It made the Weimar government more popular</button>
+    <button class="opt" onclick="answer(this,'q8',true)"><span class="badge"></span>Confidence in democracy fell and extremist parties gained support</button>
+    <button class="opt" onclick="answer(this,'q8',false)"><span class="badge"></span>Germany left the League of Nations</button>
+    <button class="opt" onclick="answer(this,'q8',false)"><span class="badge"></span>The government successfully stabilised the economy</button>
+  </div>
+</div>
+
+<div id="q9" class="q-card">
+  <div class="q-top"><div class="q-num">9</div><div class="q-text">What is the correct order of events in the 1923 crisis chain?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q9',false)"><span class="badge"></span>Hyperinflation → Ruhr invaded → Money printed → Passive resistance</button>
+    <button class="opt" onclick="answer(this,'q9',false)"><span class="badge"></span>Passive resistance → Reparations → Ruhr invaded → Money printed</button>
+    <button class="opt" onclick="answer(this,'q9',true)"><span class="badge"></span>Reparations → Ruhr invaded → Passive resistance → Money printed → Hyperinflation</button>
+    <button class="opt" onclick="answer(this,'q9',false)"><span class="badge"></span>Money printed → Reparations → Ruhr invaded → Hyperinflation</button>
+  </div>
+</div>
+
+<div id="q10" class="q-card">
+  <div class="q-top"><div class="q-num">10</div><div class="q-text">Why were workers paid rapidly and frequently during hyperinflation?</div></div>
+  <div class="options">
+    <button class="opt" onclick="answer(this,'q10',false)"><span class="badge"></span>The government wanted to boost workers' savings</button>
+    <button class="opt" onclick="answer(this,'q10',false)"><span class="badge"></span>It was required by new Weimar law</button>
+    <button class="opt" onclick="answer(this,'q10',true)"><span class="badge"></span>So they could spend their wages before prices rose further</button>
+    <button class="opt" onclick="answer(this,'q10',false)"><span class="badge"></span>Employers feared workers would go on strike</button>
+  </div>
+</div>
+
+<!-- ───── TRUE / FALSE ───── -->
+<div class="section-label">Part B – True or False (10 questions)</div>
+
+<div id="q11" class="q-card">
+  <div class="q-top"><div class="q-num">11</div><div class="q-text">The Ruhr is an important industrial region of Germany.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q11',true)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q11',false)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q12" class="q-card">
+  <div class="q-top"><div class="q-num">12</div><div class="q-text">Germany printed money to pay striking workers during the passive resistance campaign.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q12',true)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q12',false)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q13" class="q-card">
+  <div class="q-top"><div class="q-num">13</div><div class="q-text">Savers and pensioners were among the winners of hyperinflation.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q13',false)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q13',true)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q14" class="q-card">
+  <div class="q-top"><div class="q-num">14</div><div class="q-text">The hyperinflation crisis strengthened Germans' confidence in the Weimar Republic.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q14',false)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q14',true)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q15" class="q-card">
+  <div class="q-top"><div class="q-num">15</div><div class="q-text">Before hyperinflation, a loaf of bread cost under 1 mark in 1918.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q15',true)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q15',false)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q16" class="q-card">
+  <div class="q-top"><div class="q-num">16</div><div class="q-text">People who owed money (borrowers) found it easier to repay their debts during hyperinflation.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q16',true)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q16',false)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q17" class="q-card">
+  <div class="q-top"><div class="q-num">17</div><div class="q-text">Extremist parties lost support as a result of the 1923 economic crisis.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q17',false)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q17',true)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q18" class="q-card">
+  <div class="q-top"><div class="q-num">18</div><div class="q-text">Reparations were war debts Germany was required to pay after World War One.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q18',true)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q18',false)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q19" class="q-card">
+  <div class="q-top"><div class="q-num">19</div><div class="q-text">Some large exporters actually benefited from the hyperinflation crisis.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q19',true)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q19',false)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<div id="q20" class="q-card">
+  <div class="q-top"><div class="q-num">20</div><div class="q-text">The Ruhr invasion happened in 1925.</div></div>
+  <div class="tf-row">
+    <button class="opt" onclick="answer(this,'q20',false)"><span class="badge"></span>True</button>
+    <button class="opt" onclick="answer(this,'q20',true)"><span class="badge"></span>False</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="result-box" id="result">
+  <div class="result-emoji" id="res-emoji"></div>
+  <div class="result-score" id="res-score"></div>
+  <div class="result-msg" id="res-msg"></div>
+  <div class="result-mum" id="res-mum"></div>
+  <br>
+  <button class="retry-btn" onclick="retry()">Try again 🔄</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const TOTAL = 20;
+let answered = {};
+let score = 0;
+
+function answer(btn, qid, isCorrect) {
+  if (answered[qid]) return;
+  answered[qid] = true;
+
+  const card = document.getElementById(qid);
+  const allBtns = card.querySelectorAll('.opt');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    // figure out if this button is the correct one
+    const bIsCorrect = b.getAttribute('onclick').includes('true)');
+    if (b === btn) {
+      if (isCorrect) {
+        b.classList.add('correct');
+        b.querySelector('.badge').textContent = '✓';
+      } else {
+        b.classList.add('wrong');
+        b.querySelector('.badge').textContent = '✗';
+      }
+    } else if (bIsCorrect) {
+      b.classList.add('missed');
+      b.querySelector('.badge').textContent = '→';
+    }
+  });
+
+  card.classList.add('answered');
+
+  if (isCorrect) {
+    score++;
+    const fb = document.createElement('div');
+    fb.className = 'feedback ok';
+    fb.textContent = '✓ Correct!';
+    card.appendChild(fb);
+  } else {
+    const fb = document.createElement('div');
+    fb.className = 'feedback bad';
+    fb.textContent = '✗ Not quite — see the highlighted answer';
+    card.appendChild(fb);
+  }
+
+  updateProgress();
+  if (Object.keys(answered).length === TOTAL) showResult();
+}
+
+function updateProgress() {
+  const n = Object.keys(answered).length;
+  document.getElementById('bar').style.width = (n / TOTAL * 100) + '%';
+  document.getElementById('prog-label').textContent = n + ' / ' + TOTAL + ' answered';
+}
+
+function showResult() {
+  const box = document.getElementById('result');
+  box.classList.add('show');
+
+  let emoji, msg;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding — brilliant work!'; }
+  else if (score >= 14) { emoji = '👍'; msg = 'Good effort — a bit more revision will nail it!'; }
+  else { emoji = '📖'; msg = 'Keep going — read your revision notes and try again!'; }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = score + ' / 20';
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-mum').textContent = 'Show this to mum — ' + score + '/20 ' + emoji;
+
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function retry() {
+  answered = {};
+  score = 0;
+  updateProgress();
+
+  document.getElementById('result').classList.remove('show');
+
+  document.querySelectorAll('.q-card').forEach(card => {
+    card.classList.remove('answered');
+    card.querySelectorAll('.opt').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('correct','wrong','missed');
+      b.querySelector('.badge').textContent = '';
+    });
+    const fb = card.querySelector('.feedback');
+    if (fb) fb.remove();
+  });
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

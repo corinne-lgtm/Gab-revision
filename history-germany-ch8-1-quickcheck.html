@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – Germany 8.1 Young People</title>
+<style>
+:root{--bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;--red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;--blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;--purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.38}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,44px);line-height:1;margin:0 0 10px;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.86);margin:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.progress-bar-wrap{background:rgba(255,255,255,.18);border-radius:999px;height:8px;margin-top:18px}
+.progress-bar{background:var(--yellow);height:8px;border-radius:999px;width:0%;transition:width .4s ease}
+
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:28px 0 12px}
+
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px 22px;margin:12px 0;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:border-color .3s}
+.q-card.correct{border-color:var(--green);background:#f4fbf5}
+.q-card.wrong{border-color:var(--red);background:#fff8f8}
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--dark);color:var(--yellow);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0}
+.q-text{font-weight:700;font-size:16px;line-height:1.4}
+
+/* MC options */
+.options{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;background:#f5f0eb;border:2px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;font-size:15px;font-weight:600;transition:background .15s,border-color .15s;text-align:left;width:100%}
+.opt:hover:not(:disabled){background:#ede5da;border-color:#c2b4a2}
+.opt:disabled{cursor:default}
+.opt.correct{background:var(--green2);border-color:var(--green);color:#1a4d23}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#7a1a14}
+.opt.missed{background:var(--orange2);border-color:var(--orange);color:#6b3d00}
+.opt-letter{background:var(--dark);color:white;border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
+.opt.correct .opt-letter{background:var(--green)}
+.opt.wrong .opt-letter{background:var(--red)}
+.opt.missed .opt-letter{background:var(--orange)}
+
+/* TF options */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;padding:12px;border-radius:12px;border:2px solid var(--line);background:#f5f0eb;font-weight:900;font-size:16px;cursor:pointer;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:#ede5da;border-color:#c2b4a2}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d23}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a1a14}
+.tf-btn.missed{background:var(--orange2);border-color:var(--orange);color:#6b3d00}
+
+.feedback{font-size:13px;margin-top:10px;font-weight:700;display:none}
+.feedback.show{display:block}
+.feedback.ok{color:var(--green)}
+.feedback.bad{color:var(--red)}
+
+/* Results */
+#result{display:none;background:var(--dark);color:white;border-radius:28px;padding:32px;margin:28px 0;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.25)}
+#result .emoji{font-size:64px;margin-bottom:10px}
+#result h2{font-size:36px;margin:0 0 8px;color:var(--yellow);letter-spacing:-1px}
+#result .score-line{font-size:22px;font-weight:900;color:white;margin-bottom:8px}
+#result .msg{font-size:17px;color:rgba(255,255,255,.82);margin-bottom:18px}
+#result .show-mum{background:var(--yellow);color:var(--dark);font-weight:900;font-size:20px;border-radius:14px;padding:14px 22px;display:inline-block;letter-spacing:-.3px}
+
+@media(max-width:600px){.tf-row{flex-direction:column}.wrap{padding:14px}}
+@media print{.nav,#result .show-mum{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE History · Germany 1890–1945 · Quick Check</div>
+    <h1>8.1 How did the Nazis change the lives of young people?</h1>
+    <p>20 questions · answer each one and your score appears automatically.</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="history-index.html">📚 History</a>
+      <a href="history-germany-ch8-1-revision.html">📖 Revision notes</a>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  </section>
+
+  <div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="qc1">
+    <div class="q-top"><div class="q-num">1</div><div class="q-text">What did Nazi teachers have to join in order to teach in schools?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc1','A','B')"><span class="opt-letter">A</span>The National Socialist Party directly</button>
+      <button class="opt" onclick="answerMC(this,'qc1','B','B')"><span class="opt-letter">B</span>The German Teachers' League</button>
+      <button class="opt" onclick="answerMC(this,'qc1','C','B')"><span class="opt-letter">C</span>The Hitler Youth leadership corps</button>
+      <button class="opt" onclick="answerMC(this,'qc1','D','B')"><span class="opt-letter">D</span>The League of German Girls</button>
+    </div>
+    <div class="feedback" id="fb-qc1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="qc2">
+    <div class="q-top"><div class="q-num">2</div><div class="q-text">Which subject in Nazi schools focused on lands Germany had lost and areas it might conquer?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc2','A','C')"><span class="opt-letter">A</span>History</button>
+      <button class="opt" onclick="answerMC(this,'qc2','B','C')"><span class="opt-letter">B</span>Race Studies</button>
+      <button class="opt" onclick="answerMC(this,'qc2','C','C')"><span class="opt-letter">C</span>Geography</button>
+      <button class="opt" onclick="answerMC(this,'qc2','D','C')"><span class="opt-letter">D</span>Science</button>
+    </div>
+    <div class="feedback" id="fb-qc2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="qc3">
+    <div class="q-top"><div class="q-num">3</div><div class="q-text">What is "eugenics" as taught in Nazi schools?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc3','A','D')"><span class="opt-letter">A</span>The study of military tactics</button>
+      <button class="opt" onclick="answerMC(this,'qc3','B','D')"><span class="opt-letter">B</span>A scientific branch of geography</button>
+      <button class="opt" onclick="answerMC(this,'qc3','C','D')"><span class="opt-letter">C</span>A method of studying ancient history</button>
+      <button class="opt" onclick="answerMC(this,'qc3','D','D')"><span class="opt-letter">D</span>The idea of "improving" the population by controlling who could have children</button>
+    </div>
+    <div class="feedback" id="fb-qc3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="qc4">
+    <div class="q-top"><div class="q-num">4</div><div class="q-text">Why was Einstein's theory removed from Physics courses at German universities?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc4','A','B')"><span class="opt-letter">A</span>It was considered too difficult for students</button>
+      <button class="opt" onclick="answerMC(this,'qc4','B','B')"><span class="opt-letter">B</span>Einstein was Jewish</button>
+      <button class="opt" onclick="answerMC(this,'qc4','C','B')"><span class="opt-letter">C</span>It contradicted German military science</button>
+      <button class="opt" onclick="answerMC(this,'qc4','D','B')"><span class="opt-letter">D</span>The Nazi Party thought it was incorrect</button>
+    </div>
+    <div class="feedback" id="fb-qc4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="qc5">
+    <div class="q-top"><div class="q-num">5</div><div class="q-text">Approximately how many university teachers had been dismissed by 1939?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc5','A','C')"><span class="opt-letter">A</span>300</button>
+      <button class="opt" onclick="answerMC(this,'qc5','B','C')"><span class="opt-letter">B</span>1,000</button>
+      <button class="opt" onclick="answerMC(this,'qc5','C','C')"><span class="opt-letter">C</span>3,000</button>
+      <button class="opt" onclick="answerMC(this,'qc5','D','C')"><span class="opt-letter">D</span>10,000</button>
+    </div>
+    <div class="feedback" id="fb-qc5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="qc6">
+    <div class="q-top"><div class="q-num">6</div><div class="q-text">What did Hitler Youth activities mainly prepare boys for?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc6','A','A')"><span class="opt-letter">A</span>Future roles as soldiers</button>
+      <button class="opt" onclick="answerMC(this,'qc6','B','A')"><span class="opt-letter">B</span>University education</button>
+      <button class="opt" onclick="answerMC(this,'qc6','C','A')"><span class="opt-letter">C</span>Industrial factory work</button>
+      <button class="opt" onclick="answerMC(this,'qc6','D','A')"><span class="opt-letter">D</span>Leadership of the Nazi Party</button>
+    </div>
+    <div class="feedback" id="fb-qc6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="qc7">
+    <div class="q-top"><div class="q-num">7</div><div class="q-text">In which year did membership of Hitler Youth become compulsory?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc7','A','D')"><span class="opt-letter">A</span>1933</button>
+      <button class="opt" onclick="answerMC(this,'qc7','B','D')"><span class="opt-letter">B</span>1935</button>
+      <button class="opt" onclick="answerMC(this,'qc7','C','D')"><span class="opt-letter">C</span>1936</button>
+      <button class="opt" onclick="answerMC(this,'qc7','D','D')"><span class="opt-letter">D</span>1939</button>
+    </div>
+    <div class="feedback" id="fb-qc7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="qc8">
+    <div class="q-top"><div class="q-num">8</div><div class="q-text">What was Hitler Youth membership in 1933?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc8','A','B')"><span class="opt-letter">A</span>About 500,000</button>
+      <button class="opt" onclick="answerMC(this,'qc8','B','B')"><span class="opt-letter">B</span>About 2.3 million</button>
+      <button class="opt" onclick="answerMC(this,'qc8','C','B')"><span class="opt-letter">C</span>About 5.4 million</button>
+      <button class="opt" onclick="answerMC(this,'qc8','D','B')"><span class="opt-letter">D</span>About 7.3 million</button>
+    </div>
+    <div class="feedback" id="fb-qc8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="qc9">
+    <div class="q-top"><div class="q-num">9</div><div class="q-text">Which of these was a group that resisted Nazi youth organisations?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc9','A','C')"><span class="opt-letter">A</span>The Brownshirts</button>
+      <button class="opt" onclick="answerMC(this,'qc9','B','C')"><span class="opt-letter">B</span>The Gestapo Youth</button>
+      <button class="opt" onclick="answerMC(this,'qc9','C','C')"><span class="opt-letter">C</span>The Edelweiss Pirates</button>
+      <button class="opt" onclick="answerMC(this,'qc9','D','C')"><span class="opt-letter">D</span>The League of German Mothers</button>
+    </div>
+    <div class="feedback" id="fb-qc9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="qc10">
+    <div class="q-top"><div class="q-num">10</div><div class="q-text">What type of music did some young resisters listen to despite it being banned?</div></div>
+    <div class="options">
+      <button class="opt" onclick="answerMC(this,'qc10','A','B')"><span class="opt-letter">A</span>Classical German opera</button>
+      <button class="opt" onclick="answerMC(this,'qc10','B','B')"><span class="opt-letter">B</span>American jazz</button>
+      <button class="opt" onclick="answerMC(this,'qc10','C','B')"><span class="opt-letter">C</span>British folk music</button>
+      <button class="opt" onclick="answerMC(this,'qc10','D','B')"><span class="opt-letter">D</span>Soviet marching songs</button>
+    </div>
+    <div class="feedback" id="fb-qc10"></div>
+  </div>
+
+  <div class="section-label">Part 2 — True or False (10 questions)</div>
+
+  <!-- TF1 -->
+  <div class="q-card" id="qtf1">
+    <div class="q-top"><div class="q-num">11</div><div class="q-text">Nazi History lessons focused on German military victories and how badly Germany was treated after the First World War.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf1','true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf1','false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf1"></div>
+  </div>
+
+  <!-- TF2 -->
+  <div class="q-card" id="qtf2">
+    <div class="q-top"><div class="q-num">12</div><div class="q-text">Race Studies in Nazi schools taught that all races were equal and should be respected.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf2','true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf2','false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf2"></div>
+  </div>
+
+  <!-- TF3 -->
+  <div class="q-card" id="qtf3">
+    <div class="q-top"><div class="q-num">13</div><div class="q-text">Albert Einstein left Germany during the Nazi period.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf3','true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf3','false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf3"></div>
+  </div>
+
+  <!-- TF4 -->
+  <div class="q-card" id="qtf4">
+    <div class="q-top"><div class="q-num">14</div><div class="q-text">The League of German Girls trained girls mainly to become future military officers.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf4','true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf4','false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf4"></div>
+  </div>
+
+  <!-- TF5 -->
+  <div class="q-card" id="qtf5">
+    <div class="q-top"><div class="q-num">15</div><div class="q-text">Hitler Youth activities included camping, sports, map-reading and shooting practice.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf5','true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf5','false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf5"></div>
+  </div>
+
+  <!-- TF6 -->
+  <div class="q-card" id="qtf6">
+    <div class="q-top"><div class="q-num">16</div><div class="q-text">By 1936 Hitler Youth membership had fallen below 2 million.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf6','true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf6','false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf6"></div>
+  </div>
+
+  <!-- TF7 -->
+  <div class="q-card" id="qtf7">
+    <div class="q-top"><div class="q-num">17</div><div class="q-text">Some young people genuinely enjoyed the outdoor activities and sense of belonging offered by Nazi youth groups.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf7','true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf7','false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf7"></div>
+  </div>
+
+  <!-- TF8 -->
+  <div class="q-card" id="qtf8">
+    <div class="q-top"><div class="q-num">18</div><div class="q-text">The Swing Youth was a group that fully supported the Nazi regime and Hitler Youth.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf8','true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf8','false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf8"></div>
+  </div>
+
+  <!-- TF9 -->
+  <div class="q-card" id="qtf9">
+    <div class="q-top"><div class="q-num">19</div><div class="q-text">The League of German Girls also included physical activities such as sport and camping.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf9','true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf9','false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf9"></div>
+  </div>
+
+  <!-- TF10 -->
+  <div class="q-card" id="qtf10">
+    <div class="q-top"><div class="q-num">20</div><div class="q-text">The main aim of Nazi control of young people was to create a future generation that would obey Hitler and accept Nazi beliefs.</div></div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(this,'qtf10','true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'qtf10','false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-qtf10"></div>
+  </div>
+
+  <!-- Result box -->
+  <div id="result">
+    <div class="emoji" id="resEmoji"></div>
+    <h2 id="resTitle"></h2>
+    <div class="score-line" id="resScore"></div>
+    <div class="msg" id="resMsg"></div>
+    <div class="show-mum" id="resMum"></div>
+  </div>
+
+</div>
+
+<script>
+const TOTAL = 20;
+let answered = 0;
+let score = 0;
+
+function disableCard(cardId) {
+  const card = document.getElementById(cardId);
+  card.querySelectorAll('button').forEach(b => b.disabled = true);
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = (answered / TOTAL * 100) + '%';
+  if (answered === TOTAL) showResult();
+}
+
+function answerMC(btn, cardId, chosen, correct) {
+  answered++;
+  const card = document.getElementById(cardId);
+  const buttons = card.querySelectorAll('.opt');
+  const letters = ['A','B','C','D'];
+  const fb = document.getElementById('fb-' + cardId);
+
+  buttons.forEach((b, i) => {
+    b.disabled = true;
+    const ltr = letters[i];
+    if (ltr === correct && ltr === chosen) {
+      b.classList.add('correct');
+    } else if (ltr === chosen && chosen !== correct) {
+      b.classList.add('wrong');
+    } else if (ltr === correct && chosen !== correct) {
+      b.classList.add('missed');
+    }
+  });
+
+  if (chosen === correct) {
+    score++;
+    card.classList.add('correct');
+    fb.textContent = '✓ Correct!';
+    fb.className = 'feedback show ok';
+  } else {
+    card.classList.add('wrong');
+    fb.textContent = '✗ Not quite — the highlighted option was correct.';
+    fb.className = 'feedback show bad';
+  }
+  updateProgress();
+}
+
+function answerTF(btn, cardId, chosen, correct) {
+  answered++;
+  const card = document.getElementById(cardId);
+  const buttons = card.querySelectorAll('.tf-btn');
+  const fb = document.getElementById('fb-' + cardId);
+
+  buttons.forEach(b => {
+    b.disabled = true;
+    const val = b.textContent.includes('True') ? 'true' : 'false';
+    if (val === correct && val === chosen) {
+      b.classList.add('correct');
+    } else if (val === chosen && chosen !== correct) {
+      b.classList.add('wrong');
+    } else if (val === correct && chosen !== correct) {
+      b.classList.add('missed');
+    }
+  });
+
+  if (chosen === correct) {
+    score++;
+    card.classList.add('correct');
+    fb.textContent = '✓ Correct!';
+    fb.className = 'feedback show ok';
+  } else {
+    card.classList.add('wrong');
+    fb.textContent = '✗ Not quite — the highlighted answer was correct.';
+    fb.className = 'feedback show bad';
+  }
+  updateProgress();
+}
+
+function showResult() {
+  const box = document.getElementById('result');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  let emoji, title, msg, mum;
+  if (score >= 18) {
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'Excellent work — you clearly know this topic inside out. Keep it up!';
+    mum = '🏆 Show this to mum — ' + score + '/20 — Brilliant!';
+  } else if (score >= 14) {
+    emoji = '👍'; title = 'Good effort!';
+    msg = 'Solid performance. A quick re-read of the revision notes and you\'ll be flying!';
+    mum = '👍 Show this to mum — ' + score + '/20 — Good work!';
+  } else {
+    emoji = '📖'; title = 'Keep going!';
+    msg = 'Have another look at the revision notes, then give this another try. You\'ve got this!';
+    mum = '📖 Show this to mum — ' + score + '/20 — Keep revising!';
+  }
+
+  document.getElementById('resEmoji').textContent = emoji;
+  document.getElementById('resTitle').textContent = title;
+  document.getElementById('resScore').textContent = score + ' / 20';
+  document.getElementById('resMsg').textContent = msg;
+  document.getElementById('resMum').textContent = mum;
+}
+</script>
+</body>
+</html>
