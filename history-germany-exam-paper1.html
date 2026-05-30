@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Germany 1890–1945 · Practice Exam Paper 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;
+  --red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;
+  --blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;
+  --purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:var(--ink);
+  background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg)}
+.wrap{max-width:860px;margin:0 auto;padding:32px 24px 80px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:28px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:8px}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,4vw,42px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:6px}
+.hero p{font-size:15px;color:rgba(255,255,255,.82);margin-bottom:0}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px}
+
+/* Mode selector */
+.mode-bar{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:20px;padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mode-bar p{font-weight:900;font-size:14px;color:var(--muted);flex:1;min-width:160px}
+.mode-btn{padding:9px 20px;border-radius:999px;border:2px solid var(--line);font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;cursor:pointer;background:white;color:var(--ink);transition:.15s}
+.mode-btn.active{background:var(--dark);color:white;border-color:var(--dark)}
+
+/* Exam info strip */
+.info-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:28px}
+.info-chip{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center}
+.info-chip .label{font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.info-chip .value{font-family:'Poppins',sans-serif;font-size:17px;font-weight:900;color:var(--ink)}
+
+/* Timer */
+.timer-bar{background:var(--dark);color:white;border-radius:16px;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.timer-label{font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.timer-display{font-family:'Poppins',sans-serif;font-size:26px;font-weight:900;color:var(--yellow);letter-spacing:2px}
+.timer-btn{background:rgba(255,255,255,.15);border:none;color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+.timer-btn:hover{background:rgba(255,255,255,.25)}
+
+/* Question card */
+.q-block{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:24px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.q-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.q-num-badge{background:var(--dark);color:white;font-family:'Poppins',sans-serif;font-weight:900;font-size:18px;width:40px;height:40px;min-width:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.q-meta{flex:1}
+.q-type{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.q-text{font-size:16px;font-weight:700;line-height:1.5;color:var(--ink)}
+.marks-badge{background:var(--red2);color:#9a2f28;border:1.5px solid #f0b0a8;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:900;white-space:nowrap;flex-shrink:0}
+
+/* Tip box */
+.tip-box{background:linear-gradient(135deg,#dff0e2,#f0faf2);border:2px solid #9cca9f;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.tip-box .tip-head{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#2d5c36;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.tip-box ul{padding-left:18px}
+.tip-box li{font-size:13px;color:#2d5c36;font-weight:700;line-height:1.5;margin-bottom:3px}
+.tip-box p{font-size:13px;color:#2d5c36;font-weight:700;line-height:1.5}
+
+/* Source box */
+.source-box{background:var(--blue2);border:2px solid #a9c6df;border-radius:16px;padding:14px 16px;margin-bottom:14px;font-size:14px;color:#244e70;font-style:italic;line-height:1.6}
+.source-box strong{font-style:normal;display:block;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#3f6f9a;margin-bottom:6px}
+
+/* Answer area */
+.answer-area{width:100%;min-height:120px;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:15px;font-family:'Nunito',sans-serif;background:#fff;resize:vertical;transition:border-color .2s;line-height:1.6}
+.answer-area:focus{outline:none;border-color:var(--blue)}
+.lines-hint{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px}
+
+/* Mark scheme */
+.mark-scheme{display:none;background:linear-gradient(135deg,#fffdf7,#fff9f0);border:2px solid var(--orange);border-radius:18px;padding:18px;margin-top:14px}
+.mark-scheme.show{display:block}
+.ms-head{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ms-level{background:white;border:2px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px}
+.ms-level-head{font-size:12px;font-weight:900;color:var(--ink);margin-bottom:4px}
+.ms-level-desc{font-size:13px;color:var(--muted);font-weight:700;line-height:1.5}
+.ms-level.l3{border-left:5px solid var(--green)}
+.ms-level.l2{border-left:5px solid var(--orange)}
+.ms-level.l1{border-left:5px solid var(--red)}
+.ms-point{font-size:13px;color:var(--ink);font-weight:700;padding:4px 0;border-bottom:1px solid var(--line)}
+.ms-point:last-child{border:none}
+
+/* Submit */
+.submit-section{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:24px;text-align:center;margin-top:28px}
+.submit-section h3{font-family:'Poppins',sans-serif;font-size:20px;margin-bottom:8px}
+.submit-section p{font-size:14px;color:var(--muted);font-weight:700;margin-bottom:20px}
+.btn-submit{background:linear-gradient(135deg,#d94b42,#7c382f);color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;border:none;padding:16px 48px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(217,75,66,.3);transition:.2s}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,75,66,.35)}
+
+/* Results panel */
+.results-panel{display:none;background:linear-gradient(135deg,#2a3644,#1d2935);color:white;border-radius:28px;padding:30px;margin-top:28px;text-align:center}
+.results-panel.show{display:block}
+.res-emoji{font-size:56px;margin-bottom:8px}
+.res-score{font-family:'Poppins',sans-serif;font-size:52px;font-weight:900;color:var(--yellow)}
+.res-out-of{font-size:16px;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:6px}
+.res-msg{font-size:19px;font-weight:900;margin-bottom:4px}
+.res-sub{font-size:14px;color:rgba(255,255,255,.7);font-weight:700;margin-bottom:20px}
+.res-band{display:inline-block;background:rgba(255,255,255,.12);border-radius:12px;padding:10px 20px;font-size:13px;font-weight:900;color:rgba(255,255,255,.8)}
+
+/* Section divider */
+.section-divider{display:flex;align-items:center;gap:12px;margin:32px 0 20px}
+.section-divider .label{font-size:11px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.section-divider .line{flex:1;height:2px;background:var(--line);border-radius:2px}
+
+@media(max-width:600px){
+  .wrap{padding:16px 14px 60px}
+  .q-header{flex-wrap:wrap}
+  .marks-badge{margin-top:4px}
+  .timer-display{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>Practice Exam Paper 1</h1>
+  <p>Full exam conditions · 50 marks · 65 minutes recommended</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History</a>
+    <a href="history-germany.html">🇩🇪 Germany index</a>
+  </div>
+</section>
+
+<div class="info-strip">
+  <div class="info-chip"><div class="label">Total marks</div><div class="value">50</div></div>
+  <div class="info-chip"><div class="label">Questions</div><div class="value">5</div></div>
+  <div class="info-chip"><div class="label">Suggested time</div><div class="value">65 min</div></div>
+  <div class="info-chip"><div class="label">Paper</div><div class="value">Paper 1</div></div>
+</div>
+
+<div class="timer-bar">
+  <div>
+    <div class="timer-label">Countdown timer</div>
+    <div class="timer-display" id="timerDisplay">65:00</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="timer-btn" onclick="startTimer()">▶ Start</button>
+    <button class="timer-btn" onclick="pauseTimer()">⏸ Pause</button>
+    <button class="timer-btn" onclick="resetTimer()">↺ Reset</button>
+  </div>
+</div>
+
+<!-- ═══════════════ QUESTION 1 — 4 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section A · Weimar Republic</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">1</div>
+    <div class="q-meta">
+      <div class="q-type">Describe two features of…</div>
+      <div class="q-text">Describe two features of the Weimar Republic's constitution.</div>
+    </div>
+    <div class="marks-badge">4 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 4-mark "Describe two features" question</div>
+    <ul>
+      <li>Give <strong>Feature 1</strong> in one sentence, then add <strong>one supporting detail</strong> (a specific fact, name, date or example).</li>
+      <li>Do the same for <strong>Feature 2</strong> — totally separate point.</li>
+      <li>Never mix the two features together. Each feature + detail = 2 marks.</li>
+      <li><strong>Do not</strong> write an introduction or conclusion — go straight to the points.</li>
+    </ul>
+    <p style="margin-top:8px"><strong>Structure:</strong> "One feature of [topic] was [point]. For example / This meant that [detail]."</p>
+  </div>
+
+  <textarea class="answer-area" id="a1" placeholder="Feature 1: …&#10;&#10;Feature 2: …" rows="6"></textarea>
+  <div class="lines-hint">Aim for 2 clear paragraphs — one per feature. Approx. 50–80 words total.</div>
+
+  <div class="mark-scheme" id="ms1">
+    <div class="ms-head">📋 Mark Scheme — 4 marks (2 per feature)</div>
+    <div class="ms-point">Feature 1 (any): Proportional representation — seats in the Reichstag were awarded according to share of votes, meaning many parties were elected and coalition governments were necessary.</div>
+    <div class="ms-point">Feature 1 (any): The President had Article 48 emergency powers — he could pass laws without the Reichstag in a crisis, which was later used by Hindenburg to bypass democracy.</div>
+    <div class="ms-point">Feature 2 (any): A Bill of Rights guaranteed rights such as freedom of speech and the right to vote — all Germans over 20 could vote, including women for the first time.</div>
+    <div class="ms-point">Feature 2 (any): The Chancellor needed the support of the Reichstag majority to govern — this made it difficult to pass laws if no party had a majority.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ QUESTION 2 — 4 marks ═══════════════ -->
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">2</div>
+    <div class="q-meta">
+      <div class="q-type">Describe two features of…</div>
+      <div class="q-text">Describe two features of the Nazi police state.</div>
+    </div>
+    <div class="marks-badge">4 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 4-mark "Describe two features" question</div>
+    <ul>
+      <li>Same structure as Q1: Feature + specific detail, twice.</li>
+      <li>Good features here: the Gestapo, the SS, concentration camps, the courts, informers.</li>
+      <li>The detail should explain <em>how</em> the feature worked or give a specific fact about it.</li>
+    </ul>
+  </div>
+
+  <textarea class="answer-area" id="a2" placeholder="Feature 1: …&#10;&#10;Feature 2: …" rows="6"></textarea>
+  <div class="lines-hint">Aim for 2 clear paragraphs — one per feature. Approx. 50–80 words total.</div>
+
+  <div class="mark-scheme" id="ms2">
+    <div class="ms-head">📋 Mark Scheme — 4 marks (2 per feature)</div>
+    <div class="ms-point">Feature 1 (any): The Gestapo (secret police) monitored and arrested opponents of the regime — they relied heavily on ordinary Germans reporting their neighbours and colleagues.</div>
+    <div class="ms-point">Feature 1 (any): The SS (Schutzstaffel) was Hitler's personal bodyguard that grew into a powerful force controlling the concentration camps and enforcing racial policy.</div>
+    <div class="ms-point">Feature 2 (any): Concentration camps were used to imprison political opponents, Jews, and others — Dachau was the first, opened in 1933.</div>
+    <div class="ms-point">Feature 2 (any): The Nazi courts were not independent — judges were expected to rule in favour of the Nazi state, so opponents could not rely on fair trials.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ QUESTION 3 — 8 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section B · Source analysis</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">3</div>
+    <div class="q-meta">
+      <div class="q-type">How useful is Source A… (8 marks)</div>
+      <div class="q-text">How useful is Source A to a historian studying Nazi propaganda?<br><span style="font-size:13px;color:var(--muted);font-weight:700">Explain your answer, using Source A and your own knowledge of the historical context.</span></div>
+    </div>
+    <div class="marks-badge">8 marks</div>
+  </div>
+
+  <div class="source-box">
+    <strong>Source A — A poster produced by the Nazi Ministry of Propaganda, 1936</strong>
+    The poster shows a strong, blond German family standing in a field of wheat. A caption reads: "Blood and Soil — the strength of the German nation." The poster was displayed widely in schools, government buildings and public spaces across Germany.
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 8-mark "How useful is the source?" question</div>
+    <ul>
+      <li><strong>Nature / Origin / Purpose (NOP):</strong> Who made it? When? Why? Does this make it more or less useful?</li>
+      <li><strong>Content:</strong> What does it show or say? How does this help a historian?</li>
+      <li><strong>Contextual knowledge:</strong> What do you know about this topic that supports or limits the source's usefulness?</li>
+      <li><strong>Limitations:</strong> What does it NOT tell us? Is it biased? Is it typical or exceptional?</li>
+      <li>Always reach a <strong>judgement</strong>: "Overall, this source is useful because… but limited because…"</li>
+    </ul>
+    <p style="margin-top:8px"><strong>Avoid:</strong> saying a source is "not useful because it is biased" — bias itself can be useful evidence of attitudes.</p>
+  </div>
+
+  <textarea class="answer-area" id="a3" placeholder="Write your answer here…" style="min-height:200px" rows="10"></textarea>
+  <div class="lines-hint">Aim for 3–4 developed paragraphs. Approx. 200–280 words.</div>
+
+  <div class="mark-scheme" id="ms3">
+    <div class="ms-head">📋 Mark Scheme — 8 marks (Levels 1–4)</div>
+    <div class="ms-level l3"><div class="ms-level-head">Level 4 — 7–8 marks</div><div class="ms-level-desc">Developed analysis of usefulness using NOP AND content AND contextual knowledge, with a clear overall judgement about the degree of usefulness.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 3 — 5–6 marks</div><div class="ms-level-desc">Analyses usefulness using at least two of: NOP, content, context. Some judgement made but may not be fully developed.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 2 — 3–4 marks</div><div class="ms-level-desc">Some analysis but mostly descriptive. May comment on content or identify bias without explaining why this affects usefulness.</div></div>
+    <div class="ms-level l1"><div class="ms-level-head">Level 1 — 1–2 marks</div><div class="ms-level-desc">Simple statement about the source with little or no explanation. Very limited reference to context.</div></div>
+    <div class="ms-point" style="margin-top:10px"><strong>Key points to reward:</strong> NOP — Nazi Ministry of Propaganda, 1936, made to persuade → shows what the regime wanted people to believe (useful for studying propaganda techniques). Content — "Blood and Soil" ideology, racial purity, links to land. Context — Goebbels, Reich Chamber of Culture, media control, Hitler Youth. Limitation — only shows intended message, not public reaction; may not reflect what people actually believed.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ QUESTION 4 — 12 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section C · Explanation</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">4</div>
+    <div class="q-meta">
+      <div class="q-type">Explain why… (12 marks)</div>
+      <div class="q-text">Explain why the Nazis were able to rise to power between 1929 and 1933.</div>
+    </div>
+    <div class="marks-badge">12 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 12-mark "Explain why" question</div>
+    <ul>
+      <li>Give <strong>at least three separate reasons</strong>, each in its own paragraph.</li>
+      <li>Each paragraph: <strong>State the reason → Explain how it contributed → Give specific evidence</strong>.</li>
+      <li>Use <strong>connective language</strong> to show causation: "This meant that…", "As a result…", "This led to…"</li>
+      <li>The <strong>hints given in the question</strong> (if any) are a starting point, not the full answer.</li>
+      <li>A brief conclusion linking the reasons together gains the top marks.</li>
+    </ul>
+    <p style="margin-top:8px"><strong>Think about:</strong> the Great Depression and unemployment; weaknesses of the Weimar Republic; Nazi propaganda and appeal; role of Hindenburg and von Papen; fear of Communism.</p>
+  </div>
+
+  <textarea class="answer-area" id="a4" placeholder="Write your answer here…" style="min-height:260px" rows="13"></textarea>
+  <div class="lines-hint">Aim for 3–4 developed paragraphs + a brief conclusion. Approx. 300–400 words.</div>
+
+  <div class="mark-scheme" id="ms4">
+    <div class="ms-head">📋 Mark Scheme — 12 marks (Levels 1–4)</div>
+    <div class="ms-level l3"><div class="ms-level-head">Level 4 — 10–12 marks</div><div class="ms-level-desc">Multiple well-developed reasons with specific evidence. Clear causal links between reasons. Analytical conclusion that weighs factors.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 3 — 7–9 marks</div><div class="ms-level-desc">At least two developed reasons with evidence. Some causal language used. May lack a conclusion or full analysis.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 2 — 4–6 marks</div><div class="ms-level-desc">Some explanation attempted but reasons may be undeveloped or descriptive. Limited evidence used.</div></div>
+    <div class="ms-level l1"><div class="ms-level-head">Level 1 — 1–3 marks</div><div class="ms-level-desc">Simple general statements. Little or no specific knowledge or explanation of causation.</div></div>
+    <div class="ms-point" style="margin-top:10px"><strong>Reasons to reward:</strong> 1929 Wall Street Crash → Depression → 6 million unemployed by 1932 → people lost faith in Weimar. Nazi propaganda (Goebbels) targeted different groups. Hitler's powerful speeches offered simple solutions. Fear of Communist takeover pushed middle classes and businesses to support Nazis. Hindenburg appointed Hitler Chancellor Jan 1933 due to von Papen's political scheming. Weimar system's proportional representation created unstable coalition governments.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ QUESTION 5 — 16+4 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section D · Extended essay</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">5</div>
+    <div class="q-meta">
+      <div class="q-type">"How far do you agree…" — 16 marks + 4 SPaG</div>
+      <div class="q-text">"The main reason why ordinary Germans supported Hitler was propaganda." How far do you agree with this statement? Explain your answer.</div>
+    </div>
+    <div class="marks-badge">20 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 16+4 mark "How far do you agree?" essay</div>
+    <ul>
+      <li><strong>Introduction:</strong> State your overall argument in 2–3 sentences. Don't just repeat the question.</li>
+      <li><strong>Paragraphs FOR the statement:</strong> Develop the given factor (propaganda) with at least 2 specific examples and explain <em>why</em> it mattered.</li>
+      <li><strong>Paragraphs AGAINST / other factors:</strong> Give at least 2 other reasons why Germans supported Hitler (economic recovery, fear, genuine belief in Nazi ideology, tradition). Develop each with evidence.</li>
+      <li><strong>Conclusion:</strong> Reach a clear judgement — do you agree, partially agree, or disagree? Explain which factor you think was <em>most</em> important and why.</li>
+      <li><strong>SPaG (4 marks):</strong> Write in full sentences. Check spelling, punctuation, and paragraphing. Use subject-specific vocabulary (propaganda, ideology, indoctrination, rearmament…).</li>
+    </ul>
+    <p style="margin-top:8px"><strong>High-level tip:</strong> The best answers explain how factors are <em>connected</em> — e.g. propaganda worked because it reinforced economic successes people could already see.</p>
+  </div>
+
+  <textarea class="answer-area" id="a5" placeholder="Write your answer here…" style="min-height:340px" rows="18"></textarea>
+  <div class="lines-hint">Aim for intro + 4–5 developed paragraphs + conclusion. Approx. 500–700 words. Pay attention to spelling and vocabulary.</div>
+
+  <div class="mark-scheme" id="ms5">
+    <div class="ms-head">📋 Mark Scheme — 16 marks + 4 SPaG</div>
+    <div class="ms-level l3"><div class="ms-level-head">Level 4 — 13–16 marks</div><div class="ms-level-desc">Sustained analysis of multiple factors. Reaches a clear, substantiated judgement. Propaganda AND other factors fully developed with specific evidence. Links between factors shown.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 3 — 9–12 marks</div><div class="ms-level-desc">At least two factors developed with evidence. Some analysis and judgement. May not fully balance propaganda against other factors.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 2 — 5–8 marks</div><div class="ms-level-desc">Some developed points but may be mostly descriptive. Limited range of factors or weak judgement.</div></div>
+    <div class="ms-level l1"><div class="ms-level-head">Level 1 — 1–4 marks</div><div class="ms-level-desc">Simple general points. Little specific knowledge. No real judgement.</div></div>
+    <div class="ms-point" style="margin-top:10px"><strong>FOR propaganda:</strong> Goebbels — Ministry of Propaganda 1933; control of press, radio, cinema, art; rallies (Nuremberg); cult of Hitler; targeted different groups with tailored messages.</div>
+    <div class="ms-point"><strong>AGAINST / other factors:</strong> Economic recovery — unemployment fell from 6m (1932) to near zero (1938); rearmament created jobs; Strength Through Joy holidays. Fear — Gestapo, SS, concentration camps silenced dissent (some "support" was compliance). Genuine ideology — antisemitism was widespread before Hitler; nationalism after Versailles. Traditional authority — conservatives, Church, army accepted Hitler as a bulwark against Communism.</div>
+    <div class="ms-point"><strong>SPaG Level descriptors:</strong> 4 = accurate spelling/punctuation throughout, varied vocabulary, clear paragraphing. 3 = mostly accurate with occasional errors. 2 = some errors but meaning clear. 1 = frequent errors impede meaning.</div>
+  </div>
+</div>
+
+<!-- Submit -->
+<div class="submit-section">
+  <h3>Finished your exam?</h3>
+  <p>Click below to reveal the mark schemes for all five questions. Make sure you've written your full answers first!</p>
+  <button class="btn-submit" onclick="submitExam()">📋 Reveal all mark schemes</button>
+  <div class="results-panel" id="resultsPanel">
+    <div class="res-emoji">📚</div>
+    <div class="res-msg">Mark schemes revealed!</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.75);font-weight:700;margin-top:10px;line-height:1.7">
+      Scroll back up to each question to see the mark scheme.<br>
+      Be honest with yourself — award marks for the <em>quality</em> of your explanation, not just the facts you mentioned.<br><br>
+      <strong style="color:var(--yellow)">Show this to mum once you've self-marked! 🏆</strong>
+    </div>
+    <div style="margin-top:16px;background:rgba(255,255,255,.1);border-radius:12px;padding:12px;font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">
+      Target grades: 40–50 = Grade 9 · 33–39 = Grade 7–8 · 25–32 = Grade 5–6 · Below 25 = needs more revision
+    </div>
+  </div>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+// Timer
+let totalSeconds = 65 * 60;
+let timerInterval = null;
+let running = false;
+
+function updateDisplay() {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  document.getElementById('timerDisplay').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if (totalSeconds <= 300) {
+    document.getElementById('timerDisplay').style.color = '#ff6b6b';
+  }
+}
+
+function startTimer() {
+  if (running) return;
+  running = true;
+  timerInterval = setInterval(() => {
+    if (totalSeconds <= 0) { clearInterval(timerInterval); running = false; return; }
+    totalSeconds--;
+    updateDisplay();
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  running = false;
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  running = false;
+  totalSeconds = 65 * 60;
+  document.getElementById('timerDisplay').style.color = '#f4cf55';
+  updateDisplay();
+}
+
+// Submit
+function submitExam() {
+  ['ms1','ms2','ms3','ms4','ms5'].forEach(id => {
+    document.getElementById(id).classList.add('show');
+  });
+  document.getElementById('resultsPanel').classList.add('show');
+  pauseTimer();
+  document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+</script>
+</body>
+</html>

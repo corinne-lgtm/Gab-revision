@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Germany 1890–1945 · Practice Exam Paper 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;
+  --red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;
+  --blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;
+  --purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:var(--ink);
+  background:radial-gradient(circle at top left,rgba(63,111,154,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(115,83,166,.14),transparent 34%),var(--bg)}
+.wrap{max-width:860px;margin:0 auto;padding:32px 24px 80px}
+
+.hero{background:linear-gradient(135deg,#1d3a52,#3f3070);color:white;border-radius:30px;padding:30px;margin-bottom:28px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:8px}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,4vw,42px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:6px}
+.hero p{font-size:15px;color:rgba(255,255,255,.82)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px}
+
+.info-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:28px}
+.info-chip{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center}
+.info-chip .label{font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.info-chip .value{font-family:'Poppins',sans-serif;font-size:17px;font-weight:900;color:var(--ink)}
+
+.timer-bar{background:linear-gradient(135deg,#1d3a52,#3f3070);color:white;border-radius:16px;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.timer-label{font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.timer-display{font-family:'Poppins',sans-serif;font-size:26px;font-weight:900;color:var(--yellow);letter-spacing:2px}
+.timer-btn{background:rgba(255,255,255,.15);border:none;color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+.timer-btn:hover{background:rgba(255,255,255,.25)}
+
+.q-block{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:24px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.q-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.q-num-badge{background:linear-gradient(135deg,#1d3a52,#3f3070);color:white;font-family:'Poppins',sans-serif;font-weight:900;font-size:18px;width:40px;height:40px;min-width:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.q-meta{flex:1}
+.q-type{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.q-text{font-size:16px;font-weight:700;line-height:1.5;color:var(--ink)}
+.marks-badge{background:var(--purple2);color:#4a2d7a;border:1.5px solid #b9a6d9;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:900;white-space:nowrap;flex-shrink:0}
+
+.tip-box{background:linear-gradient(135deg,#dff0e2,#f0faf2);border:2px solid #9cca9f;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.tip-box .tip-head{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#2d5c36;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.tip-box ul{padding-left:18px}
+.tip-box li{font-size:13px;color:#2d5c36;font-weight:700;line-height:1.5;margin-bottom:3px}
+.tip-box p{font-size:13px;color:#2d5c36;font-weight:700;line-height:1.5}
+
+.source-box{background:var(--blue2);border:2px solid #a9c6df;border-radius:16px;padding:14px 16px;margin-bottom:14px;font-size:14px;color:#244e70;font-style:italic;line-height:1.6}
+.source-box strong{font-style:normal;display:block;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#3f6f9a;margin-bottom:6px}
+
+.answer-area{width:100%;min-height:120px;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:15px;font-family:'Nunito',sans-serif;background:#fff;resize:vertical;transition:border-color .2s;line-height:1.6}
+.answer-area:focus{outline:none;border-color:var(--purple)}
+.lines-hint{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px}
+
+.mark-scheme{display:none;background:linear-gradient(135deg,#fffdf7,#fdf6ff);border:2px solid var(--purple);border-radius:18px;padding:18px;margin-top:14px}
+.mark-scheme.show{display:block}
+.ms-head{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:10px}
+.ms-level{background:white;border:2px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px}
+.ms-level-head{font-size:12px;font-weight:900;color:var(--ink);margin-bottom:4px}
+.ms-level-desc{font-size:13px;color:var(--muted);font-weight:700;line-height:1.5}
+.ms-level.l3{border-left:5px solid var(--green)}
+.ms-level.l2{border-left:5px solid var(--orange)}
+.ms-level.l1{border-left:5px solid var(--red)}
+.ms-point{font-size:13px;color:var(--ink);font-weight:700;padding:4px 0;border-bottom:1px solid var(--line)}
+.ms-point:last-child{border:none}
+
+.section-divider{display:flex;align-items:center;gap:12px;margin:32px 0 20px}
+.section-divider .label{font-size:11px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.section-divider .line{flex:1;height:2px;background:var(--line);border-radius:2px}
+
+.submit-section{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:24px;text-align:center;margin-top:28px}
+.submit-section h3{font-family:'Poppins',sans-serif;font-size:20px;margin-bottom:8px}
+.submit-section p{font-size:14px;color:var(--muted);font-weight:700;margin-bottom:20px}
+.btn-submit{background:linear-gradient(135deg,#3f6f9a,#3f3070);color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;border:none;padding:16px 48px;border-radius:50px;cursor:pointer;box-shadow:0 4px 16px rgba(63,111,154,.35);transition:.2s}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(63,111,154,.4)}
+
+.results-panel{display:none;background:linear-gradient(135deg,#1d3a52,#3f3070);color:white;border-radius:24px;padding:28px;margin-top:24px;text-align:center}
+.results-panel.show{display:block}
+
+@media(max-width:600px){
+  .wrap{padding:16px 14px 60px}
+  .q-header{flex-wrap:wrap}
+  .marks-badge{margin-top:4px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945</div>
+  <h1>Practice Exam Paper 2</h1>
+  <p>Full exam conditions · 50 marks · 65 minutes recommended · Different topics from Paper 1</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History</a>
+    <a href="history-germany.html">🇩🇪 Germany index</a>
+    <a href="history-germany-exam-paper1.html">📄 Paper 1</a>
+  </div>
+</section>
+
+<div class="info-strip">
+  <div class="info-chip"><div class="label">Total marks</div><div class="value">50</div></div>
+  <div class="info-chip"><div class="label">Questions</div><div class="value">5</div></div>
+  <div class="info-chip"><div class="label">Suggested time</div><div class="value">65 min</div></div>
+  <div class="info-chip"><div class="label">Paper</div><div class="value">Paper 2</div></div>
+</div>
+
+<div class="timer-bar">
+  <div>
+    <div class="timer-label">Countdown timer</div>
+    <div class="timer-display" id="timerDisplay">65:00</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="timer-btn" onclick="startTimer()">▶ Start</button>
+    <button class="timer-btn" onclick="pauseTimer()">⏸ Pause</button>
+    <button class="timer-btn" onclick="resetTimer()">↺ Reset</button>
+  </div>
+</div>
+
+<!-- ═══════════════ Q1 — 4 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section A · The Kaiser &amp; WWI</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">1</div>
+    <div class="q-meta">
+      <div class="q-type">Describe two features of…</div>
+      <div class="q-text">Describe two features of Germany's government under Kaiser Wilhelm II.</div>
+    </div>
+    <div class="marks-badge">4 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 4-mark "Describe two features" question</div>
+    <ul>
+      <li><strong>Two separate points</strong>, each followed by a <strong>specific supporting detail</strong>.</li>
+      <li>Do not write an introduction. Go straight in: "One feature was… For example…"</li>
+      <li>Each correct feature + detail = 2 marks. Max 4 marks total.</li>
+      <li>Good features: the Kaiser's personal power, the role of the Reichstag, the army's influence, the lack of full democracy.</li>
+    </ul>
+  </div>
+
+  <textarea class="answer-area" id="a1" placeholder="Feature 1: …&#10;&#10;Feature 2: …" rows="6"></textarea>
+  <div class="lines-hint">Aim for 2 clear paragraphs — one per feature. Approx. 50–80 words total.</div>
+
+  <div class="mark-scheme" id="ms1">
+    <div class="ms-head">📋 Mark Scheme — 4 marks</div>
+    <div class="ms-point">Feature 1 (any): The Kaiser had enormous personal power — he could appoint and dismiss the Chancellor, control foreign policy and command the army without needing Reichstag approval.</div>
+    <div class="ms-point">Feature 1 (any): Germany had a Reichstag (parliament) elected by men over 25, but it had limited power as the Kaiser could ignore it on key matters such as war and diplomacy.</div>
+    <div class="ms-point">Feature 2 (any): The army was highly influential in German society — military leaders were respected and Germany spent heavily on rearmament, contributing to the naval race with Britain.</div>
+    <div class="ms-point">Feature 2 (any): Germany was a federal state made up of 25 different states — Prussia was the largest and most powerful, and its conservative traditions shaped national politics.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ Q2 — 4 marks ═══════════════ -->
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">2</div>
+    <div class="q-meta">
+      <div class="q-type">Describe two features of…</div>
+      <div class="q-text">Describe two features of life for Jewish people in Nazi Germany before 1939.</div>
+    </div>
+    <div class="marks-badge">4 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 4-mark "Describe two features" question</div>
+    <ul>
+      <li>Feature + specific detail twice. Keep the two features clearly separate.</li>
+      <li>Strong answers include specific dates, law names, or events as the "detail."</li>
+      <li>Good features: Nuremberg Laws, loss of citizenship, boycotts, Kristallnacht, exclusion from professions.</li>
+    </ul>
+  </div>
+
+  <textarea class="answer-area" id="a2" placeholder="Feature 1: …&#10;&#10;Feature 2: …" rows="6"></textarea>
+  <div class="lines-hint">Approx. 50–80 words total.</div>
+
+  <div class="mark-scheme" id="ms2">
+    <div class="ms-head">📋 Mark Scheme — 4 marks</div>
+    <div class="ms-point">Feature 1 (any): The Nuremberg Laws (1935) stripped Jews of German citizenship — they could no longer vote, hold public office or marry non-Jewish Germans.</div>
+    <div class="ms-point">Feature 1 (any): Jews were excluded from many professions — they were banned from being lawyers, doctors, teachers or civil servants, making it very difficult to earn a living.</div>
+    <div class="ms-point">Feature 2 (any): Kristallnacht (Night of Broken Glass), November 1938 — Jewish homes, businesses and synagogues were attacked across Germany; around 30,000 Jewish men were arrested and sent to concentration camps.</div>
+    <div class="ms-point">Feature 2 (any): Jews were required to wear a yellow Star of David from 1941 — before this, anti-Jewish propaganda portrayed them as subhuman enemies of Germany in schools, newspapers and films.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ Q3 — 8 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section B · Source analysis</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">3</div>
+    <div class="q-meta">
+      <div class="q-type">How useful is Source A… (8 marks)</div>
+      <div class="q-text">How useful is Source A to a historian studying opposition to Hitler?<br><span style="font-size:13px;color:var(--muted);font-weight:700">Explain your answer, using Source A and your own knowledge of the historical context.</span></div>
+    </div>
+    <div class="marks-badge">8 marks</div>
+  </div>
+
+  <div class="source-box">
+    <strong>Source A — A letter from Sophie Scholl to a friend, written in early 1943, shortly before her arrest</strong>
+    "How can we expect righteousness to prevail when there is hardly anyone willing to give themselves up individually to a righteous cause? It is such a splendid sunny day, and I have to go. But how many have to die on the battlefield in these days, how many young promising lives. What does my death matter if by our acts thousands are warned and alerted?"
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 8-mark source usefulness question</div>
+    <ul>
+      <li><strong>Nature:</strong> What type of source is it? (personal letter) — what does this tell us about its reliability and limitations?</li>
+      <li><strong>Origin:</strong> Who wrote it, when, and in what circumstances? Sophie Scholl, early 1943, shortly before arrest by the Gestapo.</li>
+      <li><strong>Purpose:</strong> Why was it written? A private letter — less likely to be propaganda, but written from a very particular perspective.</li>
+      <li><strong>Content:</strong> What does it tell us about opposition? Her motivation, moral/religious basis, awareness of danger, link to war context.</li>
+      <li><strong>Contextual knowledge:</strong> White Rose group, leaflets, 1943 arrests, executions. What does the source confirm or not show?</li>
+      <li><strong>Judgement:</strong> How useful is it — and for what specifically?</li>
+    </ul>
+  </div>
+
+  <textarea class="answer-area" id="a3" placeholder="Write your answer here…" style="min-height:200px" rows="10"></textarea>
+  <div class="lines-hint">Aim for 3–4 developed paragraphs. Approx. 200–280 words.</div>
+
+  <div class="mark-scheme" id="ms3">
+    <div class="ms-head">📋 Mark Scheme — 8 marks (Levels 1–4)</div>
+    <div class="ms-level l3"><div class="ms-level-head">Level 4 — 7–8 marks</div><div class="ms-level-desc">Analyses NOP and content with precise contextual knowledge, and makes a clear overall judgement about what the source is and isn't useful for.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 3 — 5–6 marks</div><div class="ms-level-desc">Uses at least two of NOP/content/context. Some judgement present.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 2 — 3–4 marks</div><div class="ms-level-desc">Some valid comment on usefulness but mainly descriptive or relies on content only.</div></div>
+    <div class="ms-level l1"><div class="ms-level-head">Level 1 — 1–2 marks</div><div class="ms-level-desc">Simple statements, little or no analysis or context.</div></div>
+    <div class="ms-point" style="margin-top:10px"><strong>Key points:</strong> Origin — private letter by a resister moments before arrest → highly authentic expression of motivation; not written for public consumption so less likely to be performative. Content — reveals moral/religious basis of resistance; awareness that death may follow; links to wartime deaths (WWII context, 1943 turning point, Stalingrad). Context — White Rose group, Hans and Sophie Scholl, leaflets distributed at Munich University, arrested Feb 1943, executed by guillotine. Limitation — shows only one individual's perspective; does not represent the range of opposition groups; cannot show extent or impact of resistance.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ Q4 — 12 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section C · Explanation</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">4</div>
+    <div class="q-meta">
+      <div class="q-type">Explain why… (12 marks)</div>
+      <div class="q-text">Explain why the Weimar Republic faced so many problems in the years 1919–1923.</div>
+    </div>
+    <div class="marks-badge">12 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 12-mark "Explain why" question</div>
+    <ul>
+      <li>Aim for <strong>three distinct reasons</strong>, each in a separate paragraph.</li>
+      <li>Structure each paragraph: <strong>Point → Explanation → Evidence → Link back</strong> ("This weakened Weimar because…")</li>
+      <li>The factors should be clearly <strong>different</strong> from each other — don't write the same point twice with different words.</li>
+      <li>A brief conclusion that <strong>connects</strong> the factors scores higher than listing them separately.</li>
+    </ul>
+    <p style="margin-top:8px"><strong>Think about:</strong> the "stab in the back" myth and loss of trust; terms of the Treaty of Versailles; left-wing and right-wing uprisings (Spartacus, Kapp); hyperinflation and the Ruhr crisis; weaknesses built into the Weimar constitution itself.</p>
+  </div>
+
+  <textarea class="answer-area" id="a4" placeholder="Write your answer here…" style="min-height:260px" rows="13"></textarea>
+  <div class="lines-hint">Aim for 3–4 developed paragraphs + conclusion. Approx. 300–400 words.</div>
+
+  <div class="mark-scheme" id="ms4">
+    <div class="ms-head">📋 Mark Scheme — 12 marks (Levels 1–4)</div>
+    <div class="ms-level l3"><div class="ms-level-head">Level 4 — 10–12 marks</div><div class="ms-level-desc">Multiple well-developed reasons with specific evidence and clear causal links. Analytical conclusion that weighs or connects factors.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 3 — 7–9 marks</div><div class="ms-level-desc">At least two developed reasons with evidence. Some causal language. May lack conclusion or full analysis.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 2 — 4–6 marks</div><div class="ms-level-desc">Some explanation but reasons may be undeveloped or mainly narrative.</div></div>
+    <div class="ms-level l1"><div class="ms-level-head">Level 1 — 1–3 marks</div><div class="ms-level-desc">Simple general statements with little specific knowledge.</div></div>
+    <div class="ms-point" style="margin-top:10px"><strong>Reasons to reward:</strong> Treaty of Versailles — reparations (£6.6bn), war guilt clause, loss of land and colonies → made Weimar associated with humiliation; "November Criminals." Political violence — Spartacus Revolt Jan 1919 (left), Kapp Putsch 1920 (right), Munich Putsch 1923 → showed Weimar could not command loyalty of all. Hyperinflation 1923 — French invasion of Ruhr, Germany printed money → savings wiped out → middle class suffered → lost faith in democracy. Constitutional weaknesses — proportional representation → fragile coalitions; Article 48 emergency powers → could bypass democracy. Legacy of war — soldiers returning to poverty, "stab in the back" myth spread by nationalists undermined legitimacy from the start.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ Q5 — 16+4 marks ═══════════════ -->
+<div class="section-divider"><div class="line"></div><div class="label">Section D · Extended essay</div><div class="line"></div></div>
+
+<div class="q-block">
+  <div class="q-header">
+    <div class="q-num-badge">5</div>
+    <div class="q-meta">
+      <div class="q-type">"How far do you agree…" — 16 marks + 4 SPaG</div>
+      <div class="q-text">"The persecution of Jewish people in Nazi Germany was caused mainly by Hitler's personal beliefs." How far do you agree with this statement? Explain your answer.</div>
+    </div>
+    <div class="marks-badge">20 marks</div>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-head">✏️ How to answer — 16+4 mark "How far do you agree?" essay</div>
+    <ul>
+      <li><strong>Introduction:</strong> Give your overall argument straight away. Avoid "In this essay I will…"</li>
+      <li><strong>Agree paragraphs:</strong> Develop Hitler's personal antisemitism — Mein Kampf, his speeches, his role in passing the Nuremberg Laws, his approval of Kristallnacht and later the Final Solution.</li>
+      <li><strong>Disagree / other factors paragraphs:</strong> Long tradition of antisemitism in Germany and Europe; the role of Goebbels and propaganda; the pressure of war and radicalisation; willing participation of ordinary Germans (Browning / Goldhagen debate); the role of the SS and bureaucracy.</li>
+      <li><strong>Conclusion:</strong> Weigh up: was Hitler the unique cause, or did he channel existing attitudes? Use precise vocabulary: antisemitism, ideology, scapegoating, Final Solution, Wannsee Conference.</li>
+      <li><strong>SPaG:</strong> Write formally. Avoid contractions. Vary your sentence structure. Spell key terms correctly.</li>
+    </ul>
+    <p style="margin-top:8px"><strong>High-level tip:</strong> The best answers consider how Hitler's beliefs interacted with other factors — e.g. propaganda made persecution socially acceptable; the war provided cover and opportunity for escalation.</p>
+  </div>
+
+  <textarea class="answer-area" id="a5" placeholder="Write your answer here…" style="min-height:340px" rows="18"></textarea>
+  <div class="lines-hint">Aim for intro + 4–5 paragraphs + conclusion. Approx. 500–700 words. Check spelling and use subject vocabulary.</div>
+
+  <div class="mark-scheme" id="ms5">
+    <div class="ms-head">📋 Mark Scheme — 16 marks + 4 SPaG</div>
+    <div class="ms-level l3"><div class="ms-level-head">Level 4 — 13–16 marks</div><div class="ms-level-desc">Sustained analysis of multiple factors, both agreeing and disagreeing. Hitler's personal role fully developed AND other factors analysed with evidence. Clear substantiated conclusion that weighs factors and reaches a supported judgement.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 3 — 9–12 marks</div><div class="ms-level-desc">At least two factors developed with evidence. Some analysis and a judgement, but may not fully weigh Hitler's role against other factors.</div></div>
+    <div class="ms-level l2"><div class="ms-level-head">Level 2 — 5–8 marks</div><div class="ms-level-desc">Some developed points but mainly descriptive. Limited range of factors. Weak or absent conclusion.</div></div>
+    <div class="ms-level l1"><div class="ms-level-head">Level 1 — 1–4 marks</div><div class="ms-level-desc">Simple general points. Little specific knowledge. No real judgement.</div></div>
+    <div class="ms-point" style="margin-top:10px"><strong>FOR (Hitler's beliefs):</strong> Mein Kampf (1925) set out extreme racial antisemitism; Hitler's speeches portrayed Jews as Germany's enemy; he personally approved Nuremberg Laws 1935; Kristallnacht 1938 ordered from above; Hitler gave verbal authorisation for the Final Solution; without Hitler the Holocaust could not have happened in this form.</div>
+    <div class="ms-point"><strong>AGAINST / other factors:</strong> Long tradition of European antisemitism — pogroms, "scientific" racism pre-dated Hitler; widespread German antisemitism meant persecution had popular support. Goebbels' propaganda machine turned hatred into policy with public acceptance. War provided cover — escalation from persecution to genocide 1941–42. "Ordinary men" argument (Browning) — bureaucrats, soldiers, policemen participated without direct orders. Wannsee Conference 1942 — organised the Final Solution through state machinery, not just Hitler's will. Nazi ideology was a party-wide belief system, not just Hitler's alone.</div>
+    <div class="ms-point"><strong>SPaG:</strong> 4 = accurate throughout, varied vocabulary, clear paragraphing. 3 = mostly accurate. 2 = some errors, meaning clear. 1 = frequent errors impede meaning.</div>
+  </div>
+</div>
+
+<!-- Submit -->
+<div class="submit-section">
+  <h3>Finished your exam?</h3>
+  <p>Click below to reveal the mark schemes for all five questions. Be honest — write everything before you look!</p>
+  <button class="btn-submit" onclick="submitExam()">📋 Reveal all mark schemes</button>
+  <div class="results-panel" id="resultsPanel">
+    <div style="font-size:52px;margin-bottom:8px">📚</div>
+    <div style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;margin-bottom:8px">Mark schemes revealed!</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.75);font-weight:700;line-height:1.7">
+      Scroll back up to each question to read the mark scheme.<br>
+      Self-mark honestly — award marks for the quality of your <em>explanation</em> and use of evidence.<br><br>
+      <strong style="color:var(--yellow)">Show mum your self-marked total! 🏆</strong>
+    </div>
+    <div style="margin-top:16px;background:rgba(255,255,255,.1);border-radius:12px;padding:12px;font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">
+      Target grades: 40–50 = Grade 9 · 33–39 = Grade 7–8 · 25–32 = Grade 5–6 · Below 25 = needs more revision
+    </div>
+    <div style="margin-top:12px">
+      <a href="history-germany-exam-paper1.html" style="background:rgba(255,255,255,.2);color:white;text-decoration:none;font-weight:900;font-size:13px;padding:10px 20px;border-radius:999px;display:inline-block">← Try Paper 1</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+let totalSeconds = 65 * 60;
+let timerInterval = null;
+let running = false;
+
+function updateDisplay() {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  document.getElementById('timerDisplay').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if (totalSeconds <= 300) {
+    document.getElementById('timerDisplay').style.color = '#ff6b6b';
+  }
+}
+
+function startTimer() {
+  if (running) return;
+  running = true;
+  timerInterval = setInterval(() => {
+    if (totalSeconds <= 0) { clearInterval(timerInterval); running = false; return; }
+    totalSeconds--;
+    updateDisplay();
+  }, 1000);
+}
+
+function pauseTimer() { clearInterval(timerInterval); running = false; }
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  running = false;
+  totalSeconds = 65 * 60;
+  document.getElementById('timerDisplay').style.color = '#f4cf55';
+  updateDisplay();
+}
+
+function submitExam() {
+  ['ms1','ms2','ms3','ms4','ms5'].forEach(id => {
+    document.getElementById(id).classList.add('show');
+  });
+  document.getElementById('resultsPanel').classList.add('show');
+  pauseTimer();
+  document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+</script>
+</body>
+</html>
