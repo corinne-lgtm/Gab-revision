@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Germany 1890–1945 · All Chapters Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4eee6;--ink:#1f2a33;--muted:#67737b;--paper:#fffdf7;--line:#dbcfc0;--red:#d94b42;--red2:#ffe0dd;--orange:#f29a2e;--orange2:#ffe4bd;--blue:#3f6f9a;--blue2:#dfefff;--green:#5e9f6b;--green2:#dff0e2;--purple:#7353a6;--purple2:#eadff7;--dark:#1d2935;--yellow:#f4cf55}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:var(--ink);
+  background:radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+  radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),var(--bg)}
+.wrap{max-width:860px;margin:0 auto;padding:32px 24px 80px}
+
+.hero{background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:30px;padding:30px;margin-bottom:24px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:8px}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(26px,4vw,44px);font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:6px}
+.hero p{font-size:15px;color:rgba(255,255,255,.82);margin:0}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.nav a{background:white;color:#26313d;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px}
+
+/* Progress bar */
+.progress-wrap{background:rgba(255,255,255,.8);border:2px solid var(--line);border-radius:20px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.progress-track{flex:1;background:#e8ddd0;border-radius:999px;height:12px}
+.progress-fill{background:linear-gradient(90deg,var(--green),var(--blue));height:12px;border-radius:999px;transition:width .3s ease;width:0%}
+.progress-text{font-weight:900;font-size:14px;color:var(--muted);white-space:nowrap}
+
+/* Section label */
+.section-label{display:flex;align-items:center;gap:12px;margin:28px 0 14px}
+.section-label .badge{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:white;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.section-label .line{flex:1;height:2px;background:var(--line);border-radius:2px}
+.badge-red{background:var(--red)}
+.badge-blue{background:var(--blue)}
+.badge-purple{background:var(--purple)}
+.badge-dark{background:var(--dark)}
+
+/* Question card */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:20px;margin:12px 0;box-shadow:0 3px 12px rgba(0,0,0,.04);transition:border-color .2s}
+.q-card.answered-correct{border-color:var(--green)}
+.q-card.answered-wrong{border-color:var(--red)}
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.q-num{background:var(--dark);color:white;font-family:'Poppins',sans-serif;font-weight:900;font-size:14px;width:34px;height:34px;min-width:34px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.q-text{font-weight:700;font-size:15px;line-height:1.5;flex:1}
+.options{display:grid;gap:8px}
+.opt-btn{background:white;border:2px solid var(--line);border-radius:12px;padding:11px 16px;font-size:14px;font-family:'Nunito',sans-serif;text-align:left;cursor:pointer;transition:background .15s,border-color .15s;width:100%;font-weight:700;color:var(--ink);line-height:1.4}
+.opt-btn:hover:not(:disabled){background:#f0e8dd;border-color:#b8a898}
+.opt-btn:disabled{cursor:default}
+.opt-btn.correct{background:#dff0e2;border-color:var(--green);color:#2d5c36}
+.opt-btn.wrong{background:#ffe0dd;border-color:var(--red);color:#7c1f1c}
+.opt-btn.missed{background:#ffe4bd;border-color:var(--orange);color:#7a4700}
+.tf-options{display:flex;gap:10px}
+.tf-btn{flex:1;background:white;border:2px solid var(--line);border-radius:12px;padding:12px;font-size:14px;font-family:'Nunito',sans-serif;cursor:pointer;font-weight:900;color:var(--ink);transition:background .15s,border-color .15s;text-align:center}
+.tf-btn:hover:not(:disabled){background:#f0e8dd;border-color:#b8a898}
+.tf-btn:disabled{cursor:default}
+.tf-btn.correct{background:#dff0e2;border-color:var(--green);color:#2d5c36}
+.tf-btn.wrong{background:#ffe0dd;border-color:var(--red);color:#7c1f1c}
+.tf-btn.missed{background:#ffe4bd;border-color:var(--orange);color:#7a4700}
+
+/* Score counter floating */
+.score-float{position:fixed;bottom:24px;right:24px;background:var(--dark);color:white;border-radius:20px;padding:12px 18px;font-weight:900;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:100;transition:.3s}
+.score-float span{color:var(--yellow)}
+
+/* Result box */
+.result-box{display:none;background:linear-gradient(135deg,#2a3644,#7c382f);color:white;border-radius:28px;padding:32px;margin-top:28px;text-align:center;box-shadow:0 14px 35px rgba(0,0,0,.2)}
+.result-box.show{display:block}
+.res-emoji{font-size:68px;margin-bottom:6px}
+.res-score{font-family:'Poppins',sans-serif;font-size:60px;font-weight:900;color:var(--yellow);line-height:1}
+.res-outof{font-size:18px;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:10px}
+.res-msg{font-size:21px;font-weight:900;margin-bottom:4px}
+.res-sub{font-size:15px;color:rgba(255,255,255,.75);font-weight:700;margin-bottom:20px}
+.res-bar-track{background:rgba(255,255,255,.15);border-radius:999px;height:12px;margin:16px 0 8px}
+.res-bar-fill{background:var(--yellow);height:12px;border-radius:999px;transition:width .8s ease}
+.res-tally{font-size:13px;color:rgba(255,255,255,.65);font-weight:700}
+.res-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.res-breakdown-chip{background:rgba(255,255,255,.1);border-radius:14px;padding:12px;font-size:13px;font-weight:700;color:rgba(255,255,255,.85)}
+.res-breakdown-chip strong{display:block;font-size:20px;color:var(--yellow);font-family:'Poppins',sans-serif}
+
+@media(max-width:600px){
+  .wrap{padding:16px 14px 80px}
+  .tf-options{flex-direction:column}
+  .score-float{bottom:12px;right:12px;padding:10px 14px;font-size:13px}
+  .res-breakdown{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE History · Germany 1890–1945 · Mega Quiz</div>
+  <h1>All Chapters Quick Check</h1>
+  <p>60 questions · Every topic from Kaiser Wilhelm to 1945 · Answer all to see your score</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="history-index.html">📚 History</a>
+    <a href="history-germany.html">🇩🇪 Germany index</a>
+  </div>
+</section>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 60 answered</div>
+</div>
+
+<!-- ══════════ PART 1: MULTIPLE CHOICE ══════════ -->
+
+<div class="section-label">
+  <div class="badge badge-red">Part 1 — Multiple Choice · 30 questions</div>
+  <div class="line"></div>
+</div>
+
+<!-- Section A: Kaiser & Imperial Germany -->
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-red" style="background:#b03020">Ch 1 · Kaiser Wilhelm II</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qc1">
+  <div class="q-top"><div class="q-num">1</div><div class="q-text">Which country did Germany enter a naval arms race with before World War One?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc1',false)">France</button>
+    <button class="opt-btn" onclick="answer(this,'qc1',true)">Britain</button>
+    <button class="opt-btn" onclick="answer(this,'qc1',false)">Russia</button>
+    <button class="opt-btn" onclick="answer(this,'qc1',false)">Austria-Hungary</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc2">
+  <div class="q-top"><div class="q-num">2</div><div class="q-text">What was the name of the German parliament under Kaiser Wilhelm II?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc2',false)">Bundesrat</button>
+    <button class="opt-btn" onclick="answer(this,'qc2',false)">Landtag</button>
+    <button class="opt-btn" onclick="answer(this,'qc2',true)">Reichstag</button>
+    <button class="opt-btn" onclick="answer(this,'qc2',false)">Volksrat</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc3">
+  <div class="q-top"><div class="q-num">3</div><div class="q-text">In which year did Kaiser Wilhelm II become Emperor of Germany?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc3',false)">1871</button>
+    <button class="opt-btn" onclick="answer(this,'qc3',false)">1884</button>
+    <button class="opt-btn" onclick="answer(this,'qc3',true)">1888</button>
+    <button class="opt-btn" onclick="answer(this,'qc3',false)">1900</button>
+  </div>
+</div>
+
+<!-- Section B: WWI & Weimar -->
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-red" style="background:#c04030">Ch 2–3 · WWI &amp; Weimar Republic</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qc4">
+  <div class="q-top"><div class="q-num">4</div><div class="q-text">What was the "stab in the back" myth?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc4',false)">The claim that the Kaiser had betrayed the German army by fleeing to the Netherlands</button>
+    <button class="opt-btn" onclick="answer(this,'qc4',true)">The false idea that Germany had not lost WWI militarily but had been betrayed by civilians and Jews at home</button>
+    <button class="opt-btn" onclick="answer(this,'qc4',false)">A French accusation that Germany had started the war through deception</button>
+    <button class="opt-btn" onclick="answer(this,'qc4',false)">The belief that the Weimar Republic was secretly controlled by communists</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc5">
+  <div class="q-top"><div class="q-num">5</div><div class="q-text">Which article of the Weimar Constitution allowed the President to rule by emergency decree, bypassing the Reichstag?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc5',false)">Article 12</button>
+    <button class="opt-btn" onclick="answer(this,'qc5',false)">Article 25</button>
+    <button class="opt-btn" onclick="answer(this,'qc5',true)">Article 48</button>
+    <button class="opt-btn" onclick="answer(this,'qc5',false)">Article 56</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc6">
+  <div class="q-top"><div class="q-num">6</div><div class="q-text">What was the total amount of reparations Germany was ordered to pay under the Treaty of Versailles?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc6',false)">£2.2 billion</button>
+    <button class="opt-btn" onclick="answer(this,'qc6',true)">£6.6 billion</button>
+    <button class="opt-btn" onclick="answer(this,'qc6',false)">£10 billion</button>
+    <button class="opt-btn" onclick="answer(this,'qc6',false)">£14 billion</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc7">
+  <div class="q-top"><div class="q-num">7</div><div class="q-text">Who led the Spartacist revolt in January 1919?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc7',false)">Friedrich Ebert and Gustav Noske</button>
+    <button class="opt-btn" onclick="answer(this,'qc7',true)">Rosa Luxemburg and Karl Liebknecht</button>
+    <button class="opt-btn" onclick="answer(this,'qc7',false)">Wolfgang Kapp and General Lüttwitz</button>
+    <button class="opt-btn" onclick="answer(this,'qc7',false)">Ernst Röhm and Hermann Göring</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc8">
+  <div class="q-top"><div class="q-num">8</div><div class="q-text">What caused the hyperinflation crisis of 1923?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc8',false)">Germany defaulted on its war debts to the United States</button>
+    <button class="opt-btn" onclick="answer(this,'qc8',true)">Germany printed vast amounts of money after France occupied the Ruhr, making the currency worthless</button>
+    <button class="opt-btn" onclick="answer(this,'qc8',false)">A banking collapse caused by the Wall Street Crash spread to Germany</button>
+    <button class="opt-btn" onclick="answer(this,'qc8',false)">The Reichstag refused to approve the government budget</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc9">
+  <div class="q-top"><div class="q-num">9</div><div class="q-text">What did the Dawes Plan of 1924 do?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc9',false)">Cancelled all German reparations payments</button>
+    <button class="opt-btn" onclick="answer(this,'qc9',true)">Arranged American loans to help Germany pay reparations and stabilise its economy</button>
+    <button class="opt-btn" onclick="answer(this,'qc9',false)">Reduced reparations and extended the payment deadline to 1988</button>
+    <button class="opt-btn" onclick="answer(this,'qc9',false)">Allowed Germany to join the League of Nations</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc10">
+  <div class="q-top"><div class="q-num">10</div><div class="q-text">Which foreign minister is most associated with Weimar Germany's "Golden Age" of recovery in the mid-1920s?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc10',false)">Friedrich Ebert</button>
+    <button class="opt-btn" onclick="answer(this,'qc10',false)">Paul von Hindenburg</button>
+    <button class="opt-btn" onclick="answer(this,'qc10',true)">Gustav Stresemann</button>
+    <button class="opt-btn" onclick="answer(this,'qc10',false)">Franz von Papen</button>
+  </div>
+</div>
+
+<!-- Section C: Nazi Rise -->
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-blue">Ch 4–6 · Depression &amp; Nazi Rise</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qc11">
+  <div class="q-top"><div class="q-num">11</div><div class="q-text">How many Germans were unemployed at the peak of the Great Depression, around 1932?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc11',false)">2 million</button>
+    <button class="opt-btn" onclick="answer(this,'qc11',false)">4 million</button>
+    <button class="opt-btn" onclick="answer(this,'qc11',true)">6 million</button>
+    <button class="opt-btn" onclick="answer(this,'qc11',false)">9 million</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc12">
+  <div class="q-top"><div class="q-num">12</div><div class="q-text">What was the Munich Putsch of November 1923?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc12',false)">A communist uprising in Munich that was crushed by the army</button>
+    <button class="opt-btn" onclick="answer(this,'qc12',true)">Hitler's failed attempt to seize power in Munich and march on Berlin</button>
+    <button class="opt-btn" onclick="answer(this,'qc12',false)">A right-wing coup in Berlin that briefly toppled the Weimar government</button>
+    <button class="opt-btn" onclick="answer(this,'qc12',false)">A naval mutiny in Munich that triggered the end of WWI</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc13">
+  <div class="q-top"><div class="q-num">13</div><div class="q-text">Which group was primarily responsible for setting fire to the Reichstag in February 1933?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc13',false)">The Nazi SA stormtroopers acting on Hitler's orders</button>
+    <button class="opt-btn" onclick="answer(this,'qc13',false)">The Social Democrats trying to destabilise the new government</button>
+    <button class="opt-btn" onclick="answer(this,'qc13',true)">A lone Dutch communist, Marinus van der Lubbe, though the Nazis used it to blame all communists</button>
+    <button class="opt-btn" onclick="answer(this,'qc13',false)">French secret agents trying to discredit the Weimar Republic</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc14">
+  <div class="q-top"><div class="q-num">14</div><div class="q-text">What was the Enabling Act of March 1933?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc14',true)">A law that gave Hitler the power to pass laws without the Reichstag for four years, effectively ending democracy</button>
+    <button class="opt-btn" onclick="answer(this,'qc14',false)">A law banning all political parties except the Nazis</button>
+    <button class="opt-btn" onclick="answer(this,'qc14',false)">The law that merged the offices of President and Chancellor after Hindenburg's death</button>
+    <button class="opt-btn" onclick="answer(this,'qc14',false)">A law allowing the arrest of political opponents without trial</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc15">
+  <div class="q-top"><div class="q-num">15</div><div class="q-text">What happened during the Night of the Long Knives in June 1934?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc15',false)">Hitler purged the army's high command and replaced them with loyal Nazis</button>
+    <button class="opt-btn" onclick="answer(this,'qc15',true)">Hitler had SA leader Ernst Röhm and other potential rivals arrested and executed</button>
+    <button class="opt-btn" onclick="answer(this,'qc15',false)">The SS rounded up thousands of Jews across Germany in a single night</button>
+    <button class="opt-btn" onclick="answer(this,'qc15',false)">Communist party members were arrested following the Reichstag fire</button>
+  </div>
+</div>
+
+<!-- Section D: Nazi Germany -->
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-purple">Ch 7–8 · Life in Nazi Germany</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qc16">
+  <div class="q-top"><div class="q-num">16</div><div class="q-text">What was the purpose of the "Strength Through Joy" (KdF) scheme?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc16',false)">To train German workers in military skills for future rearmament</button>
+    <button class="opt-btn" onclick="answer(this,'qc16',true)">To provide leisure activities and holidays for workers, making them feel rewarded and loyal to the Nazi state</button>
+    <button class="opt-btn" onclick="answer(this,'qc16',false)">To encourage women to have more children by offering state support</button>
+    <button class="opt-btn" onclick="answer(this,'qc16',false)">To replace trade unions with a Nazi-controlled workers' organisation</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc17">
+  <div class="q-top"><div class="q-num">17</div><div class="q-text">What were the three Ks that summed up the Nazi ideal for women?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc17',false)">Kraft, Kampf, Kultur (Strength, Struggle, Culture)</button>
+    <button class="opt-btn" onclick="answer(this,'qc17',true)">Kinder, Küche, Kirche (Children, Kitchen, Church)</button>
+    <button class="opt-btn" onclick="answer(this,'qc17',false)">Krieg, Kameradschaft, Kontrolle (War, Comradeship, Control)</button>
+    <button class="opt-btn" onclick="answer(this,'qc17',false)">Körper, Kunst, Klasse (Body, Art, Class)</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc18">
+  <div class="q-top"><div class="q-num">18</div><div class="q-text">Who was the Nazi Minister of Propaganda responsible for controlling the media and arts?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc18',false)">Heinrich Himmler</button>
+    <button class="opt-btn" onclick="answer(this,'qc18',false)">Hermann Göring</button>
+    <button class="opt-btn" onclick="answer(this,'qc18',true)">Joseph Goebbels</button>
+    <button class="opt-btn" onclick="answer(this,'qc18',false)">Rudolf Hess</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc19">
+  <div class="q-top"><div class="q-num">19</div><div class="q-text">What was the League of German Girls (BDM)?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc19',false)">A Nazi organisation training girls aged 10–14 in military drill and weapons</button>
+    <button class="opt-btn" onclick="answer(this,'qc19',true)">The female equivalent of the Hitler Youth, preparing girls for their roles as mothers and wives through fitness and Nazi ideology</button>
+    <button class="opt-btn" onclick="answer(this,'qc19',false)">A propaganda organisation that produced posters and radio programmes aimed at women</button>
+    <button class="opt-btn" onclick="answer(this,'qc19',false)">A scheme offering women vocational training to fill jobs vacated by men in the military</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc20">
+  <div class="q-top"><div class="q-num">20</div><div class="q-text">Which Olympics, held in Berlin, were used by the Nazis as a propaganda showcase?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc20',false)">1932 Summer Olympics</button>
+    <button class="opt-btn" onclick="answer(this,'qc20',true)">1936 Summer Olympics</button>
+    <button class="opt-btn" onclick="answer(this,'qc20',false)">1938 Winter Olympics</button>
+    <button class="opt-btn" onclick="answer(this,'qc20',false)">1940 Summer Olympics</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc21">
+  <div class="q-top"><div class="q-num">21</div><div class="q-text">What were the Nuremberg Laws of 1935?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc21',false)">Laws banning Jews from owning property or businesses</button>
+    <button class="opt-btn" onclick="answer(this,'qc21',true)">Laws that stripped Jews of German citizenship and banned marriage between Jews and non-Jews</button>
+    <button class="opt-btn" onclick="answer(this,'qc21',false)">Laws that required all Jews to register with the government and wear identifying armbands</button>
+    <button class="opt-btn" onclick="answer(this,'qc21',false)">Laws that expelled Jews from Germany and confiscated all their property</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc22">
+  <div class="q-top"><div class="q-num">22</div><div class="q-text">What was the "autarky" economic policy pursued by the Nazis from 1936?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc22',false)">A policy of rapid industrialisation by importing foreign technology and machinery</button>
+    <button class="opt-btn" onclick="answer(this,'qc22',true)">A policy of making Germany self-sufficient so it would not depend on foreign imports in wartime</button>
+    <button class="opt-btn" onclick="answer(this,'qc22',false)">A policy of exporting German goods to pay off reparations debts more quickly</button>
+    <button class="opt-btn" onclick="answer(this,'qc22',false)">A policy of nationalising all major industries under state control</button>
+  </div>
+</div>
+
+<!-- Section E: Control & Resistance -->
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-dark">Ch 9 · Control, Resistance &amp; War</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qc23">
+  <div class="q-top"><div class="q-num">23</div><div class="q-text">What did the Gestapo rely on most heavily to monitor the German population?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc23',false)">An extensive network of hidden cameras in public spaces</button>
+    <button class="opt-btn" onclick="answer(this,'qc23',false)">Regular door-to-door checks by SS officers</button>
+    <button class="opt-btn" onclick="answer(this,'qc23',true)">Ordinary Germans informing on their neighbours, colleagues and family members</button>
+    <button class="opt-btn" onclick="answer(this,'qc23',false)">Intercepting private letters and telephone calls</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc24">
+  <div class="q-top"><div class="q-num">24</div><div class="q-text">What was the Wannsee Conference of January 1942?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc24',false)">A meeting at which Hitler declared war on the United States</button>
+    <button class="opt-btn" onclick="answer(this,'qc24',false)">A conference at which Nazi leaders agreed to invade the Soviet Union</button>
+    <button class="opt-btn" onclick="answer(this,'qc24',true)">A secret meeting at which senior Nazi officials coordinated the plan to murder all Jews in Europe — the "Final Solution"</button>
+    <button class="opt-btn" onclick="answer(this,'qc24',false)">A meeting at which the SS was given formal control of the concentration camp system</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc25">
+  <div class="q-top"><div class="q-num">25</div><div class="q-text">Which country did Germany invade in September 1939, triggering the Second World War?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc25',false)">France</button>
+    <button class="opt-btn" onclick="answer(this,'qc25',false)">Czechoslovakia</button>
+    <button class="opt-btn" onclick="answer(this,'qc25',true)">Poland</button>
+    <button class="opt-btn" onclick="answer(this,'qc25',false)">Austria</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc26">
+  <div class="q-top"><div class="q-num">26</div><div class="q-text">What was the Reich Chamber of Culture?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc26',false)">The government department in charge of building Nazi monuments and architecture</button>
+    <button class="opt-btn" onclick="answer(this,'qc26',true)">Goebbels' organisation that controlled all artists, musicians, writers and filmmakers — only members could work, and Jews were excluded</button>
+    <button class="opt-btn" onclick="answer(this,'qc26',false)">A Nazi programme to promote traditional German folk art and music in schools</button>
+    <button class="opt-btn" onclick="answer(this,'qc26',false)">The censorship board that reviewed foreign films before they were shown in Germany</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc27">
+  <div class="q-top"><div class="q-num">27</div><div class="q-text">Where and when was the first Nazi concentration camp opened?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc27',false)">Auschwitz, Poland, 1940</button>
+    <button class="opt-btn" onclick="answer(this,'qc27',false)">Bergen-Belsen, Germany, 1936</button>
+    <button class="opt-btn" onclick="answer(this,'qc27',true)">Dachau, Germany, 1933</button>
+    <button class="opt-btn" onclick="answer(this,'qc27',false)">Treblinka, Poland, 1942</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc28">
+  <div class="q-top"><div class="q-num">28</div><div class="q-text">How did the impact of World War Two affect the lives of ordinary Germans at home?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc28',false)">Living standards improved as the war created full employment and high wages</button>
+    <button class="opt-btn" onclick="answer(this,'qc28',true)">Rationing was introduced, cities were bombed, women were increasingly drafted into factory work and millions of men were killed at the front</button>
+    <button class="opt-btn" onclick="answer(this,'qc28',false)">Life was largely unaffected until 1944 because the war was fought entirely outside German borders</button>
+    <button class="opt-btn" onclick="answer(this,'qc28',false)">The government increased food rations and reduced working hours to maintain morale</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc29">
+  <div class="q-top"><div class="q-num">29</div><div class="q-text">What was the Confessional Church?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc29',false)">The Catholic Church's official body that negotiated the Concordat with Hitler in 1933</button>
+    <button class="opt-btn" onclick="answer(this,'qc29',true)">A Protestant church movement that broke away to oppose Nazi attempts to control religion in Germany</button>
+    <button class="opt-btn" onclick="answer(this,'qc29',false)">A Nazi-controlled church set up to replace traditional Christianity with a religion based on German racial identity</button>
+    <button class="opt-btn" onclick="answer(this,'qc29',false)">An underground network of priests who hid Jewish families during the Holocaust</button>
+  </div>
+</div>
+
+<div class="q-card" id="qc30">
+  <div class="q-top"><div class="q-num">30</div><div class="q-text">In what month and year did Hitler commit suicide?</div></div>
+  <div class="options">
+    <button class="opt-btn" onclick="answer(this,'qc30',false)">January 1945</button>
+    <button class="opt-btn" onclick="answer(this,'qc30',false)">February 1945</button>
+    <button class="opt-btn" onclick="answer(this,'qc30',true)">April 1945</button>
+    <button class="opt-btn" onclick="answer(this,'qc30',false)">May 1945</button>
+  </div>
+</div>
+
+<!-- ══════════ PART 2: TRUE / FALSE ══════════ -->
+
+<div class="section-label">
+  <div class="badge badge-blue">Part 2 — True or False · 30 questions</div>
+  <div class="line"></div>
+</div>
+
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-red" style="background:#b03020">Kaiser &amp; WWI</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qtf31">
+  <div class="q-top"><div class="q-num">31</div><div class="q-text">Germany had the largest navy in the world by 1914.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf31',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf31',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf32">
+  <div class="q-top"><div class="q-num">32</div><div class="q-text">Kaiser Wilhelm II abdicated in November 1918 as Germany faced defeat in World War One.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf32',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf32',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf33">
+  <div class="q-top"><div class="q-num">33</div><div class="q-text">The Treaty of Versailles required Germany to accept full blame for starting the war through the War Guilt Clause (Article 231).</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf33',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf33',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf34">
+  <div class="q-top"><div class="q-num">34</div><div class="q-text">The Weimar Republic allowed women to vote for the first time in German history.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf34',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf34',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf35">
+  <div class="q-top"><div class="q-num">35</div><div class="q-text">The Kapp Putsch of 1920 was a left-wing communist uprising against the Weimar Republic.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf35',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf35',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf36">
+  <div class="q-top"><div class="q-num">36</div><div class="q-text">Germany joined the League of Nations in 1926, a sign of its growing international acceptance.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf36',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf36',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-blue" style="background:#2a5070">Nazi Rise to Power</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qtf37">
+  <div class="q-top"><div class="q-num">37</div><div class="q-text">Hitler wrote Mein Kampf while in prison following the failed Munich Putsch.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf37',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf37',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf38">
+  <div class="q-top"><div class="q-num">38</div><div class="q-text">The Nazi Party received the majority of votes in a free election before Hitler became Chancellor.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf38',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf38',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf39">
+  <div class="q-top"><div class="q-num">39</div><div class="q-text">President Hindenburg appointed Hitler as Chancellor on 30 January 1933.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf39',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf39',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf40">
+  <div class="q-top"><div class="q-num">40</div><div class="q-text">After the Night of the Long Knives, the German army swore a personal oath of loyalty to Germany as a nation.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf40',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf40',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf41">
+  <div class="q-top"><div class="q-num">41</div><div class="q-text">The Wall Street Crash of 1929 helped the Nazis because it caused mass unemployment, which made people turn to extreme parties.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf41',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf41',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf42">
+  <div class="q-top"><div class="q-num">42</div><div class="q-text">Franz von Papen persuaded Hindenburg to appoint Hitler as Chancellor, believing he could control him.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf42',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf42',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-purple">Life in Nazi Germany</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qtf43">
+  <div class="q-top"><div class="q-num">43</div><div class="q-text">Nazi unemployment figures fell partly because women and Jewish people were removed from official statistics.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf43',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf43',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf44">
+  <div class="q-top"><div class="q-num">44</div><div class="q-text">Trade unions were strengthened under the Nazis so that workers could negotiate better wages.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf44',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf44',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf45">
+  <div class="q-top"><div class="q-num">45</div><div class="q-text">The Volksempfänger was a cheap radio set produced so that Nazi propaganda could reach as many German homes as possible.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf45',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf45',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf46">
+  <div class="q-top"><div class="q-num">46</div><div class="q-text">The Nazis encouraged women to take up careers in medicine and law as part of their modernisation programme.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf46',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf46',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf47">
+  <div class="q-top"><div class="q-num">47</div><div class="q-text">Kristallnacht took place in November 1938 and involved the destruction of Jewish businesses, homes and synagogues across Germany.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf47',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf47',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf48">
+  <div class="q-top"><div class="q-num">48</div><div class="q-text">The Nazi regime signed a Concordat with the Catholic Church in 1933, agreeing not to interfere with Catholic schools and organisations.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf48',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf48',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf49">
+  <div class="q-top"><div class="q-num">49</div><div class="q-text">The Four Year Plan of 1936 aimed to prepare Germany's economy for war within four years.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf49',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf49',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="section-label">
+  <div class="line"></div>
+  <div class="badge badge-dark">Control, Resistance &amp; War</div>
+  <div class="line"></div>
+</div>
+
+<div class="q-card" id="qtf50">
+  <div class="q-top"><div class="q-num">50</div><div class="q-text">The July Bomb Plot of 1944 succeeded in killing Hitler.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf50',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf50',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf51">
+  <div class="q-top"><div class="q-num">51</div><div class="q-text">The Edelweiss Pirates were a group of young people who resisted Hitler Youth culture and sometimes helped Allied airmen and escaped prisoners.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf51',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf51',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf52">
+  <div class="q-top"><div class="q-num">52</div><div class="q-text">The Nazi courts were fully independent of the government, ensuring fair trials for all defendants.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf52',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf52',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf53">
+  <div class="q-top"><div class="q-num">53</div><div class="q-text">Colonel Claus von Stauffenberg was one of the key plotters in the July Bomb Plot of 1944.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf53',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf53',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf54">
+  <div class="q-top"><div class="q-num">54</div><div class="q-text">The Holocaust resulted in the murder of approximately six million Jewish people.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf54',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf54',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf55">
+  <div class="q-top"><div class="q-num">55</div><div class="q-text">Germany surrendered to the Allies in May 1945, ending the Second World War in Europe.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf55',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf55',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf56">
+  <div class="q-top"><div class="q-num">56</div><div class="q-text">The SS was originally formed as Hitler's personal bodyguard before growing into a much larger organisation.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf56',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf56',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf57">
+  <div class="q-top"><div class="q-num">57</div><div class="q-text">The Swing Youth rejected Nazi culture mainly by attending Nazi rallies and youth groups secretly.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf57',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf57',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf58">
+  <div class="q-top"><div class="q-num">58</div><div class="q-text">The Einsatzgruppen were mobile killing squads that followed the German army into the Soviet Union and killed Jews and others by mass shooting.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf58',true)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf58',false)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf59">
+  <div class="q-top"><div class="q-num">59</div><div class="q-text">Most opposition groups in Nazi Germany worked closely together and had a shared plan to overthrow Hitler.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf59',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf59',true)">✗ False</button>
+  </div>
+</div>
+
+<div class="q-card" id="qtf60">
+  <div class="q-top"><div class="q-num">60</div><div class="q-text">Propaganda was the only method the Nazis used to control the German population — they did not use fear or terror.</div></div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf60',false)">✓ True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,'qtf60',true)">✗ False</button>
+  </div>
+</div>
+
+<!-- Result -->
+<div class="result-box" id="resultBox">
+  <div class="res-emoji" id="resEmoji"></div>
+  <div class="res-score" id="resScore"></div>
+  <div class="res-outof">out of 60</div>
+  <div class="res-msg" id="resMsg"></div>
+  <div class="res-sub" id="resSub"></div>
+  <div class="res-bar-track"><div class="res-bar-fill" id="resBarFill"></div></div>
+  <div class="res-tally" id="resTally"></div>
+  <div class="res-breakdown">
+    <div class="res-breakdown-chip">Multiple Choice<strong id="resMC">—</strong></div>
+    <div class="res-breakdown-chip">True / False<strong id="resTF">—</strong></div>
+  </div>
+</div>
+
+</div><!-- end wrap -->
+
+<!-- Floating score -->
+<div class="score-float" id="scoreFloat">Score: <span id="scoreNum">0</span> / 60</div>
+
+<script>
+const TOTAL = 60;
+let answered = 0;
+let score = 0;
+let mcScore = 0;
+let tfScore = 0;
+
+function disableCard(id) {
+  document.getElementById(id).querySelectorAll('button').forEach(b => b.disabled = true);
+}
+
+function updateProgress() {
+  const pct = (answered / TOTAL) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = answered + ' / ' + TOTAL + ' answered';
+  document.getElementById('scoreNum').textContent = score;
+}
+
+function answer(btn, cardId, isCorrect) {
+  disableCard(cardId);
+  const btns = document.getElementById(cardId).querySelectorAll('.opt-btn');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++; mcScore++;
+    document.getElementById(cardId).classList.add('answered-correct');
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => { if (b.getAttribute('onclick').includes('true')) b.classList.add('missed'); });
+    document.getElementById(cardId).classList.add('answered-wrong');
+  }
+  answered++;
+  updateProgress();
+  if (answered === TOTAL) showResult();
+}
+
+function tfAnswer(btn, cardId, isCorrect) {
+  disableCard(cardId);
+  const btns = document.getElementById(cardId).querySelectorAll('.tf-btn');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++; tfScore++;
+    document.getElementById(cardId).classList.add('answered-correct');
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => { if (b.getAttribute('onclick').includes(',true)')) b.classList.add('missed'); });
+    document.getElementById(cardId).classList.add('answered-wrong');
+  }
+  answered++;
+  updateProgress();
+  if (answered === TOTAL) showResult();
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  const pct = Math.round((score / TOTAL) * 100);
+  let emoji, msg, sub;
+  if (score >= 54) { emoji = '🏆'; msg = 'Exceptional — Grade 9 territory!'; sub = 'You know this course inside out. Show this to mum!'; }
+  else if (score >= 48) { emoji = '🥇'; msg = 'Excellent work — Grade 8–9!'; sub = 'Really strong across all chapters. A few small gaps to tighten.'; }
+  else if (score >= 42) { emoji = '👍'; msg = 'Solid — Grade 6–7!'; sub = 'Good knowledge overall. Go back and review the questions you missed.'; }
+  else if (score >= 30) { emoji = '📖'; msg = 'Getting there — Grade 4–5.'; sub = 'Some chapters need more revision. Check the revision notes for the topics you missed.'; }
+  else { emoji = '💪'; msg = 'Keep going!'; sub = 'Head back to the revision pages chapter by chapter and try again.'; }
+
+  document.getElementById('resEmoji').textContent = emoji;
+  document.getElementById('resScore').textContent = score;
+  document.getElementById('resMsg').textContent = 'Show this to mum — ' + score + '/60 ' + emoji;
+  document.getElementById('resSub').textContent = msg + ' ' + sub;
+  document.getElementById('resBarFill').style.width = pct + '%';
+  document.getElementById('resTally').textContent = score + ' correct · ' + (TOTAL - score) + ' to revisit · ' + pct + '%';
+  document.getElementById('resMC').textContent = mcScore + ' / 30';
+  document.getElementById('resTF').textContent = tfScore + ' / 30';
+
+  box.classList.add('show');
+  setTimeout(() => box.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
+}
+</script>
+</body>
+</html>
