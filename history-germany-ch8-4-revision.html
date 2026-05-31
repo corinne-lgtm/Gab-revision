@@ -5,9 +5,22 @@
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch8-4-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
-</section>
 <section class="panel big-idea"><div class="statement">Nazi racial policy was based on the false belief that some races were <span class="key">superior</span> and others were <span class="bad">inferior</span>. This led to discrimination, persecution and murder.</div><div class="tile green"><div class="icon">🎯</div><h3>Objectives</h3><ul><li>Explain what Nazis meant by “Aryan” ideas.</li><li>Describe how minority and racial groups were persecuted.</li><li>Outline why the Nazis persecuted different groups.</li></ul></div></section>
+<script>
+(function(){
+  var key='germany-ch8-4-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel"><h2>1. Nazi racism and hatred</h2><div class="grid"><div class="tile red"><h3>The “master race” idea</h3><p>The Nazis claimed that Germans belonged to a superior “Aryan” race and that they were the rightful rulers of Europe.</p></div><div class="tile orange"><h3>“Inferior” groups</h3><p>Nazis described Jewish people, Roma and Sinti people, Slavs and black people as “inferior”. These ideas were racist and completely false.</p></div><div class="tile purple"><h3>“Pure” Germany</h3><p>Hitler wanted German society to be “pure” and not mix with people he labelled “weak” or “inferior”. This became a reason for persecution.</p></div></div></section>
 <section class="panel"><h2>2. The persecution of Jews</h2><div class="grid"><div class="tile red"><h3>Hatred from the beginning</h3><p>Hitler had an obsessive hatred of Jewish people. As soon as the Nazis came to power, they began to discriminate against Jews.</p></div><div class="tile orange"><h3>Forced out of normal life</h3><p>Jewish people were removed from jobs, schools, public places and businesses. Their rights were gradually taken away.</p></div><div class="tile red"><h3>Ghettos, camps and murder</h3><p>When war began in 1939, persecution became worse. Jewish people were forced into ghettos, sent to camps, worked to death or murdered by mobile killing squads and poison gas.</p></div></div></section>
 <section class="panel"><h2>3. Timeline of anti-Jewish laws and persecution</h2><div class="timeline"><div class="event"><div class="date">Mar 1933</div><div class="micro">Jobs</div><p>All Jewish lawyers and judges were sacked.</p></div><div class="event"><div class="date">Apr 1933</div><div class="micro">Schools & sport</div><p>Jews were banned from sports clubs. Jewish teachers were sacked.</p></div><div class="event"><div class="date">Sep 1933</div><div class="micro">Education</div><p>“Race studies” were introduced in German schools.</p></div><div class="event"><div class="date">Sep 1935</div><div class="micro">Nuremberg Laws</div><p>Jews lost German citizenship, could not vote, and marriage between Jews and non-Jews was banned.</p></div><div class="event"><div class="date">Nov 1938</div><div class="micro">Kristallnacht</div><p>Jewish homes, synagogues and businesses were attacked. Around 100 Jews were killed and 20,000 were sent to concentration camps.</p></div></div></section>

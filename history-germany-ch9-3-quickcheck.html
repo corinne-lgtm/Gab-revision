@@ -454,6 +454,7 @@ function showResult() {
   scoreEl.textContent = score + ' / ' + total;
   mumEl.textContent = 'Show this to mum — ' + score + '/20 ' + e;
   encEl.textContent = enc;
+  localStorage.setItem('germany-ch9-3-score', score);
   box.style.display = 'block';
   box.scrollIntoView({behavior:'smooth', block:'center'});
 }

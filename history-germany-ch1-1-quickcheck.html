@@ -148,6 +148,7 @@ function showResult(s){
     msg.textContent='Show this to mum — '+s+'/20. Go back to the revision notes and try again!';
   }
   box.scrollIntoView({behavior:'smooth',block:'center'});
+  localStorage.setItem('germany-ch1-1-score', s);
 }
 
 function buildQuiz(){

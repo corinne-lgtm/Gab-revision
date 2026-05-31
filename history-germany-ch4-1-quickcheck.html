@@ -486,6 +486,7 @@ function showResult() {
   document.getElementById('resultShow').textContent = `Show this to mum — ${score}/20 ${emoji}`;
 
   box.scrollIntoView({behavior:'smooth', block:'center'});
+  localStorage.setItem('germany-ch4-1-score', score);
 }
 
 function retryQuiz() {

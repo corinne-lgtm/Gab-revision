@@ -75,8 +75,22 @@ textarea{min-height:90px;resize:vertical}
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch8-5-quickcheck.html">✏️ Quiz rapide</a>
-</div></section>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
+</div>
 <section class="panel big-idea"><div class="statement">The Nazis moved from <span class="key">persecution</span> and exclusion to <span class="bad">mass murder</span>. This process became known as the <span class="bad">Holocaust</span>.</div><div class="tile green"><h3>Objectives</h3><ul><li>Investigate how persecution of Jews worsened between 1933 and 1945.</li><li>Explain why Hitler persecuted Jewish people.</li><li>Describe the reasons for, and methods of, the ‘Final Solution’.</li><li>Understand that Jewish people resisted Nazi persecution in different ways.</li></ul></div></section>
+<script>
+(function(){
+  var key='germany-ch8-5-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel"><h2>1. Persecution before the war</h2><div class="grid"><div class="tile red"><div class="icon">🚫</div><h3>Long-term antisemitism</h3><p>Antisemitism means hatred or prejudice against Jewish people. It existed in Europe for centuries. Jews were often treated as outsiders and falsely blamed for problems.</p></div><div class="tile orange"><div class="icon">📰</div><h3>Nazi propaganda</h3><p>After Hitler came to power in 1933, Nazi propaganda blamed Jewish people for Germany’s problems and presented them as enemies of the German nation.</p></div><div class="tile blue"><div class="icon">⚖️</div><h3>Laws and exclusion</h3><p>Jewish people were pushed out of jobs, schools and public life. The Nuremberg Laws of 1935 removed citizenship rights and banned marriage between Jews and non-Jews.</p></div><div class="tile purple"><div class="icon">🔥</div><h3>Kristallnacht, 1938</h3><p>On Kristallnacht, Jewish shops, homes and synagogues were attacked. Around 100 Jews were killed, thousands were sent to concentration camps, and Jewish businesses were destroyed.</p></div></div></section>
 <section class="panel"><h2>2. War made persecution worse</h2><div class="compare"><div class="tile"><h3>Conquest and ghettos</h3><p>When Germany invaded Poland and other countries, millions more Jewish people came under Nazi control. Many were forced into ghettos: crowded, sealed areas of cities with terrible conditions, hunger and disease.</p></div><div class="tile"><h3>Einsatzgruppen</h3><p>Special killing squads called Einsatzgruppen followed the German army into eastern Europe. They murdered Jewish people and other groups in mass shootings.</p></div></div><div class="must"><b>Key idea:</b> the war gave the Nazis control over many more Jewish people and made violence easier to hide from the wider German public.</div></section>
 <section class="panel"><h2>3. The ‘Final Solution’</h2><div class="grid"><div class="tile red"><div class="icon">🚂</div><h3>Wannsee Conference, 1942</h3><p>Nazi leaders met at Wannsee in January 1942. They discussed how to organise the mass murder of Europe’s Jewish population. This plan became known as the ‘Final Solution’.</p></div><div class="tile orange"><div class="icon">⛓️</div><h3>Deportation</h3><p>Jewish people were transported by train from ghettos and occupied areas to camps. Many were tricked or forced onto trains in horrific conditions.</p></div><div class="tile blue"><div class="icon">🏚️</div><h3>Concentration camps</h3><p>Some camps imprisoned people and forced them to work in brutal conditions. Prisoners included Jews, Roma and Sinti people, political opponents, disabled people and others persecuted by the Nazis.</p></div><div class="tile red"><div class="icon">☠️</div><h3>Extermination camps</h3><p>Extermination camps such as Auschwitz-Birkenau, Treblinka, Belzec, Chelmno, Sobibor and Majdanek were designed for mass murder, mainly using gas chambers.</p></div></div></section>

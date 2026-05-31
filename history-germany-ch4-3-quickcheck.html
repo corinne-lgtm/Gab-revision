@@ -356,6 +356,7 @@ function showResult(score){
   document.getElementById("resultSub") && (document.getElementById("resultSub").textContent = enc);
   box.classList.add("show");
   box.scrollIntoView({behavior:"smooth",block:"center"});
+  localStorage.setItem('germany-ch4-3-score', score);
 }
 
 buildQuiz();

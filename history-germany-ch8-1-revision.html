@@ -5,9 +5,22 @@
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch8-1-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
-</section>
 <section class="panel big-idea"><div class="statement">The Nazis wanted young people to become <span class="key">loyal Nazis</span>. Boys were trained to be future soldiers; girls were trained to be future wives and mothers.</div><div class="exam"><h3>Exam focus</h3><p><b>Remember:</b> Nazi policies affected young people both inside school and outside school. A strong answer should mention education, Hitler Youth, League of German Girls, propaganda and resistance.</p></div></section>
+<script>
+(function(){
+  var key='germany-ch8-1-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel"><h2>1. Nazi control of schools</h2><div class="grid"><div class="tile red"><div class="icon">🏫</div><h3>Schools became political</h3><ul><li>Hitler used schools to teach loyalty to him and the Nazi Party.</li><li>Students were encouraged to admire Hitler and prepare to serve Germany.</li><li>Teachers had to join the German Teachers’ League and teach Nazi ideas.</li></ul></div><div class="tile orange"><div class="icon">📚</div><h3>Subjects changed</h3><ul><li>History focused on German military victories and how badly Germany was treated after the First World War.</li><li>Geography focused on the lands Germany had lost and areas it might conquer.</li><li>Science and Maths were linked to war, weapons and Nazi ideas.</li></ul></div><div class="tile purple"><div class="icon">🧬</div><h3>Race Studies and eugenics</h3><ul><li>Race Studies taught racist Nazi ideas about “superior” and “inferior” people.</li><li>Students were taught antisemitic ideas about Jewish people and other groups.</li><li>Eugenics meant the idea that the Nazis could “improve” the population by controlling who could have children. This was racist and unscientific.</li></ul></div></div></section>
 <section class="panel"><h2>2. Universities and older students</h2><div class="compare"><div class="tile blue"><h3>Universities lost freedom</h3><ul><li>Lecturers were forced to accept Nazi ideas.</li><li>Some lecturers were sacked for racial or political reasons.</li><li>Courses were changed to fit Nazi beliefs; for example, Einstein’s theory was removed from Physics courses because Einstein was Jewish.</li></ul></div><div class="tile green"><h3>Education standards fell</h3><ul><li>Many clever academics left Germany, including Albert Einstein.</li><li>By 1939, about 3,000 university teachers had been dismissed.</li><li>University became less about independent thinking and more about obedience to Nazism.</li></ul></div></div></section>
 <section class="panel"><h2>3. Controlling young people outside school</h2><div class="grid"><div class="tile red"><div class="icon">🚩</div><h3>Hitler Youth</h3><ul><li>For boys, youth groups prepared them for future roles as soldiers.</li><li>Activities included marching, camping, sports, military drill, map-reading, shooting practice and learning to obey orders.</li><li>Membership became compulsory in 1939.</li></ul></div><div class="tile orange"><div class="icon">👧</div><h3>League of German Girls</h3><ul><li>Girls were trained for the Nazi ideal of becoming wives and mothers.</li><li>They learned domestic skills such as cooking, sewing and caring for babies.</li><li>They also did sport and camping to make them physically healthy.</li></ul></div><div class="tile blue"><div class="icon">📈</div><h3>Membership grew quickly</h3><ul><li>In 1933, Hitler Youth membership was about 2.3 million.</li><li>By 1936, it was over 5.4 million.</li><li>By 1939, it reached about 7.3 million as membership became compulsory.</li></ul></div></div></section>

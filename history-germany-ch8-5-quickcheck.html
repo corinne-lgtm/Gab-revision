@@ -442,6 +442,7 @@ function showResult(){
   document.getElementById('result-mum').textContent=mum;
   document.getElementById('result-msg').textContent=msg;
   box.scrollIntoView({behavior:'smooth',block:'center'});
+  localStorage.setItem('germany-ch8-5-score', score);
 }
 
 document.querySelectorAll('.opt').forEach(opt=>{

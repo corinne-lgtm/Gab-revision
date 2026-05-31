@@ -89,8 +89,8 @@ textarea{min-height:90px;resize:vertical}
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch4-3-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
-</section>
 
 <section class="panel big-idea">
   <div class="statement">The Nazi vote was not from one single group. The Nazis became popular because they <span class="key">promised different things to different people</span>.</div>
@@ -104,7 +104,19 @@ textarea{min-height:90px;resize:vertical}
     </ul>
   </div>
 </section>
-
+<script>
+(function(){
+  var key='germany-ch4-3-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel">
   <h2>Who supported the Nazis?</h2>
   <div class="grid">

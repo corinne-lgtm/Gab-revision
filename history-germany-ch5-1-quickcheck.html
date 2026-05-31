@@ -349,6 +349,7 @@ function showResult(){
   const box = document.getElementById('resultBox');
   box.classList.add('show');
   box.scrollIntoView({behavior:'smooth',block:'start'});
+  localStorage.setItem('germany-ch5-1-score', score);
 }
 
 buildQuiz();

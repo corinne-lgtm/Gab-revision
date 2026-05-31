@@ -480,6 +480,7 @@ function updateProgress() {
 function showResult() {
   const box = document.getElementById('resultBox');
   box.classList.add('show');
+  localStorage.setItem('germany-ch8-2-score', score);
 
   let emoji, msg, sub;
   if (score >= 18) {

@@ -396,6 +396,7 @@ function answerTF(btn, cardId, chosen, correct) {
 
 function showResult() {
   const box = document.getElementById('result');
+  localStorage.setItem('germany-ch8-1-score', score);
   box.style.display = 'block';
   box.scrollIntoView({behavior:'smooth', block:'center'});
 

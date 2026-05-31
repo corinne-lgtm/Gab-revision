@@ -327,7 +327,7 @@ function handleAnswer(qi, chosen, btn, optsEl, card, q){
 
   answered++;
   updateProgress();
-  if(answered === total) setTimeout(showResult, 500);
+  if(answered === total) setTimeout(showResult, 500); localStorage.setItem('germany-ch4-2-score', score);
 }
 
 function updateProgress(){

@@ -382,6 +382,7 @@ function showResult(){
   const score = calcScore();
   const box = document.getElementById('result-box');
   box.classList.add('show');
+  localStorage.setItem('germany-ch8-3-score', score);
 
   document.getElementById('res-score').textContent = score;
 

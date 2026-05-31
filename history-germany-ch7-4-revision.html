@@ -73,9 +73,23 @@ textarea{min-height:90px;resize:vertical}
   <a href="index.html">🏠 Main hub</a>
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
-  <a href="history-germany-ch5-1-quickcheck.html">✏️ Quiz rapide</a>
+  <a href="history-germany-ch7-4-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
 </section>
+<script>
+(function(){
+  var key='germany-ch7-4-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel big-idea"><div class="statement">At first the war made Germany look <span class="good">powerful</span>, but from 1941–45 life became increasingly <span class="bad">hard, dangerous and controlled</span>.</div><div class="tile green"><div class="icon">🎯</div><h3>Objectives</h3><ul><li>Describe how life changed in Germany during the Second World War.</li><li>Explain the impact of bombing, rationing, labour shortages and refugees.</li><li>Assess whether support for the Nazis weakened during the war.</li></ul></div></section>
 <section class="panel"><h2>The war turns against Germany</h2><div class="grid"><div class="tile blue"><div class="icon">⚔️</div><h3>Early victories</h3><p>In the first years of the war, Germany defeated many European countries quickly. Some Germans felt proud and believed Hitler was making Germany strong.</p></div><div class="tile red"><div class="icon">❄️</div><h3>Attack on the USSR</h3><p>In 1941 Germany invaded the USSR. The campaign became a disaster: German soldiers faced fierce resistance, harsh weather and huge losses. After Stalingrad, the war clearly began to turn against Germany.</p></div><div class="tile orange"><div class="icon">📉</div><h3>Morale changed</h3><p>When victory seemed less likely, confidence in the Nazis declined. People became more worried about food, bombing, deaths and survival.</p></div></div></section>
 <section class="panel"><h2>Hardship on the home front</h2><div class="grid"><div class="tile orange"><div class="icon">🍞</div><h3>Rationing and shortages</h3><ul><li>Food and everyday goods were rationed.</li><li>By 1939, clothing was rationed.</li><li>People had to use substitutes, such as poor-quality soap or unusual alternatives.</li><li>Hot water was restricted to save fuel.</li></ul></div><div class="tile red"><div class="icon">🏭</div><h3>Total War and labour shortages</h3><ul><li>In 1942 Albert Speer became Armaments Minister.</li><li>The economy focused on weapons and war production.</li><li>Many men were soldiers, so women, older people and millions of foreign workers were used in factories.</li><li>Non-essential activities such as dance halls and some shops were closed.</li></ul></div><div class="tile purple"><div class="icon">💣</div><h3>Bombing and refugees</h3><ul><li>From 1942, Britain and America heavily bombed German cities.</li><li>Bombing caused deaths, injuries, fires, flooding, gas explosions and homelessness.</li><li>People hid in shelters and many became refugees.</li><li>Fear and destruction made life far worse for ordinary Germans.</li></ul></div></div></section>

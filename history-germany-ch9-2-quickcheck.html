@@ -428,6 +428,7 @@ document.querySelectorAll('.tf-btn').forEach(btn=>{
 function showResult(){
   const box = document.getElementById('result-box');
   box.style.display = 'block';
+  localStorage.setItem('germany-ch9-2-score', score);
   document.getElementById('result-score').textContent = score;
   let emoji, enc;
   if(score>=18){emoji='🏆';enc='Outstanding! You have really nailed this topic. Keep it up!';}

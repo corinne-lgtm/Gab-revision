@@ -503,7 +503,7 @@ function answer(qNum, chosen) {
   updateProgress();
 
   if (Object.keys(answered).length === 20) {
-    setTimeout(showResult, 500);
+    setTimeout(showResult, 500); localStorage.setItem('germany-ch7-2-score', score);
   }
 }
 

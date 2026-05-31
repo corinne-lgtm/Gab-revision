@@ -82,12 +82,26 @@ textarea{min-height:90px;resize:vertical}
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch9-1-quickcheck.html">✏️ Quiz rapide</a>
-</div></section>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
+</div>
 
 <section class="panel big-idea">
   <div class="statement">By 1930s Germany had become a <span class="bad">police state</span>: the Nazis used <span class="key">fear</span>, surveillance and punishment to stop opposition.</div>
   <div class="tile green"><div class="icon">🎯</div><h3>Objectives</h3><ul><li>Explain the roles of Himmler, the SS and the Gestapo.</li><li>Analyse how terror tactics helped the Nazis keep control.</li><li>Assess what everyday life was like in a police state.</li></ul></div>
 </section>
+<script>
+(function(){
+  var key='germany-ch9-1-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel"><h2>1. What was the Nazi police state?</h2><div class="grid">
 <div class="tile red"><div class="icon">🚨</div><h3>No real freedom</h3><p>Nazi Germany looked peaceful from the outside, but people were not free to criticise Hitler or the Nazi Party. Opponents could lose jobs, be arrested, sent to camps, or worse.</p></div>
 <div class="tile orange"><div class="icon">👂</div><h3>Fear made people obey</h3><p>Many Germans did not know who they could trust. Neighbours, workers, friends or even children could report comments to the authorities.</p></div>

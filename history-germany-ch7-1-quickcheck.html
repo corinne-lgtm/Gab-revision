@@ -442,6 +442,7 @@ function showResult(){
   document.getElementById("resSub").textContent=sub;
   document.getElementById("resMum").textContent=emoji+" Show this to mum — "+score+"/20";
   box.scrollIntoView({behavior:"smooth",block:"center"});
+  localStorage.setItem('germany-ch7-1-score', score);
 }
 
 render();

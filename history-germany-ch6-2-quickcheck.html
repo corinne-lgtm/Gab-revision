@@ -546,6 +546,7 @@ function showResults() {
   document.getElementById('res-mum').textContent = 'Show this to mum — ' + total + '/20 ' + emoji;
 
   const box = document.getElementById('results');
+  localStorage.setItem('germany-ch6-2-score', score);
   box.classList.add('show');
   box.scrollIntoView({behavior:'smooth', block:'center'});
 }

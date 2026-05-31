@@ -87,8 +87,8 @@ textarea{min-height:90px;resize:vertical}
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch6-2-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
-</section>
 
 <section class="panel big-idea">
   <div class="statement">The Night of the Long Knives was when Hitler <span class="bad">destroyed threats</span> inside the Nazi movement and won the support of the <span class="key">army</span>.</div>
@@ -102,7 +102,19 @@ textarea{min-height:90px;resize:vertical}
     </ul>
   </div>
 </section>
-
+<script>
+(function(){
+  var key='germany-ch6-2-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel">
 <h2>1. Why was the SA a problem for Hitler?</h2>
 <div class="grid">

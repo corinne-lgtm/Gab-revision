@@ -421,6 +421,7 @@ function checkDone() {
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('resultTally').textContent = score + ' correct · ' + (TOTAL - score) + ' to revisit';
 
+  localStorage.setItem('germany-ch9-4-score', score);
   box.classList.add('show');
   box.scrollIntoView({behavior:'smooth', block:'nearest'});
 }

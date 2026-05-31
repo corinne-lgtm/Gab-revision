@@ -421,7 +421,7 @@ function answer(btn) {
   updateProgress();
 
   if (Object.keys(answered).length === TOTAL) {
-    setTimeout(showResult, 500);
+    setTimeout(showResult, 500); localStorage.setItem('germany-ch7-3-score', score);
   }
 }
 

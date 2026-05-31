@@ -87,8 +87,8 @@ textarea{min-height:90px;resize:vertical}
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch7-1-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
-</section>
 
 <section class="panel big-idea">
   <div class="statement">Hitler promised <span class="key">“work and bread”</span>. Nazi policies reduced official unemployment, but some of the improvement was created by <span class="bad">hiding unemployment</span> and preparing Germany for war.</div>
@@ -102,7 +102,19 @@ textarea{min-height:90px;resize:vertical}
     </ul>
   </div>
 </section>
-
+<script>
+(function(){
+  var key='germany-ch7-1-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel">
   <h2>Why was unemployment such a big issue?</h2>
   <div class="grid">

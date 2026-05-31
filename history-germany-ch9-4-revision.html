@@ -10,7 +10,8 @@
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch9-4-quickcheck.html">✏️ Quiz rapide</a>
-</div></section>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
+</div>
 <section class="panel">
   <h2>Big idea</h2>
   <div class="grid">
@@ -19,7 +20,19 @@
     <div class="tile green"><div class="icon">🧩</div><h3>Resistance was not united</h3><p>Different groups opposed Hitler for different reasons: religious beliefs, moral objections, youth rebellion, political beliefs, or anger at the war.</p></div>
   </div>
 </section>
-
+<script>
+(function(){
+  var key='germany-ch9-4-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel">
   <h2>Why did many Germans not oppose Hitler?</h2>
   <div class="grid">

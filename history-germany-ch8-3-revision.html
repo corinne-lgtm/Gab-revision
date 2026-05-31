@@ -5,9 +5,22 @@
   <a href="history-index.html">📚 History index</a>
   <a href="history-germany.html">📚 Germany index</a>
   <a href="history-germany-ch8-3-quickcheck.html">✏️ Quiz rapide</a>
+  <button id="read-btn" onclick="markRead()" style="background:#f4cf55;color:#1d2935;border:none;font-weight:900;padding:10px 16px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
 </div>
-</section>
 <section class="panel big-idea"><div class="statement">The Nazis wanted to control religion because Hitler wanted <span class="key">Nazi loyalty</span> to be stronger than loyalty to churches or religious beliefs.</div><div class="tile green"><div class="icon">🎯</div><h3>Objectives</h3><ul><li>Describe how the Nazis controlled churches and religion.</li><li>Explain why some Christians supported or opposed the Nazis.</li><li>Assess the impact of Nazi policies on Christians and Jews.</li></ul></div></section>
+<script>
+(function(){
+  var key='germany-ch8-3-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#dff0e2';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#dff0e2';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 <section class="panel"><h2>1. Germany’s main religion</h2><div class="grid"><div class="tile blue"><h3>Christian country</h3><p>Christianity was the biggest religion in Germany. Around one third of Germans were Catholic and around two thirds were Protestant.</p></div><div class="tile orange"><h3>Why Hitler had to be careful</h3><p>Religion was important to many people, so Hitler could not simply ban Christianity immediately. He first tried to control it.</p></div><div class="tile red"><h3>Nazism vs Christianity</h3><p>Nazi ideas praised strength, violence, racial superiority and Hitler as a near god-like leader. Christianity taught love, forgiveness, equality before God and loyalty to Jesus Christ.</p></div></div></section>
 <section class="panel"><h2>2. Why did some Christians support the Nazis?</h2><div class="grid"><div class="tile green"><h3>Family values</h3><p>The Nazis spoke about marriage, family and moral values, which appealed to some Christians.</p></div><div class="tile purple"><h3>Fear of communism</h3><p>Many Christians feared communism because it was anti-religious. Hitler promised to destroy communism.</p></div><div class="tile blue"><h3>Promise to respect churches</h3><p>Hitler promised to respect the Catholic Church and signed an agreement with the Pope in 1933.</p></div></div></section>
 <section class="panel"><h2>3. The Nazis and the Catholic Church</h2><div class="grid"><div class="tile orange"><h3>Concordat, 1933</h3><p>Hitler signed a Concordat with the Pope, promising not to interfere with the Catholic Church if the Church stayed out of politics.</p></div><div class="tile red"><h3>Broken promises</h3><p>Hitler broke the agreement. Nazis harassed Catholics, arrested priests, and closed Catholic youth clubs and schools.</p></div><div class="tile purple"><h3>Protest from Galen</h3><p>In 1941, Catholic Archbishop Galen criticised Nazi terror tactics, euthanasia and concentration camps. He was put under house arrest until the end of the war.</p></div></div></section>
