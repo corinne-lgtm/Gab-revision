@@ -49,10 +49,25 @@ ul{padding-left:18px;margin:8px 0} li{margin:5px 0}
   <h1>B6.1 Vaccination</h1>
   <p>How your immune system works and how vaccination protects you against disease.</p>
   <div class="nav">
-    <a href="biology-b6-1-revision.html">📖 Revision</a>
-    <a href="biology-b6-1-questions.html">✏️ Questions</a>
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b6-1-quickcheck.html">⚡ Quick check</a>
+    <button id="read-btn" onclick="markRead()" style="background:#c8e040;color:#1a2e1a;border:none;font-weight:900;padding:9px 14px;border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit">☐ Mark as read</button>
   </div>
 </section>
+<script>
+(function(){
+  var key='biology-b6-1-read';
+  var btn=document.getElementById('read-btn');
+  if(localStorage.getItem(key)==='1'){btn.textContent='✅ Read';btn.style.background='#d4edda';btn.style.color='#1a4d22';}
+  window.markRead=function(){
+    localStorage.setItem(key,'1');
+    btn.textContent='✅ Read';
+    btn.style.background='#d4edda';
+    btn.style.color='#1a4d22';
+  };
+})();
+</script>
 
 <section class="panel big-idea">
   <div class="statement">Vaccination trains your <span style="color:#3a7d44">immune system</span> without making you ill — so when the real pathogen arrives, your body <span style="color:#2e6b8a">responds immediately</span>.</div>
