@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B2.3 Stem cells</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.banner{background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:14px 18px;margin-bottom:20px;color:var(--orange);font-weight:900;font-size:15px;display:none}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+h2{font-size:clamp(18px,2.5vw,26px);margin:0 0 18px;letter-spacing:-.5px}
+.section-label{display:inline-block;background:var(--dark);color:var(--yellow);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;padding:5px 12px;border-radius:999px;margin-bottom:16px}
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.35}
+.choices{display:grid;gap:8px}
+.choice-btn{background:white;border:2px solid var(--line);border-radius:12px;padding:11px 14px;font-size:14px;font-weight:600;text-align:left;cursor:pointer;transition:all .15s;font-family:inherit;color:var(--ink);line-height:1.3}
+.choice-btn:hover:not(:disabled){border-color:var(--green);background:#f0f7ee}
+.choice-btn.correct{background:var(--green2);border-color:var(--green);color:var(--ink)}
+.choice-btn.wrong{background:var(--red2);border-color:var(--red);color:var(--ink)}
+.choice-btn:disabled{cursor:default}
+.tf-row{display:flex;gap:10px;margin-top:4px}
+.tf-btn{flex:1;background:white;border:2px solid var(--line);border-radius:12px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;color:var(--ink)}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:#f0f7ee}
+.tf-btn.correct{background:var(--green2);border-color:var(--green)}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red)}
+.tf-btn:disabled{cursor:default}
+.feedback{font-size:13px;font-weight:700;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22}
+.feedback.bad{background:var(--red2);color:#7a1a1a}
+.score-panel{background:var(--dark);color:white;border-radius:28px;padding:28px;margin-top:24px;text-align:center;display:none}
+.score-panel h2{color:var(--yellow);margin-bottom:8px;font-size:clamp(20px,3vw,32px)}
+.score-big{font-size:clamp(48px,8vw,80px);font-weight:900;letter-spacing:-2px;line-height:1;margin:10px 0}
+.score-msg{font-size:18px;color:rgba(255,255,255,.85);margin:10px 0 20px}
+.try-btn{background:var(--yellow);color:var(--ink);border:none;font-weight:900;padding:13px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit;margin-top:4px}
+.try-btn:hover{opacity:.9}
+.progress-bar{background:rgba(255,255,255,.15);border-radius:999px;height:8px;margin:14px 0 4px;overflow:hidden}
+.progress-fill{background:var(--yellow);height:100%;border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:0}
+@media(max-width:750px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>⚡ Quick Check — B2.3 Stem cells</h1>
+  <p>20 questions · 10 multiple choice · 10 true/false · Instant feedback</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b2-3-revision.html">📖 Revision notes</a>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+  <div class="progress-label" id="prog-label">Answer all 20 questions to see your score</div>
+</section>
+
+<div class="banner" id="prev-banner"></div>
+
+<div id="quiz-area"></div>
+
+<div class="score-panel" id="score-panel">
+  <h2>Show this to mum 🏆</h2>
+  <div class="score-big" id="score-big"></div>
+  <div class="score-msg" id="score-msg"></div>
+  <button class="try-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+var SCORE_KEY = 'biology-b2-3-score';
+var DATE_KEY  = 'biology-b2-3-date';
+
+var questions = [
+  // ── MCQ ──────────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'What is the correct definition of a stem cell?',
+    choices:['A cell that produces only red blood cells','An unspecialised cell that can divide and differentiate into many cell types','A cell found only in plant roots','A cell that has already differentiated into a specific type'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which process do stem cells use to divide and produce more cells?',
+    choices:['Meiosis','Osmosis','Mitosis','Diffusion'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Embryonic stem cells form when an egg and sperm fuse to produce a zygote. What does this zygote then divide to form?',
+    choices:['A solid ball of cells called a tumour','A hollow ball of cells called an embryo','A ring of cells called a blastocyst ring','A flat sheet of cells called a gastrula'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Where are adult stem cells mainly found in the human body?',
+    choices:['The liver','The brain','Bone marrow','The small intestine'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Which term describes the ability of embryonic stem cells to form almost any cell type in the body?',
+    choices:['Multipotent','Totipotent','Unipotent','Pluripotent'],
+    ans:3
+  },
+  {
+    type:'mcq',
+    q:'In plants, where are the stem cells (meristem cells) found?',
+    choices:['In the leaves and flowers','At the tips of shoots and roots','Inside the seeds only','In the bark of the stem'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'What condition were scientists trying to treat when they transplanted embryonic stem cells into patients\' eyes in 2014?',
+    choices:['Glaucoma','Cataracts','Macular degeneration','Colour blindness'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Why are plant stem cells used extensively in horticulture and agriculture?',
+    choices:['They make plants grow faster by producing extra nutrients','They allow cloning of large numbers of identical plants quickly and cheaply','They prevent plants from getting diseases naturally','They increase the genetic diversity of crop species'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Scientists hope to use stem cells to help people with type 1 diabetes. What would the stem-cell-derived cells need to do?',
+    choices:['Produce glucagon to raise blood sugar','Detect bacteria and produce antibodies','Be sensitive to blood sugar and produce insulin','Replace red blood cells destroyed by the immune system'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Adult stem cells are described as multipotent rather than pluripotent. What does this mean?',
+    choices:['They can form any cell in the body','They can only form a limited range of cell types within one tissue','They cannot divide at all once the organism is fully grown','They are identical to embryonic stem cells'],
+    ans:1
+  },
+
+  // ── TRUE / FALSE ─────────────────────────────────────────────────────────
+  {
+    type:'tf',
+    q:'Stem cells are already specialised for a particular function when they are first produced.',
+    ans:false,
+    explain:'Stem cells are unspecialised (undifferentiated); they only become specialised after they differentiate.'
+  },
+  {
+    type:'tf',
+    q:'Embryonic stem cells are considered more controversial to use than adult stem cells.',
+    ans:true,
+    explain:'Correct — embryonic stem cells require the use of an embryo, which raises ethical concerns not present with adult stem cells.'
+  },
+  {
+    type:'tf',
+    q:'Adult stem cells can divide to replace cells that are injured or diseased.',
+    ans:true,
+    explain:'Correct — adult stem cells stay in tissues and divide when cells need replacing due to injury or disease.'
+  },
+  {
+    type:'tf',
+    q:'Scientists have successfully used nerve cells grown from embryonic stem cells to restore movement in paralysed humans.',
+    ans:false,
+    explain:'This was demonstrated in paralysed rats; human trials began in 2010 but the original success was in rats.'
+  },
+  {
+    type:'tf',
+    q:'Every banana sold in supermarkets is a cloned plant originally produced using plant stem cells.',
+    ans:true,
+    explain:'Correct — bananas are seedless and reproduced by cloning, making every banana a genetically identical clone.'
+  },
+  {
+    type:'tf',
+    q:'Meristem cells in plants divide almost continuously.',
+    ans:true,
+    explain:'Correct — plant meristem cells divide almost continuously and can differentiate into all types of plant cells.'
+  },
+  {
+    type:'tf',
+    q:'Stem cells can only be found in embryos and have no role in adult organisms.',
+    ans:false,
+    explain:'Adults retain stem cells — particularly in bone marrow, but also in small numbers in blood, brain, muscle, and liver.'
+  },
+  {
+    type:'tf',
+    q:'Cloning plants from stem cells can help save rare species from extinction by producing large populations quickly.',
+    ans:true,
+    explain:'Correct — plant cloning from stem cells allows rapid production of large identical populations for conservation.'
+  },
+  {
+    type:'tf',
+    q:'Using cloned plants in research is useful because genetic variation between individuals could confuse experimental results.',
+    ans:true,
+    explain:'Correct — genetically identical clones remove genetic variation, so scientists can change one variable and observe effects clearly.'
+  },
+  {
+    type:'tf',
+    q:'Stem cells can differentiate into specialised cells but cannot divide to produce more stem cells.',
+    ans:false,
+    explain:'Stem cells are self-renewing — they can divide to produce more stem cells as well as differentiate into specialised cells.'
+  }
+];
+
+var answered = 0;
+var score = 0;
+
+function buildQuiz(){
+  answered = 0; score = 0;
+  updateProgress();
+  var area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+
+  var mcqWrap = document.createElement('div');
+  mcqWrap.className = 'panel';
+  mcqWrap.innerHTML = '<span class="section-label">Part 1 — Multiple Choice</span><h2>10 Questions · Choose one answer</h2>';
+
+  var tfWrap = document.createElement('div');
+  tfWrap.className = 'panel';
+  tfWrap.innerHTML = '<span class="section-label">Part 2 — True or False</span><h2>10 Questions · True or False?</h2>';
+
+  questions.forEach(function(q, i){
+    var card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-'+i;
+
+    var num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = 'Question '+(i+1)+' of 20';
+
+    var qtext = document.createElement('div');
+    qtext.className = 'q-text';
+    qtext.textContent = q.q;
+
+    var fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = 'fb-'+i;
+
+    card.appendChild(num);
+    card.appendChild(qtext);
+
+    if(q.type === 'mcq'){
+      var grid = document.createElement('div');
+      grid.className = 'choices';
+      q.choices.forEach(function(c, ci){
+        var btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = c;
+        btn.dataset.qi = i;
+        btn.dataset.ci = ci;
+        btn.onclick = handleMCQ;
+        grid.appendChild(btn);
+      });
+      card.appendChild(grid);
+      card.appendChild(fb);
+      mcqWrap.appendChild(card);
+    } else {
+      var row = document.createElement('div');
+      row.className = 'tf-row';
+      ['True','False'].forEach(function(label){
+        var btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = label;
+        btn.dataset.qi = i;
+        btn.dataset.val = label;
+        btn.onclick = handleTF;
+        row.appendChild(btn);
+      });
+      card.appendChild(row);
+      card.appendChild(fb);
+      tfWrap.appendChild(card);
+    }
+  });
+
+  area.appendChild(mcqWrap);
+  area.appendChild(tfWrap);
+}
+
+function handleMCQ(e){
+  var qi = parseInt(e.target.dataset.qi);
+  var ci = parseInt(e.target.dataset.ci);
+  var q = questions[qi];
+  var card = document.getElementById('card-'+qi);
+  var btns = card.querySelectorAll('.choice-btn');
+  btns.forEach(function(b){ b.disabled = true; });
+  var fb = document.getElementById('fb-'+qi);
+
+  if(ci === q.ans){
+    e.target.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    e.target.classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Incorrect. The correct answer is: ' + q.choices[q.ans];
+  }
+  answered++;
+  updateProgress();
+  if(answered === 20) showScore();
+}
+
+function handleTF(e){
+  var qi = parseInt(e.target.dataset.qi);
+  var val = e.target.dataset.val === 'True';
+  var q = questions[qi];
+  var card = document.getElementById('card-'+qi);
+  var btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(function(b){ b.disabled = true; });
+  var fb = document.getElementById('fb-'+qi);
+
+  if(val === q.ans){
+    e.target.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct! ' + (q.explain || '');
+    score++;
+  } else {
+    e.target.classList.add('wrong');
+    btns[q.ans ? 0 : 1].classList.add('correct');
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Incorrect. ' + (q.explain || 'The answer is ' + (q.ans ? 'True' : 'False') + '.');
+  }
+  answered++;
+  updateProgress();
+  if(answered === 20) showScore();
+}
+
+function updateProgress(){
+  var pct = (answered/20)*100;
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('prog-label').textContent = answered === 20
+    ? 'All done! See your score below.'
+    : answered + ' / 20 answered';
+}
+
+function showScore(){
+  var panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  document.getElementById('score-big').textContent = score + '/20';
+
+  var msg = '';
+  if(score >= 18)      msg = '🏆 Excellent! Outstanding work — you know this topic inside out!';
+  else if(score >= 14) msg = '👍 Good effort! A bit more revision and you\'ll nail it.';
+  else                 msg = '📖 Keep going — head back to the revision notes and try again!';
+  document.getElementById('score-msg').textContent = msg;
+  panel.scrollIntoView({behavior:'smooth', block:'center'});
+
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // update banner live
+  showBanner(score, dateStr);
+}
+
+function showBanner(s, d){
+  var b = document.getElementById('prev-banner');
+  b.style.display = 'block';
+  b.textContent = '📊 Your last score: ' + s + '/20' + (d ? ' — ' + d : '');
+}
+
+function resetQuiz(){
+  document.getElementById('score-panel').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── On load ──────────────────────────────────────────────────────────────
+(function(){
+  var prev = localStorage.getItem(SCORE_KEY);
+  var prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    showBanner(prev, prevDate);
+  }
+  buildQuiz();
+})();
+</script>
+</body>
+</html>

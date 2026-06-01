@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B3.7 Making digestion efficient</title>
+<style>
+:root{
+  --bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;
+  --green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;
+  --blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;
+  --purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;
+  --red:#c0392b;--red2:#fde8e6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),
+             radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),
+             var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+  min-height:100vh;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#1a2e1a,#3a7d44);
+  color:white;border-radius:30px;padding:30px;
+  margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18);
+}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;letter-spacing:-1px;margin-bottom:8px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PREVIOUS SCORE BANNER */
+#prev-banner{
+  display:none;
+  background:var(--orange2);border:2px solid var(--orange);
+  border-radius:18px;padding:14px 18px;margin-bottom:18px;
+  color:var(--orange);font-weight:700;font-size:15px;
+}
+
+/* PROGRESS */
+#progress-bar-wrap{background:var(--line);border-radius:999px;height:8px;margin-bottom:20px;overflow:hidden;display:none}
+#progress-bar{height:8px;background:var(--yellow);border-radius:999px;width:0%;transition:width .4s}
+#progress-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:none}
+
+/* QUESTION CARD */
+.q-card{
+  background:rgba(255,255,255,.85);border:2px solid var(--line);
+  border-radius:28px;padding:24px;margin-bottom:20px;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+  animation:fadeUp .35s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-num{font-size:13px;color:var(--muted);margin-bottom:4px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.35}
+
+/* MCQ OPTIONS */
+.options{display:grid;gap:10px}
+.opt-btn{
+  width:100%;text-align:left;background:var(--paper);
+  border:2px solid var(--line);border-radius:14px;
+  padding:11px 16px;font-size:15px;font-family:inherit;
+  cursor:pointer;transition:background .15s,border-color .15s;
+  color:var(--ink);font-weight:500;
+}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;font-weight:700}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.opt-btn:disabled{cursor:default}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:12px}
+.tf-btn{
+  flex:1;background:var(--paper);border:2px solid var(--line);
+  border-radius:14px;padding:12px 0;font-size:15px;font-weight:700;
+  font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s;
+  color:var(--ink);
+}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+
+/* FEEDBACK */
+.feedback{
+  margin-top:12px;padding:10px 14px;border-radius:12px;
+  font-size:14px;font-weight:600;display:none;
+}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:1.5px solid #3a7d44}
+.feedback.wrong{background:var(--red2);color:#7a1a14;border:1.5px solid #c0392b}
+
+/* NEXT BUTTON */
+.next-btn{
+  display:none;margin-top:14px;
+  background:var(--yellow);color:var(--ink);font-weight:900;
+  border:none;border-radius:999px;padding:11px 26px;
+  font-size:15px;font-family:inherit;cursor:pointer;
+  transition:opacity .15s;
+}
+.next-btn:hover{opacity:.85}
+
+/* RESULT */
+#result{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.07)}
+#result-emoji{font-size:56px;margin-bottom:10px}
+#result-title{font-size:28px;font-weight:900;margin-bottom:6px}
+#result-score{font-size:48px;font-weight:900;color:var(--green);margin:10px 0}
+#result-msg{font-size:17px;color:var(--muted);margin-bottom:20px;max-width:520px;margin-left:auto;margin-right:auto}
+#result-mum{
+  background:var(--dark);color:white;border-radius:18px;
+  padding:16px 24px;font-size:18px;font-weight:900;margin-bottom:20px;display:inline-block;
+}
+.try-again-btn{
+  background:var(--yellow);color:var(--ink);font-weight:900;border:none;
+  border-radius:999px;padding:13px 30px;font-size:16px;font-family:inherit;cursor:pointer;
+}
+.try-again-btn:hover{opacity:.85}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>⚡ Quick Check — B3.7 Making digestion efficient</h1>
+  <p>20 questions on hydrochloric acid, bile, emulsification and pH control.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b3-7-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<!-- PREVIOUS SCORE BANNER -->
+<div id="prev-banner"></div>
+
+<!-- PROGRESS -->
+<div id="progress-label"></div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<!-- QUIZ CONTAINER -->
+<div id="quiz-container"></div>
+
+<!-- RESULT -->
+<div id="result">
+  <div id="result-emoji"></div>
+  <div id="result-title"></div>
+  <div id="result-score"></div>
+  <div id="result-msg"></div>
+  <div id="result-mum"></div><br>
+  <button class="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const SCORE_KEY = 'biology-b3-7-score';
+const DATE_KEY  = 'biology-b3-7-score-date';
+const TOTAL = 20;
+
+/* ── QUESTIONS ─────────────────────────────────────────── */
+const questions = [
+
+  /* MCQ 1–10 */
+  {
+    type:'mcq',
+    q:'What is the approximate pH of the stomach when hydrochloric acid is present?',
+    opts:['pH 7 (neutral)','pH 2 (acidic)','pH 9 (alkaline)','pH 5 (slightly acidic)'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which enzyme works best in the acidic conditions of the stomach?',
+    opts:['Amylase','Lipase','Pepsin','Trypsin'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Approximately how much hydrochloric acid does the stomach produce each day?',
+    opts:['0.5 litres','1 litre','2 litres','3 litres'],
+    ans:3
+  },
+  {
+    type:'mcq',
+    q:'What protects the stomach wall from being digested by its own acid and enzymes?',
+    opts:['Bile','A layer of mucus','Amylase','The liver'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Where is bile produced?',
+    opts:['The gall bladder','The pancreas','The liver','The duodenum'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Where is bile stored before being released into the small intestine?',
+    opts:['The liver','The gall bladder','The pancreas','The stomach'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'What is the correct term for bile physically breaking large fat droplets into smaller ones?',
+    opts:['Hydrolysis','Neutralisation','Emulsification','Saponification'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Why does emulsification by bile speed up the digestion of fats?',
+    opts:[
+      'It chemically breaks fat molecules apart',
+      'It increases the surface area available for lipase to act on',
+      'It raises the pH so lipase works faster',
+      'It transports fat molecules to the liver'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Through which structure is bile released into the small intestine?',
+    opts:['The pancreatic duct','The oesophagus','The bile duct','The hepatic artery'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What pH range does bile help to create in the small intestine?',
+    opts:['pH 1–2','pH 4–5','pH 7–8 (alkaline)','pH 11–12'],
+    ans:2
+  },
+
+  /* TRUE / FALSE 11–20 */
+  {
+    type:'tf',
+    q:'Hydrochloric acid in the stomach also kills most bacteria taken in with food.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Bile is classified as a digestive enzyme because it chemically breaks down fat molecules.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'Pepsin works best at an alkaline pH of around 8.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'The liver produces bile continuously.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Gall stones can block the bile duct and reduce the efficiency of fat digestion.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Bile neutralises the acid arriving from the stomach, creating alkaline conditions in the duodenum.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Lipase, amylase and trypsin all work best in the acidic conditions of the stomach.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'Stomach ulcers can occur when the protective mucus layer is damaged and acid attacks the stomach lining.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Emulsification increases the surface area of fats, allowing lipase to break them down into fatty acids and glycerol more quickly.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'If the gall bladder is removed, bile can no longer be produced because it is made inside the gall bladder.',
+    ans:false
+  }
+];
+
+/* ── STATE ─────────────────────────────────────────────── */
+let current = 0;
+let score   = 0;
+let answered = false;
+
+/* ── INIT ──────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  showPrevScore();
+  renderQuestion();
+});
+
+function showPrevScore(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = `📊 Your last score: <strong>${s}/${TOTAL}</strong>${d ? ' — '+d : ''}`;
+  }
+}
+
+/* ── RENDER ────────────────────────────────────────────── */
+function renderQuestion(){
+  const container = document.getElementById('quiz-container');
+  const result    = document.getElementById('result');
+  result.style.display = 'none';
+
+  if(current >= TOTAL){
+    showResult();
+    container.innerHTML = '';
+    return;
+  }
+
+  // Progress
+  const pLabel = document.getElementById('progress-label');
+  const pWrap  = document.getElementById('progress-bar-wrap');
+  const pBar   = document.getElementById('progress-bar');
+  pLabel.style.display = 'block';
+  pWrap.style.display  = 'block';
+  pLabel.textContent   = `Question ${current + 1} of ${TOTAL}`;
+  pBar.style.width     = `${(current / TOTAL) * 100}%`;
+
+  const q = questions[current];
+  answered = false;
+
+  if(q.type === 'mcq'){
+    container.innerHTML = buildMCQ(q, current);
+  } else {
+    container.innerHTML = buildTF(q, current);
+  }
+}
+
+function buildMCQ(q, idx){
+  const letters = ['A','B','C','D'];
+  const optsHTML = q.opts.map((o,i) =>
+    `<button class="opt-btn" onclick="checkMCQ(${i},${idx})">${letters[i]}. ${o}</button>`
+  ).join('');
+  return `
+  <div class="q-card">
+    <div class="q-type">Multiple choice · Question ${idx+1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">${optsHTML}</div>
+    <div class="feedback" id="fb-${idx}"></div>
+    <button class="next-btn" id="next-${idx}" onclick="nextQ()">Next →</button>
+  </div>`;
+}
+
+function buildTF(q, idx){
+  return `
+  <div class="q-card">
+    <div class="q-type">True / False · Question ${idx+1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="checkTF(true,${idx})">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(false,${idx})">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-${idx}"></div>
+    <button class="next-btn" id="next-${idx}" onclick="nextQ()">Next →</button>
+  </div>`;
+}
+
+/* ── CHECK MCQ ─────────────────────────────────────────── */
+function checkMCQ(chosen, idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[idx];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${idx}`);
+  if(chosen === q.ans){
+    score++;
+    btns[chosen].classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✓ Correct!';
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `✗ Incorrect. The correct answer is: ${q.opts[q.ans]}`;
+  }
+  fb.style.display = 'block';
+  document.getElementById(`next-${idx}`).style.display = 'inline-block';
+}
+
+/* ── CHECK TF ──────────────────────────────────────────── */
+function checkTF(chosen, idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[idx];
+  const btns = document.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const chosenBtn = chosen ? btns[0] : btns[1];
+  const fb = document.getElementById(`fb-${idx}`);
+  if(chosen === q.ans){
+    score++;
+    chosenBtn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✓ Correct!';
+  } else {
+    chosenBtn.classList.add('wrong');
+    const correctBtn = q.ans ? btns[0] : btns[1];
+    correctBtn.classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `✗ Incorrect. The correct answer is: ${q.ans ? 'True' : 'False'}`;
+  }
+  fb.style.display = 'block';
+  document.getElementById(`next-${idx}`).style.display = 'inline-block';
+}
+
+/* ── NEXT ──────────────────────────────────────────────── */
+function nextQ(){
+  current++;
+  renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── RESULT ────────────────────────────────────────────── */
+function showResult(){
+  // Hide progress
+  document.getElementById('progress-label').style.display = 'none';
+  document.getElementById('progress-bar-wrap').style.display = 'none';
+  document.getElementById('prev-banner').style.display = 'none';
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Populate result box
+  let emoji, title, msg;
+  if(score >= 18){
+    emoji = '🏆'; title = 'Excellent work!';
+    msg = 'You really know your digestion! That\'s a top-tier score — keep it up.';
+  } else if(score >= 14){
+    emoji = '👍'; title = 'Good effort!';
+    msg = 'Solid score — but there\'s still a bit of room to sharpen up. Go back and check any questions you got wrong.';
+  } else {
+    emoji = '📖'; title = 'Time to revise!';
+    msg = 'Don\'t worry — head back to the revision notes and give this topic another read through.';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score').textContent = `${score} / ${TOTAL}`;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-mum').textContent = `Show this to mum — ${score}/${TOTAL} ${emoji}`;
+
+  document.getElementById('result').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── RESTART ───────────────────────────────────────────── */
+function restartQuiz(){
+  current  = 0;
+  score    = 0;
+  answered = false;
+  document.getElementById('result').style.display = 'none';
+  // Don't re-show old banner (it will be stale now)
+  document.getElementById('prev-banner').style.display = 'none';
+  renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

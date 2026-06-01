@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.6 Diffusion · Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,4vw,52px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:14px 18px;margin-bottom:20px;color:var(--orange);font-weight:700;font-size:15px}
+
+/* Progress */
+.progress-bar-wrap{background:rgba(255,255,255,.4);border-radius:999px;height:10px;margin-bottom:24px;overflow:hidden}
+.progress-bar-fill{background:linear-gradient(90deg,var(--lime),var(--green));height:10px;border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:700}
+
+/* Section heading */
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;color:var(--muted);margin:28px 0 12px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;transition:border-color .2s}
+.q-number{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px;line-height:1.35}
+
+/* MCQ options */
+.options{display:grid;gap:8px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;font-size:15px;font-family:Arial,Helvetica,sans-serif;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s;font-weight:600}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1515}
+.opt-btn:disabled{cursor:default}
+
+/* True/False */
+.tf-options{display:flex;gap:10px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px;font-size:15px;font-family:Arial,Helvetica,sans-serif;color:var(--ink);cursor:pointer;font-weight:700;text-align:center;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1515}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:10px;font-size:14px;font-weight:700;display:none;padding:8px 12px;border-radius:10px}
+.feedback.correct{background:var(--green2);color:#1a4d22;display:block}
+.feedback.wrong{background:var(--red2);color:#7a1515;display:block}
+
+/* Score box */
+#score-box{display:none;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+#score-box .score-num{font-size:clamp(52px,8vw,80px);font-weight:900;line-height:1;color:var(--green);letter-spacing:-2px}
+#score-box .score-label{font-size:18px;color:var(--muted);margin-bottom:6px}
+#score-box .mum-msg{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:18px;padding:18px 24px;font-size:20px;font-weight:900;margin:16px 0}
+#score-box .mum-msg .emoji{font-size:36px;display:block;margin-bottom:6px}
+#score-box .verdict{font-size:16px;color:rgba(255,255,255,.85);margin-top:6px;font-weight:400}
+.try-again-btn{background:var(--yellow);color:var(--ink);border:none;font-weight:900;padding:14px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:Arial,Helvetica,sans-serif;margin-top:16px}
+.try-again-btn:hover{background:#b8d030}
+
+/* Submit button */
+#submit-btn{display:block;background:var(--yellow);color:var(--ink);border:none;font-weight:900;padding:14px 36px;border-radius:999px;cursor:pointer;font-size:17px;font-family:Arial,Helvetica,sans-serif;margin:28px auto 0}
+#submit-btn:hover{background:#b8d030}
+#submit-btn:disabled{opacity:.4;cursor:default}
+
+@media(max-width:750px){.wrap{padding:14px}.tf-options{flex-direction:column}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.6 Diffusion — Quick Check ⚡</h1>
+  <p>10 multiple-choice + 10 true/false questions. Click an answer for instant feedback.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-6-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-label" id="progress-label">Question 0 of 20 answered</div>
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar"></div></div>
+
+<div id="quiz-container"></div>
+
+<button id="submit-btn" onclick="submitQuiz()" disabled>Submit &amp; See Score</button>
+
+<div id="score-box">
+  <div class="score-label">Your score</div>
+  <div class="score-num" id="score-num">—</div>
+  <div style="font-size:15px;color:var(--muted);margin-bottom:4px">out of 20</div>
+  <div class="mum-msg" id="mum-msg">
+    <span class="emoji" id="mum-emoji"></span>
+    <span id="mum-text"></span>
+    <div class="verdict" id="mum-verdict"></div>
+  </div>
+  <button class="try-again-btn" onclick="tryAgain()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b1-6-score';
+const DATE_KEY  = 'biology-b1-6-score-date';
+
+// ── Questions ────────────────────────────────────────────────────────────────
+const mcq = [
+  {
+    q: "Which of the following is the correct definition of diffusion?",
+    opts: [
+      "The movement of water molecules through a partially permeable membrane",
+      "The net movement of particles from a region of higher concentration to a region of lower concentration",
+      "The active transport of glucose from the gut into the blood",
+      "The movement of particles against a concentration gradient using energy"
+    ],
+    correct: 1
+  },
+  {
+    q: "What causes the net movement of particles during diffusion?",
+    opts: [
+      "Particles are actively pumped by proteins in the membrane",
+      "Energy from ATP drives particles from high to low concentration",
+      "The random movement of particles results in more moving from high to low concentration",
+      "An electrical gradient attracts particles to one side"
+    ],
+    correct: 2
+  },
+  {
+    q: "Which factor, when increased, will speed up the rate of diffusion?",
+    opts: [
+      "Decreasing the temperature",
+      "Decreasing the concentration gradient",
+      "Decreasing the surface area",
+      "Increasing the surface area"
+    ],
+    correct: 3
+  },
+  {
+    q: "Why does a higher temperature increase the rate of diffusion?",
+    opts: [
+      "The membrane becomes thicker, allowing more particles through",
+      "Particles have more energy and move more quickly, speeding up random movement",
+      "The concentration gradient automatically steepens",
+      "Water evaporates, concentrating the particles"
+    ],
+    correct: 1
+  },
+  {
+    q: "Oxygen moves from the lungs into the blood during gas exchange. Which direction does this represent?",
+    opts: [
+      "From low concentration to high concentration",
+      "Against the concentration gradient",
+      "From high concentration to low concentration, down the gradient",
+      "From the blood into the air sacs"
+    ],
+    correct: 2
+  },
+  {
+    q: "Which substance diffuses from the liver cells into the blood plasma to be excreted by the kidneys?",
+    opts: [
+      "Glucose",
+      "Oxygen",
+      "Urea",
+      "Carbon dioxide"
+    ],
+    correct: 2
+  },
+  {
+    q: "Microvilli are found on intestinal cells. What is their function in relation to diffusion?",
+    opts: [
+      "They pump nutrients into the bloodstream using active transport",
+      "They store digested food products temporarily",
+      "They fold the cell membrane to greatly increase surface area for diffusion",
+      "They produce enzymes to speed up digestion"
+    ],
+    correct: 2
+  },
+  {
+    q: "A student increases the concentration of glucose on one side of a membrane. What happens to the rate of diffusion across the membrane?",
+    opts: [
+      "It decreases because the gradient is too large",
+      "It stays the same — only temperature affects diffusion rate",
+      "It increases because the concentration gradient is steeper",
+      "It reverses direction immediately"
+    ],
+    correct: 2
+  },
+  {
+    q: "Digested food products such as glucose and amino acids move from the gut into the bloodstream. This is an example of diffusion because:",
+    opts: [
+      "Energy (ATP) is used to transport the molecules across the gut wall",
+      "The concentration in the gut is higher than in the blood, so molecules move down the gradient",
+      "The molecules move from low concentration in the gut to high concentration in the blood",
+      "The gut wall has no membrane, so particles pass freely"
+    ],
+    correct: 1
+  },
+  {
+    q: "Which of the following is NOT a factor that affects the rate of diffusion, according to AQA B1.6?",
+    opts: [
+      "Temperature",
+      "Concentration gradient",
+      "pH of the solution",
+      "Surface area"
+    ],
+    correct: 2
+  }
+];
+
+const tf = [
+  { q: "Diffusion is the net movement of particles from a region of lower concentration to a region of higher concentration.", correct: false },
+  { q: "Diffusion occurs because of the random movement of particles (molecules or ions).", correct: true },
+  { q: "Increasing the surface area of a cell membrane has no effect on the rate of diffusion.", correct: false },
+  { q: "Carbon dioxide moves from the blood into the air in the lungs during gas exchange.", correct: true },
+  { q: "Urea is produced in the kidneys from the breakdown of amino acids.", correct: false },
+  { q: "Particles always move 'down' a concentration gradient during diffusion — from high to low concentration.", correct: true },
+  { q: "Alveoli in the lungs increase the surface area available for gas exchange by diffusion.", correct: true },
+  { q: "Raising the temperature slows down diffusion because particles have less energy.", correct: false },
+  { q: "A male moth can detect chemical molecules from a female moth up to 3 miles away because these molecules diffuse down a concentration gradient through the air.", correct: true },
+  { q: "Diffusion requires energy (ATP) to move particles across a membrane.", correct: false }
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let answered = new Array(20).fill(false);
+let scores   = new Array(20).fill(0);
+
+// ── Previous score banner ────────────────────────────────────────────────────
+(function showPrev(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = '🕐 Your last score: <strong>' + s + '/20</strong>' + (d ? ' &mdash; ' + d : '');
+  }
+})();
+
+// ── Build quiz ───────────────────────────────────────────────────────────────
+function buildQuiz(){
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  // MCQ
+  const mcqLabel = document.createElement('div');
+  mcqLabel.className = 'section-label';
+  mcqLabel.textContent = 'Part 1 — Multiple Choice (10 questions)';
+  container.appendChild(mcqLabel);
+
+  mcq.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + i;
+    card.innerHTML = `
+      <div class="q-number">Question ${i+1} of 20</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts-${i}">
+        ${q.opts.map((o,j) => `<button class="opt-btn" onclick="answerMCQ(${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+
+  // T/F
+  const tfLabel = document.createElement('div');
+  tfLabel.className = 'section-label';
+  tfLabel.textContent = 'Part 2 — True or False (10 questions)';
+  container.appendChild(tfLabel);
+
+  tf.forEach((q, i) => {
+    const idx = i + 10;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + idx;
+    card.innerHTML = `
+      <div class="q-number">Question ${idx+1} of 20</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-options" id="opts-${idx}">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">❌ False</button>
+      </div>
+      <div class="feedback" id="fb-${idx}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ── Answer handlers ───────────────────────────────────────────────────────────
+function answerMCQ(qIdx, chosen){
+  if(answered[qIdx]) return;
+  answered[qIdx] = true;
+  const correct = mcq[qIdx].correct;
+  const isRight = chosen === correct;
+  scores[qIdx] = isRight ? 1 : 0;
+
+  const optsEl = document.getElementById('opts-' + qIdx);
+  const btns = optsEl.querySelectorAll('.opt-btn');
+  btns.forEach((b, j) => {
+    b.disabled = true;
+    if(j === correct) b.classList.add('correct');
+    if(j === chosen && !isRight) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fb-' + qIdx);
+  if(isRight){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorrect. The correct answer was: ' + mcq[qIdx].opts[correct];
+  }
+  updateProgress();
+}
+
+function answerTF(tfIdx, chosen){
+  const qIdx = tfIdx + 10;
+  if(answered[qIdx]) return;
+  answered[qIdx] = true;
+  const isRight = chosen === tf[tfIdx].correct;
+  scores[qIdx] = isRight ? 1 : 0;
+
+  const optsEl = document.getElementById('opts-' + qIdx);
+  const btns = optsEl.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  // True btn = index 0, False btn = index 1
+  const trueBtn  = btns[0];
+  const falseBtn = btns[1];
+  if(tf[tfIdx].correct === true)  trueBtn.classList.add('correct');
+  else falseBtn.classList.add('correct');
+  if(!isRight){
+    if(chosen === true) trueBtn.classList.add('wrong');
+    else falseBtn.classList.add('wrong');
+  }
+
+  const fb = document.getElementById('fb-' + qIdx);
+  if(isRight){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorrect. The correct answer was: ' + (tf[tfIdx].correct ? 'True' : 'False');
+  }
+  updateProgress();
+}
+
+// ── Progress ──────────────────────────────────────────────────────────────────
+function updateProgress(){
+  const done = answered.filter(Boolean).length;
+  document.getElementById('progress-label').textContent = 'Question ' + done + ' of 20 answered';
+  document.getElementById('progress-bar').style.width = (done / 20 * 100) + '%';
+  document.getElementById('submit-btn').disabled = done < 20;
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────────
+function submitQuiz(){
+  const total = scores.reduce((a,b) => a+b, 0);
+  // Save
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, total);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Update banner
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'none'; // hide old banner; score box is now shown
+
+  // Show score box
+  document.getElementById('submit-btn').style.display = 'none';
+  const box = document.getElementById('score-box');
+  box.style.display = 'block';
+  document.getElementById('score-num').textContent = total;
+
+  let emoji, text, verdict;
+  if(total >= 18){
+    emoji   = '🏆';
+    text    = 'Show this to mum — ' + total + '/20';
+    verdict = 'Outstanding! You really know your diffusion. Top marks!';
+  } else if(total >= 14){
+    emoji   = '👍';
+    text    = 'Show this to mum — ' + total + '/20';
+    verdict = 'Good work! A few gaps to fill — review the sections you got wrong.';
+  } else {
+    emoji   = '📖';
+    text    = 'Show this to mum — ' + total + '/20';
+    verdict = 'Go back and revise! Read through the revision notes again, then try once more.';
+  }
+  document.getElementById('mum-emoji').textContent  = emoji;
+  document.getElementById('mum-text').textContent   = text;
+  document.getElementById('mum-verdict').textContent = verdict;
+
+  box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── Try again ─────────────────────────────────────────────────────────────────
+function tryAgain(){
+  answered = new Array(20).fill(false);
+  scores   = new Array(20).fill(0);
+  document.getElementById('score-box').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'block';
+  document.getElementById('submit-btn').disabled = true;
+  // Hide banner while retrying
+  document.getElementById('prev-banner').style.display = 'none';
+  buildQuiz();
+  updateProgress();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+buildQuiz();
+updateProgress();
+</script>
+</body>
+</html>

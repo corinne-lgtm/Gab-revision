@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B1.5 Specialisation in plant cells</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.prev-score{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 18px;margin-bottom:18px;color:var(--orange);font-weight:900;font-size:15px;display:none}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px}
+.q-label{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px}
+.choices{display:grid;gap:8px}
+.choice-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s;font-family:inherit}
+.choice-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.choice-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.choice-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a1a}
+.choice-btn:disabled{cursor:default}
+.tf-row{display:flex;gap:10px;margin-top:4px}
+.tf-btn{flex:1;padding:11px;border:2px solid var(--line);border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;background:white;color:var(--ink);font-family:inherit;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a1a}
+.tf-btn:disabled{cursor:default}
+.feedback{font-size:13px;font-weight:700;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #a8d4b0}
+.feedback.bad{background:var(--red2);color:#7a1a1a;border:1.5px solid #e8a0a0}
+.progress-bar-wrap{background:rgba(255,255,255,.5);border:2px solid var(--line);border-radius:999px;height:12px;margin-bottom:20px;overflow:hidden}
+.progress-bar{background:linear-gradient(90deg,var(--green),var(--lime));height:100%;border-radius:999px;transition:width .4s ease;width:0%}
+#result-box{display:none;background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:28px;padding:30px;text-align:center;margin-top:24px}
+#result-box h2{font-size:clamp(22px,3vw,36px);margin:0 0 8px;letter-spacing:-.5px}
+#result-box .score-big{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--yellow);line-height:1;margin:10px 0}
+#result-box .show-mum{font-size:18px;font-weight:900;color:var(--yellow);margin-top:8px}
+#result-box .msg{font-size:16px;color:rgba(255,255,255,.85);margin:10px 0 20px}
+.try-again-btn{background:var(--yellow);color:var(--dark);border:none;font-weight:900;padding:13px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+.try-again-btn:hover{background:#d4ed20}
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ Quick Check – B1.5</h1>
+  <p>Specialisation in plant cells — 10 multiple choice + 10 true/false. 20 questions total.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-5-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="prev-score" id="prev-score-banner"></div>
+
+<div class="panel">
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+  <div id="quiz-area"></div>
+  <div id="result-box">
+    <h2>Quiz complete!</h2>
+    <div class="score-big" id="score-display"></div>
+    <div class="show-mum" id="show-mum"></div>
+    <div class="msg" id="result-msg"></div>
+    <button class="try-again-btn" onclick="tryAgain()">🔄 Try again</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b1-5-score';
+const DATE_KEY  = 'biology-b1-5-score-date';
+
+const questions = [
+  // ── MCQ (10) ──────────────────────────────────────────────────────────────
+  {type:'mcq', q:'What is the main function of root hair cells?',
+   choices:['Carry out photosynthesis to make food','Transport sugars up and down the plant','Absorb water and mineral ions from the soil','Provide structural support to the stem'],
+   answer:2},
+  {type:'mcq', q:'Which adaptation of root hair cells gives the greatest increase in the rate of water absorption?',
+   choices:['Many mitochondria in the cytoplasm','A large permanent vacuole','The long root hair extension increasing surface area','Thin cell walls to reduce resistance'],
+   answer:2},
+  {type:'mcq', q:'Root hair cells contain many mitochondria. What process do these mitochondria provide energy for?',
+   choices:['Osmosis of water into the root','Active transport of mineral ions into the root','Photosynthesis inside the root','Diffusion of oxygen into the soil'],
+   answer:1},
+  {type:'mcq', q:'What substance builds up in xylem cell walls, making them very strong?',
+   choices:['Cellulose','Chlorophyll','Lignin','Starch'],
+   answer:2},
+  {type:'mcq', q:'After xylem cells are fully formed, what happens to them?',
+   choices:['They divide rapidly to produce new cells','They fill with chloroplasts','They die and form hollow tubes','They develop sieve plates between them'],
+   answer:2},
+  {type:'mcq', q:'In which direction does transport occur in xylem?',
+   choices:['Two-way: up and down the plant','One-way: downward from leaves to roots','One-way: upward from roots to leaves','No fixed direction — depends on temperature'],
+   answer:2},
+  {type:'mcq', q:'What feature of phloem cells allows dissolved sugars to move freely between cells?',
+   choices:['Lignin spirals','Sieve plates','Chloroplasts','A large permanent vacuole'],
+   answer:1},
+  {type:'mcq', q:'Why do phloem cells need companion cells?',
+   choices:['To provide them with water via osmosis','Because phloem cells lose most of their internal structures and need companion cells to keep them alive','To transport mineral ions into the phloem','Because phloem cells cannot perform active transport on their own'],
+   answer:1},
+  {type:'mcq', q:'Photosynthetic cells are usually found in which part of the plant?',
+   choices:['Deep within the trunk of a tree','The root tips','Continuous layers in the leaves and outer stem','The centre of the root'],
+   answer:2},
+  {type:'mcq', q:'Why does the large permanent vacuole in photosynthetic cells help support the stem?',
+   choices:['It stores starch to give the cell mass','Water enters by osmosis, making the cell rigid; many rigid cells together support the stem','It keeps chlorophyll dissolved and active','It prevents lignin from forming in the cell wall'],
+   answer:1},
+
+  // ── True / False (10) ─────────────────────────────────────────────────────
+  {type:'tf', q:'Root hair cells are always found close to xylem tissue so that water and mineral ions can be quickly moved upward through the plant.',answer:true},
+  {type:'tf', q:'Root hair cells contain chloroplasts so they can photosynthesise and produce energy for active transport.',answer:false},
+  {type:'tf', q:'Phloem transport is two-way — dissolved food can move up or down the plant to wherever it is needed.',answer:true},
+  {type:'tf', q:'Xylem cells are lignified and die to form hollow tubes, which means water can pass easily from one end to the other.',answer:true},
+  {type:'tf', q:'Cells in the trunk of a tree can photosynthesise because they contain large numbers of chloroplasts.',answer:false},
+  {type:'tf', q:'Chlorophyll is found inside chloroplasts and traps the light energy needed for photosynthesis.',answer:true},
+  {type:'tf', q:'Phloem cells become lignified in the same way as xylem cells, giving them extra strength.',answer:false},
+  {type:'tf', q:'The long extension of a root hair cell increases the surface area available for water to move into the cell by osmosis.',answer:true},
+  {type:'tf', q:'Xylem transport is described as two-way because water can travel both up and down through the hollow tubes.',answer:false},
+  {type:'tf', q:'Companion cells contain mitochondria that transfer the energy needed to move dissolved food along phloem vessels.',answer:true},
+];
+
+let answered = 0;
+let score = 0;
+let finished = false;
+
+function buildQuiz(){
+  answered = 0; score = 0; finished = false;
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+  document.getElementById('result-box').style.display = 'none';
+  updateProgress();
+
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + i;
+
+    const label = document.createElement('div');
+    label.className = 'q-label';
+    label.textContent = q.type === 'mcq'
+      ? `Question ${i+1} of 20 · Multiple choice`
+      : `Question ${i+1} of 20 · True or False`;
+    card.appendChild(label);
+
+    const qtext = document.createElement('div');
+    qtext.className = 'q-text';
+    qtext.textContent = q.q;
+    card.appendChild(qtext);
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = 'fb-' + i;
+
+    if(q.type === 'mcq'){
+      const choices = document.createElement('div');
+      choices.className = 'choices';
+      q.choices.forEach((c, ci) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = c;
+        btn.onclick = () => handleMCQ(i, ci, btn, choices, fb);
+        choices.appendChild(btn);
+      });
+      card.appendChild(choices);
+    } else {
+      const row = document.createElement('div');
+      row.className = 'tf-row';
+      ['True','False'].forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = val;
+        btn.onclick = () => handleTF(i, val==='True', btn, row, fb);
+        row.appendChild(btn);
+      });
+      card.appendChild(row);
+    }
+
+    card.appendChild(fb);
+    area.appendChild(card);
+  });
+}
+
+function handleMCQ(qi, chosen, btn, choices, fb){
+  if(finished) return;
+  const correct = questions[qi].answer;
+  const btns = choices.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+
+  if(chosen === correct){
+    btn.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns[correct].classList.add('correct');
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Incorrect. The correct answer is: ' + questions[qi].choices[correct];
+  }
+  answered++;
+  updateProgress();
+  if(answered === questions.length) showResult();
+}
+
+function handleTF(qi, chosen, btn, row, fb){
+  if(finished) return;
+  const correct = questions[qi].answer;
+  const btns = row.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+
+  if(chosen === correct){
+    btn.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns[correct ? 0 : 1].classList.add('correct');
+    fb.className = 'feedback show bad';
+    fb.textContent = '❌ Incorrect. The correct answer is: ' + (correct ? 'True' : 'False');
+  }
+  answered++;
+  updateProgress();
+  if(answered === questions.length) showResult();
+}
+
+function updateProgress(){
+  const pct = (answered / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function showResult(){
+  finished = true;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  document.getElementById('score-display').textContent = score + '/20';
+  document.getElementById('show-mum').textContent = 'Show this to mum — ' + score + '/20 🏆';
+
+  let msg = '';
+  if(score >= 18){
+    msg = '🏆 Excellent! Outstanding work — you really know this topic!';
+  } else if(score >= 14){
+    msg = '👍 Good effort! A few things to tighten up, but you\'re nearly there.';
+  } else {
+    msg = '📖 Go back and revise! Read through the notes again and try once more.';
+  }
+  document.getElementById('result-msg').textContent = msg;
+
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+  hidePrevBanner();
+}
+
+function tryAgain(){
+  hidePrevBanner();
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function hidePrevBanner(){
+  document.getElementById('prev-score-banner').style.display = 'none';
+}
+
+function checkPrevScore(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null){
+    const banner = document.getElementById('prev-score-banner');
+    banner.textContent = '📊 Your last score: ' + s + '/20' + (d ? ' — ' + d : '');
+    banner.style.display = 'block';
+  }
+}
+
+checkPrevScore();
+buildQuiz();
+</script>
+</body>
+</html>

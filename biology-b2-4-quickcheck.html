@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B2.4 Stem cell dilemmas</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.prev-score{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 18px;margin-bottom:20px;color:var(--orange);font-weight:900;font-size:16px;display:none}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin-bottom:14px}
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px}
+.q-card.correct{background:var(--green2);border-color:var(--green)}
+.q-card.incorrect{background:var(--red2);border-color:var(--red)}
+.q-num{font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-weight:700;font-size:17px;margin-bottom:14px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s}
+.choice-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.choice-btn.correct-ans{background:var(--green2)!important;border-color:var(--green)!important;color:var(--green)!important}
+.choice-btn.wrong-ans{background:var(--red2)!important;border-color:var(--red)!important;color:var(--red)!important}
+.choice-btn:disabled{cursor:default}
+.tf-choices{display:flex;gap:10px}
+.tf-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:12px 28px;font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:900;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct-ans{background:var(--green2)!important;border-color:var(--green)!important;color:var(--green)!important}
+.tf-btn.wrong-ans{background:var(--red2)!important;border-color:var(--red)!important;color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+.feedback{margin-top:10px;font-weight:700;font-size:14px;display:none}
+.feedback.correct{color:var(--green)}
+.feedback.incorrect{color:var(--red)}
+.score-box{background:var(--dark);color:white;border-radius:22px;padding:28px;text-align:center;margin-top:24px;display:none}
+.score-box .big{font-size:clamp(36px,6vw,64px);font-weight:900;color:var(--yellow);line-height:1}
+.score-box .msg{font-size:19px;margin:10px 0 0;color:rgba(255,255,255,.85)}
+.score-box .show-mum{background:var(--yellow);color:var(--dark);border-radius:18px;padding:14px 24px;font-weight:900;font-size:20px;margin:16px 0 8px;display:inline-block}
+.try-again-btn{background:var(--yellow);color:var(--dark);border:none;border-radius:999px;padding:12px 28px;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:16px;cursor:pointer;margin-top:12px}
+.submit-btn{background:var(--yellow);color:var(--dark);border:none;border-radius:999px;padding:12px 28px;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:16px;cursor:pointer;margin-top:8px;display:block}
+.submit-btn:disabled{opacity:.4;cursor:default}
+@media(max-width:750px){.choices{grid-template-columns:1fr}.wrap{padding:14px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>⚡ Quick Check – B2.4 Stem cell dilemmas</h1>
+  <p>20 questions: 10 multiple choice + 10 true/false. Click to answer — instant feedback!</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b2-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="prev-score" id="prev-score-banner"></div>
+
+<!-- MCQ Section -->
+<div class="panel">
+  <div class="section-label">Part 1 — Multiple choice (10 questions)</div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-num">Question 1 of 20</div>
+    <div class="q-text">What is therapeutic cloning primarily used for?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q1',false)">To create a genetically identical human being</button>
+      <button class="choice-btn" onclick="answer(this,'q1',true)">To produce perfectly matched embryonic stem cells for a patient</button>
+      <button class="choice-btn" onclick="answer(this,'q1',false)">To grow embryos for reproductive purposes</button>
+      <button class="choice-btn" onclick="answer(this,'q1',false)">To clone animals for agricultural use</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-num">Question 2 of 20</div>
+    <div class="q-text">Why would stem cells produced by therapeutic cloning be less likely to be rejected by a patient's body?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q2',false)">They come from a healthy donor with no immune markers</button>
+      <button class="choice-btn" onclick="answer(this,'q2',false)">They are treated with immunosuppressant drugs before transplant</button>
+      <button class="choice-btn" onclick="answer(this,'q2',true)">They are made from the patient's own cells and have the same genes</button>
+      <button class="choice-btn" onclick="answer(this,'q2',false)">They are embryonic and therefore universally compatible</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-num">Question 3 of 20</div>
+    <div class="q-text">Which of the following is a practical risk associated with using embryonic stem cells in treatments?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q3',false)">They are impossible to extract from embryos</button>
+      <button class="choice-btn" onclick="answer(this,'q3',true)">They may cause cancer because they divide rapidly</button>
+      <button class="choice-btn" onclick="answer(this,'q3',false)">They always trigger an immune response in every patient</button>
+      <button class="choice-btn" onclick="answer(this,'q3',false)">They cannot differentiate into any specialised cell types</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-num">Question 4 of 20</div>
+    <div class="q-text">Which argument is commonly made IN FAVOUR of using embryonic stem cells?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q4',false)">Embryos used have a fully developed nervous system</button>
+      <button class="choice-btn" onclick="answer(this,'q4',false)">The embryo can give written consent to the procedure</button>
+      <button class="choice-btn" onclick="answer(this,'q4',true)">Many embryos from IVF would otherwise be destroyed anyway</button>
+      <button class="choice-btn" onclick="answer(this,'q4',false)">Embryonic stem cells never cause any side effects</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-num">Question 5 of 20</div>
+    <div class="q-text">In the therapeutic cloning process, what is inserted into an enucleated egg cell?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q5',false)">A fully differentiated muscle cell</button>
+      <button class="choice-btn" onclick="answer(this,'q5',false)">An embryonic stem cell from a donor</button>
+      <button class="choice-btn" onclick="answer(this,'q5',true)">The nucleus extracted from an adult patient's cell</button>
+      <button class="choice-btn" onclick="answer(this,'q5',false)">A chromosome from a bone marrow sample</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-num">Question 6 of 20</div>
+    <div class="q-text">Which of the following is an area of current stem cell research in the UK?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q6',false)">Regrowing entire limbs lost in accidents</button>
+      <button class="choice-btn" onclick="answer(this,'q6',true)">Restoring insulin-producing cells in people with diabetes</button>
+      <button class="choice-btn" onclick="answer(this,'q6',false)">Curing all forms of cancer using a single stem cell type</button>
+      <button class="choice-btn" onclick="answer(this,'q6',false)">Growing complete kidneys from scratch in a lab dish</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-num">Question 7 of 20</div>
+    <div class="q-text">Why might using adult stem cells from an unrelated donor cause problems?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q7',false)">Adult stem cells cannot differentiate at all</button>
+      <button class="choice-btn" onclick="answer(this,'q7',true)">They may trigger an immune response and require immunosuppressant drugs</button>
+      <button class="choice-btn" onclick="answer(this,'q7',false)">They are always infected with viruses and cannot be used</button>
+      <button class="choice-btn" onclick="answer(this,'q7',false)">Adult stem cells are too large to transplant into a patient</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-num">Question 8 of 20</div>
+    <div class="q-text">What alternative sources of embryonic stem cells might help address ethical concerns?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q8',false)">Blood cells taken from elderly donors</button>
+      <button class="choice-btn" onclick="answer(this,'q8',false)">Skin cells from people with genetic disorders</button>
+      <button class="choice-btn" onclick="answer(this,'q8',true)">Umbilical cord blood and amniotic fluid</button>
+      <button class="choice-btn" onclick="answer(this,'q8',false)">Embryos created specifically for research in the laboratory</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-num">Question 9 of 20</div>
+    <div class="q-text">Which of the following is a key ethical argument AGAINST embryonic stem cell research?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q9',false)">The embryos used are too old to contain useful cells</button>
+      <button class="choice-btn" onclick="answer(this,'q9',false)">Embryonic stem cells are less useful than adult stem cells</button>
+      <button class="choice-btn" onclick="answer(this,'q9',true)">The embryo is a potential human life and cannot give consent</button>
+      <button class="choice-btn" onclick="answer(this,'q9',false)">Embryonic stem cells always cause immediate immune rejection</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-num">Question 10 of 20</div>
+    <div class="q-text">Why is controlling the differentiation of stem cells a key scientific challenge?</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="answer(this,'q10',false)">Stem cells refuse to divide outside of a living body</button>
+      <button class="choice-btn" onclick="answer(this,'q10',false)">Scientists have proven that differentiation is permanent and cannot be reversed</button>
+      <button class="choice-btn" onclick="answer(this,'q10',true)">The signals that control differentiation are not yet completely understood</button>
+      <button class="choice-btn" onclick="answer(this,'q10',false)">Stem cells only produce one specific cell type and cannot be redirected</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+</div>
+
+<!-- True/False Section -->
+<div class="panel">
+  <div class="section-label">Part 2 — True or False (10 questions)</div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-num">Question 11 of 20</div>
+    <div class="q-text">Therapeutic cloning aims to create a complete cloned human being for reproductive purposes.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q11',false)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q11',true)">False</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="q12">
+    <div class="q-num">Question 12 of 20</div>
+    <div class="q-text">Embryos used in stem cell research are tiny balls of cells with no brain or nervous system.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q12',true)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q12',false)">False</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="q13">
+    <div class="q-num">Question 13 of 20</div>
+    <div class="q-text">Stem cell treatments could potentially help people with spinal cord injuries, diabetes, heart damage, and blindness.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q13',true)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q13',false)">False</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="q14">
+    <div class="q-num">Question 14 of 20</div>
+    <div class="q-text">Adult stem cells carrying viruses could potentially transfer those infections to patients who receive them.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q14',true)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q14',false)">False</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="q15">
+    <div class="q-num">Question 15 of 20</div>
+    <div class="q-text">All religious groups fully support the use of embryonic stem cells in medical research.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q15',false)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q15',true)">False</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="q16">
+    <div class="q-num">Question 16 of 20</div>
+    <div class="q-text">Embryonic stem cells have been shown to cause cancer in some mice and early human trials.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q16',true)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q16',false)">False</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="q17">
+    <div class="q-num">Question 17 of 20</div>
+    <div class="q-text">Stem cells produced by therapeutic cloning would need to be taken from a separate, healthy donor.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q17',false)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q17',true)">False</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="q18">
+    <div class="q-num">Question 18 of 20</div>
+    <div class="q-text">Scientists have found embryonic stem cells in umbilical cord blood and amniotic fluid.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q18',true)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q18',false)">False</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="q19">
+    <div class="q-num">Question 19 of 20</div>
+    <div class="q-text">One argument against stem cell research is that it is slow, expensive, and difficult to control.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q19',true)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q19',false)">False</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="q20">
+    <div class="q-num">Question 20 of 20</div>
+    <div class="q-text">Stem cells produced by therapeutic cloning would be rejected by the patient's immune system because they come from an embryo.</div>
+    <div class="tf-choices">
+      <button class="tf-btn" onclick="answer(this,'q20',false)">True</button>
+      <button class="tf-btn" onclick="answer(this,'q20',true)">False</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="showScore()" disabled>See my score 🏆</button>
+</div>
+
+<!-- Score box -->
+<div class="score-box" id="score-box">
+  <div class="show-mum" id="show-mum-text"></div>
+  <div class="big" id="score-display"></div>
+  <div class="msg" id="score-msg"></div>
+  <button class="try-again-btn" onclick="tryAgain()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+var STORAGE_KEY = 'biology-b2-4-score';
+var DATE_KEY    = 'biology-b2-4-score-date';
+var answered = {};
+var correct  = {};
+
+// Questions: id → correct answer key for feedback
+var correctFeedback = {
+  q1:'To produce perfectly matched embryonic stem cells for a patient',
+  q2:'They are made from the patient\'s own cells and have the same genes',
+  q3:'They may cause cancer because they divide rapidly',
+  q4:'Many embryos from IVF would otherwise be destroyed anyway',
+  q5:'The nucleus extracted from an adult patient\'s cell',
+  q6:'Restoring insulin-producing cells in people with diabetes',
+  q7:'They may trigger an immune response and require immunosuppressant drugs',
+  q8:'Umbilical cord blood and amniotic fluid',
+  q9:'The embryo is a potential human life and cannot give consent',
+  q10:'The signals that control differentiation are not yet completely understood',
+  q11:'False — therapeutic cloning produces cells/organs for medicine, not a whole human.',
+  q12:'True — embryos used are tiny balls of cells with no brain or nervous system.',
+  q13:'True — all of these are current areas of UK stem cell research.',
+  q14:'True — virus transfer from adult stem cells is a recognised practical risk.',
+  q15:'False — some religious groups cannot accept any interference with human reproduction.',
+  q16:'True — cancer risk has been observed in mice and some early human autoimmune trials.',
+  q17:'False — therapeutic cloning uses the patient\'s own cells, so no separate donor is needed.',
+  q18:'True — scientists have found embryonic stem cells in umbilical cord blood and amniotic fluid.',
+  q19:'True — the slow pace, cost, and difficulty of control are cited as arguments against.',
+  q20:'False — because they are made from the patient\'s own cells, rejection is unlikely.'
+};
+
+// Show previous score banner on load
+(function(){
+  var prev = localStorage.getItem(STORAGE_KEY);
+  var prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    var banner = document.getElementById('prev-score-banner');
+    var dateStr = prevDate ? ' — ' + prevDate : '';
+    banner.textContent = '📊 Your last score: ' + prev + '/20' + dateStr;
+    banner.style.display = 'block';
+  }
+})();
+
+function answer(btn, qid, isCorrect){
+  if(answered[qid]) return;
+  answered[qid] = true;
+  correct[qid] = isCorrect;
+
+  // Disable all buttons in this card
+  var card = document.getElementById(qid);
+  var btns = card.querySelectorAll('button');
+  btns.forEach(function(b){ b.disabled = true; });
+
+  var fb = document.getElementById('fb-' + qid);
+  fb.style.display = 'block';
+
+  if(isCorrect){
+    card.classList.add('correct');
+    btn.classList.add('correct-ans');
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    card.classList.add('incorrect');
+    btn.classList.add('wrong-ans');
+    fb.className = 'feedback incorrect';
+    fb.textContent = '❌ Incorrect. Correct answer: ' + correctFeedback[qid];
+    // Highlight correct button (MCQ only — not needed for T/F since feedback explains)
+  }
+
+  // Check if all 20 answered
+  if(Object.keys(answered).length === 20){
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('submit-btn').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+function showScore(){
+  var score = 0;
+  for(var k in correct){ if(correct[k]) score++; }
+
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+  localStorage.setItem(STORAGE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  document.getElementById('score-display').textContent = score + ' / 20';
+  document.getElementById('show-mum-text').textContent = 'Show this to mum — ' + score + '/20 🏆';
+
+  var msg;
+  if(score >= 18){
+    msg = '🏆 Excellent work! You really know your stem cells — outstanding!';
+  } else if(score >= 14){
+    msg = '👍 Good effort! A few gaps to fill — review the bits you missed.';
+  } else {
+    msg = '📖 Time to go back and revise! Re-read the B2.4 notes carefully, then try again.';
+  }
+  document.getElementById('score-msg').textContent = msg;
+
+  var box = document.getElementById('score-box');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth'});
+
+  // Update banner
+  var banner = document.getElementById('prev-score-banner');
+  banner.textContent = '📊 Your last score: ' + score + '/20 — ' + dateStr;
+  banner.style.display = 'block';
+}
+
+function tryAgain(){
+  // Hide score box and banner (keep localStorage)
+  document.getElementById('score-box').style.display = 'none';
+  document.getElementById('prev-score-banner').style.display = 'none';
+
+  // Reset state
+  answered = {};
+  correct = {};
+
+  // Reset all cards
+  var cards = document.querySelectorAll('.q-card');
+  cards.forEach(function(card){
+    card.classList.remove('correct','incorrect');
+    var btns = card.querySelectorAll('button');
+    btns.forEach(function(b){
+      b.disabled = false;
+      b.classList.remove('correct-ans','wrong-ans');
+    });
+    var fb = card.querySelector('.feedback');
+    fb.style.display = 'none';
+    fb.textContent = '';
+    fb.className = 'feedback';
+  });
+
+  document.getElementById('submit-btn').disabled = true;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

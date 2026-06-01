@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B1.4 Specialisation in animal cells</title>
+<style>
+:root{
+  --bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;
+  --green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;
+  --blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;
+  --purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;
+  --red:#c0392b;--red2:#fde8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:900;font-size:15px}
+
+/* Progress */
+#progress-bar-wrap{background:rgba(255,255,255,.5);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:10px;background:linear-gradient(90deg,var(--lime),var(--green));border-radius:999px;width:0%;transition:width .4s ease}
+#progress-label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:26px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-type-badge{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.badge-mcq{background:var(--blue2);color:var(--blue)}
+.badge-tf{background:var(--purple2);color:var(--purple)}
+.q-number{font-size:12px;font-weight:900;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:18px;line-height:1.35}
+
+/* Options */
+.options{display:grid;gap:10px}
+.opt-btn{width:100%;text-align:left;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:13px 16px;font-size:15px;font-family:Arial,Helvetica,sans-serif;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s;font-weight:600}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1010}
+.opt-btn:disabled{cursor:default}
+
+/* TF buttons */
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;text-align:center;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:13px 16px;font-size:16px;font-family:Arial,Helvetica,sans-serif;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s;font-weight:700}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1010}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:12px;font-size:14px;font-weight:700;display:none;border-radius:10px;padding:10px 14px}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:1.5px solid var(--green)}
+.feedback.wrong{background:var(--red2);color:#7a1010;border:1.5px solid var(--red)}
+
+/* Next button */
+.next-btn{margin-top:16px;background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:11px 28px;font-size:15px;font-weight:900;font-family:Arial,Helvetica,sans-serif;cursor:pointer;display:none}
+.next-btn:hover{background:#b8d030}
+
+/* Results */
+#results{display:none;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:28px;padding:32px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+#results .score-big{font-size:clamp(52px,8vw,88px);font-weight:900;line-height:1;letter-spacing:-2px;color:var(--dark)}
+#results .score-denom{font-size:24px;color:var(--muted);font-weight:700}
+#results .show-mum{margin:16px auto 0;max-width:480px;border-radius:22px;padding:22px 28px;font-size:20px;font-weight:900;line-height:1.3}
+.show-mum.excellent{background:linear-gradient(135deg,var(--green2),#f0fce8);border:2px solid var(--green);color:#1a4d22}
+.show-mum.good{background:linear-gradient(135deg,var(--lime2),#f5fce0);border:2px solid var(--lime);color:#3a5010}
+.show-mum.revise{background:linear-gradient(135deg,var(--orange2),#fff3e0);border:2px solid var(--orange);color:#7a3a00}
+#results .try-again{margin-top:22px;background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:13px 34px;font-size:16px;font-weight:900;font-family:Arial,Helvetica,sans-serif;cursor:pointer}
+#results .try-again:hover{background:#b8d030}
+
+@media(max-width:620px){.wrap{padding:14px}.tf-row{flex-direction:column}.q-text{font-size:16px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ Quick Check — B1.4 Specialisation in animal cells</h1>
+  <p>20 questions · Instant feedback · Score saved automatically</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="progress-label"></div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-container"></div>
+<div id="results">
+  <div class="score-big" id="score-big">0</div>
+  <div class="score-denom">out of 20</div>
+  <div class="show-mum" id="show-mum"></div>
+  <button class="try-again" onclick="tryAgain()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const STORAGE_KEY = 'biology-b1-4-score';
+
+const questions = [
+  // ── MCQ (10) ──────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    text:'What is cell differentiation?',
+    options:[
+      'When cells divide by mitosis to make identical copies',
+      'When cells change to form different types of specialised cells',
+      'When cells die and are replaced by new ones',
+      'When cells grow larger to carry out their function'
+    ],
+    correct:1,
+    feedback:'Differentiation is the process by which cells change and develop sub-cellular structures so they can carry out a specific function.'
+  },
+  {
+    type:'mcq',
+    text:'What is the main function of the long axon in a nerve cell?',
+    options:[
+      'To receive impulses from many different sources',
+      'To store transmitter chemicals',
+      'To carry electrical impulses from one place to another',
+      'To provide energy for the nerve cell'
+    ],
+    correct:2,
+    feedback:'The long axon carries electrical impulses along the nerve cell from one location to another — in some animals they can be up to 25 m long!'
+  },
+  {
+    type:'mcq',
+    text:'Why do nerve cells have many mitochondria at their synapses?',
+    options:[
+      'To insulate the axon and speed up impulse transmission',
+      'To make the axon longer',
+      'To produce transmitter chemicals by aerobic respiration',
+      'To provide energy for making the myelin sheath'
+    ],
+    correct:2,
+    feedback:'Mitochondria at synapses provide the energy needed to produce the transmitter chemicals that pass impulses to the next cell.'
+  },
+  {
+    type:'mcq',
+    text:'What is the role of the myelin sheath in a nerve cell?',
+    options:[
+      'It releases transmitter chemicals at the synapse',
+      'It acts as an insulating layer that speeds up electrical impulse transmission',
+      'It stores glycogen for energy',
+      'It connects the nerve cell to muscle fibres'
+    ],
+    correct:1,
+    feedback:'The myelin sheath is an insulating layer around the axon. It speeds up the transmission of electrical impulses along the nerve.'
+  },
+  {
+    type:'mcq',
+    text:'Which sub-cellular structure in a sperm cell stores the enzymes needed to penetrate the egg?',
+    options:['Nucleus','Mitochondria','Tail','Acrosome'],
+    correct:3,
+    feedback:'The acrosome is at the head of the sperm and contains digestive enzymes that break down the outer layers of the egg so the sperm can enter.'
+  },
+  {
+    type:'mcq',
+    text:'Why does the middle section of a sperm cell contain large numbers of mitochondria?',
+    options:[
+      'To carry the genetic information to the egg',
+      'To store glycogen for later use',
+      'To provide the energy needed to move the tail',
+      'To produce enzymes for breaking down the egg membrane'
+    ],
+    correct:2,
+    feedback:'The mitochondria in the middle section of the sperm transfer the energy needed to power the beating tail, which propels the sperm towards the egg.'
+  },
+  {
+    type:'mcq',
+    text:'Which of the following correctly describes how striated muscle cells contract?',
+    options:[
+      'Mitochondria release energy which directly shortens the axon',
+      'Glycogen directly pulls the cell membrane inward',
+      'Special proteins slide over each other, shortening the muscle fibre',
+      'The myelin sheath contracts around the muscle fibre'
+    ],
+    correct:2,
+    feedback:'Muscle cells contain special proteins that slide over each other, causing the fibre to contract and shorten.'
+  },
+  {
+    type:'mcq',
+    text:'Why do muscle cells store glycogen?',
+    options:[
+      'Glycogen insulates the cell during contraction',
+      'Glycogen can be broken down in cellular respiration to release energy for contraction',
+      'Glycogen forms the proteins that slide during contraction',
+      'Glycogen is used to build the cell membrane'
+    ],
+    correct:1,
+    feedback:'Glycogen is a storage carbohydrate. When muscles need to contract, the glycogen is broken down and used in cellular respiration to release energy.'
+  },
+  {
+    type:'mcq',
+    text:'At what stage of development do most animal cells differentiate?',
+    options:[
+      'Throughout the organism\'s entire life',
+      'Only during puberty',
+      'At an early stage of development',
+      'Only after the organism reaches adulthood'
+    ],
+    correct:2,
+    feedback:'Most animal cells differentiate at an early stage of development, unlike many plant cells which retain the ability to differentiate throughout life.'
+  },
+  {
+    type:'mcq',
+    text:'What is the function of dendrites on a nerve cell?',
+    options:[
+      'To insulate the axon from electrical interference',
+      'To make connections with other nerve cells and receive impulses',
+      'To store transmitter chemicals ready for release',
+      'To carry impulses away from the cell body over long distances'
+    ],
+    correct:1,
+    feedback:'Dendrites are branched extensions of the nerve cell that make connections with other neurons, allowing the cell to receive impulses from many different sources.'
+  },
+
+  // ── True / False (10) ────────────────────────────────────────────────────
+  {
+    type:'tf',
+    text:'Plant cells lose the ability to differentiate much earlier in life than animal cells.',
+    correct:false,
+    feedback:'False — it is the other way around. Most animal cells differentiate at an early stage, whereas many plant cells retain the ability to differentiate throughout their life.'
+  },
+  {
+    type:'tf',
+    text:'The acrosome of a sperm cell contains digestive enzymes.',
+    correct:true,
+    feedback:'True. The acrosome is packed with digestive enzymes that break down the outer layers of the egg, allowing the sperm to enter and fertilise it.'
+  },
+  {
+    type:'tf',
+    text:'A nerve cell\'s axon carries electrical impulses towards the cell body from dendrites.',
+    correct:false,
+    feedback:'False. The dendrites receive impulses and pass them to the cell body; the axon carries impulses away from the cell body to the next cell or organ.'
+  },
+  {
+    type:'tf',
+    text:'Striated muscle cells contain many mitochondria because contraction requires energy.',
+    correct:true,
+    feedback:'True. The many mitochondria in muscle cells transfer the energy needed for the chemical reactions involved in contraction and relaxation.'
+  },
+  {
+    type:'tf',
+    text:'Sperm cells are an example of specialised cells that work as part of a tissue.',
+    correct:false,
+    feedback:'False. Sperm cells are specialised cells that work individually to carry genetic information and fertilise an egg — they do not form a tissue.'
+  },
+  {
+    type:'tf',
+    text:'The myelin sheath around a nerve cell\'s axon speeds up electrical impulse transmission.',
+    correct:true,
+    feedback:'True. The myelin sheath acts as an insulating layer, which speeds up the transmission of electrical impulses along the axon.'
+  },
+  {
+    type:'tf',
+    text:'Glycogen stored in muscle cells is a type of protein.',
+    correct:false,
+    feedback:'False. Glycogen is a carbohydrate (a polysaccharide), not a protein. It is broken down during cellular respiration to release energy for muscle contraction.'
+  },
+  {
+    type:'tf',
+    text:'When a cell differentiates, it develops sub-cellular structures that allow it to carry out a specific function.',
+    correct:true,
+    feedback:'True. This is the core definition of differentiation — cells acquire specialised sub-cellular structures during development to fulfil a particular role.'
+  },
+  {
+    type:'tf',
+    text:'The long tail of a sperm cell is used to carry the genetic information of the male parent.',
+    correct:false,
+    feedback:'False. The genetic information (DNA) is carried in the large nucleus of the sperm head. The tail\'s job is to propel the sperm towards the egg.'
+  },
+  {
+    type:'tf',
+    text:'Transmitter chemicals at a synapse are released to pass an impulse from one nerve cell to another.',
+    correct:true,
+    feedback:'True. When an electrical impulse reaches a synapse, transmitter chemicals are released into the gap and stimulate the next nerve cell to continue the impulse.'
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+// ── Previous score banner ────────────────────────────────────────────────────
+(function showPrevScore(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw === null) return;
+  try{
+    const data = JSON.parse(raw);
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = `📊 Your last score: <span style="font-size:18px">${data.score}/20</span>${data.date ? ' &nbsp;·&nbsp; ' + data.date : ''}`;
+  } catch(e){ /* legacy plain number */ 
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = `📊 Your last score: <span style="font-size:18px">${raw}/20</span>`;
+  }
+})();
+
+// ── Render ───────────────────────────────────────────────────────────────────
+function renderQuestion(){
+  const q = questions[current];
+  const container = document.getElementById('quiz-container');
+
+  // Progress
+  document.getElementById('progress-label').textContent = `Question ${current+1} of ${questions.length}`;
+  document.getElementById('progress-bar').style.width = `${(current/questions.length)*100}%`;
+
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = 'current-card';
+
+  const badge = q.type === 'mcq'
+    ? `<span class="q-type-badge badge-mcq">Multiple choice</span>`
+    : `<span class="q-type-badge badge-tf">True / False</span>`;
+
+  card.innerHTML = `
+    ${badge}
+    <div class="q-number">Question ${current+1}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">${current < questions.length-1 ? 'Next question →' : 'See my results 🏆'}</button>
+  `;
+
+  container.innerHTML = '';
+  container.appendChild(card);
+
+  const optionsEl = document.getElementById('options');
+
+  if(q.type === 'mcq'){
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.textContent = opt;
+      btn.onclick = () => selectMCQ(i);
+      optionsEl.appendChild(btn);
+    });
+  } else {
+    const row = document.createElement('div');
+    row.className = 'tf-row';
+    ['True','False'].forEach((label, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'tf-btn';
+      btn.textContent = label;
+      btn.onclick = () => selectTF(i === 0);
+      row.appendChild(btn);
+    });
+    optionsEl.appendChild(row);
+  }
+
+  answered = false;
+}
+
+function selectMCQ(chosen){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === q.correct) btn.classList.add('correct');
+    else if(i === chosen) btn.classList.add('wrong');
+  });
+  showFeedback(chosen === q.correct, q.feedback);
+  if(chosen === q.correct) score++;
+}
+
+function selectTF(chosen){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.tf-btn');
+  const isCorrect = chosen === q.correct;
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    const val = i === 0; // True = index 0
+    if(val === q.correct) btn.classList.add('correct');
+    else if(val === chosen && !isCorrect) btn.classList.add('wrong');
+  });
+  showFeedback(isCorrect, q.feedback);
+  if(isCorrect) score++;
+}
+
+function showFeedback(correct, text){
+  const fb = document.getElementById('feedback');
+  fb.className = `feedback ${correct ? 'correct' : 'wrong'}`;
+  fb.style.display = 'block';
+  fb.textContent = (correct ? '✅ Correct! ' : '❌ Incorrect. ') + text;
+  document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function nextQuestion(){
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults(){
+  document.getElementById('quiz-container').innerHTML = '';
+  document.getElementById('progress-label').textContent = '';
+  document.getElementById('progress-bar').style.width = '100%';
+
+  const results = document.getElementById('results');
+  results.style.display = 'block';
+  document.getElementById('score-big').textContent = score;
+
+  const mum = document.getElementById('show-mum');
+  if(score >= 18){
+    mum.className = 'show-mum excellent';
+    mum.innerHTML = `🏆 Show this to mum — ${score}/20<br><span style="font-size:15px;font-weight:700">Excellent! Gabriel has mastered B1.4. Outstanding work! 🌟</span>`;
+  } else if(score >= 14){
+    mum.className = 'show-mum good';
+    mum.innerHTML = `👍 Show this to mum — ${score}/20<br><span style="font-size:15px;font-weight:700">Good effort! A bit more revision on the tricky bits and you'll nail it.</span>`;
+  } else {
+    mum.className = 'show-mum revise';
+    mum.innerHTML = `📖 Show this to mum — ${score}/20<br><span style="font-size:15px;font-weight:700">Go back and revise B1.4 — you've got this! Read the notes again and retry. 💪</span>`;
+  }
+
+  // Save score
+  const dateStr = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({score, date: dateStr}));
+
+  // Update banner
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'none'; // hide old; new score is shown in results
+}
+
+function tryAgain(){
+  current = 0;
+  score = 0;
+  answered = false;
+  document.getElementById('results').style.display = 'none';
+  // Hide prev banner while retrying
+  document.getElementById('prev-banner').style.display = 'none';
+  renderQuestion();
+}
+
+// ── Start ─────────────────────────────────────────────────────────────────────
+renderQuestion();
+</script>
+</body>
+</html>

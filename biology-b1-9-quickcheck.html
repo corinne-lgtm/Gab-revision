@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B1.9 Active Transport</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.banner{background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:14px 18px;color:var(--orange);font-weight:900;font-size:15px;margin-bottom:20px;display:none}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:24px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;color:var(--muted);margin-bottom:14px}
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.q-card.correct{background:var(--green2);border-color:var(--green)}
+.q-card.wrong{background:var(--red2);border-color:var(--red)}
+.q-num{font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.4}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.choices{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;font-family:inherit;color:var(--ink);cursor:pointer;text-align:left;font-weight:600;transition:all .15s;line-height:1.3}
+.choice-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.choice-btn.correct-ans{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.choice-btn.wrong-ans{background:var(--red2);border-color:var(--red);color:#7a1a14}
+.choice-btn:disabled{cursor:default}
+.tf-row{display:flex;gap:10px;margin-top:4px}
+.tf-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 24px;font-size:14px;font-family:inherit;color:var(--ink);cursor:pointer;font-weight:700;transition:all .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct-ans{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong-ans{background:var(--red2);border-color:var(--red);color:#7a1a14}
+.tf-btn:disabled{cursor:default}
+.feedback{margin-top:10px;font-size:13px;font-weight:700;display:none}
+.q-card.correct .feedback{display:block;color:#1a4d22}
+.q-card.wrong .feedback{display:block;color:var(--red)}
+.submit-row{text-align:center;margin:28px 0 8px}
+.submit-btn{background:var(--yellow);color:var(--dark);border:none;border-radius:999px;padding:14px 36px;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.12);transition:opacity .15s}
+.submit-btn:hover{opacity:.88}
+.submit-btn:disabled{opacity:.5;cursor:default}
+.result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;text-align:center;margin-top:24px}
+.result-box .score-big{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--yellow);line-height:1}
+.result-box .score-label{font-size:18px;color:rgba(255,255,255,.75);margin-top:6px}
+.result-box .message{font-size:19px;font-weight:700;margin:18px 0 22px;line-height:1.4}
+.result-box .mum-box{background:var(--yellow);color:var(--dark);border-radius:18px;padding:14px 20px;font-size:16px;font-weight:900;margin-bottom:18px}
+.try-again-btn{background:white;color:var(--dark);border:none;border-radius:999px;padding:12px 30px;font-size:15px;font-weight:900;font-family:inherit;cursor:pointer}
+.try-again-btn:hover{background:var(--lime2)}
+.progress-bar-wrap{background:var(--line);border-radius:999px;height:8px;margin-bottom:20px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:999px;transition:width .3s;width:0%}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ Quick Check — B1.9 Active Transport</h1>
+  <p>20 questions · MCQ + True/False · Instant feedback</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-9-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="banner" id="prev-banner"></div>
+
+<div class="wrap-inner">
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <div class="panel">
+    <div class="section-label">Part 1 — Multiple Choice (Q1–10)</div>
+    <div id="mcq-container"></div>
+  </div>
+
+  <div class="panel">
+    <div class="section-label">Part 2 — True or False (Q11–20)</div>
+    <div id="tf-container"></div>
+  </div>
+
+  <div class="submit-row">
+    <button class="submit-btn" id="submit-btn" onclick="submitQuiz()">Submit answers</button>
+  </div>
+
+  <div class="result-box" id="result-box">
+    <div class="score-big" id="result-score"></div>
+    <div class="score-label">out of 20</div>
+    <div class="message" id="result-message"></div>
+    <div class="mum-box" id="mum-box"></div>
+    <button class="try-again-btn" onclick="tryAgain()">🔄 Try again</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const MCQ = [
+  {
+    q: "What does active transport move substances against?",
+    choices: ["The temperature gradient","The concentration gradient","The pressure gradient","The osmotic gradient"],
+    correct: 1
+  },
+  {
+    q: "Active transport moves substances from an area of _____ concentration to an area of _____ concentration.",
+    choices: ["High → Low","Low → Low","Low → High","High → High"],
+    correct: 2
+  },
+  {
+    q: "Where does the energy for active transport come from?",
+    choices: ["Photosynthesis","The sun","Cell respiration","Diffusion"],
+    correct: 2
+  },
+  {
+    q: "Which structures in the cell membrane carry out active transport?",
+    choices: ["Phospholipid molecules","Carrier proteins","Ribosomes","Channel proteins"],
+    correct: 1
+  },
+  {
+    q: "Why do cells that carry out a lot of active transport have many mitochondria?",
+    choices: ["Mitochondria make carrier proteins","Mitochondria provide energy through respiration","Mitochondria store glucose","Mitochondria absorb mineral ions"],
+    correct: 1
+  },
+  {
+    q: "Why do plant root hair cells use active transport to absorb mineral ions?",
+    choices: ["Mineral ions are too large to diffuse","Mineral ions move faster with a carrier","The concentration of minerals in soil is lower than in the root cells","The concentration of minerals in soil is higher than in the root cells"],
+    correct: 2
+  },
+  {
+    q: "Which of the following correctly describes how active transport differs from diffusion?",
+    choices: ["Diffusion needs energy; active transport does not","Active transport moves molecules down a concentration gradient","Active transport moves molecules against a concentration gradient and requires energy","Both use carrier proteins"],
+    correct: 2
+  },
+  {
+    q: "Glucose is sometimes actively transported from the gut into the blood. When does this occur?",
+    choices: ["When glucose concentration in the gut is higher than in the blood","When glucose concentration in the gut is lower than in the blood","When there is no glucose in the blood","When osmosis cannot take place"],
+    correct: 1
+  },
+  {
+    q: "Which condition is linked to a faulty active transport system in mucus-producing cells?",
+    choices: ["Diabetes","Cystic fibrosis","Asthma","Sickle cell anaemia"],
+    correct: 1
+  },
+  {
+    q: "A student exercises hard, causing their respiration rate to increase greatly. What effect would this most likely have on the rate of active transport in their cells?",
+    choices: ["No effect","Rate decreases because ATP is used up","Rate increases because more energy is available","Rate stops because oxygen is used up"],
+    correct: 2
+  }
+];
+
+const TF = [
+  { q: "Active transport moves substances in the same direction as diffusion.", correct: false, explain: "Active transport moves substances AGAINST the concentration gradient — the opposite direction to diffusion." },
+  { q: "Active transport requires energy released by cell respiration.", correct: true, explain: "Correct. Energy from respiration is essential for active transport." },
+  { q: "Osmosis, like active transport, requires energy from respiration.", correct: false, explain: "Osmosis is passive — it requires no energy from respiration." },
+  { q: "Carrier proteins in the cell membrane are involved in active transport.", correct: true, explain: "Correct. Carrier proteins pick up molecules and use energy to move them against the gradient." },
+  { q: "Root hair cells use active transport to absorb nitrate ions from the soil even when the soil solution is very dilute.", correct: true, explain: "Correct. Active transport allows uptake against the concentration gradient, even from very dilute soil." },
+  { q: "Cells that perform a lot of active transport tend to have fewer mitochondria than other cells.", correct: false, explain: "They have MORE mitochondria — to supply the extra energy needed for active transport." },
+  { q: "Active transport can only move water molecules across a membrane.", correct: false, explain: "Active transport moves ions, sugars, and specific molecules. Water is moved by osmosis." },
+  { q: "The rate of active transport is closely linked to the rate of respiration.", correct: true, explain: "Correct. More respiration = more energy = faster active transport." },
+  { q: "Active transport always requires a partially permeable membrane with carrier proteins.", correct: true, explain: "Correct. Carrier proteins in the membrane are essential for active transport." },
+  { q: "Glucose is always absorbed from the gut into the blood by diffusion alone.", correct: false, explain: "When gut glucose concentration is lower than blood glucose, active transport is required to move glucose into the blood against the gradient." }
+];
+
+let answered = new Array(20).fill(false);
+let scores = new Array(20).fill(0);
+
+function buildMCQ() {
+  const container = document.getElementById('mcq-container');
+  MCQ.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `q-${i}`;
+    card.innerHTML = `
+      <div class="q-num">Question ${i+1}</div>
+      <div class="q-text">${item.q}</div>
+      <div class="choices" id="choices-${i}">
+        ${item.choices.map((c,ci) => `<button class="choice-btn" onclick="answerMCQ(${i},${ci})">${c}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function buildTF() {
+  const container = document.getElementById('tf-container');
+  TF.forEach((item, i) => {
+    const qi = i + 10;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `q-${qi}`;
+    card.innerHTML = `
+      <div class="q-num">Question ${qi+1}</div>
+      <div class="q-text">${item.q}</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">❌ False</button>
+      </div>
+      <div class="feedback" id="fb-${qi}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function answerMCQ(qi, chosen) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const item = MCQ[qi];
+  const btns = document.querySelectorAll(`#choices-${qi} .choice-btn`);
+  btns.forEach(b => b.disabled = true);
+  const card = document.getElementById(`q-${qi}`);
+  const fb = document.getElementById(`fb-${qi}`);
+  if (chosen === item.correct) {
+    scores[qi] = 1;
+    card.classList.add('correct');
+    btns[chosen].classList.add('correct-ans');
+    fb.textContent = '✅ Correct!';
+  } else {
+    scores[qi] = 0;
+    card.classList.add('wrong');
+    btns[chosen].classList.add('wrong-ans');
+    btns[item.correct].classList.add('correct-ans');
+    fb.textContent = `❌ Wrong — correct answer: ${item.choices[item.correct]}`;
+  }
+  updateProgress();
+}
+
+function answerTF(i, chosen) {
+  const qi = i + 10;
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const item = TF[i];
+  const card = document.getElementById(`q-${qi}`);
+  const fb = document.getElementById(`fb-${qi}`);
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const chosenBtn = chosen ? btns[0] : btns[1];
+  if (chosen === item.correct) {
+    scores[qi] = 1;
+    card.classList.add('correct');
+    chosenBtn.classList.add('correct-ans');
+    fb.textContent = `✅ Correct! ${item.explain}`;
+  } else {
+    scores[qi] = 0;
+    card.classList.add('wrong');
+    chosenBtn.classList.add('wrong-ans');
+    const correctBtn = item.correct ? btns[0] : btns[1];
+    correctBtn.classList.add('correct-ans');
+    fb.textContent = `❌ Wrong — ${item.explain}`;
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const done = answered.filter(Boolean).length;
+  document.getElementById('progress-bar').style.width = (done/20*100) + '%';
+}
+
+function submitQuiz() {
+  const total = scores.reduce((a,b)=>a+b,0);
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem('biology-b1-9-score', total);
+  localStorage.setItem('biology-b1-9-score-date', dateStr);
+
+  // Show result
+  document.getElementById('submit-btn').disabled = true;
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  document.getElementById('result-score').textContent = total;
+
+  let msg, mumMsg;
+  if (total >= 18) {
+    msg = "🏆 Excellent work, Gabriel! You clearly know your active transport inside out. Keep it up!";
+    mumMsg = `Show this to mum — ${total}/20 🏆 Excellent!`;
+  } else if (total >= 14) {
+    msg = "👍 Good effort! You've got the main ideas but check over the questions you got wrong.";
+    mumMsg = `Show this to mum — ${total}/20 👍 Good, but room to improve`;
+  } else {
+    msg = "📖 Go back and revise! Read through the B1.9 revision notes again and try once more.";
+    mumMsg = `Show this to mum — ${total}/20 📖 More revision needed`;
+  }
+  document.getElementById('result-message').textContent = msg;
+  document.getElementById('mum-box').textContent = mumMsg;
+  box.scrollIntoView({behavior:'smooth'});
+
+  // Update banner
+  showBanner(total, dateStr);
+}
+
+function showBanner(score, date) {
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'block';
+  banner.textContent = `Your last score: ${score}/20 — ${date}`;
+}
+
+function tryAgain() {
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('prev-banner').style.display = 'none';
+  answered = new Array(20).fill(false);
+  scores = new Array(20).fill(0);
+  document.getElementById('mcq-container').innerHTML = '';
+  document.getElementById('tf-container').innerHTML = '';
+  document.getElementById('submit-btn').disabled = false;
+  document.getElementById('progress-bar').style.width = '0%';
+  buildMCQ();
+  buildTF();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// On load: check previous score
+(function(){
+  const prev = localStorage.getItem('biology-b1-9-score');
+  const prevDate = localStorage.getItem('biology-b1-9-score-date');
+  if (prev !== null) {
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `Your last score: ${prev}/20${prevDate ? ' — ' + prevDate : ''}`;
+  }
+  buildMCQ();
+  buildTF();
+})();
+</script>
+</body>
+</html>

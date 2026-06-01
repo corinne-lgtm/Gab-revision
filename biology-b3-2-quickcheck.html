@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B3.2 The human digestive system</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Last score banner */
+#last-score-banner{display:none;background:var(--orange2);border:2px solid var(--orange);color:var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:18px;font-weight:700;font-size:15px}
+
+/* Progress */
+.progress-bar-wrap{background:rgba(200,223,200,.4);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+.progress-bar{background:linear-gradient(90deg,var(--lime),var(--green));height:100%;border-radius:999px;transition:width .4s}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:24px;padding:24px;margin-bottom:18px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.q-label{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.q-type-badge{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.badge-mcq{background:var(--blue2);color:var(--blue)}
+.badge-tf{background:var(--purple2);color:var(--purple)}
+
+/* Answer options */
+.options{display:grid;gap:10px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:13px 18px;text-align:left;font-size:15px;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s;font-weight:600;color:var(--ink)}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--ink)}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--ink)}
+.opt-btn:disabled{cursor:default}
+
+/* TF buttons */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:14px;text-align:center;font-size:16px;font-weight:900;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:12px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:600;display:none}
+.feedback.correct{background:var(--green2);border:1px solid var(--green);color:#1a4d22;display:block}
+.feedback.wrong{background:var(--red2);border:1px solid var(--red);color:#7a1a1a;display:block}
+
+/* Nav buttons */
+.btn-next{background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:12px 28px;font-weight:900;font-size:15px;cursor:pointer;margin-top:16px;display:none;font-family:inherit}
+.btn-next:hover{background:#b8d030}
+
+/* Score panel */
+#score-panel{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#score-panel h2{font-size:clamp(22px,4vw,38px);margin:0 0 8px;letter-spacing:-.5px}
+.score-num{font-size:clamp(52px,10vw,88px);font-weight:900;line-height:1;color:var(--green);margin:10px 0}
+.score-msg{font-size:18px;margin:10px 0 22px;color:var(--muted)}
+.show-mum{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:20px;padding:18px 24px;display:inline-block;margin:0 auto 22px;font-size:22px;font-weight:900;letter-spacing:-.5px}
+.btn-retry{background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:14px 32px;font-weight:900;font-size:16px;cursor:pointer;font-family:inherit}
+.btn-retry:hover{background:#b8d030}
+
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:16px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>⚡ Quick Check – B3.2 The human digestive system</h1>
+  <p>20 questions · Instant feedback · Score saved automatically</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b3-2-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="last-score-banner"></div>
+
+<div id="quiz-area">
+  <div class="progress-bar-wrap"><div class="progress-bar" id="prog" style="width:0%"></div></div>
+  <div id="q-container"></div>
+</div>
+
+<div id="score-panel">
+  <h2>Quiz complete! 🎉</h2>
+  <div class="score-num" id="final-score-num"></div>
+  <div class="score-msg" id="final-score-msg"></div>
+  <div class="show-mum" id="show-mum-box"></div>
+  <br>
+  <button class="btn-retry" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b3-2-score';
+const DATE_KEY  = 'biology-b3-2-score-date';
+
+const questions = [
+  // ── MCQ (10) ──────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'What is the main function of the digestive system?',
+    opts:[
+      'To pump blood around the body',
+      'To break down large insoluble food molecules into small soluble molecules that can be absorbed into the blood',
+      'To filter waste products from the blood',
+      'To produce hormones that regulate growth'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which enzyme is found in saliva and begins the digestion of starch in the mouth?',
+    opts:['Protease','Lipase','Amylase','Bile'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What is the name of the muscular process that moves food along the oesophagus?',
+    opts:['Absorption','Active transport','Diffusion','Peristalsis'],
+    ans:3
+  },
+  {
+    type:'mcq',
+    q:'Which organ produces bile?',
+    opts:['Pancreas','Gall bladder','Liver','Stomach'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What does bile do to fats during digestion?',
+    opts:[
+      'Chemically breaks them down into fatty acids and glycerol',
+      'Emulsifies them into tiny droplets to increase the surface area for digestion',
+      'Converts them into glucose for energy',
+      'Transports them into the bloodstream directly'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Where are the digestive enzymes produced by the pancreas released into?',
+    opts:['Stomach','Large intestine','Liver','Duodenum'],
+    ans:3
+  },
+  {
+    type:'mcq',
+    q:'Which part of the digestive system is primarily responsible for absorbing water from undigested food?',
+    opts:['Small intestine','Duodenum','Large intestine','Stomach'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Which adaptation of the small intestine gives it a very large surface area to maximise absorption?',
+    opts:['Thick muscular walls','Villi','A rich supply of digestive enzymes','The presence of hydrochloric acid'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'When glucose concentration in the gut is lower than in the blood, how is glucose still absorbed?',
+    opts:['Osmosis','Simple diffusion','Active transport','Peristalsis'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Gastric juice in the stomach contains hydrochloric acid. What is one function of this acid?',
+    opts:[
+      'It digests carbohydrates',
+      'It kills bacteria in food',
+      'It neutralises bile from the liver',
+      'It absorbs water from food'
+    ],
+    ans:1
+  },
+
+  // ── True / False (10) ─────────────────────────────────────────
+  {
+    type:'tf',
+    q:'The gall bladder produces bile.',
+    ans:false,
+    explanation:'The liver produces bile. The gall bladder only stores bile and releases it into the duodenum when needed.'
+  },
+  {
+    type:'tf',
+    q:'The small intestine is where most chemical digestion takes place.',
+    ans:false,
+    explanation:'Most chemical digestion takes place in the duodenum (the first part of the small intestine). Digestion is then completed in the rest of the small intestine.'
+  },
+  {
+    type:'tf',
+    q:'The wall of each villus is only one cell thick, providing a short diffusion distance.',
+    ans:true,
+    explanation:'Correct! The single-cell-thick wall of each villus gives a very short diffusion path from the gut lumen into the blood, maximising absorption rate.'
+  },
+  {
+    type:'tf',
+    q:'The pancreas produces both digestive enzymes (amylase, protease, lipase) and the hormone insulin.',
+    ans:true,
+    explanation:'Correct! The pancreas has two roles: producing digestive enzymes released into the duodenum, and producing the hormone insulin.'
+  },
+  {
+    type:'tf',
+    q:'Peristalsis is the process by which the small intestine absorbs food molecules into the blood.',
+    ans:false,
+    explanation:'Peristalsis is wave-like muscle contractions that push food along the digestive tract (especially through the oesophagus). Absorption from the small intestine occurs by diffusion and active transport.'
+  },
+  {
+    type:'tf',
+    q:'The human digestive system is approximately 6–9 metres long.',
+    ans:true,
+    explanation:'Correct! The digestive tract is 6–9 m in length — around 9 million times longer than an average human cell.'
+  },
+  {
+    type:'tf',
+    q:'The stomach begins digestion of proteins using protease enzymes in gastric juice.',
+    ans:true,
+    explanation:'Correct! The stomach produces gastric juice containing protease enzymes which begin to break down proteins, alongside hydrochloric acid.'
+  },
+  {
+    type:'tf',
+    q:'Faeces are stored in the gall bladder before being expelled from the body.',
+    ans:false,
+    explanation:'Faeces are stored in the rectum, then expelled through the anus. The gall bladder stores bile, not faeces.'
+  },
+  {
+    type:'tf',
+    q:'The capillaries inside villi help maintain a steep concentration gradient, which keeps absorption rates high.',
+    ans:true,
+    explanation:'Correct! The rich blood supply constantly carries away absorbed molecules, keeping concentrations low in the blood relative to the gut, maintaining the gradient.'
+  },
+  {
+    type:'tf',
+    q:'The tongue shapes food into a bolus to help with swallowing.',
+    ans:true,
+    explanation:'Correct! After chewing, the tongue moulds food into a rounded ball called a bolus, which is then swallowed down the oesophagus.'
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+// ── Show last score banner ─────────────────────────────────────
+(function(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    const banner = document.getElementById('last-score-banner');
+    const dateStr = prevDate ? ' · ' + prevDate : '';
+    banner.textContent = '📊 Your last score: ' + prev + '/20' + dateStr;
+    banner.style.display = 'block';
+  }
+})();
+
+// ── Render question ────────────────────────────────────────────
+function renderQuestion(){
+  answered = false;
+  const q = questions[current];
+  const pct = (current / questions.length) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+
+  let html = '<div class="q-card">';
+  html += '<div class="q-label">Question ' + (current+1) + ' of ' + questions.length + '</div>';
+  html += '<span class="q-type-badge ' + (q.type==='mcq'?'badge-mcq':'badge-tf') + '">' + (q.type==='mcq'?'Multiple choice':'True or False') + '</span>';
+  html += '<div class="q-text">' + q.q + '</div>';
+
+  if(q.type === 'mcq'){
+    html += '<div class="options">';
+    q.opts.forEach(function(opt, i){
+      html += '<button class="opt-btn" onclick="answerMCQ(' + i + ')" id="opt-' + i + '">' + opt + '</button>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div class="tf-wrap">';
+    html += '<button class="tf-btn" onclick="answerTF(true)" id="tf-true">✅ True</button>';
+    html += '<button class="tf-btn" onclick="answerTF(false)" id="tf-false">❌ False</button>';
+    html += '</div>';
+  }
+
+  html += '<div class="feedback" id="feedback"></div>';
+  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">' + (current < questions.length-1 ? 'Next question →' : 'See my score 🏆') + '</button>';
+  html += '</div>';
+
+  document.getElementById('q-container').innerHTML = html;
+}
+
+function answerMCQ(chosen){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const fb = document.getElementById('feedback');
+  q.opts.forEach(function(_, i){
+    const b = document.getElementById('opt-' + i);
+    b.disabled = true;
+    if(i === q.ans) b.classList.add('correct');
+  });
+  if(chosen === q.ans){
+    score++;
+    document.getElementById('opt-' + chosen).classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    document.getElementById('opt-' + chosen).classList.add('wrong');
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorrect. The correct answer is: ' + q.opts[q.ans];
+  }
+  document.getElementById('btn-next').style.display = 'inline-block';
+}
+
+function answerTF(chosen){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const trueBtn  = document.getElementById('tf-true');
+  const falseBtn = document.getElementById('tf-false');
+  trueBtn.disabled = true;
+  falseBtn.disabled = true;
+  const correct = chosen === q.ans;
+  if(correct) score++;
+  const chosenBtn = chosen ? trueBtn : falseBtn;
+  const correctBtn = q.ans ? trueBtn : falseBtn;
+  chosenBtn.classList.add(correct ? 'correct' : 'wrong');
+  if(!correct) correctBtn.classList.add('correct');
+
+  const fb = document.getElementById('feedback');
+  if(correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct! ' + (q.explanation || '');
+  } else {
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorrect. ' + (q.explanation || ('The correct answer is ' + (q.ans ? 'True' : 'False') + '.'));
+  }
+  document.getElementById('btn-next').style.display = 'inline-block';
+}
+
+function nextQuestion(){
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  } else {
+    showScore();
+  }
+}
+
+function showScore(){
+  document.getElementById('prog').style.width = '100%';
+  document.getElementById('quiz-area').style.display = 'none';
+  const panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+
+  document.getElementById('final-score-num').textContent = score + '/20';
+
+  let msg, mum;
+  if(score >= 18){
+    msg = '🏆 Excellent! You really know your digestive system!';
+    mum = '🏆 Show this to Mum — ' + score + '/20 — Excellent!';
+  } else if(score >= 14){
+    msg = '👍 Good work! A bit more revision on the tricky parts and you\'ll nail it.';
+    mum = '👍 Show this to Mum — ' + score + '/20 — Good, but room to improve.';
+  } else {
+    msg = '📖 Keep going! Head back to the revision notes and try again.';
+    mum = '📖 Show this to Mum — ' + score + '/20 — More revision needed!';
+  }
+
+  document.getElementById('final-score-msg').textContent = msg;
+  document.getElementById('show-mum-box').textContent = mum;
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Update banner
+  const banner = document.getElementById('last-score-banner');
+  banner.textContent = '📊 Your last score: ' + score + '/20 · ' + dateStr;
+  banner.style.display = 'block';
+}
+
+function restartQuiz(){
+  current = 0;
+  score = 0;
+  answered = false;
+  document.getElementById('score-panel').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  // Hide banner during quiz (it reappears after)
+  document.getElementById('last-score-banner').style.display = 'none';
+  renderQuestion();
+}
+
+// ── Start ──────────────────────────────────────────────────────
+renderQuestion();
+</script>
+</body>
+</html>

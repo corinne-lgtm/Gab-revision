@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B3.1 Tissues and organs</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,46px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:700;font-size:16px}
+
+/* Progress */
+#progress-bar-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+#progress-bar{height:10px;background:linear-gradient(90deg,var(--lime),var(--green));border-radius:999px;width:0;transition:width .4s ease}
+#progress-label{font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:700}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:28px;padding:26px;margin-bottom:22px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-number{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:18px;line-height:1.3}
+.q-type-badge{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:999px;margin-bottom:10px}
+.badge-mcq{background:var(--blue2);color:var(--blue)}
+.badge-tf{background:var(--purple2);color:var(--purple)}
+
+/* Options */
+.options{display:flex;flex-direction:column;gap:10px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:13px 18px;font-size:15px;font-weight:600;cursor:pointer;text-align:left;font-family:Arial,Helvetica,sans-serif;color:var(--ink);transition:border-color .15s,background .15s}
+.opt-btn:hover:not(:disabled){border-color:var(--lime);background:var(--lime2)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--green)!important;font-weight:900}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--red)!important;font-weight:900}
+.opt-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:14px;padding:12px 16px;border-radius:12px;font-weight:700;font-size:15px;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:var(--green2);color:var(--green);border:1.5px solid var(--green)}
+.feedback.wrong{background:var(--red2);color:var(--red);border:1.5px solid var(--red)}
+
+/* Section divider */
+.section-divider{background:linear-gradient(135deg,var(--purple2),var(--lime2));border:2px solid var(--line);border-radius:20px;padding:16px 22px;margin:28px 0 18px;display:flex;align-items:center;gap:12px}
+.section-divider span{font-size:26px}
+.section-divider div{font-weight:900;font-size:17px;color:var(--ink)}
+.section-divider small{font-size:13px;color:var(--muted);display:block;margin-top:2px}
+
+/* Result */
+#result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 14px 35px rgba(0,0,0,.2)}
+#result-box .result-emoji{font-size:60px;margin-bottom:10px}
+#result-box .result-score{font-size:48px;font-weight:900;color:var(--yellow);letter-spacing:-1px}
+#result-box .result-label{font-size:22px;font-weight:700;margin:6px 0 14px;color:rgba(255,255,255,.9)}
+#result-box .result-msg{font-size:16px;color:rgba(255,255,255,.75);max-width:560px;margin:0 auto 24px}
+#result-box .show-mum{background:var(--yellow);color:var(--dark);border-radius:18px;padding:14px 22px;font-size:18px;font-weight:900;margin-bottom:20px;display:inline-block}
+#try-again-btn{background:white;color:var(--dark);border:none;border-radius:999px;padding:12px 28px;font-size:15px;font-weight:900;cursor:pointer;font-family:Arial,Helvetica,sans-serif}
+
+@media(max-width:700px){.wrap{padding:14px}.q-text{font-size:16px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+    <h1>⚡ Quick Check — B3.1 Tissues and organs</h1>
+    <p>20 questions · instant feedback · based on your revision notes</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="biology-index.html">📚 Biology</a>
+      <a href="biology-b3-1-revision.html">📖 Revision notes</a>
+    </div>
+  </section>
+
+  <div id="prev-banner"></div>
+
+  <div id="progress-label"></div>
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+  <div id="quiz-container"></div>
+
+  <div id="result-box">
+    <div class="result-emoji" id="res-emoji"></div>
+    <div class="result-score" id="res-score"></div>
+    <div class="result-label" id="res-label"></div>
+    <div class="result-msg" id="res-msg"></div>
+    <div class="show-mum" id="res-showmum"></div>
+    <br>
+    <button id="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>
+  </div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b3-1-score';
+const DATE_KEY  = 'biology-b3-1-score-date';
+
+const questions = [
+  // ── MCQ (10) ──────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'What is the correct order of biological organisation, from smallest to largest?',
+    options:['Organ → Tissue → Cell → Organism','Cell → Tissue → Organ → Organ system → Organism','Tissue → Cell → Organ → Organism','Cell → Organ → Tissue → Organ system → Organism'],
+    answer:1
+  },
+  {
+    type:'mcq',
+    q:'Which of the following is the best definition of a tissue?',
+    options:['A single specialised cell that carries out one function','A collection of organs working together','A group of cells with similar structure and function working together','An organism made of many different cell types'],
+    answer:2
+  },
+  {
+    type:'mcq',
+    q:'Muscular tissue in the stomach wall has which main function?',
+    options:['Producing digestive enzymes','Covering the outer surface of the stomach','Contracting to churn food and digestive juices together','Absorbing nutrients into the bloodstream'],
+    answer:2
+  },
+  {
+    type:'mcq',
+    q:'Glandular tissue in the stomach is responsible for:',
+    options:['Covering and lining the organ','Producing and releasing substances such as digestive juices and hormones','Contracting to mix food','Transporting oxygen to cells'],
+    answer:1
+  },
+  {
+    type:'mcq',
+    q:'Which tissue covers the outside of the body and lines internal organs?',
+    options:['Muscular tissue','Glandular tissue','Connective tissue','Epithelial tissue'],
+    answer:3
+  },
+  {
+    type:'mcq',
+    q:'The stomach is best described as which level of organisation?',
+    options:['A specialised cell','A tissue','An organ','An organ system'],
+    answer:2
+  },
+  {
+    type:'mcq',
+    q:'Which TWO functions does the pancreas carry out? Choose the answer that includes BOTH.',
+    options:['Churning food and absorbing water','Producing hormones (e.g. insulin) and producing digestive enzymes','Lining the gut and transporting nutrients','Filtering blood and making red blood cells'],
+    answer:1
+  },
+  {
+    type:'mcq',
+    q:'A sperm cell is an example of which level of biological organisation?',
+    options:['Tissue','Organ','Organ system','Specialised cell'],
+    answer:3
+  },
+  {
+    type:'mcq',
+    q:'Which organ system is responsible for breaking down food and absorbing nutrients into the blood?',
+    options:['Circulatory system','Gas exchange system','Digestive system','Nervous system'],
+    answer:2
+  },
+  {
+    type:'mcq',
+    q:'Which of the following is a feature that makes organ systems effective exchange surfaces?',
+    options:['Thick walls to prevent diffusion','Small surface area to concentrate substances','Short diffusion distances and a rich blood supply','Slow blood flow to allow more absorption time'],
+    answer:2
+  },
+
+  // ── True / False (10) ─────────────────────────────────────────────────────
+  {
+    type:'tf',
+    q:'A tissue is made up of a collection of different organs working together.',
+    answer:false
+  },
+  {
+    type:'tf',
+    q:'The stomach contains muscular tissue, glandular tissue, and epithelial tissue.',
+    answer:true
+  },
+  {
+    type:'tf',
+    q:'Glandular tissue can contract to bring about movement.',
+    answer:false
+  },
+  {
+    type:'tf',
+    q:'An organ is a collection of tissues all working together to perform a specific function.',
+    answer:true
+  },
+  {
+    type:'tf',
+    q:'The kidney is a specialised cell because it is very small.',
+    answer:false
+  },
+  {
+    type:'tf',
+    q:'The circulatory system transports substances around the body in the blood.',
+    answer:true
+  },
+  {
+    type:'tf',
+    q:'Organ systems consist of groups of organs working together to perform specific functions.',
+    answer:true
+  },
+  {
+    type:'tf',
+    q:'Epithelial tissue produces hormones and enzymes.',
+    answer:false
+  },
+  {
+    type:'tf',
+    q:'The pancreas makes insulin to help control blood sugar levels.',
+    answer:true
+  },
+  {
+    type:'tf',
+    q:'A whole multicellular organism is made up of a single organ system.',
+    answer:false
+  }
+];
+
+let answered = 0;
+let score    = 0;
+
+function renderQuiz(){
+  score    = 0;
+  answered = 0;
+  updateProgress();
+
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  document.getElementById('result-box').style.display = 'none';
+
+  questions.forEach((q, i) => {
+    // Section divider before T/F block
+    if(i === 10){
+      const div = document.createElement('div');
+      div.className = 'section-divider';
+      div.innerHTML = '<span>✅</span><div>True / False<small>Questions 11–20 · decide if each statement is true or false</small></div>';
+      container.appendChild(div);
+    }
+
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + i;
+
+    const badge = q.type === 'mcq'
+      ? '<span class="q-type-badge badge-mcq">Multiple choice</span>'
+      : '<span class="q-type-badge badge-tf">True / False</span>';
+
+    const opts = q.type === 'mcq'
+      ? q.options.map((o, j) => `<button class="opt-btn" onclick="check(${i},${j})">${o}</button>`).join('')
+      : `<button class="opt-btn" onclick="check(${i},true)">✅ True</button>
+         <button class="opt-btn" onclick="check(${i},false)">❌ False</button>`;
+
+    card.innerHTML = `
+      ${badge}
+      <div class="q-number">Question ${i+1} of ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts-${i}">${opts}</div>
+      <div class="feedback" id="fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function check(qIdx, chosen){
+  const q      = questions[qIdx];
+  const correct = q.answer;
+  const isRight = (chosen === correct);
+
+  // Disable all buttons for this question
+  const optsEl = document.getElementById('opts-' + qIdx);
+  const btns   = optsEl.querySelectorAll('.opt-btn');
+
+  btns.forEach((btn, j) => {
+    btn.disabled = true;
+    const isThisAnswer = q.type === 'mcq' ? (j === correct) : (correct === true ? j === 0 : j === 1);
+    if(isThisAnswer) btn.classList.add('correct');
+  });
+
+  // Mark chosen button wrong if incorrect
+  if(!isRight){
+    const chosenBtn = q.type === 'mcq'
+      ? btns[chosen]
+      : (chosen ? btns[0] : btns[1]);
+    chosenBtn.classList.add('wrong');
+  }
+
+  // Feedback
+  const fb = document.getElementById('fb-' + qIdx);
+  fb.classList.add('show');
+  if(isRight){
+    fb.classList.add('correct');
+    fb.textContent = '✓ Correct!';
+    score++;
+  } else {
+    fb.classList.add('wrong');
+    const correctText = q.type === 'mcq'
+      ? q.options[correct]
+      : (correct ? 'True' : 'False');
+    fb.textContent = `✗ Incorrect. The correct answer is: ${correctText}`;
+  }
+
+  answered++;
+  updateProgress();
+
+  if(answered === questions.length){
+    setTimeout(showResult, 700);
+  }
+}
+
+function updateProgress(){
+  const pct = (answered / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent =
+    answered === 0 ? 'Answer all 20 questions to see your result'
+                   : `${answered} / ${questions.length} answered`;
+}
+
+function showResult(){
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Hide banner (score now updated)
+  document.getElementById('prev-banner').style.display = 'none';
+
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth'});
+
+  document.getElementById('res-score').textContent = score + '/20';
+  document.getElementById('res-showmum').textContent = `Show this to mum — ${score}/20 🏆`;
+
+  let emoji, label, msg;
+  if(score >= 18){
+    emoji = '🏆'; label = 'Excellent work, Gabriel!';
+    msg   = 'Outstanding — you really know your tissues from your organs. Keep it up and that top grade is yours!';
+  } else if(score >= 14){
+    emoji = '👍'; label = 'Good effort — nearly there!';
+    msg   = 'Solid score! A quick look back at the revision notes for the bits you missed and you\'ll be flying.';
+  } else {
+    emoji = '📖'; label = 'Time to revise!';
+    msg   = 'Don\'t worry — head back to the revision notes, focus on the key definitions, then come back and try again.';
+  }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-label').textContent = label;
+  document.getElementById('res-msg').textContent   = msg;
+}
+
+function restartQuiz(){
+  document.getElementById('prev-banner').style.display = 'none';
+  renderQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// On load: check for previous score
+(function(){
+  const prev     = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = `📊 Your last score: <strong>${prev}/20</strong>${prevDate ? ' &mdash; ' + prevDate : ''} &nbsp;·&nbsp; Complete the quiz again to update it.`;
+  }
+  renderQuiz();
+})();
+</script>
+</body>
+</html>

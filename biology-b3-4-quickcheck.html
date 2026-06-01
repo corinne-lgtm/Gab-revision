@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B3.4 Catalysts and enzymes</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* Previous score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 18px;margin-bottom:18px;color:var(--orange);font-weight:700;font-size:15px}
+/* Progress */
+#progress-bar-wrap{background:rgba(0,0,0,.08);border-radius:999px;height:8px;margin-bottom:20px;overflow:hidden}
+#progress-bar{height:8px;background:linear-gradient(90deg,var(--lime),var(--green));border-radius:999px;width:0;transition:width .4s}
+#progress-label{font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:700}
+/* Question card */
+.q-card{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:28px;padding:24px;margin-bottom:20px;box-shadow:0 6px 20px rgba(0,0,0,.05);display:none}
+.q-card.active{display:block}
+.q-type-badge{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.badge-mcq{background:var(--blue2);color:var(--blue)}
+.badge-tf{background:var(--lime2);color:#3d6b00}
+.q-num{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:16px;line-height:1.35}
+/* Options */
+.options{display:grid;gap:10px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:13px 16px;cursor:pointer;font-size:15px;font-weight:600;text-align:left;width:100%;transition:border-color .15s,background .15s;font-family:inherit;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a1a}
+.opt:disabled{cursor:default}
+/* Feedback */
+.feedback{margin-top:14px;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:700;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:2px solid var(--green)}
+.feedback.bad{background:var(--red2);color:#7a1a1a;border:2px solid var(--red)}
+/* Next button */
+.next-btn{margin-top:14px;background:var(--yellow);color:var(--ink);border:none;font-weight:900;padding:11px 22px;border-radius:999px;cursor:pointer;font-size:15px;font-family:inherit;display:none}
+.next-btn.show{display:inline-block}
+/* Result */
+#result{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:32px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result h2{font-size:clamp(22px,3vw,36px);margin-bottom:8px}
+#result .score-big{font-size:clamp(48px,8vw,90px);font-weight:900;line-height:1;color:var(--green);letter-spacing:-2px}
+#result .verdict{font-size:18px;margin:14px 0 6px;font-weight:700}
+#result .msg{color:var(--muted);font-size:15px;margin-bottom:22px}
+.show-mum{background:linear-gradient(135deg,var(--dark),var(--green));color:white;border-radius:22px;padding:18px 24px;margin-bottom:22px;font-size:19px;font-weight:900}
+.try-btn{background:var(--yellow);color:var(--ink);border:none;font-weight:900;padding:13px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:16px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>⚡ Quick Check — B3.4 Catalysts &amp; Enzymes</h1>
+  <p>20 questions · instant feedback · MCQ + True/False</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b3-4-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div id="quiz-area">
+  <div id="progress-label"></div>
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+  <!-- ========== MCQ QUESTIONS ========== -->
+
+  <div class="q-card active" id="q1">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 1 of 20</div>
+    <div class="q-text">What is a catalyst?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">A substance that is used up during a chemical reaction</button>
+      <button class="opt" onclick="answer(this,true)">A substance that speeds up a chemical reaction without being used up</button>
+      <button class="opt" onclick="answer(this,false)">A substance that slows down a chemical reaction</button>
+      <button class="opt" onclick="answer(this,false)">A protein that stores energy in cells</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q2">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 2 of 20</div>
+    <div class="q-text">What type of molecule are enzymes made from?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">Lipids</button>
+      <button class="opt" onclick="answer(this,false)">Carbohydrates</button>
+      <button class="opt" onclick="answer(this,true)">Proteins</button>
+      <button class="opt" onclick="answer(this,false)">Nucleic acids</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q3">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 3 of 20</div>
+    <div class="q-text">What is the name of the region on an enzyme where the substrate binds?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">Reaction site</button>
+      <button class="opt" onclick="answer(this,false)">Substrate pocket</button>
+      <button class="opt" onclick="answer(this,true)">Active site</button>
+      <button class="opt" onclick="answer(this,false)">Binding groove</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q4">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 4 of 20</div>
+    <div class="q-text">In the lock and key theory, what does the 'lock' represent?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">The substrate molecule</button>
+      <button class="opt" onclick="answer(this,true)">The enzyme (specifically its active site)</button>
+      <button class="opt" onclick="answer(this,false)">The product of the reaction</button>
+      <button class="opt" onclick="answer(this,false)">The enzyme-substrate complex</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q5">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 5 of 20</div>
+    <div class="q-text">Which term describes an enzyme that has permanently lost its shape and can no longer function?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">Inhibited</button>
+      <button class="opt" onclick="answer(this,false)">Deactivated</button>
+      <button class="opt" onclick="answer(this,true)">Denatured</button>
+      <button class="opt" onclick="answer(this,false)">Saturated</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q6">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 6 of 20</div>
+    <div class="q-text">The metabolism of an organism is best described as:</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">The process by which cells divide</button>
+      <button class="opt" onclick="answer(this,false)">The rate at which an organism breathes</button>
+      <button class="opt" onclick="answer(this,true)">The sum of all chemical reactions taking place in its cells at any one time</button>
+      <button class="opt" onclick="answer(this,false)">The energy stored in an organism's fat cells</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q7">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 7 of 20</div>
+    <div class="q-text">Which of the following is an example of a metabolic reaction that breaks down a large molecule?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">Building glycogen from glucose</button>
+      <button class="opt" onclick="answer(this,false)">Building proteins from amino acids</button>
+      <button class="opt" onclick="answer(this,false)">Building lipids from fatty acids and glycerol</button>
+      <button class="opt" onclick="answer(this,true)">Breaking down excess amino acids to form urea</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q8">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 8 of 20</div>
+    <div class="q-text">After an enzyme has catalysed a reaction, what happens to the enzyme?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">It is broken down into amino acids</button>
+      <button class="opt" onclick="answer(this,false)">It bonds permanently to the product</button>
+      <button class="opt" onclick="answer(this,true)">It is released unchanged and can be used again</button>
+      <button class="opt" onclick="answer(this,false)">It combines with another substrate to form a new enzyme</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q9">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 9 of 20</div>
+    <div class="q-text">Hydrogen peroxide is a toxic waste product in cells. What products are formed when it is broken down by an enzyme?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">Carbon dioxide and water</button>
+      <button class="opt" onclick="answer(this,true)">Oxygen and water</button>
+      <button class="opt" onclick="answer(this,false)">Glucose and oxygen</button>
+      <button class="opt" onclick="answer(this,false)">Carbon dioxide and oxygen</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q10">
+    <span class="q-type-badge badge-mcq">Multiple Choice</span>
+    <div class="q-num">Question 10 of 20</div>
+    <div class="q-text">Which of the following correctly describes why enzymes are specific to particular substrates?</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">Each enzyme has a different molecular weight that matches its substrate</button>
+      <button class="opt" onclick="answer(this,false)">Each enzyme is made from a different type of amino acid unique to one substrate</button>
+      <button class="opt" onclick="answer(this,true)">The shape of an enzyme's active site only fits one specific substrate, like a lock and key</button>
+      <button class="opt" onclick="answer(this,false)">Enzymes carry an electrical charge that attracts only one type of substrate</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <!-- ========== TRUE/FALSE QUESTIONS ========== -->
+
+  <div class="q-card" id="q11">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 11 of 20</div>
+    <div class="q-text">A catalyst is used up during a chemical reaction.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">True</button>
+      <button class="opt" onclick="answer(this,true)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q12">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 12 of 20</div>
+    <div class="q-text">Enzymes are biological catalysts made of protein.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q13">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 13 of 20</div>
+    <div class="q-text">One enzyme can catalyse many different types of reaction because it can change its active site shape.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">True</button>
+      <button class="opt" onclick="answer(this,true)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q14">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 14 of 20</div>
+    <div class="q-text">The active site of an enzyme is formed by the folding of long chains of amino acids.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q15">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 15 of 20</div>
+    <div class="q-text">When an enzyme is denatured by high temperature, its active site shape changes permanently.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q16">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 16 of 20</div>
+    <div class="q-text">Enzymes can only break large molecules apart — they cannot join small molecules together.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,false)">True</button>
+      <button class="opt" onclick="answer(this,true)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q17">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 17 of 20</div>
+    <div class="q-text">The breakdown of glucose during cellular respiration is an example of a metabolic reaction.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q18">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 18 of 20</div>
+    <div class="q-text">In the lock and key theory, the substrate is represented by the key.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q19">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 19 of 20</div>
+    <div class="q-text">Plants can build amino acids by combining carbon dioxide, water, and nitrates using enzyme-controlled reactions.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+
+  <div class="q-card" id="q20">
+    <span class="q-type-badge badge-tf">True / False</span>
+    <div class="q-num">Question 20 of 20</div>
+    <div class="q-text">The enzyme catalase breaks down hydrogen peroxide into oxygen and water.</div>
+    <div class="options">
+      <button class="opt" onclick="answer(this,true)">True</button>
+      <button class="opt" onclick="answer(this,false)">False</button>
+    </div>
+    <div class="feedback"></div>
+    <button class="next-btn" onclick="nextQ()">Finish →</button>
+  </div>
+
+</div><!-- /quiz-area -->
+
+<!-- ========== RESULT ========== -->
+<div id="result">
+  <div class="show-mum" id="show-mum-box"></div>
+  <div class="score-big" id="score-display"></div>
+  <div class="verdict" id="verdict-text"></div>
+  <div class="msg" id="verdict-msg"></div>
+  <button class="try-btn" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+(function(){
+  var SCORE_KEY = 'biology-b3-4-score';
+  var DATE_KEY  = 'biology-b3-4-score-date';
+  var TOTAL     = 20;
+
+  var currentQ  = 1;
+  var score     = 0;
+  var answered  = false;
+
+  /* ---- Previous score banner ---- */
+  var prevScore = localStorage.getItem(SCORE_KEY);
+  if(prevScore !== null){
+    var prevDate = localStorage.getItem(DATE_KEY) || '';
+    var banner   = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent   = '📊 Your last score: ' + prevScore + '/' + TOTAL +
+                           (prevDate ? '  ·  ' + prevDate : '');
+  }
+
+  /* ---- Progress ---- */
+  function updateProgress(){
+    var done = currentQ - 1;
+    document.getElementById('progress-label').textContent =
+      'Question ' + Math.min(currentQ, TOTAL) + ' of ' + TOTAL;
+    document.getElementById('progress-bar').style.width =
+      Math.round((done / TOTAL) * 100) + '%';
+  }
+  updateProgress();
+
+  /* ---- Answer handler ---- */
+  window.answer = function(btn, isCorrect){
+    if(answered) return;
+    answered = true;
+
+    var card    = btn.closest('.q-card');
+    var opts    = card.querySelectorAll('.opt');
+    var fb      = card.querySelector('.feedback');
+    var nextBtn = card.querySelector('.next-btn');
+
+    opts.forEach(function(o){ o.disabled = true; });
+
+    if(isCorrect){
+      btn.classList.add('correct');
+      score++;
+      fb.textContent = '✅ Correct!';
+      fb.className   = 'feedback show ok';
+    } else {
+      btn.classList.add('wrong');
+      /* Highlight correct answer */
+      opts.forEach(function(o){
+        if(o.getAttribute('onclick').indexOf('true') !== -1){
+          o.classList.add('correct');
+        }
+      });
+      fb.textContent = '❌ Incorrect — the correct answer is highlighted in green.';
+      fb.className   = 'feedback show bad';
+    }
+    nextBtn.classList.add('show');
+  };
+
+  /* ---- Next question ---- */
+  window.nextQ = function(){
+    document.getElementById('q' + currentQ).classList.remove('active');
+    currentQ++;
+    answered = false;
+
+    if(currentQ <= TOTAL){
+      document.getElementById('q' + currentQ).classList.add('active');
+      updateProgress();
+    } else {
+      showResult();
+    }
+  };
+
+  /* ---- Show result ---- */
+  function showResult(){
+    document.getElementById('quiz-area').style.display = 'none';
+    document.getElementById('progress-label').style.display = 'none';
+    document.getElementById('progress-bar-wrap').style.display = 'none';
+
+    var resultEl = document.getElementById('result');
+    resultEl.style.display = 'block';
+
+    document.getElementById('score-display').textContent = score + '/' + TOTAL;
+    document.getElementById('show-mum-box').textContent =
+      'Show this to mum — ' + score + '/' + TOTAL + ' 🏆';
+
+    var verdict, msg;
+    if(score >= 18){
+      verdict = '🏆 Excellent! Outstanding work, Gabriel!';
+      msg     = 'You really know your enzymes — keep it up, that\'s exam-ready!';
+    } else if(score >= 14){
+      verdict = '👍 Good effort — nearly there!';
+      msg     = 'Solid understanding, but review any questions you got wrong before the exam.';
+    } else {
+      verdict = '📖 Time to revise!';
+      msg     = 'Head back to the revision notes and re-read B3.4 before trying again.';
+    }
+    document.getElementById('verdict-text').textContent = verdict;
+    document.getElementById('verdict-msg').textContent  = msg;
+
+    /* Save score */
+    var now = new Date();
+    var dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    localStorage.setItem(SCORE_KEY, score);
+    localStorage.setItem(DATE_KEY, dateStr);
+
+    /* Update banner for next load */
+    var banner = document.getElementById('prev-banner');
+    banner.style.display = 'none'; /* hide old banner during result view */
+  }
+
+  /* ---- Restart ---- */
+  window.restartQuiz = function(){
+    score    = 0;
+    currentQ = 1;
+    answered = false;
+
+    /* Reset all cards */
+    for(var i=1; i<=TOTAL; i++){
+      var card = document.getElementById('q'+i);
+      card.classList.remove('active');
+      var opts = card.querySelectorAll('.opt');
+      opts.forEach(function(o){
+        o.disabled = false;
+        o.classList.remove('correct','wrong');
+      });
+      card.querySelector('.feedback').className = 'feedback';
+      card.querySelector('.next-btn').classList.remove('show');
+    }
+
+    document.getElementById('q1').classList.add('active');
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('quiz-area').style.display = 'block';
+    document.getElementById('progress-label').style.display = 'block';
+    document.getElementById('progress-bar-wrap').style.display = 'block';
+    document.getElementById('prev-banner').style.display = 'none';
+    updateProgress();
+  };
+})();
+</script>
+</body>
+</html>

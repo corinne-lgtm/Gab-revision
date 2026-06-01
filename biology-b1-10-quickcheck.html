@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B1.10 Quick Check – Exchanging materials</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.5;min-height:100vh}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(24px,4vw,46px);line-height:1;letter-spacing:-1px;margin-bottom:8px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.prev-score{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 18px;margin-bottom:18px;display:none;font-weight:700;color:var(--orange)}
+.prev-score span{font-size:18px}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:18px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin-bottom:16px}
+.question-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.question-card.correct{background:var(--green2);border-color:var(--green)}
+.question-card.incorrect{background:var(--red2);border-color:var(--red)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.4}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 14px;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s}
+.choice-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.choice-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green)}
+.choice-btn.selected-incorrect{background:var(--red2);border-color:var(--red);color:var(--red)}
+.choice-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green)}
+.choice-btn:disabled{cursor:default}
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;background:white;border:2px solid var(--line);border-radius:14px;padding:12px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green)}
+.tf-btn.selected-incorrect{background:var(--red2);border-color:var(--red);color:var(--red)}
+.tf-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green)}
+.tf-btn:disabled{cursor:default}
+.feedback{margin-top:10px;font-size:14px;font-weight:700;display:none}
+.feedback.show{display:block}
+.feedback.ok{color:var(--green)}
+.feedback.wrong{color:var(--red)}
+.progress-bar{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,var(--green),var(--lime));height:100%;border-radius:999px;transition:width .4s}
+.score-panel{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:28px;padding:30px;text-align:center;display:none}
+.score-panel.show{display:block}
+.score-big{font-size:72px;font-weight:900;line-height:1;color:var(--yellow);margin:10px 0}
+.score-label{font-size:20px;font-weight:700;margin-bottom:6px}
+.score-msg{font-size:16px;color:rgba(255,255,255,.85);margin:10px 0 20px}
+.try-again{background:var(--yellow);color:var(--dark);border:none;border-radius:999px;padding:14px 28px;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer}
+.try-again:hover{opacity:.9}
+@media(max-width:640px){.choices{grid-template-columns:1fr}.wrap{padding:14px}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ B1.10 Quick Check</h1>
+  <p>Exchanging materials — 10 multiple choice + 10 true/false = 20 questions</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-10-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="prev-score" id="prev-score-banner">
+  <span id="prev-score-text"></span>
+</div>
+
+<div id="quiz-area">
+  <div class="panel">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div id="questions-container"></div>
+  </div>
+</div>
+
+<div class="score-panel" id="score-panel">
+  <div class="score-label">Show this to mum 🏆</div>
+  <div class="score-big" id="score-display"></div>
+  <div style="font-size:16px;color:rgba(255,255,255,.7)">/20</div>
+  <div class="score-msg" id="score-msg"></div>
+  <button class="try-again" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const STORAGE_KEY = 'biology-b1-10-score';
+const STORAGE_DATE_KEY = 'biology-b1-10-score-date';
+
+const questions = [
+  // --- 10 MCQ ---
+  {
+    type:'mcq', id:'q1',
+    text:'A 1 cm cube has a surface area to volume ratio of:',
+    choices:['1 : 1','3 : 1','6 : 1','12 : 1'],
+    correct:2
+  },
+  {
+    type:'mcq', id:'q2',
+    text:'As an organism gets larger, what happens to its surface area to volume (SA:V) ratio?',
+    choices:['It increases','It stays the same','It decreases','It doubles'],
+    correct:2
+  },
+  {
+    type:'mcq', id:'q3',
+    text:'Which adaptation ensures a short diffusion path across an exchange surface?',
+    choices:['Rich blood supply','Large surface area','Thin walls / membrane','Ventilation'],
+    correct:2
+  },
+  {
+    type:'mcq', id:'q4',
+    text:'What is the main role of ventilation (e.g. breathing) at an exchange surface?',
+    choices:['Thickening the membrane','Increasing the diffusion path','Maintaining a steep concentration gradient','Reducing surface area'],
+    correct:2
+  },
+  {
+    type:'mcq', id:'q5',
+    text:'Which structure in the human lungs provides a very large surface area for gas exchange?',
+    choices:['Bronchioles','Trachea','Alveoli','Diaphragm'],
+    correct:2
+  },
+  {
+    type:'mcq', id:'q6',
+    text:'Fish gills maintain concentration gradients for gas exchange by:',
+    choices:['Having very thick walls','Using an operculum flap to pump water over the gills','Reducing the blood supply to the gills','Absorbing oxygen through the skin'],
+    correct:1
+  },
+  {
+    type:'mcq', id:'q7',
+    text:'Which structure in plant leaves allows gas exchange to occur?',
+    choices:['Root hair cells','Villi','Stomata','Alveoli'],
+    correct:2
+  },
+  {
+    type:'mcq', id:'q8',
+    text:'Root hair cells in plants are adapted for absorption of water and mineral ions by having:',
+    choices:['Thick, waxy walls','Long hair-like extensions that increase surface area','A very low concentration of minerals inside','Stomata on their surface'],
+    correct:1
+  },
+  {
+    type:'mcq', id:'q9',
+    text:'Villi in the small intestine increase the efficiency of food absorption mainly by:',
+    choices:['Producing digestive enzymes','Providing a large surface area with a rich blood supply','Secreting mucus to protect cells','Pumping food molecules by active transport only'],
+    correct:1
+  },
+  {
+    type:'mcq', id:'q10',
+    text:'The Fitzroy river turtle absorbs oxygen from water using:',
+    choices:['Its lungs alone','Gills on the side of its body','Two large sacs lined with finger-like folds at its rear opening','Stomata on its skin'],
+    correct:2
+  },
+
+  // --- 10 True/False ---
+  {
+    type:'tf', id:'q11',
+    text:'A small organism with a high SA:V ratio can supply all its cells by simple diffusion alone.',
+    correct:true
+  },
+  {
+    type:'tf', id:'q12',
+    text:'When the size of an organism doubles, surface area increases faster than volume.',
+    correct:false
+  },
+  {
+    type:'tf', id:'q13',
+    text:'Large multicellular organisms need both specialised exchange surfaces and transport systems.',
+    correct:true
+  },
+  {
+    type:'tf', id:'q14',
+    text:'A thick membrane speeds up diffusion across an exchange surface.',
+    correct:false
+  },
+  {
+    type:'tf', id:'q15',
+    text:'A rich blood supply at an exchange surface helps maintain a steep concentration gradient.',
+    correct:true
+  },
+  {
+    type:'tf', id:'q16',
+    text:'Human alveoli have thin walls, a rich blood supply, and are ventilated by breathing.',
+    correct:true
+  },
+  {
+    type:'tf', id:'q17',
+    text:'Plant leaves are thick and round in shape to maximise the volume for storing gases.',
+    correct:false
+  },
+  {
+    type:'tf', id:'q18',
+    text:'For a large organism, the distance from the outer surface to cells deep inside is too great for simple diffusion to be effective.',
+    correct:true
+  },
+  {
+    type:'tf', id:'q19',
+    text:'Ventilation of an exchange surface reduces the concentration gradient, slowing diffusion.',
+    correct:false
+  },
+  {
+    type:'tf', id:'q20',
+    text:'The Fitzroy river turtle uses a muscular opening to pump water in and out, ventilating its internal folds.',
+    correct:true
+  }
+];
+
+let answered = 0;
+let score = 0;
+
+function buildQuiz() {
+  answered = 0;
+  score = 0;
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  updateProgress();
+
+  // MCQ section
+  const mcqLabel = document.createElement('div');
+  mcqLabel.className = 'section-label';
+  mcqLabel.textContent = 'Part 1 — Multiple choice (10 questions)';
+  container.appendChild(mcqLabel);
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + q.id;
+
+    const num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = 'Question ' + (idx + 1);
+    card.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.text;
+    card.appendChild(text);
+
+    if (q.type === 'mcq') {
+      const grid = document.createElement('div');
+      grid.className = 'choices';
+      q.choices.forEach((c, ci) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = c;
+        btn.onclick = () => handleMCQ(q.id, ci, q.correct);
+        grid.appendChild(btn);
+      });
+      card.appendChild(grid);
+
+      // Add T/F separator before q11
+      if (q.id === 'q11') {
+        const sep = document.createElement('div');
+        sep.className = 'section-label';
+        sep.style.marginTop = '24px';
+        sep.textContent = 'Part 2 — True / False (10 questions)';
+        container.appendChild(sep);
+      }
+    } else {
+      const row = document.createElement('div');
+      row.className = 'tf-row';
+      ['✅ True', '❌ False'].forEach((label, ti) => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = label;
+        const chosen = ti === 0; // True = index 0
+        btn.onclick = () => handleTF(q.id, chosen, q.correct);
+        row.appendChild(btn);
+      });
+      card.appendChild(row);
+    }
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = 'fb-' + q.id;
+    card.appendChild(fb);
+
+    container.appendChild(card);
+  });
+}
+
+function handleMCQ(qid, chosen, correct) {
+  const card = document.getElementById('card-' + qid);
+  const buttons = card.querySelectorAll('.choice-btn');
+  buttons.forEach(b => b.disabled = true);
+  const fb = document.getElementById('fb-' + qid);
+  fb.classList.add('show');
+
+  if (chosen === correct) {
+    buttons[chosen].classList.add('selected-correct');
+    card.classList.add('correct');
+    fb.classList.add('ok');
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    buttons[chosen].classList.add('selected-incorrect');
+    buttons[correct].classList.add('reveal-correct');
+    card.classList.add('incorrect');
+    fb.classList.add('wrong');
+    fb.textContent = '❌ Incorrect — the correct answer is: ' + questions.find(q=>q.id===qid).choices[correct];
+  }
+  answered++;
+  updateProgress();
+  if (answered === 20) setTimeout(showScore, 600);
+}
+
+function handleTF(qid, chosen, correct) {
+  const card = document.getElementById('card-' + qid);
+  const buttons = card.querySelectorAll('.tf-btn');
+  buttons.forEach(b => b.disabled = true);
+  const fb = document.getElementById('fb-' + qid);
+  fb.classList.add('show');
+
+  // buttons[0] = True, buttons[1] = False
+  if (chosen === correct) {
+    buttons[chosen ? 0 : 1].classList.add('selected-correct');
+    card.classList.add('correct');
+    fb.classList.add('ok');
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    buttons[chosen ? 0 : 1].classList.add('selected-incorrect');
+    buttons[correct ? 0 : 1].classList.add('reveal-correct');
+    card.classList.add('incorrect');
+    fb.classList.add('wrong');
+    fb.textContent = '❌ Incorrect — the correct answer is: ' + (correct ? 'True' : 'False');
+  }
+  answered++;
+  updateProgress();
+  if (answered === 20) setTimeout(showScore, 600);
+}
+
+function updateProgress() {
+  document.getElementById('progress').style.width = (answered / 20 * 100) + '%';
+}
+
+function showScore() {
+  document.getElementById('quiz-area').style.display = 'none';
+  const panel = document.getElementById('score-panel');
+  panel.classList.add('show');
+  document.getElementById('score-display').textContent = score;
+
+  let msg = '';
+  if (score >= 18) msg = '🏆 Excellent work, Gabriel! You really know this topic. Keep it up!';
+  else if (score >= 14) msg = '👍 Good effort! A few things to brush up on — check the revision notes.';
+  else msg = '📖 Go back and revise the notes, then try again. You\'ve got this!';
+  document.getElementById('score-msg').textContent = msg;
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(STORAGE_KEY, score);
+  localStorage.setItem(STORAGE_DATE_KEY, dateStr);
+}
+
+function restartQuiz() {
+  document.getElementById('score-panel').classList.remove('show');
+  document.getElementById('quiz-area').style.display = '';
+  buildQuiz();
+  // Keep banner hidden during quiz, it was already shown on load
+  document.getElementById('prev-score-banner').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function loadPrevScore() {
+  const prev = localStorage.getItem(STORAGE_KEY);
+  if (prev !== null) {
+    const date = localStorage.getItem(STORAGE_DATE_KEY) || '';
+    const banner = document.getElementById('prev-score-banner');
+    const text = document.getElementById('prev-score-text');
+    text.innerHTML = '📊 Your last score: <strong>' + prev + '/20</strong>' + (date ? ' &mdash; ' + date : '');
+    banner.style.display = 'block';
+  }
+}
+
+// Init
+loadPrevScore();
+buildQuiz();
+</script>
+</body>
+</html>

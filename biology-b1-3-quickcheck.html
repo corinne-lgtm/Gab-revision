@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.3 Quick Check Quiz</title>
+<style>
+:root{
+  --bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;
+  --green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;
+  --blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;
+  --purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;
+  --red:#c0392b;--red2:#fde8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:900;font-size:15px;display:none}
+
+/* Quiz container */
+#quiz-container{}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--muted);margin:24px 0 10px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:22px;padding:22px;margin-bottom:16px;transition:border-color .2s}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.4}
+
+/* MCQ options */
+.options{display:grid;gap:8px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 16px;font-size:14px;font-weight:600;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink);transition:background .15s,border-color .15s}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--dark)}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--dark)}
+.opt-btn:disabled{cursor:default}
+
+/* True/False */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink);transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:600;display:none}
+.feedback.correct{background:var(--green2);color:var(--green);border:1.5px solid var(--green)}
+.feedback.wrong{background:var(--red2);color:var(--red);border:1.5px solid var(--red)}
+
+/* Submit / result */
+#submit-btn{display:block;width:100%;background:var(--yellow);color:var(--ink);border:none;border-radius:18px;padding:16px;font-size:18px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:10px;letter-spacing:-.3px}
+#submit-btn:disabled{opacity:.4;cursor:default}
+#result-box{background:var(--dark);color:white;border-radius:28px;padding:28px;margin-top:24px;text-align:center;display:none}
+#result-box .score-big{font-size:clamp(36px,6vw,64px);font-weight:900;color:var(--yellow);line-height:1}
+#result-box .score-label{font-size:18px;color:rgba(255,255,255,.8);margin-top:4px}
+#result-box .msg{font-size:20px;font-weight:700;margin:18px 0 4px;color:white}
+#result-box .show-mum{background:var(--yellow);color:var(--ink);border-radius:18px;padding:16px 24px;font-size:18px;font-weight:900;margin:14px auto 0;display:inline-block}
+#try-again-btn{display:inline-block;margin-top:16px;background:rgba(255,255,255,.12);color:white;border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:10px 22px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+#try-again-btn:hover{background:rgba(255,255,255,.2)}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ B1.3 Quick Check Quiz</h1>
+  <p>Eukaryotic and prokaryotic cells · 20 questions · instant feedback</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-3-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="quiz-container"></div>
+
+</div>
+
+<script>
+// ── Data ─────────────────────────────────────────────────────────────────────
+const STORE_KEY = 'biology-b1-3-score';
+const STORE_DATE_KEY = 'biology-b1-3-score-date';
+
+const mcqs = [
+  {
+    q: "Which of the following correctly describes a eukaryotic cell?",
+    opts: [
+      "DNA is found free in the cytoplasm with no nucleus",
+      "DNA is contained in chromosomes inside a nucleus",
+      "DNA is stored in plasmids outside the cell membrane",
+      "DNA is found only in mitochondria"
+    ],
+    ans: 1
+  },
+  {
+    q: "What is the approximate size range of prokaryotic cells (bacteria)?",
+    opts: ["10–100 μm", "1–10 mm", "0.2–2.0 μm", "20–300 nm"],
+    ans: 2
+  },
+  {
+    q: "Which structure is found in bacterial cells but NOT in animal or plant cells?",
+    opts: ["Mitochondria", "Ribosomes", "Plasmids", "Cell membrane"],
+    ans: 2
+  },
+  {
+    q: "A plant cell is approximately 100 μm long. A bacterium is approximately 1 μm long. How many orders of magnitude larger is the plant cell?",
+    opts: ["1 order of magnitude (10¹)", "2 orders of magnitude (10²)", "3 orders of magnitude (10³)", "They are the same order of magnitude"],
+    ans: 1
+  },
+  {
+    q: "The cell wall of a bacterial cell is different from that of a plant cell because:",
+    opts: [
+      "Bacteria have no cell wall at all",
+      "The bacterial cell wall is made of cellulose",
+      "The bacterial cell wall is NOT made of cellulose",
+      "Only plant cells have a cell wall"
+    ],
+    ans: 2
+  },
+  {
+    q: "What is the function of a flagellum in a bacterial cell?",
+    opts: ["Storing extra DNA", "Producing energy", "Movement", "Protein synthesis"],
+    ans: 2
+  },
+  {
+    q: "Which of the following structures do animal cells, plant cells and bacterial cells ALL share?",
+    opts: ["Nucleus", "Chloroplasts", "Cell membrane", "Permanent vacuole"],
+    ans: 2
+  },
+  {
+    q: "How is the genetic material of a prokaryotic cell different from that of a eukaryotic cell?",
+    opts: [
+      "Prokaryotes have multiple chromosomes enclosed in a nucleus",
+      "Prokaryotes have a single DNA loop free in the cytoplasm",
+      "Prokaryotes store DNA only in mitochondria",
+      "Prokaryotes have no DNA at all"
+    ],
+    ans: 1
+  },
+  {
+    q: "Which cells are classified as eukaryotic?",
+    opts: [
+      "Bacteria and viruses",
+      "Bacteria and fungi",
+      "Animal cells, plant cells, fungi and protists",
+      "Only animal cells and plant cells"
+    ],
+    ans: 2
+  },
+  {
+    q: "A small animal cell measures 10 μm and a large plant cell measures 100 μm. What is the ratio of their sizes, expressed as a power of 10?",
+    opts: ["10⁰ (same size)", "10¹", "10²", "10³"],
+    ans: 1
+  }
+];
+
+const truefalse = [
+  { q: "Bacterial cells contain mitochondria.", ans: false },
+  { q: "Ribosomes are found in both prokaryotic and eukaryotic cells.", ans: true },
+  { q: "The DNA loop in a bacterial cell is enclosed inside a nucleus.", ans: false },
+  { q: "Plasmids are always present in every bacterial cell.", ans: false },
+  { q: "Viruses are smaller than prokaryotic cells.", ans: true },
+  { q: "Eukaryotic cells typically range from 10–100 μm in size.", ans: true },
+  { q: "Bacterial cells sometimes have a slime capsule that provides a protective layer.", ans: true },
+  { q: "Plant cells have a cell wall made of the same material as the bacterial cell wall.", ans: false },
+  { q: "Two cells differ in size by a factor of 100 — this is described as 2 orders of magnitude.", ans: true },
+  { q: "All bacterial cells have flagella for movement.", ans: false }
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let answered = new Array(20).fill(false);
+let correct   = new Array(20).fill(false);
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function buildQuiz() {
+  answered = new Array(20).fill(false);
+  correct   = new Array(20).fill(false);
+
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  // MCQ section
+  const mcqLabel = document.createElement('div');
+  mcqLabel.className = 'section-label';
+  mcqLabel.textContent = 'Part A — Multiple choice (10 questions)';
+  container.appendChild(mcqLabel);
+
+  mcqs.forEach((q, i) => {
+    container.appendChild(buildMCQ(q, i));
+  });
+
+  // T/F section
+  const tfLabel = document.createElement('div');
+  tfLabel.className = 'section-label';
+  tfLabel.textContent = 'Part B — True or False (10 questions)';
+  container.appendChild(tfLabel);
+
+  truefalse.forEach((q, i) => {
+    container.appendChild(buildTF(q, i + 10));
+  });
+
+  // Submit
+  const btn = document.createElement('button');
+  btn.id = 'submit-btn';
+  btn.textContent = 'See my score →';
+  btn.disabled = true;
+  btn.addEventListener('click', showResult);
+  container.appendChild(btn);
+
+  // Result box
+  const res = document.createElement('div');
+  res.id = 'result-box';
+  container.appendChild(res);
+}
+
+function buildMCQ(data, idx) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = 'card-' + idx;
+
+  card.innerHTML = `<div class="q-num">Question ${idx + 1}</div>
+    <div class="q-text">${data.q}</div>
+    <div class="options" id="opts-${idx}"></div>
+    <div class="feedback" id="fb-${idx}"></div>`;
+
+  const optsDiv = card.querySelector(`#opts-${idx}`);
+  data.opts.forEach((o, oi) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = o;
+    btn.addEventListener('click', () => handleMCQ(idx, oi, data.ans, optsDiv, card));
+    optsDiv.appendChild(btn);
+  });
+
+  return card;
+}
+
+function handleMCQ(idx, chosen, correct_idx, optsDiv, card) {
+  if (answered[idx]) return;
+  answered[idx] = true;
+
+  const btns = optsDiv.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = card.querySelector('.feedback');
+
+  if (chosen === correct_idx) {
+    btns[chosen].classList.add('correct');
+    correct[idx] = true;
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[correct_idx].classList.add('correct');
+    correct[idx] = false;
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Incorrect — the correct answer is: "${mcqs[idx].opts[correct_idx]}"`;
+  }
+  fb.style.display = 'block';
+  checkAllAnswered();
+}
+
+function buildTF(data, idx) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = 'card-' + idx;
+
+  card.innerHTML = `<div class="q-num">Question ${idx + 1}</div>
+    <div class="q-text">${data.q}</div>
+    <div class="tf-row">
+      <button class="tf-btn" id="tf-true-${idx}">✅ True</button>
+      <button class="tf-btn" id="tf-false-${idx}">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-${idx}"></div>`;
+
+  // attach after inserting so IDs exist
+  setTimeout(() => {
+    const trueBtn  = document.getElementById(`tf-true-${idx}`);
+    const falseBtn = document.getElementById(`tf-false-${idx}`);
+    trueBtn.addEventListener('click',  () => handleTF(idx, true,  data.ans, trueBtn, falseBtn, card));
+    falseBtn.addEventListener('click', () => handleTF(idx, false, data.ans, trueBtn, falseBtn, card));
+  }, 0);
+
+  return card;
+}
+
+function handleTF(idx, chosen, correctAns, trueBtn, falseBtn, card) {
+  if (answered[idx]) return;
+  answered[idx] = true;
+
+  trueBtn.disabled = true;
+  falseBtn.disabled = true;
+
+  const fb = card.querySelector('.feedback');
+  const isCorrect = (chosen === correctAns);
+  correct[idx] = isCorrect;
+
+  const chosenBtn  = chosen ? trueBtn : falseBtn;
+  const correctBtn = correctAns ? trueBtn : falseBtn;
+
+  if (isCorrect) {
+    chosenBtn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+  } else {
+    chosenBtn.classList.add('wrong');
+    correctBtn.classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Incorrect — the correct answer is: ${correctAns ? 'True' : 'False'}`;
+  }
+  fb.style.display = 'block';
+  checkAllAnswered();
+}
+
+function checkAllAnswered() {
+  const allDone = answered.every(Boolean);
+  const btn = document.getElementById('submit-btn');
+  if (btn) btn.disabled = !allDone;
+}
+
+function showResult() {
+  const score = correct.filter(Boolean).length;
+
+  // Save to localStorage
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(STORE_KEY, score);
+  localStorage.setItem(STORE_DATE_KEY, dateStr);
+
+  // Determine message
+  let emoji, msg;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding! You really know your eukaryotes from your prokaryotes!';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good effort — a few things to tighten up, then you\'ll have this nailed!';
+  } else {
+    emoji = '📖';
+    msg = 'Head back to the revision notes and go again — you\'ve got this!';
+  }
+
+  const box = document.getElementById('result-box');
+  box.innerHTML = `
+    <div class="score-big">${score}/20</div>
+    <div class="score-label">questions correct</div>
+    <div class="show-mum">Show this to Mum — ${score}/20 ${emoji}</div>
+    <div class="msg">${msg}</div>
+    <button id="try-again-btn" onclick="restartQuiz()">↩ Try again</button>`;
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  document.getElementById('submit-btn').style.display = 'none';
+}
+
+function restartQuiz() {
+  // Hide banner (keep data in localStorage)
+  document.getElementById('prev-banner').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── Previous score banner ─────────────────────────────────────────────────────
+function showPrevScore() {
+  const prev = localStorage.getItem(STORE_KEY);
+  if (prev === null) return;
+  const prevDate = localStorage.getItem(STORE_DATE_KEY);
+  const banner = document.getElementById('prev-banner');
+  banner.textContent = `Your last score: ${prev}/20${prevDate ? ' — ' + prevDate : ''}`;
+  banner.style.display = 'block';
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+showPrevScore();
+buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B3.6 How the digestive system works</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(20px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-score-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:14px 18px;margin-bottom:18px;color:var(--orange);font-weight:700;font-size:15px}
+
+/* Progress */
+.progress-bar-wrap{background:rgba(255,255,255,.35);border-radius:999px;height:8px;margin-bottom:20px;overflow:hidden}
+.progress-bar{background:var(--yellow);height:8px;border-radius:999px;transition:width .4s ease;width:0%}
+.progress-label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:26px;margin-bottom:22px;box-shadow:0 6px 20px rgba(0,0,0,.05);display:none}
+.q-card.active{display:block}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:18px;line-height:1.35}
+.q-num{display:inline-block;background:var(--dark);color:var(--yellow);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:900;margin-bottom:8px}
+
+/* MCQ options */
+.options{display:grid;gap:10px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;font-size:15px;font-weight:600;transition:all .18s;text-align:left;color:var(--ink)}
+.opt:hover:not(:disabled){background:var(--lime2);border-color:var(--lime);transform:translateY(-1px)}
+.opt.correct{background:var(--green2);border-color:var(--green);color:#1a4d22;cursor:default}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#7a1a14;cursor:default}
+.opt:disabled{cursor:default}
+
+/* True/False */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:15px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:16px;font-weight:900;cursor:pointer;transition:all .18s;color:var(--ink)}
+.tf-btn:hover:not(:disabled){transform:translateY(-1px)}
+.tf-btn.true-btn:hover:not(:disabled){background:var(--green2);border-color:var(--green)}
+.tf-btn.false-btn:hover:not(:disabled){background:var(--red2);border-color:var(--red)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a1a14}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{display:none;margin-top:14px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:700}
+.feedback.correct{background:var(--green2);border:2px solid var(--green);color:#1a4d22;display:block}
+.feedback.wrong{background:var(--red2);border:2px solid var(--red);color:#7a1a14;display:block}
+
+/* Next button */
+.next-btn{display:none;margin-top:16px;background:var(--yellow);color:var(--dark);border:none;border-radius:999px;padding:11px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;transition:transform .15s}
+.next-btn:hover{transform:scale(1.04)}
+.next-btn.visible{display:inline-block}
+
+/* Score panel */
+#score-panel{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:32px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.07)}
+#score-panel h2{font-size:clamp(22px,3vw,36px);margin:0 0 10px}
+.score-big{font-size:clamp(48px,8vw,80px);font-weight:900;letter-spacing:-2px;color:var(--green);line-height:1}
+.score-msg{font-size:18px;margin:14px 0 22px;color:var(--ink)}
+.try-again{background:var(--yellow);color:var(--dark);border:none;border-radius:999px;padding:13px 30px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+.try-again:hover{transform:scale(1.04);display:inline-block}
+.mum-box{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:22px;padding:22px;margin:18px 0;font-size:20px;font-weight:900}
+.mum-box span{color:var(--yellow)}
+
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:16px}.tf-wrap{flex-direction:column}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>⚡ Quick Check — B3.6 Digestive System</h1>
+  <p>20 questions · instant feedback · MCQ + True/False</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b3-6-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-score-banner"></div>
+
+<div id="quiz-wrap">
+  <div class="progress-label" id="progress-label">Question 1 of 20</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <!-- ───────── MCQ QUESTIONS ───────── -->
+
+  <!-- Q1 -->
+  <div class="q-card active" id="q1">
+    <div class="q-num">Q1</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Which enzyme breaks down starch into simple sugars?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','b','Q1')">A) Protease</button>
+      <button class="opt" onclick="checkMCQ(this,'b','b','Q1')">B) Amylase</button>
+      <button class="opt" onclick="checkMCQ(this,'c','b','Q1')">C) Lipase</button>
+      <button class="opt" onclick="checkMCQ(this,'d','b','Q1')">D) Pepsin</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+    <button class="next-btn" id="next-q1" onclick="nextQ(1)">Next →</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-num">Q2</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Where is amylase produced? (Select the best answer.)</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','a','Q2')">A) Salivary glands and pancreas</button>
+      <button class="opt" onclick="checkMCQ(this,'b','a','Q2')">B) Stomach and liver</button>
+      <button class="opt" onclick="checkMCQ(this,'c','a','Q2')">C) Pancreas and large intestine</button>
+      <button class="opt" onclick="checkMCQ(this,'d','a','Q2')">D) Small intestine only</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+    <button class="next-btn" id="next-q2" onclick="nextQ(2)">Next →</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-num">Q3</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Proteins are broken down into which products by protease enzymes?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','c','Q3')">A) Fatty acids and glycerol</button>
+      <button class="opt" onclick="checkMCQ(this,'b','c','Q3')">B) Simple sugars (glucose)</button>
+      <button class="opt" onclick="checkMCQ(this,'c','c','Q3')">C) Amino acids</button>
+      <button class="opt" onclick="checkMCQ(this,'d','c','Q3')">D) Starch</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+    <button class="next-btn" id="next-q3" onclick="nextQ(3)">Next →</button>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-num">Q4</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">What is the approximate optimum pH for pepsin (a protease in the stomach)?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','b','Q4')">A) pH 7</button>
+      <button class="opt" onclick="checkMCQ(this,'b','b','Q4')">B) pH 2</button>
+      <button class="opt" onclick="checkMCQ(this,'c','b','Q4')">C) pH 8</button>
+      <button class="opt" onclick="checkMCQ(this,'d','b','Q4')">D) pH 5</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+    <button class="next-btn" id="next-q4" onclick="nextQ(4)">Next →</button>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-num">Q5</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Lipase breaks down lipids into which two products?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','d','Q5')">A) Glucose and glycerol</button>
+      <button class="opt" onclick="checkMCQ(this,'b','d','Q5')">B) Amino acids and fatty acids</button>
+      <button class="opt" onclick="checkMCQ(this,'c','d','Q5')">C) Starch and glycerol</button>
+      <button class="opt" onclick="checkMCQ(this,'d','d','Q5')">D) Fatty acids and glycerol</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+    <button class="next-btn" id="next-q5" onclick="nextQ(5)">Next →</button>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-num">Q6</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Which organ produces bile?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','c','Q6')">A) Pancreas</button>
+      <button class="opt" onclick="checkMCQ(this,'b','c','Q6')">B) Stomach</button>
+      <button class="opt" onclick="checkMCQ(this,'c','c','Q6')">C) Liver</button>
+      <button class="opt" onclick="checkMCQ(this,'d','c','Q6')">D) Salivary glands</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+    <button class="next-btn" id="next-q6" onclick="nextQ(6)">Next →</button>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-num">Q7</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">What role does bile play in the digestion of fats?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','b','Q7')">A) It chemically digests fats into fatty acids</button>
+      <button class="opt" onclick="checkMCQ(this,'b','b','Q7')">B) It emulsifies fats, increasing surface area for lipase</button>
+      <button class="opt" onclick="checkMCQ(this,'c','b','Q7')">C) It produces lipase enzymes</button>
+      <button class="opt" onclick="checkMCQ(this,'d','b','Q7')">D) It acidifies the small intestine to help lipase work</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+    <button class="next-btn" id="next-q7" onclick="nextQ(7)">Next →</button>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-num">Q8</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Where is the digestion of starch first begun?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','a','Q8')">A) The mouth</button>
+      <button class="opt" onclick="checkMCQ(this,'b','a','Q8')">B) The stomach</button>
+      <button class="opt" onclick="checkMCQ(this,'c','a','Q8')">C) The small intestine</button>
+      <button class="opt" onclick="checkMCQ(this,'d','a','Q8')">D) The pancreas</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+    <button class="next-btn" id="next-q8" onclick="nextQ(8)">Next →</button>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-num">Q9</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Why does the stomach produce hydrochloric acid?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','c','Q9')">A) To activate amylase</button>
+      <button class="opt" onclick="checkMCQ(this,'b','c','Q9')">B) To emulsify fats</button>
+      <button class="opt" onclick="checkMCQ(this,'c','c','Q9')">C) To provide the optimum pH for pepsin and to kill bacteria</button>
+      <button class="opt" onclick="checkMCQ(this,'d','c','Q9')">D) To neutralise bile</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+    <button class="next-btn" id="next-q9" onclick="nextQ(9)">Next →</button>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-num">Q10</div>
+    <div class="q-type">Multiple choice</div>
+    <div class="q-text">Small soluble molecules produced by digestion are absorbed into the blood across the wall of which organ?</div>
+    <div class="options">
+      <button class="opt" onclick="checkMCQ(this,'a','b','Q10')">A) The stomach</button>
+      <button class="opt" onclick="checkMCQ(this,'b','b','Q10')">B) The small intestine</button>
+      <button class="opt" onclick="checkMCQ(this,'c','b','Q10')">C) The large intestine</button>
+      <button class="opt" onclick="checkMCQ(this,'d','b','Q10')">D) The pancreas</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+    <button class="next-btn" id="next-q10" onclick="nextQ(10)">Next →</button>
+  </div>
+
+  <!-- ───────── TRUE / FALSE QUESTIONS ───────── -->
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-num">Q11</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Digestive enzymes work <em>inside</em> cells, unlike most other enzymes.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'false','Q11')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'false','Q11')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+    <button class="next-btn" id="next-q11" onclick="nextQ(11)">Next →</button>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="q12">
+    <div class="q-num">Q12</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Amylase is a type of carbohydrase enzyme.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'true','Q12')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'true','Q12')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+    <button class="next-btn" id="next-q12" onclick="nextQ(12)">Next →</button>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="q13">
+    <div class="q-num">Q13</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">The pancreas digests food directly inside its own tissue.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'false','Q13')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'false','Q13')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+    <button class="next-btn" id="next-q13" onclick="nextQ(13)">Next →</button>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="q14">
+    <div class="q-num">Q14</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Bile is alkaline and neutralises stomach acid as food enters the small intestine.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'true','Q14')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'true','Q14')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+    <button class="next-btn" id="next-q14" onclick="nextQ(14)">Next →</button>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="q15">
+    <div class="q-num">Q15</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Protease enzymes are produced in the stomach, pancreas, and small intestine.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'true','Q15')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'true','Q15')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+    <button class="next-btn" id="next-q15" onclick="nextQ(15)">Next →</button>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="q16">
+    <div class="q-num">Q16</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Lipase is produced in the salivary glands.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'false','Q16')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'false','Q16')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+    <button class="next-btn" id="next-q16" onclick="nextQ(16)">Next →</button>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="q17">
+    <div class="q-num">Q17</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">The optimum pH for salivary amylase is approximately pH 7 (neutral to slightly alkaline).</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'true','Q17')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'true','Q17')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+    <button class="next-btn" id="next-q17" onclick="nextQ(17)">Next →</button>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="q18">
+    <div class="q-num">Q18</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Emulsification of fats by bile chemically digests the fat molecules into smaller molecules.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'false','Q18')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'false','Q18')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+    <button class="next-btn" id="next-q18" onclick="nextQ(18)">Next →</button>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="q19">
+    <div class="q-num">Q19</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Trypsin is a protease enzyme that works at an alkaline pH of around 8.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'true','Q19')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'true','Q19')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+    <button class="next-btn" id="next-q19" onclick="nextQ(19)">Next →</button>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="q20">
+    <div class="q-num">Q20</div>
+    <div class="q-type">True or False</div>
+    <div class="q-text">Digestive enzymes break down large <em>insoluble</em> molecules into small <em>soluble</em> molecules that can be absorbed into the blood.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn true-btn" onclick="checkTF(this,'true','Q20')">✅ True</button>
+      <button class="tf-btn false-btn" onclick="checkTF(this,'true','Q20')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+    <button class="next-btn" id="next-q20" onclick="showScore()">See my score 🏆</button>
+  </div>
+
+</div><!-- end quiz-wrap -->
+
+<!-- Score panel -->
+<div id="score-panel">
+  <div class="mum-box">Show this to mum — <span id="mum-score"></span> 🏆</div>
+  <div class="score-big" id="score-display"></div>
+  <div class="score-msg" id="score-msg"></div>
+  <button class="try-again" onclick="tryAgain()">🔄 Try again</button>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+/* ── State ── */
+var score = 0;
+var current = 1;
+var total = 20;
+var SCORE_KEY = 'biology-b3-6-score';
+var DATE_KEY  = 'biology-b3-6-score-date';
+
+/* ── Feedback texts ── */
+var feedback = {
+  Q1:  {right:'✅ Correct! Amylase breaks down starch into simple sugars.',
+        wrong:'❌ The answer is B) Amylase — a carbohydrase enzyme that digests starch.'},
+  Q2:  {right:'✅ Correct! Amylase is made in the salivary glands and the pancreas.',
+        wrong:'❌ The answer is A) Salivary glands and pancreas — not the stomach or liver.'},
+  Q3:  {right:'✅ Correct! Proteases break proteins down into amino acids.',
+        wrong:'❌ The answer is C) Amino acids. Fatty acids come from lipids; glucose from starch.'},
+  Q4:  {right:'✅ Correct! Pepsin works best at the very low pH (~2) of the stomach.',
+        wrong:'❌ The answer is B) pH 2. The stomach\'s hydrochloric acid provides this acidic environment.'},
+  Q5:  {right:'✅ Correct! Lipase produces fatty acids and glycerol from lipids.',
+        wrong:'❌ The answer is D) Fatty acids and glycerol — not amino acids or glucose.'},
+  Q6:  {right:'✅ Correct! Bile is produced by the liver.',
+        wrong:'❌ The answer is C) Liver. The pancreas makes enzymes; bile comes from the liver.'},
+  Q7:  {right:'✅ Correct! Bile emulsifies fats, breaking large droplets into smaller ones to increase surface area for lipase.',
+        wrong:'❌ The answer is B) Emulsification. Bile does not chemically digest fat — it physically breaks it into droplets.'},
+  Q8:  {right:'✅ Correct! Salivary amylase begins starch digestion in the mouth.',
+        wrong:'❌ The answer is A) The mouth — salivary amylase starts breaking down starch as soon as you chew.'},
+  Q9:  {right:'✅ Correct! HCl provides the low pH needed for pepsin and kills bacteria.',
+        wrong:'❌ The answer is C) It provides the optimum pH for pepsin (a protease) and kills harmful bacteria.'},
+  Q10: {right:'✅ Correct! Digested, soluble molecules are absorbed across the wall of the small intestine into the blood.',
+        wrong:'❌ The answer is B) The small intestine — this is where absorption into the blood takes place.'},
+  Q11: {right:'✅ Correct! False — digestive enzymes work OUTSIDE cells, unlike most enzymes that work inside cells.',
+        wrong:'❌ This is False. Digestive enzymes are unusual because they work outside cells (in the gut lumen).'},
+  Q12: {right:'✅ Correct! Amylase is indeed a carbohydrase — it breaks down carbohydrates (starch).',
+        wrong:'❌ True! Amylase IS a carbohydrase enzyme — it digests carbohydrates (starch → sugars).'},
+  Q13: {right:'✅ Correct! False — the pancreas releases enzymes INTO the small intestine; no digestion occurs inside the pancreas itself.',
+        wrong:'❌ This is False. The pancreas passes enzymes to the small intestine — it does not digest food within itself.'},
+  Q14: {right:'✅ Correct! Bile is alkaline and neutralises stomach acid when food enters the small intestine.',
+        wrong:'❌ True! Bile is alkaline, and it neutralises the acid from the stomach in the small intestine.'},
+  Q15: {right:'✅ Correct! All three — stomach, pancreas, and small intestine — make protease enzymes.',
+        wrong:'❌ True! Proteases are produced by the stomach, pancreas, and small intestine.'},
+  Q16: {right:'✅ Correct! False — lipase is made in the pancreas and small intestine, NOT the salivary glands.',
+        wrong:'❌ This is False. Lipase comes from the pancreas and small intestine; salivary glands produce amylase.'},
+  Q17: {right:'✅ Correct! Salivary amylase works at around pH 7, which is the pH of saliva.',
+        wrong:'❌ True! Salivary amylase has an optimum pH of ~7 — saliva is slightly alkaline.'},
+  Q18: {right:'✅ Correct! False — emulsification is a PHYSICAL process (breaking fat into droplets), not chemical digestion. Lipase does the chemical digestion.',
+        wrong:'❌ This is False. Emulsification is physical — it breaks fat into small droplets to give lipase more surface area, but it does not change the fat molecules chemically.'},
+  Q19: {right:'✅ Correct! Trypsin is a protease from the pancreas that works at alkaline pH ~8.',
+        wrong:'❌ True! Trypsin is a protease with an optimum pH of ~8, working in the small intestine.'},
+  Q20: {right:'✅ Correct! This is the big idea of the whole topic — enzymes convert large insoluble molecules to small soluble ones for absorption.',
+        wrong:'❌ True! That\'s the core statement of B3.6 — enzymes create small soluble molecules that cross into the blood.'},
+};
+
+/* ── True/False answer map: which button value means correct ── */
+/* handled inline via onclick — correct answer passed as 2nd arg */
+
+/* ── On page load: show previous score ── */
+(function(){
+  var s = localStorage.getItem(SCORE_KEY);
+  var d = localStorage.getItem(DATE_KEY);
+  if(s !== null){
+    var banner = document.getElementById('prev-score-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = '📊 Your last score: <strong>' + s + '/20</strong>' + (d ? ' — ' + d : '');
+  }
+})();
+
+/* ── MCQ check ── */
+function checkMCQ(btn, chosen, correct, qid){
+  var card = btn.closest('.q-card');
+  var opts = card.querySelectorAll('.opt');
+  opts.forEach(function(o){ o.disabled = true; });
+
+  var fb = document.getElementById('fb-' + qid.toLowerCase());
+  var nextBtn = document.getElementById('next-' + qid.toLowerCase());
+
+  if(chosen === correct){
+    btn.classList.add('correct');
+    fb.textContent = feedback[qid].right;
+    fb.className = 'feedback correct';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    /* highlight the correct one */
+    var allOpts = ['a','b','c','d'];
+    opts.forEach(function(o, i){
+      if(allOpts[i] === correct) o.classList.add('correct');
+    });
+    fb.textContent = feedback[qid].wrong;
+    fb.className = 'feedback wrong';
+  }
+  nextBtn.classList.add('visible');
+}
+
+/* ── True/False check ── */
+function checkTF(btn, correct, qid){
+  var card = btn.closest('.q-card');
+  var btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(function(b){ b.disabled = true; });
+
+  var fb = document.getElementById('fb-' + qid.toLowerCase());
+  var nextBtn = document.getElementById('next-' + qid.toLowerCase());
+
+  /* Determine what the user clicked */
+  var chosen = btn.classList.contains('true-btn') ? 'true' : 'false';
+
+  if(chosen === correct){
+    btn.classList.add('correct');
+    fb.textContent = feedback[qid].right;
+    fb.className = 'feedback correct';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(function(b){
+      if((b.classList.contains('true-btn') && correct==='true') ||
+         (b.classList.contains('false-btn') && correct==='false')){
+        b.classList.add('correct');
+      }
+    });
+    fb.textContent = feedback[qid].wrong;
+    fb.className = 'feedback wrong';
+  }
+  nextBtn.classList.add('visible');
+}
+
+/* ── Next question ── */
+function nextQ(n){
+  document.getElementById('q'+n).classList.remove('active');
+  current = n + 1;
+  if(current <= total){
+    document.getElementById('q'+current).classList.add('active');
+    updateProgress();
+  }
+}
+
+/* ── Progress bar ── */
+function updateProgress(){
+  var pct = ((current-1)/total)*100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = 'Question ' + current + ' of ' + total;
+}
+
+/* ── Show final score ── */
+function showScore(){
+  /* hide last card */
+  document.getElementById('q20').classList.remove('active');
+  document.getElementById('quiz-wrap').style.display = 'none';
+
+  /* save */
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  /* display */
+  var panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  document.getElementById('score-display').textContent = score + '/20';
+  document.getElementById('mum-score').textContent = score + '/20';
+
+  var msg;
+  if(score >= 18){
+    msg = '🏆 Excellent work! Outstanding result — Gabriel knows his enzymes!';
+  } else if(score >= 14){
+    msg = '👍 Good effort! A solid score — review any questions you missed and you\'ll nail it next time.';
+  } else {
+    msg = '📖 Keep going! Head back to the revision notes and give it another read before trying again.';
+  }
+  document.getElementById('score-msg').textContent = msg;
+}
+
+/* ── Try again ── */
+function tryAgain(){
+  score = 0;
+  current = 1;
+
+  /* reset all cards */
+  for(var i=1;i<=total;i++){
+    var card = document.getElementById('q'+i);
+    card.classList.remove('active');
+    /* re-enable all buttons */
+    card.querySelectorAll('button.opt, button.tf-btn').forEach(function(b){
+      b.disabled = false;
+      b.classList.remove('correct','wrong');
+    });
+    /* hide feedback and next */
+    var fb = card.querySelector('.feedback');
+    if(fb){ fb.className = 'feedback'; fb.textContent = ''; }
+    var nb = card.querySelector('.next-btn');
+    if(nb) nb.classList.remove('visible');
+  }
+
+  /* hide score, show quiz */
+  document.getElementById('score-panel').style.display = 'none';
+  document.getElementById('quiz-wrap').style.display = 'block';
+
+  /* hide previous score banner during attempt */
+  document.getElementById('prev-score-banner').style.display = 'none';
+
+  document.getElementById('q1').classList.add('active');
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

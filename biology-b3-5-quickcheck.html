@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B3.5 Factors affecting enzyme action</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,40px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* Previous score banner */
+#prev-banner{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:18px;color:var(--orange);font-weight:900;font-size:16px;display:none}
+/* Quiz container */
+.quiz-section{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:24px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.section-title{font-size:clamp(18px,2.5vw,26px);font-weight:900;margin:0 0 18px;letter-spacing:-.4px}
+.section-title span{color:var(--green)}
+/* Question card */
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.4}
+/* MCQ options */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.options{grid-template-columns:1fr}}
+.opt-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 14px;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s;line-height:1.3}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a14}
+.opt-btn:disabled{cursor:default}
+/* T/F options */
+.tf-options{display:flex;gap:12px}
+.tf-btn{flex:1;background:white;border:2px solid var(--line);border-radius:14px;padding:12px;font-family:inherit;font-size:15px;font-weight:900;color:var(--ink);cursor:pointer;text-align:center;transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a14}
+.tf-btn:disabled{cursor:default}
+/* Feedback */
+.feedback{margin-top:10px;font-size:14px;font-weight:700;padding:8px 12px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22}
+.feedback.bad{background:var(--red2);color:#7a1a14}
+/* Submit / result */
+.submit-wrap{text-align:center;margin-top:24px}
+#submit-btn{background:var(--yellow);color:var(--ink);border:none;font-family:inherit;font-weight:900;font-size:18px;padding:14px 40px;border-radius:999px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+#submit-btn:hover{opacity:.9}
+#result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:28px;text-align:center;margin-top:22px}
+#result-box .score-big{font-size:clamp(40px,8vw,72px);font-weight:900;color:var(--yellow);line-height:1}
+#result-box .show-mum{font-size:clamp(18px,3vw,26px);font-weight:900;margin:10px 0 6px}
+#result-box .msg{font-size:16px;color:rgba(255,255,255,.8);margin-bottom:18px}
+#try-again-btn{background:var(--yellow);color:var(--ink);border:none;font-family:inherit;font-weight:900;font-size:16px;padding:12px 32px;border-radius:999px;cursor:pointer}
+#try-again-btn:hover{opacity:.9}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>⚡ Quick Check — B3.5 Factors affecting enzyme action</h1>
+  <p>10 multiple-choice + 10 true/false questions. Click an answer for instant feedback.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b3-5-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<!-- ── MCQ SECTION ── -->
+<div class="quiz-section">
+  <div class="section-title"><span>Part 1</span> — Multiple Choice <span style="color:var(--muted);font-size:14px;font-weight:400">(10 questions)</span></div>
+  <div id="mcq-container"></div>
+</div>
+
+<!-- ── TRUE/FALSE SECTION ── -->
+<div class="quiz-section">
+  <div class="section-title"><span>Part 2</span> — True or False <span style="color:var(--muted);font-size:14px;font-weight:400">(10 questions)</span></div>
+  <div id="tf-container"></div>
+</div>
+
+<div class="submit-wrap">
+  <button id="submit-btn" onclick="submitQuiz()">See my score 🏁</button>
+</div>
+
+<div id="result-box">
+  <div class="score-big" id="score-display"></div>
+  <div class="show-mum" id="show-mum-text"></div>
+  <div class="msg" id="result-msg"></div>
+  <button id="try-again-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const MCQ = [
+  {
+    q: "As temperature increases towards the optimum, what happens to the rate of an enzyme-controlled reaction?",
+    opts: ["It stays the same", "It decreases gradually", "It increases because molecules move faster and collide more often", "It increases because the active site gets bigger"],
+    ans: 2
+  },
+  {
+    q: "What is the approximate optimum temperature for most human enzymes?",
+    opts: ["25°C", "37°C", "42°C", "100°C"],
+    ans: 1
+  },
+  {
+    q: "What happens to an enzyme when the temperature rises well above its optimum?",
+    opts: ["It becomes more efficient", "It is denatured — the active site changes shape permanently", "It works more slowly but recovers when cooled", "It breaks down into amino acids immediately"],
+    ans: 1
+  },
+  {
+    q: "Which word correctly describes an enzyme that has permanently lost its shape due to high temperature or extreme pH?",
+    opts: ["Dissolved", "Killed", "Denatured", "Digested"],
+    ans: 2
+  },
+  {
+    q: "What is the optimum pH of pepsin, the protease found in the stomach?",
+    opts: ["pH 7 (neutral)", "pH 8 (slightly alkaline)", "pH 2 (acidic)", "pH 14 (strongly alkaline)"],
+    ans: 2
+  },
+  {
+    q: "How does a change in pH away from the optimum affect an enzyme's active site?",
+    opts: ["The active site enlarges to fit more substrates", "Forces holding the protein shape in place are disrupted, changing the shape of the active site", "The substrate is broken down more quickly", "Nothing — pH only affects temperature, not enzymes"],
+    ans: 1
+  },
+  {
+    q: "Trypsin is a protease produced by the pancreas. What is its approximate optimum pH?",
+    opts: ["pH 2", "pH 5", "pH 7", "pH 8"],
+    ans: 3
+  },
+  {
+    q: "Why can a very high fever (above ~41°C) be life-threatening?",
+    opts: ["The body produces too much glucose", "Microorganisms multiply faster at high temperatures", "Human enzymes begin to denature, slowing vital reactions", "Blood becomes too thin to carry oxygen"],
+    ans: 2
+  },
+  {
+    q: "Bacteria that live in hot springs have enzymes with a very high optimum temperature. These bacteria are known as:",
+    opts: ["Pathogens", "Extremophiles", "Decomposers", "Parasites"],
+    ans: 1
+  },
+  {
+    q: "Enzymes from extremophile bacteria are used in PCR (polymerase chain reaction). Why are their enzymes useful for this process?",
+    opts: ["They work at very low pH values", "They can survive the high temperatures needed to separate DNA strands", "They digest DNA more quickly than human enzymes", "They have a much smaller active site"],
+    ans: 1
+  }
+];
+
+const TF = [
+  { q: "Below the optimum temperature, increasing temperature increases the rate of an enzyme-controlled reaction.", ans: true },
+  { q: "Denaturation of an enzyme is a reversible process — cooling the enzyme down restores its original shape.", ans: false },
+  { q: "At very low temperatures, enzymes are denatured and stop working permanently.", ans: false },
+  { q: "The shape of an enzyme's active site determines which substrate can bind to it.", ans: true },
+  { q: "Amylase, found in saliva, works best at an optimum pH of around 7 (neutral).", ans: true },
+  { q: "All enzymes in the human body have the same optimum pH of 7.", ans: false },
+  { q: "A fever (raised body temperature) is a defence mechanism that can make it harder for some microorganisms to reproduce.", ans: true },
+  { q: "Above the optimum temperature, the rate of an enzyme-controlled reaction drops sharply because the enzyme is denatured.", ans: true },
+  { q: "Extremophile bacteria have enzymes that are adapted to extreme conditions such as very high temperatures or very high/low pH.", ans: true },
+  { q: "When an enzyme is described as 'denatured', this means the enzyme has been killed by the high temperature.", ans: false }
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+const SCORE_KEY = 'biology-b3-5-score';
+const DATE_KEY  = 'biology-b3-5-score-date';
+let answered = {}; // {id: true}
+let totalAnswered = 0;
+let correctCount = 0;
+
+// ─────────────────────────────────────────────
+// PREVIOUS SCORE BANNER
+// ─────────────────────────────────────────────
+(function showPrevScore(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    const banner = document.getElementById('prev-banner');
+    const dateStr = prevDate ? ' — ' + prevDate : '';
+    banner.textContent = '📊 Your last score: ' + prev + '/20' + dateStr;
+    banner.style.display = 'block';
+  }
+})();
+
+// ─────────────────────────────────────────────
+// RENDER MCQs
+// ─────────────────────────────────────────────
+function renderMCQ(){
+  const container = document.getElementById('mcq-container');
+  MCQ.forEach((item, i) => {
+    const id = 'mcq-' + i;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = id;
+
+    const optsHTML = item.opts.map((opt, oi) =>
+      `<button class="opt-btn" onclick="answerMCQ(${i}, ${oi})" id="${id}-opt${oi}">${opt}</button>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="q-num">Question ${i+1} of 20</div>
+      <div class="q-text">${item.q}</div>
+      <div class="options">${optsHTML}</div>
+      <div class="feedback" id="${id}-fb"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function answerMCQ(qi, chosen){
+  const id = 'mcq-' + qi;
+  if(answered[id]) return;
+  answered[id] = true;
+  totalAnswered++;
+
+  const item = MCQ[qi];
+  const fb = document.getElementById(id + '-fb');
+
+  for(let i = 0; i < item.opts.length; i++){
+    const btn = document.getElementById(id + '-opt' + i);
+    btn.disabled = true;
+    if(i === item.ans) btn.classList.add('correct');
+    else if(i === chosen) btn.classList.add('wrong');
+  }
+
+  if(chosen === item.ans){
+    correctCount++;
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback show ok';
+  } else {
+    fb.textContent = '❌ Incorrect. The correct answer is: ' + item.opts[item.ans];
+    fb.className = 'feedback show bad';
+  }
+}
+
+// ─────────────────────────────────────────────
+// RENDER True/False
+// ─────────────────────────────────────────────
+function renderTF(){
+  const container = document.getElementById('tf-container');
+  TF.forEach((item, i) => {
+    const id = 'tf-' + i;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = id;
+
+    card.innerHTML = `
+      <div class="q-num">Question ${MCQ.length + i + 1} of 20</div>
+      <div class="q-text">${item.q}</div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(${i}, true)" id="${id}-true">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)" id="${id}-false">❌ False</button>
+      </div>
+      <div class="feedback" id="${id}-fb"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function answerTF(qi, chosen){
+  const id = 'tf-' + qi;
+  if(answered[id]) return;
+  answered[id] = true;
+  totalAnswered++;
+
+  const item = TF[qi];
+  const trueBtn  = document.getElementById(id + '-true');
+  const falseBtn = document.getElementById(id + '-false');
+  const fb = document.getElementById(id + '-fb');
+
+  trueBtn.disabled = true;
+  falseBtn.disabled = true;
+
+  const correct = (chosen === item.ans);
+  if(correct){
+    correctCount++;
+    (chosen ? trueBtn : falseBtn).classList.add('correct');
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback show ok';
+  } else {
+    (chosen ? trueBtn : falseBtn).classList.add('wrong');
+    const correctLabel = item.ans ? '✅ True' : '❌ False';
+    fb.textContent = '❌ Incorrect. The correct answer is: ' + correctLabel;
+    fb.className = 'feedback show bad';
+  }
+}
+
+// ─────────────────────────────────────────────
+// SUBMIT
+// ─────────────────────────────────────────────
+function submitQuiz(){
+  // Auto-mark any unanswered questions as wrong (don't add to correct)
+  MCQ.forEach((_, i) => {
+    if(!answered['mcq-' + i]){
+      // disable all buttons
+      for(let oi = 0; oi < MCQ[i].opts.length; oi++){
+        const btn = document.getElementById('mcq-' + i + '-opt' + oi);
+        btn.disabled = true;
+        if(oi === MCQ[i].ans) btn.classList.add('correct');
+      }
+      const fb = document.getElementById('mcq-' + i + '-fb');
+      fb.textContent = '⏭️ Not answered. Correct answer: ' + MCQ[i].opts[MCQ[i].ans];
+      fb.className = 'feedback show bad';
+      answered['mcq-' + i] = true;
+    }
+  });
+  TF.forEach((_, i) => {
+    if(!answered['tf-' + i]){
+      const trueBtn  = document.getElementById('tf-' + i + '-true');
+      const falseBtn = document.getElementById('tf-' + i + '-false');
+      trueBtn.disabled = true;
+      falseBtn.disabled = true;
+      const correctLabel = TF[i].ans ? '✅ True' : '❌ False';
+      const fb = document.getElementById('tf-' + i + '-fb');
+      fb.textContent = '⏭️ Not answered. Correct answer: ' + correctLabel;
+      fb.className = 'feedback show bad';
+      answered['tf-' + i] = true;
+      // mark correct button
+      if(TF[i].ans) trueBtn.classList.add('correct');
+      else falseBtn.classList.add('correct');
+    }
+  });
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, correctCount);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Show result
+  document.getElementById('submit-btn').style.display = 'none';
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  document.getElementById('score-display').textContent = correctCount + '/20';
+
+  let emoji, showMum, msg;
+  if(correctCount >= 18){
+    emoji = '🏆'; showMum = 'Show this to mum — ' + correctCount + '/20 🏆';
+    msg = 'Excellent work! You\'ve mastered this topic. Keep it up, Gabriel!';
+  } else if(correctCount >= 14){
+    emoji = '👍'; showMum = 'Show this to mum — ' + correctCount + '/20 👍';
+    msg = 'Good effort! A bit more revision and you\'ll nail this. Check any questions you got wrong.';
+  } else {
+    emoji = '📖'; showMum = 'Score: ' + correctCount + '/20 📖';
+    msg = 'Go back and revise the notes, then try again. You\'ve got this!';
+  }
+  document.getElementById('show-mum-text').textContent = showMum;
+  document.getElementById('result-msg').textContent = msg;
+
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  // Update banner
+  const banner = document.getElementById('prev-banner');
+  banner.textContent = '📊 Your last score: ' + correctCount + '/20 — ' + dateStr;
+  banner.style.display = 'block';
+}
+
+// ─────────────────────────────────────────────
+// RESET
+// ─────────────────────────────────────────────
+function resetQuiz(){
+  answered = {};
+  totalAnswered = 0;
+  correctCount = 0;
+
+  document.getElementById('mcq-container').innerHTML = '';
+  document.getElementById('tf-container').innerHTML = '';
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'inline-block';
+  document.getElementById('prev-banner').style.display = 'none';
+
+  renderMCQ();
+  renderTF();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+renderMCQ();
+renderTF();
+</script>
+</body>
+</html>

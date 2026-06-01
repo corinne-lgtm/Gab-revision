@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B1.8 Osmosis in plants</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 18px;margin-bottom:18px;color:var(--orange);font-weight:900;font-size:16px;display:none}
+
+/* Progress */
+#progress-bar-wrap{background:rgba(0,0,0,.08);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:10px;background:var(--yellow);border-radius:999px;width:0;transition:width .4s ease}
+#progress-label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:28px;padding:26px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.q-num{display:inline-block;background:var(--dark);color:var(--yellow);border-radius:999px;padding:3px 11px;font-size:13px;font-weight:900;margin-right:8px}
+
+/* Answer buttons */
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf-answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:360px}
+.ans-btn{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 16px;font-size:15px;font-weight:700;cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;transition:background .15s,border-color .15s}
+.ans-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.ans-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--green)!important}
+.ans-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--red)!important}
+.ans-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:12px;font-size:14px;font-weight:700;padding:10px 14px;border-radius:12px;display:none}
+.feedback.correct{background:var(--green2);color:var(--green);display:block}
+.feedback.wrong{background:var(--red2);color:var(--red);display:block}
+
+/* Final score */
+#final-box{background:var(--dark);color:white;border-radius:28px;padding:32px;text-align:center;display:none;margin-top:10px}
+#final-box h2{font-size:clamp(22px,3vw,38px);margin:0 0 10px;color:var(--yellow)}
+#final-score-big{font-size:clamp(52px,8vw,88px);font-weight:900;line-height:1;color:var(--yellow)}
+#final-msg{font-size:18px;margin:12px 0 20px;color:rgba(255,255,255,.85)}
+#final-show{font-size:20px;font-weight:900;background:var(--yellow);color:var(--dark);border-radius:18px;padding:14px 28px;margin-bottom:16px;display:inline-block}
+#try-again-btn{background:white;color:var(--dark);border:none;font-weight:900;padding:12px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+#try-again-btn:hover{background:var(--lime2)}
+
+@media(max-width:600px){.answers{grid-template-columns:1fr}.wrap{padding:14px}.q-text{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ Quick Check — B1.8 Osmosis in plants</h1>
+  <p>20 questions · MCQ + True/False · Instant feedback</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-8-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div id="progress-label">Question <span id="q-current">1</span> of 20</div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-area"></div>
+<div id="final-box">
+  <h2>Quiz complete!</h2>
+  <div id="final-score-big"></div>
+  <div id="final-msg"></div>
+  <div id="final-show"></div>
+  <br>
+  <button id="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b1-8-score';
+const DATE_KEY  = 'biology-b1-8-score-date';
+
+const questions = [
+  // ── MCQ (10) ──────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'What is osmosis?',
+    options:[
+      'The movement of all molecules from high to low concentration',
+      'The movement of water molecules across a partially permeable membrane from a region of higher water concentration to lower water concentration',
+      'Active transport of water molecules against a concentration gradient',
+      'Diffusion of glucose across a cell membrane'
+    ],
+    correct:1
+  },
+  {
+    type:'mcq',
+    q:'A plant cell is described as turgid. What does this mean?',
+    options:[
+      'The cell has lost water and the vacuole has shrunk',
+      'The cell membrane has pulled away from the cell wall',
+      'The cell has taken in water by osmosis, swelling the vacuole and pushing the cytoplasm against the cell wall',
+      'The cell is in equilibrium with the surrounding solution'
+    ],
+    correct:2
+  },
+  {
+    type:'mcq',
+    q:'A potato cylinder is placed in a concentrated salt solution. What would you expect to happen to its mass?',
+    options:[
+      'It increases — water moves in by osmosis',
+      'It stays the same — the solutions are isotonic',
+      'It decreases — water moves out by osmosis',
+      'It increases — salt moves into the potato'
+    ],
+    correct:2
+  },
+  {
+    type:'mcq',
+    q:'Which term describes the state in which a plant cell\'s membrane has pulled away from the cell wall due to severe water loss?',
+    options:['Turgid','Flaccid','Plasmolysed','Isotonic'],
+    correct:2
+  },
+  {
+    type:'mcq',
+    q:'Why is turgor pressure important for non-woody plants?',
+    options:[
+      'It helps transport glucose around the plant',
+      'It is the main source of structural support, keeping stems and leaves firm and upright',
+      'It increases the rate of photosynthesis',
+      'It prevents water from entering the roots'
+    ],
+    correct:1
+  },
+  {
+    type:'mcq',
+    q:'In an osmosis investigation using potato cylinders, why must the surface of each cylinder be dried before measuring its mass?',
+    options:[
+      'To make the potato more absorbent',
+      'To prevent the potato from reacting with the solution',
+      'To remove any liquid on the outside that would give an inaccurate mass reading',
+      'To speed up the rate of osmosis'
+    ],
+    correct:2
+  },
+  {
+    type:'mcq',
+    q:'A plant cell is placed in a solution that is hypotonic compared to the cell\'s cytoplasm. In which direction will water move?',
+    options:[
+      'Out of the cell into the solution',
+      'Into the cell from the solution',
+      'There is no net movement of water',
+      'Water moves in both directions equally'
+    ],
+    correct:1
+  },
+  {
+    type:'mcq',
+    q:'Which of the following correctly describes a flaccid plant cell?',
+    options:[
+      'The vacuole is fully swollen and pressing against the cell wall',
+      'The cell membrane has separated from the cell wall',
+      'The cell has lost water, the vacuole has shrunk, and there is no turgor pressure',
+      'The cell is surrounded by a hypotonic solution'
+    ],
+    correct:2
+  },
+  {
+    type:'mcq',
+    q:'Why is potato commonly used in osmosis investigations?',
+    options:[
+      'It is the only plant tissue that undergoes osmosis',
+      'It is cheap, easy to cut into uniform shapes, and reacts visibly to changes in osmotic concentration',
+      'It does not react with salt solutions',
+      'Its cells have no cell wall, making osmosis easier to observe'
+    ],
+    correct:1
+  },
+  {
+    type:'mcq',
+    q:'In an osmosis experiment, a potato disc shows no change in mass after 30 minutes. What does this indicate about the solution it was placed in?',
+    options:[
+      'The solution was hypotonic — water moved in',
+      'The solution was hypertonic — water moved out',
+      'The solution was isotonic — no net movement of water occurred',
+      'The potato disc was too large to show any change'
+    ],
+    correct:2
+  },
+
+  // ── True / False (10) ─────────────────────────────────────────────────────
+  {
+    type:'tf',
+    q:'Osmosis requires energy from the cell because it moves water against a concentration gradient.',
+    correct:false,
+    explanation:'Osmosis is a passive process — water moves along its concentration gradient (from high to low water concentration) with no energy input required.'
+  },
+  {
+    type:'tf',
+    q:'A turgid plant cell has a swollen vacuole that pushes the cytoplasm against the cell wall, creating turgor pressure.',
+    correct:true,
+    explanation:'Correct. Water enters by osmosis, the vacuole swells, cytoplasm is pressed outwards, and turgor pressure builds — keeping the cell firm.'
+  },
+  {
+    type:'tf',
+    q:'Plasmolysis occurs when so much water enters a plant cell that the cell wall bursts.',
+    correct:false,
+    explanation:'Plasmolysis is the opposite — it is caused by severe water LOSS. The cell membrane pulls away from the cell wall. Plant cells are protected from bursting by their rigid cell walls.'
+  },
+  {
+    type:'tf',
+    q:'When cells become flaccid, plants wilt because turgor pressure no longer supports the tissues.',
+    correct:true,
+    explanation:'Correct. Flaccid cells have lost turgor pressure, so stems and leaves lose their firmness and the plant wilts.'
+  },
+  {
+    type:'tf',
+    q:'A hypertonic solution has a lower solute concentration than the cytoplasm of the cell.',
+    correct:false,
+    explanation:'A hypertonic solution has a HIGHER solute concentration (lower water concentration) than the cytoplasm. Water therefore moves OUT of the cell into the solution.'
+  },
+  {
+    type:'tf',
+    q:'Smaller pieces of potato (higher surface area to volume ratio) will reach equilibrium faster in an osmosis experiment.',
+    correct:true,
+    explanation:'Correct. A greater surface area relative to volume means more membrane area for osmosis to occur across, so the rate is faster and equilibrium is reached sooner.'
+  },
+  {
+    type:'tf',
+    q:'Plasmolysis is commonly observed in healthy plant cells under normal growing conditions.',
+    correct:false,
+    explanation:'Plasmolysis usually only occurs in extreme laboratory conditions. Under normal conditions, plant cells are turgid. Plasmolysis can be fatal if not reversed.'
+  },
+  {
+    type:'tf',
+    q:'In an osmosis experiment, a gain in mass of a potato cylinder shows that water moved into the tissue by osmosis.',
+    correct:true,
+    explanation:'Correct. If mass increases, water has entered by osmosis — meaning the surrounding solution was hypotonic (more dilute) than the cytoplasm.'
+  },
+  {
+    type:'tf',
+    q:'Turgor pressure is the main source of support in woody trees as well as soft-stemmed plants.',
+    correct:false,
+    explanation:'Turgor pressure is the main support for NON-WOODY plants. Woody plants rely on lignified cell walls and woody tissue for structural support.'
+  },
+  {
+    type:'tf',
+    q:'Sugar solutions can be used instead of salt solutions in osmosis investigations because both create concentration gradients that cause water to move by osmosis.',
+    correct:true,
+    explanation:'Correct. Both solutes create an osmotic gradient. Sugar solutions may be preferred as they are less likely to affect cell chemistry, but both work by the same osmotic principle.'
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = [];
+
+function showPrevBanner(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  const banner = document.getElementById('prev-banner');
+  if(prev !== null){
+    let txt = `Your last score: ${prev}/20`;
+    if(prevDate) txt += ` &nbsp;·&nbsp; ${prevDate}`;
+    banner.innerHTML = '📊 ' + txt;
+    banner.style.display = 'block';
+  }
+}
+
+function updateProgress(){
+  const pct = (current / questions.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('q-current').textContent = Math.min(current + 1, questions.length);
+}
+
+function renderQuestion(){
+  if(current >= questions.length){ showFinal(); return; }
+  updateProgress();
+  const q = questions[current];
+  const area = document.getElementById('quiz-area');
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = 'q-card-' + current;
+
+  const typeLabel = q.type === 'mcq' ? 'Multiple choice' : 'True / False';
+  card.innerHTML = `<div class="q-type">${typeLabel}</div>
+    <div class="q-text"><span class="q-num">${current + 1}</span>${q.q}</div>`;
+
+  if(q.type === 'mcq'){
+    const grid = document.createElement('div');
+    grid.className = 'answers';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'ans-btn';
+      btn.textContent = opt;
+      btn.onclick = () => handleMCQ(i, q.correct, card, q);
+      grid.appendChild(btn);
+    });
+    card.appendChild(grid);
+  } else {
+    const grid = document.createElement('div');
+    grid.className = 'tf-answers';
+    ['True','False'].forEach((label, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'ans-btn';
+      btn.textContent = label;
+      btn.onclick = () => handleTF(i === 0, q.correct, card, q);
+      grid.appendChild(btn);
+    });
+    card.appendChild(grid);
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  fb.id = 'fb-' + current;
+  card.appendChild(fb);
+
+  area.innerHTML = '';
+  area.appendChild(card);
+  card.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function lockButtons(card){
+  card.querySelectorAll('.ans-btn').forEach(b => b.disabled = true);
+}
+
+function handleMCQ(chosen, correct, card, q){
+  lockButtons(card);
+  const btns = card.querySelectorAll('.ans-btn');
+  const fb = card.querySelector('.feedback');
+  if(chosen === correct){
+    btns[chosen].classList.add('correct');
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback correct';
+    score++;
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[correct].classList.add('correct');
+    fb.textContent = `❌ Incorrect. The correct answer is: "${q.options[correct]}"`;
+    fb.className = 'feedback wrong';
+  }
+  answered.push(chosen === correct);
+  setTimeout(nextQuestion, 1600);
+}
+
+function handleTF(chosen, correct, card, q){
+  lockButtons(card);
+  const btns = card.querySelectorAll('.ans-btn');
+  const fb = card.querySelector('.feedback');
+  const chosenIdx = chosen ? 0 : 1;
+  const correctIdx = correct ? 0 : 1;
+  if(chosen === correct){
+    btns[chosenIdx].classList.add('correct');
+    fb.textContent = '✅ Correct!';
+    if(q.explanation) fb.textContent += ' ' + q.explanation;
+    fb.className = 'feedback correct';
+    score++;
+  } else {
+    btns[chosenIdx].classList.add('wrong');
+    btns[correctIdx].classList.add('correct');
+    let msg = `❌ Incorrect. The answer is ${correct ? 'True' : 'False'}.`;
+    if(q.explanation) msg += ' ' + q.explanation;
+    fb.textContent = msg;
+    fb.className = 'feedback wrong';
+  }
+  answered.push(chosen === correct);
+  setTimeout(nextQuestion, 2200);
+}
+
+function nextQuestion(){
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  } else {
+    showFinal();
+  }
+}
+
+function showFinal(){
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('progress-bar-wrap').style.display = 'none';
+  document.getElementById('progress-label').style.display = 'none';
+
+  const box = document.getElementById('final-box');
+  box.style.display = 'block';
+  document.getElementById('final-score-big').textContent = score + '/20';
+
+  let msg, emoji;
+  if(score >= 18){ emoji = '🏆'; msg = 'Outstanding! You\'ve mastered osmosis in plants. Keep it up!' }
+  else if(score >= 14){ emoji = '👍'; msg = 'Good effort — you know the core concepts. Review any questions you got wrong and you\'ll nail it.' }
+  else { emoji = '📖'; msg = 'Go back and revise the notes before trying again. Focus on turgid, flaccid, and plasmolysis.' }
+
+  document.getElementById('final-msg').textContent = msg;
+  document.getElementById('final-show').innerHTML = `${emoji} Show this to mum — ${score}/20`;
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function restartQuiz(){
+  current = 0;
+  score = 0;
+  answered = [];
+  document.getElementById('final-box').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('progress-bar-wrap').style.display = 'block';
+  document.getElementById('progress-label').style.display = 'block';
+  document.getElementById('prev-banner').style.display = 'none';
+  renderQuestion();
+}
+
+// Init
+showPrevBanner();
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics · AQA GCSE · Gab Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --navy: #0a1628;
+    --blue-strong: #1565c0;
+    --blue-mid: #1976d2;
+    --blue-pale: #bbdefb;
+    --blue-xpale: #e3f2fd;
+    --chapter-bg: #f0f7ff;
+    --sub-bg: #ffffff;
+    --sub-border: #dbeeff;
+    --white: #ffffff;
+    --text: #0d1b2a;
+    --text-muted: #607d8b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* ── HERO ── */
+  .hero { padding: 44px 52px 24px; }
+
+  .back-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--blue-strong);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    transition: gap 0.18s;
+  }
+  .back-link:hover { gap: 10px; }
+
+  .hero-text-subject {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-text-qual {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--blue-strong);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .hero-sub {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  /* ── TOOLS ROW ── */
+  .tools-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0 52px 40px;
+  }
+  .tool-pill {
+    background: var(--white);
+    border: 2px solid var(--blue-pale);
+    border-radius: 50px;
+    padding: 10px 22px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    box-shadow: 0 2px 8px rgba(21,101,192,0.08);
+  }
+  .tool-pill:hover { background: var(--blue-xpale); border-color: var(--blue-mid); transform: translateY(-2px); }
+  .tool-pill .meta { font-weight: 600; color: var(--text-muted); font-size: 0.72rem; }
+
+  /* ── CONTENT ── */
+  .content { padding: 0 52px; max-width: 1300px; }
+
+  /* ── SPEC SECTION ── */
+  .spec-section { margin-bottom: 60px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .section-badge {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 7px 18px;
+    border-radius: 50px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .section-badge.available { background: var(--navy); color: var(--white); }
+  .section-badge.coming-soon { background: #e0e0e0; color: #9e9e9e; }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+  .section-title.available { color: var(--navy); }
+  .section-title.coming-soon { color: #aaa; }
+
+  .section-rule {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--blue-pale), transparent);
+    border-radius: 2px;
+  }
+
+  /* ── CHAPTER BLOCK ── */
+  .chapter {
+    border-radius: 24px;
+    padding: 24px 28px 28px;
+    margin-bottom: 20px;
+    border: 2px solid;
+  }
+  .chapter.available { background: var(--chapter-bg); border-color: var(--blue-pale); }
+  .chapter.coming-soon { background: #fafafa; border-color: #e8e8e8; }
+
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chapter-title-row { display: flex; align-items: center; gap: 12px; }
+  .chapter-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .chapter.available .chapter-dot { background: var(--blue-mid); }
+  .chapter.coming-soon .chapter-dot { background: #ccc; }
+
+  .chapter-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+  .chapter.available .chapter-title { color: var(--navy); }
+  .chapter.coming-soon .chapter-title { color: #bbb; }
+
+  /* availability badge */
+  .avail-badge {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .avail-badge.yes { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7; }
+  .avail-badge.no  { background: #f5f5f5; color: #9e9e9e; border: 1.5px solid #e0e0e0; }
+
+  /* ── SUB-CHAPTER GRID ── */
+  .sub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .sub-card {
+    border-radius: 16px;
+    padding: 16px 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1.5px solid;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .sub-card.available {
+    background: var(--sub-bg);
+    border-color: var(--sub-border);
+  }
+  .sub-card.available:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(21,101,192,0.1);
+  }
+  .sub-card.coming-soon {
+    background: #f7f7f7;
+    border-color: #e8e8e8;
+    opacity: 0.65;
+  }
+
+  .sub-num {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+  .sub-card.available .sub-num { color: var(--blue-mid); }
+  .sub-card.coming-soon .sub-num { color: #bbb; }
+
+  .sub-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1.35;
+    flex: 1;
+  }
+  .sub-card.available .sub-title { color: var(--navy); }
+  .sub-card.coming-soon .sub-title { color: #bbb; }
+
+  .sub-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .btn-revise, .btn-quiz {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.12s, box-shadow 0.12s;
+    white-space: nowrap;
+  }
+  .btn-revise { background: var(--navy); color: var(--white); }
+  .btn-revise:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10,22,40,0.3); }
+  .btn-quiz { background: #90caf9; color: var(--navy); }
+  .btn-quiz:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(144,202,249,0.5); }
+
+  .btn-na {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #bbb;
+    padding: 6px 12px;
+    border-radius: 50px;
+    background: #ececec;
+    cursor: default;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .score-badge {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: #2e7d32;
+    color: var(--white);
+    padding: 3px 9px;
+    border-radius: 50px;
+    display: none;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px) {
+    .hero, .tools-row, .content { padding-left: 18px; padding-right: 18px; }
+    .section-title { font-size: 1.2rem; }
+    .chapter { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="index.html" class="back-link">← All Subjects</a>
+  <div class="hero-text-subject">⚛️ Physics</div>
+  <div class="hero-text-qual">AQA GCSE</div>
+  <div class="hero-sub">Choose a topic to revise</div>
+</div>
+
+<div class="tools-row">
+  <a href="physics-quickcheck-all.html" class="tool-pill">⚡ All chapters quiz</a>
+  <a href="physics-exam-paper1.html" class="tool-pill">📄 Paper 1 <span class="meta">50 marks · 65 min</span></a>
+  <a href="physics-exam-paper2.html" class="tool-pill">📄 Paper 2 <span class="meta">50 marks · 65 min</span></a>
+  <a href="physics-equations.html" class="tool-pill">📐 Equation sheet</a>
+</div>
+
+<div class="content">
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 1 — Energy  (COMING SOON)
+  ══════════════════════════════════════════════════════ -->
+  <section class="spec-section">
+    <div class="section-header">
+      <span class="section-badge coming-soon">Section 1</span>
+      <span class="section-title coming-soon">Energy</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <!-- P1 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P1 — Conservation and dissipation of energy</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P1.1</div><div class="sub-title">Changes in energy stores</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.2</div><div class="sub-title">Conservation of energy</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.3</div><div class="sub-title">Energy and work</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.4</div><div class="sub-title">Gravitational potential energy stores</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.5</div><div class="sub-title">Kinetic energy and elastic energy stores</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.6</div><div class="sub-title">Energy dissipation</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.7</div><div class="sub-title">Energy and efficiency</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.8</div><div class="sub-title">Electrical appliances</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P1.9</div><div class="sub-title">Energy and power</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P2 — Energy transfer by heating</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P2.1</div><div class="sub-title">Energy transfer by conduction</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P2.2</div><div class="sub-title">Specific heat capacity</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P2.3</div><div class="sub-title">Heating and insulating buildings</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P3 — Energy resources</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P3.1</div><div class="sub-title">Energy demands</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P3.2</div><div class="sub-title">Energy from wind and water</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P3.3</div><div class="sub-title">Power from the Sun and the Earth</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P3.4</div><div class="sub-title">Energy and the environment</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P3.5</div><div class="sub-title">Big energy issues</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 2 — Particles at work  (COMING SOON)
+  ══════════════════════════════════════════════════════ -->
+  <section class="spec-section">
+    <div class="section-header">
+      <span class="section-badge coming-soon">Section 2</span>
+      <span class="section-title coming-soon">Particles at work</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <!-- P4 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P4 — Electric circuits</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P4.1</div><div class="sub-title">Current and charge</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P4.2</div><div class="sub-title">Potential difference and resistance</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P4.3</div><div class="sub-title">Component characteristics</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P4.4</div><div class="sub-title">Series circuits</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P4.5</div><div class="sub-title">Parallel circuits</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P5 — Electricity in the home</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P5.1</div><div class="sub-title">Alternating current</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P5.2</div><div class="sub-title">Cables and plugs</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P5.3</div><div class="sub-title">Electrical power and potential difference</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P5.4</div><div class="sub-title">Electrical currents and energy transfer</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P5.5</div><div class="sub-title">Appliances and efficiency</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+
+    <!-- P6 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P6 — Molecules and matter</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P6.1</div><div class="sub-title">Density</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P6.2</div><div class="sub-title">States of matter</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P6.3</div><div class="sub-title">Changes of state</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P6.4</div><div class="sub-title">Internal energy</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P6.5</div><div class="sub-title">Specific latent heat</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P6.6</div><div class="sub-title">Gas pressure and temperature</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+
+    <!-- P7 -->
+    <div class="chapter coming-soon">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P7 — Radioactivity</span>
+        </div>
+        <span class="avail-badge no">🔒 Coming soon</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card coming-soon"><div class="sub-num">P7.1</div><div class="sub-title">Atoms and radiation</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P7.2</div><div class="sub-title">The discovery of the nucleus</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P7.3</div><div class="sub-title">Changes in the nucleus</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P7.4</div><div class="sub-title">More about alpha, beta, and gamma radiation</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+        <div class="sub-card coming-soon"><div class="sub-num">P7.5</div><div class="sub-title">Activity and half-life</div><div class="sub-actions"><span class="btn-na">🔒 Coming soon</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 3 — Forces in action  (AVAILABLE)
+  ══════════════════════════════════════════════════════ -->
+  <section class="spec-section">
+    <div class="section-header">
+      <span class="section-badge available">Section 3</span>
+      <span class="section-title available">Forces in action</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <!-- P8 -->
+    <div class="chapter available">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P8 — Forces in balance</span>
+        </div>
+        <span class="avail-badge yes">✅ Available now</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card available">
+          <div class="sub-num">P8.1</div><div class="sub-title">Vectors and scalars</div>
+          <div class="sub-actions">
+            <a href="physics-p8-1-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p8-1-quickcheck.html" class="btn-quiz" data-key="physics-p8-1-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p8-1-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P8.2</div><div class="sub-title">Forces between objects</div>
+          <div class="sub-actions">
+            <a href="physics-p8-2-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p8-2-quickcheck.html" class="btn-quiz" data-key="physics-p8-2-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p8-2-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P8.3</div><div class="sub-title">Resultant forces</div>
+          <div class="sub-actions">
+            <a href="physics-p8-3-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p8-3-quickcheck.html" class="btn-quiz" data-key="physics-p8-3-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p8-3-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P8.4</div><div class="sub-title">Centre of mass</div>
+          <div class="sub-actions">
+            <a href="physics-p8-4-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p8-4-quickcheck.html" class="btn-quiz" data-key="physics-p8-4-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p8-4-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P8.5</div><div class="sub-title">The parallelogram of forces</div>
+          <div class="sub-actions">
+            <a href="physics-p8-5-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p8-5-quickcheck.html" class="btn-quiz" data-key="physics-p8-5-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p8-5-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P8.6</div><div class="sub-title">Resolution of forces</div>
+          <div class="sub-actions">
+            <a href="physics-p8-6-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p8-6-quickcheck.html" class="btn-quiz" data-key="physics-p8-6-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p8-6-score"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P9 -->
+    <div class="chapter available">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P9 — Motion</span>
+        </div>
+        <span class="avail-badge yes">✅ Available now</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card available">
+          <div class="sub-num">P9.1</div><div class="sub-title">Speed and distance-time graphs</div>
+          <div class="sub-actions">
+            <a href="physics-p9-1-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p9-1-quickcheck.html" class="btn-quiz" data-key="physics-p9-1-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p9-1-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P9.2</div><div class="sub-title">Velocity and acceleration</div>
+          <div class="sub-actions">
+            <a href="physics-p9-2-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p9-2-quickcheck.html" class="btn-quiz" data-key="physics-p9-2-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p9-2-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P9.3</div><div class="sub-title">More about velocity-time graphs</div>
+          <div class="sub-actions">
+            <a href="physics-p9-3-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p9-3-quickcheck.html" class="btn-quiz" data-key="physics-p9-3-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p9-3-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P9.4</div><div class="sub-title">Analysing motion graphs</div>
+          <div class="sub-actions">
+            <a href="physics-p9-4-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p9-4-quickcheck.html" class="btn-quiz" data-key="physics-p9-4-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p9-4-score"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P10 -->
+    <div class="chapter available">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P10 — Force and motion</span>
+        </div>
+        <span class="avail-badge yes">✅ Available now</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card available">
+          <div class="sub-num">P10.1</div><div class="sub-title">Forces and acceleration</div>
+          <div class="sub-actions">
+            <a href="physics-p10-1-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p10-1-quickcheck.html" class="btn-quiz" data-key="physics-p10-1-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p10-1-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P10.2</div><div class="sub-title">Weight and terminal velocity</div>
+          <div class="sub-actions">
+            <a href="physics-p10-2-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p10-2-quickcheck.html" class="btn-quiz" data-key="physics-p10-2-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p10-2-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P10.3</div><div class="sub-title">Forces and braking</div>
+          <div class="sub-actions">
+            <a href="physics-p10-3-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p10-3-quickcheck.html" class="btn-quiz" data-key="physics-p10-3-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p10-3-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P10.4</div><div class="sub-title">Momentum</div>
+          <div class="sub-actions">
+            <a href="physics-p10-4-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p10-4-quickcheck.html" class="btn-quiz" data-key="physics-p10-4-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p10-4-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P10.5</div><div class="sub-title">Forces and elasticity</div>
+          <div class="sub-actions">
+            <a href="physics-p10-5-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p10-5-quickcheck.html" class="btn-quiz" data-key="physics-p10-5-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p10-5-score"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION 4 — Waves and electromagnetism  (AVAILABLE)
+  ══════════════════════════════════════════════════════ -->
+  <section class="spec-section">
+    <div class="section-header">
+      <span class="section-badge available">Section 4</span>
+      <span class="section-title available">Waves and electromagnetism</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <!-- P11 -->
+    <div class="chapter available">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P11 — Wave properties</span>
+        </div>
+        <span class="avail-badge yes">✅ Available now</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card available">
+          <div class="sub-num">P11.1</div><div class="sub-title">The nature of waves</div>
+          <div class="sub-actions">
+            <a href="physics-p11-1-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p11-1-quickcheck.html" class="btn-quiz" data-key="physics-p11-1-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p11-1-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P11.2</div><div class="sub-title">The properties of waves</div>
+          <div class="sub-actions">
+            <a href="physics-p11-2-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p11-2-quickcheck.html" class="btn-quiz" data-key="physics-p11-2-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p11-2-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P11.3</div><div class="sub-title">Reflection and refraction</div>
+          <div class="sub-actions">
+            <a href="physics-p11-3-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p11-3-quickcheck.html" class="btn-quiz" data-key="physics-p11-3-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p11-3-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P11.4</div><div class="sub-title">More about waves</div>
+          <div class="sub-actions">
+            <a href="physics-p11-4-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p11-4-quickcheck.html" class="btn-quiz" data-key="physics-p11-4-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p11-4-score"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P12 -->
+    <div class="chapter available">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P12 — Electromagnetic waves</span>
+        </div>
+        <span class="avail-badge yes">✅ Available now</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card available">
+          <div class="sub-num">P12.1</div><div class="sub-title">The electromagnetic spectrum</div>
+          <div class="sub-actions">
+            <a href="physics-p12-1-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p12-1-quickcheck.html" class="btn-quiz" data-key="physics-p12-1-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p12-1-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P12.2</div><div class="sub-title">Light, infrared, microwaves, and radio waves</div>
+          <div class="sub-actions">
+            <a href="physics-p12-2-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p12-2-quickcheck.html" class="btn-quiz" data-key="physics-p12-2-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p12-2-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P12.3</div><div class="sub-title">Communications</div>
+          <div class="sub-actions">
+            <a href="physics-p12-3-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p12-3-quickcheck.html" class="btn-quiz" data-key="physics-p12-3-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p12-3-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P12.4</div><div class="sub-title">Ultraviolet waves, X-rays, and gamma rays</div>
+          <div class="sub-actions">
+            <a href="physics-p12-4-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p12-4-quickcheck.html" class="btn-quiz" data-key="physics-p12-4-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p12-4-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P12.5</div><div class="sub-title">X-rays in medicine</div>
+          <div class="sub-actions">
+            <a href="physics-p12-5-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p12-5-quickcheck.html" class="btn-quiz" data-key="physics-p12-5-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p12-5-score"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P13 -->
+    <div class="chapter available">
+      <div class="chapter-header">
+        <div class="chapter-title-row">
+          <div class="chapter-dot"></div>
+          <span class="chapter-title">Chapter P13 — Electromagnetism</span>
+        </div>
+        <span class="avail-badge yes">✅ Available now</span>
+      </div>
+      <div class="sub-grid">
+        <div class="sub-card available">
+          <div class="sub-num">P13.1</div><div class="sub-title">Magnetic fields</div>
+          <div class="sub-actions">
+            <a href="physics-p13-1-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p13-1-quickcheck.html" class="btn-quiz" data-key="physics-p13-1-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p13-1-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P13.2</div><div class="sub-title">Magnetic fields of electric currents</div>
+          <div class="sub-actions">
+            <a href="physics-p13-2-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p13-2-quickcheck.html" class="btn-quiz" data-key="physics-p13-2-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p13-2-score"></span>
+          </div>
+        </div>
+        <div class="sub-card available">
+          <div class="sub-num">P13.3</div><div class="sub-title">The motor effect</div>
+          <div class="sub-actions">
+            <a href="physics-p13-3-revision.html" class="btn-revise">📖 Revise</a>
+            <a href="physics-p13-3-quickcheck.html" class="btn-quiz" data-key="physics-p13-3-score">⚡ Quiz</a>
+            <span class="score-badge" id="score-physics-p13-3-score"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  document.querySelectorAll('.btn-quiz[data-key]').forEach(btn => {
+    const key = btn.getAttribute('data-key');
+    const val = localStorage.getItem(key);
+    if (val) {
+      const badge = document.getElementById('score-' + key);
+      if (badge) { badge.textContent = val + ' ✓'; badge.style.display = 'inline-flex'; }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B1.7 Osmosis Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(28px,4vw,52px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-score-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:900;font-size:16px}
+
+/* Progress */
+#progress-wrap{margin-bottom:20px}
+.progress-bar-bg{background:#d8ebd8;border-radius:999px;height:12px;overflow:hidden}
+.progress-bar-fill{background:linear-gradient(90deg,var(--green),var(--lime));height:100%;border-radius:999px;transition:width .4s ease}
+.progress-label{font-size:13px;color:var(--muted);font-weight:700;margin-top:6px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:28px;padding:26px;margin-bottom:20px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-type-badge{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;background:var(--lime2);color:var(--green);border-radius:999px;padding:3px 10px;margin-bottom:10px}
+.q-type-badge.tf{background:var(--blue2);color:var(--blue)}
+.q-text{font-size:18px;font-weight:700;margin-bottom:16px;line-height:1.4}
+
+/* Answer options */
+.options{display:grid;gap:10px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 16px;text-align:left;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:all .15s;width:100%}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime);transform:translateY(-1px)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22!important}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1010!important}
+.opt-btn:disabled{cursor:default;transform:none}
+
+/* T/F buttons */
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:14px;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer;transition:all .15s}
+.tf-btn:hover:not(:disabled){transform:translateY(-1px)}
+.tf-btn.tf-true{border-color:#80c080}
+.tf-btn.tf-false{border-color:#e09090}
+.tf-btn.tf-true:hover:not(:disabled){background:var(--green2)}
+.tf-btn.tf-false:hover:not(:disabled){background:var(--red2)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1010!important}
+.tf-btn:disabled{cursor:default;transform:none}
+
+/* Feedback */
+.feedback{display:none;margin-top:12px;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:700;line-height:1.5}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:2px solid var(--green)}
+.feedback.wrong{background:var(--red2);color:#7a1010;border:2px solid var(--red)}
+
+/* Next button */
+.next-btn{margin-top:14px;background:var(--yellow);color:var(--ink);border:none;font-family:inherit;font-weight:900;font-size:15px;padding:11px 24px;border-radius:999px;cursor:pointer;display:none;transition:transform .1s,box-shadow .1s}
+.next-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
+
+/* Score panel */
+#score-panel{display:none;background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+#score-panel h2{font-size:clamp(22px,3vw,36px);margin:0 0 8px}
+.score-big{font-size:clamp(48px,8vw,90px);font-weight:900;color:var(--green);line-height:1;margin:12px 0}
+.result-msg{font-size:18px;font-weight:700;margin-bottom:20px;padding:16px 20px;border-radius:18px;display:inline-block}
+.result-excellent{background:#d4edda;color:#1a4d22;border:2px solid var(--green)}
+.result-good{background:var(--orange2);color:#7a3800;border:2px solid var(--orange)}
+.result-revise{background:var(--red2);color:#7a1010;border:2px solid var(--red)}
+.show-mum{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:20px;padding:18px 24px;font-size:18px;font-weight:900;margin:18px 0;display:inline-block}
+.try-again-btn{background:var(--yellow);color:var(--ink);border:none;font-family:inherit;font-weight:900;font-size:16px;padding:13px 30px;border-radius:999px;cursor:pointer;margin-top:12px;transition:transform .1s,box-shadow .1s}
+.try-again-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.14)}
+
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:20px}.q-text{font-size:16px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>⚡ B1.7 Osmosis — Quick Check</h1>
+  <p>20 questions · Instant feedback · See how well you know osmosis!</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-7-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-score-banner"></div>
+
+<div id="progress-wrap" style="display:none">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="progress-label" id="prog-label">Question 1 of 20</div>
+</div>
+
+<div id="quiz-area"></div>
+<div id="score-panel"></div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b1-7-score';
+const DATE_KEY  = 'biology-b1-7-score-date';
+
+const questions = [
+  // ── MCQ (1–10) ──────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'What is osmosis?',
+    opts:['The movement of any small particles from high to low concentration','The movement of water from a dilute solution to a concentrated solution through a partially permeable membrane','The movement of large molecules through a fully permeable membrane','The movement of glucose from a concentrated solution to a dilute solution'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which particles move during osmosis?',
+    opts:['Glucose molecules only','All soluble particles','Water molecules only','Oxygen and carbon dioxide'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'A cell is placed in a hypotonic solution. What happens?',
+    opts:['Water moves out of the cell and it shrivels','No net movement of water occurs','Water moves into the cell and it may burst','The cell membrane dissolves'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Which statement correctly describes an isotonic solution?',
+    opts:['The solution outside has a higher concentration than inside the cell','The solution outside has a lower concentration than inside the cell','The solution outside has the same concentration as inside the cell','The solution contains no solutes'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'A cell is placed in a hypertonic solution. What will happen to it?',
+    opts:['It will swell and potentially burst','It will remain unchanged','It will shrivel as water leaves the cell','It will take in glucose by osmosis'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'A dilute solution has which of the following?',
+    opts:['High concentration of solute and low concentration of water','Low concentration of both water and solute','High concentration of water and low concentration of solute','Equal concentrations of water and solute'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Why can water molecules pass through a partially permeable membrane, but glucose molecules cannot?',
+    opts:['Glucose molecules have a negative charge','Water molecules are small enough to pass through; glucose molecules are too large','Glucose molecules move against the concentration gradient','Water molecules are repelled by the solute'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which of the following is the most important reason why the concentration of fluid surrounding body cells must stay constant?',
+    opts:['To prevent diffusion of oxygen into the cell','To avoid changes in osmosis that could cause cells to burst or shrivel','To keep the temperature of the cell stable','To allow glucose to enter the cell more quickly'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'How does osmosis differ from diffusion?',
+    opts:['Diffusion only moves water; osmosis moves all small particles','Osmosis only moves water through a partially permeable membrane; diffusion moves any small particles and needs no membrane','Osmosis requires energy; diffusion does not','They are identical processes'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'A cell uses water during a chemical reaction. What effect does this have on osmosis?',
+    opts:['The cytoplasm becomes more dilute, so water moves out by osmosis','The cytoplasm becomes more concentrated, so water moves in by osmosis','No osmosis occurs because the cell is using water','Water moves out because the surrounding fluid becomes hypertonic'],
+    ans:1
+  },
+
+  // ── True / False (11–20) ─────────────────────────────────────────────────────
+  {
+    type:'tf',
+    q:'Osmosis is a special type of diffusion.',
+    ans:true,
+    explain:'Correct — osmosis is the diffusion of water specifically, through a partially permeable membrane.'
+  },
+  {
+    type:'tf',
+    q:'During osmosis, water moves from a concentrated solution to a dilute solution.',
+    ans:false,
+    explain:'False — water moves from a DILUTE solution (high water concentration) to a CONCENTRATED solution (low water concentration).'
+  },
+  {
+    type:'tf',
+    q:'A partially permeable membrane allows all molecules to pass through freely.',
+    ans:false,
+    explain:'False — a partially permeable membrane only allows small molecules (like water) through; large molecules such as glucose cannot pass.'
+  },
+  {
+    type:'tf',
+    q:'In a hypotonic solution, the fluid outside the cell has a lower concentration than the fluid inside.',
+    ans:true,
+    explain:'Correct — hypotonic means the surrounding solution is less concentrated than the cell contents, so water enters the cell.'
+  },
+  {
+    type:'tf',
+    q:'If an animal cell is placed in a hypertonic solution, it will swell and burst.',
+    ans:false,
+    explain:'False — in a hypertonic solution, water leaves the cell, causing it to shrivel. Swelling and bursting happen in a hypotonic solution.'
+  },
+  {
+    type:'tf',
+    q:'A concentrated solution has a high concentration of water molecules.',
+    ans:false,
+    explain:'False — a concentrated solution has a LOW concentration of water (and a HIGH concentration of solute).'
+  },
+  {
+    type:'tf',
+    q:'No net movement of water occurs when a cell is in an isotonic solution.',
+    ans:true,
+    explain:'Correct — in an isotonic solution the concentrations inside and outside the cell are equal, so there is no net movement of water.'
+  },
+  {
+    type:'tf',
+    q:'Osmosis can occur without any membrane being present.',
+    ans:false,
+    explain:'False — osmosis requires a partially permeable membrane. Diffusion (not osmosis) can occur freely without a membrane.'
+  },
+  {
+    type:'tf',
+    q:'If the fluid surrounding body cells becomes too dilute, cells could burst.',
+    ans:true,
+    explain:'Correct — if the surrounding fluid is too dilute (hypotonic), excess water enters the cell by osmosis, causing it to swell and potentially burst.'
+  },
+  {
+    type:'tf',
+    q:'Water moves into a concentrated solution during osmosis.',
+    ans:true,
+    explain:'Correct — water moves from a region of high water concentration (dilute solution) INTO a region of low water concentration (concentrated solution).'
+  }
+];
+
+let current = 0;
+let score   = 0;
+let answered = false;
+
+// ── Show previous score banner ───────────────────────────────────────────────
+(function(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const d    = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    const banner = document.getElementById('prev-score-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = '📊 Your last score: <strong>' + prev + '/20</strong>' + (d ? ' &nbsp;·&nbsp; ' + d : '');
+  }
+})();
+
+// ── Build & show question ────────────────────────────────────────────────────
+function showQuestion(i){
+  answered = false;
+  const area = document.getElementById('quiz-area');
+  const q    = questions[i];
+
+  // progress
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.getElementById('prog-fill').style.width = (i / questions.length * 100) + '%';
+  document.getElementById('prog-label').textContent = 'Question ' + (i+1) + ' of ' + questions.length;
+
+  let html = '<div class="q-card">';
+  html += '<div class="q-num">Question ' + (i+1) + ' of ' + questions.length + '</div>';
+
+  if(q.type === 'mcq'){
+    html += '<span class="q-type-badge">Multiple choice</span>';
+    html += '<div class="q-text">' + q.q + '</div>';
+    html += '<div class="options">';
+    q.opts.forEach(function(opt, idx){
+      html += '<button class="opt-btn" id="opt-' + idx + '" onclick="checkMCQ(' + idx + ')">' + opt + '</button>';
+    });
+    html += '</div>';
+  } else {
+    html += '<span class="q-type-badge tf">True / False</span>';
+    html += '<div class="q-text">' + q.q + '</div>';
+    html += '<div class="tf-row">';
+    html += '<button class="tf-btn tf-true" id="tf-true" onclick="checkTF(true)">✅ True</button>';
+    html += '<button class="tf-btn tf-false" id="tf-false" onclick="checkTF(false)">❌ False</button>';
+    html += '</div>';
+  }
+
+  html += '<div class="feedback" id="feedback"></div>';
+  html += '<button class="next-btn" id="next-btn" onclick="nextQ()">' + (i < questions.length - 1 ? 'Next question →' : 'See my score 🏆') + '</button>';
+  html += '</div>';
+
+  area.innerHTML = html;
+}
+
+function checkMCQ(chosen){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const fb = document.getElementById('feedback');
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(function(b){ b.disabled = true; });
+
+  if(chosen === q.ans){
+    score++;
+    btns[chosen].classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correct!';
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.innerHTML = '❌ Incorrect. The correct answer is: <strong>' + q.opts[q.ans] + '</strong>';
+  }
+  fb.style.display = 'block';
+  document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function checkTF(chosen){
+  if(answered) return;
+  answered = true;
+  const q   = questions[current];
+  const fb  = document.getElementById('feedback');
+  const tBtn = document.getElementById('tf-true');
+  const fBtn = document.getElementById('tf-false');
+  tBtn.disabled = true;
+  fBtn.disabled = true;
+
+  const correct = chosen === q.ans;
+  if(correct) score++;
+
+  const pickedBtn  = chosen ? tBtn : fBtn;
+  const correctBtn = q.ans ? tBtn : fBtn;
+
+  if(correct){
+    pickedBtn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Correct! ' + (q.explain || '');
+  } else {
+    pickedBtn.classList.add('wrong');
+    correctBtn.classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.innerHTML = '❌ Incorrect. ' + (q.explain || ('The correct answer is: <strong>' + (q.ans ? 'True' : 'False') + '</strong>'));
+  }
+  fb.style.display = 'block';
+  document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function nextQ(){
+  current++;
+  if(current < questions.length){
+    showQuestion(current);
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz(){
+  // hide quiz
+  document.getElementById('quiz-area').innerHTML = '';
+  document.getElementById('progress-wrap').style.display = 'none';
+
+  // save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // update banner
+  const banner = document.getElementById('prev-score-banner');
+  banner.style.display = 'none'; // hide old banner; score just saved
+
+  // show result
+  let msgClass, msgText;
+  if(score >= 18){
+    msgClass = 'result-excellent';
+    msgText  = '🏆 Excellent work! You really know your osmosis!';
+  } else if(score >= 14){
+    msgClass = 'result-good';
+    msgText  = '👍 Good effort — a little more revision and you\'ll nail it!';
+  } else {
+    msgClass = 'result-revise';
+    msgText  = '📖 Go back and revise the notes — you\'ll get there!';
+  }
+
+  const panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  panel.innerHTML =
+    '<h2>Quiz complete!</h2>' +
+    '<div class="score-big">' + score + '<span style="font-size:0.45em;color:var(--muted)">/20</span></div>' +
+    '<div class="result-msg ' + msgClass + '">' + msgText + '</div>' +
+    '<div class="show-mum">Show this to mum — ' + score + '/20 🏆</div>' +
+    '<br><button class="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>';
+
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function restartQuiz(){
+  current  = 0;
+  score    = 0;
+  answered = false;
+
+  // hide banner for this attempt (score still in localStorage)
+  document.getElementById('prev-score-banner').style.display = 'none';
+  document.getElementById('score-panel').style.display = 'none';
+  showQuestion(0);
+  document.getElementById('quiz-area').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// kick off
+showQuestion(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B2.2 Growth and differentiation</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+.prev-score{background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 18px;margin-bottom:18px;color:var(--orange);font-weight:900;font-size:15px;display:none}
+.panel{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:14px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.section-label{font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-size:12px;margin-bottom:14px}
+.q-card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px;transition:border-color .2s}
+.q-card.correct{background:var(--green2);border-color:var(--green)}
+.q-card.incorrect{background:var(--red2);border-color:var(--red)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.4}
+.choices{display:grid;gap:8px}
+.choice-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 16px;text-align:left;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,border-color .15s;color:var(--ink)}
+.choice-btn:hover:not(:disabled){background:#f0f7ee;border-color:var(--green)}
+.choice-btn.selected-correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.choice-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:#7a1010}
+.choice-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.choice-btn:disabled{cursor:default}
+.tf-choices{display:flex;gap:10px;margin-top:4px}
+.tf-btn{background:white;border:2px solid var(--line);border-radius:14px;padding:11px 28px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s;color:var(--ink)}
+.tf-btn:hover:not(:disabled){background:#f0f7ee;border-color:var(--green)}
+.tf-btn.selected-correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:#7a1010}
+.tf-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn:disabled{cursor:default}
+.feedback{margin-top:10px;font-size:13px;font-weight:700;display:none}
+.feedback.show{display:block}
+.feedback.ok{color:#1a4d22}
+.feedback.bad{color:var(--red)}
+.submit-row{text-align:center;margin-top:22px}
+.submit-btn{background:var(--yellow);color:var(--dark);font-weight:900;border:none;border-radius:999px;padding:14px 40px;font-size:16px;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,0,0,.12);transition:transform .1s}
+.submit-btn:hover{transform:scale(1.03)}
+.result-box{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:28px;padding:30px;text-align:center;margin-top:20px;display:none}
+.result-score{font-size:clamp(40px,8vw,72px);font-weight:900;color:var(--yellow);line-height:1}
+.result-label{font-size:18px;margin-top:8px;color:rgba(255,255,255,.85)}
+.result-msg{font-size:15px;margin-top:12px;color:rgba(255,255,255,.75);max-width:480px;margin-left:auto;margin-right:auto}
+.try-again-btn{background:var(--yellow);color:var(--dark);font-weight:900;border:none;border-radius:999px;padding:13px 36px;font-size:15px;cursor:pointer;font-family:inherit;margin-top:20px}
+.progress-bar{height:6px;background:var(--line);border-radius:999px;margin-bottom:20px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);border-radius:999px;transition:width .4s}
+@media(max-width:600px){.wrap{padding:14px}.tf-choices{flex-direction:column}.tf-btn{padding:11px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+  <h1>⚡ Quick Check – B2.2 Growth and differentiation</h1>
+  <p>20 questions — 10 multiple choice + 10 true/false. Click an answer for instant feedback.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b2-2-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div class="prev-score" id="prev-score-banner"></div>
+
+<div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+
+<div id="quiz-area"></div>
+
+<div class="result-box" id="result-box">
+  <div style="font-size:22px;font-weight:900;margin-bottom:6px">Show this to mum 🏆</div>
+  <div class="result-score" id="result-score"></div>
+  <div class="result-label">out of 20</div>
+  <div class="result-msg" id="result-msg"></div>
+  <button class="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b2-2-score';
+const DATE_KEY  = 'biology-b2-2-score-date';
+
+const questions = [
+  // ── MCQ (10) ─────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    text:'What is differentiation?',
+    choices:['The process by which cells divide to form two daughter cells','The process by which a cell becomes specialised for its function','The process by which cells absorb nutrients','The process by which DNA is copied before cell division'],
+    correct:1
+  },
+  {
+    type:'mcq',
+    text:'In animals, when do most cells become specialised?',
+    choices:['Throughout the animal\'s entire life','Only in old age','Very early in development — most cells are specialised by birth','Only when the animal reaches reproductive maturity'],
+    correct:2
+  },
+  {
+    type:'mcq',
+    text:'Where are the undifferentiated cells (meristems) found in plants?',
+    choices:['In the leaves only','At the tips of shoots and roots','In the centre of the stem','In the flower petals'],
+    correct:1
+  },
+  {
+    type:'mcq',
+    text:'Which statement best explains why cloning plants is much easier than cloning animals?',
+    choices:['Plant cells divide more rapidly than animal cells','Plant cells have a nucleus; animal cells do not','Plant cells can redifferentiate — they retain the ability to become any cell type throughout life','Plants reproduce sexually, making cloning simpler'],
+    correct:2
+  },
+  {
+    type:'mcq',
+    text:'In mature animals, what is the main role of cell division?',
+    choices:['To form new organs','Repair and replacement of worn-out cells','To increase body size continuously','To produce gametes only'],
+    correct:1
+  },
+  {
+    type:'mcq',
+    text:'Which type of stem cell can become ANY cell type in the body?',
+    choices:['Adult stem cells','Meristematic stem cells','Embryonic stem cells','Red blood cell precursors'],
+    correct:2
+  },
+  {
+    type:'mcq',
+    text:'Approximately how many cells does the adult human body contain?',
+    choices:['1 million','1 billion','37.2 trillion','100 quadrillion'],
+    correct:2
+  },
+  {
+    type:'mcq',
+    text:'What happens to genes during differentiation?',
+    choices:['All genes are deleted from the cell','Certain genes are switched on and others are switched off','New genes are added to the DNA','All genes become permanently active'],
+    correct:1
+  },
+  {
+    type:'mcq',
+    text:'Adult stem cells in bone marrow mainly produce which type of cells?',
+    choices:['Nerve cells','Muscle cells','Blood cells','Liver cells'],
+    correct:2
+  },
+  {
+    type:'mcq',
+    text:'When a plant cell is cloned from a tiny piece of leaf tissue, what must happen first?',
+    choices:['The cell immediately differentiates into a root cell','The cell becomes unspecialised and then undergoes mitosis many times','The cell undergoes meiosis to form gametes','The cell fuses with another cell'],
+    correct:1
+  },
+
+  // ── True / False (10) ─────────────────────────────────────────────────────
+  {
+    type:'tf',
+    text:'Animal cells retain the ability to differentiate throughout their entire lives, just like plant cells.',
+    correct:false
+  },
+  {
+    type:'tf',
+    text:'Nerve cells do not divide once they have differentiated, which is why nerve damage is usually permanent.',
+    correct:true
+  },
+  {
+    type:'tf',
+    text:'Mitosis takes place almost continuously in plant meristems.',
+    correct:true
+  },
+  {
+    type:'tf',
+    text:'A plant cell that has already differentiated can never change back into an unspecialised cell.',
+    correct:false
+  },
+  {
+    type:'tf',
+    text:'All specialised animal cells can continue to divide to produce more of the same cell type.',
+    correct:false
+  },
+  {
+    type:'tf',
+    text:'Embryonic stem cells are able to develop into any cell type needed by the organism.',
+    correct:true
+  },
+  {
+    type:'tf',
+    text:'Clones produced from plant tissue are genetically identical to the original parent plant.',
+    correct:true
+  },
+  {
+    type:'tf',
+    text:'Adult stem cells are completely unspecialised and can form any cell type in the body.',
+    correct:false
+  },
+  {
+    type:'tf',
+    text:'Meristems are found in the actively growing regions at the tips of plant shoots and roots.',
+    correct:true
+  },
+  {
+    type:'tf',
+    text:'In the early embryo, all cells are already fully specialised.',
+    correct:false
+  }
+];
+
+let answered = 0;
+let score = 0;
+
+function buildQuiz() {
+  answered = 0;
+  score = 0;
+  updateProgress();
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+
+  const mcqs = questions.filter(q=>q.type==='mcq');
+  const tfs  = questions.filter(q=>q.type==='tf');
+
+  let html = '<div class="panel"><div class="section-label">Part 1 — Multiple Choice (10 questions)</div>';
+  mcqs.forEach((q,i)=>{ html += buildMCQ(q, i); });
+  html += '</div>';
+
+  html += '<div class="panel" style="margin-top:20px"><div class="section-label">Part 2 — True / False (10 questions)</div>';
+  tfs.forEach((q,i)=>{ html += buildTF(q, i+10); });
+  html += '</div>';
+
+  area.innerHTML = html;
+}
+
+function buildMCQ(q, idx) {
+  let opts = q.choices.map((c,ci)=>`<button class="choice-btn" id="opt-${idx}-${ci}" onclick="answerMCQ(${idx},${ci},${q.correct})">${c}</button>`).join('');
+  return `<div class="q-card" id="card-${idx}">
+    <div class="q-num">Question ${idx+1}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="choices">${opts}</div>
+    <div class="feedback" id="fb-${idx}"></div>
+  </div>`;
+}
+
+function buildTF(q, idx) {
+  return `<div class="q-card" id="card-${idx}">
+    <div class="q-num">Question ${idx+1}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="tf-choices">
+      <button class="tf-btn" id="opt-${idx}-true"  onclick="answerTF(${idx},true,${q.correct})">True</button>
+      <button class="tf-btn" id="opt-${idx}-false" onclick="answerTF(${idx},false,${q.correct})">False</button>
+    </div>
+    <div class="feedback" id="fb-${idx}"></div>
+  </div>`;
+}
+
+function answerMCQ(idx, chosen, correct) {
+  const card = document.getElementById('card-'+idx);
+  if (card.classList.contains('correct')||card.classList.contains('incorrect')) return;
+
+  const allBtns = card.querySelectorAll('.choice-btn');
+  allBtns.forEach(b=>b.disabled=true);
+
+  const fb = document.getElementById('fb-'+idx);
+  if (chosen===correct) {
+    card.classList.add('correct');
+    document.getElementById('opt-'+idx+'-'+chosen).classList.add('selected-correct');
+    fb.textContent='✅ Correct!';
+    fb.className='feedback show ok';
+    score++;
+  } else {
+    card.classList.add('incorrect');
+    document.getElementById('opt-'+idx+'-'+chosen).classList.add('selected-wrong');
+    document.getElementById('opt-'+idx+'-'+correct).classList.add('reveal-correct');
+    const correctText = card.querySelectorAll('.choice-btn')[correct].textContent;
+    fb.textContent='❌ Incorrect. The correct answer is: '+correctText;
+    fb.className='feedback show bad';
+  }
+  answered++;
+  updateProgress();
+  maybeShowResult();
+}
+
+function answerTF(idx, chosen, correct) {
+  const card = document.getElementById('card-'+idx);
+  if (card.classList.contains('correct')||card.classList.contains('incorrect')) return;
+
+  const trueBtn  = document.getElementById('opt-'+idx+'-true');
+  const falseBtn = document.getElementById('opt-'+idx+'-false');
+  trueBtn.disabled=true; falseBtn.disabled=true;
+
+  const fb = document.getElementById('fb-'+idx);
+  const chosenBtn = chosen ? trueBtn : falseBtn;
+  const correctBtn = correct ? trueBtn : falseBtn;
+
+  if (chosen===correct) {
+    card.classList.add('correct');
+    chosenBtn.classList.add('selected-correct');
+    fb.textContent='✅ Correct!';
+    fb.className='feedback show ok';
+    score++;
+  } else {
+    card.classList.add('incorrect');
+    chosenBtn.classList.add('selected-wrong');
+    correctBtn.classList.add('reveal-correct');
+    fb.textContent='❌ Incorrect. The correct answer is: '+(correct?'True':'False');
+    fb.className='feedback show bad';
+  }
+  answered++;
+  updateProgress();
+  maybeShowResult();
+}
+
+function updateProgress() {
+  const pct = (answered/20)*100;
+  document.getElementById('progress-fill').style.width=pct+'%';
+}
+
+function maybeShowResult() {
+  if (answered < 20) return;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+  showResult(score);
+}
+
+function showResult(s) {
+  const box = document.getElementById('result-box');
+  document.getElementById('result-score').textContent = s;
+  let msg='';
+  if (s>=18) msg='🏆 Excellent work, Gabriel! Outstanding score — you clearly know this topic really well. Keep it up!';
+  else if (s>=14) msg='👍 Good effort! You\'ve got a solid understanding, but there\'s still room to improve. Review any questions you got wrong.';
+  else msg='📖 Time to go back and revise! Re-read the B2.2 notes carefully, then try again.';
+  document.getElementById('result-msg').textContent = msg;
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function restartQuiz() {
+  document.getElementById('result-box').style.display='none';
+  document.getElementById('prev-score-banner').style.display='none';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Load previous score
+(function(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if (prev!==null) {
+    const banner = document.getElementById('prev-score-banner');
+    banner.textContent = '📊 Your last score: '+prev+'/20'+(prevDate?' — '+prevDate:'');
+    banner.style.display='block';
+  }
+})();
+
+buildQuiz();
+</script>
+</body>
+</html>

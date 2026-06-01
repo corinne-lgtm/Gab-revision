@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B2.1 Cell Division</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.5;min-height:100vh}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:clamp(26px,4vw,50px);line-height:1;letter-spacing:-1px;margin-bottom:8px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:700;font-size:15px}
+
+/* Progress */
+#progress-wrap{background:rgba(255,255,255,.7);border:2px solid var(--line);border-radius:999px;height:14px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--lime),var(--green));border-radius:999px;transition:width .4s ease}
+#progress-label{text-align:right;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:700}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:28px;padding:28px;margin-bottom:22px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-meta{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+.q-meta .q-type{background:var(--lime2);color:var(--green);border-radius:999px;padding:3px 10px;margin-left:6px;font-size:11px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:18px;line-height:1.4}
+
+/* MCQ options */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;font-size:15px;font-weight:600;text-align:left;transition:background .15s,border-color .15s;font-family:inherit;color:var(--ink);width:100%}
+.opt:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22!important}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a1a!important}
+.opt:disabled{cursor:default}
+
+/* True/False */
+.tf-opts{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;color:var(--ink);transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1a1a!important}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{display:none;border-radius:14px;padding:12px 16px;margin-top:14px;font-size:15px;font-weight:700}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:2px solid var(--green)}
+.feedback.bad{background:var(--red2);color:#7a1a1a;border:2px solid var(--red)}
+
+/* Next button */
+.next-btn{display:none;margin-top:16px;background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+.next-btn.show{display:inline-block}
+.next-btn:hover{background:#b8d030}
+
+/* Score panel */
+#score-panel{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:32px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+#score-panel h2{font-size:28px;margin-bottom:8px}
+#score-big{font-size:72px;font-weight:900;line-height:1;margin:16px 0;color:var(--green)}
+#score-label{font-size:20px;margin-bottom:8px;color:var(--muted)}
+#score-msg{font-size:18px;font-weight:700;margin:16px 0;padding:16px;border-radius:18px}
+#score-msg.great{background:var(--green2);color:#1a4d22}
+#score-msg.good{background:var(--blue2);color:#1a3d55}
+#score-msg.revise{background:var(--orange2);color:#7a3a0a}
+#show-mum{background:var(--dark);color:white;border-radius:22px;padding:20px;margin:18px 0;font-size:20px;font-weight:900}
+#show-mum .trophy{font-size:40px;display:block;margin-bottom:8px}
+.try-again{background:var(--yellow);color:var(--ink);border:none;border-radius:999px;padding:13px 32px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:8px}
+.try-again:hover{background:#b8d030}
+
+@media(max-width:600px){.options{grid-template-columns:1fr}.wrap{padding:14px}.tf-opts{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE Biology · B2 Cell division</div>
+    <h1>⚡ Quick Check — B2.1</h1>
+    <p>20 questions covering cell division, the cell cycle, and mitosis. Good luck, Gabriel!</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="biology-index.html">📚 Biology</a>
+      <a href="biology-b2-1-revision.html">📖 Revision notes</a>
+    </div>
+  </section>
+
+  <div id="prev-banner"></div>
+
+  <div id="quiz-area">
+    <div id="progress-label"></div>
+    <div id="progress-wrap"><div id="progress-bar"></div></div>
+    <div id="q-container"></div>
+  </div>
+
+  <div id="score-panel">
+    <h2>Quiz complete! 🎉</h2>
+    <div id="score-big"></div>
+    <div id="score-label">out of 20</div>
+    <div id="score-msg"></div>
+    <div id="show-mum">
+      <span class="trophy" id="trophy-icon">🏆</span>
+      <span id="show-mum-text"></span>
+    </div>
+    <button class="try-again" onclick="tryAgain()">🔄 Try again</button>
+  </div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b2-1-score';
+const DATE_KEY  = 'biology-b2-1-score-date';
+
+const questions = [
+  // ── MCQ (10) ──────────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'How many chromosomes do human body cells normally contain?',
+    opts:['23','44','46','48'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What is a gene?',
+    opts:[
+      'A molecule made of protein that controls cell division',
+      'A small section of DNA on a chromosome that controls a characteristic',
+      'The full set of chromosomes in a cell',
+      'A type of cell found only in the nucleus'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which of the following correctly describes the order of biological organisation from smallest to largest?',
+    opts:[
+      'Chromosome → DNA → Gene',
+      'DNA → Gene → Chromosome',
+      'Gene → Chromosome → DNA',
+      'DNA → Chromosome → Gene'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'During Stage 1 of the cell cycle, which of the following does NOT happen?',
+    opts:[
+      'The cell grows bigger',
+      'DNA is replicated',
+      'The nucleus divides into two',
+      'The number of mitochondria increases'
+    ],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What happens to the chromosomes during mitosis (Stage 2 of the cell cycle)?',
+    opts:[
+      'Chromosomes are destroyed and rebuilt',
+      'One set of chromosomes is pulled to each end of the dividing cell',
+      'Chromosomes fuse together to form longer strands',
+      'The number of chromosomes is halved'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'How many chromosomes do human sex cells (gametes) contain?',
+    opts:['46','23','22','48'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which of these best explains why mitosis is important for repair of damaged tissue?',
+    opts:[
+      'It produces cells with different genetic information so they can adapt',
+      'It produces genetically identical cells that can carry out the same functions as the originals',
+      'It produces cells with half the number of chromosomes',
+      'It increases the rate of mutation in new cells'
+    ],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which statement about asexual reproduction is correct?',
+    opts:[
+      'Offspring have half the genes of the parent',
+      'Offspring are produced by meiosis and show variation',
+      'Offspring are produced by mitosis and are genetically identical to the parent',
+      'Offspring have twice the chromosome number of the parent'
+    ],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Which stage of the cell cycle is the longest?',
+    opts:[
+      'Stage 2 — mitosis',
+      'Stage 3 — cytoplasm division',
+      'Stage 1 — growth and DNA replication',
+      'All stages are equal in length'
+    ],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Why is it important that the chromosome number stays the same after cell division by mitosis?',
+    opts:[
+      'So the cell can produce gametes more easily',
+      'To allow genetic variation in daughter cells',
+      'So daughter cells can carry out the same functions as the parent cell',
+      'To ensure the cell cycle takes less time'
+    ],
+    ans:2
+  },
+
+  // ── True / False (10) ─────────────────────────────────────────────────────
+  {
+    type:'tf',
+    q:'Chromosomes in human body cells are arranged in 23 pairs.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'DNA stands for Deoxyribonucleic acid.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Cells produced by mitosis are genetically different from the parent cell.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'During Stage 3 of the cell cycle, the cytoplasm and cell membranes divide to form two daughter cells.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Sex cells are produced by mitosis.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'One chromosome in each pair in a body cell comes from the mother and one from the father.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'A chromosome may carry hundreds or thousands of genes.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Mitosis produces four daughter cells from one parent cell.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'Cell division by mitosis is used for growth, repair, and replacement of cells.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'During DNA replication, one copy of each chromosome is made so the cell ends up with two copies.',
+    ans:true
+  }
+];
+
+let current = 0;
+let score   = 0;
+let answered = false;
+
+// ── Previous score banner ────────────────────────────────────────────────────
+(function(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    const banner = document.getElementById('prev-banner');
+    let txt = `📊 Your last score: <b>${prev}/20</b>`;
+    if(prevDate) txt += ` &nbsp;·&nbsp; ${prevDate}`;
+    banner.innerHTML = txt;
+    banner.style.display = 'block';
+  }
+})();
+
+// ── Render question ──────────────────────────────────────────────────────────
+function render(){
+  answered = false;
+  const q = questions[current];
+  const total = questions.length;
+
+  document.getElementById('progress-label').textContent =
+    `Question ${current+1} of ${total}`;
+  document.getElementById('progress-bar').style.width =
+    `${((current)/total)*100}%`;
+
+  let html = `<div class="q-card">
+    <div class="q-meta">Question ${current+1} <span class="q-type">${q.type==='mcq'?'Multiple choice':'True / False'}</span></div>
+    <div class="q-text">${q.q}</div>`;
+
+  if(q.type==='mcq'){
+    html += `<div class="options">`;
+    q.opts.forEach((o,i)=>{
+      html += `<button class="opt" onclick="checkMCQ(${i})">${String.fromCharCode(65+i)}. ${o}</button>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="tf-opts">
+      <button class="tf-btn" onclick="checkTF(true)">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(false)">❌ False</button>
+    </div>`;
+  }
+
+  html += `<div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn" onclick="next()">${current+1<total?'Next question →':'See my score 🏆'}</button>
+  </div>`;
+
+  document.getElementById('q-container').innerHTML = html;
+}
+
+function checkMCQ(idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const opts = document.querySelectorAll('.opt');
+  opts.forEach(b=>b.disabled=true);
+  const fb = document.getElementById('feedback');
+  if(idx===q.ans){
+    score++;
+    opts[idx].classList.add('correct');
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback show ok';
+  } else {
+    opts[idx].classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.textContent = `❌ Incorrect. The correct answer is: ${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}`;
+    fb.className = 'feedback show bad';
+  }
+  document.getElementById('next-btn').className = 'next-btn show';
+}
+
+function checkTF(val){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.tf-btn');
+  btns.forEach(b=>b.disabled=true);
+  const chosen = val ? btns[0] : btns[1];
+  const fb = document.getElementById('feedback');
+  if(val===q.ans){
+    score++;
+    chosen.classList.add('correct');
+    fb.textContent = '✅ Correct!';
+    fb.className = 'feedback show ok';
+  } else {
+    chosen.classList.add('wrong');
+    (q.ans ? btns[0] : btns[1]).classList.add('correct');
+    fb.textContent = `❌ Incorrect. The correct answer is: ${q.ans ? 'True' : 'False'}.`;
+    fb.className = 'feedback show bad';
+  }
+  document.getElementById('next-btn').className = 'next-btn show';
+}
+
+function next(){
+  current++;
+  if(current < questions.length){
+    render();
+  } else {
+    showScore();
+  }
+}
+
+function showScore(){
+  document.getElementById('quiz-area').style.display = 'none';
+  const panel = document.getElementById('score-panel');
+  panel.style.display = 'block';
+  document.getElementById('score-big').textContent = score;
+  document.getElementById('progress-bar').style.width = '100%';
+
+  // Save to localStorage
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Message
+  const msgEl = document.getElementById('score-msg');
+  let emoji, msg, cls;
+  if(score>=18){
+    emoji='🏆'; msg='Excellent work! You really know this topic inside out. Keep it up!'; cls='great';
+  } else if(score>=14){
+    emoji='👍'; msg='Good effort! A few gaps to fill — check any questions you got wrong.'; cls='good';
+  } else {
+    emoji='📖'; msg='Go back and revise! Read through the notes again and try once more.'; cls='revise';
+  }
+  msgEl.textContent = msg;
+  msgEl.className = `show ${cls}`;
+  document.getElementById('trophy-icon').textContent = emoji;
+  document.getElementById('show-mum-text').textContent = `Show this to mum — ${score}/20 ${emoji}`;
+}
+
+function tryAgain(){
+  current = 0;
+  score   = 0;
+  document.getElementById('score-panel').style.display = 'none';
+  document.getElementById('quiz-area').style.display   = 'block';
+  // Hide previous-score banner while quiz is running
+  document.getElementById('prev-banner').style.display = 'none';
+  render();
+}
+
+// ── Start ────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>

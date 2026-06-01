@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B1.2 Quick Check — Animal and plant cells</title>
+<style>
+:root{
+  --bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;
+  --green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;
+  --blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;
+  --purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;
+  --red:#c0392b;--red2:#fde8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),
+  radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),
+  var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Last score banner */
+#last-score-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:18px;color:var(--orange);font-weight:900;font-size:15px}
+
+/* Section labels */
+.section-label{font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:28px 0 10px}
+
+/* Question card */
+.qcard{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:22px;padding:22px;margin-bottom:14px;transition:border-color .2s}
+.qcard.correct{background:var(--green2);border-color:var(--green)}
+.qcard.wrong{background:var(--red2);border-color:var(--red)}
+.qnum{font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.qtext{font-size:16px;font-weight:700;margin-bottom:14px}
+
+/* MCQ options */
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 14px;cursor:pointer;font-size:14px;font-weight:600;transition:background .15s,border-color .15s;text-align:left}
+.opt:hover:not([disabled]){background:var(--lime2);border-color:var(--lime)}
+.opt.correct-ans{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.opt.wrong-ans{background:var(--red2);border-color:var(--red);color:#7a1a1a}
+.opt[disabled]{cursor:default}
+
+/* True/False */
+.tf-btns{display:flex;gap:10px;margin-top:4px}
+.tf-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 28px;cursor:pointer;font-size:14px;font-weight:900;transition:background .15s,border-color .15s}
+.tf-btn:hover:not([disabled]){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct-ans{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong-ans{background:var(--red2);border-color:var(--red);color:#7a1a1a}
+.tf-btn[disabled]{cursor:default}
+
+/* Feedback line */
+.feedback{margin-top:10px;font-size:13px;font-weight:700;min-height:18px}
+.feedback.ok{color:var(--green)}
+.feedback.bad{color:var(--red)}
+
+/* Results box */
+#results{display:none;background:var(--dark);color:white;border-radius:28px;padding:28px;margin-top:28px;text-align:center}
+#results h2{font-size:clamp(22px,3vw,36px);margin:0 0 8px;color:var(--yellow)}
+#results .score-big{font-size:clamp(40px,8vw,80px);font-weight:900;line-height:1;margin:12px 0}
+#results .msg{font-size:18px;color:rgba(255,255,255,.85);margin-bottom:20px}
+#results .mum{background:var(--yellow);color:var(--dark);border-radius:18px;padding:14px 22px;font-weight:900;font-size:17px;display:inline-block;margin-bottom:20px}
+.try-again{background:var(--yellow);color:var(--dark);border:none;font-weight:900;padding:12px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+.try-again:hover{opacity:.85}
+
+@media(max-width:600px){.options{grid-template-columns:1fr}.wrap{padding:14px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+  <h1>B1.2 Quick Check ⚡</h1>
+  <p>Animal and plant cells — 10 MCQs + 10 True/False · 20 questions total</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b1-2-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="last-score-banner"></div>
+<div id="quiz-container"></div>
+<div id="results">
+  <h2>Quiz complete!</h2>
+  <div class="score-big" id="score-display"></div>
+  <div class="mum" id="mum-line"></div>
+  <div class="msg" id="result-msg"></div>
+  <button class="try-again" onclick="tryAgain()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b1-2-score';
+const DATE_KEY  = 'biology-b1-2-score-date';
+
+const questions = [
+  // ── MCQ (1–10) ──────────────────────────────────────────────────────────
+  {
+    type:'mcq', n:1,
+    q:'Which of the following organelles is found in BOTH animal cells and plant cells?',
+    opts:['Cell wall','Chloroplast','Mitochondria','Permanent vacuole'],
+    ans:2
+  },
+  {
+    type:'mcq', n:2,
+    q:'What is the main function of the nucleus in a cell?',
+    opts:['Site of aerobic respiration','Controls what enters and leaves the cell','Contains DNA and controls cell activities','Carries out protein synthesis'],
+    ans:2
+  },
+  {
+    type:'mcq', n:3,
+    q:'The cell wall of a plant cell is made from which material?',
+    opts:['Chitin','Cellulose','Starch','Chlorophyll'],
+    ans:1
+  },
+  {
+    type:'mcq', n:4,
+    q:'Where does aerobic respiration take place inside a cell?',
+    opts:['Nucleus','Ribosomes','Permanent vacuole','Mitochondria'],
+    ans:3
+  },
+  {
+    type:'mcq', n:5,
+    q:'Why do root cells NOT contain chloroplasts?',
+    opts:['Root cells are too small to hold chloroplasts','Roots are underground and receive no light for photosynthesis','Chloroplasts only develop after the cell wall forms','Root cells already have a permanent vacuole instead'],
+    ans:1
+  },
+  {
+    type:'mcq', n:6,
+    q:'Ribosomes are the site of which process?',
+    opts:['Aerobic respiration','Photosynthesis','Protein synthesis','Active transport'],
+    ans:2
+  },
+  {
+    type:'mcq', n:7,
+    q:'What is the approximate diameter of a typical animal cell nucleus?',
+    opts:['0.1 μm','1 μm','10 μm','100 μm'],
+    ans:2
+  },
+  {
+    type:'mcq', n:8,
+    q:'Which statement about the cell membrane is correct?',
+    opts:['It is made of cellulose and provides structural support','It is only found in plant cells','It controls which substances enter and leave the cell','It is where most chemical reactions of life take place'],
+    ans:2
+  },
+  {
+    type:'mcq', n:9,
+    q:'Algal cells are most similar to which type of cell?',
+    opts:['Animal cells','Bacterial cells','Plant cells','Red blood cells'],
+    ans:2
+  },
+  {
+    type:'mcq', n:10,
+    q:'The permanent vacuole in a plant cell is filled with:',
+    opts:['Chlorophyll','Cell sap','Cytoplasm','DNA'],
+    ans:1
+  },
+  // ── TRUE / FALSE (11–20) ─────────────────────────────────────────────────
+  {
+    type:'tf', n:11,
+    q:'Mitochondria are found only in plant cells.',
+    ans:false
+  },
+  {
+    type:'tf', n:12,
+    q:'Chloroplasts contain a green pigment called chlorophyll.',
+    ans:true
+  },
+  {
+    type:'tf', n:13,
+    q:'The cytoplasm is where most of the cell\'s chemical reactions take place.',
+    ans:true
+  },
+  {
+    type:'tf', n:14,
+    q:'Ribosomes are large enough to be seen with a standard light microscope.',
+    ans:false
+  },
+  {
+    type:'tf', n:15,
+    q:'All plant cells contain chloroplasts.',
+    ans:false
+  },
+  {
+    type:'tf', n:16,
+    q:'Animal cells have a cell wall made of cellulose.',
+    ans:false
+  },
+  {
+    type:'tf', n:17,
+    q:'The permanent vacuole helps keep a plant cell rigid by maintaining turgor pressure.',
+    ans:true
+  },
+  {
+    type:'tf', n:18,
+    q:'Algae are now classified as protists, not plants.',
+    ans:true
+  },
+  {
+    type:'tf', n:19,
+    q:'A typical plant cell can be up to 100 μm long.',
+    ans:true
+  },
+  {
+    type:'tf', n:20,
+    q:'The cell membrane is selectively permeable, meaning it controls what passes through it.',
+    ans:true
+  }
+];
+
+let score = 0;
+let answered = 0;
+
+// ── Last score banner ────────────────────────────────────────────────────────
+function showLastScore() {
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if (prev !== null) {
+    const banner = document.getElementById('last-score-banner');
+    const dateStr = prevDate ? ' — ' + prevDate : '';
+    banner.textContent = '📊 Your last score: ' + prev + '/20' + dateStr;
+    banner.style.display = 'block';
+  }
+}
+
+// ── Build quiz ───────────────────────────────────────────────────────────────
+function buildQuiz() {
+  score = 0; answered = 0;
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  // MCQ section
+  const mcqLabel = document.createElement('div');
+  mcqLabel.className = 'section-label';
+  mcqLabel.textContent = '📝 Multiple Choice — Questions 1–10';
+  container.appendChild(mcqLabel);
+
+  questions.forEach((q, i) => {
+    if (i === 10) {
+      const tfLabel = document.createElement('div');
+      tfLabel.className = 'section-label';
+      tfLabel.textContent = '✅ True or False — Questions 11–20';
+      container.appendChild(tfLabel);
+    }
+
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'qcard-' + i;
+
+    const num = document.createElement('div');
+    num.className = 'qnum';
+    num.textContent = 'Question ' + q.n + ' of 20';
+
+    const text = document.createElement('div');
+    text.className = 'qtext';
+    text.textContent = q.q;
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.id = 'fb-' + i;
+
+    card.appendChild(num);
+    card.appendChild(text);
+
+    if (q.type === 'mcq') {
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'options';
+      q.opts.forEach((opt, oi) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt';
+        btn.textContent = opt;
+        btn.dataset.qi = i;
+        btn.dataset.oi = oi;
+        btn.onclick = handleMCQ;
+        optsDiv.appendChild(btn);
+      });
+      card.appendChild(optsDiv);
+    } else {
+      const tfDiv = document.createElement('div');
+      tfDiv.className = 'tf-btns';
+      ['True','False'].forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = val;
+        btn.dataset.qi = i;
+        btn.dataset.val = val;
+        btn.onclick = handleTF;
+        tfDiv.appendChild(btn);
+      });
+      card.appendChild(tfDiv);
+    }
+
+    card.appendChild(feedback);
+    container.appendChild(card);
+  });
+}
+
+function handleMCQ(e) {
+  const qi = +e.currentTarget.dataset.qi;
+  const oi = +e.currentTarget.dataset.oi;
+  const q = questions[qi];
+  const card = document.getElementById('qcard-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const allOpts = card.querySelectorAll('.opt');
+
+  allOpts.forEach(b => b.disabled = true);
+
+  if (oi === q.ans) {
+    e.currentTarget.classList.add('correct-ans');
+    card.classList.add('correct');
+    fb.className = 'feedback ok';
+    fb.textContent = '✓ Correct!';
+    score++;
+  } else {
+    e.currentTarget.classList.add('wrong-ans');
+    allOpts[q.ans].classList.add('correct-ans');
+    card.classList.add('wrong');
+    fb.className = 'feedback bad';
+    fb.textContent = '✗ Incorrect. The correct answer is: ' + q.opts[q.ans];
+  }
+
+  answered++;
+  if (answered === 20) showResults();
+}
+
+function handleTF(e) {
+  const qi = +e.currentTarget.dataset.qi;
+  const val = e.currentTarget.dataset.val === 'True';
+  const q = questions[qi];
+  const card = document.getElementById('qcard-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const allBtns = card.querySelectorAll('.tf-btn');
+
+  allBtns.forEach(b => b.disabled = true);
+
+  if (val === q.ans) {
+    e.currentTarget.classList.add('correct-ans');
+    card.classList.add('correct');
+    fb.className = 'feedback ok';
+    fb.textContent = '✓ Correct!';
+    score++;
+  } else {
+    e.currentTarget.classList.add('wrong-ans');
+    allBtns.forEach(b => { if ((b.dataset.val === 'True') === q.ans) b.classList.add('correct-ans'); });
+    card.classList.add('wrong');
+    fb.className = 'feedback bad';
+    fb.textContent = '✗ Incorrect. The answer is: ' + (q.ans ? 'True' : 'False');
+  }
+
+  answered++;
+  if (answered === 20) showResults();
+}
+
+function showResults() {
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.style.display = 'block';
+  document.getElementById('score-display').textContent = score + '/20';
+
+  let emoji, msg;
+  if (score >= 18) {
+    emoji = '🏆';
+    msg = 'Outstanding! You really know your cells — keep it up!';
+  } else if (score >= 14) {
+    emoji = '👍';
+    msg = 'Good work! A bit more revision and you\'ll nail it.';
+  } else {
+    emoji = '📖';
+    msg = 'Go back and read the revision notes again — you\'ve got this!';
+  }
+
+  document.getElementById('mum-line').textContent = 'Show this to mum — ' + score + '/20 ' + emoji;
+  document.getElementById('result-msg').textContent = msg;
+
+  resultsDiv.scrollIntoView({behavior:'smooth', block:'start'});
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Update banner
+  const banner = document.getElementById('last-score-banner');
+  banner.textContent = '📊 Your last score: ' + score + '/20 — ' + dateStr;
+  banner.style.display = 'block';
+}
+
+function tryAgain() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('last-score-banner').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+showLastScore();
+buildQuiz();
+</script>
+</body>
+</html>

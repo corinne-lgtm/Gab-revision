@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B3.3 Quick Check – The chemistry of food</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Previous score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:900;font-size:16px}
+
+/* Progress */
+#progress-bar-wrap{background:rgba(255,255,255,.4);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{background:var(--yellow);height:100%;width:0%;transition:width .4s ease;border-radius:999px}
+#progress-label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+
+/* Section heading */
+.section-tag{display:inline-block;background:var(--dark);color:var(--yellow);border-radius:999px;padding:5px 14px;font-weight:900;font-size:13px;letter-spacing:1px;margin-bottom:14px}
+
+/* Question card */
+.q-card{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:24px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:18px;font-weight:700;margin-bottom:16px}
+
+/* MCQ choices */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice-btn{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 16px;font-size:15px;font-family:inherit;cursor:pointer;text-align:left;transition:background .15s,border-color .15s;font-weight:600;color:var(--ink)}
+.choice-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.choice-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--dark)}
+.choice-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--dark)}
+.choice-btn:disabled{cursor:default}
+
+/* True/False */
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:14px;font-size:16px;font-family:inherit;cursor:pointer;font-weight:700;color:var(--ink);transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+
+/* Feedback */
+.feedback{margin-top:12px;font-weight:700;font-size:14px;padding:10px 14px;border-radius:12px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:var(--green);border:1.5px solid var(--green)}
+.feedback.nope{background:var(--red2);color:var(--red);border:1.5px solid var(--red)}
+
+/* Result box */
+#result-box{display:none;background:rgba(255,255,255,.9);border:3px solid var(--line);border-radius:30px;padding:32px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.1)}
+#result-box h2{font-size:clamp(22px,4vw,38px);margin:0 0 10px;letter-spacing:-.5px}
+#result-score{font-size:clamp(40px,8vw,80px);font-weight:900;color:var(--green);line-height:1;margin:10px 0}
+#result-msg{font-size:18px;font-weight:700;margin-bottom:22px;color:var(--dark)}
+#try-again-btn{background:var(--yellow);color:var(--dark);border:none;font-weight:900;padding:14px 28px;border-radius:999px;font-size:17px;cursor:pointer;font-family:inherit}
+#try-again-btn:hover{opacity:.88}
+
+@media(max-width:640px){.choices{grid-template-columns:1fr}.wrap{padding:14px}.q-text{font-size:16px}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B3 Organisation and the digestive system</div>
+  <h1>B3.3 Quick Check ⚡</h1>
+  <p>The chemistry of food — 10 MCQs + 10 True/False. 20 questions total.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b3-3-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div id="quiz-area">
+  <div id="progress-label"></div>
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+  <div id="questions-container"></div>
+</div>
+
+<div id="result-box">
+  <h2>Show this to mum 🏆</h2>
+  <div id="result-score"></div>
+  <div id="result-msg"></div>
+  <button id="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b3-3-score';
+const DATE_KEY  = 'biology-b3-3-score-date';
+
+const questions = [
+  // ── MCQ (1–10) ──────────────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'Which THREE elements are found in ALL carbohydrates, lipids, AND proteins?',
+    choices:['Carbon, hydrogen, oxygen','Carbon, nitrogen, oxygen','Carbon, hydrogen, nitrogen','Hydrogen, oxygen, nitrogen'],
+    answer:0,
+    feedback:'Carbohydrates and lipids contain C, H, O. Proteins also contain nitrogen — but C, H and O are present in all three.'
+  },
+  {
+    type:'mcq',
+    q:'What is the monomer (building block) of proteins?',
+    choices:['Fatty acids','Glucose','Amino acids','Glycerol'],
+    answer:2,
+    feedback:'Proteins are long chains of amino acids joined by peptide bonds. There are approximately 20 different amino acids.'
+  },
+  {
+    type:'mcq',
+    q:'A food sample is tested with iodine solution and turns blue-black. What does this indicate?',
+    choices:['The food contains glucose','The food contains protein','The food contains starch','The food contains lipid'],
+    answer:2,
+    feedback:'Iodine solution turns blue-black in the presence of starch. Simple sugars give no colour change.'
+  },
+  {
+    type:'mcq',
+    q:'One lipid molecule is made up of:',
+    choices:['1 fatty acid + 3 glycerol molecules','3 fatty acids + 1 glycerol molecule','2 fatty acids + 2 glycerol molecules','1 fatty acid + 1 glycerol molecule'],
+    answer:1,
+    feedback:'A lipid = glycerol + THREE fatty acids. Always remember: one glycerol backbone, three fatty acid tails.'
+  },
+  {
+    type:'mcq',
+    q:'Which reagent is used to test for the presence of proteins, and what is the positive result?',
+    choices:['Benedict\'s solution — turns brick red','Iodine solution — turns blue-black','Biuret reagent — turns purple','Ethanol in water — turns cloudy white'],
+    answer:2,
+    feedback:'The Biuret test uses NaOH and CuSO₄ (Biuret reagent). A positive result is a colour change from blue to purple.'
+  },
+  {
+    type:'mcq',
+    q:'What is the chemical formula of glucose?',
+    choices:['C₆H₁₀O₅','C₁₂H₂₂O₁₁','C₆H₁₂O₆','C₂H₅OH'],
+    answer:2,
+    feedback:'Glucose has the formula C₆H₁₂O₆. It is the most important monosaccharide and the key fuel for respiration.'
+  },
+  {
+    type:'mcq',
+    q:'Why do proteins become denatured?',
+    choices:['They are digested by enzymes in the stomach','Extreme changes in temperature or pH break the bonds holding their 3D shape','They are converted into amino acids','They react with oxygen in the blood'],
+    answer:1,
+    feedback:'The bonds that maintain a protein\'s specific 3D shape are very sensitive to temperature and pH. Excessive changes denature the protein, meaning it can no longer function.'
+  },
+  {
+    type:'mcq',
+    q:'Which of the following is an example of a complex carbohydrate that has a STRUCTURAL role in plants?',
+    choices:['Glucose','Sucrose','Starch','Cellulose'],
+    answer:3,
+    feedback:'Cellulose is a complex carbohydrate that forms plant cell walls (structural role). Starch is also a complex carbohydrate but acts as an energy STORE in plants.'
+  },
+  {
+    type:'mcq',
+    q:'How do you test a food sample for lipids using the ethanol test?',
+    choices:['Heat the food with Benedict\'s solution','Add iodine solution and observe colour change','Dissolve the food in ethanol, then pour into water — a cloudy white layer indicates lipid','Add Biuret reagent and look for a purple colour'],
+    answer:2,
+    feedback:'The ethanol emulsion test: dissolve the food in ethanol, then add to water. A cloudy white layer (emulsion) is a positive result for lipids. Note: ethanol is flammable — handle with care.'
+  },
+  {
+    type:'mcq',
+    q:'Which statement best describes the relationship between simple sugars and complex carbohydrates?',
+    choices:['Complex carbohydrates are the building blocks of simple sugars','Simple sugars and complex carbohydrates contain different elements','Complex carbohydrates are long chains of simple sugar units bonded together','Simple sugars are only found in animals, complex carbohydrates only in plants'],
+    answer:2,
+    feedback:'Complex carbohydrates (e.g. starch, cellulose) are polymers — long chains of simple sugar monomers (e.g. glucose) joined together.'
+  },
+
+  // ── True / False (11–20) ─────────────────────────────────────────────────
+  {
+    type:'tf',
+    q:'Lipids are soluble in water.',
+    answer:false,
+    feedback:'FALSE. All lipids are insoluble in water. This is why the ethanol emulsion test works — the ethanol dissolves the lipid first.'
+  },
+  {
+    type:'tf',
+    q:'Proteins contain the elements carbon, hydrogen, oxygen, and nitrogen.',
+    answer:true,
+    feedback:'TRUE. Unlike carbohydrates and lipids (C, H, O only), proteins also contain nitrogen — and sometimes sulfur.'
+  },
+  {
+    type:'tf',
+    q:'Sucrose is an example of a monosaccharide (single sugar unit).',
+    answer:false,
+    feedback:'FALSE. Sucrose (table sugar) is a disaccharide — it is made of TWO sugar units joined together. Glucose is the best-known monosaccharide.'
+  },
+  {
+    type:'tf',
+    q:'The Benedict\'s test must be heated to give a positive result.',
+    answer:true,
+    feedback:'TRUE. Benedict\'s solution must be heated with the food sample. A positive result (reducing sugars present) shows a colour change from blue to brick red.'
+  },
+  {
+    type:'tf',
+    q:'All carbohydrates in the body are ultimately broken down to glucose for use in cellular respiration.',
+    answer:true,
+    feedback:'TRUE. Most carbohydrates are digested and converted to glucose, which is then used as fuel in cellular respiration.'
+  },
+  {
+    type:'tf',
+    q:'A denatured enzyme can return to its original shape once conditions return to normal.',
+    answer:false,
+    feedback:'FALSE. Denaturation is permanent — once the bonds holding the 3D shape are broken by extreme heat or pH, the protein cannot return to its original shape and loses its function.'
+  },
+  {
+    type:'tf',
+    q:'The glycerol part of a lipid molecule varies between different types of lipid.',
+    answer:false,
+    feedback:'FALSE. The glycerol is always the same in all lipids. It is the different combinations of fatty acids attached to the glycerol that determine whether a lipid is a solid fat or a liquid oil.'
+  },
+  {
+    type:'tf',
+    q:'Antibodies are a type of protein made by the immune system to destroy pathogens.',
+    answer:true,
+    feedback:'TRUE. Antibodies are proteins produced by the immune system. They are one of several key functions of proteins in the body.'
+  },
+  {
+    type:'tf',
+    q:'Iodine solution is used to test for the presence of simple sugars such as glucose.',
+    answer:false,
+    feedback:'FALSE. Iodine tests for STARCH (a complex carbohydrate). Simple sugars give no colour change with iodine. The Benedict\'s test is used for simple sugars.'
+  },
+  {
+    type:'tf',
+    q:'Proteins are made up of chains of amino acids that are folded into specific 3D shapes.',
+    answer:true,
+    feedback:'TRUE. Chains of amino acids are folded, coiled, and twisted into specific 3D shapes. This shape is critical for the protein\'s function (e.g. allowing substrates to fit into enzymes).'
+  }
+];
+
+let answered = 0;
+const total = questions.length;
+
+// ── Load previous score ──────────────────────────────────────────────────
+(function(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const prevDate = localStorage.getItem(DATE_KEY);
+  if(prev !== null){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = `📊 Your last score: <span style="font-size:20px">${prev}/20</span>${prevDate ? ' &nbsp;·&nbsp; ' + prevDate : ''}`;
+  }
+})();
+
+// ── Build questions ──────────────────────────────────────────────────────
+function buildQuiz(){
+  answered = 0;
+  updateProgress();
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  let mcqCount = 0, tfCount = 0;
+
+  questions.forEach((q, i) => {
+    const isMCQ = q.type === 'mcq';
+    if(isMCQ) mcqCount++;
+    else tfCount++;
+
+    const isFirstTF = !isMCQ && tfCount === 1;
+
+    let html = '';
+    if(isMCQ && mcqCount === 1){
+      html += `<div class="section-tag">📝 Multiple Choice (Questions 1–10)</div>`;
+    }
+    if(isFirstTF){
+      html += `<div class="section-tag" style="margin-top:8px">✅ True or False (Questions 11–20)</div>`;
+    }
+
+    html += `<div class="q-card" id="qcard-${i}">
+      <div class="q-num">Question ${i+1} of ${total}</div>
+      <div class="q-text">${q.q}</div>`;
+
+    if(isMCQ){
+      html += `<div class="choices">`;
+      q.choices.forEach((c, ci) => {
+        html += `<button class="choice-btn" id="c-${i}-${ci}" onclick="answerMCQ(${i},${ci})">${c}</button>`;
+      });
+      html += `</div>`;
+    } else {
+      html += `<div class="tf-row">
+        <button class="tf-btn" id="tf-${i}-true" onclick="answerTF(${i},true)">✅ True</button>
+        <button class="tf-btn" id="tf-${i}-false" onclick="answerTF(${i},false)">❌ False</button>
+      </div>`;
+    }
+
+    html += `<div class="feedback" id="fb-${i}"></div></div>`;
+    container.innerHTML += html;
+  });
+}
+
+function updateProgress(){
+  const pct = (answered / total) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Progress: ${answered}/${total} answered`;
+}
+
+let score = 0;
+
+function answerMCQ(qi, ci){
+  const q = questions[qi];
+  const correct = q.answer === ci;
+  // Disable all buttons for this question
+  q.choices.forEach((_,i) => {
+    const btn = document.getElementById(`c-${qi}-${i}`);
+    btn.disabled = true;
+    if(i === q.answer) btn.classList.add('correct');
+    else if(i === ci && !correct) btn.classList.add('wrong');
+  });
+  showFeedback(qi, correct, q.feedback);
+  if(correct) score++;
+  answered++;
+  updateProgress();
+  if(answered === total) setTimeout(showResult, 600);
+}
+
+function answerTF(qi, userAnswer){
+  const q = questions[qi];
+  const correct = q.answer === userAnswer;
+  const trueBtn  = document.getElementById(`tf-${qi}-true`);
+  const falseBtn = document.getElementById(`tf-${qi}-false`);
+  trueBtn.disabled = true;
+  falseBtn.disabled = true;
+  if(q.answer === true) trueBtn.classList.add('correct');
+  else falseBtn.classList.add('correct');
+  if(!correct){
+    if(userAnswer === true) trueBtn.classList.add('wrong');
+    else falseBtn.classList.add('wrong');
+  }
+  showFeedback(qi, correct, q.feedback);
+  if(correct) score++;
+  answered++;
+  updateProgress();
+  if(answered === total) setTimeout(showResult, 600);
+}
+
+function showFeedback(qi, correct, text){
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = 'feedback show ' + (correct ? 'ok' : 'nope');
+  fb.innerHTML = (correct ? '✅ Correct! ' : '❌ Incorrect. ') + text;
+}
+
+function showResult(){
+  document.getElementById('quiz-area').style.display = 'none';
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  document.getElementById('result-score').textContent = `${score}/20`;
+
+  let msg = '';
+  if(score >= 18) msg = '🏆 Excellent work! Gabriel absolutely nailed this topic.';
+  else if(score >= 14) msg = '👍 Good effort — a few things to review but well on track!';
+  else msg = '📖 Go back to the revision notes and try again — you\'ve got this!';
+  document.getElementById('result-msg').textContent = msg;
+
+  // Save score
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  // Update banner for next time (update in place)
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'block';
+  banner.innerHTML = `📊 Your last score: <span style="font-size:20px">${score}/20</span> &nbsp;·&nbsp; ${dateStr}`;
+}
+
+function restartQuiz(){
+  score = 0;
+  document.getElementById('result-box').style.display = 'none';
+  // Hide banner during the quiz (it will show again if page reloaded)
+  // but per spec, Try Again clears the displayed banner
+  document.getElementById('prev-banner').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────
+buildQuiz();
+</script>
+</div>
+</body>
+</html>

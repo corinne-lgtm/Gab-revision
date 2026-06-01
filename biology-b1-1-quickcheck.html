@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B1.1 The world of the microscope</title>
+<style>
+:root{
+  --bg:#f0f7ee; --ink:#1a2e1a; --muted:#5a7a5a; --paper:#f9fdf7; --line:#c8dfc8;
+  --green:#3a7d44; --green2:#d4edda; --lime:#7ab648; --lime2:#e8f5d8;
+  --blue:#2e6b8a; --blue2:#d4eaf5; --orange:#e07b2a; --orange2:#fde8cc;
+  --purple:#6b4a9a; --purple2:#e8daf5; --dark:#1a2e1a; --yellow:#c8e040;
+  --red:#c0392b; --red2:#fde8e6;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),
+    radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),
+    var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,4vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PREVIOUS SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid #e07b2a;border-radius:18px;padding:14px 20px;margin-bottom:20px;color:var(--orange);font-weight:700;font-size:15px}
+
+/* QUIZ CONTAINER */
+#quiz-wrap{}
+.q-card{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:26px;padding:22px 24px;margin:0 0 18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-type-badge{display:inline-block;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:3px 10px;margin-bottom:10px}
+.badge-mcq{background:var(--blue2);color:var(--blue)}
+.badge-tf{background:var(--lime2);color:#3d6e0a}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;color:var(--dark)}
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice-btn{
+  background:var(--paper);
+  border:2px solid var(--line);
+  border-radius:14px;
+  padding:11px 16px;
+  text-align:left;
+  font-size:14px;
+  font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  transition:background .15s,border-color .15s,transform .1s;
+  color:var(--ink);
+  font-weight:600;
+}
+.choice-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime);transform:translateY(-1px)}
+.choice-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22!important}
+.choice-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a0000!important}
+.choice-btn:disabled{cursor:default;transform:none}
+.feedback{margin-top:10px;font-size:13px;font-weight:700;padding:8px 14px;border-radius:10px;display:none}
+.feedback.correct{background:var(--green2);color:#1a4d22;display:block}
+.feedback.wrong{background:var(--red2);color:var(--red);display:block}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--line);border-radius:999px;height:8px;margin-bottom:20px;overflow:hidden}
+.progress-bar{background:var(--lime);height:8px;border-radius:999px;transition:width .4s}
+.progress-label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+
+/* RESULT */
+#result-box{display:none;background:var(--dark);color:white;border-radius:28px;padding:30px;text-align:center;margin-top:20px}
+#result-box h2{font-size:clamp(24px,3vw,38px);color:var(--yellow);margin:0 0 10px;letter-spacing:-1px}
+#result-box .score-big{font-size:clamp(48px,8vw,80px);font-weight:900;color:white;line-height:1;margin:10px 0}
+#result-box .msg{font-size:18px;color:rgba(255,255,255,.85);margin:10px 0 22px}
+#result-box .show-mum{background:var(--yellow);color:var(--dark);border-radius:18px;padding:16px 24px;font-size:20px;font-weight:900;margin-bottom:22px;display:inline-block}
+#try-again-btn{background:var(--yellow);color:var(--dark);border:none;font-weight:900;padding:13px 30px;border-radius:999px;cursor:pointer;font-size:16px;font-family:Arial,Helvetica,sans-serif}
+#try-again-btn:hover{opacity:.88}
+
+@media(max-width:650px){.wrap{padding:14px}.hero{padding:22px}.choices{gap:8px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">AQA GCSE Biology · B1 Cell structure and transport</div>
+    <h1>⚡ Quick Check — B1.1 The world of the microscope</h1>
+    <p>20 questions · MCQ &amp; True/False · Instant feedback</p>
+    <div class="nav">
+      <a href="index.html">🏠 Main hub</a>
+      <a href="biology-index.html">📚 Biology</a>
+      <a href="biology-b1-1-revision.html">📖 Revision notes</a>
+    </div>
+  </section>
+
+  <div id="prev-banner"></div>
+
+  <div class="progress-label" id="prog-label">Question 1 of 20</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar" style="width:5%"></div></div>
+
+  <div id="quiz-wrap"></div>
+  <div id="result-box"></div>
+
+</div>
+
+<script>
+// ── Questions ──────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // MCQ (10)
+  {type:'mcq', q:'What does a light microscope use to produce an image?',
+   choices:['A beam of electrons','A beam of light','A beam of X-rays','A beam of sound waves'], correct:1},
+
+  {type:'mcq', q:'What is the maximum magnification of a modern light microscope?',
+   choices:['×200','×2,000','×20,000','×2,000,000'], correct:1},
+
+  {type:'mcq', q:'A student uses an eyepiece lens of ×10 and an objective lens of ×40. What is the total magnification?',
+   choices:['×40','×50','×400','×4,000'], correct:2},
+
+  {type:'mcq', q:'An image of a cell measures 5 mm and the magnification is ×1,000. What is the real size of the cell?',
+   choices:['5,000 μm','50 μm','5 μm','0.5 μm'], correct:2},
+
+  {type:'mcq', q:'How many nanometres are there in 1 micrometre (μm)?',
+   choices:['10','100','1,000','1,000,000'], correct:2},
+
+  {type:'mcq', q:'Which type of microscope can produce a 3D image of a specimen\'s surface?',
+   choices:['Light microscope','Transmission electron microscope (TEM)','Scanning electron microscope (SEM)','Confocal microscope'], correct:2},
+
+  {type:'mcq', q:'What does "resolving power" mean in the context of microscopy?',
+   choices:['How much a microscope can magnify an object',
+            'The ability to distinguish two separate points as distinct',
+            'The brightness of the light source used',
+            'The thickness of the lens'], correct:1},
+
+  {type:'mcq', q:'Which unit is most appropriate for measuring a typical animal cell?',
+   choices:['Kilometres (km)','Millimetres (mm)','Micrometres (μm)','Metres (m)'], correct:2},
+
+  {type:'mcq', q:'Electron microscopes were first developed in which decade?',
+   choices:['1890s','1910s','1930s','1960s'], correct:2},
+
+  {type:'mcq', q:'Which of the following is a disadvantage of an electron microscope compared to a light microscope?',
+   choices:['Lower maximum magnification',
+            'Cannot distinguish fine detail',
+            'Cannot be used to view living specimens',
+            'Can only produce very small images'], correct:2},
+
+  // True/False (10)
+  {type:'tf', q:'An electron microscope uses a beam of light to form an image.',
+   correct:false},
+
+  {type:'tf', q:'The resolving power of an electron microscope is approximately 0.2 nm.',
+   correct:true},
+
+  {type:'tf', q:'Light microscopes are more expensive than electron microscopes.',
+   correct:false},
+
+  {type:'tf', q:'1 mm is equal to 1,000 micrometres (μm).',
+   correct:true},
+
+  {type:'tf', q:'Electron microscopes can be used to observe live specimens.',
+   correct:false},
+
+  {type:'tf', q:'To find the real size of an object, you divide the image size by the magnification.',
+   correct:true},
+
+  {type:'tf', q:'A scanning electron microscope (SEM) produces a two-dimensional (2D) image.',
+   correct:false},
+
+  {type:'tf', q:'The light microscope was developed in the mid-17th century.',
+   correct:true},
+
+  {type:'tf', q:'Higher resolving power means you can see more detail.',
+   correct:true},
+
+  {type:'tf', q:'1 nanometre (nm) is equal to 1 × 10⁻³ m.',
+   correct:false},
+];
+
+// ── State ──────────────────────────────────────────────────────────────────
+const STORE_KEY  = 'biology-b1-1-score';
+const STORE_DATE = 'biology-b1-1-score-date';
+let answered = 0;
+let score    = 0;
+
+// ── Previous score banner ──────────────────────────────────────────────────
+function showPrevBanner(){
+  const prev = localStorage.getItem(STORE_KEY);
+  if(prev === null) return;
+  const date = localStorage.getItem(STORE_DATE) || '';
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'block';
+  banner.innerHTML = `📊 Your last score: <strong>${prev}/20</strong>${date ? ' — '+date : ''}`;
+}
+showPrevBanner();
+
+// ── Build quiz ─────────────────────────────────────────────────────────────
+function buildQuiz(){
+  const wrap = document.getElementById('quiz-wrap');
+  wrap.innerHTML = '';
+  answered = 0; score = 0;
+  updateProgress(0);
+
+  QUESTIONS.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'q'+i;
+
+    const badge = q.type==='mcq'
+      ? '<span class="q-type-badge badge-mcq">Multiple Choice</span>'
+      : '<span class="q-type-badge badge-tf">True / False</span>';
+
+    let choicesHTML = '';
+    if(q.type==='mcq'){
+      q.choices.forEach((c, ci) => {
+        choicesHTML += `<button class="choice-btn" data-q="${i}" data-idx="${ci}" onclick="handleAnswer(this,'mcq',${ci===(q.correct?q.correct:q.correct)})">${c}</button>`;
+      });
+    } else {
+      choicesHTML = `
+        <button class="choice-btn" data-q="${i}" onclick="handleTF(this,${i},true)">True</button>
+        <button class="choice-btn" data-q="${i}" onclick="handleTF(this,${i},false)">False</button>`;
+    }
+
+    card.innerHTML = `
+      <div class="q-num">Question ${i+1} of 20</div>
+      ${badge}
+      <div class="q-text">${q.q}</div>
+      <div class="choices" id="choices-${i}">${choicesHTML}</div>
+      <div class="feedback" id="fb-${i}"></div>`;
+
+    // Fix MCQ onclick — rebuild properly after innerHTML set
+    wrap.appendChild(card);
+  });
+
+  // Re-attach MCQ handlers properly
+  QUESTIONS.forEach((q, i) => {
+    if(q.type==='mcq'){
+      const btns = document.querySelectorAll(`#choices-${i} .choice-btn`);
+      btns.forEach((btn, ci) => {
+        btn.onclick = () => handleMCQ(i, ci);
+      });
+    }
+  });
+}
+
+function handleMCQ(qi, chosen){
+  const q = QUESTIONS[qi];
+  const btns = document.querySelectorAll(`#choices-${qi} .choice-btn`);
+  btns.forEach(b => b.disabled = true);
+  const correct = q.correct;
+  const fb = document.getElementById('fb-'+qi);
+  if(chosen === correct){
+    btns[chosen].classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[correct].classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Incorrect — the correct answer is: ${q.choices[correct]}`;
+  }
+  recordAnswer();
+}
+
+function handleTF(btn, qi, chosen){
+  const q = QUESTIONS[qi];
+  const btns = document.querySelectorAll(`#choices-${qi} .choice-btn`);
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('fb-'+qi);
+  if(chosen === q.correct){
+    btn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correct!';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    // Highlight the correct button
+    btns.forEach(b => {
+      const isTrue = b.textContent.trim()==='True';
+      if((isTrue && q.correct) || (!isTrue && !q.correct)) b.classList.add('correct');
+    });
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Incorrect — the answer is: ${q.correct ? 'True' : 'False'}`;
+  }
+  recordAnswer();
+}
+
+function recordAnswer(){
+  answered++;
+  updateProgress(answered);
+  if(answered === QUESTIONS.length) setTimeout(showResult, 500);
+}
+
+function updateProgress(n){
+  const pct = Math.round((n / QUESTIONS.length) * 100);
+  document.getElementById('prog-bar').style.width = Math.max(5, pct)+'%';
+  document.getElementById('prog-label').textContent =
+    n < QUESTIONS.length ? `Question ${n+1} of 20` : 'All done!';
+}
+
+function showResult(){
+  // Save to localStorage
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(STORE_KEY, score);
+  localStorage.setItem(STORE_DATE, dateStr);
+
+  let emoji, msg;
+  if(score >= 18){
+    emoji = '🏆'; msg = 'Outstanding! You clearly know your microscopy inside out. Gabriel, that\'s excellent work!';
+  } else if(score >= 14){
+    emoji = '👍'; msg = 'Good effort — you know most of it, but there\'s a bit more to nail down. Go back over the bits you missed!';
+  } else {
+    emoji = '📖'; msg = 'You\'re not quite there yet — go back to the revision notes and give it another read through before trying again.';
+  }
+
+  const box = document.getElementById('result-box');
+  box.innerHTML = `
+    <h2>Quiz complete!</h2>
+    <div class="score-big">${score}/20</div>
+    <div class="msg">${emoji} ${msg}</div>
+    <div class="show-mum">Show this to mum — ${score}/20 ${emoji}</div><br>
+    <button id="try-again-btn" onclick="tryAgain()">🔄 Try again</button>`;
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function tryAgain(){
+  document.getElementById('result-box').style.display = 'none';
+  // Hide banner while attempting quiz, will reshow on next completion
+  document.getElementById('prev-banner').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+buildQuiz();
+</script>
+</body>
+</html>
