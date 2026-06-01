@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History Flashcards · My GCSE Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:#1f2a33;background:
+radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(242,154,46,.14),transparent 34%),#f4eee6}
+.wrap{max-width:980px;margin:0 auto;padding:36px 22px 70px}
+.back{display:inline-flex;align-items:center;gap:8px;color:#67737b;text-decoration:none;font-weight:900;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:28px}
+.back:hover{color:#d94b42}
+header{margin-bottom:26px}
+.subject-label{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#d94b42;margin-bottom:8px}
+h1{font-family:'Poppins',sans-serif;font-size:clamp(32px,6vw,58px);font-weight:900;line-height:1;color:#1f2a33;letter-spacing:-1px;margin-bottom:8px}
+.tagline{font-size:15px;color:#67737b;font-weight:800;line-height:1.4}
+.controls{background:#fffdf7;border:2px solid #dbcfc0;border-radius:24px;padding:18px;margin:24px 0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:#a0aab0;display:block;margin-bottom:6px}
+select,button{font-family:inherit}
+select{width:100%;border:2px solid #dbcfc0;border-radius:14px;padding:11px 12px;background:white;color:#1f2a33;font-weight:900}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 20px}
+.pill{background:#fffdf7;border:2px solid #dbcfc0;border-radius:999px;padding:7px 12px;font-weight:900;font-size:13px;color:#67737b}
+.card-area{perspective:1000px;margin-top:14px}
+.flashcard{min-height:320px;position:relative;transform-style:preserve-3d;transition:transform .45s;cursor:pointer}
+.flashcard.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:#fffdf7;border:2px solid #dbcfc0;border-radius:30px;padding:30px;box-shadow:0 14px 36px rgba(0,0,0,.08);display:flex;flex-direction:column;justify-content:space-between}
+.back-face{transform:rotateY(180deg);background:linear-gradient(135deg,#fffdf7,#ffe4bd)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tag{border-radius:999px;padding:5px 10px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px}
+.topic{background:#ffe0dd;color:#9a2f28}
+.level{background:#dff0e2;color:#2d5c36}
+.question{font-family:'Poppins',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:900;line-height:1.08;letter-spacing:-.8px}
+.answer{font-size:clamp(21px,3vw,30px);font-weight:900;line-height:1.25}
+.hint{font-size:13px;color:#a0aab0;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;margin-top:22px}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+button{border:none;border-radius:999px;padding:12px 18px;font-weight:900;font-size:14px;cursor:pointer}
+.primary{background:#d94b42;color:white}
+.secondary{background:#1f2a33;color:white}
+.ghost{background:#fffdf7;color:#67737b;border:2px solid #dbcfc0}
+.empty{background:#fffdf7;border:2px solid #dbcfc0;border-radius:24px;padding:28px;font-weight:900;color:#67737b;text-align:center}
+@media(max-width:700px){.controls{grid-template-columns:1fr}.flashcard{min-height:370px}.face{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="history-germany.html" class="back">← Germany revision</a>
+  <header>
+    <div class="subject-label">History · AQA GCSE</div>
+    <h1>Germany Flashcards</h1>
+    <div class="tagline">Click the card to reveal the answer. Use the filters to revise one chapter at a time.</div>
+  </header>
+
+  <div class="controls">
+    <div>
+      <label for="topicFilter">Chapter</label>
+      <select id="topicFilter"></select>
+    </div>
+    <div>
+      <label for="levelFilter">Level</label>
+      <select id="levelFilter">
+        <option value="All">All levels</option>
+        <option value="Easy">Easy · facts and definitions</option>
+        <option value="Medium">Medium · causes and consequences</option>
+        <option value="Hard">Hard · explain questions</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span class="pill" id="countPill">0 cards</span>
+    <span class="pill" id="positionPill">Card 0 / 0</span>
+  </div>
+
+  <div id="cardContainer"></div>
+
+  <div class="buttons">
+    <button class="ghost" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="secondary" onclick="prevCard()">← Previous</button>
+    <button class="primary" onclick="nextCard()">Next →</button>
+  </div>
+</div>
+
+<script>
+const flashcards = [
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Easy",
+    "q": "Who was Kaiser Wilhelm II?",
+    "a": "The German Emperor from 1888 to 1918. He wanted Germany to become a strong world power."
+  },
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Easy",
+    "q": "What type of government did Germany have before 1918?",
+    "a": "Germany was an empire ruled by the Kaiser, with a parliament called the Reichstag, but the Kaiser had a lot of power."
+  },
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Medium",
+    "q": "Why was Germany difficult to rule before the First World War?",
+    "a": "It had rapid industrial growth, a large working class, growing socialism, regional differences and tension between democracy and the power of the Kaiser."
+  },
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Easy",
+    "q": "What was Weltpolitik?",
+    "a": "Kaiser Wilhelm II’s policy of making Germany a major world power, especially through empire-building and naval expansion."
+  },
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Medium",
+    "q": "Why did Weltpolitik create tension with Britain?",
+    "a": "Germany built up its navy and challenged Britain’s naval dominance, increasing rivalry between the two countries."
+  },
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Easy",
+    "q": "What was the Reichstag?",
+    "a": "The German parliament. It could debate and pass laws, but the Kaiser still had major power."
+  },
+  {
+    "subject": "History",
+    "topic": "1.1 Germany before WWI",
+    "level": "Medium",
+    "q": "Why were the Social Democrats seen as a threat by the Kaiser?",
+    "a": "They represented workers and wanted more democracy and social reform, which threatened the traditional power of the Kaiser and elites."
+  },
+  {
+    "subject": "History",
+    "topic": "2.1 First World War",
+    "level": "Easy",
+    "q": "When did the First World War begin?",
+    "a": "1914."
+  },
+  {
+    "subject": "History",
+    "topic": "2.1 First World War",
+    "level": "Easy",
+    "q": "When did Germany sign the armistice ending its fighting in the First World War?",
+    "a": "11 November 1918."
+  },
+  {
+    "subject": "History",
+    "topic": "2.1 First World War",
+    "level": "Medium",
+    "q": "How did the First World War affect German civilians?",
+    "a": "Food shortages, poverty, illness, low morale and anger towards the government increased during the war."
+  },
+  {
+    "subject": "History",
+    "topic": "2.1 First World War",
+    "level": "Medium",
+    "q": "Why did support for the Kaiser collapse in 1918?",
+    "a": "Germany was losing the war, people were starving, soldiers and sailors mutinied, and many Germans blamed the Kaiser for the crisis."
+  },
+  {
+    "subject": "History",
+    "topic": "2.1 First World War",
+    "level": "Easy",
+    "q": "What happened to Kaiser Wilhelm II in November 1918?",
+    "a": "He abdicated and fled to the Netherlands."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Easy",
+    "q": "What was the Weimar Republic?",
+    "a": "Germany’s democratic government created after the Kaiser abdicated in 1918."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Easy",
+    "q": "Who became Germany’s temporary leader after the Kaiser abdicated?",
+    "a": "Friedrich Ebert."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Easy",
+    "q": "What was Article 48?",
+    "a": "An emergency power allowing the President to rule by decree without the Reichstag."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Medium",
+    "q": "What was proportional representation?",
+    "a": "A voting system where parties got seats in the Reichstag in proportion to the votes they received."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Medium",
+    "q": "Why was proportional representation a weakness?",
+    "a": "It led to many small parties and coalition governments, making strong leadership difficult."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Easy",
+    "q": "Give one democratic feature of the Weimar Constitution.",
+    "a": "Men and women over 20 could vote."
+  },
+  {
+    "subject": "History",
+    "topic": "2.2 Weimar Republic",
+    "level": "Medium",
+    "q": "Why did some Germans dislike the Weimar Republic from the start?",
+    "a": "They associated it with defeat in the war, the Treaty of Versailles and political instability."
+  },
+  {
+    "subject": "History",
+    "topic": "2.3 Treaty of Versailles",
+    "level": "Easy",
+    "q": "When was the Treaty of Versailles signed?",
+    "a": "1919."
+  },
+  {
+    "subject": "History",
+    "topic": "2.3 Treaty of Versailles",
+    "level": "Easy",
+    "q": "What was the War Guilt Clause?",
+    "a": "Article 231, which blamed Germany for causing the First World War."
+  },
+  {
+    "subject": "History",
+    "topic": "2.3 Treaty of Versailles",
+    "level": "Easy",
+    "q": "What were reparations?",
+    "a": "Compensation payments Germany had to pay to the Allies after the First World War."
+  },
+  {
+    "subject": "History",
+    "topic": "2.3 Treaty of Versailles",
+    "level": "Medium",
+    "q": "Why did Germans hate the Treaty of Versailles?",
+    "a": "They saw it as unfair, humiliating and too harsh because Germany lost territory, had to pay reparations, accept blame and reduce its army."
+  },
+  {
+    "subject": "History",
+    "topic": "2.3 Treaty of Versailles",
+    "level": "Easy",
+    "q": "What did Germans call the Treaty of Versailles?",
+    "a": "The Diktat, meaning a dictated peace."
+  },
+  {
+    "subject": "History",
+    "topic": "2.3 Treaty of Versailles",
+    "level": "Medium",
+    "q": "How did the Treaty weaken the Weimar Republic?",
+    "a": "Many Germans blamed the new democratic politicians for signing it, which damaged trust in the Republic."
+  },
+  {
+    "subject": "History",
+    "topic": "2.4 Weimar in trouble 1923",
+    "level": "Easy",
+    "q": "What happened in the Ruhr in 1923?",
+    "a": "French and Belgian troops occupied the Ruhr after Germany failed to pay reparations."
+  },
+  {
+    "subject": "History",
+    "topic": "2.4 Weimar in trouble 1923",
+    "level": "Medium",
+    "q": "What was passive resistance?",
+    "a": "German workers in the Ruhr refused to cooperate with the French and Belgian occupation."
+  },
+  {
+    "subject": "History",
+    "topic": "2.4 Weimar in trouble 1923",
+    "level": "Medium",
+    "q": "How did passive resistance contribute to hyperinflation?",
+    "a": "The government printed money to pay striking workers, causing the value of money to collapse."
+  },
+  {
+    "subject": "History",
+    "topic": "2.4 Weimar in trouble 1923",
+    "level": "Easy",
+    "q": "What is hyperinflation?",
+    "a": "A very rapid rise in prices and collapse in the value of money."
+  },
+  {
+    "subject": "History",
+    "topic": "2.4 Weimar in trouble 1923",
+    "level": "Medium",
+    "q": "Who suffered most from hyperinflation?",
+    "a": "People with savings, pensioners and people on fixed incomes, because their money became worthless."
+  },
+  {
+    "subject": "History",
+    "topic": "2.4 Weimar in trouble 1923",
+    "level": "Hard",
+    "q": "Why was 1923 a crisis year for Weimar Germany?",
+    "a": "Germany faced Ruhr occupation, passive resistance, hyperinflation, poverty, political violence and loss of confidence in the government."
+  },
+  {
+    "subject": "History",
+    "topic": "3.1 Murders and uprisings",
+    "level": "Easy",
+    "q": "Who were the Spartacists?",
+    "a": "A left-wing communist group who wanted a communist revolution in Germany."
+  },
+  {
+    "subject": "History",
+    "topic": "3.1 Murders and uprisings",
+    "level": "Easy",
+    "q": "Who led the Spartacist uprising?",
+    "a": "Rosa Luxemburg and Karl Liebknecht."
+  },
+  {
+    "subject": "History",
+    "topic": "3.1 Murders and uprisings",
+    "level": "Easy",
+    "q": "What was the Freikorps?",
+    "a": "Right-wing ex-soldiers used by the government to crush uprisings."
+  },
+  {
+    "subject": "History",
+    "topic": "3.1 Murders and uprisings",
+    "level": "Easy",
+    "q": "What was the Kapp Putsch?",
+    "a": "A right-wing attempt to overthrow the Weimar government in 1920."
+  },
+  {
+    "subject": "History",
+    "topic": "3.1 Murders and uprisings",
+    "level": "Medium",
+    "q": "Why did political violence weaken the Weimar Republic?",
+    "a": "It made the government look unstable and showed that extremist groups from both left and right rejected democracy."
+  },
+  {
+    "subject": "History",
+    "topic": "3.2 Munich Putsch",
+    "level": "Easy",
+    "q": "When was the Munich Putsch?",
+    "a": "November 1923."
+  },
+  {
+    "subject": "History",
+    "topic": "3.2 Munich Putsch",
+    "level": "Easy",
+    "q": "What was the Munich Putsch?",
+    "a": "Hitler and the Nazis tried to seize power in Munich, but the coup failed."
+  },
+  {
+    "subject": "History",
+    "topic": "3.2 Munich Putsch",
+    "level": "Medium",
+    "q": "Why did the Munich Putsch fail?",
+    "a": "The Nazis lacked support from the army and police, and the march was stopped by armed police."
+  },
+  {
+    "subject": "History",
+    "topic": "3.2 Munich Putsch",
+    "level": "Easy",
+    "q": "What happened to Hitler after the Munich Putsch?",
+    "a": "He was arrested, put on trial and imprisoned."
+  },
+  {
+    "subject": "History",
+    "topic": "3.2 Munich Putsch",
+    "level": "Medium",
+    "q": "How did the Munich Putsch help Hitler in the long term?",
+    "a": "The trial gave him publicity, he wrote Mein Kampf in prison, and he realised he needed to gain power legally."
+  },
+  {
+    "subject": "History",
+    "topic": "3.2 Munich Putsch",
+    "level": "Easy",
+    "q": "What was Mein Kampf?",
+    "a": "Hitler’s book outlining his political ideas, written while he was in prison."
+  },
+  {
+    "subject": "History",
+    "topic": "3.3 Weimar recovery",
+    "level": "Easy",
+    "q": "Who was Gustav Stresemann?",
+    "a": "A leading Weimar politician who helped Germany recover after 1923."
+  },
+  {
+    "subject": "History",
+    "topic": "3.3 Weimar recovery",
+    "level": "Easy",
+    "q": "What was the Rentenmark?",
+    "a": "A new currency introduced in 1923 to replace the worthless old mark and stabilise the economy."
+  },
+  {
+    "subject": "History",
+    "topic": "3.3 Weimar recovery",
+    "level": "Easy",
+    "q": "What was the Dawes Plan?",
+    "a": "A 1924 plan that gave Germany American loans and reorganised reparations payments."
+  },
+  {
+    "subject": "History",
+    "topic": "3.3 Weimar recovery",
+    "level": "Easy",
+    "q": "What was the Young Plan?",
+    "a": "A 1929 plan that reduced Germany’s total reparations and extended the payment period."
+  },
+  {
+    "subject": "History",
+    "topic": "3.3 Weimar recovery",
+    "level": "Medium",
+    "q": "Why was Weimar recovery fragile?",
+    "a": "Germany depended heavily on American loans, so it was vulnerable if the US economy collapsed."
+  },
+  {
+    "subject": "History",
+    "topic": "3.3 Weimar recovery",
+    "level": "Medium",
+    "q": "How did Stresemann improve Germany’s international position?",
+    "a": "He signed the Locarno Pact, joined the League of Nations and improved relations with other countries."
+  },
+  {
+    "subject": "History",
+    "topic": "3.4 Golden Age",
+    "level": "Easy",
+    "q": "What is meant by Germany’s Golden Age?",
+    "a": "The period 1924–1929 when Germany became more stable economically, politically and culturally."
+  },
+  {
+    "subject": "History",
+    "topic": "3.4 Golden Age",
+    "level": "Medium",
+    "q": "Give one example of cultural change in Weimar Germany.",
+    "a": "Cinema, art, architecture, theatre and cabaret became more experimental and modern."
+  },
+  {
+    "subject": "History",
+    "topic": "3.4 Golden Age",
+    "level": "Medium",
+    "q": "Why did some Germans dislike Weimar culture?",
+    "a": "Conservatives saw it as immoral, too modern and a threat to traditional German values."
+  },
+  {
+    "subject": "History",
+    "topic": "3.4 Golden Age",
+    "level": "Hard",
+    "q": "Was the Weimar Republic fully stable by 1929?",
+    "a": "No. It was more stable than in 1923, but political extremism remained and the economy depended on US loans."
+  },
+  {
+    "subject": "History",
+    "topic": "4.1 Depression",
+    "level": "Easy",
+    "q": "When did the Wall Street Crash happen?",
+    "a": "October 1929."
+  },
+  {
+    "subject": "History",
+    "topic": "4.1 Depression",
+    "level": "Medium",
+    "q": "How did the Wall Street Crash affect Germany?",
+    "a": "American banks recalled loans, German businesses collapsed, unemployment rose and poverty increased."
+  },
+  {
+    "subject": "History",
+    "topic": "4.1 Depression",
+    "level": "Easy",
+    "q": "How many Germans were unemployed by 1932?",
+    "a": "Around 6 million."
+  },
+  {
+    "subject": "History",
+    "topic": "4.1 Depression",
+    "level": "Medium",
+    "q": "Why did the Depression damage support for Weimar democracy?",
+    "a": "The government seemed unable to solve unemployment and poverty, so many people turned to extremist parties."
+  },
+  {
+    "subject": "History",
+    "topic": "4.1 Depression",
+    "level": "Hard",
+    "q": "Why was Germany especially vulnerable to the Great Depression?",
+    "a": "Its recovery had depended on American loans from the Dawes Plan, so when the loans were recalled the economy collapsed quickly."
+  },
+  {
+    "subject": "History",
+    "topic": "4.2 Growth of Nazi Party",
+    "level": "Easy",
+    "q": "Who was the leader of the Nazi Party?",
+    "a": "Adolf Hitler."
+  },
+  {
+    "subject": "History",
+    "topic": "4.2 Growth of Nazi Party",
+    "level": "Easy",
+    "q": "What did the Nazis promise voters during the Depression?",
+    "a": "Jobs, strong leadership, national revival, the destruction of communism and reversal of the Treaty of Versailles."
+  },
+  {
+    "subject": "History",
+    "topic": "4.2 Growth of Nazi Party",
+    "level": "Medium",
+    "q": "How did propaganda help the Nazis?",
+    "a": "It spread simple messages, blamed enemies and presented Hitler as Germany’s strong saviour."
+  },
+  {
+    "subject": "History",
+    "topic": "4.2 Growth of Nazi Party",
+    "level": "Easy",
+    "q": "Who was Joseph Goebbels?",
+    "a": "The Nazi propaganda chief."
+  },
+  {
+    "subject": "History",
+    "topic": "4.2 Growth of Nazi Party",
+    "level": "Medium",
+    "q": "How did the SA help the Nazis gain support?",
+    "a": "The SA protected Nazi meetings, intimidated opponents and created an image of strength."
+  },
+  {
+    "subject": "History",
+    "topic": "4.2 Growth of Nazi Party",
+    "level": "Hard",
+    "q": "Why did Nazi support increase after 1929?",
+    "a": "Economic crisis, fear of communism, anger at Weimar politicians, effective propaganda and Hitler’s promises all increased support."
+  },
+  {
+    "subject": "History",
+    "topic": "4.3 Nazi voters",
+    "level": "Easy",
+    "q": "Which groups often supported the Nazis?",
+    "a": "Middle-class voters, farmers, nationalists, some workers, business owners and people afraid of communism."
+  },
+  {
+    "subject": "History",
+    "topic": "4.3 Nazi voters",
+    "level": "Medium",
+    "q": "Why did some business owners support the Nazis?",
+    "a": "They feared communism and trade unions, and hoped the Nazis would restore order and protect private property."
+  },
+  {
+    "subject": "History",
+    "topic": "4.3 Nazi voters",
+    "level": "Medium",
+    "q": "Why did some farmers support the Nazis?",
+    "a": "The Nazis promised to protect German farmers, improve prices and support traditional rural values."
+  },
+  {
+    "subject": "History",
+    "topic": "4.3 Nazi voters",
+    "level": "Medium",
+    "q": "Why did unemployed people vote for extremist parties?",
+    "a": "They were desperate for jobs and felt the Weimar government had failed them."
+  },
+  {
+    "subject": "History",
+    "topic": "5.1 Hitler Chancellor",
+    "level": "Easy",
+    "q": "When did Hitler become Chancellor?",
+    "a": "30 January 1933."
+  },
+  {
+    "subject": "History",
+    "topic": "5.1 Hitler Chancellor",
+    "level": "Easy",
+    "q": "Who appointed Hitler as Chancellor?",
+    "a": "President Hindenburg."
+  },
+  {
+    "subject": "History",
+    "topic": "5.1 Hitler Chancellor",
+    "level": "Medium",
+    "q": "Why did conservative politicians think they could control Hitler?",
+    "a": "They believed they could use his popularity while limiting his power within a coalition government."
+  },
+  {
+    "subject": "History",
+    "topic": "5.1 Hitler Chancellor",
+    "level": "Medium",
+    "q": "Why did Hindenburg eventually appoint Hitler Chancellor?",
+    "a": "Political instability, backroom deals, Nazi popularity and pressure from conservative politicians led to Hitler’s appointment."
+  },
+  {
+    "subject": "History",
+    "topic": "6.1 Eliminating opposition",
+    "level": "Easy",
+    "q": "When was the Reichstag Fire?",
+    "a": "February 1933."
+  },
+  {
+    "subject": "History",
+    "topic": "6.1 Eliminating opposition",
+    "level": "Medium",
+    "q": "How did Hitler use the Reichstag Fire?",
+    "a": "He blamed communists, persuaded Hindenburg to pass emergency powers and used them to arrest opponents."
+  },
+  {
+    "subject": "History",
+    "topic": "6.1 Eliminating opposition",
+    "level": "Easy",
+    "q": "What was the Enabling Act?",
+    "a": "A law passed in March 1933 that allowed Hitler to make laws without the Reichstag."
+  },
+  {
+    "subject": "History",
+    "topic": "6.1 Eliminating opposition",
+    "level": "Hard",
+    "q": "Why was the Enabling Act important?",
+    "a": "It effectively ended democracy in Germany and allowed Hitler to rule as a dictator legally."
+  },
+  {
+    "subject": "History",
+    "topic": "6.1 Eliminating opposition",
+    "level": "Medium",
+    "q": "How did Hitler remove political opposition in 1933?",
+    "a": "He arrested opponents, banned or intimidated parties, used emergency powers and passed the Enabling Act."
+  },
+  {
+    "subject": "History",
+    "topic": "6.2 Night of Long Knives",
+    "level": "Easy",
+    "q": "When was the Night of the Long Knives?",
+    "a": "June 1934."
+  },
+  {
+    "subject": "History",
+    "topic": "6.2 Night of Long Knives",
+    "level": "Easy",
+    "q": "Who was Ernst Röhm?",
+    "a": "Leader of the SA."
+  },
+  {
+    "subject": "History",
+    "topic": "6.2 Night of Long Knives",
+    "level": "Medium",
+    "q": "Why did Hitler turn against the SA?",
+    "a": "The SA was becoming too powerful, Röhm wanted more radical change, and the army feared the SA."
+  },
+  {
+    "subject": "History",
+    "topic": "6.2 Night of Long Knives",
+    "level": "Medium",
+    "q": "How did the Night of the Long Knives help Hitler?",
+    "a": "It removed SA leaders, pleased the army and showed that Hitler would use violence against rivals."
+  },
+  {
+    "subject": "History",
+    "topic": "6.2 Night of Long Knives",
+    "level": "Easy",
+    "q": "What happened after Hindenburg died in August 1934?",
+    "a": "Hitler combined the roles of Chancellor and President and became Führer."
+  },
+  {
+    "subject": "History",
+    "topic": "7.1 Work and bread",
+    "level": "Easy",
+    "q": "What did the Nazi slogan ‘Work and Bread’ promise?",
+    "a": "Jobs and food/security for ordinary Germans."
+  },
+  {
+    "subject": "History",
+    "topic": "7.1 Work and bread",
+    "level": "Medium",
+    "q": "How did the Nazis reduce unemployment?",
+    "a": "Public works, rearmament, conscription and removing some groups from unemployment statistics."
+  },
+  {
+    "subject": "History",
+    "topic": "7.1 Work and bread",
+    "level": "Easy",
+    "q": "What were autobahns?",
+    "a": "Motorways built under the Nazis as part of public works and propaganda."
+  },
+  {
+    "subject": "History",
+    "topic": "7.1 Work and bread",
+    "level": "Medium",
+    "q": "Why were unemployment figures misleading under the Nazis?",
+    "a": "Women, Jews and political opponents were pushed out of work or not counted, and conscription removed men from the workforce."
+  },
+  {
+    "subject": "History",
+    "topic": "7.2 Self-sufficiency",
+    "level": "Easy",
+    "q": "What is autarky?",
+    "a": "Economic self-sufficiency: trying to produce everything Germany needed without relying on imports."
+  },
+  {
+    "subject": "History",
+    "topic": "7.2 Self-sufficiency",
+    "level": "Easy",
+    "q": "Who was in charge of the Four Year Plan?",
+    "a": "Hermann Göring."
+  },
+  {
+    "subject": "History",
+    "topic": "7.2 Self-sufficiency",
+    "level": "Medium",
+    "q": "What was the aim of the Four Year Plan?",
+    "a": "To prepare Germany for war and make the economy more self-sufficient."
+  },
+  {
+    "subject": "History",
+    "topic": "7.2 Self-sufficiency",
+    "level": "Hard",
+    "q": "Did Germany become fully self-sufficient under the Nazis?",
+    "a": "No. Production increased, but Germany still relied on some imported raw materials."
+  },
+  {
+    "subject": "History",
+    "topic": "7.3 Better off under Nazis",
+    "level": "Medium",
+    "q": "How did workers benefit under the Nazis?",
+    "a": "Many gained jobs and activities through Strength Through Joy, but they lost trade unions and workers’ rights."
+  },
+  {
+    "subject": "History",
+    "topic": "7.3 Better off under Nazis",
+    "level": "Easy",
+    "q": "What happened to trade unions under the Nazis?",
+    "a": "They were banned and replaced by the German Labour Front."
+  },
+  {
+    "subject": "History",
+    "topic": "7.3 Better off under Nazis",
+    "level": "Easy",
+    "q": "What was Strength Through Joy?",
+    "a": "A Nazi organisation that offered leisure activities and holidays to workers."
+  },
+  {
+    "subject": "History",
+    "topic": "7.3 Better off under Nazis",
+    "level": "Hard",
+    "q": "Were German workers better off under the Nazis?",
+    "a": "They had more employment and leisure schemes, but wages and freedoms were limited and they could not strike."
+  },
+  {
+    "subject": "History",
+    "topic": "7.4 Impact of war",
+    "level": "Medium",
+    "q": "How did war affect ordinary Germans?",
+    "a": "Bombing, rationing, longer working hours, shortages and fear became part of daily life."
+  },
+  {
+    "subject": "History",
+    "topic": "7.4 Impact of war",
+    "level": "Easy",
+    "q": "What was total war?",
+    "a": "Using all of a country’s resources, economy and people to support the war effort."
+  },
+  {
+    "subject": "History",
+    "topic": "8.1 Young people",
+    "level": "Easy",
+    "q": "What was the Hitler Youth?",
+    "a": "A Nazi youth organisation for boys that trained them in Nazi ideas, discipline and military skills."
+  },
+  {
+    "subject": "History",
+    "topic": "8.1 Young people",
+    "level": "Easy",
+    "q": "What was the League of German Maidens?",
+    "a": "A Nazi youth organisation for girls that prepared them for motherhood and domestic roles."
+  },
+  {
+    "subject": "History",
+    "topic": "8.1 Young people",
+    "level": "Medium",
+    "q": "How did schools change under the Nazis?",
+    "a": "Subjects promoted Nazi ideology, racial ideas, obedience, physical fitness and loyalty to Hitler."
+  },
+  {
+    "subject": "History",
+    "topic": "8.1 Young people",
+    "level": "Hard",
+    "q": "Why did the Nazis focus heavily on young people?",
+    "a": "They wanted to indoctrinate the next generation and create loyal Nazis for the future."
+  },
+  {
+    "subject": "History",
+    "topic": "8.2 Women",
+    "level": "Easy",
+    "q": "What were the three Ks for women in Nazi Germany?",
+    "a": "Kinder, Küche, Kirche — children, kitchen, church."
+  },
+  {
+    "subject": "History",
+    "topic": "8.2 Women",
+    "level": "Medium",
+    "q": "What role did the Nazis want women to have?",
+    "a": "They wanted women to be wives and mothers, raise Aryan children and support the family."
+  },
+  {
+    "subject": "History",
+    "topic": "8.2 Women",
+    "level": "Easy",
+    "q": "What was the Mother’s Cross?",
+    "a": "An award given to women who had many children."
+  },
+  {
+    "subject": "History",
+    "topic": "8.2 Women",
+    "level": "Medium",
+    "q": "Why did Nazi policy towards women change during the war?",
+    "a": "Labour shortages meant more women were needed to work."
+  },
+  {
+    "subject": "History",
+    "topic": "8.3 Religion",
+    "level": "Easy",
+    "q": "Why did the Nazis want to control religion?",
+    "a": "Churches had influence and could challenge Nazi loyalty and ideology."
+  },
+  {
+    "subject": "History",
+    "topic": "8.3 Religion",
+    "level": "Medium",
+    "q": "What was the Reich Church?",
+    "a": "An attempt to create a Nazi-controlled Protestant church."
+  },
+  {
+    "subject": "History",
+    "topic": "8.3 Religion",
+    "level": "Medium",
+    "q": "Why did some Christians oppose the Nazis?",
+    "a": "They objected to Nazi control of churches, racism, violence and attacks on Christian values."
+  },
+  {
+    "subject": "History",
+    "topic": "8.4 Racial policy",
+    "level": "Easy",
+    "q": "What did the Nazis mean by the Aryan race?",
+    "a": "The so-called ‘master race’ that the Nazis believed was superior, especially blonde, blue-eyed Germans."
+  },
+  {
+    "subject": "History",
+    "topic": "8.4 Racial policy",
+    "level": "Easy",
+    "q": "Who were the main victims of Nazi racial policy?",
+    "a": "Jewish people, Roma and Sinti people, disabled people, Black people, Slavs and other groups the Nazis considered ‘inferior’."
+  },
+  {
+    "subject": "History",
+    "topic": "8.4 Racial policy",
+    "level": "Easy",
+    "q": "What were the Nuremberg Laws?",
+    "a": "1935 laws that took away Jewish citizenship and banned marriage or sexual relationships between Jews and Germans."
+  },
+  {
+    "subject": "History",
+    "topic": "8.4 Racial policy",
+    "level": "Medium",
+    "q": "How did the Nazis use propaganda against Jewish people?",
+    "a": "They spread antisemitic stereotypes and blamed Jews for Germany’s problems."
+  },
+  {
+    "subject": "History",
+    "topic": "8.5 Final Solution",
+    "level": "Easy",
+    "q": "What was Kristallnacht?",
+    "a": "A violent attack on Jewish homes, businesses and synagogues in November 1938."
+  },
+  {
+    "subject": "History",
+    "topic": "8.5 Final Solution",
+    "level": "Medium",
+    "q": "What happened during Kristallnacht?",
+    "a": "Synagogues were burned, Jewish shops and homes were destroyed, Jewish people were attacked and many were arrested."
+  },
+  {
+    "subject": "History",
+    "topic": "8.5 Final Solution",
+    "level": "Easy",
+    "q": "What were ghettos?",
+    "a": "Areas of towns and cities where Jewish people were forced to live in terrible conditions."
+  },
+  {
+    "subject": "History",
+    "topic": "8.5 Final Solution",
+    "level": "Easy",
+    "q": "What was the Final Solution?",
+    "a": "The Nazi plan to systematically murder the Jewish people of Europe."
+  },
+  {
+    "subject": "History",
+    "topic": "8.5 Final Solution",
+    "level": "Hard",
+    "q": "How did Nazi persecution of Jews escalate over time?",
+    "a": "It moved from discrimination and propaganda to legal exclusion, violence, ghettos, deportations and mass murder."
+  },
+  {
+    "subject": "History",
+    "topic": "9.1 Police state",
+    "level": "Easy",
+    "q": "What was the Gestapo?",
+    "a": "The Nazi secret police."
+  },
+  {
+    "subject": "History",
+    "topic": "9.1 Police state",
+    "level": "Easy",
+    "q": "What was the SS?",
+    "a": "An elite Nazi organisation loyal to Hitler, involved in terror, policing and running concentration camps."
+  },
+  {
+    "subject": "History",
+    "topic": "9.1 Police state",
+    "level": "Easy",
+    "q": "What were concentration camps used for?",
+    "a": "To imprison, punish and terrorise political opponents and groups the Nazis persecuted."
+  },
+  {
+    "subject": "History",
+    "topic": "9.1 Police state",
+    "level": "Medium",
+    "q": "How did fear help the Nazis control Germany?",
+    "a": "People feared arrest, informers, imprisonment, violence and concentration camps, so many stayed silent."
+  },
+  {
+    "subject": "History",
+    "topic": "9.2 Winning people over",
+    "level": "Easy",
+    "q": "How did the Nazis use propaganda?",
+    "a": "They controlled media, rallies, posters, radio, film and newspapers to spread Nazi ideas."
+  },
+  {
+    "subject": "History",
+    "topic": "9.2 Winning people over",
+    "level": "Easy",
+    "q": "Who controlled Nazi propaganda?",
+    "a": "Joseph Goebbels."
+  },
+  {
+    "subject": "History",
+    "topic": "9.2 Winning people over",
+    "level": "Medium",
+    "q": "Why were rallies useful to the Nazis?",
+    "a": "They created excitement, unity, loyalty to Hitler and the impression of strength."
+  },
+  {
+    "subject": "History",
+    "topic": "9.2 Winning people over",
+    "level": "Medium",
+    "q": "How did censorship help Nazi control?",
+    "a": "It removed criticism and ensured Germans mainly heard Nazi-approved messages."
+  },
+  {
+    "subject": "History",
+    "topic": "9.3 Arts and culture",
+    "level": "Easy",
+    "q": "What type of art did the Nazis approve of?",
+    "a": "Traditional, heroic and realistic art that promoted Nazi values."
+  },
+  {
+    "subject": "History",
+    "topic": "9.3 Arts and culture",
+    "level": "Medium",
+    "q": "What did the Nazis call modern art they disliked?",
+    "a": "Degenerate art."
+  },
+  {
+    "subject": "History",
+    "topic": "9.3 Arts and culture",
+    "level": "Medium",
+    "q": "How did the Nazis control culture?",
+    "a": "They censored books, films, music and art, and promoted work that supported Nazi ideology."
+  },
+  {
+    "subject": "History",
+    "topic": "9.4 Resistance",
+    "level": "Easy",
+    "q": "Give one youth opposition group in Nazi Germany.",
+    "a": "The Edelweiss Pirates or the Swing Youth."
+  },
+  {
+    "subject": "History",
+    "topic": "9.4 Resistance",
+    "level": "Easy",
+    "q": "Who were the White Rose group?",
+    "a": "A student resistance group that distributed anti-Nazi leaflets."
+  },
+  {
+    "subject": "History",
+    "topic": "9.4 Resistance",
+    "level": "Medium",
+    "q": "Why was opposition to Hitler difficult?",
+    "a": "The police state, Gestapo, informers, censorship and harsh punishments made resistance very dangerous."
+  },
+  {
+    "subject": "History",
+    "topic": "9.4 Resistance",
+    "level": "Hard",
+    "q": "How successful was resistance to Hitler?",
+    "a": "It showed not all Germans supported the Nazis, but it was limited and did not seriously threaten Hitler’s control."
+  }
+];
+
+let filtered = [];
+let current = 0;
+
+const topicFilter = document.getElementById('topicFilter');
+const levelFilter = document.getElementById('levelFilter');
+const cardContainer = document.getElementById('cardContainer');
+const countPill = document.getElementById('countPill');
+const positionPill = document.getElementById('positionPill');
+
+function initTopics(){
+  const topics = ['All chapters', ...new Set(flashcards.map(c => c.topic))];
+  topicFilter.innerHTML = topics.map(t => `<option value="${t}">${t}</option>`).join('');
+}
+
+function applyFilters(){
+  const topic = topicFilter.value;
+  const level = levelFilter.value;
+  filtered = flashcards.filter(c => 
+    (topic === 'All chapters' || c.topic === topic) &&
+    (level === 'All' || c.level === level)
+  );
+  current = 0;
+  renderCard();
+}
+
+function renderCard(){
+  countPill.textContent = `${filtered.length} cards`;
+  if(filtered.length === 0){
+    positionPill.textContent = 'Card 0 / 0';
+    cardContainer.innerHTML = '<div class="empty">No cards for this filter.</div>';
+    return;
+  }
+  const c = filtered[current];
+  positionPill.textContent = `Card ${current + 1} / ${filtered.length}`;
+  cardContainer.innerHTML = `
+    <div class="card-area">
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="face front-face">
+          <div>
+            <div class="meta">
+              <span class="tag topic">${c.topic}</span>
+              <span class="tag level">${c.level}</span>
+            </div>
+            <div class="question">${c.q}</div>
+          </div>
+          <div class="hint">Click to reveal answer</div>
+        </div>
+        <div class="face back-face">
+          <div>
+            <div class="meta">
+              <span class="tag topic">Answer</span>
+              <span class="tag level">${c.level}</span>
+            </div>
+            <div class="answer">${c.a}</div>
+          </div>
+          <div class="hint">Click again to hide</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function nextCard(){
+  if(filtered.length === 0) return;
+  current = (current + 1) % filtered.length;
+  renderCard();
+}
+
+function prevCard(){
+  if(filtered.length === 0) return;
+  current = (current - 1 + filtered.length) % filtered.length;
+  renderCard();
+}
+
+function shuffleCards(){
+  for(let i = filtered.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+  }
+  current = 0;
+  renderCard();
+}
+
+topicFilter.addEventListener('change', applyFilters);
+levelFilter.addEventListener('change', applyFilters);
+
+initTopics();
+applyFilters();
+</script>
+</body>
+</html>
