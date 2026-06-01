@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology Flashcards · My GCSE Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:#1a2e1a;background:
+radial-gradient(circle at top left,rgba(58,125,68,.12),transparent 34%),
+radial-gradient(circle at top right,rgba(122,182,72,.14),transparent 34%),#f0f7ee}
+.wrap{max-width:980px;margin:0 auto;padding:36px 22px 70px}
+.back{display:inline-flex;align-items:center;gap:8px;color:#5a7a5a;text-decoration:none;font-weight:900;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:28px}
+.back:hover{color:#3a7d44}
+header{margin-bottom:26px}
+.subject-label{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#3a7d44;margin-bottom:8px}
+h1{font-family:'Poppins',sans-serif;font-size:clamp(32px,6vw,58px);font-weight:900;line-height:1;color:#1a2e1a;letter-spacing:-1px;margin-bottom:8px}
+.tagline{font-size:15px;color:#5a7a5a;font-weight:800;line-height:1.4}
+.controls{background:#f9fdf7;border:2px solid #c8dfc8;border-radius:24px;padding:18px;margin:24px 0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:#7ab648;display:block;margin-bottom:6px}
+select,button{font-family:inherit}
+select{width:100%;border:2px solid #c8dfc8;border-radius:14px;padding:11px 12px;background:white;color:#1a2e1a;font-weight:900}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 20px}
+.pill{background:#f9fdf7;border:2px solid #c8dfc8;border-radius:999px;padding:7px 12px;font-weight:900;font-size:13px;color:#5a7a5a}
+.card-area{perspective:1000px;margin-top:14px}
+.flashcard{min-height:330px;position:relative;transform-style:preserve-3d;transition:transform .45s;cursor:pointer}
+.flashcard.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:#f9fdf7;border:2px solid #c8dfc8;border-radius:30px;padding:30px;box-shadow:0 14px 36px rgba(0,0,0,.08);display:flex;flex-direction:column;justify-content:space-between}
+.back-face{transform:rotateY(180deg);background:linear-gradient(135deg,#f9fdf7,#e8f5d8)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tag{border-radius:999px;padding:5px 10px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px}
+.topic{background:#d4edda;color:#1a4d22}
+.level{background:#fde8cc;color:#7a3a0a}
+.question{font-family:'Poppins',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:900;line-height:1.08;letter-spacing:-.8px}
+.answer{font-size:clamp(21px,3vw,30px);font-weight:900;line-height:1.25}
+.hint{font-size:13px;color:#7ab648;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;margin-top:22px}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+button{border:none;border-radius:999px;padding:12px 18px;font-weight:900;font-size:14px;cursor:pointer}
+.primary{background:#3a7d44;color:white}
+.secondary{background:#1a2e1a;color:white}
+.ghost{background:#f9fdf7;color:#5a7a5a;border:2px solid #c8dfc8}
+.empty{background:#f9fdf7;border:2px solid #c8dfc8;border-radius:24px;padding:28px;font-weight:900;color:#5a7a5a;text-align:center}
+@media(max-width:700px){.controls{grid-template-columns:1fr}.flashcard{min-height:390px}.face{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="flashcards.html" class="back">← Flashcards</a>
+  <header>
+    <div class="subject-label">Biology · AQA GCSE</div>
+    <h1>Biology Flashcards</h1>
+    <div class="tagline">Available Biology revision cards from the site: B1 to B9, plus practical and exam recall.</div>
+  </header>
+
+  <div class="controls">
+    <div>
+      <label for="topicFilter">Chapter</label>
+      <select id="topicFilter"></select>
+    </div>
+    <div>
+      <label for="levelFilter">Level</label>
+      <select id="levelFilter">
+        <option value="All">All levels</option>
+        <option value="Easy">Easy · facts and definitions</option>
+        <option value="Medium">Medium · processes and comparisons</option>
+        <option value="Hard">Hard · explain questions</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span class="pill" id="countPill">0 cards</span>
+    <span class="pill" id="positionPill">Card 0 / 0</span>
+  </div>
+
+  <div id="cardContainer"></div>
+
+  <div class="buttons">
+    <button class="ghost" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="secondary" onclick="prevCard()">← Previous</button>
+    <button class="primary" onclick="nextCard()">Next →</button>
+  </div>
+</div>
+
+<script>
+const flashcards = [
+  {
+    "subject": "Biology",
+    "topic": "B1.1 Microscopes",
+    "level": "Easy",
+    "q": "What is magnification?",
+    "a": "How many times larger an image is compared with the real object."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.1 Microscopes",
+    "level": "Easy",
+    "q": "What is resolution?",
+    "a": "The ability to distinguish between two points that are close together."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.1 Microscopes",
+    "level": "Medium",
+    "q": "Why do electron microscopes show more detail than light microscopes?",
+    "a": "They have a higher resolution, so they can show smaller structures such as ribosomes and internal organelle detail."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.1 Microscopes",
+    "level": "Easy",
+    "q": "What is the equation for magnification?",
+    "a": "magnification = image size ÷ real size"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.1 Microscopes",
+    "level": "Medium",
+    "q": "What units are cells usually measured in?",
+    "a": "Micrometres, written as μm."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.1 Microscopes",
+    "level": "Easy",
+    "q": "How many micrometres are in 1 millimetre?",
+    "a": "1000 μm."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "Name three structures found in both animal and plant cells.",
+    "a": "Nucleus, cytoplasm and cell membrane. Mitochondria and ribosomes are also found in both."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What does the nucleus do?",
+    "a": "It contains genetic material and controls the activities of the cell."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What does the cytoplasm do?",
+    "a": "It is where many chemical reactions happen."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What does the cell membrane do?",
+    "a": "It controls what enters and leaves the cell."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What do mitochondria do?",
+    "a": "They are the site of aerobic respiration, where energy is released."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What do ribosomes do?",
+    "a": "They are the site of protein synthesis."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What extra structures do plant cells have?",
+    "a": "A cellulose cell wall, chloroplasts and a permanent vacuole."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Medium",
+    "q": "What does the cell wall do in a plant cell?",
+    "a": "It supports and strengthens the cell."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What do chloroplasts do?",
+    "a": "They absorb light energy for photosynthesis."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.2 Animal and plant cells",
+    "level": "Easy",
+    "q": "What does the permanent vacuole contain?",
+    "a": "Cell sap."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.3 Eukaryotic and prokaryotic cells",
+    "level": "Easy",
+    "q": "What is a eukaryotic cell?",
+    "a": "A cell with genetic material enclosed in a nucleus."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.3 Eukaryotic and prokaryotic cells",
+    "level": "Easy",
+    "q": "Give two examples of eukaryotic cells.",
+    "a": "Animal cells and plant cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.3 Eukaryotic and prokaryotic cells",
+    "level": "Easy",
+    "q": "What is a prokaryotic cell?",
+    "a": "A bacterial cell with no nucleus; its genetic material is free in the cytoplasm."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.3 Eukaryotic and prokaryotic cells",
+    "level": "Medium",
+    "q": "How is DNA arranged in a bacterial cell?",
+    "a": "As a single circular loop of DNA, and sometimes small rings called plasmids."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.3 Eukaryotic and prokaryotic cells",
+    "level": "Medium",
+    "q": "How are bacterial cells different from animal cells?",
+    "a": "They are smaller, have no nucleus and may contain plasmids, a cell wall and a flagellum."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.3 Eukaryotic and prokaryotic cells",
+    "level": "Easy",
+    "q": "What are plasmids?",
+    "a": "Small rings of DNA found in some bacterial cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Easy",
+    "q": "What is cell differentiation?",
+    "a": "The process by which a cell becomes specialised for a particular function."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Medium",
+    "q": "How is a sperm cell adapted for its job?",
+    "a": "It has a tail to swim, many mitochondria for energy and enzymes in the head to help penetrate the egg."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Medium",
+    "q": "How is a nerve cell adapted for its job?",
+    "a": "It is long, has branched ends and can carry electrical impulses around the body."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Medium",
+    "q": "How is a muscle cell adapted for contraction?",
+    "a": "It contains protein fibres that can contract and many mitochondria to release energy."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Medium",
+    "q": "How is a root hair cell adapted for absorbing water and mineral ions?",
+    "a": "It has a large surface area and a thin wall for efficient absorption."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Medium",
+    "q": "How is a xylem cell adapted for transport?",
+    "a": "It is hollow, strengthened with lignin and forms tubes to carry water and mineral ions."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Medium",
+    "q": "How is a phloem cell adapted for transport?",
+    "a": "It forms tubes with companion cells and carries dissolved sugars around the plant."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.4–B1.5 Specialised cells",
+    "level": "Hard",
+    "q": "Why is cell specialisation important in multicellular organisms?",
+    "a": "Different cells perform different jobs, allowing tissues, organs and organ systems to work efficiently."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.6 Diffusion",
+    "level": "Easy",
+    "q": "What is diffusion?",
+    "a": "The net movement of particles from a higher concentration to a lower concentration."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.6 Diffusion",
+    "level": "Easy",
+    "q": "Does diffusion require energy?",
+    "a": "No. It is a passive process."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.6 Diffusion",
+    "level": "Medium",
+    "q": "Name three factors that increase the rate of diffusion.",
+    "a": "A steeper concentration gradient, higher temperature and larger surface area."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.6 Diffusion",
+    "level": "Medium",
+    "q": "Why do exchange surfaces need a large surface area?",
+    "a": "So more particles can diffuse across at the same time."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.6 Diffusion",
+    "level": "Medium",
+    "q": "Why do exchange surfaces need thin membranes?",
+    "a": "So particles have a shorter distance to diffuse."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.6 Diffusion",
+    "level": "Hard",
+    "q": "Why is diffusion important in cells?",
+    "a": "It allows substances such as oxygen and glucose to enter cells and waste products such as carbon dioxide to leave cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.7–B1.8 Osmosis",
+    "level": "Easy",
+    "q": "What is osmosis?",
+    "a": "The movement of water molecules across a partially permeable membrane from a dilute solution to a more concentrated solution."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.7–B1.8 Osmosis",
+    "level": "Easy",
+    "q": "What is a partially permeable membrane?",
+    "a": "A membrane that allows some substances through but not others."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.7–B1.8 Osmosis",
+    "level": "Medium",
+    "q": "What happens to an animal cell in a very dilute solution?",
+    "a": "Water moves in by osmosis and the cell may burst."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.7–B1.8 Osmosis",
+    "level": "Medium",
+    "q": "What happens to a plant cell in a dilute solution?",
+    "a": "Water moves in and the cell becomes turgid."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.7–B1.8 Osmosis",
+    "level": "Medium",
+    "q": "What happens to a plant cell in a concentrated solution?",
+    "a": "Water leaves the cell and it becomes flaccid or plasmolysed."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.7–B1.8 Osmosis",
+    "level": "Hard",
+    "q": "Why do plant cells not usually burst when water enters by osmosis?",
+    "a": "The cellulose cell wall supports the cell and resists expansion."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.9 Active transport",
+    "level": "Easy",
+    "q": "What is active transport?",
+    "a": "The movement of substances from a lower concentration to a higher concentration using energy from respiration."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.9 Active transport",
+    "level": "Easy",
+    "q": "Does active transport require energy?",
+    "a": "Yes."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.9 Active transport",
+    "level": "Medium",
+    "q": "Give an example of active transport in plants.",
+    "a": "Root hair cells absorbing mineral ions from the soil."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.9 Active transport",
+    "level": "Medium",
+    "q": "Give an example of active transport in humans.",
+    "a": "Absorption of glucose in the small intestine when glucose concentration is low."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.9 Active transport",
+    "level": "Hard",
+    "q": "How is active transport different from diffusion?",
+    "a": "Active transport moves substances against the concentration gradient and requires energy; diffusion moves down the gradient and does not require energy."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.10 Exchanging materials",
+    "level": "Easy",
+    "q": "Why do small organisms exchange substances easily?",
+    "a": "They have a large surface area to volume ratio."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.10 Exchanging materials",
+    "level": "Medium",
+    "q": "Why do large organisms need specialised exchange surfaces?",
+    "a": "Their surface area to volume ratio is smaller, so diffusion alone is not fast enough for all cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.10 Exchanging materials",
+    "level": "Medium",
+    "q": "Name three features of an efficient exchange surface.",
+    "a": "Large surface area, thin membrane and good blood supply or ventilation."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B1.10 Exchanging materials",
+    "level": "Hard",
+    "q": "Why do multicellular organisms need transport systems?",
+    "a": "To move substances quickly between exchange surfaces and cells throughout the body."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Easy",
+    "q": "What is the cell cycle?",
+    "a": "The series of stages a cell goes through as it grows and divides."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Easy",
+    "q": "What is mitosis?",
+    "a": "Cell division that produces two genetically identical daughter cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Easy",
+    "q": "Why is mitosis important?",
+    "a": "For growth, repair and replacing damaged cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Medium",
+    "q": "What happens to DNA before mitosis?",
+    "a": "The DNA is copied so each new cell gets a complete set of chromosomes."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Medium",
+    "q": "What happens during mitosis?",
+    "a": "Chromosomes are pulled apart and the nucleus divides."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Easy",
+    "q": "What are chromosomes made of?",
+    "a": "DNA."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Medium",
+    "q": "What is differentiation?",
+    "a": "When a cell becomes specialised for a particular function."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Easy",
+    "q": "What are stem cells?",
+    "a": "Undifferentiated cells that can divide and develop into different types of cell."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Medium",
+    "q": "Where are stem cells found in humans?",
+    "a": "Embryos and some adult tissues such as bone marrow."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Medium",
+    "q": "Where are stem cells found in plants?",
+    "a": "In meristems, such as the tips of roots and shoots."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Hard",
+    "q": "Why are embryonic stem cells useful in medicine?",
+    "a": "They can develop into many different cell types, so they may be used to replace damaged tissues."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B2 Cell division",
+    "level": "Hard",
+    "q": "Give one ethical issue with using embryonic stem cells.",
+    "a": "Some people believe embryos should not be used or destroyed for research."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What is a tissue?",
+    "a": "A group of similar cells working together to perform a function."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What is an organ?",
+    "a": "A group of different tissues working together to perform a function."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What is an organ system?",
+    "a": "A group of organs working together to perform a function."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What is the function of the digestive system?",
+    "a": "To break down large insoluble food molecules into small soluble molecules that can be absorbed."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What are enzymes?",
+    "a": "Biological catalysts that speed up chemical reactions."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What is the lock-and-key model?",
+    "a": "The active site of an enzyme has a specific shape that fits only its substrate."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Medium",
+    "q": "What happens if an enzyme is denatured?",
+    "a": "Its active site changes shape, so the substrate no longer fits."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Medium",
+    "q": "How does temperature affect enzyme activity?",
+    "a": "Rate increases up to the optimum temperature, then decreases because the enzyme denatures."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Medium",
+    "q": "How does pH affect enzymes?",
+    "a": "Each enzyme has an optimum pH; extreme pH can denature the enzyme."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What do carbohydrases break down?",
+    "a": "Carbohydrates into simple sugars."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What does amylase break down?",
+    "a": "Starch into sugars."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What do proteases break down?",
+    "a": "Proteins into amino acids."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "What do lipases break down?",
+    "a": "Lipids into fatty acids and glycerol."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Medium",
+    "q": "What does bile do?",
+    "a": "It neutralises stomach acid and emulsifies fats, increasing the surface area for lipase."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "Where is bile made?",
+    "a": "In the liver."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B3 Organisation and digestion",
+    "level": "Easy",
+    "q": "Where is bile stored?",
+    "a": "In the gall bladder."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What is the function of the heart?",
+    "a": "To pump blood around the body."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do arteries do?",
+    "a": "Carry blood away from the heart."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do veins do?",
+    "a": "Carry blood back to the heart."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do capillaries do?",
+    "a": "Allow exchange of substances between blood and tissues."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "How are arteries adapted to high pressure?",
+    "a": "They have thick, muscular, elastic walls."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "Why do veins have valves?",
+    "a": "To prevent blood flowing backwards."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "Why do capillaries have thin walls?",
+    "a": "To allow rapid diffusion of substances."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do red blood cells carry?",
+    "a": "Oxygen."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "How are red blood cells adapted for carrying oxygen?",
+    "a": "They contain haemoglobin, have no nucleus and have a biconcave shape for a large surface area."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do white blood cells do?",
+    "a": "Defend the body against pathogens."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do platelets do?",
+    "a": "Help blood clot."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What is plasma?",
+    "a": "The liquid part of blood that transports substances."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What is coronary heart disease?",
+    "a": "A disease where coronary arteries become narrowed or blocked by fatty deposits."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "How can coronary heart disease be treated?",
+    "a": "With stents, statins, lifestyle changes or sometimes surgery."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do xylem vessels transport?",
+    "a": "Water and mineral ions from roots to leaves."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What do phloem vessels transport?",
+    "a": "Dissolved sugars around the plant."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Easy",
+    "q": "What is transpiration?",
+    "a": "The loss of water vapour from leaves through stomata."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "What is the transpiration stream?",
+    "a": "The movement of water from roots, through xylem, to leaves and out by evaporation."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "Name four factors that increase transpiration rate.",
+    "a": "Higher temperature, stronger light, more wind and lower humidity."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B4 Transport in animals and plants",
+    "level": "Medium",
+    "q": "What do stomata do?",
+    "a": "They allow gas exchange and control water loss from leaves."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What is health?",
+    "a": "A state of physical and mental wellbeing."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What is a communicable disease?",
+    "a": "A disease that can be spread from one organism to another."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What is a non-communicable disease?",
+    "a": "A disease that cannot be spread between organisms."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What is a pathogen?",
+    "a": "A microorganism that causes disease."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "Name four types of pathogen.",
+    "a": "Bacteria, viruses, fungi and protists."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Medium",
+    "q": "How can pathogens spread?",
+    "a": "Through air, water, direct contact, bodily fluids or vectors."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What is a vector?",
+    "a": "An organism that spreads a pathogen without getting the disease itself."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Medium",
+    "q": "How can the spread of disease be reduced?",
+    "a": "Hygiene, destroying vectors, isolation and vaccination."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes measles?",
+    "a": "A virus."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes HIV/AIDS?",
+    "a": "A virus called HIV."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes tobacco mosaic virus?",
+    "a": "A virus that infects plants and causes mosaic patterns on leaves."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes salmonella food poisoning?",
+    "a": "Bacteria."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes gonorrhoea?",
+    "a": "Bacteria."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes rose black spot?",
+    "a": "A fungus."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What causes malaria?",
+    "a": "A protist spread by mosquitoes."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Medium",
+    "q": "How does the skin defend against pathogens?",
+    "a": "It acts as a barrier and produces antimicrobial secretions."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Medium",
+    "q": "How does the nose defend against pathogens?",
+    "a": "Hairs and mucus trap particles and pathogens."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Medium",
+    "q": "How do white blood cells defend the body?",
+    "a": "They engulf pathogens, produce antibodies and produce antitoxins."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What are antibodies?",
+    "a": "Proteins made by white blood cells that bind to specific antigens on pathogens."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B5 Communicable diseases",
+    "level": "Easy",
+    "q": "What are antitoxins?",
+    "a": "Substances produced by white blood cells that neutralise toxins."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "What is vaccination?",
+    "a": "Giving a dead or inactive pathogen, or antigen, to stimulate an immune response."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "How does vaccination protect a person?",
+    "a": "It causes white blood cells to produce antibodies and memory cells, so the response is faster if the pathogen returns."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "What is herd immunity?",
+    "a": "When enough people are immune, making it harder for a disease to spread."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "What do antibiotics treat?",
+    "a": "Bacterial infections."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "Do antibiotics kill viruses?",
+    "a": "No."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "Why do antibiotics not work on viruses?",
+    "a": "Viruses live and reproduce inside body cells, so antibiotics cannot target them without damaging cells."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "What do painkillers do?",
+    "a": "Relieve symptoms such as pain, but do not kill pathogens."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "What is antibiotic resistance?",
+    "a": "When bacteria evolve so an antibiotic no longer kills them."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Hard",
+    "q": "How can antibiotic resistance be reduced?",
+    "a": "Use antibiotics only when needed, complete the course, reduce unnecessary prescribing and develop new antibiotics."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "Where was aspirin originally discovered from?",
+    "a": "Willow bark."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "Where was penicillin discovered from?",
+    "a": "A mould, discovered by Alexander Fleming."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "What are preclinical trials?",
+    "a": "Tests on cells, tissues and animals before testing a drug on humans."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "What are clinical trials?",
+    "a": "Tests on healthy volunteers and patients to check safety, dosage and effectiveness."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Easy",
+    "q": "What is a placebo?",
+    "a": "A treatment with no active drug, used as a comparison in trials."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B6 Preventing and treating disease",
+    "level": "Medium",
+    "q": "What is a double-blind trial?",
+    "a": "Neither doctors nor patients know who has the real drug or placebo, reducing bias."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Easy",
+    "q": "What is a risk factor?",
+    "a": "Something linked to an increased chance of developing a disease."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Medium",
+    "q": "Give examples of lifestyle risk factors.",
+    "a": "Smoking, alcohol, poor diet and lack of exercise."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Easy",
+    "q": "What is cancer?",
+    "a": "Uncontrolled cell growth and division that can form tumours."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Easy",
+    "q": "What is a benign tumour?",
+    "a": "A growth that stays in one place and does not invade other tissues."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Easy",
+    "q": "What is a malignant tumour?",
+    "a": "A cancerous tumour that can invade tissues and spread around the body."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Medium",
+    "q": "How does smoking increase disease risk?",
+    "a": "It damages lungs and blood vessels and increases the risk of lung cancer, COPD and cardiovascular disease."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Medium",
+    "q": "How can diet increase disease risk?",
+    "a": "A poor diet can lead to obesity, type 2 diabetes and cardiovascular disease."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Medium",
+    "q": "How does alcohol affect health?",
+    "a": "It can damage the liver and brain and increase risk of some cancers."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Easy",
+    "q": "What is a carcinogen?",
+    "a": "A substance that can cause cancer."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Medium",
+    "q": "Give examples of carcinogens.",
+    "a": "Tobacco smoke, asbestos, ionising radiation and some chemicals."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B7 Non-communicable diseases",
+    "level": "Hard",
+    "q": "Why can diseases interact?",
+    "a": "One disease can increase the risk of another, for example obesity increasing risk of type 2 diabetes."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "What is photosynthesis?",
+    "a": "The process by which plants make glucose using light energy."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "What is the word equation for photosynthesis?",
+    "a": "carbon dioxide + water → glucose + oxygen"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Medium",
+    "q": "What is the symbol equation for photosynthesis?",
+    "a": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "Where does photosynthesis happen?",
+    "a": "In chloroplasts."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "What pigment absorbs light for photosynthesis?",
+    "a": "Chlorophyll."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "What are the reactants of photosynthesis?",
+    "a": "Carbon dioxide and water."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "What are the products of photosynthesis?",
+    "a": "Glucose and oxygen."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Medium",
+    "q": "Name three limiting factors of photosynthesis.",
+    "a": "Light intensity, carbon dioxide concentration and temperature."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Medium",
+    "q": "What is a limiting factor?",
+    "a": "A factor that stops the rate of a reaction increasing because it is in shortest supply."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Medium",
+    "q": "How does temperature affect photosynthesis?",
+    "a": "Rate increases up to an optimum, then decreases as enzymes denature."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Easy",
+    "q": "How do plants use glucose?",
+    "a": "For respiration, making cellulose, making amino acids, storing as starch and making fats/oils."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Medium",
+    "q": "Why do plants store glucose as starch?",
+    "a": "Starch is insoluble, so it does not affect osmosis and can be stored safely."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Medium",
+    "q": "What mineral ion is needed to make amino acids?",
+    "a": "Nitrate ions."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B8 Photosynthesis",
+    "level": "Hard",
+    "q": "How can greenhouse conditions increase plant growth?",
+    "a": "By controlling light, temperature, carbon dioxide and mineral supply to increase photosynthesis."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Easy",
+    "q": "What is aerobic respiration?",
+    "a": "Respiration using oxygen to release energy from glucose."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Easy",
+    "q": "What is the word equation for aerobic respiration?",
+    "a": "glucose + oxygen → carbon dioxide + water"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "What is the symbol equation for aerobic respiration?",
+    "a": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Easy",
+    "q": "Where does aerobic respiration happen?",
+    "a": "In mitochondria."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Easy",
+    "q": "What is anaerobic respiration?",
+    "a": "Respiration without oxygen."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "What is the word equation for anaerobic respiration in muscles?",
+    "a": "glucose → lactic acid"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "What is the word equation for anaerobic respiration in yeast?",
+    "a": "glucose → ethanol + carbon dioxide"
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Easy",
+    "q": "What is fermentation?",
+    "a": "Anaerobic respiration in yeast."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "Why is anaerobic respiration less efficient than aerobic respiration?",
+    "a": "Glucose is only partially broken down, so less energy is released."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "What happens to heart rate during exercise?",
+    "a": "It increases to deliver more oxygen and glucose to muscles and remove carbon dioxide faster."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "What happens to breathing rate during exercise?",
+    "a": "It increases to take in more oxygen and remove more carbon dioxide."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Easy",
+    "q": "What is oxygen debt?",
+    "a": "The extra oxygen needed after exercise to break down lactic acid."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Medium",
+    "q": "Why does lactic acid cause problems in muscles?",
+    "a": "It can build up and cause muscle fatigue."
+  },
+  {
+    "subject": "Biology",
+    "topic": "B9 Respiration",
+    "level": "Hard",
+    "q": "Why does the body continue breathing heavily after exercise?",
+    "a": "To take in extra oxygen to remove lactic acid and repay oxygen debt."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Medium",
+    "q": "How do you prepare a microscope slide?",
+    "a": "Place the specimen on a slide, add stain if needed, lower a coverslip carefully and view under the microscope."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Medium",
+    "q": "Why is iodine used when viewing onion cells?",
+    "a": "It stains cell structures so they are easier to see."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Medium",
+    "q": "In osmosis practicals, why should potato cylinders be the same size?",
+    "a": "To make the test fair by controlling surface area and volume."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Medium",
+    "q": "How do you calculate percentage change in mass?",
+    "a": "change in mass ÷ original mass × 100"
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Medium",
+    "q": "In enzyme practicals, why should temperature be controlled?",
+    "a": "Temperature affects enzyme activity, so it must be controlled for a fair test."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Medium",
+    "q": "In photosynthesis practicals, why is light intensity changed?",
+    "a": "To investigate how light affects the rate of photosynthesis."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Easy",
+    "q": "How can oxygen production show the rate of photosynthesis?",
+    "a": "More oxygen bubbles or gas collected per minute means a faster rate."
+  },
+  {
+    "subject": "Biology",
+    "topic": "Required practicals and exam skills",
+    "level": "Hard",
+    "q": "Why should repeat readings be taken in practicals?",
+    "a": "To identify anomalies and calculate a more reliable mean."
+  }
+];
+
+let filtered = [];
+let current = 0;
+
+const topicFilter = document.getElementById('topicFilter');
+const levelFilter = document.getElementById('levelFilter');
+const cardContainer = document.getElementById('cardContainer');
+const countPill = document.getElementById('countPill');
+const positionPill = document.getElementById('positionPill');
+
+function initTopics(){
+  const topics = ['All chapters', ...new Set(flashcards.map(c => c.topic))];
+  topicFilter.innerHTML = topics.map(t => `<option value="${t}">${t}</option>`).join('');
+}
+
+function applyFilters(){
+  const topic = topicFilter.value;
+  const level = levelFilter.value;
+  filtered = flashcards.filter(c =>
+    (topic === 'All chapters' || c.topic === topic) &&
+    (level === 'All' || c.level === level)
+  );
+  current = 0;
+  renderCard();
+}
+
+function renderCard(){
+  countPill.textContent = `${filtered.length} cards`;
+  if(filtered.length === 0){
+    positionPill.textContent = 'Card 0 / 0';
+    cardContainer.innerHTML = '<div class="empty">No cards for this filter.</div>';
+    return;
+  }
+  const c = filtered[current];
+  positionPill.textContent = `Card ${current + 1} / ${filtered.length}`;
+  cardContainer.innerHTML = `
+    <div class="card-area">
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="face front-face">
+          <div>
+            <div class="meta">
+              <span class="tag topic">${c.topic}</span>
+              <span class="tag level">${c.level}</span>
+            </div>
+            <div class="question">${c.q}</div>
+          </div>
+          <div class="hint">Click to reveal answer</div>
+        </div>
+        <div class="face back-face">
+          <div>
+            <div class="meta">
+              <span class="tag topic">Answer</span>
+              <span class="tag level">${c.level}</span>
+            </div>
+            <div class="answer">${c.a}</div>
+          </div>
+          <div class="hint">Click again to hide</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function nextCard(){
+  if(filtered.length === 0) return;
+  current = (current + 1) % filtered.length;
+  renderCard();
+}
+
+function prevCard(){
+  if(filtered.length === 0) return;
+  current = (current - 1 + filtered.length) % filtered.length;
+  renderCard();
+}
+
+function shuffleCards(){
+  for(let i = filtered.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+  }
+  current = 0;
+  renderCard();
+}
+
+topicFilter.addEventListener('change', applyFilters);
+levelFilter.addEventListener('change', applyFilters);
+
+initTopics();
+applyFilters();
+</script>
+</body>
+</html>
