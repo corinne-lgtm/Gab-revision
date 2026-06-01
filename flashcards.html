@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards · My GCSE Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Nunito',sans-serif;color:#1f2a33;
+  background:
+    radial-gradient(circle at top left,rgba(217,75,66,.12),transparent 34%),
+    radial-gradient(circle at top right,rgba(115,83,166,.12),transparent 34%),
+    #f4eee6}
+.wrap{max-width:920px;margin:0 auto;padding:40px 24px 70px}
+.back{display:inline-flex;align-items:center;gap:8px;color:#67737b;text-decoration:none;font-weight:900;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:32px;transition:color .2s}
+.back:hover{color:#d94b42}
+header{margin-bottom:44px}
+.subject-label{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#d94b42;margin-bottom:8px}
+h1{font-family:'Poppins',sans-serif;font-size:clamp(36px,7vw,68px);font-weight:900;line-height:1;color:#1f2a33;letter-spacing:-2px;margin-bottom:8px}
+h1 span{color:#d94b42}
+.tagline{font-size:16px;color:#67737b;font-weight:800;line-height:1.5;max-width:680px}
+.section-label{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#b0bac0;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{position:relative;border-radius:24px;padding:26px 22px;text-decoration:none;background:#fffdf7;border:2px solid #dbcfc0;transition:transform .18s,box-shadow .18s;overflow:hidden;color:#1f2a33}
+.card:not(.soon):hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:24px 24px 0 0}
+.history::before{background:linear-gradient(90deg,#d94b42,#f29a2e)}
+.maths::before{background:linear-gradient(90deg,#1f2a33,#67737b)}
+.biology::before{background:linear-gradient(90deg,#5e9f6b,#a0d4a8)}
+.physics::before{background:linear-gradient(90deg,#7353a6,#b09de0)}
+.computing::before{background:linear-gradient(90deg,#3f6f9a,#5eb8e0)}
+.english::before{background:linear-gradient(90deg,#b35f8f,#e8a6c8)}
+.spanish::before{background:linear-gradient(90deg,#f29a2e,#f4cf55)}
+.icon{font-size:40px;margin-bottom:12px;display:block}
+.name{font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;margin-bottom:4px}
+.desc{font-size:13px;color:#67737b;font-weight:700;line-height:1.5}
+.badge{display:inline-block;margin-top:10px;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.on{background:#dff0e2;color:#2e6b40}
+.off{background:#f0ece6;color:#a0aab0}
+.soon{opacity:.55;cursor:default;pointer-events:none}
+.arrow{position:absolute;top:22px;right:22px;font-size:20px;color:#dbcfc0;transition:color .2s,transform .2s}
+.card:hover .arrow{color:#d94b42;transform:translate(2px,-2px)}
+footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" class="back">← Main hub</a>
+
+  <header>
+    <div class="subject-label">GCSE Revision</div>
+    <h1>Flash<span>cards</span></h1>
+    <div class="tagline">Choose one subject. Cards stay separated, so History is History, Biology is Biology, Physics is Physics — no revision soup.</div>
+  </header>
+
+  <div class="section-label">Choose a subject</div>
+  <div class="grid">
+    <a href="history-flashcards.html" class="card history">
+      <span class="icon">🏛️</span>
+      <div class="name">History</div>
+      <div class="desc">Germany 1890–1945 · Democracy and Dictatorship · 130 cards</div>
+      <div class="badge on">✅ Available</div>
+      <span class="arrow">↗</span>
+    </a>
+
+    <div class="card maths soon">
+      <span class="icon">🧮</span>
+      <div class="name">Maths</div>
+      <div class="desc">Formulae, methods, definitions and quick recall.</div>
+      <div class="badge off">Coming soon</div>
+    </div>
+
+    <div class="card biology soon">
+      <span class="icon">🧬</span>
+      <div class="name">Biology</div>
+      <div class="desc">AQA key facts, processes, required practicals and exam definitions.</div>
+      <div class="badge off">Coming soon</div>
+    </div>
+
+    <div class="card physics soon">
+      <span class="icon">⚡</span>
+      <div class="name">Physics</div>
+      <div class="desc">Equations, units, required practicals and explanations.</div>
+      <div class="badge off">Coming soon</div>
+    </div>
+
+    <div class="card computing soon">
+      <span class="icon">💻</span>
+      <div class="name">Computing</div>
+      <div class="desc">Algorithms, networks, systems, memory and cyber security.</div>
+      <div class="badge off">Coming soon</div>
+    </div>
+
+    <div class="card english soon">
+      <span class="icon">📖</span>
+      <div class="name">English</div>
+      <div class="desc">Quotes, techniques, themes and essay structure.</div>
+      <div class="badge off">Coming soon</div>
+    </div>
+
+    <div class="card spanish soon">
+      <span class="icon">🇪🇸</span>
+      <div class="name">Spanish</div>
+      <div class="desc">Vocabulary, tenses and useful speaking/writing phrases.</div>
+      <div class="badge off">Coming soon</div>
+    </div>
+  </div>
+
+  <footer>My GCSE Revision · Flashcards</footer>
+</div>
+</body>
+</html>
