@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8.3 Resultant Forces — Physics Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2744;
+    --muted: #5a6a8a;
+    --paper: #ffffff;
+    --line: #d0e8f8;
+    --card-border: #b8d8f0;
+    --accent: #64b5f6;
+    --accent-dark: #1565c0;
+    --navy: #0d2b5e;
+    --navy2: #1a3a7a;
+    --red: #e53935;
+    --red2: #fdecea;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7b1fa2;
+    --purple2: #f3e5f5;
+    --yellow: #f9a825;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  nav a:hover { color: #fff; }
+  nav .sep { color: rgba(255,255,255,0.35); font-size: 12px; }
+  nav .current { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, #1a4a8a 100%);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(100,181,246,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(100,181,246,0.08) 0%, transparent 50%);
+  }
+  .floating-emoji {
+    font-size: 52px;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.2);
+    border: 1.5px solid rgba(100,181,246,0.5);
+    color: var(--accent);
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    line-height: 1.15;
+  }
+  .hero-kicker {
+    color: rgba(255,255,255,0.65);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 14px;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .score-bar span { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 700; }
+  .progress-track {
+    flex: 1;
+    max-width: 300px;
+    height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #90caf9);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  .score-label { color: var(--accent); font-size: 13px; font-weight: 800; }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 28px 30px;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.07);
+  }
+  .card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .ico { font-size: 22px; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 2px solid var(--line);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+    font-size: 15px;
+    user-select: none;
+  }
+  .checklist li:hover { border-color: var(--accent); background: #f0f8ff; }
+  .checklist li.done {
+    background: var(--green2);
+    border-color: var(--green);
+    color: #2e7d32;
+    text-decoration: line-through;
+    text-decoration-color: rgba(46,125,50,0.4);
+  }
+  .checklist li .chk {
+    width: 24px; height: 24px;
+    border-radius: 8px;
+    border: 2.5px solid #ccc;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .checklist li.done .chk {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  /* ── KEY FACT BOX ── */
+  .key-fact {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid var(--accent-dark);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-size: 15px;
+  }
+  .key-fact .kf-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+
+  /* ── HIGHLIGHT STRIPS ── */
+  .strip {
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .strip-green { background: var(--green2); border-left: 4px solid var(--green); color: #1b5e20; }
+  .strip-orange { background: var(--orange2); border-left: 4px solid var(--orange); color: #7f4000; }
+  .strip-red { background: var(--red2); border-left: 4px solid var(--red); color: #7f0000; }
+  .strip-purple { background: var(--purple2); border-left: 4px solid var(--purple); color: #4a0070; }
+  .strip .strip-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .big-idea-tile {
+    border-radius: 16px;
+    padding: 18px 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .big-idea-tile .tile-ico { font-size: 30px; margin-bottom: 8px; display: block; }
+  .big-idea-tile .tile-label { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .big-idea-tile p { font-weight: 600; font-size: 13px; opacity: 0.85; line-height: 1.4; }
+  .tile-blue { background: #ddeeff; color: #0d2b5e; border: 2px solid #aac8ee; }
+  .tile-green { background: var(--green2); color: #1b5e20; border: 2px solid #a5d6a7; }
+  .tile-orange { background: var(--orange2); color: #7f4000; border: 2px solid #ffcc80; }
+  .tile-red { background: var(--red2); color: #7f0000; border: 2px solid #ef9a9a; }
+  .tile-purple { background: var(--purple2); color: #4a0070; border: 2px solid #ce93d8; }
+
+  /* ── INTERACTIVE FORCE DEMO ── */
+  .demo-box {
+    background: #f0f8ff;
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: 12px;
+  }
+  .demo-box h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .force-controls {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .force-ctrl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .force-ctrl label { color: var(--ink); font-size: 13px; font-weight: 700; }
+  .force-ctrl input[type=range] { width: 130px; accent-color: var(--accent-dark); }
+  .force-ctrl .val {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--navy);
+    min-width: 48px;
+    text-align: center;
+  }
+  #forceCanvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    background: white;
+    border: 1.5px solid var(--line);
+    max-width: 100%;
+  }
+  .resultant-label {
+    text-align: center;
+    margin-top: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  /* ── FLOW ARROWS ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 12px 0;
+    justify-content: center;
+  }
+  .flow-step {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    max-width: 130px;
+    line-height: 1.3;
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 24px;
+    padding: 0 4px;
+    font-weight: 800;
+  }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .compare-col {
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .compare-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .compare-col ul li { font-size: 13px; font-weight: 600; display: flex; gap: 6px; }
+  .col-green { background: var(--green2); border: 2px solid #a5d6a7; }
+  .col-green h4 { color: #1b5e20; }
+  .col-green ul li { color: #2e7d32; }
+  .col-orange { background: var(--orange2); border: 2px solid #ffcc80; }
+  .col-orange h4 { color: #7f4000; }
+  .col-orange ul li { color: #e65100; }
+
+  /* ── GLOSSARY GRID ── */
+  .glossary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .gloss-pill {
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 2px solid transparent;
+    transition: transform 0.15s;
+  }
+  .gloss-pill:hover { transform: translateY(-2px); }
+  .gloss-pill .term {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .gloss-pill .def { font-size: 13px; font-weight: 600; line-height: 1.4; opacity: 0.85; }
+  .gp-blue { background: #ddeeff; border-color: #aac8ee; color: #0d2b5e; }
+  .gp-green { background: var(--green2); border-color: #a5d6a7; color: #1b5e20; }
+  .gp-orange { background: var(--orange2); border-color: #ffcc80; color: #7f4000; }
+  .gp-red { background: var(--red2); border-color: #ef9a9a; color: #7f0000; }
+  .gp-purple { background: var(--purple2); border-color: #ce93d8; color: #4a0070; }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+    border: 2px solid #f9a825;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .exam-tip .et-icon { font-size: 24px; flex-shrink: 0; }
+  .exam-tip .et-body h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7f4000;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .exam-tip .et-body p { font-size: 14px; font-weight: 600; color: #5f3000; line-height: 1.5; }
+
+  /* ── MARK AS READ ── */
+  .mark-btn {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    background: linear-gradient(135deg, var(--accent-dark), #1976d2);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(21,101,192,0.35);
+    text-align: center;
+  }
+  .mark-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(21,101,192,0.45); }
+  .mark-btn.marked {
+    background: linear-gradient(135deg, var(--green), #388e3c);
+    box-shadow: 0 4px 16px rgba(56,142,60,0.35);
+  }
+  .mark-confirm {
+    text-align: center;
+    font-weight: 700;
+    color: var(--green);
+    font-size: 15px;
+    margin-top: 10px;
+    min-height: 22px;
+  }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+    border-radius: 24px;
+    padding: 30px;
+    text-align: center;
+    border: 2px solid rgba(100,181,246,0.3);
+  }
+  .quiz-cta h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .quiz-cta p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 20px; font-weight: 600; }
+  .quiz-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 14px 36px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(100,181,246,0.4);
+  }
+  .quiz-btn:hover { transform: translateY(-2px); background: #90caf9; }
+
+  /* ── STATEMENT BOX ── */
+  .statement-box {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border: 2.5px solid var(--accent);
+    border-radius: 16px;
+    padding: 20px 24px;
+    text-align: center;
+    margin: 12px 0;
+  }
+  .statement-box p { font-size: 16px; font-weight: 700; color: var(--accent-dark); line-height: 1.5; }
+
+  section-label {
+    font-size: 11px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+    .force-controls { flex-direction: column; align-items: center; }
+    main { padding: 20px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="#">Physics</a>
+  <span class="sep">›</span>
+  <span class="current">P8.3 Resultant Forces</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="floating-emoji">⚖️</div>
+  <div class="chapter-badge">Physics · Chapter P8.3</div>
+  <h1>Resultant Forces</h1>
+  <p class="hero-kicker">Forces in balance — and when they're not</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Resultant force</span>
+    <span class="hero-tag">Newton's 1st Law</span>
+    <span class="hero-tag">Balanced forces</span>
+    <span class="hero-tag">Unbalanced forces</span>
+    <span class="hero-tag">Free-body diagrams</span>
+  </div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span>Progress</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="score-label" id="progressLabel">0 / 5</span>
+</div>
+
+<main>
+
+  <!-- LEARNING OBJECTIVES -->
+  <div class="card">
+    <h2><span class="ico">🎯</span> Learning Objectives</h2>
+    <p style="color:var(--muted);font-size:14px;font-weight:600;margin-bottom:14px;">Tap each one when you've got it ✓</p>
+    <ul class="checklist" id="checklist">
+      <li data-key="check-physics-p8-3-revision-0">
+        <div class="chk" id="chk0"></div>
+        What a resultant force is
+      </li>
+      <li data-key="check-physics-p8-3-revision-1">
+        <div class="chk" id="chk1"></div>
+        What happens when the resultant force on an object is zero
+      </li>
+      <li data-key="check-physics-p8-3-revision-2">
+        <div class="chk" id="chk2"></div>
+        What happens when the resultant force on an object is greater than zero
+      </li>
+      <li data-key="check-physics-p8-3-revision-3">
+        <div class="chk" id="chk3"></div>
+        How to calculate the resultant force from two forces along the same line
+      </li>
+      <li data-key="check-physics-p8-3-revision-4">
+        <div class="chk" id="chk4"></div>
+        What a free-body force diagram is
+      </li>
+    </ul>
+  </div>
+
+  <!-- BIG IDEA -->
+  <div class="card">
+    <h2><span class="ico">💡</span> The Big Idea</h2>
+    <div class="statement-box">
+      <p>Wherever you are, at least <strong>two forces</strong> act on you — gravity pulling you down, and a surface pushing you up. The <strong>resultant force</strong> is the single force that has the same effect as all of them combined.</p>
+    </div>
+    <div class="big-idea-grid" style="margin-top:16px;">
+      <div class="big-idea-tile tile-blue">
+        <span class="tile-ico">🔢</span>
+        <div class="tile-label">Resultant Force</div>
+        <p>One force replacing all others with identical effect</p>
+      </div>
+      <div class="big-idea-tile tile-green">
+        <span class="tile-ico">⚖️</span>
+        <div class="tile-label">Balanced</div>
+        <p>Resultant = 0 N → object stays still or moves at constant speed</p>
+      </div>
+      <div class="big-idea-tile tile-orange">
+        <span class="tile-ico">🚀</span>
+        <div class="tile-label">Unbalanced</div>
+        <p>Resultant ≠ 0 N → speed or direction changes</p>
+      </div>
+      <div class="big-idea-tile tile-purple">
+        <span class="tile-ico">📐</span>
+        <div class="tile-label">Free-body Diagram</div>
+        <p>Shows all forces on one object as arrows (vectors)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BALANCED FORCES -->
+  <div class="card">
+    <h2><span class="ico">⚖️</span> Balanced Forces</h2>
+    <div class="key-fact">
+      <div class="kf-label">Newton's First Law of Motion</div>
+      If the forces on an object are balanced (resultant = 0 N), the object either stays at rest OR keeps moving at the same speed in the same direction.
+    </div>
+    <div class="compare" style="margin-top:14px;">
+      <div class="compare-col col-green">
+        <h4>✅ Object at rest</h4>
+        <ul>
+          <li>→ It <strong>stays stationary</strong></li>
+          <li>→ Forces cancel perfectly</li>
+          <li>→ e.g. book on a table</li>
+        </ul>
+      </div>
+      <div class="compare-col col-orange">
+        <h4>🔄 Object in motion</h4>
+        <ul>
+          <li>→ Keeps moving at <strong>same speed</strong></li>
+          <li>→ Same direction maintained</li>
+          <li>→ e.g. glider on air track</li>
+        </ul>
+      </div>
+    </div>
+    <div class="strip strip-green" style="margin-top:14px;">
+      <span class="strip-ico">🛸</span>
+      <div><strong>Air track glider example:</strong> The air track removes friction. With no unbalanced force, the glider floats along at constant speed — Newton's 1st Law in action.</div>
+    </div>
+    <div class="strip strip-orange">
+      <span class="strip-ico">📦</span>
+      <div><strong>Crate on rough floor:</strong> Pushed at constant speed → push force = friction force. Resultant = 0 N, so it doesn't accelerate.</div>
+    </div>
+  </div>
+
+  <!-- UNBALANCED FORCES -->
+  <div class="card">
+    <h2><span class="ico">🚀</span> Unbalanced Forces</h2>
+    <p style="font-size:15px;font-weight:600;color:var(--muted);margin-bottom:14px;">When resultant force ≠ 0, the object accelerates (speeds up, slows down, or changes direction).</p>
+    <div class="key-fact">
+      <div class="kf-label">Two forces in opposite directions</div>
+      Resultant = difference between the two forces, acting in the direction of the larger force
+    </div>
+    <div class="flow" style="margin-top:16px;">
+      <div class="flow-step">Thrust force<br>on jet</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">Greater than<br>air resistance</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">Resultant force<br>> 0 (forward)</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">Plane<br>accelerates</div>
+    </div>
+    <div class="strip strip-red" style="margin-top:14px;">
+      <span class="strip-ico">🛑</span>
+      <div><strong>Car braking:</strong> Braking force > engine force. Resultant acts opposite to direction of travel → car slows down.</div>
+    </div>
+    <div style="margin-top:14px;padding:16px;background:#f0f8ff;border-radius:14px;border:2px solid var(--line);">
+      <div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;">📊 Tug of war example</div>
+      <p style="font-size:14px;font-weight:600;color:var(--muted);">Team A pulls with <strong style="color:var(--ink)">1000 N</strong> ← · → Team B pulls with <strong style="color:var(--ink)">800 N</strong></p>
+      <p style="font-size:15px;font-weight:800;color:var(--accent-dark);margin-top:8px;">Resultant = 1000 − 800 = <span style="font-size:18px;">200 N</span> in Team A's direction</p>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE DEMO -->
+  <div class="card">
+    <h2><span class="ico">🎮</span> Interactive Force Calculator</h2>
+    <p style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:10px;">Drag the sliders to change the forces and see the resultant!</p>
+    <div class="demo-box">
+      <h3>Two forces acting along the same line</h3>
+      <div class="force-controls">
+        <div class="force-ctrl">
+          <label>⬅️ Force A (left)</label>
+          <input type="range" id="forceA" min="0" max="500" value="200">
+          <div class="val" id="valA">200 N</div>
+        </div>
+        <div class="force-ctrl">
+          <label>Force B (right) ➡️</label>
+          <input type="range" id="forceB" min="0" max="500" value="200">
+          <div class="val" id="valB">200 N</div>
+        </div>
+      </div>
+      <canvas id="forceCanvas" width="520" height="120"></canvas>
+      <div class="resultant-label" id="resultantLabel">⚖️ Balanced — Resultant = 0 N</div>
+    </div>
+  </div>
+
+  <!-- FREE-BODY DIAGRAMS -->
+  <div class="card">
+    <h2><span class="ico">📐</span> Free-body Force Diagrams</h2>
+    <div class="key-fact">
+      <div class="kf-label">Definition</div>
+      A free-body diagram shows ALL forces acting on ONE object only, with each force shown as a vector arrow pointing in the direction of the force.
+    </div>
+    <div class="strip strip-green" style="margin-top:12px;">
+      <span class="strip-ico">✅</span>
+      <div><strong>IS a free-body diagram:</strong> A single car with arrows for engine force, braking force, weight, and road support — all on that car alone.</div>
+    </div>
+    <div class="strip strip-red">
+      <span class="strip-ico">❌</span>
+      <div><strong>NOT a free-body diagram:</strong> A tug-of-war scene showing two teams — it shows forces on more than one object.</div>
+    </div>
+    <div class="strip strip-purple">
+      <span class="strip-ico">📏</span>
+      <div><strong>Vectors matter:</strong> Arrow length represents force magnitude. Always draw arrows from the object, pointing in the direction of the force.</div>
+    </div>
+  </div>
+
+  <!-- CALCULATING RESULTANT -->
+  <div class="card">
+    <h2><span class="ico">🧮</span> Calculating the Resultant Force</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;">
+      <div style="background:var(--green2);border:2px solid #a5d6a7;border-radius:16px;padding:18px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">➡️➡️</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:700;color:#1b5e20;font-size:13px;margin-bottom:8px;">SAME DIRECTION</div>
+        <div style="font-size:18px;font-weight:800;color:#1b5e20;">F = A + B</div>
+        <div style="font-size:13px;font-weight:600;color:#2e7d32;margin-top:6px;">Add the forces<br>Direction stays the same</div>
+      </div>
+      <div style="background:var(--orange2);border:2px solid #ffcc80;border-radius:16px;padding:18px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">⬅️➡️</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:700;color:#7f4000;font-size:13px;margin-bottom:8px;">OPPOSITE DIRECTIONS</div>
+        <div style="font-size:18px;font-weight:800;color:#7f4000;">F = A − B</div>
+        <div style="font-size:13px;font-weight:600;color:#e65100;margin-top:6px;">Subtract the smaller<br>Direction = larger force</div>
+      </div>
+    </div>
+    <div class="exam-tip" style="margin-top:16px;">
+      <div class="et-icon">📌</div>
+      <div class="et-body">
+        <h4>Worked Example</h4>
+        <p>Two forces act on an object in opposite directions: <strong>A = 5 N</strong> and <strong>B = 9 N</strong>.<br>
+        Resultant = 9 − 5 = <strong>4 N in the direction of B</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM TIP -->
+  <div class="card">
+    <h2><span class="ico">⚡</span> Common Exam Traps</h2>
+    <div class="exam-tip">
+      <div class="et-icon">⚠️</div>
+      <div class="et-body">
+        <h4>Study Tip — Don't Fall for This!</h4>
+        <p>A common error: if the resultant force on an object is zero, it <strong>doesn't mean</strong> it must be stationary. It could be travelling at <strong>constant speed in a straight line</strong>. Zero resultant = no change in motion.</p>
+      </div>
+    </div>
+    <div class="strip strip-red" style="margin-top:12px;">
+      <span class="strip-ico">❌</span>
+      <div><strong>Wrong:</strong> "The object is stationary because the forces are balanced."</div>
+    </div>
+    <div class="strip strip-green">
+      <span class="strip-ico">✅</span>
+      <div><strong>Correct:</strong> "The object is either stationary or moving at constant velocity because the resultant force is zero."</div>
+    </div>
+    <div class="strip strip-orange" style="margin-top:2px;">
+      <span class="strip-ico">🖊️</span>
+      <div><strong>Scale diagrams:</strong> In vector scale diagrams, use a ruler and protractor. State the scale clearly. Arrow length = force magnitude.</div>
+    </div>
+  </div>
+
+  <!-- GLOSSARY -->
+  <div class="card">
+    <h2><span class="ico">📖</span> Key Terms Glossary</h2>
+    <div class="glossary">
+      <div class="gloss-pill gp-blue">
+        <div class="term">Resultant Force</div>
+        <div class="def">The single force that has the same effect as all forces acting on an object combined.</div>
+      </div>
+      <div class="gloss-pill gp-green">
+        <div class="term">Balanced Forces</div>
+        <div class="def">When the resultant force on an object is zero — it doesn't change its motion.</div>
+      </div>
+      <div class="gloss-pill gp-orange">
+        <div class="term">Unbalanced Forces</div>
+        <div class="def">When the resultant force is not zero — the object accelerates (changes speed or direction).</div>
+      </div>
+      <div class="gloss-pill gp-red">
+        <div class="term">Newton's First Law</div>
+        <div class="def">An object stays at rest or at constant velocity unless acted on by an unbalanced force.</div>
+      </div>
+      <div class="gloss-pill gp-purple">
+        <div class="term">Free-body Diagram</div>
+        <div class="def">A diagram showing all forces acting on ONE object as vector arrows.</div>
+      </div>
+      <div class="gloss-pill gp-blue">
+        <div class="term">Vector</div>
+        <div class="def">A quantity with both magnitude and direction, shown as an arrow.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY POINTS SUMMARY -->
+  <div class="card">
+    <h2><span class="ico">🏆</span> Key Points Summary</h2>
+    <div class="strip strip-green">
+      <span class="strip-ico">1️⃣</span>
+      <div>The resultant force is a <strong>single force</strong> that has the same effect as all the forces acting on an object.</div>
+    </div>
+    <div class="strip strip-orange">
+      <span class="strip-ico">2️⃣</span>
+      <div>If resultant = 0 N → object stays at <strong>rest or constant speed/direction</strong>.</div>
+    </div>
+    <div class="strip strip-red">
+      <span class="strip-ico">3️⃣</span>
+      <div>If resultant > 0 N → <strong>speed or direction changes</strong> (acceleration).</div>
+    </div>
+    <div class="strip strip-purple">
+      <span class="strip-ico">4️⃣</span>
+      <div>Same direction → <strong>add</strong> the forces. Opposite directions → <strong>subtract</strong>, direction = larger force.</div>
+    </div>
+    <div class="strip strip-green" style="margin-top:2px;">
+      <span class="strip-ico">5️⃣</span>
+      <div>A <strong>free-body force diagram</strong> shows forces on ONE object as vector arrows.</div>
+    </div>
+  </div>
+
+  <!-- MARK AS READ -->
+  <div class="card" style="text-align:center;">
+    <h2 style="justify-content:center;margin-bottom:6px;"><span class="ico">✅</span> Done revising?</h2>
+    <p style="color:var(--muted);font-size:14px;font-weight:600;margin-bottom:20px;">Mark this page as read to track your progress</p>
+    <button class="mark-btn" id="markBtn" onclick="markAsRead()">Mark as Read ✓</button>
+    <div class="mark-confirm" id="markConfirm"></div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h2>⚡ Ready to test yourself?</h2>
+    <p>Try the quick-check quiz on Resultant Forces</p>
+    <a href="physics-p8-3-quickcheck.html" class="quiz-btn">Start Quick Check →</a>
+  </div>
+
+</main>
+
+<script>
+  const STEM = 'physics-p8-3-revision';
+  const READ_KEY = STEM + '-read';
+  const TOTAL_OBJ = 5;
+
+  // ── CHECKLIST ──
+  function updateProgress() {
+    let done = 0;
+    document.querySelectorAll('#checklist li').forEach((li, i) => {
+      if (li.classList.contains('done')) done++;
+    });
+    const pct = Math.round((done / TOTAL_OBJ) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' / ' + TOTAL_OBJ;
+  }
+
+  document.querySelectorAll('#checklist li').forEach((li, i) => {
+    const key = li.dataset.key;
+    const chk = li.querySelector('.chk');
+    if (localStorage.getItem(key) === '1') {
+      li.classList.add('done');
+      chk.textContent = '✓';
+    }
+    li.addEventListener('click', () => {
+      if (li.classList.contains('done')) {
+        li.classList.remove('done');
+        chk.textContent = '';
+        localStorage.removeItem(key);
+      } else {
+        li.classList.add('done');
+        chk.textContent = '✓';
+        localStorage.setItem(key, '1');
+      }
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // ── MARK AS READ ──
+  const markBtn = document.getElementById('markBtn');
+  const markConfirm = document.getElementById('markConfirm');
+
+  if (localStorage.getItem(READ_KEY) === '1') {
+    markBtn.classList.add('marked');
+    markBtn.textContent = '✓ Marked as Read';
+    markConfirm.textContent = '📸 Show this to mum!';
+  }
+
+  function markAsRead() {
+    localStorage.setItem(READ_KEY, '1');
+    markBtn.classList.add('marked');
+    markBtn.textContent = '✓ Marked as Read';
+    markConfirm.textContent = '📸 Show this to mum!';
+  }
+
+  // ── FORCE CANVAS DEMO ──
+  const canvas = document.getElementById('forceCanvas');
+  const ctx = canvas.getContext('2d');
+  const sliderA = document.getElementById('forceA');
+  const sliderB = document.getElementById('forceB');
+  const valA = document.getElementById('valA');
+  const valB = document.getElementById('valB');
+  const resultantLabel = document.getElementById('resultantLabel');
+
+  function drawForces() {
+    const A = parseInt(sliderA.value);
+    const B = parseInt(sliderB.value);
+    valA.textContent = A + ' N';
+    valB.textContent = B + ' N';
+
+    const W = canvas.width;
+    const H = canvas.height;
+    const CX = W / 2;
+    const CY = H / 2;
+    const MAX_LEN = 200;
+    const scale = MAX_LEN / 500;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Object
+    ctx.fillStyle = '#1a3a7a';
+    ctx.beginPath();
+    ctx.roundRect(CX - 24, CY - 24, 48, 48, 10);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '20px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('📦', CX, CY);
+
+    // Arrow helper
+    function drawArrow(fromX, fromY, toX, toY, color, label, labelRight) {
+      if (fromX === toX && fromY === toY) return;
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(fromX, fromY);
+      ctx.lineTo(toX, toY);
+      ctx.stroke();
+      // Arrowhead
+      const angle = Math.atan2(toY - fromY, toX - fromX);
+      ctx.beginPath();
+      ctx.moveTo(toX, toY);
+      ctx.lineTo(toX - 12 * Math.cos(angle - 0.4), toY - 12 * Math.sin(angle - 0.4));
+      ctx.lineTo(toX - 12 * Math.cos(angle + 0.4), toY - 12 * Math.sin(angle + 0.4));
+      ctx.closePath();
+      ctx.fill();
+      // Label
+      ctx.fillStyle = color;
+      ctx.font = 'bold 13px Nunito, sans-serif';
+      ctx.textAlign = labelRight ? 'right' : 'left';
+      ctx.fillText(label, labelRight ? fromX - 8 : fromX + 8, fromY - 16);
+    }
+
+    if (A > 0) drawArrow(CX - 28, CY, CX - 28 - A * scale, CY, '#e53935', 'A: ' + A + 'N', true);
+    if (B > 0) drawArrow(CX + 28, CY, CX + 28 + B * scale, CY, '#1565c0', 'B: ' + B + 'N', false);
+
+    // Resultant
+    const diff = B - A;
+    const absR = Math.abs(diff);
+    if (diff === 0) {
+      resultantLabel.textContent = '⚖️ Balanced — Resultant = 0 N';
+      resultantLabel.style.color = '#43a047';
+    } else {
+      const dir = diff > 0 ? 'right (→)' : 'left (←)';
+      resultantLabel.textContent = `⚡ Resultant = ${absR} N · direction: ${dir}`;
+      resultantLabel.style.color = '#1565c0';
+      // Draw resultant below object
+      const rStart = CX;
+      const rEnd = CX + diff * scale;
+      drawArrow(rStart, CY + 46, rEnd, CY + 46, '#7b1fa2', 'Resultant', false);
+    }
+  }
+
+  sliderA.addEventListener('input', drawForces);
+  sliderB.addEventListener('input', drawForces);
+  drawForces();
+</script>
+
+</body>
+</html>

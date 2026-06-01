@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8.6 Resolution of Forces – Physics Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d1b2a;
+    --muted: #546e8a;
+    --paper: #ffffff;
+    --line: #c8dff0;
+    --accent: #64b5f6;
+    --accent-dark: #1565c0;
+    --navy: #0d2b5e;
+    --navy2: #1a3a72;
+    --red: #ef5350;
+    --red2: #fde8e8;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7c3aed;
+    --dark: #0a1929;
+    --yellow: #ffd600;
+    --card-border: #b3d4ef;
+    --hero-grad: linear-gradient(135deg, #0d2b5e 0%, #1565c0 50%, #0d47a1 100%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.3);
+  }
+  nav a {
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all .2s;
+  }
+  nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+  nav a.home { color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,.3); font-size: 12px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--hero-grad);
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(100,181,246,.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(100,181,246,.12) 0%, transparent 50%);
+  }
+  .hero-float {
+    font-size: 72px;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,.3));
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-14px) rotate(3deg); }
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(100,181,246,.22);
+    border: 1.5px solid rgba(100,181,246,.5);
+    color: var(--accent);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    color: #fff;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 10px 0 16px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 16px rgba(0,0,0,.25);
+  }
+  .hero-kicker {
+    color: rgba(255,255,255,.75);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags span {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    color: rgba(255,255,255,.9);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: .4px;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    border: 2px solid var(--card-border);
+    box-shadow: 0 2px 12px rgba(13,43,94,.07);
+  }
+  .score-bar .label { font-weight: 700; color: var(--muted); font-size: 13px; flex-shrink: 0; }
+  .progress-track {
+    flex: 1;
+    height: 10px;
+    background: var(--line);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+    border-radius: 99px;
+    transition: width .5s ease;
+  }
+  .score-val { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--navy); font-size: 14px; flex-shrink: 0; }
+
+  /* ── SECTION HEADERS ── */
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 2px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(13,43,94,.06);
+  }
+  .card h2 {
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: 16px;
+    color: var(--navy2);
+    margin: 18px 0 8px;
+  }
+  .card p { color: var(--ink); margin-bottom: 10px; }
+  .card ul { padding-left: 20px; }
+  .card ul li { margin-bottom: 6px; color: var(--ink); }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .big-idea {
+    background: linear-gradient(135deg, #e3f0fb, #d0e8f7);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .big-idea .icon { font-size: 32px; display: block; margin-bottom: 8px; }
+  .big-idea .label { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); }
+
+  /* ── KEY FACT ── */
+  .key-fact {
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+    border-left: 6px solid var(--yellow);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+  .key-fact .kf-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 6px;
+  }
+  .key-fact p { color: rgba(255,255,255,.92); margin: 0; font-weight: 600; }
+
+  /* ── HIGHLIGHT STRIPS ── */
+  .strip {
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .strip.green { background: var(--green2); border-left: 5px solid var(--green); color: #1b5e20; }
+  .strip.orange { background: var(--orange2); border-left: 5px solid var(--orange); color: #4a2700; }
+  .strip.red { background: var(--red2); border-left: 5px solid var(--red); color: #7f1010; }
+  .strip .strip-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── STATEMENT BOX ── */
+  .statement {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 20px 24px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .statement .eq { font-family: 'Poppins', sans-serif; font-size: 22px; color: var(--accent); margin-top: 8px; display: block; }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border: 2px solid #f9a825;
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+  .exam-tip .et-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #e65100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .exam-tip p { color: #4e2000; font-weight: 600; margin: 0; }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .compare-col {
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 2px solid transparent;
+  }
+  .compare-col.left { background: #e8f5e9; border-color: var(--green); }
+  .compare-col.right { background: #fde8e8; border-color: var(--red); }
+  .compare-col h4 { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .compare-col.left h4 { color: #1b5e20; }
+  .compare-col.right h4 { color: #7f1010; }
+  .compare-col ul { padding-left: 16px; font-size: 14px; font-weight: 600; }
+  .compare-col.left li { color: #1b5e20; }
+  .compare-col.right li { color: #7f1010; }
+
+  /* ── FLOW ARROWS ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flow-step {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 120px;
+  }
+  .flow-arrow { color: var(--accent); font-size: 22px; padding: 0 8px; }
+
+  /* ── GLOSSARY PILLS ── */
+  .glossary-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill {
+    border-radius: 99px;
+    padding: 7px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 2px solid transparent;
+    cursor: default;
+    transition: transform .15s;
+  }
+  .pill:hover { transform: scale(1.05); }
+  .pill.blue { background: #dbeafe; color: #1e3a8a; border-color: #93c5fd; }
+  .pill.green { background: var(--green2); color: #14532d; border-color: #86efac; }
+  .pill.orange { background: var(--orange2); color: #7c2d12; border-color: #fdba74; }
+  .pill.red { background: var(--red2); color: #7f1010; border-color: #fca5a5; }
+  .pill.purple { background: #ede9fe; color: #4c1d95; border-color: #c4b5fd; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: background .15s;
+    border-radius: 8px;
+    padding-left: 4px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li:hover { background: rgba(100,181,246,.08); }
+  .check-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    border: 2.5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all .2s;
+    font-size: 14px;
+  }
+  .checklist li.done .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .checklist li.done .check-label { text-decoration: line-through; color: var(--muted); }
+  .check-label { font-weight: 600; font-size: 15px; color: var(--ink); }
+
+  /* ── INTERACTIVE DEMO ── */
+  .demo-box {
+    background: linear-gradient(135deg, #0d2b5e, #1a3a72);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .demo-box h3 { color: var(--accent); font-size: 15px; margin-bottom: 16px; }
+  .demo-canvas {
+    width: 100%;
+    height: 220px;
+    background: rgba(0,0,0,.25);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .demo-controls label { color: rgba(255,255,255,.8); font-size: 13px; font-weight: 700; }
+  .demo-controls input[type=range] {
+    accent-color: var(--accent);
+    width: 140px;
+  }
+  .demo-output {
+    background: rgba(0,0,0,.3);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .demo-val { color: #fff; font-size: 14px; font-weight: 700; }
+  .demo-val span { color: var(--accent); }
+
+  /* ── MARK AS READ ── */
+  .mar-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 18px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 32px;
+    transition: all .2s;
+    box-shadow: 0 4px 20px rgba(21,101,192,.3);
+  }
+  .mar-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(21,101,192,.4); }
+  .mar-btn.done {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    box-shadow: 0 4px 20px rgba(46,125,50,.3);
+  }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--orange) 0%, #e65100 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 22px 32px;
+    text-decoration: none;
+    margin-top: 28px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 6px 24px rgba(251,140,0,.35);
+    transition: all .2s;
+  }
+  .quiz-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(251,140,0,.45); }
+
+  /* ── VECTOR DIAGRAM SVG CARD ── */
+  .vector-card {
+    background: #f0f7ff;
+    border: 2px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .vector-card svg { max-width: 100%; height: auto; }
+
+  /* ── WARNING ── */
+  .warning {
+    background: #fff8f0;
+    border: 2px solid var(--orange);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .warning p { margin: 0; color: #4a2700; font-weight: 600; font-size: 14px; }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+    .flow { gap: 4px; }
+    .flow-step { min-width: 90px; font-size: 12px; padding: 10px 12px; }
+    .hero { padding: 40px 20px 36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="home">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="#">Physics</a>
+  <span class="sep">›</span>
+  <a href="#">P8 Forces</a>
+  <span class="sep">›</span>
+  <a style="color:#fff;pointer-events:none">P8.6 Resolution</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-float">⚖️</div>
+  <div class="hero-badge">📘 Physics · Chapter P8.6 · Higher Tier</div>
+  <h1>Resolution of Forces</h1>
+  <p class="hero-kicker">Splitting forces into components · Equilibrium · Inclined planes</p>
+  <div class="hero-tags">
+    <span>🔬 Higher Tier</span>
+    <span>📐 Vectors</span>
+    <span>⚡ Forces &amp; Motion</span>
+    <span>📊 Graphical Methods</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PROGRESS BAR -->
+  <div class="score-bar">
+    <span class="label">Learning Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <span class="score-val" id="progressVal">0 / 5</span>
+  </div>
+
+  <!-- LEARNING OBJECTIVES -->
+  <div class="section-title">🎯 Learning Objectives</div>
+  <div class="card">
+    <h2>After this topic, you should know:</h2>
+    <ul class="checklist" id="checklist">
+      <li data-key="obj1" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-label">What is meant by the <strong>resolution</strong> of a force</span>
+      </li>
+      <li data-key="obj2" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-label">How to <strong>resolve a force</strong> into two perpendicular components</span>
+      </li>
+      <li data-key="obj3" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-label">The forces on an object <strong>in equilibrium</strong></span>
+      </li>
+      <li data-key="obj4" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-label">How to use a <strong>force diagram</strong> to work out equilibrium</span>
+      </li>
+      <li data-key="obj5" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-label">How to apply resolution to <strong>inclined planes</strong> (slopes)</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div class="section-title">💡 Big Ideas</div>
+  <div class="card">
+    <div class="big-idea-grid">
+      <div class="big-idea">
+        <span class="icon">➡️</span>
+        <div class="label">Force is a vector — it has magnitude AND direction</div>
+      </div>
+      <div class="big-idea">
+        <span class="icon">📐</span>
+        <div class="label">Any force can be split into two perpendicular parts</div>
+      </div>
+      <div class="big-idea">
+        <span class="icon">⚖️</span>
+        <div class="label">Equilibrium = zero resultant force in every direction</div>
+      </div>
+      <div class="big-idea">
+        <span class="icon">🏔️</span>
+        <div class="label">On slopes, resolve parallel and perpendicular to the surface</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT IS RESOLUTION -->
+  <div class="section-title">📖 What Is Resolution of Forces?</div>
+  <div class="card">
+    <p>A single force vector can be broken down (resolved) into <strong>two perpendicular components</strong>. This is the reverse of combining forces — instead of adding vectors, we split one into two.</p>
+
+    <div class="key-fact">
+      <div class="kf-label">⭐ Key Principle</div>
+      <p>To resolve a force <em>F</em> at angle θ from the horizontal: the <strong>horizontal component = F cos θ</strong> and the <strong>vertical component = F sin θ</strong>. The two components together have exactly the same effect as the original force.</p>
+    </div>
+
+    <h3>The Rectangle Method (OABC)</h3>
+    <p>Draw a rectangle around the force vector <strong>OB</strong>. The force vector lies along the diagonal. The two sides of the rectangle — <strong>OA</strong> (parallel to slope) and <strong>OC</strong> (perpendicular to slope) — are the two resolved components.</p>
+
+    <div class="vector-card">
+      <svg viewBox="0 0 380 210" xmlns="http://www.w3.org/2000/svg" font-family="Nunito,sans-serif">
+        <!-- slope background -->
+        <polygon points="30,180 350,180 350,60" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+        <text x="310" y="178" fill="#1565c0" font-size="12" font-weight="700">slope</text>
+
+        <!-- box -->
+        <rect x="155" y="65" width="32" height="22" rx="4" fill="#64b5f6" stroke="#1565c0" stroke-width="1.5"/>
+        <text x="165" y="80" fill="#0d2b5e" font-size="10" font-weight="800">box</text>
+
+        <!-- weight vector OB -->
+        <line x1="171" y1="87" x2="171" y2="165" stroke="#e53935" stroke-width="3" marker-end="url(#arrowR)"/>
+        <text x="175" y="140" fill="#e53935" font-size="12" font-weight="700">W (weight)</text>
+
+        <!-- parallel component OA -->
+        <line x1="171" y1="87" x2="245" y2="147" stroke="#1565c0" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrowB)"/>
+        <text x="218" y="108" fill="#1565c0" font-size="11" font-weight="700">parallel ‖</text>
+
+        <!-- perp component -->
+        <line x1="171" y1="165" x2="245" y2="147" stroke="#43a047" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrowG)"/>
+        <text x="205" y="172" fill="#43a047" font-size="11" font-weight="700">perpendicular ⊥</text>
+
+        <!-- labels -->
+        <text x="145" y="90" fill="#0d2b5e" font-size="11" font-weight="700">O</text>
+        <text x="245" y="145" fill="#0d2b5e" font-size="11" font-weight="700">B</text>
+        <text x="155" y="175" fill="#0d2b5e" font-size="11" font-weight="700">C</text>
+
+        <defs>
+          <marker id="arrowR" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#e53935"/></marker>
+          <marker id="arrowB" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1565c0"/></marker>
+          <marker id="arrowG" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#43a047"/></marker>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="strip green">
+      <span class="strip-icon">✅</span>
+      <span>The <strong>parallel component</strong> (down the slope) = the force causing the object to slide. Friction must equal this to keep the object still.</span>
+    </div>
+    <div class="strip orange">
+      <span class="strip-icon">🔶</span>
+      <span>The <strong>perpendicular component</strong> (into the slope) = the contact/normal force pressing the object into the surface.</span>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE DEMO -->
+  <div class="section-title">🧪 Interactive: Force Resolution</div>
+  <div class="demo-box">
+    <h3>🎛️ Adjust force magnitude and angle to see the components change</h3>
+    <canvas class="demo-canvas" id="forceCanvas" width="800" height="220"></canvas>
+    <div class="demo-controls">
+      <div>
+        <label>Force (N): <strong id="fLabel">50</strong></label><br>
+        <input type="range" id="fSlider" min="10" max="100" value="50">
+      </div>
+      <div>
+        <label>Angle θ (°): <strong id="aLabel">30</strong></label><br>
+        <input type="range" id="aSlider" min="5" max="85" value="30">
+      </div>
+    </div>
+    <div class="demo-output">
+      <div class="demo-val">Horizontal: <span id="hComp">43.3 N</span></div>
+      <div class="demo-val">Vertical: <span id="vComp">25.0 N</span></div>
+    </div>
+  </div>
+
+  <!-- INCLINED PLANES -->
+  <div class="section-title">🏔️ Forces on an Inclined Plane</div>
+  <div class="card">
+    <p>When an object sits on a slope, the weight acts <strong>straight down</strong>. We resolve it into two components relative to the slope:</p>
+
+    <div class="statement">
+      Weight parallel to slope = W sin θ &nbsp;|&nbsp; Weight perpendicular to slope = W cos θ
+      <span class="eq">Normal reaction N = W cos θ</span>
+    </div>
+
+    <h3>Worked Example — Car on a Hill</h3>
+    <p>A car of weight <strong>12 kN</strong> is parked on a road inclined at <strong>10°</strong> to the horizontal.</p>
+
+    <div class="flow">
+      <div class="flow-step">Weight = 12 kN downward</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">Ratio: small side to diagonal = 1 : 6.0</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">Parallel = 12/6 = <strong>2.0 kN</strong></div>
+    </div>
+
+    <div class="strip green">
+      <span class="strip-icon">✅</span>
+      <span>The <strong>frictional force</strong> from the road acts <em>up</em> the slope and equals the parallel component: <strong>2.0 kN up the slope</strong>.</span>
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-label">📝 Exam Tip</div>
+      <p>Always draw a clear diagram first. Label W downward, then draw the rectangle. The diagonal IS the weight vector. The sides ARE the components. Use this ratio method or trigonometry (sin/cos) — both are valid. Show your working clearly for full marks.</p>
+    </div>
+  </div>
+
+  <!-- EQUILIBRIUM -->
+  <div class="section-title">⚖️ Equilibrium</div>
+  <div class="card">
+    <h2>Conditions for Equilibrium</h2>
+    <p>An object at rest (or moving at constant velocity) is in <strong>equilibrium</strong>. Two conditions must be met:</p>
+
+    <div class="key-fact">
+      <div class="kf-label">⭐ Key Conditions</div>
+      <p>1. The <strong>resultant force</strong> on the object is zero.<br>
+      2. The forces acting on the object have <strong>no overall turning effect</strong> (moments balance).</p>
+    </div>
+
+    <h3>How to Check for Equilibrium</h3>
+    <div class="compare">
+      <div class="compare-col left">
+        <h4>✅ Parallel forces</h4>
+        <ul>
+          <li>Sum all forces in one direction</li>
+          <li>Sum all forces in the opposite direction</li>
+          <li>If equal → resultant = 0 → equilibrium ✓</li>
+        </ul>
+      </div>
+      <div class="compare-col right">
+        <h4>🔀 Non-parallel forces</h4>
+        <ul>
+          <li>Resolve ALL forces along two perpendicular axes</li>
+          <li>Components along each axis must sum to zero</li>
+          <li>Otherwise not in equilibrium ✗</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="strip red">
+      <span class="strip-icon">🚨</span>
+      <span>Common mistake: thinking "the forces look balanced" from the diagram. Always resolve — non-parallel forces can still produce a resultant if components don't cancel!</span>
+    </div>
+
+    <h3>Example — Aircraft in Level Flight</h3>
+    <p>An aircraft travels east at constant speed. A wind force of <strong>800 N</strong> acts at <strong>30° to the line of flight</strong>.</p>
+    <div class="flow">
+      <div class="flow-step">Resolve 800 N at 30°</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">Along flight = 800 cos 30° ≈ 693 N</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">Perpendicular = 800 sin 30° = 400 N</div>
+    </div>
+    <p style="margin-top:10px">The component <strong>along the direction of motion = 800 cos 30° ≈ 693 N</strong>.</p>
+  </div>
+
+  <!-- KEY POINTS -->
+  <div class="section-title">🔑 Key Points Summary</div>
+  <div class="card">
+    <div class="key-fact">
+      <div class="kf-label">📌 Resolution</div>
+      <p>Resolving a force means finding perpendicular components whose resultant equals the original force.</p>
+    </div>
+    <div class="key-fact">
+      <div class="kf-label">📌 Two Components</div>
+      <p>To resolve in two perpendicular directions, draw a rectangle with adjacent sides along those directions — the diagonal represents the force vector.</p>
+    </div>
+    <div class="key-fact">
+      <div class="kf-label">📌 Equilibrium Rule</div>
+      <p>For equilibrium: resultant force = zero. An object at rest is in equilibrium because the resultant force on it is zero.</p>
+    </div>
+  </div>
+
+  <!-- WARNING -->
+  <div class="section-title">⚠️ Watch Out!</div>
+  <div class="card">
+    <div class="warning">
+      <span style="font-size:20px;flex-shrink:0">⚠️</span>
+      <p>On a slope, the angle θ in the formula (W sin θ, W cos θ) is the angle between the slope and the <strong>horizontal</strong> — not the angle from vertical. Sketch the right-angle triangle carefully to avoid confusion.</p>
+    </div>
+    <div class="warning">
+      <span style="font-size:20px;flex-shrink:0">⚠️</span>
+      <p>The <strong>normal reaction</strong> is always perpendicular to the surface (not vertical), so on a slope N = W cos θ, not W.</p>
+    </div>
+  </div>
+
+  <!-- GLOSSARY -->
+  <div class="section-title">📚 Keywords</div>
+  <div class="card">
+    <div class="glossary-grid">
+      <span class="pill blue">Resolution</span>
+      <span class="pill blue">Force vector</span>
+      <span class="pill blue">Component</span>
+      <span class="pill green">Parallel component</span>
+      <span class="pill green">Perpendicular component</span>
+      <span class="pill orange">Equilibrium</span>
+      <span class="pill orange">Resultant force</span>
+      <span class="pill red">Inclined plane</span>
+      <span class="pill red">Normal reaction</span>
+      <span class="pill purple">Friction</span>
+      <span class="pill purple">Weight (W)</span>
+      <span class="pill blue">θ (theta)</span>
+    </div>
+  </div>
+
+  <!-- QUICK CHECK QUESTIONS -->
+  <div class="section-title">🧮 Quick Practice</div>
+  <div class="card">
+    <h2>Try These Before the Quiz</h2>
+    <h3>1. A trolley of weight 510 N is pushed up a slope at 15°.</h3>
+    <ul>
+      <li><strong>a)</strong> Component of weight down the slope = 510 × sin 15° = <em>132 N</em></li>
+      <li><strong>b)</strong> The student's push is greater because they also have to overcome friction.</li>
+    </ul>
+    <h3>2. A box of weight 50 N sits on a slope at 30°.</h3>
+    <ul>
+      <li><strong>a)</strong> Parallel = 50 sin 30° = <em>25 N</em> down slope; Perpendicular = 50 cos 30° ≈ <em>43.3 N</em> into slope</li>
+      <li><strong>b)</strong> Friction = 25 N up the slope (if stationary).</li>
+    </ul>
+    <div class="exam-tip" style="margin-top:18px">
+      <div class="et-label">💡 Remember</div>
+      <p>A ladder against a wall slides if friction is insufficient to provide a force equal to the parallel component of weight. Too slippery = friction force &lt; parallel component of weight.</p>
+    </div>
+  </div>
+
+  <!-- MARK AS READ -->
+  <button class="mar-btn" id="marBtn" onclick="markAsRead()">
+    ✅ Mark P8.6 as Read
+  </button>
+
+  <!-- QUIZ CTA -->
+  <a href="physics-p8-6-quickcheck.html" class="quiz-cta">
+    ⚡ Take the Quick Check Quiz →
+  </a>
+
+</div>
+
+<script>
+  const STEM = 'physics-p8-6';
+  const READ_KEY = STEM + '-read';
+
+  // ── checklist ──
+  function toggleCheck(li) {
+    li.classList.toggle('done');
+    const key = 'check-' + STEM + '-' + li.dataset.key;
+    localStorage.setItem(key, li.classList.contains('done') ? '1' : '0');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('#checklist li');
+    const done = [...items].filter(l => l.classList.contains('done')).length;
+    const pct = Math.round((done / items.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressVal').textContent = done + ' / ' + items.length;
+  }
+
+  function loadChecklist() {
+    document.querySelectorAll('#checklist li').forEach(li => {
+      const key = 'check-' + STEM + '-' + li.dataset.key;
+      if (localStorage.getItem(key) === '1') li.classList.add('done');
+    });
+    updateProgress();
+  }
+
+  // ── mark as read ──
+  function markAsRead() {
+    localStorage.setItem(READ_KEY, '1');
+    const btn = document.getElementById('marBtn');
+    btn.textContent = '🎉 Done! Show this to mum ✅';
+    btn.classList.add('done');
+  }
+
+  function loadReadState() {
+    if (localStorage.getItem(READ_KEY) === '1') {
+      const btn = document.getElementById('marBtn');
+      btn.textContent = '🎉 Done! Show this to mum ✅';
+      btn.classList.add('done');
+    }
+  }
+
+  // ── interactive force demo ──
+  const canvas = document.getElementById('forceCanvas');
+  const ctx = canvas.getContext('2d');
+  const fSlider = document.getElementById('fSlider');
+  const aSlider = document.getElementById('aSlider');
+
+  function drawForce() {
+    const F = +fSlider.value;
+    const theta = +aSlider.value;
+    const rad = theta * Math.PI / 180;
+    const Fx = F * Math.cos(rad);
+    const Fy = F * Math.sin(rad);
+
+    document.getElementById('fLabel').textContent = F;
+    document.getElementById('aLabel').textContent = theta;
+    document.getElementById('hComp').textContent = Fx.toFixed(1) + ' N';
+    document.getElementById('vComp').textContent = Fy.toFixed(1) + ' N';
+
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // background
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.fillRect(0, 0, W, H);
+
+    const ox = W * 0.2, oy = H * 0.65;
+    const scale = (H * 0.5) / 100;
+    const len = F * scale;
+    const ex = ox + len * Math.cos(rad);
+    const ey = oy - len * Math.sin(rad);
+
+    function arrow(x1, y1, x2, y2, color, dash) {
+      ctx.beginPath();
+      if (dash) ctx.setLineDash([8, 4]);
+      else ctx.setLineDash([]);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      ctx.fillStyle = color;
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - 14 * Math.cos(angle - 0.35), y2 - 14 * Math.sin(angle - 0.35));
+      ctx.lineTo(x2 - 14 * Math.cos(angle + 0.35), y2 - 14 * Math.sin(angle + 0.35));
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // horizontal component
+    arrow(ox, oy, ox + len * Math.cos(rad), oy, '#64b5f6', true);
+    // vertical component
+    arrow(ox + len * Math.cos(rad), oy, ox + len * Math.cos(rad), oy - len * Math.sin(rad), '#81c784', true);
+    // main force vector
+    arrow(ox, oy, ex, ey, '#ffcc02', false);
+
+    // labels
+    ctx.font = 'bold 13px Nunito,sans-serif';
+    ctx.fillStyle = '#ffcc02';
+    ctx.fillText('F = ' + F + ' N', ex + 8, ey - 6);
+    ctx.fillStyle = '#64b5f6';
+    ctx.fillText('Fx = ' + Fx.toFixed(1) + ' N', ox + len * Math.cos(rad) / 2, oy + 20);
+    ctx.fillStyle = '#81c784';
+    ctx.fillText('Fy = ' + Fy.toFixed(1) + ' N', ox + len * Math.cos(rad) + 8, oy - len * Math.sin(rad) / 2);
+
+    // angle arc
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = '#ffcc0266';
+    ctx.lineWidth = 1.5;
+    ctx.arc(ox, oy, 30, -rad, 0);
+    ctx.stroke();
+    ctx.fillStyle = '#ffcc02aa';
+    ctx.font = '12px Nunito,sans-serif';
+    ctx.fillText('θ = ' + theta + '°', ox + 34, oy - 6);
+  }
+
+  fSlider.addEventListener('input', drawForce);
+  aSlider.addEventListener('input', drawForce);
+
+  // resize canvas for sharpness
+  function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * 2;
+    canvas.height = 220 * 2;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = '220px';
+    ctx.scale(2, 2);
+    drawForce();
+  }
+
+  loadChecklist();
+  loadReadState();
+  setTimeout(() => { resizeCanvas(); }, 100);
+  window.addEventListener('resize', resizeCanvas);
+</script>
+</body>
+</html>

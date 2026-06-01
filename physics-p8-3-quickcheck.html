@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8.3 Resultant Forces — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2744;
+    --muted: #5a6a8a;
+    --paper: #ffffff;
+    --line: #d0e8f8;
+    --card-border: #b8d8f0;
+    --accent: #64b5f6;
+    --accent-dark: #1565c0;
+    --navy: #0d2b5e;
+    --navy2: #1a3a7a;
+    --red: #e53935;
+    --red2: #fdecea;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 600; }
+  nav a:hover { color: #fff; }
+  nav .sep { color: rgba(255,255,255,0.35); font-size: 12px; }
+  nav .current { color: var(--accent); }
+
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, #1a4a8a 100%);
+    padding: 52px 24px 40px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(100,181,246,0.12) 0%, transparent 60%);
+  }
+  .floating-emoji { font-size: 48px; display: inline-block; animation: float 3s ease-in-out infinite; position: relative; z-index: 1; margin-bottom: 14px; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.2); border: 1.5px solid rgba(100,181,246,0.5);
+    color: var(--accent); font-family: 'Poppins', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 20px; margin-bottom: 12px; position: relative; z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif; font-size: clamp(22px,4vw,36px); font-weight: 800;
+    color: #fff; margin-bottom: 8px; position: relative; z-index: 1;
+  }
+  .hero-kicker { color: rgba(255,255,255,0.65); font-size: 15px; font-weight: 600; position: relative; z-index: 1; margin-bottom: 18px; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; position: relative; z-index: 1; }
+  .hero-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.85); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 14px; }
+
+  .score-bar {
+    background: var(--navy); padding: 12px 24px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
+  }
+  .score-bar span { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 700; }
+  .progress-track { flex: 1; max-width: 300px; height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #90caf9); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+  .score-label { color: var(--accent); font-size: 13px; font-weight: 800; }
+
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; display: flex; flex-direction: column; gap: 22px; }
+
+  .q-block {
+    background: var(--paper); border: 2px solid var(--card-border); border-radius: 24px;
+    padding: 26px 28px; box-shadow: 0 4px 20px rgba(21,101,192,0.07); transition: border-color 0.3s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong   { border-color: var(--red); }
+
+  .q-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .q-num { font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+  .q-type-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .badge-mcq { background: #e3f2fd; color: var(--accent-dark); }
+  .badge-tf  { background: var(--orange2); color: #7f4000; }
+
+  .q-text { font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: 18px; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 18px; border: 2px solid var(--line); border-radius: 14px;
+    cursor: pointer; font-weight: 600; font-size: 15px;
+    transition: all 0.18s; user-select: none; background: #fff;
+  }
+  .opt:hover:not(.locked) { border-color: var(--accent); background: #f0f8ff; }
+  .opt .opt-key {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--bg); border: 2px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 800;
+    flex-shrink: 0; transition: all 0.18s; color: var(--muted);
+  }
+  .opt.selected .opt-key { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+  .opt.selected { border-color: var(--accent-dark); background: #e3f2fd; }
+  .opt.correct-ans { border-color: var(--green) !important; background: var(--green2) !important; }
+  .opt.correct-ans .opt-key { background: var(--green); border-color: var(--green); color: #fff; }
+  .opt.wrong-ans { border-color: var(--red) !important; background: var(--red2) !important; }
+  .opt.wrong-ans .opt-key { background: var(--red); border-color: var(--red); color: #fff; }
+  .opt.locked { cursor: default; }
+
+  .tf-options { display: flex; gap: 12px; }
+  .tf-opt {
+    flex: 1; padding: 14px; border: 2px solid var(--line); border-radius: 14px;
+    text-align: center; cursor: pointer;
+    font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700;
+    transition: all 0.18s; background: #fff;
+  }
+  .tf-opt:hover:not(.locked) { border-color: var(--accent); background: #f0f8ff; }
+  .tf-opt.selected  { border-color: var(--accent-dark); background: #e3f2fd; color: var(--accent-dark); }
+  .tf-opt.correct-ans { border-color: var(--green) !important; background: var(--green2) !important; color: #1b5e20 !important; }
+  .tf-opt.wrong-ans   { border-color: var(--red)   !important; background: var(--red2)   !important; color: #7f0000 !important; }
+  .tf-opt.locked { cursor: default; }
+
+  .feedback { margin-top: 14px; padding: 13px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; display: none; line-height: 1.5; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); border-left: 4px solid var(--green); color: #1b5e20; }
+  .feedback.wrong   { background: var(--red2);   border-left: 4px solid var(--red);   color: #7f0000; }
+  .feedback .fb-head { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+
+  .result-box {
+    background: var(--paper); border: 2px solid var(--card-border); border-radius: 24px;
+    padding: 40px 30px; text-align: center;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.07); display: none;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 64px; margin-bottom: 14px; animation: pop 0.4s ease; }
+  @keyframes pop { 0%{transform:scale(0.5)} 80%{transform:scale(1.1)} 100%{transform:scale(1)} }
+  .result-box h2 { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+  .result-score { font-family: 'Poppins', sans-serif; font-size: 56px; font-weight: 800; color: var(--accent-dark); line-height: 1; margin: 12px 0; }
+  .result-score span { font-size: 26px; color: var(--muted); }
+  .result-msg { font-size: 16px; font-weight: 700; color: var(--muted); margin: 10px 0 6px; line-height: 1.5; }
+  .result-mum { font-size: 16px; font-weight: 800; color: var(--green); margin-bottom: 28px; }
+  .reset-btn {
+    display: inline-block; background: linear-gradient(135deg, var(--accent-dark), #1976d2);
+    color: white; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700;
+    padding: 14px 32px; border-radius: 14px; border: none; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(21,101,192,0.3); transition: all 0.2s; margin-right: 10px; margin-bottom: 10px;
+  }
+  .reset-btn:hover { transform: translateY(-2px); }
+  .rev-btn {
+    display: inline-block; background: var(--bg); color: var(--navy);
+    font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700;
+    padding: 14px 28px; border-radius: 14px; border: 2px solid var(--card-border);
+    text-decoration: none; transition: all 0.2s; margin-bottom: 10px;
+  }
+  .rev-btn:hover { border-color: var(--accent); background: #ddeeff; }
+
+  @media (max-width: 600px) {
+    .q-block { padding: 20px 18px; }
+    main { padding: 20px 14px 60px; }
+    .tf-options { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p8-3-revision.html">📖 P8.3 Revision</a>
+  <span class="sep">›</span>
+  <span class="current">Quick Check</span>
+</nav>
+
+<div class="hero">
+  <div class="floating-emoji">⚡</div>
+  <div class="chapter-badge">Physics · P8.3 Quiz</div>
+  <h1>Resultant Forces — Quick Check</h1>
+  <p class="hero-kicker">20 questions · MCQ + True / False</p>
+  <div class="hero-tags">
+    <span class="hero-tag">10 MCQ</span>
+    <span class="hero-tag">10 True / False</span>
+    <span class="hero-tag">Score out of 20</span>
+  </div>
+</div>
+
+<div class="score-bar">
+  <span>Answered</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="score-label" id="progressLabel">0 / 20</span>
+</div>
+
+<main id="quizMain">
+
+  <!-- Q1 MCQ -->
+  <div class="q-block" id="q1">
+    <div class="q-meta"><span class="q-num">Question 1</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">What is a resultant force?</div>
+    <div class="options">
+      <div class="opt" data-q="1" data-val="A"><div class="opt-key">A</div>The largest single force acting on an object</div>
+      <div class="opt" data-q="1" data-val="B"><div class="opt-key">B</div>A single force with the same effect as all the forces on an object combined</div>
+      <div class="opt" data-q="1" data-val="C"><div class="opt-key">C</div>The gravitational force acting on an object</div>
+      <div class="opt" data-q="1" data-val="D"><div class="opt-key">D</div>The average of all forces acting on an object</div>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- Q2 MCQ -->
+  <div class="q-block" id="q2">
+    <div class="q-meta"><span class="q-num">Question 2</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">Two forces act on an object in opposite directions: 9 N to the right and 5 N to the left. What is the resultant force?</div>
+    <div class="options">
+      <div class="opt" data-q="2" data-val="A"><div class="opt-key">A</div>14 N to the right</div>
+      <div class="opt" data-q="2" data-val="B"><div class="opt-key">B</div>4 N to the left</div>
+      <div class="opt" data-q="2" data-val="C"><div class="opt-key">C</div>4 N to the right</div>
+      <div class="opt" data-q="2" data-val="D"><div class="opt-key">D</div>14 N to the left</div>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- Q3 MCQ -->
+  <div class="q-block" id="q3">
+    <div class="q-meta"><span class="q-num">Question 3</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">A glider on a level air track moves at constant speed. According to Newton's First Law, what must be true about the forces on it?</div>
+    <div class="options">
+      <div class="opt" data-q="3" data-val="A"><div class="opt-key">A</div>There are no forces on the glider at all</div>
+      <div class="opt" data-q="3" data-val="B"><div class="opt-key">B</div>A thrust force is pushing it forward</div>
+      <div class="opt" data-q="3" data-val="C"><div class="opt-key">C</div>The forces are balanced — resultant force is zero</div>
+      <div class="opt" data-q="3" data-val="D"><div class="opt-key">D</div>The resultant force acts in the direction of motion</div>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- Q4 MCQ -->
+  <div class="q-block" id="q4">
+    <div class="q-meta"><span class="q-num">Question 4</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">In a tug-of-war, Team A pulls with 1000 N and Team B pulls with 800 N in the opposite direction. What is the resultant force?</div>
+    <div class="options">
+      <div class="opt" data-q="4" data-val="A"><div class="opt-key">A</div>1800 N in Team A's direction</div>
+      <div class="opt" data-q="4" data-val="B"><div class="opt-key">B</div>200 N in Team B's direction</div>
+      <div class="opt" data-q="4" data-val="C"><div class="opt-key">C</div>200 N in Team A's direction</div>
+      <div class="opt" data-q="4" data-val="D"><div class="opt-key">D</div>0 N — the forces cancel out</div>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- Q5 MCQ -->
+  <div class="q-block" id="q5">
+    <div class="q-meta"><span class="q-num">Question 5</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">A heavy crate is pushed across a rough floor at constant speed with a push force of 300 N. What is the friction force?</div>
+    <div class="options">
+      <div class="opt" data-q="5" data-val="A"><div class="opt-key">A</div>0 N</div>
+      <div class="opt" data-q="5" data-val="B"><div class="opt-key">B</div>Less than 300 N</div>
+      <div class="opt" data-q="5" data-val="C"><div class="opt-key">C</div>300 N</div>
+      <div class="opt" data-q="5" data-val="D"><div class="opt-key">D</div>Greater than 300 N</div>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <!-- Q6 MCQ -->
+  <div class="q-block" id="q6">
+    <div class="q-meta"><span class="q-num">Question 6</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">A jet taking off has a thrust of 80 000 N and an air resistance of 30 000 N. What is the resultant force on the jet?</div>
+    <div class="options">
+      <div class="opt" data-q="6" data-val="A"><div class="opt-key">A</div>110 000 N forward</div>
+      <div class="opt" data-q="6" data-val="B"><div class="opt-key">B</div>30 000 N backward</div>
+      <div class="opt" data-q="6" data-val="C"><div class="opt-key">C</div>50 000 N forward</div>
+      <div class="opt" data-q="6" data-val="D"><div class="opt-key">D</div>50 000 N backward</div>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <!-- Q7 MCQ -->
+  <div class="q-block" id="q7">
+    <div class="q-meta"><span class="q-num">Question 7</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">Which of the following correctly describes a free-body force diagram?</div>
+    <div class="options">
+      <div class="opt" data-q="7" data-val="A"><div class="opt-key">A</div>A diagram showing forces between two or more objects in a scene</div>
+      <div class="opt" data-q="7" data-val="B"><div class="opt-key">B</div>A graph of force against time for a moving object</div>
+      <div class="opt" data-q="7" data-val="C"><div class="opt-key">C</div>A diagram showing all forces on one single object as vector arrows</div>
+      <div class="opt" data-q="7" data-val="D"><div class="opt-key">D</div>A scale drawing of the path taken by a moving object</div>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <!-- Q8 MCQ -->
+  <div class="q-block" id="q8">
+    <div class="q-meta"><span class="q-num">Question 8</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">A car's braking force is 4500 N and its engine force is 3000 N in the opposite direction. What happens to the car?</div>
+    <div class="options">
+      <div class="opt" data-q="8" data-val="A"><div class="opt-key">A</div>It accelerates forward</div>
+      <div class="opt" data-q="8" data-val="B"><div class="opt-key">B</div>It travels at constant speed</div>
+      <div class="opt" data-q="8" data-val="C"><div class="opt-key">C</div>It slows down — resultant force acts opposite to motion</div>
+      <div class="opt" data-q="8" data-val="D"><div class="opt-key">D</div>It instantly reverses direction</div>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <!-- Q9 MCQ -->
+  <div class="q-block" id="q9">
+    <div class="q-meta"><span class="q-num">Question 9</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">Two forces act in the same direction on an object: 350 N and 150 N. What is the resultant force?</div>
+    <div class="options">
+      <div class="opt" data-q="9" data-val="A"><div class="opt-key">A</div>200 N</div>
+      <div class="opt" data-q="9" data-val="B"><div class="opt-key">B</div>350 N</div>
+      <div class="opt" data-q="9" data-val="C"><div class="opt-key">C</div>500 N in the same direction</div>
+      <div class="opt" data-q="9" data-val="D"><div class="opt-key">D</div>500 N in the opposite direction</div>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <!-- Q10 MCQ -->
+  <div class="q-block" id="q10">
+    <div class="q-meta"><span class="q-num">Question 10</span><span class="q-type-badge badge-mcq">MCQ</span></div>
+    <div class="q-text">When the resultant force on an object is NOT zero, what happens?</div>
+    <div class="options">
+      <div class="opt" data-q="10" data-val="A"><div class="opt-key">A</div>The object stays stationary</div>
+      <div class="opt" data-q="10" data-val="B"><div class="opt-key">B</div>The object moves at constant speed</div>
+      <div class="opt" data-q="10" data-val="C"><div class="opt-key">C</div>The object's speed or direction changes</div>
+      <div class="opt" data-q="10" data-val="D"><div class="opt-key">D</div>All forces on the object become equal</div>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+  <!-- Q11 T/F -->
+  <div class="q-block" id="q11">
+    <div class="q-meta"><span class="q-num">Question 11</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">If the resultant force on an object is zero, the object must be stationary.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="11" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="11" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb11"></div>
+  </div>
+
+  <!-- Q12 T/F -->
+  <div class="q-block" id="q12">
+    <div class="q-meta"><span class="q-num">Question 12</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">Newton's First Law states that a moving object keeps moving at the same speed and direction when the forces on it are balanced.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="12" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="12" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb12"></div>
+  </div>
+
+  <!-- Q13 T/F -->
+  <div class="q-block" id="q13">
+    <div class="q-meta"><span class="q-num">Question 13</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">A free-body force diagram can show forces acting on more than one object.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="13" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="13" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb13"></div>
+  </div>
+
+  <!-- Q14 T/F -->
+  <div class="q-block" id="q14">
+    <div class="q-meta"><span class="q-num">Question 14</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">When two equal forces act on an object in opposite directions, the resultant force is zero.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="14" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="14" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb14"></div>
+  </div>
+
+  <!-- Q15 T/F -->
+  <div class="q-block" id="q15">
+    <div class="q-meta"><span class="q-num">Question 15</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">When two forces act in the same direction, you find the resultant by subtracting one from the other.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="15" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="15" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb15"></div>
+  </div>
+
+  <!-- Q16 T/F -->
+  <div class="q-block" id="q16">
+    <div class="q-meta"><span class="q-num">Question 16</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">In a free-body force diagram, each force is shown as a vector arrow pointing in the direction of that force.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="16" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="16" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb16"></div>
+  </div>
+
+  <!-- Q17 T/F -->
+  <div class="q-block" id="q17">
+    <div class="q-meta"><span class="q-num">Question 17</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">An unbalanced (non-zero resultant) force always causes a change in the speed or direction of an object.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="17" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="17" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb17"></div>
+  </div>
+
+  <!-- Q18 T/F -->
+  <div class="q-block" id="q18">
+    <div class="q-meta"><span class="q-num">Question 18</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">The tug-of-war diagram in the textbook is a free-body force diagram because it shows forces as arrows.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="18" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="18" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb18"></div>
+  </div>
+
+  <!-- Q19 T/F -->
+  <div class="q-block" id="q19">
+    <div class="q-meta"><span class="q-num">Question 19</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">At least two forces act on every object at any given time.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="19" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="19" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb19"></div>
+  </div>
+
+  <!-- Q20 T/F -->
+  <div class="q-block" id="q20">
+    <div class="q-meta"><span class="q-num">Question 20</span><span class="q-type-badge badge-tf">True / False</span></div>
+    <div class="q-text">If only two forces act on an object with zero resultant, those forces must be equal in size and act in opposite directions.</div>
+    <div class="tf-options">
+      <div class="tf-opt" data-q="20" data-val="True">✅ True</div>
+      <div class="tf-opt" data-q="20" data-val="False">❌ False</div>
+    </div>
+    <div class="feedback" id="fb20"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <h2 id="resultTitle">Quiz Complete!</h2>
+    <div class="result-score" id="resultScore">0 <span>/ 20</span></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+    <a href="physics-p8-3-revision.html" class="rev-btn">📖 Back to Revision</a>
+  </div>
+
+</main>
+
+<script>
+const ANSWERS = {
+  1:  { correct:'B', explanation:'The resultant force is the single force that replaces all others with exactly the same effect on the object.' },
+  2:  { correct:'C', explanation:'Opposite directions → subtract: 9 − 5 = 4 N. Direction = the larger force, so 4 N to the right.' },
+  3:  { correct:'C', explanation:'Constant speed means no change in motion. Newton\'s First Law tells us the resultant force must be zero — forces are balanced.' },
+  4:  { correct:'C', explanation:'1000 − 800 = 200 N in Team A\'s direction (the side with the larger force).' },
+  5:  { correct:'C', explanation:'Constant speed → resultant = 0. So friction must exactly equal the push force: 300 N.' },
+  6:  { correct:'C', explanation:'Opposite directions → subtract: 80 000 − 30 000 = 50 000 N forward (direction of the larger thrust force).' },
+  7:  { correct:'C', explanation:'A free-body diagram shows ALL forces on ONE object only, each as a vector arrow in the direction of that force.' },
+  8:  { correct:'C', explanation:'Braking force (4500 N) > engine force (3000 N). Resultant = 1500 N opposite to motion — the car slows down.' },
+  9:  { correct:'C', explanation:'Same direction → add the forces: 350 + 150 = 500 N in the same direction.' },
+  10: { correct:'C', explanation:'A non-zero resultant force causes acceleration — a change in speed or direction of the object.' },
+  11: { correct:'False',  explanation:'A very common exam mistake! Zero resultant means no change in motion — the object could be stationary OR moving at constant velocity.' },
+  12: { correct:'True',   explanation:'Newton\'s First Law: if forces are balanced (resultant = 0), a moving object keeps its speed and direction unchanged.' },
+  13: { correct:'False',  explanation:'A free-body diagram shows forces on ONE object only. The tug-of-war scene is NOT one because it shows two teams.' },
+  14: { correct:'True',   explanation:'Equal and opposite forces cancel perfectly — the resultant is zero.' },
+  15: { correct:'False',  explanation:'Same direction → you ADD the forces. You subtract when forces act in opposite directions.' },
+  16: { correct:'True',   explanation:'Each force in a free-body diagram is a vector arrow — the direction shows which way the force acts.' },
+  17: { correct:'True',   explanation:'By Newton\'s First Law, any non-zero resultant force causes acceleration — a change in speed or direction.' },
+  18: { correct:'False',  explanation:'It is NOT a free-body diagram because it shows forces on more than one object (two teams). Free-body = one object only.' },
+  19: { correct:'True',   explanation:'At minimum, gravity and a normal/support force always act on any object. At least two forces are always present.' },
+  20: { correct:'True',   explanation:'Two forces giving zero resultant must be equal in magnitude and opposite in direction — they cancel each other perfectly.' },
+};
+
+const STORAGE_KEY = 'physics-p8-3-score';
+let answered = 0, score = 0;
+const total = 20;
+
+function handleAnswer(qNum, chosen) {
+  const block = document.getElementById('q' + qNum);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+  const data = ANSWERS[qNum];
+  const isCorrect = chosen === data.correct;
+  const fb = document.getElementById('fb' + qNum);
+
+  block.querySelectorAll('.opt, .tf-opt').forEach(el => {
+    el.classList.add('locked');
+    if (el.dataset.val === data.correct) el.classList.add('correct-ans');
+    if (el.dataset.val === chosen && !isCorrect) el.classList.add('wrong-ans');
+  });
+
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+  fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = `<div class="fb-head">${isCorrect ? '✅ Correct!' : '❌ Not quite'}</div>${data.explanation}`;
+
+  if (isCorrect) score++;
+  answered++;
+
+  const pct = Math.round((answered / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = answered + ' / ' + total;
+
+  if (answered === total) showResult();
+}
+
+document.querySelectorAll('.opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const q = parseInt(opt.dataset.q);
+    const block = document.getElementById('q' + q);
+    if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+    block.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    handleAnswer(q, opt.dataset.val);
+  });
+});
+
+document.querySelectorAll('.tf-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const q = parseInt(opt.dataset.q);
+    const block = document.getElementById('q' + q);
+    if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+    handleAnswer(q, opt.dataset.val);
+  });
+});
+
+function showResult() {
+  localStorage.setItem(STORAGE_KEY, score);
+  let emoji, title, msg, mum;
+  if (score >= 18) {
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'You absolutely nailed Resultant Forces — brilliant work!';
+    mum = '📸 Show this to mum — she\'ll be SO proud!';
+  } else if (score >= 15) {
+    emoji = '⭐'; title = 'Great Work!';
+    msg = 'Really solid understanding — just a couple of tricky ones to revisit.';
+    mum = '📸 Show this to mum — great score!';
+  } else if (score >= 10) {
+    emoji = '💪'; title = 'Good Effort!';
+    msg = 'You\'ve got the basics — head back to the revision page to sharpen the details.';
+    mum = '📖 A bit more revision then show mum!';
+  } else {
+    emoji = '📖'; title = 'Keep Going!';
+    msg = 'Resultant forces need a bit more practice — revisit the page and try again.';
+    mum = '📚 Revise and retry — you\'ve got this!';
+  }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultScore').innerHTML = score + ' <span>/ 20</span>';
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMum').textContent = mum;
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+}
+
+function resetQuiz() {
+  answered = 0; score = 0;
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressLabel').textContent = '0 / 20';
+  document.getElementById('resultBox').classList.remove('show');
+  document.querySelectorAll('.q-block').forEach(block => {
+    block.classList.remove('correct', 'wrong');
+    block.querySelectorAll('.opt, .tf-opt').forEach(o => o.classList.remove('selected','locked','correct-ans','wrong-ans'));
+    block.querySelector('.feedback').className = 'feedback';
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

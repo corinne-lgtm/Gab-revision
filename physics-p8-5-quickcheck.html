@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8.5 Quick Check – Parallelogram of Forces</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2a3a;
+    --muted: #5a7a9a;
+    --paper: #ffffff;
+    --line: #c8dff0;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --navy: #0d2d5e;
+    --navy2: #1a4480;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --card-border: #b3d4f0;
+    --hero-grad: linear-gradient(135deg, #0d2d5e 0%, #1565c0 50%, #1976d2 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: #90caf9;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  nav a:hover { color: #fff; }
+  nav span { color: #4a7aaa; font-size: 0.8rem; }
+
+  /* HERO */
+  .hero {
+    background: var(--hero-grad);
+    padding: 52px 24px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .floating-emoji {
+    font-size: 2.8rem;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+    margin-bottom: 14px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-10px) rotate(3deg); }
+  }
+  .kicker {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .hero-sub { color: #90caf9; font-size: 0.9rem; font-weight: 700; }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .score-label { color: #90caf9; font-size: 0.82rem; font-weight: 700; }
+  .score-track {
+    flex: 1; min-width: 120px;
+    height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #90caf9);
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .score-count { color: #fff; font-weight: 800; font-size: 0.85rem; }
+
+  /* MAIN */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 36px 18px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 4px;
+    margin-top: 8px;
+  }
+
+  /* Q BLOCK */
+  .q-block {
+    background: var(--paper);
+    border-radius: 20px;
+    border: 2px solid var(--card-border);
+    padding: 22px 22px 18px;
+    box-shadow: 0 2px 12px rgba(13,45,94,0.06);
+    transition: border-color 0.2s;
+  }
+  .q-block.correct  { border-color: var(--green); }
+  .q-block.incorrect{ border-color: var(--red); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .q-num {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 2px solid var(--card-border);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    color: var(--navy);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .q-text { font-size: 0.97rem; font-weight: 700; color: var(--ink); line-height: 1.45; }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 9px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--paper);
+    transition: border-color 0.18s, background 0.18s;
+    text-align: left;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); background: #f0f8ff; }
+  .opt .opt-letter {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 2px solid var(--card-border);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+  .opt.selected { border-color: var(--accent2); background: #e3f2fd; }
+  .opt.selected .opt-letter { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+  .opt.correct-ans { border-color: var(--green) !important; background: var(--green2) !important; }
+  .opt.correct-ans .opt-letter { background: var(--green); border-color: var(--green); color: #fff; }
+  .opt.wrong-ans { border-color: var(--red) !important; background: var(--red2) !important; }
+  .opt.wrong-ans .opt-letter { background: var(--red); border-color: var(--red); color: #fff; }
+  .opt:disabled { cursor: default; }
+
+  /* T/F */
+  .tf-options { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2.5px solid var(--line);
+    background: var(--paper);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .tf-btn.true-btn  { color: #1565c0; }
+  .tf-btn.false-btn { color: #b71c1c; }
+  .tf-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(13,45,94,0.12); }
+  .tf-btn.selected  { border-width: 3px; }
+  .tf-btn.true-btn.selected  { border-color: #1565c0; background: #e3f2fd; }
+  .tf-btn.false-btn.selected { border-color: #b71c1c; background: var(--red2); }
+  .tf-btn.correct-ans { border-color: var(--green) !important; background: var(--green2) !important; color: #2e7d32 !important; }
+  .tf-btn.wrong-ans   { border-color: var(--red)   !important; background: var(--red2)   !important; color: #b71c1c !important; }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 13px;
+    padding: 11px 14px;
+    border-radius: 11px;
+    font-size: 0.87rem;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok  { background: var(--green2); color: #2e7d32; border-left: 4px solid var(--green); }
+  .feedback.bad { background: var(--red2);   color: #b71c1c; border-left: 4px solid var(--red);   }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 36px 28px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(13,45,94,0.1);
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .result-box h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .result-score {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 10px 0;
+  }
+  .result-score.great  { color: var(--green); }
+  .result-score.ok     { color: var(--orange); }
+  .result-score.retry  { color: var(--red); }
+  .result-msg {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .mum-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border: 2px solid #90caf9;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .result-btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn-reset {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-reset:hover { background: var(--navy2); transform: translateY(-1px); }
+  .btn-revise {
+    display: inline-block;
+    background: var(--bg);
+    color: var(--navy);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 12px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 2px solid var(--card-border);
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-revise:hover { border-color: var(--accent2); transform: translateY(-1px); }
+
+  /* SUBMIT */
+  .submit-wrap { text-align: center; }
+  .submit-btn {
+    background: var(--hero-grad);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(13,45,94,0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(13,45,94,0.3); }
+  .submit-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+  @media (max-width:560px) {
+    .hero { padding: 36px 16px 30px; }
+    main { padding: 22px 12px 60px; }
+    .q-block { padding: 18px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span>›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span>›</span>
+  <a href="physics-p8-5-revision.html">📖 P8.5 Revision</a>
+  <span>›</span>
+  <a style="color:#fff">Quick Check</a>
+</nav>
+
+<header class="hero">
+  <span class="floating-emoji">⚡</span>
+  <div class="kicker">Physics · P8.5 · Quick Check</div>
+  <h1>Parallelogram of Forces</h1>
+  <p class="hero-sub">20 questions &nbsp;·&nbsp; 10 MCQ + 10 True / False</p>
+</header>
+
+<div class="score-bar">
+  <span class="score-label">⚡ Progress</span>
+  <div class="score-track"><div class="score-fill" id="progressFill"></div></div>
+  <span class="score-count" id="progressCount">0 / 20</span>
+</div>
+
+<main>
+
+  <p class="section-label">Part A — Multiple Choice</p>
+
+  <!-- Q1 MCQ -->
+  <div class="q-block" id="q1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">What is the parallelogram of forces?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q1',this,'A')"><span class="opt-letter">A</span>A formula for adding forces along the same line</button>
+      <button class="opt" onclick="answerMCQ('q1',this,'B')"><span class="opt-letter">B</span>A scale diagram used to find the resultant of two forces acting at a point</button>
+      <button class="opt" onclick="answerMCQ('q1',this,'C')"><span class="opt-letter">C</span>A type of graph showing how force varies with time</button>
+      <button class="opt" onclick="answerMCQ('q1',this,'D')"><span class="opt-letter">D</span>A method for measuring a single force using a spring balance</button>
+    </div>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+
+  <!-- Q2 MCQ -->
+  <div class="q-block" id="q2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">In the parallelogram of forces, what does the diagonal from the origin represent?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q2',this,'A')"><span class="opt-letter">A</span>The larger of the two forces</button>
+      <button class="opt" onclick="answerMCQ('q2',this,'B')"><span class="opt-letter">B</span>The angle between the two forces</button>
+      <button class="opt" onclick="answerMCQ('q2',this,'C')"><span class="opt-letter">C</span>The resultant force</button>
+      <button class="opt" onclick="answerMCQ('q2',this,'D')"><span class="opt-letter">D</span>The sum of the two force magnitudes</button>
+    </div>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+
+  <!-- Q3 MCQ -->
+  <div class="q-block" id="q3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">Which piece of equipment is essential for drawing the angle between the two forces correctly?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q3',this,'A')"><span class="opt-letter">A</span>A compass</button>
+      <button class="opt" onclick="answerMCQ('q3',this,'B')"><span class="opt-letter">B</span>A set square</button>
+      <button class="opt" onclick="answerMCQ('q3',this,'C')"><span class="opt-letter">C</span>A protractor</button>
+      <button class="opt" onclick="answerMCQ('q3',this,'D')"><span class="opt-letter">D</span>A calculator</button>
+    </div>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+
+  <!-- Q4 MCQ -->
+  <div class="q-block" id="q4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">Two forces of 3.0 N and 4.0 N act at right angles (90°). What is the magnitude of their resultant?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q4',this,'A')"><span class="opt-letter">A</span>7.0 N</button>
+      <button class="opt" onclick="answerMCQ('q4',this,'B')"><span class="opt-letter">B</span>1.0 N</button>
+      <button class="opt" onclick="answerMCQ('q4',this,'C')"><span class="opt-letter">C</span>5.0 N</button>
+      <button class="opt" onclick="answerMCQ('q4',this,'D')"><span class="opt-letter">D</span>12.0 N</button>
+    </div>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+
+  <!-- Q5 MCQ -->
+  <div class="q-block" id="q5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">In the tow rope worked example, two 3000 N forces act at 30° to each other. What is the tension in the main tow rope?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q5',this,'A')"><span class="opt-letter">A</span>3000 N</button>
+      <button class="opt" onclick="answerMCQ('q5',this,'B')"><span class="opt-letter">B</span>6000 N</button>
+      <button class="opt" onclick="answerMCQ('q5',this,'C')"><span class="opt-letter">C</span>5800 N</button>
+      <button class="opt" onclick="answerMCQ('q5',this,'D')"><span class="opt-letter">D</span>4200 N</button>
+    </div>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+
+  <!-- Q6 MCQ -->
+  <div class="q-block" id="q6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-text">In the parallelogram of forces diagram, the two force vectors form which parts of the parallelogram?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q6',this,'A')"><span class="opt-letter">A</span>The two diagonals</button>
+      <button class="opt" onclick="answerMCQ('q6',this,'B')"><span class="opt-letter">B</span>Two adjacent sides from the same origin</button>
+      <button class="opt" onclick="answerMCQ('q6',this,'C')"><span class="opt-letter">C</span>Two opposite sides</button>
+      <button class="opt" onclick="answerMCQ('q6',this,'D')"><span class="opt-letter">D</span>The perimeter</button>
+    </div>
+    <div class="feedback" id="q6-fb"></div>
+  </div>
+
+  <!-- Q7 MCQ -->
+  <div class="q-block" id="q7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-text">When investigating the parallelogram of forces with weights and pulleys, the resultant of the two outer weights W₁ and W₂ should be…</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q7',this,'A')"><span class="opt-letter">A</span>Twice the weight of W₃</button>
+      <button class="opt" onclick="answerMCQ('q7',this,'B')"><span class="opt-letter">B</span>Equal in magnitude but opposite in direction to W₃</button>
+      <button class="opt" onclick="answerMCQ('q7',this,'C')"><span class="opt-letter">C</span>Equal in magnitude and the same direction as W₃</button>
+      <button class="opt" onclick="answerMCQ('q7',this,'D')"><span class="opt-letter">D</span>Half the weight of W₃</button>
+    </div>
+    <div class="feedback" id="q7-fb"></div>
+  </div>
+
+  <!-- Q8 MCQ -->
+  <div class="q-block" id="q8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-text">When is it acceptable to find the resultant of two forces by simply adding their magnitudes arithmetically?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q8',this,'A')"><span class="opt-letter">A</span>Always — addition works for any two forces</button>
+      <button class="opt" onclick="answerMCQ('q8',this,'B')"><span class="opt-letter">B</span>Only when the forces act along the same line in the same direction</button>
+      <button class="opt" onclick="answerMCQ('q8',this,'C')"><span class="opt-letter">C</span>When the forces are equal in magnitude</button>
+      <button class="opt" onclick="answerMCQ('q8',this,'D')"><span class="opt-letter">D</span>When the forces act at 45° to each other</button>
+    </div>
+    <div class="feedback" id="q8-fb"></div>
+  </div>
+
+  <!-- Q9 MCQ -->
+  <div class="q-block" id="q9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-text">In the scale diagram for the tow rope problem, the scale used is 1 cm = 1000 N. A force of 3000 N would be drawn as…</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q9',this,'A')"><span class="opt-letter">A</span>1 cm</button>
+      <button class="opt" onclick="answerMCQ('q9',this,'B')"><span class="opt-letter">B</span>3 cm</button>
+      <button class="opt" onclick="answerMCQ('q9',this,'C')"><span class="opt-letter">C</span>30 cm</button>
+      <button class="opt" onclick="answerMCQ('q9',this,'D')"><span class="opt-letter">D</span>300 cm</button>
+    </div>
+    <div class="feedback" id="q9-fb"></div>
+  </div>
+
+  <!-- Q10 MCQ -->
+  <div class="q-block" id="q10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-text">Two tugboats pull a ship using cables. The tension in each cable pulls the ship forwards. What does the combined effect of these tension forces represent?</div>
+    </div>
+    <div class="options">
+      <button class="opt" onclick="answerMCQ('q10',this,'A')"><span class="opt-letter">A</span>The average force</button>
+      <button class="opt" onclick="answerMCQ('q10',this,'B')"><span class="opt-letter">B</span>The resultant force on the ship</button>
+      <button class="opt" onclick="answerMCQ('q10',this,'C')"><span class="opt-letter">C</span>The friction force on the ship</button>
+      <button class="opt" onclick="answerMCQ('q10',this,'D')"><span class="opt-letter">D</span>The weight of the ship</button>
+    </div>
+    <div class="feedback" id="q10-fb"></div>
+  </div>
+
+  <p class="section-label">Part B — True or False</p>
+
+  <!-- Q11 T/F -->
+  <div class="q-block" id="q11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-text">The parallelogram of forces can only be used when the two forces act along the same straight line.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q11',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q11',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q11-fb"></div>
+  </div>
+
+  <!-- Q12 T/F -->
+  <div class="q-block" id="q12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-text">The resultant force in the parallelogram of forces is the diagonal that starts from the origin of the two force vectors.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q12',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q12',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q12-fb"></div>
+  </div>
+
+  <!-- Q13 T/F -->
+  <div class="q-block" id="q13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-text">A sharp pencil is recommended when drawing the parallelogram of forces because precision is essential in scale diagrams.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q13',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q13',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q13-fb"></div>
+  </div>
+
+  <!-- Q14 T/F -->
+  <div class="q-block" id="q14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-text">When two forces act at a small angle to each other, the resultant is always smaller than either of the individual forces.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q14',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q14',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q14-fb"></div>
+  </div>
+
+  <!-- Q15 T/F -->
+  <div class="q-block" id="q15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-text">In the pulley investigation, the tension in each string supporting the side weights equals the weight it supports.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q15',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q15',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q15-fb"></div>
+  </div>
+
+  <!-- Q16 T/F -->
+  <div class="q-block" id="q16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-text">You must always write your scale on a parallelogram of forces diagram to gain full marks.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q16',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q16',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q16-fb"></div>
+  </div>
+
+  <!-- Q17 T/F -->
+  <div class="q-block" id="q17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-text">The angle between the adjacent sides of the parallelogram is the same as the angle between the two forces.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q17',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q17',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q17-fb"></div>
+  </div>
+
+  <!-- Q18 T/F -->
+  <div class="q-block" id="q18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-text">If the angle between the tow rope sections increased from 30° to 50°, the maximum tension in the main tow rope would increase.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q18',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q18',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q18-fb"></div>
+  </div>
+
+  <!-- Q19 T/F -->
+  <div class="q-block" id="q19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-text">The parallelogram of forces is described as a geometrical method for finding a resultant force.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q19',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q19',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q19-fb"></div>
+  </div>
+
+  <!-- Q20 T/F -->
+  <div class="q-block" id="q20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-text">In a model zip wire where both string sections make a 20° angle with the horizontal, the line of action of the weight force at the lowest point acts horizontally.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn"  onclick="answerTF('q20',this,'T')">✓ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q20',this,'F')">✗ False</button>
+    </div>
+    <div class="feedback" id="q20-fb"></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">Submit Answers ✓</button>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <h2 id="resultTitle"></h2>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="mum-badge" id="mumBadge"></div>
+    <div class="result-btns">
+      <button class="btn-reset" onclick="resetQuiz()">🔄 Try Again</button>
+      <a class="btn-revise" href="physics-p8-5-revision.html">📖 Back to Revision</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const STORE_KEY = 'physics-p8-5-score';
+  const TOTAL = 20;
+
+  // Correct answers
+  const answers = {
+    q1:  { type:'mcq', correct:'B', feedback:'The parallelogram of forces is a scale diagram used to find the resultant of two forces that do not act along the same line.' },
+    q2:  { type:'mcq', correct:'C', feedback:'The diagonal from the origin (where the two force arrows start) gives the resultant force — its length (to scale) is the magnitude and its angle gives the direction.' },
+    q3:  { type:'mcq', correct:'C', feedback:'A protractor is needed to measure the angle between the two forces accurately when constructing the scale diagram.' },
+    q4:  { type:'mcq', correct:'C', feedback:'Using Pythagoras for 90°: √(3² + 4²) = √25 = 5.0 N. You cannot just add 3 + 4 = 7 N because the forces are not along the same line.' },
+    q5:  { type:'mcq', correct:'C', feedback:'Drawing the parallelogram for two 3000 N forces at 30° (scale 1 cm = 1000 N) gives a diagonal of 5.8 cm, so T = 5800 N.' },
+    q6:  { type:'mcq', correct:'B', feedback:'The two force vectors are drawn as two adjacent sides of the parallelogram, both starting from the same origin point.' },
+    q7:  { type:'mcq', correct:'B', feedback:'The system is in equilibrium, so the resultant of W₁ and W₂ must be equal in magnitude but opposite in direction to W₃ (the middle weight).' },
+    q8:  { type:'mcq', correct:'B', feedback:'You can add magnitudes arithmetically only when forces act along the same line in the same direction. For opposite directions you subtract; for any angle you must use geometry.' },
+    q9:  { type:'mcq', correct:'B', feedback:'Scale: 1 cm = 1000 N, so 3000 N ÷ 1000 N/cm = 3 cm.' },
+    q10: { type:'mcq', correct:'B', feedback:'The combined effect of the two tension forces from the tugboat cables is the resultant force that pulls the ship forwards.' },
+    q11: { type:'tf',  correct:'F', feedback:'False — the parallelogram of forces is used precisely when the two forces do NOT act along the same line. If they did, you could just add or subtract them arithmetically.' },
+    q12: { type:'tf',  correct:'T', feedback:'True — the diagonal drawn from the origin (where the two force arrows start) represents the resultant force.' },
+    q13: { type:'tf',  correct:'T', feedback:'True — a sharp pencil is essential because even small inaccuracies in a scale diagram lead to significant errors in the calculated resultant.' },
+    q14: { type:'tf',  correct:'F', feedback:'False — when two forces act at a small angle to each other, the resultant is LARGER than either individual force (both forces are pulling in nearly the same direction).' },
+    q15: { type:'tf',  correct:'T', feedback:'True — in the pulley investigation, each string\'s tension equals the weight it supports, either directly or over the pulley.' },
+    q16: { type:'tf',  correct:'T', feedback:'True — the scale must be clearly stated on the diagram; examiners award marks for this and the result cannot be checked without it.' },
+    q17: { type:'tf',  correct:'T', feedback:'True — the two forces are drawn as adjacent sides at the same angle to each other as the actual forces, so the angle between the sides equals the angle between the forces.' },
+    q18: { type:'tf',  correct:'F', feedback:'False — a larger angle between the sections means the forces are pulling more sideways against each other, so the resultant (main rope tension) is SMALLER, not larger.' },
+    q19: { type:'tf',  correct:'T', feedback:'True — the parallelogram of forces is a geometrical (graphical) method, not an arithmetical one, which is why you need a ruler, protractor and paper.' },
+    q20: { type:'tf',  correct:'F', feedback:'False — the weight force always acts vertically downwards (due to gravity), not horizontally, regardless of the angle of the string.' },
+  };
+
+  let answered = {};
+  let score = 0;
+  let submitted = false;
+
+  function answerMCQ(qid, btn, choice) {
+    if (answered[qid] || submitted) return;
+    answered[qid] = choice;
+    // mark selected
+    btn.closest('.options').querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    btn.classList.add('selected');
+    updateProgress();
+  }
+
+  function answerTF(qid, btn, choice) {
+    if (answered[qid] || submitted) return;
+    answered[qid] = choice;
+    btn.closest('.tf-options').querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const n = Object.keys(answered).length;
+    document.getElementById('progressFill').style.width = `${(n/TOTAL)*100}%`;
+    document.getElementById('progressCount').textContent = `${n} / ${TOTAL}`;
+  }
+
+  function submitQuiz() {
+    if (submitted) return;
+    submitted = true;
+    score = 0;
+
+    Object.entries(answers).forEach(([qid, data]) => {
+      const block = document.getElementById(qid);
+      const fb = document.getElementById(`${qid}-fb`);
+      const userAns = answered[qid];
+      const isCorrect = userAns === data.correct;
+      if (isCorrect) score++;
+
+      block.classList.add(isCorrect ? 'correct' : 'incorrect');
+      fb.textContent = (isCorrect ? '✅ Correct! ' : '❌ Incorrect. ') + data.feedback;
+      fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'bad');
+
+      if (data.type === 'mcq') {
+        block.querySelectorAll('.opt').forEach(btn => {
+          btn.disabled = true;
+          const letter = btn.querySelector('.opt-letter').textContent;
+          if (letter === data.correct) btn.classList.add('correct-ans');
+          else if (btn.classList.contains('selected') && !isCorrect) btn.classList.add('wrong-ans');
+        });
+      } else {
+        block.querySelectorAll('.tf-btn').forEach(btn => {
+          btn.disabled = true;
+          const val = btn.classList.contains('true-btn') ? 'T' : 'F';
+          if (val === data.correct) btn.classList.add('correct-ans');
+          else if (btn.classList.contains('selected') && !isCorrect) btn.classList.add('wrong-ans');
+        });
+      }
+    });
+
+    // unanswered
+    Object.keys(answers).forEach(qid => {
+      if (!answered[qid]) {
+        document.getElementById(qid).querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = document.getElementById(`${qid}-fb`);
+        fb.textContent = '⚠️ Not answered. ' + answers[qid].feedback;
+        fb.className = 'feedback show bad';
+        document.getElementById(qid).classList.add('incorrect');
+      }
+    });
+
+    document.getElementById('submitBtn').disabled = true;
+    updateProgress();
+    localStorage.setItem(STORE_KEY, JSON.stringify({ score, total: TOTAL, date: new Date().toISOString() }));
+
+    showResult();
+    document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showResult() {
+    const box = document.getElementById('resultBox');
+    const pct = score / TOTAL;
+    let tier, emoji, title, msg, mum;
+
+    if (pct >= 0.85) {
+      tier = 'great';
+      emoji = '🏆';
+      title = 'Excellent work!';
+      msg = 'You have a strong understanding of the parallelogram of forces.';
+      mum = '🌟 Show this to mum — ' + score + '/20!';
+    } else if (pct >= 0.6) {
+      tier = 'ok';
+      emoji = '👍';
+      title = 'Good effort!';
+      msg = 'You\'re getting there — review the questions you missed and try again.';
+      mum = '📋 Show this to mum — ' + score + '/20';
+    } else {
+      tier = 'retry';
+      emoji = '💪';
+      title = 'Keep going!';
+      msg = 'Go back to the revision page, re-read the key points, then try again.';
+      mum = '📖 Show this to mum — ' + score + '/20 (will improve!)';
+    }
+
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultScore').textContent = `${score} / ${TOTAL}`;
+    document.getElementById('resultScore').className = `result-score ${tier}`;
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('mumBadge').textContent = mum;
+    box.classList.add('show');
+  }
+
+  function resetQuiz() {
+    answered = {};
+    score = 0;
+    submitted = false;
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressCount').textContent = '0 / 20';
+
+    document.querySelectorAll('.q-block').forEach(b => {
+      b.classList.remove('correct','incorrect');
+    });
+    document.querySelectorAll('.opt').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('selected','correct-ans','wrong-ans');
+    });
+    document.querySelectorAll('.tf-btn').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('selected','correct-ans','wrong-ans');
+    });
+    document.querySelectorAll('.feedback').forEach(f => {
+      f.className = 'feedback';
+      f.textContent = '';
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

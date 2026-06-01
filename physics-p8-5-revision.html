@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8.5 Parallelogram of Forces – Physics Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2a3a;
+    --muted: #5a7a9a;
+    --paper: #ffffff;
+    --line: #c8dff0;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --navy: #0d2d5e;
+    --navy2: #1a4480;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7b1fa2;
+    --purple2: #f3e5f5;
+    --card-border: #b3d4f0;
+    --hero-grad: linear-gradient(135deg, #0d2d5e 0%, #1565c0 50%, #1976d2 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: #90caf9;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  nav a:hover { color: #fff; }
+  nav span { color: #4a7aaa; font-size: 0.8rem; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--hero-grad);
+    padding: 60px 24px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .floating-emoji {
+    font-size: 3rem;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-3deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.18);
+    color: #e3f2fd;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .score-label { color: #90caf9; font-size: 0.82rem; font-weight: 700; }
+  .score-track {
+    flex: 1; min-width: 140px;
+    height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #90caf9);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  .score-count { color: #fff; font-weight: 800; font-size: 0.85rem; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 28px 28px 24px;
+    box-shadow: 0 2px 16px rgba(13,45,94,0.07);
+  }
+  .card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .icon {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 6px 8px;
+    font-size: 1.1rem;
+  }
+
+  /* ── LEARNING OBJECTIVES (checklist) ── */
+  .obj-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .obj-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    transition: all 0.25s;
+    user-select: none;
+  }
+  .obj-item:hover { border-color: var(--accent); background: #f0f8ff; }
+  .obj-item.done {
+    background: var(--green2);
+    border-color: var(--green);
+  }
+  .obj-check {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2.5px solid var(--line);
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .obj-item.done .obj-check {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .obj-check::after { content: ''; }
+  .obj-item.done .obj-check::after { content: '✓'; font-weight: 800; font-size: 0.75rem; color: #fff; }
+  .obj-text { font-size: 0.95rem; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .obj-item.done .obj-text { color: var(--green); text-decoration: line-through; text-decoration-color: #a5d6a7; }
+
+  /* ── KEY FACT BOX ── */
+  .key-fact {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-left: 5px solid var(--accent2);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .key-fact p { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+
+  /* ── HIGHLIGHT STRIPS ── */
+  .strip {
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .strip-green { background: var(--green2); color: #2e7d32; border-left: 4px solid var(--green); }
+  .strip-orange { background: var(--orange2); color: #e65100; border-left: 4px solid var(--orange); }
+  .strip-red { background: var(--red2); color: #b71c1c; border-left: 4px solid var(--red); }
+  .strip-purple { background: var(--purple2); color: var(--purple); border-left: 4px solid var(--purple); }
+  .strip-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .big-idea {
+    background: linear-gradient(135deg, var(--bg), #d0e8fb);
+    border-radius: 16px;
+    border: 2px solid var(--card-border);
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .big-idea .bi-icon { font-size: 2rem; margin-bottom: 8px; }
+  .big-idea .bi-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .big-idea .bi-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* ── TILES ── */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .tile {
+    border-radius: 16px;
+    padding: 16px;
+    border: 2px solid transparent;
+  }
+  .tile-blue { background: #e3f2fd; border-color: #90caf9; }
+  .tile-green { background: var(--green2); border-color: #a5d6a7; }
+  .tile-orange { background: var(--orange2); border-color: #ffcc80; }
+  .tile-red { background: var(--red2); border-color: #ef9a9a; }
+  .tile-purple { background: var(--purple2); border-color: #ce93d8; }
+  .tile h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--navy);
+  }
+  .tile p, .tile li {
+    font-size: 0.84rem;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .tile ul { padding-left: 16px; }
+  .tile li { margin-bottom: 3px; }
+
+  /* ── STEP BOX ── */
+  .steps { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent2);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-body { flex: 1; }
+  .step-body strong { display: block; font-size: 0.92rem; color: var(--navy); margin-bottom: 2px; }
+  .step-body span { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+
+  /* ── INTERACTIVE DEMO ── */
+  .demo-wrap {
+    background: #f0f8ff;
+    border-radius: 16px;
+    border: 2px dashed var(--card-border);
+    padding: 20px;
+    margin-top: 8px;
+  }
+  .demo-wrap canvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(13,45,94,0.1);
+  }
+  .demo-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .demo-controls label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .demo-controls input[type=range] { width: 100px; accent-color: var(--accent2); }
+  .demo-result {
+    text-align: center;
+    margin-top: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  /* ── COMPARE TABLE ── */
+  .compare-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .compare-col {
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .compare-col.left { background: #e3f2fd; border: 2px solid #90caf9; }
+  .compare-col.right { background: var(--green2); border: 2px solid #a5d6a7; }
+  .compare-col h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--navy);
+  }
+  .compare-col p { font-size: 0.84rem; font-weight: 600; color: var(--ink); }
+
+  /* ── KEYWORDS ── */
+  .keyword-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .keyword {
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: default;
+  }
+  .kw-blue { background: #e3f2fd; color: var(--accent2); border: 2px solid #90caf9; }
+  .kw-navy { background: var(--navy); color: #fff; }
+  .kw-orange { background: var(--orange2); color: #e65100; border: 2px solid #ffcc80; }
+  .kw-green { background: var(--green2); color: #2e7d32; border: 2px solid #a5d6a7; }
+  .kw-red { background: var(--red2); color: #b71c1c; border: 2px solid #ef9a9a; }
+  .kw-purple { background: var(--purple2); color: var(--purple); border: 2px solid #ce93d8; }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    border-left: 5px solid var(--orange);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .exam-tip .et-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .exam-tip p { font-size: 0.9rem; font-weight: 700; color: #5d2d00; }
+
+  /* ── WORKED EXAMPLE ── */
+  .worked {
+    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+    border-radius: 16px;
+    padding: 20px;
+    border: 2px solid #ce93d8;
+  }
+  .worked h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--purple);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .worked p { font-size: 0.88rem; font-weight: 600; color: #2d0045; margin-bottom: 6px; }
+  .worked .answer {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    background: var(--hero-grad);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(13,45,94,0.2);
+  }
+  .quiz-cta p { color: #90caf9; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; }
+  .quiz-cta h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .quiz-btn {
+    display: inline-block;
+    background: #fff;
+    color: var(--navy);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    padding: 13px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .quiz-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+
+  /* ── MARK AS READ ── */
+  .mar-btn {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 8px;
+  }
+  .mar-btn:hover { background: #388e3c; transform: translateY(-1px); }
+  .mar-btn.read { background: #81c784; cursor: default; }
+  .mar-confirm {
+    display: none;
+    text-align: center;
+    font-weight: 700;
+    color: var(--green);
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+  .mar-confirm.show { display: block; }
+
+  @media (max-width: 600px) {
+    .compare-table { grid-template-columns: 1fr; }
+    .hero { padding: 40px 16px 36px; }
+    main { padding: 24px 14px 60px; }
+    .card { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span>›</span>
+  <a href="#">Physics</a>
+  <span>›</span>
+  <a href="#">P8 Forces</a>
+  <span>›</span>
+  <a style="color:#fff">P8.5 Parallelogram of Forces</a>
+</nav>
+
+<header class="hero">
+  <span class="floating-emoji">📐</span>
+  <div class="chapter-badge">Physics · P8.5 · Higher Tier</div>
+  <h1>The Parallelogram of Forces</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">⚓ Vector addition</span>
+    <span class="hero-tag">📏 Scale diagrams</span>
+    <span class="hero-tag">📐 Resultant forces</span>
+    <span class="hero-tag">🚢 Real-world forces</span>
+  </div>
+</header>
+
+<div class="score-bar">
+  <span class="score-label">📋 Learning objectives</span>
+  <div class="score-track"><div class="score-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="score-count" id="progressCount">0 / 4</span>
+</div>
+
+<main>
+
+  <!-- LEARNING OBJECTIVES -->
+  <div class="card">
+    <h2><span class="icon">🎯</span> Learning Objectives</h2>
+    <ul class="obj-list" id="objList">
+      <li class="obj-item" data-i="0" onclick="toggleObj(this)">
+        <div class="obj-check"></div>
+        <span class="obj-text">Describe what the parallelogram of forces is</span>
+      </li>
+      <li class="obj-item" data-i="1" onclick="toggleObj(this)">
+        <div class="obj-check"></div>
+        <span class="obj-text">Explain what the parallelogram of forces is used for</span>
+      </li>
+      <li class="obj-item" data-i="2" onclick="toggleObj(this)">
+        <div class="obj-check"></div>
+        <span class="obj-text">State what is needed to draw a scale diagram of the parallelogram of forces</span>
+      </li>
+      <li class="obj-item" data-i="3" onclick="toggleObj(this)">
+        <div class="obj-check"></div>
+        <span class="obj-text">Use the parallelogram of forces to find the resultant of two forces</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div class="card">
+    <h2><span class="icon">💡</span> The Big Picture</h2>
+    <div class="big-idea-grid">
+      <div class="big-idea">
+        <div class="bi-icon">🚢</div>
+        <div class="bi-label">Two Forces, One Object</div>
+        <div class="bi-sub">e.g. two tugboats pulling a ship in different directions</div>
+      </div>
+      <div class="big-idea">
+        <div class="bi-icon">↗️</div>
+        <div class="bi-label">Draw as Vectors</div>
+        <div class="bi-sub">represent each force as an arrow, to scale</div>
+      </div>
+      <div class="big-idea">
+        <div class="bi-icon">▱</div>
+        <div class="bi-label">Complete the Parallelogram</div>
+        <div class="bi-sub">the two vectors form adjacent sides</div>
+      </div>
+      <div class="big-idea">
+        <div class="bi-icon">🎯</div>
+        <div class="bi-label">Diagonal = Resultant</div>
+        <div class="bi-sub">measure the diagonal from the origin</div>
+      </div>
+    </div>
+
+    <div class="key-fact" style="margin-top:18px">
+      <p>🔑 The <strong>parallelogram of forces</strong> is a <em>scale diagram</em> used to find the single resultant force when two forces act at a point but <strong>not along the same line</strong>.</p>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="card">
+    <h2><span class="icon">📖</span> How It Works</h2>
+
+    <div class="strip strip-orange">
+      <span class="strip-icon">⚠️</span>
+      <span>You cannot simply add or subtract forces that act at an angle — you must use the parallelogram method (geometry, not arithmetic).</span>
+    </div>
+
+    <div class="steps" style="margin-top:14px">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Choose a scale</strong>
+          <span>e.g. 1 cm = 100 N. Write it on your diagram.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Draw the two force vectors from the same origin</strong>
+          <span>Use a protractor for the angle between them. Draw arrows to scale.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Complete the parallelogram</strong>
+          <span>Draw two more lines parallel to each force vector to form a four-sided shape (a parallelogram).</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Draw the diagonal</strong>
+          <span>From the origin to the opposite corner. This diagonal is the resultant force.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>Measure the diagonal</strong>
+          <span>Use your ruler and scale to find the magnitude. Use a protractor to find the direction.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-tip" style="margin-top:18px">
+      <span class="et-label">✏️ Exam Tip</span>
+      <p>You will need: a <strong>protractor</strong>, a <strong>ruler</strong>, a <strong>sharp pencil</strong>, and a <strong>blank sheet of paper</strong>. Always state your scale clearly on the diagram.</p>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE DEMO -->
+  <div class="card">
+    <h2><span class="icon">🎮</span> Interactive Parallelogram Demo</h2>
+    <p style="font-size:0.88rem;color:var(--muted);font-weight:600;margin-bottom:12px">Adjust the two forces and the angle between them to see the parallelogram and resultant change in real time.</p>
+    <div class="demo-wrap">
+      <canvas id="paraCanvas" width="520" height="300"></canvas>
+      <div class="demo-controls">
+        <label>Force 1 (N): <strong id="f1val">3</strong>
+          <input type="range" id="f1" min="1" max="10" value="3" oninput="updateDemo()">
+        </label>
+        <label>Force 2 (N): <strong id="f2val">4</strong>
+          <input type="range" id="f2" min="1" max="10" value="4" oninput="updateDemo()">
+        </label>
+        <label>Angle (°): <strong id="angval">90</strong>
+          <input type="range" id="ang" min="10" max="170" value="90" oninput="updateDemo()">
+        </label>
+      </div>
+      <div class="demo-result" id="demoResult">Resultant = ? N</div>
+    </div>
+  </div>
+
+  <!-- TILES: WHAT YOU NEED TO KNOW -->
+  <div class="card">
+    <h2><span class="icon">📋</span> Key Points to Remember</h2>
+    <div class="tile-grid">
+      <div class="tile tile-blue">
+        <h3>📐 What it IS</h3>
+        <p>A <strong>scale diagram</strong> of two force vectors drawn as adjacent sides of a parallelogram.</p>
+      </div>
+      <div class="tile tile-green">
+        <h3>🎯 The Resultant</h3>
+        <p>The <strong>diagonal</strong> of the parallelogram, starting from the origin of the two forces — that's your resultant.</p>
+      </div>
+      <div class="tile tile-orange">
+        <h3>📏 Angles Matter</h3>
+        <p>The angle between the two adjacent sides of the parallelogram <strong>equals the angle between the two forces</strong>.</p>
+      </div>
+      <div class="tile tile-red">
+        <h3>⚠️ Not Arithmetic!</h3>
+        <p>You <strong>cannot add force magnitudes</strong> unless they act along the same line. Always use geometry for angled forces.</p>
+      </div>
+      <div class="tile tile-purple">
+        <h3>🔬 Investigating It</h3>
+        <p>Use <strong>weights and pulleys</strong>. Three strings meet at a point; the resultant of two outer weights equals the middle weight (opposite direction).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE: SAME LINE vs ANGLE -->
+  <div class="card">
+    <h2><span class="icon">⚖️</span> Same Line vs At an Angle</h2>
+    <div class="compare-table">
+      <div class="compare-col left">
+        <h3>➡️ Forces Along Same Line</h3>
+        <p>Add or subtract magnitudes directly.<br><br>
+        e.g. 5 N + 3 N = <strong>8 N</strong> (same direction)<br>
+        e.g. 5 N − 3 N = <strong>2 N</strong> (opposite)</p>
+      </div>
+      <div class="compare-col right">
+        <h3>↗️ Forces at an Angle</h3>
+        <p>Use the <strong>parallelogram of forces</strong>.<br><br>
+        Draw to scale → measure diagonal → read off resultant magnitude and direction.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKED EXAMPLE -->
+  <div class="card">
+    <h2><span class="icon">🔢</span> Worked Example</h2>
+    <div class="worked">
+      <h3>🚗 Tow Rope Problem</h3>
+      <p><strong>Setup:</strong> A tow rope is attached to a car at two points 0.80 m apart. Both sections of rope make a <strong>30° angle</strong> with each other (15° each side). The pull on each attachment must not exceed <strong>3000 N</strong>.</p>
+      <p><strong>Find:</strong> The maximum tension T in the main tow rope.</p>
+      <p><strong>Method:</strong> Draw the parallelogram for two 3000 N forces at 30° to each other (scale: 1 cm = 1000 N). The diagonal from the origin gives the resultant.</p>
+      <div class="answer">T = 5800 N</div>
+    </div>
+
+    <div class="strip strip-green" style="margin-top:14px">
+      <span class="strip-icon">💡</span>
+      <span>The resultant (tow rope tension) is larger than either individual force — this is always true when two forces act at a small angle to each other.</span>
+    </div>
+  </div>
+
+  <!-- REQUIRED TOOLS -->
+  <div class="card">
+    <h2><span class="icon">🧰</span> What You Need for the Diagram</h2>
+    <div class="tile-grid">
+      <div class="tile tile-blue"><h3>📐 Protractor</h3><p>To measure the angle between the two force vectors accurately.</p></div>
+      <div class="tile tile-green"><h3>📏 Ruler</h3><p>To draw and measure the force vectors and the diagonal to scale.</p></div>
+      <div class="tile tile-orange"><h3>✏️ Sharp Pencil</h3><p>Precision is essential — a blunt pencil introduces errors in scale diagrams.</p></div>
+      <div class="tile tile-red"><h3>📄 Blank Paper</h3><p>Plenty of space for a clear, large diagram with stated scale.</p></div>
+    </div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="card">
+    <h2><span class="icon">🔤</span> Key Vocabulary</h2>
+    <div class="keyword-grid">
+      <span class="keyword kw-navy">Parallelogram of forces</span>
+      <span class="keyword kw-blue">Resultant force</span>
+      <span class="keyword kw-orange">Vector</span>
+      <span class="keyword kw-green">Scale diagram</span>
+      <span class="keyword kw-red">Tension</span>
+      <span class="keyword kw-purple">Diagonal</span>
+      <span class="keyword kw-blue">Magnitude</span>
+      <span class="keyword kw-orange">Direction</span>
+      <span class="keyword kw-navy">Adjacent sides</span>
+      <span class="keyword kw-green">Origin</span>
+      <span class="keyword kw-red">Pulley</span>
+      <span class="keyword kw-purple">Equilibrium</span>
+    </div>
+  </div>
+
+  <!-- EXAM TIPS -->
+  <div class="card">
+    <h2><span class="icon">✍️</span> Exam Tips</h2>
+    <div class="exam-tip">
+      <span class="et-label">✏️ Scale Diagrams</span>
+      <p>Always state your scale (e.g. "1 cm = 500 N") — marks are lost if you omit it. Choose a scale that fills most of the page.</p>
+    </div>
+    <div class="exam-tip" style="margin-top:10px">
+      <span class="et-label">✏️ Reading the Diagonal</span>
+      <p>Measure the diagonal carefully with a ruler, then convert back using your scale. Also measure its angle with a protractor to give the full vector answer.</p>
+    </div>
+    <div class="strip strip-purple" style="margin-top:10px">
+      <span class="strip-icon">🔔</span>
+      <span>Remember: the resultant is the diagonal that starts at the <strong>origin</strong> (where the two force arrows begin), NOT the other diagonal.</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <p>Ready to test yourself?</p>
+    <h3>⚡ Take the Quick Check Quiz</h3>
+    <a href="physics-p8-5-quickcheck.html" class="quiz-btn">Start Quiz →</a>
+  </div>
+
+  <!-- MARK AS READ -->
+  <div class="card" style="text-align:center">
+    <h2 style="justify-content:center"><span class="icon">✅</span> Finished Revising?</h2>
+    <button class="mar-btn" id="marBtn" onclick="markRead()">Mark P8.5 as Read ✓</button>
+    <div class="mar-confirm" id="marConfirm">🎉 Great work! Show this to mum 😊</div>
+  </div>
+
+</main>
+
+<script>
+  const STEM = 'physics-p8-5-revision';
+  const OBJ_COUNT = 4;
+
+  // ── Objectives ──
+  function toggleObj(el) {
+    el.classList.toggle('done');
+    const i = el.dataset.i;
+    const key = `check-${STEM}-obj${i}`;
+    localStorage.setItem(key, el.classList.contains('done') ? '1' : '0');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('.obj-item');
+    let done = 0;
+    items.forEach(it => { if (it.classList.contains('done')) done++; });
+    document.getElementById('progressFill').style.width = `${(done/OBJ_COUNT)*100}%`;
+    document.getElementById('progressCount').textContent = `${done} / ${OBJ_COUNT}`;
+  }
+
+  function loadObjs() {
+    document.querySelectorAll('.obj-item').forEach(el => {
+      const key = `check-${STEM}-obj${el.dataset.i}`;
+      if (localStorage.getItem(key) === '1') el.classList.add('done');
+    });
+    updateProgress();
+  }
+
+  // ── Mark as read ──
+  function markRead() {
+    const btn = document.getElementById('marBtn');
+    const confirm = document.getElementById('marConfirm');
+    btn.textContent = '✓ P8.5 Marked as Read!';
+    btn.classList.add('read');
+    btn.disabled = true;
+    confirm.classList.add('show');
+    localStorage.setItem(`${STEM}-read`, '1');
+  }
+
+  function loadRead() {
+    if (localStorage.getItem(`${STEM}-read`) === '1') {
+      const btn = document.getElementById('marBtn');
+      btn.textContent = '✓ P8.5 Marked as Read!';
+      btn.classList.add('read');
+      btn.disabled = true;
+      document.getElementById('marConfirm').classList.add('show');
+    }
+  }
+
+  // ── Interactive Demo ──
+  function updateDemo() {
+    const f1 = parseFloat(document.getElementById('f1').value);
+    const f2 = parseFloat(document.getElementById('f2').value);
+    const deg = parseFloat(document.getElementById('ang').value);
+    document.getElementById('f1val').textContent = f1;
+    document.getElementById('f2val').textContent = f2;
+    document.getElementById('angval').textContent = deg;
+
+    const rad = deg * Math.PI / 180;
+    const resultant = Math.sqrt(f1*f1 + f2*f2 + 2*f1*f2*Math.cos(rad));
+    document.getElementById('demoResult').textContent =
+      `Resultant ≈ ${resultant.toFixed(2)} N`;
+
+    drawParallelogram(f1, f2, deg, resultant);
+  }
+
+  function drawParallelogram(f1, f2, deg, res) {
+    const canvas = document.getElementById('paraCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const scale = 22;
+    const ox = W * 0.18, oy = H * 0.75;
+
+    // vectors
+    const v1x = f1 * scale, v1y = 0;
+    const rad = deg * Math.PI / 180;
+    const v2x = f2 * scale * Math.cos(rad), v2y = -f2 * scale * Math.sin(rad);
+
+    // parallelogram corners
+    const ax = ox, ay = oy;
+    const bx = ox + v1x, by = oy + v1y;
+    const cx = ox + v1x + v2x, cy = oy + v1y + v2y;
+    const dx = ox + v2x, dy = oy + v2y;
+
+    // fill
+    ctx.beginPath();
+    ctx.moveTo(ax, ay); ctx.lineTo(bx, by);
+    ctx.lineTo(cx, cy); ctx.lineTo(dx, dy);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(100,181,246,0.15)';
+    ctx.fill();
+    ctx.strokeStyle = '#90caf9';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5,5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Force 1 arrow (blue)
+    drawArrow(ctx, ax, ay, bx, by, '#1565c0', `F₁ = ${f1} N`, 'below');
+    // Force 2 arrow (orange)
+    drawArrow(ctx, ax, ay, dx, dy, '#fb8c00', `F₂ = ${f2} N`, 'above');
+    // Resultant arrow (red)
+    drawArrow(ctx, ax, ay, cx, cy, '#e53935', `R ≈ ${res.toFixed(1)} N`, 'right');
+
+    // origin dot
+    ctx.beginPath();
+    ctx.arc(ax, ay, 5, 0, Math.PI*2);
+    ctx.fillStyle = '#0d2d5e';
+    ctx.fill();
+
+    // angle arc
+    ctx.beginPath();
+    ctx.arc(ax, ay, 30, -Math.PI/2, -Math.PI/2 + rad, false);
+    ctx.strokeStyle = '#fb8c00';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = '#fb8c00';
+    ctx.font = '12px Nunito';
+    ctx.fillText(`${deg}°`, ax + 34, ay - 10);
+  }
+
+  function drawArrow(ctx, x1, y1, x2, y2, color, label, labelPos) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // arrowhead
+    const angle = Math.atan2(y2-y1, x2-x1);
+    const hs = 10;
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - hs*Math.cos(angle-0.4), y2 - hs*Math.sin(angle-0.4));
+    ctx.lineTo(x2 - hs*Math.cos(angle+0.4), y2 - hs*Math.sin(angle+0.4));
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    // label
+    ctx.fillStyle = color;
+    ctx.font = 'bold 11px Nunito';
+    const mx = (x1+x2)/2, my = (y1+y2)/2;
+    const offset = labelPos === 'below' ? 14 : labelPos === 'above' ? -8 : 14;
+    const offx = labelPos === 'right' ? 8 : 0;
+    ctx.fillText(label, mx + offx, my + offset);
+  }
+
+  // init
+  loadObjs();
+  loadRead();
+  updateDemo();
+</script>
+</body>
+</html>

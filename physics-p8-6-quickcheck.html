@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8.6 Quick Check – Resolution of Forces</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d1b2a;
+    --muted: #546e8a;
+    --paper: #ffffff;
+    --line: #c8dff0;
+    --accent: #64b5f6;
+    --accent-dark: #1565c0;
+    --navy: #0d2b5e;
+    --navy2: #1a3a72;
+    --red: #ef5350;
+    --red2: #fde8e8;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --card-border: #b3d4ef;
+    --hero-grad: linear-gradient(135deg, #0d2b5e 0%, #1565c0 50%, #0d47a1 100%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+    min-height: 100vh;
+  }
+
+  h1,h2,h3 { font-family: 'Poppins', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.3);
+  }
+  nav a {
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all .2s;
+  }
+  nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+  nav a.home { color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,.3); font-size: 12px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--hero-grad);
+    padding: 48px 32px 42px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(100,181,246,.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(100,181,246,.10) 0%, transparent 50%);
+  }
+  .hero-float {
+    font-size: 64px;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,.3));
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(100,181,246,.2);
+    border: 1.5px solid rgba(100,181,246,.45);
+    color: var(--accent);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    color: #fff;
+    font-size: clamp(24px, 4.5vw, 38px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin: 10px 0 12px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 16px rgba(0,0,0,.25);
+  }
+  .hero-kicker {
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags span {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.18);
+    color: rgba(255,255,255,.88);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    border: 2px solid var(--card-border);
+    box-shadow: 0 2px 10px rgba(13,43,94,.06);
+  }
+  .score-bar .label { font-weight: 700; color: var(--muted); font-size: 13px; flex-shrink: 0; }
+  .progress-track { flex: 1; height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 99px; transition: width .4s ease; }
+  .score-val { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--navy); font-size: 14px; flex-shrink: 0; }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 36px 20px 80px;
+  }
+
+  /* ── QUESTION BLOCKS ── */
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin-bottom: 16px;
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 2px;
+  }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 20px;
+    border: 2px solid var(--card-border);
+    padding: 24px 26px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px rgba(13,43,94,.06);
+    transition: border-color .25s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong   { border-color: var(--red); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .q-num {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    min-width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .q-text { font-weight: 700; font-size: 16px; color: var(--ink); line-height: 1.45; }
+
+  /* MCQ options */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 2px solid var(--line);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--bg);
+    transition: all .18s;
+    user-select: none;
+  }
+  .opt:hover:not(.locked) { border-color: var(--accent); background: #dbeafe; }
+  .opt.selected { border-color: var(--accent-dark); background: #dbeafe; }
+  .opt.correct-ans { border-color: var(--green) !important; background: var(--green2) !important; color: #1b5e20 !important; }
+  .opt.wrong-ans   { border-color: var(--red) !important;   background: var(--red2) !important;   color: #7f1010 !important; }
+  .opt .opt-letter {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .18s;
+  }
+  .opt.correct-ans .opt-letter { background: var(--green); color: #fff; }
+  .opt.wrong-ans .opt-letter   { background: var(--red); color: #fff; }
+
+  /* T/F options */
+  .tf-options { display: flex; gap: 12px; }
+  .tf-btn {
+    flex: 1;
+    padding: 13px;
+    border-radius: 14px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all .18s;
+    color: var(--ink);
+    text-align: center;
+  }
+  .tf-btn:hover:not(.locked) { border-color: var(--accent); background: #dbeafe; }
+  .tf-btn.selected { border-color: var(--accent-dark); background: #dbeafe; }
+  .tf-btn.correct-ans { border-color: var(--green) !important; background: var(--green2) !important; color: #1b5e20 !important; }
+  .tf-btn.wrong-ans   { border-color: var(--red) !important;   background: var(--red2) !important;   color: #7f1010 !important; }
+
+  /* Feedback */
+  .feedback {
+    margin-top: 12px;
+    padding: 11px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: #1b5e20; border-left: 4px solid var(--green); }
+  .feedback.wrong   { background: var(--red2);   color: #7f1010; border-left: 4px solid var(--red); }
+
+  /* ── RESULT BOX ── */
+  .result-box {
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 40px 32px;
+    text-align: center;
+    margin-top: 36px;
+    display: none;
+    box-shadow: 0 6px 28px rgba(13,43,94,.1);
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 64px; margin-bottom: 16px; }
+  .result-score {
+    font-family: 'Poppins', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .result-label {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .result-msg {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .result-msg.great { color: var(--green); }
+  .result-msg.ok    { color: var(--orange); }
+  .result-msg.retry { color: var(--red); }
+  .result-sub { color: var(--muted); font-size: 14px; font-weight: 600; margin-bottom: 28px; }
+
+  .reset-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 32px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 4px 16px rgba(21,101,192,.25);
+  }
+  .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(21,101,192,.35); }
+
+  .revision-link {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--accent-dark);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    transition: all .2s;
+  }
+  .revision-link:hover { background: var(--accent); color: #fff; }
+
+  @media (max-width: 560px) {
+    .q-text { font-size: 15px; }
+    .tf-options { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="home">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p8-6-revision.html">📖 P8.6 Revision</a>
+  <span class="sep">›</span>
+  <a style="color:#fff;pointer-events:none">Quick Check</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-float">⚡</div>
+  <div class="hero-badge">📘 Physics · P8.6 · Quick Check</div>
+  <h1>Resolution of Forces</h1>
+  <p class="hero-kicker">20 questions · MCQ + True / False · Score out of 20</p>
+  <div class="hero-tags">
+    <span>📐 Vectors</span>
+    <span>⚖️ Equilibrium</span>
+    <span>🏔️ Inclined Planes</span>
+    <span>🔬 Higher Tier</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="score-bar">
+    <span class="label">Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <span class="score-val" id="progressVal">0 / 20</span>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — MCQ (Q1–Q10)
+  ══════════════════════════════════════ -->
+  <div class="section-title">📝 Part 1 — Multiple Choice (10 questions)</div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">What does it mean to "resolve" a force?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q1','A','C')"><span class="opt-letter">A</span>Add two forces to find a resultant</div>
+      <div class="opt" onclick="answerMCQ('q1','B','C')"><span class="opt-letter">B</span>Measure the size of a force with a newton-meter</div>
+      <div class="opt" onclick="answerMCQ('q1','C','C')"><span class="opt-letter">C</span>Split a single force into two perpendicular components</div>
+      <div class="opt" onclick="answerMCQ('q1','D','C')"><span class="opt-letter">D</span>Reduce a force to zero by applying friction</div>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">A force F acts at angle θ to the horizontal. Which expression gives the <em>horizontal</em> component?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q2','A','B')"><span class="opt-letter">A</span>F sin θ</div>
+      <div class="opt" onclick="answerMCQ('q2','B','B')"><span class="opt-letter">B</span>F cos θ</div>
+      <div class="opt" onclick="answerMCQ('q2','C','B')"><span class="opt-letter">C</span>F tan θ</div>
+      <div class="opt" onclick="answerMCQ('q2','D','B')"><span class="opt-letter">D</span>F / sin θ</div>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">A box rests on a slope inclined at 30° to the horizontal. Its weight is 60 N. What is the component of the weight acting <em>down</em> the slope?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q3','A','C')"><span class="opt-letter">A</span>60 N</div>
+      <div class="opt" onclick="answerMCQ('q3','B','C')"><span class="opt-letter">B</span>52.0 N</div>
+      <div class="opt" onclick="answerMCQ('q3','C','C')"><span class="opt-letter">C</span>30.0 N</div>
+      <div class="opt" onclick="answerMCQ('q3','D','C')"><span class="opt-letter">D</span>34.6 N</div>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">In the rectangle method (OABC) for resolving a force, the force vector lies along which part of the rectangle?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q4','A','C')"><span class="opt-letter">A</span>One of the shorter sides</div>
+      <div class="opt" onclick="answerMCQ('q4','B','C')"><span class="opt-letter">B</span>One of the longer sides</div>
+      <div class="opt" onclick="answerMCQ('q4','C','C')"><span class="opt-letter">C</span>The diagonal</div>
+      <div class="opt" onclick="answerMCQ('q4','D','C')"><span class="opt-letter">D</span>The perimeter</div>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">A car of weight 12 kN is parked on a road inclined at 10°. The ratio of the small side to the diagonal of the force rectangle is 1 : 6.0. What is the component of weight <em>parallel</em> to the slope?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q5','A','B')"><span class="opt-letter">A</span>1.0 kN</div>
+      <div class="opt" onclick="answerMCQ('q5','B','B')"><span class="opt-letter">B</span>2.0 kN</div>
+      <div class="opt" onclick="answerMCQ('q5','C','B')"><span class="opt-letter">C</span>6.0 kN</div>
+      <div class="opt" onclick="answerMCQ('q5','D','B')"><span class="opt-letter">D</span>12.0 kN</div>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-text">For the car parked on the slope above, the frictional force from the road acts in which direction?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q6','A','D')"><span class="opt-letter">A</span>Vertically downward</div>
+      <div class="opt" onclick="answerMCQ('q6','B','D')"><span class="opt-letter">B</span>Perpendicular into the slope</div>
+      <div class="opt" onclick="answerMCQ('q6','C','D')"><span class="opt-letter">C</span>Down the slope</div>
+      <div class="opt" onclick="answerMCQ('q6','D','D')"><span class="opt-letter">D</span>Up the slope</div>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-text">An object is in equilibrium. Which of the following must be true?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q7','A','C')"><span class="opt-letter">A</span>The object is stationary</div>
+      <div class="opt" onclick="answerMCQ('q7','B','C')"><span class="opt-letter">B</span>Only one force acts on the object</div>
+      <div class="opt" onclick="answerMCQ('q7','C','C')"><span class="opt-letter">C</span>The resultant force on the object is zero</div>
+      <div class="opt" onclick="answerMCQ('q7','D','C')"><span class="opt-letter">D</span>All forces on the object are equal in size</div>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-text">An aircraft is in level flight heading east. A wind force of 800 N acts at 30° to the line of flight. What is the component of the wind force <em>along</em> the direction of flight? (cos 30° ≈ 0.866, sin 30° = 0.5)</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q8','A','B')"><span class="opt-letter">A</span>400 N</div>
+      <div class="opt" onclick="answerMCQ('q8','B','B')"><span class="opt-letter">B</span>693 N</div>
+      <div class="opt" onclick="answerMCQ('q8','C','B')"><span class="opt-letter">C</span>800 N</div>
+      <div class="opt" onclick="answerMCQ('q8','D','B')"><span class="opt-letter">D</span>1600 N</div>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-text">A trolley of weight 510 N is on a slope inclined at 15°. A student pushes it up the slope. The student's force is <em>greater</em> than the component of weight down the slope. What is the most likely reason?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q9','A','C')"><span class="opt-letter">A</span>The trolley is too heavy to move</div>
+      <div class="opt" onclick="answerMCQ('q9','B','C')"><span class="opt-letter">B</span>The slope angle was measured incorrectly</div>
+      <div class="opt" onclick="answerMCQ('q9','C','C')"><span class="opt-letter">C</span>The student must also overcome friction acting down the slope</div>
+      <div class="opt" onclick="answerMCQ('q9','D','C')"><span class="opt-letter">D</span>The normal reaction force increases as the trolley moves</div>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-text">A box of weight 50 N is at rest on a slope inclined at 30°. What is the <em>normal reaction force</em> from the slope on the box? (sin 30° = 0.5, cos 30° ≈ 0.866)</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q10','A','C')"><span class="opt-letter">A</span>25.0 N</div>
+      <div class="opt" onclick="answerMCQ('q10','B','C')"><span class="opt-letter">B</span>50.0 N</div>
+      <div class="opt" onclick="answerMCQ('q10','C','C')"><span class="opt-letter">C</span>43.3 N</div>
+      <div class="opt" onclick="answerMCQ('q10','D','C')"><span class="opt-letter">D</span>57.7 N</div>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — TRUE / FALSE (Q11–Q20)
+  ══════════════════════════════════════ -->
+  <div class="section-title">✅ Part 2 — True or False (10 questions)</div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-text">A force can only be resolved into components if it is acting on a slope.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q11','T','F')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q11','F','F')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-text">The two components of a resolved force have the same overall effect as the original force.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q12','T','T')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q12','F','T')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-text">The normal reaction force on a box resting on a slope is always equal to the full weight of the box.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q13','T','F')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q13','F','F')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-text">For an object to be in equilibrium, the resultant force on it must be zero.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q14','T','T')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q14','F','T')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-text">An object moving at constant velocity is NOT in equilibrium.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q15','T','F')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q15','F','F')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-text">When resolving non-parallel forces to check for equilibrium, the components along each perpendicular axis must each sum to zero.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q16','T','T')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q16','F','T')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-text">If the floor is too slippery, a ladder leaning against a wall will slide because friction is insufficient to balance the component of weight parallel to the floor.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q17','T','T')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q17','F','T')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-text">The component of a weight acting <em>down</em> a slope increases as the slope angle increases.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q18','T','T')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q18','F','T')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-text">In the rectangle method, the sides of the rectangle represent the original force, and the diagonal represents the components.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q19','T','F')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q19','F','F')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-text">For a box in equilibrium on a slope, the friction force equals the component of the box's weight acting down the slope.</div>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q20','T','T')">TRUE</button>
+      <button class="tf-btn" onclick="answerTF('q20','F','T')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- ── RESULT BOX ── -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-label">out of 20</div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+    <br>
+    <a href="physics-p8-6-revision.html" class="revision-link">📖 Back to Revision Notes</a>
+  </div>
+
+</div>
+
+<script>
+  const SCORE_KEY = 'physics-p8-6-score';
+  const TOTAL = 20;
+  let answered = 0;
+  let score = 0;
+
+  const feedbacks = {
+    q1:  { correct: '✅ Correct! Resolving splits one force into two perpendicular components.',
+            wrong:   '❌ Not quite. Resolving means splitting a force into two perpendicular components — the reverse of finding a resultant.' },
+    q2:  { correct: '✅ Correct! F cos θ gives the component adjacent to the angle — the horizontal one.',
+            wrong:   '❌ Remember: cos θ → adjacent (horizontal); sin θ → opposite (vertical).' },
+    q3:  { correct: '✅ Correct! 60 × sin 30° = 60 × 0.5 = 30 N down the slope.',
+            wrong:   '❌ The component down the slope = W sin θ = 60 × sin 30° = 30 N.' },
+    q4:  { correct: '✅ Correct! The force vector lies along the diagonal of rectangle OABC.',
+            wrong:   '❌ In the rectangle method the force vector IS the diagonal; the sides are the components.' },
+    q5:  { correct: '✅ Correct! 12 kN ÷ 6 = 2.0 kN parallel to the slope.',
+            wrong:   '❌ Use the ratio: parallel component = 12 kN ÷ 6 = 2.0 kN.' },
+    q6:  { correct: '✅ Correct! Friction acts up the slope to oppose the tendency to slide down.',
+            wrong:   '❌ Friction opposes motion, so it acts up the slope against the parallel component of weight.' },
+    q7:  { correct: '✅ Correct! Equilibrium requires the resultant force to be zero. The object can still be moving at constant velocity.',
+            wrong:   '❌ Equilibrium means zero resultant force — the object could still be moving at constant velocity.' },
+    q8:  { correct: '✅ Correct! 800 × cos 30° = 800 × 0.866 ≈ 693 N along the direction of flight.',
+            wrong:   '❌ The component along the flight direction = 800 × cos 30° ≈ 693 N.' },
+    q9:  { correct: '✅ Correct! The student must overcome both the weight component AND friction down the slope.',
+            wrong:   '❌ The student\'s extra force is needed to overcome friction acting down the slope in addition to the weight component.' },
+    q10: { correct: '✅ Correct! Normal reaction N = W cos θ = 50 × cos 30° ≈ 43.3 N.',
+            wrong:   '❌ N = W cos θ = 50 × 0.866 ≈ 43.3 N. The normal reaction is perpendicular to the slope, not equal to the full weight.' },
+    q11: { correct: '✅ Correct — FALSE! Any force can be resolved into components, not just forces on slopes.',
+            wrong:   '❌ This is false. Resolution works for any force in any situation, not just on slopes.' },
+    q12: { correct: '✅ Correct — TRUE! The two components together have exactly the same effect as the original force.',
+            wrong:   '❌ This is true. The whole point of resolution is that the components are equivalent to the original force.' },
+    q13: { correct: '✅ Correct — FALSE! On a slope, N = W cos θ, which is less than W (unless θ = 0°).',
+            wrong:   '❌ This is false. On a slope, the normal reaction N = W cos θ — only equal to W on a flat surface.' },
+    q14: { correct: '✅ Correct — TRUE! Zero resultant force is the key condition for equilibrium.',
+            wrong:   '❌ This is true. Equilibrium always means the resultant force is zero.' },
+    q15: { correct: '✅ Correct — FALSE! Constant velocity means zero acceleration, so the resultant force is zero — the object IS in equilibrium.',
+            wrong:   '❌ This is false. Constant velocity → zero resultant force → equilibrium.' },
+    q16: { correct: '✅ Correct — TRUE! Both perpendicular directions must independently sum to zero for equilibrium.',
+            wrong:   '❌ This is true. You must check both axes separately — each must sum to zero.' },
+    q17: { correct: '✅ Correct — TRUE! Too little friction means the forces don\'t balance and the ladder slides.',
+            wrong:   '❌ This is true. The ladder slides when friction < the component of weight along the direction of sliding.' },
+    q18: { correct: '✅ Correct — TRUE! W sin θ increases as θ increases, so steeper slope → larger component down the slope.',
+            wrong:   '❌ This is true. sin θ increases with angle, so W sin θ gets larger as the slope gets steeper.' },
+    q19: { correct: '✅ Correct — FALSE! It\'s the other way round: the diagonal = the force vector; the sides = the components.',
+            wrong:   '❌ This is false. The diagonal represents the original force; the rectangle\'s sides are the components.' },
+    q20: { correct: '✅ Correct — TRUE! For equilibrium the friction must exactly balance the weight component down the slope.',
+            wrong:   '❌ This is true. With zero resultant, friction up the slope = weight component down the slope.' },
+  };
+
+  function updateProgress() {
+    const pct = Math.round((answered / TOTAL) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressVal').textContent = answered + ' / ' + TOTAL;
+    if (answered === TOTAL) showResult();
+  }
+
+  function answerMCQ(qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.classList.contains('locked')) return;
+    block.classList.add('locked');
+
+    const opts = block.querySelectorAll('.opt');
+    const letters = ['A','B','C','D'];
+    opts.forEach((opt, i) => {
+      opt.classList.add('locked');
+      if (letters[i] === correct) opt.classList.add('correct-ans');
+      else if (letters[i] === chosen && chosen !== correct) opt.classList.add('wrong-ans');
+    });
+
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+    answered++;
+
+    const fb = document.getElementById('fb-' + qid);
+    fb.textContent = isCorrect ? feedbacks[qid].correct : feedbacks[qid].wrong;
+    fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+    block.classList.add(isCorrect ? 'correct' : 'wrong');
+    updateProgress();
+  }
+
+  function answerTF(qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.classList.contains('locked')) return;
+    block.classList.add('locked');
+
+    const btns = block.querySelectorAll('.tf-btn');
+    btns.forEach(btn => {
+      btn.classList.add('locked');
+      const val = btn.textContent === 'TRUE' ? 'T' : 'F';
+      if (val === correct) btn.classList.add('correct-ans');
+      else if (val === chosen && chosen !== correct) btn.classList.add('wrong-ans');
+    });
+
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+    answered++;
+
+    const fb = document.getElementById('fb-' + qid);
+    fb.textContent = isCorrect ? feedbacks[qid].correct : feedbacks[qid].wrong;
+    fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+    block.classList.add(isCorrect ? 'correct' : 'wrong');
+    updateProgress();
+  }
+
+  function showResult() {
+    localStorage.setItem(SCORE_KEY, score);
+    const box = document.getElementById('resultBox');
+    box.classList.add('show');
+    document.getElementById('resultScore').textContent = score + '/20';
+
+    let emoji, msgClass, msg, sub;
+    if (score >= 18) {
+      emoji = '🏆'; msgClass = 'great';
+      msg = 'Outstanding! Show this to mum! 🎉';
+      sub = 'You\'ve nailed Resolution of Forces. Brilliant work!';
+    } else if (score >= 14) {
+      emoji = '⭐'; msgClass = 'ok';
+      msg = 'Good effort! Show this to mum 😊';
+      sub = 'Solid understanding — review any questions you missed and try again.';
+    } else if (score >= 10) {
+      emoji = '📖'; msgClass = 'ok';
+      msg = 'Getting there — show this to mum and keep going!';
+      sub = 'Go back over the revision notes and focus on components & equilibrium.';
+    } else {
+      emoji = '💪'; msgClass = 'retry';
+      msg = 'Keep practising — you\'ll get there!';
+      sub = 'Re-read the revision page carefully, then try the quiz again.';
+    }
+
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('resultMsg').className = 'result-msg ' + msgClass;
+    document.getElementById('resultSub').textContent = sub;
+
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('progressVal').textContent = '0 / 20';
+    document.getElementById('resultBox').classList.remove('show');
+
+    document.querySelectorAll('.q-block').forEach(b => {
+      b.className = 'q-block';
+    });
+    document.querySelectorAll('.opt').forEach(o => {
+      o.className = 'opt';
+    });
+    document.querySelectorAll('.tf-btn').forEach(b => {
+      b.className = 'tf-btn';
+    });
+    document.querySelectorAll('.feedback').forEach(f => {
+      f.className = 'feedback';
+      f.textContent = '';
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
