@@ -27,6 +27,11 @@ header{text-align:center;margin-bottom:52px}
 .card-biology::before{background:linear-gradient(90deg,#5e9f6b,#a0d4a8)}
 .card-chemistry::before{background:linear-gradient(90deg,#f29a2e,#f4cf55)}
 .card-physics::before{background:linear-gradient(90deg,#7353a6,#b09de0)}
+.card-flashcards::before{background:linear-gradient(90deg,#d94b42,#7353a6,#3f6f9a)}
+.card-maths::before{background:linear-gradient(90deg,#1f2a33,#67737b)}
+.card-english::before{background:linear-gradient(90deg,#b35f8f,#e8a6c8)}
+.card-spanish::before{background:linear-gradient(90deg,#f29a2e,#f4cf55)}
+.card-wide{grid-column:1/-1}
 .card-arrow{position:absolute;top:22px;right:22px;font-size:20px;color:#dbcfc0;transition:color .2s,transform .2s}
 .card:hover .card-arrow{color:#d94b42;transform:translate(2px,-2px)}
 .card-icon{font-size:40px;margin-bottom:12px;display:block}
@@ -45,8 +50,17 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
     <div class="logo">My GCSE<br><span>Revision</span></div>
     <div class="subtitle">Choose your subject</div>
   </header>
-  <div class="section-label">Subjects</div>
+  <div class="section-label">Revision Hub</div>
   <div class="subjects">
+
+    <a href="flashcards.html" class="card card-flashcards card-wide">
+      <span class="card-icon">🃏</span>
+      <div class="card-name">Flashcards</div>
+      <div class="card-desc">Quick revision by subject · History available now</div>
+      <div class="badge badge-on">✅ Available</div>
+      <span class="card-arrow">↗</span>
+    </a>
+
     <a href="history-index.html" class="card card-history">
       <span class="card-icon">🏛️</span>
       <div class="card-name">History</div>
@@ -54,12 +68,14 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="badge badge-on">✅ Available</div>
       <span class="card-arrow">↗</span>
     </a>
+
     <div class="card card-computing card-soon">
       <span class="card-icon">💻</span>
-      <div class="card-name">Computing Science</div>
+      <div class="card-name">Computing</div>
       <div class="card-desc">Algorithms, programming, networks</div>
-      <div class="badge badge-soon">Coming soon</div>
+      <div class="badge badge-soon">🚧 Coming soon</div>
     </div>
+
     <a href="biology-index.html" class="card card-biology">
       <span class="card-icon">🧬</span>
       <div class="card-name">Biology</div>
@@ -67,12 +83,14 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="badge badge-on">✅ Available</div>
       <span class="card-arrow">↗</span>
     </a>
+
     <div class="card card-chemistry card-soon">
       <span class="card-icon">⚗️</span>
       <div class="card-name">Chemistry</div>
       <div class="card-desc">Atoms, reactions, bonding</div>
-      <div class="badge badge-soon">Coming soon</div>
+      <div class="badge badge-soon">🚧 Coming soon</div>
     </div>
+
     <a href="physics-index.html" class="card card-physics">
       <span class="card-icon">⚡</span>
       <div class="card-name">Physics</div>
@@ -80,6 +98,28 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#b0bac0;font-weigh
       <div class="badge badge-on">✅ Available</div>
       <span class="card-arrow">↗</span>
     </a>
+
+    <div class="card card-maths card-soon">
+      <span class="card-icon">🧮</span>
+      <div class="card-name">Maths</div>
+      <div class="card-desc">Formulae, methods and practice questions</div>
+      <div class="badge badge-soon">🚧 Coming soon</div>
+    </div>
+
+    <div class="card card-english card-soon">
+      <span class="card-icon">📖</span>
+      <div class="card-name">English</div>
+      <div class="card-desc">Literature, language and exam technique</div>
+      <div class="badge badge-soon">🚧 Coming soon</div>
+    </div>
+
+    <div class="card card-spanish card-soon">
+      <span class="card-icon">🇪🇸</span>
+      <div class="card-name">Spanish</div>
+      <div class="card-desc">Vocabulary, grammar and speaking phrases</div>
+      <div class="badge badge-soon">🚧 Coming soon</div>
+    </div>
+
   </div>
   <footer>My GCSE Revision · All subjects</footer>
 </div>
