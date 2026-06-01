@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>P8.2 Forces Between Objects — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2332;
+    --muted: #5a7080;
+    --paper: #ffffff;
+    --line: #cde4f5;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --hero-top: #0d2c5a;
+    --hero-bot: #1565c0;
+    --card-border: #b8d9f5;
+    --red: #fce4ec;
+    --red2: #c62828;
+    --green: #e8f5e9;
+    --green2: #2e7d32;
+    --orange: #fff3e0;
+    --orange2: #e65100;
+    --purple: #ede7f6;
+    --purple2: #6a1b9a;
+    --yellow: #fffde7;
+    --dark: #0d2c5a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--dark);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: #90caf9;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  nav a:first-child { color: white; font-size: 1rem; }
+  nav .sep { color: #4a6080; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--hero-top) 0%, var(--hero-bot) 100%);
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(100,181,246,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  }
+  .hero-emoji {
+    font-size: 4.5rem;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 2px solid rgba(100,181,246,0.5);
+    color: #90caf9;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900;
+    color: white;
+    position: relative;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .hero-sub {
+    color: #90caf9;
+    font-size: 1.05rem;
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    position: relative;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: #e3f2fd;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--dark);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .score-bar span { color: #90caf9; font-weight: 700; font-size: 0.85rem; }
+  .progress-track {
+    flex: 1; min-width: 120px; height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #42a5f5, #64b5f6);
+    border-radius: 999px;
+    transition: width 0.6s ease;
+    width: 0%;
+  }
+  .score-pct { color: white; font-weight: 800; font-size: 0.9rem; min-width: 36px; }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--paper);
+    border: 2px solid var(--card-border);
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+  }
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--accent2);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title .icon {
+    width: 36px; height: 36px;
+    background: var(--bg);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist { display: flex; flex-direction: column; gap: 10px; }
+  .check-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    user-select: none;
+  }
+  .check-item:hover { border-color: var(--accent); background: #dbedf9; }
+  .check-item.done {
+    background: var(--green);
+    border-color: #81c784;
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .check-box {
+    width: 24px; height: 24px; flex-shrink: 0;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    transition: all 0.25s;
+  }
+  .check-item.done .check-box {
+    background: var(--green2);
+    border-color: var(--green2);
+    color: white;
+  }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .big-idea {
+    background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+    border-radius: 18px;
+    padding: 20px 16px;
+    color: white;
+    text-align: center;
+  }
+  .big-idea .bi-emoji { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .big-idea .bi-label { font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 0.85rem; }
+  .big-idea .bi-def { font-size: 0.78rem; opacity: 0.85; margin-top: 4px; }
+
+  /* ── STATEMENT / KEY FACT ── */
+  .statement {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid var(--accent2);
+    border-radius: 0 16px 16px 0;
+    padding: 18px 22px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent2);
+  }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: var(--yellow);
+    border: 2px solid #f9a825;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .exam-tip .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .exam-tip strong { color: #e65100; }
+
+  /* ── HIGHLIGHT STRIPS ── */
+  .strip {
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .strip.red { background: var(--red); color: var(--red2); }
+  .strip.green { background: var(--green); color: var(--green2); }
+  .strip.orange { background: var(--orange); color: var(--orange2); }
+  .strip .s-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  /* ── TILE GRID ── */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+  }
+  .tile {
+    border-radius: 16px;
+    padding: 16px 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+  .tile h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; opacity: 0.75; }
+  .tile p { font-size: 0.85rem; font-weight: 600; line-height: 1.4; }
+  .tile.blue { background: var(--purple); color: var(--purple2); }
+  .tile.red { background: var(--red); color: var(--red2); }
+  .tile.green { background: var(--green); color: var(--green2); }
+  .tile.orange { background: var(--orange); color: var(--orange2); }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .compare-col {
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .compare-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  .compare-col.a h4 { color: #1565c0; }
+  .compare-col.b h4 { color: #c62828; }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .compare-col li { font-size: 0.88rem; font-weight: 600; display: flex; gap: 8px; align-items: flex-start; }
+  .compare-col li::before { content: '→'; flex-shrink: 0; }
+  .compare-col.a li::before { color: #1565c0; }
+  .compare-col.b li::before { color: #c62828; }
+
+  /* ── INTERACTIVE FORCE DEMO ── */
+  .force-demo {
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+  }
+  .force-demo h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--accent2);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .demo-scene {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 0 auto 16px;
+    max-width: 480px;
+    position: relative;
+  }
+  .demo-obj {
+    width: 70px; height: 70px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .demo-obj.blue { background: linear-gradient(135deg,#1565c0,#42a5f5); }
+  .demo-obj.red-obj { background: linear-gradient(135deg,#c62828,#ef5350); }
+  .rope {
+    flex: 1; min-width: 60px; height: 8px;
+    background: linear-gradient(90deg, #8d6e63, #a1887f, #8d6e63);
+    border-radius: 4px;
+    position: relative;
+  }
+  .arrow-pair {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 480px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent2);
+    padding: 0 8px;
+  }
+  .arrow-pair span { display: flex; align-items: center; gap: 4px; animation: pulse-arrow 1.5s ease-in-out infinite; }
+  .arrow-pair span:first-child { animation-delay: 0s; }
+  .arrow-pair span:last-child { animation-delay: 0.75s; flex-direction: row-reverse; }
+  @keyframes pulse-arrow {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+  .demo-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* friction demo */
+  .friction-scene {
+    display: flex; flex-direction: column; gap: 12px;
+    max-width: 420px; margin: 0 auto;
+  }
+  .car-track {
+    position: relative;
+    background: #e3f2fd;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    height: 70px;
+    overflow: hidden;
+    display: flex; align-items: center;
+  }
+  .ground-line {
+    position: absolute; bottom: 12px; left: 0; right: 0;
+    height: 3px; background: #90a4ae; border-radius: 2px;
+  }
+  .car-emoji {
+    font-size: 2.2rem;
+    position: absolute;
+    bottom: 14px;
+    animation: drive 4s linear infinite;
+  }
+  @keyframes drive {
+    0% { left: 5%; }
+    100% { left: 78%; }
+  }
+  .friction-arrows {
+    display: flex; justify-content: space-between;
+    padding: 0 16px;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+  .friction-arrows .fwd { color: var(--green2); }
+  .friction-arrows .rev { color: var(--red2); }
+
+  /* ── KEYWORDS PILLS ── */
+  .keywords {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .pill {
+    background: linear-gradient(135deg, #1565c0, #1976d2);
+    color: white;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: default;
+    transition: transform 0.2s;
+  }
+  .pill:hover { transform: scale(1.06); }
+  .pill.green-pill { background: linear-gradient(135deg, #2e7d32, #43a047); }
+  .pill.red-pill { background: linear-gradient(135deg, #c62828, #e53935); }
+  .pill.orange-pill { background: linear-gradient(135deg, #e65100, #f57c00); }
+  .pill.purple-pill { background: linear-gradient(135deg, #6a1b9a, #8e24aa); }
+
+  /* ── EXAMPLES 4-col ── */
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .example-card {
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+  }
+  .example-card .ex-emoji { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .example-card .ex-title { font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--accent2); margin-bottom: 4px; }
+  .example-card .ex-desc { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+
+  /* ── WARNING BOX ── */
+  .warning {
+    background: var(--red);
+    border: 2.5px solid #e57373;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .warning .w-icon { font-size: 1.4rem; }
+  .warning p { color: var(--red2); font-weight: 700; font-size: 0.9rem; }
+
+  /* ── KEY POINTS ── */
+  .key-points { display: flex; flex-direction: column; gap: 10px; }
+  .kp {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .kp::before { content: '★'; color: var(--accent); flex-shrink: 0; }
+
+  /* ── MARK AS READ ── */
+  .mark-read-zone {
+    text-align: center;
+    padding: 32px;
+  }
+  .mark-btn {
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(21,101,192,0.35);
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .mark-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(21,101,192,0.45); }
+  .mark-btn.done { background: linear-gradient(135deg, #2e7d32, #43a047); }
+  .mark-confirmation {
+    margin-top: 16px;
+    font-weight: 700;
+    color: var(--green2);
+    font-size: 1rem;
+    display: none;
+  }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    background: linear-gradient(135deg, #0d2c5a 0%, #1565c0 100%);
+    border-radius: 20px;
+    padding: 28px 32px;
+    text-align: center;
+    color: white;
+  }
+  .quiz-cta h3 { font-size: 1.3rem; margin-bottom: 8px; }
+  .quiz-cta p { color: #90caf9; font-weight: 600; margin-bottom: 20px; font-size: 0.9rem; }
+  .quiz-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: white;
+    color: #1565c0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 14px 36px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+  .quiz-link:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.28); }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+    .card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="#">Physics</a>
+  <span class="sep">›</span>
+  <a href="#">P8 Forces in Balance</a>
+  <span class="sep">›</span>
+  <a href="#">P8.2</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">⚡</span>
+  <div class="chapter-badge">Physics · P8 Forces in Balance · Chapter 2</div>
+  <h1>Forces Between Objects</h1>
+  <p class="hero-sub">P8.2 — Newton's Third Law & Contact Forces</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Newton's 3rd Law</span>
+    <span class="hero-tag">Contact Forces</span>
+    <span class="hero-tag">Equal & Opposite</span>
+    <span class="hero-tag">Friction</span>
+    <span class="hero-tag">Driving Force</span>
+  </div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span>📖 Learning progress</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="score-pct" id="progressPct">0%</span>
+</div>
+
+<main>
+
+  <!-- LEARNING OBJECTIVES CHECKLIST -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🎯</span> Learning Objectives</div>
+    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:16px;font-weight:600;">Tick each one off as you go — track your progress above!</p>
+    <div class="checklist" id="checklist">
+      <div class="check-item" data-key="obj1" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Describe what forces can do to objects</span>
+      </div>
+      <div class="check-item" data-key="obj2" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>State the unit of force (the newton, N)</span>
+      </div>
+      <div class="check-item" data-key="obj3" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Explain what is meant by a contact force</span>
+      </div>
+      <div class="check-item" data-key="obj4" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Describe the forces exerted when two objects interact (Newton's Third Law)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div class="card">
+    <div class="card-title"><span class="icon">💡</span> The Big Ideas</div>
+    <div class="big-idea-grid">
+      <div class="big-idea">
+        <span class="bi-emoji">💪</span>
+        <div class="bi-label">Force</div>
+        <div class="bi-def">A push or pull acting on an object due to interaction with another object</div>
+      </div>
+      <div class="big-idea">
+        <span class="bi-emoji">🔗</span>
+        <div class="bi-label">Contact Force</div>
+        <div class="bi-def">Requires objects to touch each other — friction, tension, normal</div>
+      </div>
+      <div class="big-idea">
+        <span class="bi-emoji">🔄</span>
+        <div class="bi-label">Newton's 3rd Law</div>
+        <div class="bi-def">Two objects exert equal and opposite forces on each other</div>
+      </div>
+      <div class="big-idea">
+        <span class="bi-emoji">🚗</span>
+        <div class="bi-label">Driving Force</div>
+        <div class="bi-def">Engine force that moves the car; balanced by friction from the road</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATEMENT -->
+  <div class="statement">
+    ⚡ Newton's Third Law: When two objects interact, they always exert equal and opposite forces on each other — every single time, no exceptions.
+  </div>
+
+  <!-- CONTACT vs NON-CONTACT COMPARE -->
+  <div class="card">
+    <div class="card-title"><span class="icon">⚖️</span> Contact vs Non-Contact Forces</div>
+    <div class="compare">
+      <div class="compare-col a">
+        <h4>✋ Contact Forces</h4>
+        <ul>
+          <li>Objects must touch to interact</li>
+          <li>Friction — opposes motion</li>
+          <li>Air resistance — drag through air</li>
+          <li>Tension — stretching forces in ropes</li>
+          <li>Normal contact force — support</li>
+        </ul>
+      </div>
+      <div class="compare-col b">
+        <h4>🌐 Non-Contact Forces</h4>
+        <ul>
+          <li>Act at a distance — no touching needed</li>
+          <li>Magnetic force — magnets attracting/repelling</li>
+          <li>Electrostatic force — charged objects</li>
+          <li>Gravity — force of attraction between masses</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE DEMO — EQUAL & OPPOSITE -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🎮</span> Interactive Demo: Equal & Opposite Forces</div>
+    <div class="force-demo">
+      <h4>Two roller skaters on a rope</h4>
+      <div class="demo-scene">
+        <div class="demo-obj blue">🧑</div>
+        <div class="rope"></div>
+        <div class="demo-obj red-obj">👩</div>
+      </div>
+      <div class="arrow-pair">
+        <span>⬅️ Pull (100 N)</span>
+        <span>Pull (100 N) ➡️</span>
+      </div>
+      <div class="demo-label">Each skater pulls the other with exactly 100 N — same size, opposite direction</div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="strip green">
+        <span class="s-icon">✅</span>
+        The forces are equal in magnitude and opposite in direction — this is Newton's Third Law in action.
+      </div>
+    </div>
+  </div>
+
+  <!-- FRICTION IN ACTION DEMO -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🚘</span> Friction in Action</div>
+    <div class="force-demo">
+      <h4>Driving force vs Friction at the tyre</h4>
+      <div class="friction-scene">
+        <div class="car-track">
+          <div class="ground-line"></div>
+          <div class="car-emoji">🚗</div>
+        </div>
+        <div class="friction-arrows">
+          <span class="fwd">➡️ Friction of road on tyre (forward)</span>
+          <span class="rev">Friction of tyre on road (backward) ⬅️</span>
+        </div>
+      </div>
+      <div class="demo-label" style="margin-top:12px;">These two friction forces are equal and opposite — a Newton's Third Law pair</div>
+    </div>
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
+      <div class="strip orange">
+        <span class="s-icon">⚠️</span>
+        The <strong>driving force</strong> is the engine/motive force pushing the car forward.
+      </div>
+      <div class="strip green">
+        <span class="s-icon">✅</span>
+        Friction acts at the contact point between tyre and road — it's what actually propels the car.
+      </div>
+    </div>
+  </div>
+
+  <!-- REAL WORLD EXAMPLES -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌍</span> Real-World Examples of Newton's 3rd Law</div>
+    <div class="examples-grid">
+      <div class="example-card">
+        <span class="ex-emoji">🥊</span>
+        <div class="ex-title">Boxer & Bag</div>
+        <div class="ex-desc">Punch at 100 N → bag pushes back with 100 N</div>
+      </div>
+      <div class="example-card">
+        <span class="ex-emoji">🌍</span>
+        <div class="ex-title">Object & Earth</div>
+        <div class="ex-desc">Gravity pulls object down; object pulls Earth up (equal forces!)</div>
+      </div>
+      <div class="example-card">
+        <span class="ex-emoji">🚜</span>
+        <div class="ex-title">Tractor & Car</div>
+        <div class="ex-desc">Pull on rope is equal & opposite on both vehicles</div>
+      </div>
+      <div class="example-card">
+        <span class="ex-emoji">🛹</span>
+        <div class="ex-title">Roller Skaters</div>
+        <div class="ex-desc">Pulling a rope — each exerts equal & opposite force</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TILES: KEY CONCEPTS -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🧩</span> Key Concepts at a Glance</div>
+    <div class="tile-grid">
+      <div class="tile green">
+        <h4>Force definition</h4>
+        <p>A push or pull due to interaction with another object</p>
+      </div>
+      <div class="tile blue">
+        <h4>Unit of force</h4>
+        <p>The newton (N) — named after Isaac Newton</p>
+      </div>
+      <div class="tile orange">
+        <h4>Newton's 3rd Law</h4>
+        <p>Equal and opposite forces always act in pairs between objects</p>
+      </div>
+      <div class="tile red">
+        <h4>Friction</h4>
+        <p>Contact force opposing relative motion at surfaces</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM TIP -->
+  <div class="exam-tip">
+    <span class="tip-icon">📝</span>
+    <div>
+      <strong>Exam Tip:</strong> When describing a Newton's Third Law pair, you must name <em>both</em> objects and <em>both</em> forces — e.g. "the force of the tyre on the road" AND "the force of the road on the tyre." Don't just say "equal and opposite forces."
+    </div>
+  </div>
+
+  <!-- WARNING BOX -->
+  <div class="warning">
+    <span class="w-icon">🚨</span>
+    <p>Common mistake: Newton's Third Law pairs act on <u>different</u> objects. A book resting on a table — the weight of the book downward and the normal force of the table upward are NOT a Newton's Third Law pair (they act on the same object!)</p>
+  </div>
+
+  <!-- THE MUD SCENARIO -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🌧️</span> In the Mud — Unequal Effects</div>
+    <p style="margin-bottom:14px;font-weight:600;">To pull a car from mud, the tractor's engine force must be <strong>greater</strong> than the mud's resistance force on the car.</p>
+    <div class="strip red">
+      <span class="s-icon">❌</span>
+      The mud's force on the tractor ≠ mud's force on the car (the forces on each object are different sizes).
+    </div>
+    <div style="margin-top:12px;">
+      <div class="strip orange">
+        <span class="s-icon">⚠️</span>
+        The rope pull on the car = the car's pull on the rope — <em>that</em> is the Newton's Third Law pair.
+      </div>
+    </div>
+    <div style="margin-top:16px;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:14px 18px;">
+      <strong style="color:var(--accent2);font-family:Poppins,sans-serif;font-size:0.85rem;">Remember:</strong>
+      <p style="font-size:0.88rem;margin-top:6px;font-weight:600;">Newton's 3rd Law is always true — equal & opposite forces between two objects — but the <em>effect</em> depends on mass. The larger the mass, the smaller the acceleration (Newton's 2nd Law — coming in P10.1!).</p>
+    </div>
+  </div>
+
+  <!-- GLOSSARY KEYWORDS -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📖</span> Keyword Glossary</div>
+    <div class="keywords">
+      <span class="pill">Force</span>
+      <span class="pill green-pill">Newton (N)</span>
+      <span class="pill red-pill">Friction</span>
+      <span class="pill orange-pill">Driving Force</span>
+      <span class="pill purple-pill">Contact Force</span>
+      <span class="pill">Newton's 3rd Law</span>
+      <span class="pill green-pill">Normal Contact Force</span>
+      <span class="pill red-pill">Air Resistance</span>
+      <span class="pill orange-pill">Tension</span>
+      <span class="pill purple-pill">Non-Contact Force</span>
+      <span class="pill">Gravity</span>
+      <span class="pill green-pill">Electrostatic Force</span>
+      <span class="pill red-pill">Magnetic Force</span>
+      <span class="pill orange-pill">Interaction Pair</span>
+    </div>
+  </div>
+
+  <!-- KEY POINTS -->
+  <div class="card">
+    <div class="card-title"><span class="icon">⭐</span> Key Points Summary</div>
+    <div class="key-points">
+      <div class="kp">Forces can change the shape of an object, or change its motion or its state of rest.</div>
+      <div class="kp">The unit of force is the newton (N).</div>
+      <div class="kp">A contact force is a force that acts on objects only when the objects touch each other.</div>
+      <div class="kp">When two objects interact, they always exert equal and opposite forces on each other.</div>
+      <div class="kp">The driving force on a car is the engine/motive force — friction between tyre and road actually propels it forward.</div>
+      <div class="kp">The effects of equal forces on each object depend on their masses — larger mass = smaller effect.</div>
+    </div>
+  </div>
+
+  <!-- MARK AS READ -->
+  <div class="card mark-read-zone">
+    <div class="card-title" style="justify-content:center;"><span class="icon">✅</span> Ready? Mark as Read!</div>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:24px;font-weight:600;">Finished revising P8.2? Tap below to save your progress.</p>
+    <button class="mark-btn" id="markBtn" onclick="markRead()">
+      <span id="markIcon">📖</span>
+      <span id="markText">Mark as Read</span>
+    </button>
+    <div class="mark-confirmation" id="markConfirm">
+      🎉 Brilliant! Show this to mum — you've read P8.2 Forces Between Objects!
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h3>💬 Ready to test yourself?</h3>
+    <p>Take the quick check quiz on P8.2 Forces Between Objects</p>
+    <a href="physics-p8-1-quickcheck.html" class="quiz-link">
+      🚀 Start Quick Check
+    </a>
+  </div>
+
+</main>
+
+<script>
+  const PAGE_KEY = 'physics-p8-1-read';
+  const CHECKS = ['obj1','obj2','obj3','obj4'];
+
+  // Load saved checklist state
+  function loadChecks() {
+    CHECKS.forEach(key => {
+      const saved = localStorage.getItem('check-p8-1-' + key);
+      if (saved === 'done') {
+        const el = document.querySelector('[data-key="' + key + '"]');
+        if (el) el.classList.add('done');
+      }
+    });
+    updateProgress();
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    const key = el.dataset.key;
+    localStorage.setItem('check-p8-1-' + key, el.classList.contains('done') ? 'done' : '');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.check-item').length;
+    const done = document.querySelectorAll('.check-item.done').length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  // Mark as read
+  function markRead() {
+    localStorage.setItem(PAGE_KEY, 'true');
+    const btn = document.getElementById('markBtn');
+    btn.classList.add('done');
+    document.getElementById('markIcon').textContent = '✅';
+    document.getElementById('markText').textContent = 'Read! Well done 🎉';
+    document.getElementById('markConfirm').style.display = 'block';
+
+    // Tick all checklist items
+    document.querySelectorAll('.check-item').forEach(el => {
+      el.classList.add('done');
+      localStorage.setItem('check-p8-1-' + el.dataset.key, 'done');
+    });
+    updateProgress();
+  }
+
+  // On load
+  if (localStorage.getItem(PAGE_KEY) === 'true') {
+    const btn = document.getElementById('markBtn');
+    btn.classList.add('done');
+    document.getElementById('markIcon').textContent = '✅';
+    document.getElementById('markText').textContent = 'Read! Well done 🎉';
+    document.getElementById('markConfirm').style.display = 'block';
+  }
+
+  loadChecks();
+</script>
+</body>
+</html>

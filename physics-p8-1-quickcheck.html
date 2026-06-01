@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8 8.1 Vectors & Scalars — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2744;
+    --muted: #5a6a8a;
+    --paper: #ffffff;
+    --line: #c8dff5;
+    --red: #ef5350;
+    --red2: #fde8e8;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #8e24aa;
+    --dark: #1a2744;
+    --yellow: #fdd835;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --hero-bg: #0d1b3e;
+    --card-border: #c8dff5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--hero-bg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+  }
+  nav a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color .2s; }
+  nav a:hover { color: var(--accent); }
+  nav span.sep { color: rgba(255,255,255,0.3); }
+  nav .current { color: var(--accent); font-weight: 700; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1b3e 0%, #1a3a6e 50%, #0a3d7a 100%);
+    color: #fff;
+    padding: 44px 24px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 75% 50%, rgba(100,181,246,0.18) 0%, transparent 60%);
+  }
+  .hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.2);
+    border: 1px solid rgba(100,181,246,0.4);
+    color: var(--accent);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.8rem, 4.5vw, 2.7rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-kicker { font-size: 0.95rem; color: rgba(255,255,255,0.7); margin-bottom: 20px; font-weight: 500; }
+  .hero-emoji {
+    position: absolute; right: 0; top: 0;
+    font-size: 5.5rem; opacity: 0.15;
+    animation: floaty 4s ease-in-out infinite;
+    user-select: none;
+  }
+  @keyframes floaty {
+    0%,100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+  }
+  .score-bar .score-num { color: var(--yellow); font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 900; }
+  .progress-wrap {
+    width: 140px; height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 100px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--yellow));
+    border-radius: 100px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  /* MAIN */
+  main { max-width: 700px; margin: 0 auto; padding: 36px 20px 60px; }
+
+  /* QUESTION BLOCK */
+  .q-block {
+    background: var(--paper);
+    border: 2px solid var(--card-border);
+    border-radius: 24px;
+    padding: 26px 26px 22px;
+    margin-bottom: 20px;
+    transition: border-color .3s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong   { border-color: var(--red); }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .q-num {
+    background: var(--accent2);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .q-type {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .q-text {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 9px; }
+  .opt-btn {
+    background: #f4f9ff;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent2); background: #e3f2fd; }
+  .opt-btn.selected { border-color: var(--accent2); background: #e3f2fd; }
+  .opt-btn.correct-ans { border-color: var(--green); background: var(--green2); color: #1b5e20; }
+  .opt-btn.wrong-ans   { border-color: var(--red);   background: var(--red2);   color: #b71c1c; }
+  .opt-btn:disabled { cursor: default; }
+  .opt-letter {
+    width: 26px; height: 26px;
+    background: var(--line);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+  .opt-btn.correct-ans .opt-letter { background: var(--green); color: white; }
+  .opt-btn.wrong-ans   .opt-letter { background: var(--red);   color: white; }
+
+  /* TRUE / FALSE */
+  .tf-options { display: flex; gap: 12px; }
+  .tf-btn {
+    flex: 1;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    transition: all .2s;
+    background: #f4f9ff;
+    color: var(--ink);
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent2); background: #e3f2fd; }
+  .tf-btn.selected   { border-color: var(--accent2); background: #e3f2fd; }
+  .tf-btn.correct-ans { border-color: var(--green); background: var(--green2); color: #1b5e20; }
+  .tf-btn.wrong-ans   { border-color: var(--red);   background: var(--red2);   color: #b71c1c; }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 12px;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.87rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .feedback.correct { display: flex; gap: 8px; background: var(--green2); color: #2e7d32; }
+  .feedback.wrong   { display: flex; gap: 8px; background: var(--red2);   color: #c62828; }
+  .feedback .fb-icon { flex-shrink: 0; font-size: 1rem; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border: 2px solid var(--card-border);
+    border-radius: 28px;
+    padding: 36px 32px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 4rem; margin-bottom: 12px; }
+  .result-box h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .result-score {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 10px 0 6px;
+  }
+  .result-score.great  { color: var(--green); }
+  .result-score.ok     { color: var(--orange); }
+  .result-score.retry  { color: var(--red); }
+  .result-msg {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 6px;
+    line-height: 1.55;
+  }
+  .result-mum {
+    display: inline-block;
+    margin: 10px 0 24px;
+    background: linear-gradient(135deg, #fff9c4, #fff59d);
+    border: 2px solid #f9a825;
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #5d4037;
+  }
+  .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .result-btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 12px 26px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    display: inline-block;
+  }
+  .result-btn:hover { transform: scale(1.04); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .btn-primary { background: var(--accent2); color: white; }
+  .btn-secondary { background: var(--line); color: var(--ink); }
+  .btn-yellow { background: var(--yellow); color: var(--ink); }
+
+  /* SUBMIT */
+  .submit-wrap { text-align: center; margin: 10px 0 30px; }
+  #submit-btn {
+    background: linear-gradient(135deg, var(--accent2), #0d47a1);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 16px 48px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.35);
+    transition: all .2s;
+  }
+  #submit-btn:hover { transform: scale(1.04); box-shadow: 0 6px 28px rgba(21,101,192,0.45); }
+  #submit-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p8-8-1-revision.html">📖 8.1 Revision</a>
+  <span class="sep">›</span>
+  <span class="current">⚡ Quick Check</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Physics · P8 · 8.1 · Quick Check</div>
+    <h1>Vectors &amp; <span>Scalars</span></h1>
+    <p class="hero-kicker">20 questions · 10 MCQ + 10 True/False · Score out of 20</p>
+    <div class="score-bar">
+      <span>Score</span>
+      <span class="score-num" id="live-score">0 / 20</span>
+      <div class="progress-wrap"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </div>
+  <div class="hero-emoji">⚡</div>
+</div>
+
+<main id="quiz-main">
+
+  <!-- Q1 MCQ -->
+  <div class="q-block" id="q1">
+    <div class="q-meta"><span class="q-num">Q1</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What is displacement?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q1','A')"><span class="opt-letter">A</span>The total path length travelled by an object</button>
+      <button class="opt-btn" onclick="answer(this,'q1','B')"><span class="opt-letter">B</span>Distance in a given direction</button>
+      <button class="opt-btn" onclick="answer(this,'q1','C')"><span class="opt-letter">C</span>Speed multiplied by time</button>
+      <button class="opt-btn" onclick="answer(this,'q1','D')"><span class="opt-letter">D</span>The magnitude of a force</button>
+    </div>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+
+  <!-- Q2 MCQ -->
+  <div class="q-block" id="q2">
+    <div class="q-meta"><span class="q-num">Q2</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Which of the following is a vector quantity?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q2','A')"><span class="opt-letter">A</span>Speed</button>
+      <button class="opt-btn" onclick="answer(this,'q2','B')"><span class="opt-letter">B</span>Mass</button>
+      <button class="opt-btn" onclick="answer(this,'q2','C')"><span class="opt-letter">C</span>Velocity</button>
+      <button class="opt-btn" onclick="answer(this,'q2','D')"><span class="opt-letter">D</span>Temperature</button>
+    </div>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+
+  <!-- Q3 MCQ -->
+  <div class="q-block" id="q3">
+    <div class="q-meta"><span class="q-num">Q3</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What does the <strong>length</strong> of an arrow represent in a vector diagram?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q3','A')"><span class="opt-letter">A</span>The direction of the vector</button>
+      <button class="opt-btn" onclick="answer(this,'q3','B')"><span class="opt-letter">B</span>The type of quantity</button>
+      <button class="opt-btn" onclick="answer(this,'q3','C')"><span class="opt-letter">C</span>The magnitude of the vector quantity</button>
+      <button class="opt-btn" onclick="answer(this,'q3','D')"><span class="opt-letter">D</span>The time taken</button>
+    </div>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+
+  <!-- Q4 MCQ -->
+  <div class="q-block" id="q4">
+    <div class="q-meta"><span class="q-num">Q4</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Which of these is a scalar quantity?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q4','A')"><span class="opt-letter">A</span>Force</button>
+      <button class="opt-btn" onclick="answer(this,'q4','B')"><span class="opt-letter">B</span>Acceleration</button>
+      <button class="opt-btn" onclick="answer(this,'q4','C')"><span class="opt-letter">C</span>Energy</button>
+      <button class="opt-btn" onclick="answer(this,'q4','D')"><span class="opt-letter">D</span>Momentum</button>
+    </div>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+
+  <!-- Q5 MCQ -->
+  <div class="q-block" id="q5">
+    <div class="q-meta"><span class="q-num">Q5</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">A student walks 3 km north, then 3 km south. What is their final displacement?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q5','A')"><span class="opt-letter">A</span>6 km north</button>
+      <button class="opt-btn" onclick="answer(this,'q5','B')"><span class="opt-letter">B</span>6 km</button>
+      <button class="opt-btn" onclick="answer(this,'q5','C')"><span class="opt-letter">C</span>0 km</button>
+      <button class="opt-btn" onclick="answer(this,'q5','D')"><span class="opt-letter">D</span>3 km north</button>
+    </div>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+
+  <!-- Q6 MCQ -->
+  <div class="q-block" id="q6">
+    <div class="q-meta"><span class="q-num">Q6</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">On a scale diagram where 10 mm represents 1.0 N, how long should an arrow be for a force of 4.0 N?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q6','A')"><span class="opt-letter">A</span>4 mm</button>
+      <button class="opt-btn" onclick="answer(this,'q6','B')"><span class="opt-letter">B</span>14 mm</button>
+      <button class="opt-btn" onclick="answer(this,'q6','C')"><span class="opt-letter">C</span>40 mm</button>
+      <button class="opt-btn" onclick="answer(this,'q6','D')"><span class="opt-letter">D</span>400 mm</button>
+    </div>
+    <div class="feedback" id="q6-fb"></div>
+  </div>
+
+  <!-- Q7 MCQ -->
+  <div class="q-block" id="q7">
+    <div class="q-meta"><span class="q-num">Q7</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">What does the <strong>direction</strong> of an arrow in a vector diagram show?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q7','A')"><span class="opt-letter">A</span>The magnitude of the vector</button>
+      <button class="opt-btn" onclick="answer(this,'q7','B')"><span class="opt-letter">B</span>The direction of the vector quantity</button>
+      <button class="opt-btn" onclick="answer(this,'q7','C')"><span class="opt-letter">C</span>The scale used in the diagram</button>
+      <button class="opt-btn" onclick="answer(this,'q7','D')"><span class="opt-letter">D</span>The type of force acting</button>
+    </div>
+    <div class="feedback" id="q7-fb"></div>
+  </div>
+
+  <!-- Q8 MCQ -->
+  <div class="q-block" id="q8">
+    <div class="q-meta"><span class="q-num">Q8</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Which of the following correctly describes a scalar quantity?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q8','A')"><span class="opt-letter">A</span>It has magnitude and direction</button>
+      <button class="opt-btn" onclick="answer(this,'q8','B')"><span class="opt-letter">B</span>It has direction only</button>
+      <button class="opt-btn" onclick="answer(this,'q8','C')"><span class="opt-letter">C</span>It has magnitude only</button>
+      <button class="opt-btn" onclick="answer(this,'q8','D')"><span class="opt-letter">D</span>It has neither magnitude nor direction</button>
+    </div>
+    <div class="feedback" id="q8-fb"></div>
+  </div>
+
+  <!-- Q9 MCQ -->
+  <div class="q-block" id="q9">
+    <div class="q-meta"><span class="q-num">Q9</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Which symbol is used to mean "represents" when stating a scale on a force diagram?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q9','A')"><span class="opt-letter">A</span>=</button>
+      <button class="opt-btn" onclick="answer(this,'q9','B')"><span class="opt-letter">B</span>≡</button>
+      <button class="opt-btn" onclick="answer(this,'q9','C')"><span class="opt-letter">C</span>≈</button>
+      <button class="opt-btn" onclick="answer(this,'q9','D')"><span class="opt-letter">D</span>∝</button>
+    </div>
+    <div class="feedback" id="q9-fb"></div>
+  </div>
+
+  <!-- Q10 MCQ -->
+  <div class="q-block" id="q10">
+    <div class="q-meta"><span class="q-num">Q10</span><span class="q-type">Multiple Choice</span></div>
+    <div class="q-text">Two forces of 3.0 N and 4.0 N act at right angles on an object. Using a scale of 10 mm = 1.0 N, the 3.0 N arrow should be:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(this,'q10','A')"><span class="opt-letter">A</span>3 mm long</button>
+      <button class="opt-btn" onclick="answer(this,'q10','B')"><span class="opt-letter">B</span>30 mm long</button>
+      <button class="opt-btn" onclick="answer(this,'q10','C')"><span class="opt-letter">C</span>300 mm long</button>
+      <button class="opt-btn" onclick="answer(this,'q10','D')"><span class="opt-letter">D</span>0.3 mm long</button>
+    </div>
+    <div class="feedback" id="q10-fb"></div>
+  </div>
+
+  <!-- Q11 T/F -->
+  <div class="q-block" id="q11">
+    <div class="q-meta"><span class="q-num">Q11</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Displacement is a scalar quantity because it only has magnitude.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q11','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q11','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q11-fb"></div>
+  </div>
+
+  <!-- Q12 T/F -->
+  <div class="q-block" id="q12">
+    <div class="q-meta"><span class="q-num">Q12</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Speed is a vector quantity because it tells you how fast something is moving.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q12','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q12','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q12-fb"></div>
+  </div>
+
+  <!-- Q13 T/F -->
+  <div class="q-block" id="q13">
+    <div class="q-meta"><span class="q-num">Q13</span><span class="q-type">True / False</span></div>
+    <div class="q-text">The distance you travel is always equal to the magnitude of your displacement.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q13','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q13','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q13-fb"></div>
+  </div>
+
+  <!-- Q14 T/F -->
+  <div class="q-block" id="q14">
+    <div class="q-meta"><span class="q-num">Q14</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Force is a vector quantity.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q14','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q14','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q14-fb"></div>
+  </div>
+
+  <!-- Q15 T/F -->
+  <div class="q-block" id="q15">
+    <div class="q-meta"><span class="q-num">Q15</span><span class="q-type">True / False</span></div>
+    <div class="q-text">All force diagrams must be drawn to scale.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q15','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q15','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q15-fb"></div>
+  </div>
+
+  <!-- Q16 T/F -->
+  <div class="q-block" id="q16">
+    <div class="q-meta"><span class="q-num">Q16</span><span class="q-type">True / False</span></div>
+    <div class="q-text">On a scale diagram, the length of an arrow represents the magnitude of the force.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q16','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q16','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q16-fb"></div>
+  </div>
+
+  <!-- Q17 T/F -->
+  <div class="q-block" id="q17">
+    <div class="q-meta"><span class="q-num">Q17</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Mass is a vector quantity because it depends on gravity.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q17','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q17','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q17-fb"></div>
+  </div>
+
+  <!-- Q18 T/F -->
+  <div class="q-block" id="q18">
+    <div class="q-meta"><span class="q-num">Q18</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Acceleration is a vector quantity.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q18','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q18','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q18-fb"></div>
+  </div>
+
+  <!-- Q19 T/F -->
+  <div class="q-block" id="q19">
+    <div class="q-meta"><span class="q-num">Q19</span><span class="q-type">True / False</span></div>
+    <div class="q-text">If a scale diagram is drawn, the scale must always be clearly stated on the diagram.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q19','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q19','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q19-fb"></div>
+  </div>
+
+  <!-- Q20 T/F -->
+  <div class="q-block" id="q20">
+    <div class="q-meta"><span class="q-num">Q20</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Velocity and speed are both scalar quantities.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,'q20','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(this,'q20','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="q20-fb"></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button id="submit-btn" onclick="submitQuiz()" disabled>See my result →</button>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="result-box">
+    <div class="result-emoji" id="result-emoji"></div>
+    <h2 id="result-title"></h2>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-mum" id="result-mum"></div>
+    <div class="result-actions">
+      <button class="result-btn btn-secondary" onclick="resetQuiz()">↺ Try again</button>
+      <a class="result-btn btn-primary" href="physics-p8-8-1-revision.html">📖 Back to revision</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const ANSWERS = {
+  q1:  { correct: 'B', fb: 'Displacement is distance in a given direction — it\'s a vector with both magnitude and direction.' },
+  q2:  { correct: 'C', fb: 'Velocity is a vector because it has both speed (magnitude) AND direction. Speed alone is a scalar.' },
+  q3:  { correct: 'C', fb: 'The length of the arrow represents the magnitude (size) of the vector quantity.' },
+  q4:  { correct: 'C', fb: 'Energy is a scalar — it has magnitude only, no direction. Force, acceleration and momentum are all vectors.' },
+  q5:  { correct: 'C', fb: '3 km north + 3 km south = 0 km displacement. They end up where they started! The distance travelled is 6 km, but displacement is 0.' },
+  q6:  { correct: 'C', fb: '4.0 N × 10 mm/N = 40 mm. Scale: 10 mm ≡ 1.0 N, so multiply force by 10.' },
+  q7:  { correct: 'B', fb: 'The direction of the arrow shows the direction of the vector quantity. The length shows the magnitude.' },
+  q8:  { correct: 'C', fb: 'A scalar quantity has magnitude only — no direction. A vector has both magnitude and direction.' },
+  q9:  { correct: 'B', fb: 'The symbol ≡ means "represents" in scale diagrams. For example: 10 mm ≡ 1.0 N.' },
+  q10: { correct: 'B', fb: '3.0 N × 10 mm/N = 30 mm. Using the scale 10 mm = 1.0 N, multiply the force value by 10.' },
+  q11: { correct: 'false', fb: 'False! Displacement is a VECTOR — it has both magnitude (how far) AND direction (which way).' },
+  q12: { correct: 'false', fb: 'False! Speed is a scalar — it only tells you how fast (magnitude). Velocity is the vector version, as it includes direction.' },
+  q13: { correct: 'false', fb: 'False! Distance can be much greater than displacement. For example, taking a winding bus route is a greater distance than the straight-line displacement.' },
+  q14: { correct: 'true',  fb: 'Correct! Force is a vector — it has both a magnitude (in newtons) and a direction.' },
+  q15: { correct: 'false', fb: 'False! Force diagrams do not always need to be to scale. But IF a scale diagram is drawn, the scale must be stated.' },
+  q16: { correct: 'true',  fb: 'Correct! On a scale diagram, arrow length represents the magnitude of the force, according to the stated scale.' },
+  q17: { correct: 'false', fb: 'False! Mass is a scalar — it\'s just an amount (kg) with no direction. Weight (the force of gravity) is a vector.' },
+  q18: { correct: 'true',  fb: 'Correct! Acceleration is a vector — it has both a magnitude (m/s²) and a direction.' },
+  q19: { correct: 'true',  fb: 'Correct! The scale must always be stated on a scale diagram, e.g. "10 mm ≡ 1.0 N".' },
+  q20: { correct: 'false', fb: 'False! Velocity is a vector (speed + direction), but speed is a scalar (magnitude only).' },
+};
+
+const TOTAL = 20;
+let answered = {};
+let score = 0;
+
+function answer(btn, qid, choice) {
+  if (answered[qid]) return;
+  answered[qid] = true;
+  score += updateScore(qid);
+
+  const block = document.getElementById(qid);
+  const correct = ANSWERS[qid].correct;
+  const allBtns = block.querySelectorAll('.opt-btn');
+  const letters = ['A','B','C','D'];
+
+  allBtns.forEach((b, i) => {
+    b.disabled = true;
+    if (letters[i] === correct) b.classList.add('correct-ans');
+    else if (letters[i] === choice) b.classList.add('wrong-ans');
+  });
+
+  const isCorrect = (choice === correct);
+  if (!isCorrect) score -= 1; // we pre-added, remove if wrong
+  // recalc properly
+  scored(qid, isCorrect);
+  showFeedback(qid, isCorrect);
+  updateUI();
+}
+
+function answerTF(btn, qid, choice) {
+  if (answered[qid]) return;
+  answered[qid] = choice;
+
+  const block = document.getElementById(qid);
+  const correct = ANSWERS[qid].correct;
+  const allBtns = block.querySelectorAll('.tf-btn');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    const val = b.onclick.toString().includes("'true'") ? 'true' : 'false';
+    if (val === correct) b.classList.add('correct-ans');
+    else if (val === choice && choice !== correct) b.classList.add('wrong-ans');
+  });
+
+  const isCorrect = (choice === correct);
+  scored(qid, isCorrect);
+  showFeedback(qid, isCorrect);
+  updateUI();
+}
+
+// Separate scoring map so we don't double-count
+const scoreMap = {};
+function scored(qid, isCorrect) {
+  if (scoreMap[qid] !== undefined) return;
+  scoreMap[qid] = isCorrect ? 1 : 0;
+  score = Object.values(scoreMap).reduce((a,b) => a+b, 0);
+}
+function updateScore(qid) { return 0; } // scoring now via scoreMap
+
+function showFeedback(qid, isCorrect) {
+  const fb = document.getElementById(qid + '-fb');
+  const block = document.getElementById(qid);
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = `<span class="fb-icon">${isCorrect ? '✅' : '❌'}</span><span>${isCorrect ? 'Correct! ' : 'Not quite. '}${ANSWERS[qid].fb}</span>`;
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  if (Object.keys(scoreMap).length === TOTAL) {
+    document.getElementById('submit-btn').disabled = false;
+  }
+}
+
+function updateUI() {
+  const done = Object.keys(scoreMap).length;
+  document.getElementById('live-score').textContent = `${score} / ${TOTAL}`;
+  document.getElementById('progress-fill').style.width = `${(done / TOTAL) * 100}%`;
+  if (done === TOTAL) {
+    document.getElementById('submit-btn').disabled = false;
+  }
+}
+
+function submitQuiz() {
+  localStorage.setItem('physics-p8-8-1-score', score);
+  const box = document.getElementById('result-box');
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.getElementById('result-score').textContent = `${score} / ${TOTAL}`;
+  const pct = score / TOTAL;
+
+  let emoji, title, msg, mumMsg, cls;
+  if (pct >= 0.85) {
+    emoji = '🏆'; title = 'Outstanding!'; cls = 'great';
+    msg = 'You\'ve really nailed vectors and scalars. Excellent recall of both definitions and scale diagram rules!';
+    mumMsg = '🌟 Show this to mum — ' + score + '/20 is amazing! 🌟';
+  } else if (pct >= 0.6) {
+    emoji = '👍'; title = 'Good effort!'; cls = 'ok';
+    msg = 'Solid understanding! Check back over the questions you missed — especially the difference between distance and displacement.';
+    mumMsg = '😊 Show this to mum — ' + score + '/20, keep it up!';
+  } else {
+    emoji = '📚'; title = 'Keep revising!'; cls = 'retry';
+    msg = 'Have another look at the revision page — focus on the definitions of vectors vs scalars and how to read scale diagrams.';
+    mumMsg = '💪 Show this to mum — you\'ll smash it next time!';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score').className = 'result-score ' + cls;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-mum').textContent = mumMsg;
+  document.getElementById('submit-btn').disabled = true;
+}
+
+function resetQuiz() {
+  answered = {};
+  Object.keys(scoreMap).forEach(k => delete scoreMap[k]);
+  score = 0;
+
+  document.querySelectorAll('.q-block').forEach(b => {
+    b.className = 'q-block';
+    b.querySelectorAll('button').forEach(btn => {
+      btn.disabled = false;
+      btn.className = btn.classList.contains('tf-btn') ? 'tf-btn' : 'opt-btn';
+      if (btn.classList.contains('opt-btn')) {
+        // restore letter span
+        const letter = btn.querySelector('.opt-letter');
+        btn.className = 'opt-btn';
+        if (letter) btn.querySelector('.opt-letter') && (btn.querySelector('.opt-letter').className = 'opt-letter');
+      }
+    });
+    const fb = b.querySelector('.feedback');
+    if (fb) { fb.className = 'feedback'; fb.innerHTML = ''; }
+  });
+
+  // Re-attach onclick for tf buttons (class was reset)
+  document.querySelectorAll('.tf-btn').forEach(b => { b.className = 'tf-btn'; });
+
+  document.getElementById('result-box').classList.remove('show');
+  document.getElementById('submit-btn').disabled = true;
+  document.getElementById('live-score').textContent = '0 / 20';
+  document.getElementById('progress-fill').style.width = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

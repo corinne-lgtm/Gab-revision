@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>P8.2 Quick Check — Forces Between Objects</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #1a2332;
+    --muted: #5a7080;
+    --paper: #ffffff;
+    --line: #cde4f5;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --hero-top: #0d2c5a;
+    --hero-bot: #1565c0;
+    --card-border: #b8d9f5;
+    --red: #fce4ec;
+    --red2: #c62828;
+    --green: #e8f5e9;
+    --green2: #2e7d32;
+    --orange: #fff3e0;
+    --orange2: #e65100;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; }
+
+  /* NAV */
+  nav {
+    background: var(--hero-top);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: #90caf9;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  nav a:first-child { color: white; font-size: 1rem; }
+  nav .sep { color: #4a6080; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--hero-top) 0%, var(--hero-bot) 100%);
+    padding: 50px 24px 70px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(100,181,246,0.15) 0%, transparent 60%);
+  }
+  .hero-emoji {
+    font-size: 4rem;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 2px solid rgba(100,181,246,0.5);
+    color: #90caf9;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+    font-weight: 900;
+    color: white;
+    position: relative;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .hero-sub {
+    color: #90caf9;
+    font-size: 1rem;
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    position: relative;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: #e3f2fd;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--hero-top);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .score-bar span { color: #90caf9; font-weight: 700; font-size: 0.83rem; }
+  .progress-track {
+    flex: 1; min-width: 100px; height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #42a5f5, #64b5f6);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .score-pct { color: white; font-weight: 800; font-size: 0.88rem; min-width: 36px; }
+
+  /* MAIN */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent2);
+    padding: 0 4px;
+  }
+
+  /* QUESTION BLOCK */
+  .q-block {
+    background: var(--paper);
+    border: 2px solid var(--card-border);
+    border-radius: 20px;
+    padding: 24px;
+    transition: border-color 0.3s;
+  }
+  .q-block.answered-correct { border-color: #81c784; }
+  .q-block.answered-wrong { border-color: #ef9a9a; }
+
+  .q-number {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .opt:hover:not(.locked) { border-color: var(--accent); background: #dbedf9; }
+  .opt.selected { border-color: var(--accent2); background: #dbedf9; }
+  .opt.correct { border-color: #66bb6a; background: var(--green); color: var(--green2); }
+  .opt.wrong { border-color: #ef5350; background: var(--red); color: var(--red2); }
+  .opt.locked { cursor: default; }
+  .opt-letter {
+    width: 28px; height: 28px; flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    color: var(--accent2);
+    transition: all 0.2s;
+  }
+  .opt.correct .opt-letter { background: #66bb6a; color: white; }
+  .opt.wrong .opt-letter { background: #ef5350; color: white; }
+  .opt.selected:not(.correct):not(.wrong) .opt-letter { background: var(--accent2); color: white; }
+
+  /* T/F OPTIONS */
+  .tf-options { display: flex; gap: 12px; }
+  .tf-btn {
+    flex: 1;
+    padding: 14px;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .tf-btn:hover:not(.locked) { transform: translateY(-2px); }
+  .tf-btn.true-btn:hover:not(.locked) { border-color: #66bb6a; background: var(--green); color: var(--green2); }
+  .tf-btn.false-btn:hover:not(.locked) { border-color: #ef5350; background: var(--red); color: var(--red2); }
+  .tf-btn.selected { border-color: var(--accent2); background: #dbedf9; color: var(--accent2); }
+  .tf-btn.correct { border-color: #66bb6a; background: var(--green); color: var(--green2); }
+  .tf-btn.wrong { border-color: #ef5350; background: var(--red); color: var(--red2); }
+  .tf-btn.locked { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: none;
+  }
+  .feedback.correct { background: var(--green); color: var(--green2); border: 2px solid #a5d6a7; }
+  .feedback.wrong { background: var(--red); color: var(--red2); border: 2px solid #ef9a9a; }
+  .feedback.show { display: block; }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--paper);
+    border: 2px solid var(--card-border);
+    border-radius: 24px;
+    padding: 40px 32px;
+    text-align: center;
+    display: none;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 4rem; display: block; margin-bottom: 12px; }
+  .result-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .result-score {
+    font-size: 3.5rem;
+    font-weight: 900;
+    font-family: 'Poppins', sans-serif;
+    margin: 16px 0;
+  }
+  .result-msg {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 12px;
+    max-width: 460px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+  .result-mum {
+    display: inline-block;
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 8px 22px;
+    border-radius: 999px;
+    margin: 12px auto 24px;
+  }
+  .result-box.great .result-title { color: var(--green2); }
+  .result-box.great .result-score { color: var(--green2); }
+  .result-box.ok .result-title { color: var(--orange2); }
+  .result-box.ok .result-score { color: var(--orange2); }
+  .result-box.retry .result-title { color: var(--red2); }
+  .result-box.retry .result-score { color: var(--red2); }
+
+  .result-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  .btn-reset {
+    background: var(--bg);
+    border: 2px solid var(--line);
+    color: var(--accent2);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--accent2); background: #dbedf9; }
+  .btn-revise {
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-revise:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(21,101,192,0.35); }
+
+  @media (max-width: 520px) {
+    .q-block { padding: 18px; }
+    .tf-options { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p8-1-revision.html">📖 P8.2 Revision</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">⚡</span>
+  <div class="chapter-badge">Physics · P8.2 · Quick Check</div>
+  <h1>Forces Between Objects</h1>
+  <p class="hero-sub">20 Questions — MCQ & True/False — Score x/20</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Newton's 3rd Law</span>
+    <span class="hero-tag">Contact Forces</span>
+    <span class="hero-tag">Friction</span>
+    <span class="hero-tag">Driving Force</span>
+  </div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span>⚡ Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="score-pct" id="progressPct">0 / 20</span>
+</div>
+
+<main id="quizMain">
+
+  <!-- ── MCQ SECTION ── -->
+  <div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-number">Question 1 of 20</div>
+    <div class="q-text">What is a force?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q1',this,'A')"><div class="opt-letter">A</div>A form of energy stored in an object</div>
+      <div class="opt" onclick="answerMCQ('q1',this,'B')"><div class="opt-letter">B</div>A push or pull that acts on an object due to its interaction with another object</div>
+      <div class="opt" onclick="answerMCQ('q1',this,'C')"><div class="opt-letter">C</div>The speed at which an object moves</div>
+      <div class="opt" onclick="answerMCQ('q1',this,'D')"><div class="opt-letter">D</div>The weight of an object in kilograms</div>
+    </div>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-number">Question 2 of 20</div>
+    <div class="q-text">What is the unit of force?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q2',this,'A')"><div class="opt-letter">A</div>Kilogram (kg)</div>
+      <div class="opt" onclick="answerMCQ('q2',this,'B')"><div class="opt-letter">B</div>Joule (J)</div>
+      <div class="opt" onclick="answerMCQ('q2',this,'C')"><div class="opt-letter">C</div>Newton (N)</div>
+      <div class="opt" onclick="answerMCQ('q2',this,'D')"><div class="opt-letter">D</div>Watt (W)</div>
+    </div>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-number">Question 3 of 20</div>
+    <div class="q-text">Which of the following is an example of a contact force?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q3',this,'A')"><div class="opt-letter">A</div>Gravity</div>
+      <div class="opt" onclick="answerMCQ('q3',this,'B')"><div class="opt-letter">B</div>Magnetic force</div>
+      <div class="opt" onclick="answerMCQ('q3',this,'C')"><div class="opt-letter">C</div>Friction</div>
+      <div class="opt" onclick="answerMCQ('q3',this,'D')"><div class="opt-letter">D</div>Electrostatic force</div>
+    </div>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-number">Question 4 of 20</div>
+    <div class="q-text">Newton's Third Law states that when two objects interact, the forces they exert on each other are…</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q4',this,'A')"><div class="opt-letter">A</div>Equal in size but in the same direction</div>
+      <div class="opt" onclick="answerMCQ('q4',this,'B')"><div class="opt-letter">B</div>Different in size and opposite in direction</div>
+      <div class="opt" onclick="answerMCQ('q4',this,'C')"><div class="opt-letter">C</div>Equal in size and opposite in direction</div>
+      <div class="opt" onclick="answerMCQ('q4',this,'D')"><div class="opt-letter">D</div>Equal in size only when objects are at rest</div>
+    </div>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-number">Question 5 of 20</div>
+    <div class="q-text">A boxer punches a bag with a force of 100 N. What force does the bag exert back on the boxer's fist?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q5',this,'A')"><div class="opt-letter">A</div>0 N — the bag cannot push back</div>
+      <div class="opt" onclick="answerMCQ('q5',this,'B')"><div class="opt-letter">B</div>50 N in the same direction</div>
+      <div class="opt" onclick="answerMCQ('q5',this,'C')"><div class="opt-letter">C</div>100 N in the opposite direction</div>
+      <div class="opt" onclick="answerMCQ('q5',this,'D')"><div class="opt-letter">D</div>200 N in the opposite direction</div>
+    </div>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-number">Question 6 of 20</div>
+    <div class="q-text">What is the driving force on a car also called?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q6',this,'A')"><div class="opt-letter">A</div>The friction force</div>
+      <div class="opt" onclick="answerMCQ('q6',this,'B')"><div class="opt-letter">B</div>The motive force</div>
+      <div class="opt" onclick="answerMCQ('q6',this,'C')"><div class="opt-letter">C</div>The normal contact force</div>
+      <div class="opt" onclick="answerMCQ('q6',this,'D')"><div class="opt-letter">D</div>The gravitational force</div>
+    </div>
+    <div class="feedback" id="q6-fb"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-number">Question 7 of 20</div>
+    <div class="q-text">Where does friction act when a car tyre propels a car forward?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q7',this,'A')"><div class="opt-letter">A</div>Between the engine and the gearbox</div>
+      <div class="opt" onclick="answerMCQ('q7',this,'B')"><div class="opt-letter">B</div>At the contact point between the tyre and the road</div>
+      <div class="opt" onclick="answerMCQ('q7',this,'C')"><div class="opt-letter">C</div>Inside the fuel tank</div>
+      <div class="opt" onclick="answerMCQ('q7',this,'D')"><div class="opt-letter">D</div>Between the axle and the wheel hub</div>
+    </div>
+    <div class="feedback" id="q7-fb"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-number">Question 8 of 20</div>
+    <div class="q-text">Which of the following is a non-contact force?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q8',this,'A')"><div class="opt-letter">A</div>Air resistance</div>
+      <div class="opt" onclick="answerMCQ('q8',this,'B')"><div class="opt-letter">B</div>Normal contact force</div>
+      <div class="opt" onclick="answerMCQ('q8',this,'C')"><div class="opt-letter">C</div>Tension</div>
+      <div class="opt" onclick="answerMCQ('q8',this,'D')"><div class="opt-letter">D</div>Electrostatic force</div>
+    </div>
+    <div class="feedback" id="q8-fb"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-number">Question 9 of 20</div>
+    <div class="q-text">To pull a car out of mud, what condition must be met?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q9',this,'A')"><div class="opt-letter">A</div>The tractor's force must equal the mud's resistance force on the car</div>
+      <div class="opt" onclick="answerMCQ('q9',this,'B')"><div class="opt-letter">B</div>The tractor's engine force must be greater than the mud's resistance force on the car</div>
+      <div class="opt" onclick="answerMCQ('q9',this,'C')"><div class="opt-letter">C</div>The car must have its brakes off only</div>
+      <div class="opt" onclick="answerMCQ('q9',this,'D')"><div class="opt-letter">D</div>The rope must be shorter than 1 metre</div>
+    </div>
+    <div class="feedback" id="q9-fb"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-number">Question 10 of 20</div>
+    <div class="q-text">When equal forces act on two interacting objects, why does the less massive object accelerate more?</div>
+    <div class="options">
+      <div class="opt" onclick="answerMCQ('q10',this,'A')"><div class="opt-letter">A</div>It has less friction acting on it</div>
+      <div class="opt" onclick="answerMCQ('q10',this,'B')"><div class="opt-letter">B</div>It has a larger surface area</div>
+      <div class="opt" onclick="answerMCQ('q10',this,'C')"><div class="opt-letter">C</div>The larger the mass, the smaller the acceleration for the same force</div>
+      <div class="opt" onclick="answerMCQ('q10',this,'D')"><div class="opt-letter">D</div>Newton's Third Law does not apply to unequal masses</div>
+    </div>
+    <div class="feedback" id="q10-fb"></div>
+  </div>
+
+  <!-- ── T/F SECTION ── -->
+  <div class="section-label">Part 2 — True or False (10 questions)</div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-number">Question 11 of 20</div>
+    <div class="q-text">Forces can change the shape of an object or change its state of rest or motion.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q11',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q11',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q11-fb"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-number">Question 12 of 20</div>
+    <div class="q-text">Gravity is an example of a contact force because it pulls objects toward Earth.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q12',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q12',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q12-fb"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-number">Question 13 of 20</div>
+    <div class="q-text">When a book rests on a table, the book's weight and the table's normal force on the book are a Newton's Third Law pair.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q13',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q13',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q13-fb"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-number">Question 14 of 20</div>
+    <div class="q-text">The force of friction of the road on a car's tyre acts in the forward direction (the same direction as the car's motion).</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q14',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q14',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q14-fb"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-number">Question 15 of 20</div>
+    <div class="q-text">At any point when a tractor tows a car on a rope, the force of the rope on the car is equal and opposite to the force of the car on the rope.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q15',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q15',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q15-fb"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-number">Question 16 of 20</div>
+    <div class="q-text">Newton's Third Law only applies when the two objects are the same mass.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q16',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q16',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q16-fb"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-number">Question 17 of 20</div>
+    <div class="q-text">The weight of an object is the force of gravity on the object due to the Earth, and the object exerts an equal and opposite force on the Earth.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q17',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q17',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q17-fb"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-number">Question 18 of 20</div>
+    <div class="q-text">Two roller skaters pulling on opposite ends of a rope will move towards each other because they pull on each other with equal and opposite forces.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q18',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q18',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q18-fb"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-number">Question 19 of 20</div>
+    <div class="q-text">Tension is an example of a non-contact force.</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q19',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q19',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q19-fb"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-number">Question 20 of 20</div>
+    <div class="q-text">The force of friction of the tyre on the road acts in the reverse direction (opposite to the car's motion).</div>
+    <div class="tf-options">
+      <button class="tf-btn true-btn" onclick="answerTF('q20',this,true)">✅ True</button>
+      <button class="tf-btn false-btn" onclick="answerTF('q20',this,false)">❌ False</button>
+    </div>
+    <div class="feedback" id="q20-fb"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <span class="result-emoji" id="resultEmoji"></span>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <div class="result-actions">
+      <button class="btn-reset" onclick="resetQuiz()">🔄 Try Again</button>
+      <a href="physics-p8-1-revision.html" class="btn-revise">📖 Back to Revision</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const SCORE_KEY = 'physics-p8-1-score';
+  const TOTAL = 20;
+
+  // Answer data
+  const answers = {
+    q1:  { correct: 'B', explain: 'A force is a push or pull that acts on an object due to its interaction with another object.' },
+    q2:  { correct: 'C', explain: 'The unit of force is the newton (N), named after Isaac Newton.' },
+    q3:  { correct: 'C', explain: 'Friction is a contact force — it requires objects to touch. Gravity, magnetism, and electrostatics are non-contact forces.' },
+    q4:  { correct: 'C', explain: "Newton's Third Law: the forces are always equal in size and opposite in direction." },
+    q5:  { correct: 'C', explain: "Newton's Third Law — the bag pushes back on the fist with an equal 100 N in the opposite direction." },
+    q6:  { correct: 'B', explain: 'The driving force is also called the motive force — it is produced by the engine.' },
+    q7:  { correct: 'B', explain: 'Friction acts where the tyre is in contact with the road — this friction actually propels the car forward.' },
+    q8:  { correct: 'D', explain: 'Electrostatic force is a non-contact force. Air resistance, normal contact force, and tension are all contact forces.' },
+    q9:  { correct: 'B', explain: "The tractor's engine force must exceed the mud's resistance — the forces are not equal in this scenario." },
+    q10: { correct: 'C', explain: "Newton's 2nd Law: for the same force, a larger mass gives a smaller acceleration. The smaller object accelerates more." },
+  };
+
+  const tfAnswers = {
+    q11: { correct: true,  explain: 'Forces can change an object\'s shape, motion, or state of rest — all three are correct.' },
+    q12: { correct: false, explain: 'Gravity is a non-contact force — it acts over a distance without objects touching.' },
+    q13: { correct: false, explain: 'These forces both act on the book, so they are NOT a Newton\'s 3rd Law pair. The pair would be: book pulls Earth up; Earth pulls book down.' },
+    q14: { correct: true,  explain: 'The friction of the road on the tyre acts forward — this is what propels the car. The friction of the tyre on the road acts backward.' },
+    q15: { correct: true,  explain: "Newton's Third Law always holds — the rope's force on the car equals and opposes the car's force on the rope." },
+    q16: { correct: false, explain: "Newton's Third Law applies regardless of mass. Mass affects the acceleration, not the force pair." },
+    q17: { correct: true,  explain: "Newton's 3rd Law: Earth pulls object down (gravity/weight), object pulls Earth up with an equal force." },
+    q18: { correct: true,  explain: 'Equal and opposite forces pull both skaters toward each other — both accelerate (more so if less massive).' },
+    q19: { correct: false, explain: 'Tension is a contact force — it acts through a rope or string that is physically connecting objects.' },
+    q20: { correct: true,  explain: 'The friction of the tyre on the road acts backward (Newton\'s 3rd Law pair to the road\'s forward friction on the tyre).' },
+  };
+
+  let score = 0;
+  let answered = 0;
+
+  function updateProgress() {
+    const pct = Math.round((answered / TOTAL) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = answered + ' / ' + TOTAL;
+  }
+
+  function answerMCQ(qId, optEl, chosen) {
+    const block = document.getElementById(qId);
+    if (block.classList.contains('answered')) return;
+    block.classList.add('answered');
+
+    const correct = answers[qId].correct;
+    const explain = answers[qId].explain;
+    const opts = block.querySelectorAll('.opt');
+    const letters = ['A','B','C','D'];
+
+    opts.forEach((o, i) => {
+      o.classList.add('locked');
+      if (letters[i] === correct) o.classList.add('correct');
+      else if (letters[i] === chosen && chosen !== correct) o.classList.add('wrong');
+    });
+
+    const fb = document.getElementById(qId + '-fb');
+    if (chosen === correct) {
+      score++;
+      block.classList.add('answered-correct');
+      fb.className = 'feedback correct show';
+      fb.textContent = '✅ Correct! ' + explain;
+    } else {
+      block.classList.add('answered-wrong');
+      fb.className = 'feedback wrong show';
+      fb.textContent = '❌ Not quite. ' + explain;
+    }
+
+    answered++;
+    updateProgress();
+    checkDone();
+  }
+
+  function answerTF(qId, btnEl, chosen) {
+    const block = document.getElementById(qId);
+    if (block.classList.contains('answered')) return;
+    block.classList.add('answered');
+
+    const correct = tfAnswers[qId].correct;
+    const explain = tfAnswers[qId].explain;
+    const btns = block.querySelectorAll('.tf-btn');
+
+    btns.forEach(b => {
+      b.classList.add('locked');
+      const isTrue = b.classList.contains('true-btn');
+      if (isTrue === correct) b.classList.add('correct');
+      else if (isTrue === chosen && chosen !== correct) b.classList.add('wrong');
+    });
+
+    const fb = document.getElementById(qId + '-fb');
+    if (chosen === correct) {
+      score++;
+      block.classList.add('answered-correct');
+      fb.className = 'feedback correct show';
+      fb.textContent = '✅ Correct! ' + explain;
+    } else {
+      block.classList.add('answered-wrong');
+      fb.className = 'feedback wrong show';
+      fb.textContent = '❌ Not quite. ' + explain;
+    }
+
+    answered++;
+    updateProgress();
+    checkDone();
+  }
+
+  function checkDone() {
+    if (answered < TOTAL) return;
+
+    localStorage.setItem(SCORE_KEY, score + '/' + TOTAL);
+
+    const box = document.getElementById('resultBox');
+    box.classList.add('show');
+
+    let tier, emoji, title, msg, mum;
+
+    if (score >= 17) {
+      tier = 'great'; emoji = '🏆'; title = 'Outstanding!';
+      msg = 'You scored ' + score + ' out of 20 — you really know your Newton\'s Third Law! Forces between objects hold no secrets for you.';
+      mum = '⭐ Show this to mum — ' + score + '/20 on Forces Between Objects!';
+    } else if (score >= 12) {
+      tier = 'ok'; emoji = '👍'; title = 'Good effort!';
+      msg = 'You scored ' + score + ' out of 20 — solid understanding! Read back over contact vs non-contact forces and the friction examples to push higher.';
+      mum = '😊 Show this to mum — ' + score + '/20, nearly there!';
+    } else {
+      tier = 'retry'; emoji = '💪'; title = 'Keep going!';
+      msg = 'You scored ' + score + ' out of 20. Head back to the revision page and focus on Newton\'s Third Law pairs and the difference between contact and non-contact forces.';
+      mum = '📖 Show this to mum — revision time for P8.2!';
+    }
+
+    box.className = 'result-box show ' + tier;
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultScore').textContent = score + ' / 20';
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('resultMum').textContent = mum;
+
+    setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    document.querySelectorAll('.q-block').forEach(b => {
+      b.className = 'q-block';
+      b.querySelectorAll('.opt').forEach(o => o.className = 'opt');
+      b.querySelectorAll('.tf-btn').forEach(btn => {
+        btn.className = 'tf-btn ' + (btn.textContent.includes('True') ? 'true-btn' : 'false-btn');
+      });
+      b.querySelector('.feedback').className = 'feedback';
+      b.querySelector('.feedback').textContent = '';
+    });
+    document.getElementById('resultBox').className = 'result-box';
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
