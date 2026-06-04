@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.2 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:760px;margin:0 auto;padding:24px}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:680px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 16px;margin-bottom:16px;font-weight:700;font-size:14px;color:#7a3a00}
+
+/* progress bar */
+.progress-wrap{background:rgba(0,0,0,.08);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+.progress-bar{height:10px;border-radius:999px;background:var(--yellow);transition:width .4s ease;width:0%}
+
+/* question blocks */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px}
+.q-num{font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:12px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px}
+
+/* MCQ options */
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;font-weight:600;text-align:left;transition:border-color .15s,background .15s;font-family:inherit}
+.opt:hover:not([disabled]){border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--green)}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--red)}
+.opt[disabled]{cursor:default}
+
+/* TF buttons */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:16px;font-weight:900;cursor:pointer;transition:border-color .15s,background .15s;font-family:inherit}
+.tf-btn:hover:not([disabled]){border-color:var(--green)}
+.tf-btn[disabled]{cursor:default}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:var(--green)}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:var(--red)}
+
+/* feedback */
+.feedback{margin-top:12px;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:600;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);border:2px solid #a8d4b0;color:#1a4d22}
+.feedback.bad{background:var(--red2);border:2px solid #e0a8a0;color:#7a1a1a}
+
+/* submit button */
+#submit-wrap{text-align:center;margin:24px 0}
+#submit-btn{background:var(--dark);color:white;border:none;border-radius:999px;padding:14px 36px;font-size:17px;font-weight:900;cursor:pointer;font-family:inherit;opacity:.4;transition:opacity .2s}
+#submit-btn.ready{opacity:1}
+
+/* result box */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;margin-top:20px}
+#result-box h2{font-size:32px;margin:0 0 8px}
+.score-big{font-size:64px;font-weight:900;line-height:1;margin:12px 0}
+.res-msg{font-size:18px;margin-bottom:18px;font-weight:700}
+.mum{background:var(--yellow);color:var(--dark);border-radius:16px;padding:12px 20px;display:inline-block;font-weight:900;font-size:15px;margin-bottom:18px}
+#reset-btn{background:var(--dark);color:white;border:none;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-wrap{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.2 The blood vessels ⚡</h1>
+  <p>20 questions · blood vessels, valves &amp; double circulation</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b4-2-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<!-- Q1 -->
+<div class="q-block">
+  <div class="q-num">Question 1 of 20</div>
+  <div class="q-text">What does an artery do?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,1)">Returns blood to the heart</button>
+    <button class="opt" onclick="mcq(this,1,1)">Carries blood away from the heart</button>
+    <button class="opt" onclick="mcq(this,2,1)">Exchanges substances with body cells</button>
+    <button class="opt" onclick="mcq(this,3,1)">Stores blood when pressure is low</button>
+  </div>
+  <div class="feedback" id="fb1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="q-block">
+  <div class="q-num">Question 2 of 20</div>
+  <div class="q-text">Which blood vessel has walls only one cell thick?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,2)">Artery</button>
+    <button class="opt" onclick="mcq(this,1,2)">Vein</button>
+    <button class="opt" onclick="mcq(this,2,2)">Capillary</button>
+    <button class="opt" onclick="mcq(this,3,2)">Aorta</button>
+  </div>
+  <div class="feedback" id="fb2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="q-block">
+  <div class="q-num">Question 3 of 20</div>
+  <div class="q-text">Why do arteries have thick, muscular walls?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,3)">To allow diffusion of gases</button>
+    <button class="opt" onclick="mcq(this,1,3)">To withstand and maintain the high blood pressure from the heart</button>
+    <button class="opt" onclick="mcq(this,2,3)">To prevent blood from clotting</button>
+    <button class="opt" onclick="mcq(this,3,3)">To absorb nutrients from the blood</button>
+  </div>
+  <div class="feedback" id="fb3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="q-block">
+  <div class="q-num">Question 4 of 20</div>
+  <div class="q-text">Which vessels contain valves to prevent backflow of blood?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,4)">Arteries</button>
+    <button class="opt" onclick="mcq(this,1,4)">Veins</button>
+    <button class="opt" onclick="mcq(this,2,4)">Capillaries</button>
+    <button class="opt" onclick="mcq(this,3,4)">All three vessel types</button>
+  </div>
+  <div class="feedback" id="fb4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="q-block">
+  <div class="q-num">Question 5 of 20</div>
+  <div class="q-text">What travels from body cells INTO capillaries?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,5)">Oxygen and glucose</button>
+    <button class="opt" onclick="mcq(this,1,5)">Carbon dioxide and urea</button>
+    <button class="opt" onclick="mcq(this,2,5)">Red blood cells</button>
+    <button class="opt" onclick="mcq(this,3,5)">Water and hormones</button>
+  </div>
+  <div class="feedback" id="fb5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="q-block">
+  <div class="q-num">Question 6 of 20</div>
+  <div class="q-text">In a double circulatory system, pulmonary circulation goes from the heart to…</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,6)">The liver</button>
+    <button class="opt" onclick="mcq(this,1,6)">All body organs</button>
+    <button class="opt" onclick="mcq(this,2,6)">The lungs</button>
+    <button class="opt" onclick="mcq(this,3,6)">The kidneys</button>
+  </div>
+  <div class="feedback" id="fb6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="q-block">
+  <div class="q-num">Question 7 of 20</div>
+  <div class="q-text">Which vessel has the largest lumen relative to its wall size?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,7)">Artery</button>
+    <button class="opt" onclick="mcq(this,1,7)">Vein</button>
+    <button class="opt" onclick="mcq(this,2,7)">Capillary</button>
+    <button class="opt" onclick="mcq(this,3,7)">Pulmonary artery</button>
+  </div>
+  <div class="feedback" id="fb7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="q-block">
+  <div class="q-num">Question 8 of 20</div>
+  <div class="q-text">How does blood in veins get pushed back towards the heart?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,8)">By the pulse from the heart</button>
+    <button class="opt" onclick="mcq(this,1,8)">By contraction of skeletal muscles surrounding the veins</button>
+    <button class="opt" onclick="mcq(this,2,8)">By elastic fibres in the vein walls</button>
+    <button class="opt" onclick="mcq(this,3,8)">By diffusion</button>
+  </div>
+  <div class="feedback" id="fb8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="q-block">
+  <div class="q-num">Question 9 of 20</div>
+  <div class="q-text">The pulmonary artery carries blood from the heart to the lungs. What type of blood does it carry?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,9)">Oxygenated blood</button>
+    <button class="opt" onclick="mcq(this,1,9)">Deoxygenated blood</button>
+    <button class="opt" onclick="mcq(this,2,9)">Mixed blood</button>
+    <button class="opt" onclick="mcq(this,3,9)">Plasma only</button>
+  </div>
+  <div class="feedback" id="fb9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="q-block">
+  <div class="q-num">Question 10 of 20</div>
+  <div class="q-text">What is the maximum distance a typical body cell is from the nearest capillary?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,10)">0.5 mm</button>
+    <button class="opt" onclick="mcq(this,1,10)">5 mm</button>
+    <button class="opt" onclick="mcq(this,2,10)">0.05 mm</button>
+    <button class="opt" onclick="mcq(this,3,10)">0.005 mm</button>
+  </div>
+  <div class="feedback" id="fb10"></div>
+</div>
+
+<!-- Q11 TF -->
+<div class="q-block">
+  <div class="q-num">Question 11 of 20</div>
+  <div class="q-text">True or False: Arteries always carry oxygenated blood.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,11)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,11)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb11"></div>
+</div>
+
+<!-- Q12 TF -->
+<div class="q-block">
+  <div class="q-num">Question 12 of 20</div>
+  <div class="q-text">True or False: Veins have a pulse that can be felt at the wrist.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,12)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,12)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb12"></div>
+</div>
+
+<!-- Q13 TF -->
+<div class="q-block">
+  <div class="q-num">Question 13 of 20</div>
+  <div class="q-text">True or False: Capillaries exchange substances with body cells by diffusion.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,13)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,13)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb13"></div>
+</div>
+
+<!-- Q14 TF -->
+<div class="q-block">
+  <div class="q-num">Question 14 of 20</div>
+  <div class="q-text">True or False: In a double circulatory system, blood passes through the heart twice per complete circuit of the body.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,14)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,14)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb14"></div>
+</div>
+
+<!-- Q15 TF -->
+<div class="q-block">
+  <div class="q-num">Question 15 of 20</div>
+  <div class="q-text">True or False: Arteries contain valves to prevent blood flowing backwards.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,15)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,15)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb15"></div>
+</div>
+
+<!-- Q16 TF -->
+<div class="q-block">
+  <div class="q-num">Question 16 of 20</div>
+  <div class="q-text">True or False: Fish have a double circulatory system like humans.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,16)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,16)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb16"></div>
+</div>
+
+<!-- Q17 TF -->
+<div class="q-block">
+  <div class="q-num">Question 17 of 20</div>
+  <div class="q-text">True or False: Blood in veins is at higher pressure than blood in arteries.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,17)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,17)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb17"></div>
+</div>
+
+<!-- Q18 TF -->
+<div class="q-block">
+  <div class="q-num">Question 18 of 20</div>
+  <div class="q-text">True or False: Systemic circulation delivers oxygenated blood to all body organs.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,18)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,18)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb18"></div>
+</div>
+
+<!-- Q19 TF -->
+<div class="q-block">
+  <div class="q-num">Question 19 of 20</div>
+  <div class="q-text">True or False: The elastic fibres in artery walls help them stretch and recoil with each heartbeat.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,19)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,19)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb19"></div>
+</div>
+
+<!-- Q20 TF -->
+<div class="q-block">
+  <div class="q-num">Question 20 of 20</div>
+  <div class="q-text">True or False: Oxygen moves out of capillaries into body cells by diffusion.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,20)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,20)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb20"></div>
+</div>
+
+<div id="submit-wrap">
+  <button id="submit-btn" onclick="submitQuiz()" disabled>See my score →</button>
+</div>
+
+<!-- Result box -->
+<div id="result-box">
+  <div id="res-emoji" style="font-size:52px"></div>
+  <h2 id="res-title"></h2>
+  <div class="score-big" id="res-score"></div>
+  <div class="res-msg" id="res-msg"></div>
+  <div class="mum" id="res-mum"></div><br>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const TOTAL = 20;
+const SCORE_KEY = 'biology-b4-2-score';
+const DATE_KEY  = 'biology-b4-2-date';
+
+const MCQ_ANS = {1:1,2:2,3:1,4:1,5:1,6:2,7:1,8:1,9:1,10:2};
+const TF_ANS  = {11:false,12:false,13:true,14:true,15:false,16:false,17:false,18:true,19:true,20:true};
+
+const MCQ_FB = {
+  1:{ok:'✅ Correct! Arteries carry blood Away from the heart — remember the double A.',bad:'❌ Not quite. Arteries carry blood Away from the heart — think "A for Away".'},
+  2:{ok:'✅ Correct! Capillary walls are just one cell thick to allow easy diffusion.',bad:'❌ It\'s capillaries — their walls are only one cell thick.'},
+  3:{ok:'✅ Correct! Thick muscular walls withstand the high pressure from the heart\'s pumping.',bad:'❌ Thick walls resist high pressure blood — they also contain elastic fibres to stretch and recoil.'},
+  4:{ok:'✅ Correct! Veins have valves to stop blood flowing backwards at low pressure.',bad:'❌ Only veins have valves. Arteries don\'t need them — high pressure keeps blood moving forward.'},
+  5:{ok:'✅ Correct! CO₂ and urea are waste products that move from cells into capillaries.',bad:'❌ O₂ and glucose move OUT to cells. CO₂ and urea move IN from cells to blood.'},
+  6:{ok:'✅ Correct! Pulmonary circulation: heart → lungs → heart.',bad:'❌ Pulmonary = lungs. Heart → lungs → heart. Systemic goes to all other organs.'},
+  7:{ok:'✅ Correct! Veins have a large lumen to help low-pressure blood flow back to the heart.',bad:'❌ Veins have the largest lumen relative to their wall size, reducing resistance to slow-moving blood.'},
+  8:{ok:'✅ Correct! Skeletal muscle contractions squeeze blood along veins towards the heart.',bad:'❌ Blood in veins is squeezed along by the contraction of surrounding skeletal muscles.'},
+  9:{ok:'✅ Correct! The pulmonary artery is unusual — it\'s an artery carrying deoxygenated blood.',bad:'❌ The pulmonary artery carries deoxygenated blood to the lungs to be oxygenated.'},
+  10:{ok:'✅ Correct! Every cell is within 0.05 mm of a capillary for fast diffusion.',bad:'❌ It\'s 0.05 mm — tiny! This ensures substances can diffuse quickly between blood and cells.'}
+};
+const TF_FB = {
+  11:{ok:'✅ Correct — False! The pulmonary artery carries deoxygenated blood to the lungs.',bad:'❌ False! Arteries carry blood AWAY from the heart, but not always oxygenated — e.g. the pulmonary artery carries deoxygenated blood.'},
+  12:{ok:'✅ Correct — False! Only arteries have a pulse.',bad:'❌ False! Pulse is felt in arteries only (high pressure). Veins have no pulse.'},
+  13:{ok:'✅ Correct! Substances move in and out of capillaries by diffusion through thin walls.',bad:'❌ True! Capillaries exchange O₂, CO₂, glucose and urea by diffusion.'},
+  14:{ok:'✅ Correct! In a double circulation, the heart pumps blood twice per full circuit.',bad:'❌ True! Blood goes heart → lungs → heart → body → heart, passing the heart twice each circuit.'},
+  15:{ok:'✅ Correct — False! It\'s VEINS that have valves, not arteries.',bad:'❌ False! Veins have valves. Arteries rely on high pressure to keep blood moving forward.'},
+  16:{ok:'✅ Correct — False! Fish have a single circulatory system.',bad:'❌ False! Fish have a single circulation — blood loses pressure passing through the gills and reaches organs at lower pressure.'},
+  17:{ok:'✅ Correct — False! Arteries have much higher pressure than veins.',bad:'❌ False! Veins are at LOW pressure. Arteries carry blood at high pressure directly from the heart.'},
+  18:{ok:'✅ Correct! Systemic circulation delivers fully oxygenated blood to all body organs.',bad:'❌ True! Systemic circulation: heart → all body organs, carrying fully oxygenated blood.'},
+  19:{ok:'✅ Correct! Elastic fibres let artery walls stretch during a pulse and recoil to maintain pressure.',bad:'❌ True! Elastic fibres in artery walls stretch with each heartbeat and recoil to smooth blood flow.'},
+  20:{ok:'✅ Correct! O₂ diffuses from high concentration in capillaries to lower concentration in cells.',bad:'❌ True! Oxygen moves from capillaries into cells by diffusion down the concentration gradient.'}
+};
+
+// track answered questions
+var answered = {};
+var score = 0;
+
+// Show previous score banner
+(function(){
+  var s = localStorage.getItem(SCORE_KEY);
+  var d = localStorage.getItem(DATE_KEY);
+  if(s && d){
+    var b = document.getElementById('prev-banner');
+    b.style.display = 'block';
+    b.innerHTML = '📊 Last attempt: <b>' + s + '/' + TOTAL + '</b> on ' + d;
+  }
+})();
+
+function updateProgress(){
+  var n = Object.keys(answered).length;
+  document.getElementById('prog').style.width = (n / TOTAL * 100) + '%';
+  var btn = document.getElementById('submit-btn');
+  if(n >= TOTAL){
+    btn.disabled = false;
+    btn.classList.add('ready');
+  }
+}
+
+function mcq(btn, chosen, qn){
+  if(answered[qn] !== undefined) return;
+  var correct = MCQ_ANS[qn];
+  var opts = btn.parentElement.querySelectorAll('.opt');
+  opts.forEach(function(o){ o.disabled = true; });
+  var fb = document.getElementById('fb' + qn);
+  if(chosen === correct){
+    btn.classList.add('correct');
+    answered[qn] = true;
+    fb.className = 'feedback show ok';
+    fb.textContent = MCQ_FB[qn].ok;
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    answered[qn] = false;
+    fb.className = 'feedback show bad';
+    fb.textContent = MCQ_FB[qn].bad;
+  }
+  updateProgress();
+}
+
+function tf(btn, chosen, qn){
+  if(answered[qn] !== undefined) return;
+  var correct = TF_ANS[qn];
+  var btns = btn.parentElement.querySelectorAll('.tf-btn');
+  btns.forEach(function(b){ b.disabled = true; });
+  var fb = document.getElementById('fb' + qn);
+  if(chosen === correct){
+    btn.classList.add('correct');
+    answered[qn] = true;
+    fb.className = 'feedback show ok';
+    fb.textContent = TF_FB[qn].ok;
+  } else {
+    btn.classList.add('wrong');
+    // highlight the correct button
+    btns.forEach(function(b){
+      var isTrue = (b.textContent.trim().startsWith('✅'));
+      if((correct === true && isTrue) || (correct === false && !isTrue)){
+        b.classList.add('correct');
+      }
+    });
+    answered[qn] = false;
+    fb.className = 'feedback show bad';
+    fb.textContent = TF_FB[qn].bad;
+  }
+  updateProgress();
+}
+
+function submitQuiz(){
+  // calculate score from answered map
+  score = 0;
+  for(var k in answered){ if(answered[k]) score++; }
+
+  var box = document.getElementById('result-box');
+  box.style.display = 'block';
+
+  var emoji, title, msg;
+  if(score >= 18){
+    emoji = '🏆'; title = 'Brilliant!';
+    msg = 'Outstanding — you really know your blood vessels!';
+  } else if(score >= 14){
+    emoji = '👍'; title = 'Good work!';
+    msg = 'Solid understanding — review any answers you missed.';
+  } else {
+    emoji = '📖'; title = 'Keep revising!';
+    msg = 'Head back to the revision page and try again.';
+  }
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-score').textContent = score + '/' + TOTAL;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-mum').textContent = 'Show this to mum — ' + score + '/' + TOTAL;
+
+  var today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+
+  document.getElementById('submit-wrap').style.display = 'none';
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  answered = {};
+  score = 0;
+
+  for(var i = 1; i <= TOTAL; i++){
+    var q = document.querySelector('#fb' + i).closest('.q-block');
+    q.querySelectorAll('.opt, .tf-btn').forEach(function(b){
+      b.disabled = false;
+      b.classList.remove('correct','wrong');
+    });
+    var fb = document.getElementById('fb' + i);
+    fb.className = 'feedback';
+    fb.textContent = '';
+  }
+
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('submit-wrap').style.display = 'block';
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.classList.remove('ready');
+  document.getElementById('prog').style.width = '0%';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

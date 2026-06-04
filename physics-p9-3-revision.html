@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P9.3 More about Velocity–Time Graphs · Physics Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d1b2a;
+    --muted: #4a6080;
+    --paper: #ffffff;
+    --line: #c5dff5;
+    --accent: #64b5f6;
+    --accent-dark: #1565c0;
+    --navy: #0d2b5e;
+    --navy2: #1a3a7a;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7e57c2;
+    --yellow: #fdd835;
+    --card-border: #b3d4f5;
+    --hero-h: 260px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color .2s;
+  }
+  nav a:hover { color: #fff; }
+  nav a.home { color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,0.3); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, #1a5276 100%);
+    min-height: var(--hero-h);
+    padding: 48px 32px 56px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(100,181,246,.15) 0%, transparent 70%);
+  }
+  .hero-emoji {
+    position: absolute;
+    font-size: 80px;
+    opacity: .12;
+    animation: floatEmoji 6s ease-in-out infinite;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .hero-emoji:nth-child(2) { right: 18%; font-size: 48px; animation-delay: -2s; opacity: .08; }
+  .hero-emoji:nth-child(3) { right: 30%; font-size: 36px; animation-delay: -4s; opacity: .06; top: 25%; }
+  @keyframes floatEmoji {
+    0%, 100% { transform: translateY(-50%) rotate(-4deg); }
+    50% { transform: translateY(calc(-50% - 12px)) rotate(4deg); }
+  }
+  .chapter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(100,181,246,.25);
+    border: 1.5px solid rgba(100,181,246,.5);
+    border-radius: 999px;
+    padding: 4px 14px;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    width: fit-content;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    position: relative;
+    z-index: 1;
+    max-width: 620px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 999px;
+    color: rgba(255,255,255,.85);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 12px;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--navy);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .score-label { color: rgba(255,255,255,.6); font-size: 13px; font-weight: 600; }
+  .score-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,.15);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), #90caf9);
+    border-radius: 999px;
+    transition: width .5s ease;
+  }
+  .score-pct { color: #fff; font-size: 13px; font-weight: 700; min-width: 36px; text-align: right; }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 28px 32px;
+    box-shadow: 0 4px 20px rgba(13,43,94,.06);
+  }
+  .card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title .icon {
+    width: 32px; height: 32px;
+    background: var(--bg);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist { display: flex; flex-direction: column; gap: 10px; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    cursor: pointer;
+    transition: all .2s;
+    user-select: none;
+  }
+  .check-item:hover { border-color: var(--accent); background: #f0f8ff; }
+  .check-item.done {
+    border-color: var(--green);
+    background: var(--green2);
+  }
+  .check-box {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--line);
+    background: #fff;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    transition: all .2s;
+    margin-top: 1px;
+  }
+  .check-item.done .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .check-item span { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .check-item.done span { color: #2e7d32; }
+
+  /* ── KEY FACT ── */
+  .key-fact {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-left: 5px solid var(--accent-dark);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .key-fact p { font-weight: 700; font-size: 15px; color: var(--navy); line-height: 1.5; }
+  .key-fact .label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--accent-dark);
+    margin-bottom: 6px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* ── HIGHLIGHT STRIPS ── */
+  .strip {
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .strip.green { background: var(--green2); border-left: 4px solid var(--green); color: #1b5e20; }
+  .strip.orange { background: var(--orange2); border-left: 4px solid var(--orange); color: #6d3200; }
+  .strip.red { background: var(--red2); border-left: 4px solid var(--red); color: #7f0000; }
+  .strip.blue { background: #e3f2fd; border-left: 4px solid var(--accent); color: var(--navy); }
+  .strip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .big-idea-tile {
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .big-idea-tile .num {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .big-idea-tile p { font-size: 13px; font-weight: 700; line-height: 1.4; }
+  .tile-blue  { background: #e3f2fd; color: var(--navy); }
+  .tile-red   { background: var(--red2); color: #b71c1c; }
+  .tile-green { background: var(--green2); color: #1b5e20; }
+  .tile-orange{ background: var(--orange2); color: #6d3200; }
+  .tile-purple{ background: #ede7f6; color: #4a148c; }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--accent-dark);
+    margin-bottom: 14px;
+    margin-top: 6px;
+  }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .formula-box .formula {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .formula-box p { font-size: 13px; color: rgba(255,255,255,.7); font-weight: 600; }
+
+  /* ── INTERACTIVE VT GRAPH DEMO ── */
+  .demo-wrap {
+    background: #f7fbff;
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .demo-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  canvas#vtGraph {
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  .demo-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 14px;
+  }
+  .demo-btn {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .demo-btn:hover { background: var(--accent-dark); }
+  .demo-btn.active { background: var(--accent); color: var(--navy); }
+  .demo-info {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 10px;
+    min-height: 20px;
+  }
+
+  /* ── AREA CALC DEMO ── */
+  .area-demo {
+    background: #f0f8ff;
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .compare-col { border-radius: 12px; padding: 16px; }
+  .compare-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .compare-col ul { padding-left: 16px; }
+  .compare-col li { font-size: 13px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+  .compare-pos { background: var(--green2); }
+  .compare-pos h4 { color: var(--green); }
+  .compare-neg { background: var(--red2); }
+  .compare-neg h4 { color: var(--red); }
+
+  /* ── KEYWORDS GRID ── */
+  .keywords-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+  }
+  .kw-pill {
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .kw-pill .kw-term {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .kw-pill .kw-def { font-size: 12px; font-weight: 600; opacity: .8; line-height: 1.4; }
+  .kw-blue   { background: #e3f2fd; color: var(--navy); }
+  .kw-green  { background: var(--green2); color: #1b5e20; }
+  .kw-red    { background: var(--red2); color: #7f0000; }
+  .kw-orange { background: var(--orange2); color: #6d3200; }
+  .kw-purple { background: #ede7f6; color: #4a148c; }
+
+  /* ── TIMELINE / FLOW ── */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 110px;
+  }
+  .flow-box {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    width: 100%;
+    line-height: 1.4;
+  }
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--accent);
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    padding-top: 14px;
+  }
+
+  /* ── WORKED EXAMPLE ── */
+  .worked {
+    background: #f7fbff;
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 24px;
+  }
+  .worked .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .worked .step:last-child { margin-bottom: 0; }
+  .step-num {
+    background: var(--accent-dark);
+    color: #fff;
+    border-radius: 50%;
+    width: 26px; height: 26px;
+    font-size: 13px;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  .worked p { font-size: 14px; font-weight: 600; line-height: 1.6; }
+  .worked .eq {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-dark);
+    background: #e3f2fd;
+    border-radius: 8px;
+    padding: 4px 12px;
+    display: inline-block;
+    margin: 4px 0;
+  }
+
+  /* ── MARK AS READ ── */
+  .mar-wrap { text-align: center; padding-top: 8px; }
+  #marBtn {
+    background: linear-gradient(135deg, var(--navy), var(--navy2));
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 36px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 20px rgba(13,43,94,.25);
+  }
+  #marBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(13,43,94,.3); }
+  #marBtn.done {
+    background: linear-gradient(135deg, var(--green), #388e3c);
+    box-shadow: 0 4px 20px rgba(67,160,71,.3);
+  }
+  #marMsg { margin-top: 12px; font-size: 14px; font-weight: 700; color: var(--green); display: none; }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    text-align: center;
+    padding: 8px 0 16px;
+  }
+  .quiz-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent), #42a5f5);
+    color: var(--navy);
+    text-decoration: none;
+    border-radius: 14px;
+    padding: 16px 36px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 20px rgba(100,181,246,.4);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .quiz-cta a:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(100,181,246,.5); }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border-left: 5px solid var(--yellow);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .exam-tip .et-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #f57f17;
+    margin-bottom: 5px;
+  }
+  .exam-tip p { font-size: 14px; font-weight: 700; color: #4e3400; line-height: 1.5; }
+
+  @media (max-width: 600px) {
+    .compare { grid-template-columns: 1fr; }
+    .card { padding: 20px 18px; }
+    main { padding: 24px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="home">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="#">Physics</a>
+  <span class="sep">›</span>
+  <a href="#">P9 Motion</a>
+  <span class="sep">›</span>
+  <a>P9.3 Velocity–Time Graphs</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">📈</span>
+  <span class="hero-emoji">🚗</span>
+  <span class="hero-emoji">⚡</span>
+  <div class="chapter-badge">📘 Physics · P9.3</div>
+  <h1>More about Velocity–Time Graphs</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">Gradient = Acceleration</span>
+    <span class="hero-tag">Area = Distance</span>
+    <span class="hero-tag">Braking</span>
+    <span class="hero-tag">km/h → m/s</span>
+    <span class="hero-tag">Higher Content ⬆</span>
+  </div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span class="score-label">Objectives completed</span>
+  <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+  <span class="score-pct" id="scorePct">0%</span>
+</div>
+
+<main>
+
+  <!-- LEARNING OBJECTIVES -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🎯</div>Learning Objectives</div>
+    <div class="checklist" id="checklist">
+      <div class="check-item" data-key="obj1" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Describe how velocity changes on a velocity–time graph</span>
+      </div>
+      <div class="check-item" data-key="obj2" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Explain what a horizontal line on a velocity–time graph means</span>
+      </div>
+      <div class="check-item" data-key="obj3" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Use a velocity–time graph to determine if an object is accelerating or decelerating</span>
+      </div>
+      <div class="check-item" data-key="obj4" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>⬆ Higher: Explain what the area under a velocity–time graph represents (distance/displacement)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div class="card">
+    <div class="card-title"><div class="icon">💡</div>The Big Ideas</div>
+    <div class="big-idea-grid">
+      <div class="big-idea-tile tile-blue">
+        <div class="num">📐</div>
+        <p>Gradient = Acceleration<br><small>(m/s²)</small></p>
+      </div>
+      <div class="big-idea-tile tile-orange">
+        <div class="num">➡</div>
+        <p>Horizontal line = Zero acceleration (constant velocity)</p>
+      </div>
+      <div class="big-idea-tile tile-red">
+        <div class="num">↘</div>
+        <p>Negative gradient = Deceleration</p>
+      </div>
+      <div class="big-idea-tile tile-green">
+        <div class="num">▦</div>
+        <p>Area under graph = Distance travelled</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY FACTS -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🔑</div>Key Facts & Formulas</div>
+
+    <p class="section-heading">Gradient → Acceleration</p>
+    <div class="key-fact">
+      <div class="label">Core Principle</div>
+      <p>The gradient (slope) of a velocity–time graph equals the acceleration of the object. A steeper line means a larger acceleration.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula">acceleration = Δvelocity ÷ Δtime</div>
+      <p>a = (v − u) / t &nbsp;·&nbsp; units: m/s²</p>
+    </div>
+
+    <div class="strip blue"><span class="strip-icon">📏</span><span>A straight line on a v-t graph means <strong>constant acceleration</strong>. The increase in velocity is the same every second.</span></div>
+    <div class="strip orange"><span class="strip-icon">➡</span><span>A <strong>horizontal</strong> line means the velocity is not changing → <strong>zero acceleration</strong>.</span></div>
+    <div class="strip red"><span class="strip-icon">↘</span><span>A line going <strong>downward</strong> (negative gradient) means the object is <strong>decelerating</strong>.</span></div>
+
+    <p class="section-heading" style="margin-top:22px">Area → Distance (Higher ⬆)</p>
+    <div class="key-fact">
+      <div class="label">Higher Content</div>
+      <p>The area under a velocity–time graph represents the distance travelled (displacement) in the direction of motion.</p>
+    </div>
+    <div class="strip green"><span class="strip-icon">🟨</span><span>Rectangle area = base × height → distance at constant velocity</span></div>
+    <div class="strip green"><span class="strip-icon">🔺</span><span>Triangle area = ½ × base × height → distance while accelerating/decelerating</span></div>
+  </div>
+
+  <!-- INTERACTIVE VT GRAPH DEMO -->
+  <div class="card">
+    <div class="card-title"><div class="icon">📊</div>Interactive Velocity–Time Graph</div>
+    <p style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:16px">Click a button to see different types of motion on the graph.</p>
+    <div class="demo-wrap">
+      <div class="demo-title">Velocity–Time Graph Demo</div>
+      <canvas id="vtGraph" width="580" height="280" style="max-width:100%"></canvas>
+      <div class="demo-controls">
+        <button class="demo-btn active" onclick="showGraph('accel')">↗ Accelerating</button>
+        <button class="demo-btn" onclick="showGraph('const')">→ Constant Velocity</button>
+        <button class="demo-btn" onclick="showGraph('decel')">↘ Decelerating</button>
+        <button class="demo-btn" onclick="showGraph('brake')">🚗 Braking Sequence</button>
+      </div>
+      <div class="demo-info" id="demoInfo">Straight line going up → constant acceleration (a &gt; 0)</div>
+    </div>
+  </div>
+
+  <!-- BRAKING WORKED EXAMPLE -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🚗</div>Braking — Worked Example</div>
+    <p style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:16px">A car travels at 20 m/s for 10 s, then brakes to a stop in 5 s. Find the distances.</p>
+    <div class="worked">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <p><strong>Distance at constant velocity</strong> (rectangle):</p>
+          <p class="eq">d = v × t = 20 × 10 = <strong>200 m</strong></p>
+          <p style="font-size:13px;color:var(--muted)">This is the yellow shaded rectangle on Figure 2 (0 s to 10 s)</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <p><strong>Distance while braking</strong> (triangle):</p>
+          <p class="eq">d = ½ × base × height = ½ × 5 × 20 = <strong>50 m</strong></p>
+          <p style="font-size:13px;color:var(--muted)">This is the purple shaded triangle (10 s to 15 s)</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <p><strong>Total distance</strong> = 200 + 50 = <span style="color:var(--accent-dark);font-size:16px">250 m</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-tip" style="margin-top:16px">
+      <div class="et-label">⚠ Exam Tip</div>
+      <p>Always check what shape the area is: flat section = rectangle, sloping section = triangle. Don't forget the ½ for triangles!</p>
+    </div>
+  </div>
+
+  <!-- UNIT CONVERSION -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🔄</div>Unit Conversion: km/h → m/s</div>
+    <div class="key-fact">
+      <div class="label">Key fact</div>
+      <p>Because 1000 m = 1 km and 3600 s = 1 hour, a speed of 1 km/h = 0.278 m/s.</p>
+    </div>
+    <div class="formula-box">
+      <div class="formula">m/s = km/h ÷ 3.6</div>
+      <p>Always convert km/h → m/s before using graphs or equations</p>
+    </div>
+    <div class="strip orange"><span class="strip-icon">⚠</span><span>If speed/velocity is given in km/h, you <strong>must</strong> convert to m/s before plotting on a v-t graph or using in a formula.</span></div>
+  </div>
+
+  <!-- GRAPH SHAPES COMPARE -->
+  <div class="card">
+    <div class="card-title"><div class="icon">⚖️</div>Positive vs Negative Gradient</div>
+    <div class="compare">
+      <div class="compare-col compare-pos">
+        <h4>✅ Positive gradient</h4>
+        <ul>
+          <li>Line slopes upward</li>
+          <li>Velocity increasing</li>
+          <li>Object accelerating</li>
+          <li>a is a positive value</li>
+        </ul>
+      </div>
+      <div class="compare-col compare-neg">
+        <h4>❌ Negative gradient</h4>
+        <ul>
+          <li>Line slopes downward</li>
+          <li>Velocity decreasing</li>
+          <li>Object decelerating</li>
+          <li>a is a negative value</li>
+        </ul>
+      </div>
+    </div>
+    <div class="strip blue" style="margin-top:14px"><span class="strip-icon">📏</span><span>Always draw graphs with a <strong>ruler</strong> for straight-line graphs in the exam.</span></div>
+  </div>
+
+  <!-- INVESTIGATING ACCELERATION -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🔬</div>Investigating Acceleration Experiment</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-box">Set up motion sensor + interface + computer</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-box">Trolley rolls down runway (card fixed)</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-box">Computer records velocity over time</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-box">Displays v-t graph — gradient = acceleration</div>
+      </div>
+    </div>
+    <div class="strip green" style="margin-top:14px"><span class="strip-icon">🔍</span><span><strong>Independent variable:</strong> steepness of runway &nbsp;|&nbsp; <strong>Dependent variable:</strong> acceleration (gradient of line)</span></div>
+    <div class="strip orange"><span class="strip-icon">🛡</span><span><strong>Safety:</strong> Use foam or empty cardboard box to stop the trolley. Mind your feet!</span></div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="card">
+    <div class="card-title"><div class="icon">📖</div>Key Vocabulary</div>
+    <div class="keywords-grid">
+      <div class="kw-pill kw-blue">
+        <span class="kw-term">Velocity</span>
+        <span class="kw-def">Speed in a given direction (vector), m/s</span>
+      </div>
+      <div class="kw-pill kw-orange">
+        <span class="kw-term">Acceleration</span>
+        <span class="kw-def">Rate of change of velocity, m/s². Gradient of v-t graph.</span>
+      </div>
+      <div class="kw-pill kw-red">
+        <span class="kw-term">Deceleration</span>
+        <span class="kw-def">Negative acceleration — velocity is decreasing</span>
+      </div>
+      <div class="kw-pill kw-green">
+        <span class="kw-term">Displacement</span>
+        <span class="kw-def">Distance in a given direction — area under v-t graph</span>
+      </div>
+      <div class="kw-pill kw-purple">
+        <span class="kw-term">Gradient</span>
+        <span class="kw-def">Slope of a line = Δy / Δx = Δv / Δt</span>
+      </div>
+      <div class="kw-pill kw-blue">
+        <span class="kw-term">Motion sensor</span>
+        <span class="kw-def">Device linked to a computer to record changing velocity</span>
+      </div>
+      <div class="kw-pill kw-orange">
+        <span class="kw-term">km/h → m/s</span>
+        <span class="kw-def">Divide by 3.6 (e.g. 1 km/h = 0.278 m/s)</span>
+      </div>
+      <div class="kw-pill kw-green">
+        <span class="kw-term">Area (triangle)</span>
+        <span class="kw-def">½ × base × height → distance during acceleration/decel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <a href="physics-p9-3-quickcheck.html">⚡ Test Yourself — Quick Check Quiz →</a>
+  </div>
+
+  <!-- MARK AS READ -->
+  <div class="mar-wrap">
+    <button id="marBtn" onclick="markRead()">Mark as read ✓</button>
+    <div id="marMsg">✅ Great work! Show this to mum 😊</div>
+  </div>
+
+</main>
+
+<script>
+  const STEM = 'physics-p9-3-revision';
+
+  // ── Checklist ──
+  function toggleCheck(el) {
+    const key = 'check-' + STEM + '-' + el.dataset.key;
+    const done = !el.classList.contains('done');
+    el.classList.toggle('done', done);
+    localStorage.setItem(key, done ? '1' : '0');
+    updateScore();
+  }
+
+  function loadChecks() {
+    document.querySelectorAll('.check-item').forEach(el => {
+      const key = 'check-' + STEM + '-' + el.dataset.key;
+      if (localStorage.getItem(key) === '1') el.classList.add('done');
+    });
+    updateScore();
+  }
+
+  function updateScore() {
+    const items = document.querySelectorAll('.check-item');
+    const done  = document.querySelectorAll('.check-item.done').length;
+    const pct   = Math.round(done / items.length * 100);
+    document.getElementById('scoreFill').style.width = pct + '%';
+    document.getElementById('scorePct').textContent  = pct + '%';
+  }
+
+  // ── Mark as read ──
+  function markRead() {
+    localStorage.setItem(STEM + '-read', '1');
+    const btn = document.getElementById('marBtn');
+    const msg = document.getElementById('marMsg');
+    btn.classList.add('done');
+    btn.textContent = '✅ Read!';
+    msg.style.display = 'block';
+  }
+
+  function loadRead() {
+    if (localStorage.getItem(STEM + '-read') === '1') {
+      document.getElementById('marBtn').classList.add('done');
+      document.getElementById('marBtn').textContent = '✅ Read!';
+      document.getElementById('marMsg').style.display = 'block';
+    }
+  }
+
+  // ── VT Graph Demo ──
+  const graphData = {
+    accel: {
+      points: [[0,0],[2,4],[4,8],[6,12],[8,16],[10,20]],
+      color: '#1565c0',
+      label: 'Velocity increasing steadily',
+      info: 'Straight line going up → constant acceleration (a > 0). Gradient = acceleration.',
+    },
+    const: {
+      points: [[0,15],[2,15],[4,15],[6,15],[8,15],[10,15]],
+      color: '#43a047',
+      label: 'Constant velocity',
+      info: 'Horizontal line → zero acceleration. Velocity stays the same every second.',
+    },
+    decel: {
+      points: [[0,20],[2,16],[4,12],[6,8],[8,4],[10,0]],
+      color: '#ef5350',
+      label: 'Velocity decreasing',
+      info: 'Line going down (negative gradient) → deceleration. Object slowing down.',
+    },
+    brake: {
+      points: [[0,20],[4,20],[4,20],[6,20],[10,20],[10,20],[15,0]],
+      color: '#fb8c00',
+      label: 'Constant then brakes to stop',
+      info: 'Braking sequence: flat (constant v) → steep negative slope (deceleration). Area = total distance.',
+      shadeRect: true,
+      shadeTri: true,
+    },
+  };
+
+  let currentGraph = 'accel';
+
+  function showGraph(type) {
+    currentGraph = type;
+    document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('demoInfo').textContent = graphData[type].info;
+    drawGraph(type);
+  }
+
+  function drawGraph(type) {
+    const canvas = document.getElementById('vtGraph');
+    const ctx    = canvas.getContext('2d');
+    const dpr    = window.devicePixelRatio || 1;
+    const W = canvas.clientWidth, H = canvas.clientHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+
+    const pad = { top: 20, right: 30, bottom: 50, left: 55 };
+    const gW = W - pad.left - pad.right;
+    const gH = H - pad.top  - pad.bottom;
+
+    const d = graphData[type];
+    const xs = d.points.map(p => p[0]);
+    const ys = d.points.map(p => p[1]);
+    const maxX = Math.max(...xs, 15);
+    const maxY = Math.max(...ys, 25);
+
+    function tx(x) { return pad.left + (x / maxX) * gW; }
+    function ty(y) { return pad.top  + gH - (y / maxY) * gH; }
+
+    // Background
+    ctx.fillStyle = '#f7fbff';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#d0e8f8';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 5; i++) {
+      const y = pad.top + (i / 5) * gH;
+      ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + gW, y); ctx.stroke();
+    }
+    for (let i = 0; i <= maxX; i += 5) {
+      const x = tx(i);
+      ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + gH); ctx.stroke();
+    }
+
+    // Shading for brake graph
+    if (type === 'brake') {
+      // Yellow rectangle (0-10 s at 20 m/s)
+      ctx.fillStyle = 'rgba(253,216,53,0.35)';
+      ctx.fillRect(tx(0), ty(20), tx(10)-tx(0), gH - (ty(20)-pad.top));
+
+      // Purple triangle (10-15 s braking)
+      ctx.fillStyle = 'rgba(126,87,194,0.25)';
+      ctx.beginPath();
+      ctx.moveTo(tx(10), ty(20));
+      ctx.lineTo(tx(15), ty(0));
+      ctx.lineTo(tx(10), ty(0));
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Axes
+    ctx.strokeStyle = '#0d2b5e';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top);
+    ctx.lineTo(pad.left, pad.top + gH);
+    ctx.lineTo(pad.left + gW, pad.top + gH);
+    ctx.stroke();
+
+    // Axis labels
+    ctx.fillStyle = '#4a6080';
+    ctx.font = '600 12px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('time in s', pad.left + gW / 2, H - 6);
+    ctx.save();
+    ctx.translate(14, pad.top + gH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('velocity in m/s', 0, 0);
+    ctx.restore();
+
+    // Tick marks & numbers
+    ctx.fillStyle = '#0d2b5e';
+    ctx.font = '600 11px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= maxX; i += 5) {
+      ctx.fillText(i, tx(i), pad.top + gH + 18);
+    }
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= maxY; i += 5) {
+      ctx.fillText(i, pad.left - 8, ty(i) + 4);
+    }
+
+    // Line
+    ctx.strokeStyle = d.color;
+    ctx.lineWidth = 3;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    d.points.forEach((pt, i) => {
+      i === 0 ? ctx.moveTo(tx(pt[0]), ty(pt[1])) : ctx.lineTo(tx(pt[0]), ty(pt[1]));
+    });
+    ctx.stroke();
+
+    // Dots
+    d.points.forEach(pt => {
+      ctx.beginPath();
+      ctx.arc(tx(pt[0]), ty(pt[1]), 5, 0, Math.PI * 2);
+      ctx.fillStyle = d.color;
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+
+  // Init
+  window.addEventListener('load', () => {
+    loadChecks();
+    loadRead();
+    drawGraph('accel');
+  });
+
+  window.addEventListener('resize', () => drawGraph(currentGraph));
+</script>
+</body>
+</html>

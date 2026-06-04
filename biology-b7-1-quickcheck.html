@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B7.1 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;font-weight:700;font-size:14px;margin-bottom:14px;color:#7a3a00}
+/* progress bar */
+#progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:18px}
+#progress-bar{background:var(--yellow);height:10px;border-radius:999px;width:0%;transition:width .35s}
+/* question blocks */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;text-align:left;font-family:inherit;transition:border-color .2s,background .2s;width:100%}
+.opt:hover{border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2);border-color:var(--green);font-weight:700}
+.opt.wrong{background:var(--red2);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.feedback{border-radius:12px;padding:10px 14px;font-size:14px;margin-top:10px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);border:1.5px solid var(--green);color:#1a4d22}
+.feedback.bad{background:var(--red2);border:1.5px solid var(--red);color:#7a0d0d}
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-row .opt{flex:1;text-align:center;font-weight:900}
+/* result */
+#result-box{display:none;background:white;border:3px solid var(--line);border-radius:30px;padding:32px;text-align:center;margin-top:24px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+#result-box h2{font-size:36px;margin:0 0 8px}
+#result-box .score{font-size:64px;font-weight:900;line-height:1}
+#result-box .msg{font-size:18px;margin:12px 0;font-weight:700}
+#result-box .sub{font-size:15px;color:var(--muted)}
+#reset-btn{margin-top:18px;background:var(--dark);color:white;border:none;font-weight:900;padding:12px 28px;border-radius:999px;cursor:pointer;font-size:15px;font-family:inherit}
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:20px}.q-text{font-size:15px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B7 Non-communicable diseases</div>
+  <h1>B7.1 Quick Check ⚡</h1>
+  <p>20 questions · Non-communicable diseases, risk factors, correlations &amp; causal mechanisms</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b7-1-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+
+<!-- Q1 MCQ -->
+<div class="q-block" id="q1">
+  <div class="q-num">Question 1 of 20 · Multiple choice</div>
+  <div class="q-text">Which of the following is the best definition of a non-communicable disease?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,1,0)">A disease caused by a pathogen that spreads between people</button>
+    <button class="opt" onclick="mcq(this,1,1)">A disease that cannot be passed from one person to another</button>
+    <button class="opt" onclick="mcq(this,1,2)">A disease that only affects people over the age of 60</button>
+    <button class="opt" onclick="mcq(this,1,3)">A disease caused entirely by a person's genetic makeup</button>
+  </div>
+  <div class="feedback" id="f1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="q-block" id="q2">
+  <div class="q-num">Question 2 of 20 · Multiple choice</div>
+  <div class="q-text">In 2012, how many of the top 10 killer diseases globally were non-communicable?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,2,0)">3</button>
+    <button class="opt" onclick="mcq(this,2,1)">5</button>
+    <button class="opt" onclick="mcq(this,2,2)">7</button>
+    <button class="opt" onclick="mcq(this,2,3)">10</button>
+  </div>
+  <div class="feedback" id="f2"></div>
+</div>
+
+<!-- Q3 MCQ -->
+<div class="q-block" id="q3">
+  <div class="q-num">Question 3 of 20 · Multiple choice</div>
+  <div class="q-text">Which of the following is a lifestyle risk factor for non-communicable disease?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,3,0)">Ionising radiation</button>
+    <button class="opt" onclick="mcq(this,3,1)">Age</button>
+    <button class="opt" onclick="mcq(this,3,2)">Lack of exercise</button>
+    <button class="opt" onclick="mcq(this,3,3)">Inherited genes</button>
+  </div>
+  <div class="feedback" id="f3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="q-block" id="q4">
+  <div class="q-num">Question 4 of 20 · Multiple choice</div>
+  <div class="q-text">A carcinogen is best described as:</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,4,0)">A type of white blood cell that destroys cancer cells</button>
+    <button class="opt" onclick="mcq(this,4,1)">A substance that can cause mutations in DNA, leading to cancer</button>
+    <button class="opt" onclick="mcq(this,4,2)">A drug used to treat non-communicable diseases</button>
+    <button class="opt" onclick="mcq(this,4,3)">A virus that spreads between individuals</button>
+  </div>
+  <div class="feedback" id="f4"></div>
+</div>
+
+<!-- Q5 MCQ -->
+<div class="q-block" id="q5">
+  <div class="q-num">Question 5 of 20 · Multiple choice</div>
+  <div class="q-text">What does a correlation between two variables tell us?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,5,0)">One variable definitely causes the other</button>
+    <button class="opt" onclick="mcq(this,5,1)">There is a proven biological mechanism linking the two variables</button>
+    <button class="opt" onclick="mcq(this,5,2)">There is a pattern or relationship between the two variables</button>
+    <button class="opt" onclick="mcq(this,5,3)">The two variables are completely unrelated</button>
+  </div>
+  <div class="feedback" id="f5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="q-block" id="q6">
+  <div class="q-num">Question 6 of 20 · Multiple choice</div>
+  <div class="q-text">Smoking → carcinogens inhaled → DNA mutations in lung cells → lung cancer. This is an example of:</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,6,0)">A correlation only</button>
+    <button class="opt" onclick="mcq(this,6,1)">A risk factor with no evidence</button>
+    <button class="opt" onclick="mcq(this,6,2)">A causal mechanism</button>
+    <button class="opt" onclick="mcq(this,6,3)">An environmental factor that cannot be changed</button>
+  </div>
+  <div class="feedback" id="f6"></div>
+</div>
+
+<!-- Q7 MCQ -->
+<div class="q-block" id="q7">
+  <div class="q-num">Question 7 of 20 · Multiple choice</div>
+  <div class="q-text">Which of the following is an environmental (not lifestyle) risk factor?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,7,0)">Overeating</button>
+    <button class="opt" onclick="mcq(this,7,1)">Smoking</button>
+    <button class="opt" onclick="mcq(this,7,2)">UV light from the sun</button>
+    <button class="opt" onclick="mcq(this,7,3)">Drinking alcohol</button>
+  </div>
+  <div class="feedback" id="f7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="q-block" id="q8">
+  <div class="q-num">Question 8 of 20 · Multiple choice</div>
+  <div class="q-text">Which of these is NOT an example of a non-communicable disease?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,8,0)">Coronary heart disease</button>
+    <button class="opt" onclick="mcq(this,8,1)">Type 2 diabetes</button>
+    <button class="opt" onclick="mcq(this,8,2)">Influenza</button>
+    <button class="opt" onclick="mcq(this,8,3)">COPD</button>
+  </div>
+  <div class="feedback" id="f8"></div>
+</div>
+
+<!-- Q9 MCQ -->
+<div class="q-block" id="q9">
+  <div class="q-num">Question 9 of 20 · Multiple choice</div>
+  <div class="q-text">Why do non-communicable diseases have such a large economic impact?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,9,0)">They only affect elderly people who are not in work</button>
+    <button class="opt" onclick="mcq(this,9,1)">They are very rare and expensive to treat</button>
+    <button class="opt" onclick="mcq(this,9,2)">They affect large numbers of people including working-age populations, reducing productivity and increasing treatment costs</button>
+    <button class="opt" onclick="mcq(this,9,3)">They spread rapidly between communities causing widespread job losses</button>
+  </div>
+  <div class="feedback" id="f9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="q-block" id="q10">
+  <div class="q-num">Question 10 of 20 · Multiple choice</div>
+  <div class="q-text">Scientists find that people who eat more processed meat have higher rates of bowel cancer. What is needed before we can say processed meat causes bowel cancer?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,10,0)">Nothing — the correlation is enough to confirm the cause</button>
+    <button class="opt" onclick="mcq(this,10,1)">A proven causal mechanism explaining how processed meat leads to bowel cancer</button>
+    <button class="opt" onclick="mcq(this,10,2)">A government ban on processed meat</button>
+    <button class="opt" onclick="mcq(this,10,3)">A survey of people's opinions on eating habits</button>
+  </div>
+  <div class="feedback" id="f10"></div>
+</div>
+
+<!-- Q11 TF -->
+<div class="q-block" id="q11">
+  <div class="q-num">Question 11 of 20 · True or False</div>
+  <div class="q-text">Non-communicable diseases can be passed from one person to another.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,11,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,11,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f11"></div>
+</div>
+
+<!-- Q12 TF -->
+<div class="q-block" id="q12">
+  <div class="q-num">Question 12 of 20 · True or False</div>
+  <div class="q-text">Age and genes are risk factors for non-communicable diseases that a person can change through lifestyle choices.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,12,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,12,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f12"></div>
+</div>
+
+<!-- Q13 TF -->
+<div class="q-block" id="q13">
+  <div class="q-num">Question 13 of 20 · True or False</div>
+  <div class="q-text">A correlation between two factors is enough to prove that one causes the other.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,13,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,13,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f13"></div>
+</div>
+
+<!-- Q14 TF -->
+<div class="q-block" id="q14">
+  <div class="q-num">Question 14 of 20 · True or False</div>
+  <div class="q-text">UV light from the sun is an environmental risk factor for skin cancer.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,14,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,14,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f14"></div>
+</div>
+
+<!-- Q15 TF -->
+<div class="q-block" id="q15">
+  <div class="q-num">Question 15 of 20 · True or False</div>
+  <div class="q-text">Second-hand tobacco smoke is classified as an environmental risk factor.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,15,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,15,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f15"></div>
+</div>
+
+<!-- Q16 TF -->
+<div class="q-block" id="q16">
+  <div class="q-num">Question 16 of 20 · True or False</div>
+  <div class="q-text">Non-communicable diseases affect fewer people than communicable diseases, so they have a smaller global economic impact.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,16,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,16,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f16"></div>
+</div>
+
+<!-- Q17 TF -->
+<div class="q-block" id="q17">
+  <div class="q-num">Question 17 of 20 · True or False</div>
+  <div class="q-text">Coronary heart disease, stroke, and COPD are all examples of non-communicable diseases.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,17,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,17,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f17"></div>
+</div>
+
+<!-- Q18 TF -->
+<div class="q-block" id="q18">
+  <div class="q-num">Question 18 of 20 · True or False</div>
+  <div class="q-text">If a wage-earner in a family develops a non-communicable disease, there can be a financial impact on the whole family.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,18,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,18,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f18"></div>
+</div>
+
+<!-- Q19 TF -->
+<div class="q-block" id="q19">
+  <div class="q-num">Question 19 of 20 · True or False</div>
+  <div class="q-text">A risk factor is an aspect of a person's lifestyle or environment that has been linked to an increased rate of a particular disease.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,19,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,19,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f19"></div>
+</div>
+
+<!-- Q20 TF -->
+<div class="q-block" id="q20">
+  <div class="q-num">Question 20 of 20 · True or False</div>
+  <div class="q-text">Drinking alcohol and overeating are examples of lifestyle factors that a person can choose to change.</div>
+  <div class="options tf-row">
+    <button class="opt" onclick="tf(this,20,true)">TRUE</button>
+    <button class="opt" onclick="tf(this,20,false)">FALSE</button>
+  </div>
+  <div class="feedback" id="f20"></div>
+</div>
+
+<!-- Result box -->
+<div id="result-box">
+  <div class="score" id="result-score"></div>
+  <div class="msg" id="result-msg"></div>
+  <div class="sub" id="result-sub"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const TOTAL = 20;
+const SCORE_KEY = 'biology-b7-1-quiz-score';
+const DATE_KEY  = 'biology-b7-1-quiz-date';
+
+// MCQ answers (0-indexed option index)
+const MCQ_ANS = {1:1, 2:2, 3:2, 4:1, 5:2, 6:2, 7:2, 8:2, 9:2, 10:1};
+// TF answers (true/false)
+const TF_ANS  = {11:false,12:false,13:false,14:true,15:true,16:false,17:true,18:true,19:true,20:true};
+
+const MCQ_FEEDBACK = {
+  1:{ok:'Correct! Non-communicable diseases cannot spread between people.',bad:'Not quite. Non-communicable means the disease cannot be passed from person to person.'},
+  2:{ok:'Correct! In 2012, 7 of the top 10 killer diseases were non-communicable.',bad:'Not quite — 7 of the top 10 were non-communicable, and only 3 were communicable.'},
+  3:{ok:'Correct! Lack of exercise is a lifestyle factor we can choose to change.',bad:'Not quite. Lifestyle factors are ones we can choose to change — lack of exercise fits this.'},
+  4:{ok:'Correct! A carcinogen is a substance that causes DNA mutations leading to cancer.',bad:'Not quite. A carcinogen is a substance that can cause DNA mutations, potentially leading to cancer.'},
+  5:{ok:'Correct! A correlation shows a pattern or relationship — it does NOT prove cause.',bad:'Not quite. A correlation shows a relationship between variables, but does not prove that one causes the other.'},
+  6:{ok:'Correct! This step-by-step biological explanation is a causal mechanism.',bad:'Not quite. When we can explain exactly how one thing biologically causes another, that is a causal mechanism.'},
+  7:{ok:'Correct! UV light is an environmental factor (not a lifestyle choice).',bad:'Not quite. UV light from the sun is an environmental risk factor — the others listed are lifestyle choices.'},
+  8:{ok:'Correct! Influenza is a communicable disease caused by a virus.',bad:'Not quite. Influenza is infectious and communicable — it is caused by a virus and spreads between people.'},
+  9:{ok:'Correct! Non-communicable diseases affect huge numbers, including working-age people, driving up economic costs.',bad:'Not quite. Non-communicable diseases affect vast numbers of people including working-age populations, costing economies enormously.'},
+  10:{ok:'Correct! A proven causal mechanism is needed to move from correlation to confirmed cause.',bad:'Not quite. A correlation alone is not enough — scientists need a proven causal mechanism before concluding a cause.'}
+};
+const TF_FEEDBACK = {
+  11:{ok:'Correct! Non-communicable diseases CANNOT be passed between people.',bad:'Careful! Non-communicable means it cannot be passed from person to person. It is not infectious.'},
+  12:{ok:'',bad:'Correct! Age and genes cannot be changed — they are fixed risk factors, unlike lifestyle choices.'},
+  13:{ok:'',bad:'Correct! Correlation only shows a relationship or pattern. A causal mechanism is needed to prove cause.'},
+  14:{ok:'Correct! UV light is a well-known environmental risk factor for skin cancer.',bad:'Not quite — UV light from the sun is an environmental risk factor for skin cancer.'},
+  15:{ok:'Correct! Second-hand smoke is an environmental risk factor, not a personal lifestyle choice.',bad:'Not quite — second-hand tobacco smoke is classified as an environmental risk factor.'},
+  16:{ok:'',bad:'Correct! Non-communicable diseases actually affect far MORE people than communicable ones, giving them the greatest economic impact.'},
+  17:{ok:'Correct! All three are classic examples of non-communicable diseases.',bad:'Not quite — coronary heart disease, stroke, and COPD are all non-communicable diseases.'},
+  18:{ok:'Correct! Loss of a wage-earner\'s income creates a financial burden on the whole family.',bad:'Not quite — if a wage-earner falls ill, the family can lose income, creating real financial hardship.'},
+  19:{ok:'Correct! That is the definition of a risk factor.',bad:'Not quite — a risk factor is an aspect of lifestyle or environment linked to increased disease rates.'},
+  20:{ok:'Correct! Lifestyle factors are those we have the power to change.',bad:'Not quite — both drinking alcohol and overeating are lifestyle choices that individuals can change.'}
+};
+
+let scores = {};
+let answered = 0;
+
+// Show prev score
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s && d){
+    const b = document.getElementById('prev-banner');
+    b.style.display = 'block';
+    b.textContent = '📋 Last attempt: ' + s + '/' + TOTAL + ' on ' + d;
+  }
+})();
+
+function updateProgress(){
+  const pct = (answered / TOTAL) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function lockQ(qNum){
+  const block = document.getElementById('q' + qNum);
+  block.querySelectorAll('.opt').forEach(b => b.disabled = true);
+}
+
+function showFeedback(qNum, correct, text){
+  const fb = document.getElementById('f' + qNum);
+  fb.className = 'feedback show ' + (correct ? 'ok' : 'bad');
+  fb.innerHTML = (correct ? '✅ ' : '❌ ') + text;
+}
+
+function mcq(btn, qNum, chosenIdx){
+  if(scores[qNum] !== undefined) return;
+  lockQ(qNum);
+  const correct = chosenIdx === MCQ_ANS[qNum];
+  // highlight
+  const opts = btn.closest('.options').querySelectorAll('.opt');
+  opts[MCQ_ANS[qNum]].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  scores[qNum] = correct ? 1 : 0;
+  answered++;
+  updateProgress();
+  const fb = MCQ_FEEDBACK[qNum];
+  showFeedback(qNum, correct, correct ? fb.ok : fb.bad);
+  checkDone();
+}
+
+function tf(btn, qNum, chosen){
+  if(scores[qNum] !== undefined) return;
+  lockQ(qNum);
+  const correct = chosen === TF_ANS[qNum];
+  // highlight correct button
+  const opts = btn.closest('.options').querySelectorAll('.opt');
+  opts[TF_ANS[qNum] ? 0 : 1].classList.add('correct');
+  if(!correct) btn.classList.add('wrong');
+  scores[qNum] = correct ? 1 : 0;
+  answered++;
+  updateProgress();
+  const fb = TF_FEEDBACK[qNum];
+  showFeedback(qNum, correct, correct ? fb.ok : fb.bad);
+  checkDone();
+}
+
+function checkDone(){
+  if(answered < TOTAL) return;
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  // save
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, total);
+  localStorage.setItem(DATE_KEY, today);
+  // show result
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  document.getElementById('result-score').textContent = total + '/' + TOTAL;
+  let emoji, msg, sub;
+  if(total >= 18){
+    emoji = '🏆';
+    msg = emoji + ' Excellent work!';
+    sub = 'Show this to mum — ' + total + '/' + TOTAL + '! You really know your B7.1.';
+    box.style.borderColor = 'var(--green)';
+  } else if(total >= 14){
+    emoji = '👍';
+    msg = emoji + ' Good effort!';
+    sub = 'Show this to mum — ' + total + '/' + TOTAL + '. A little more revision and you\'ll nail it.';
+    box.style.borderColor = 'var(--orange)';
+  } else {
+    emoji = '📖';
+    msg = emoji + ' Keep going!';
+    sub = 'Show this to mum — ' + total + '/' + TOTAL + '. Head back to the revision page for another look.';
+    box.style.borderColor = 'var(--red)';
+  }
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-sub').textContent = sub;
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetQuiz(){
+  scores = {};
+  answered = 0;
+  document.getElementById('progress-bar').style.width = '0%';
+  document.getElementById('result-box').style.display = 'none';
+  // reset all buttons
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled = false;
+    b.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.feedback').forEach(f=>{
+    f.className = 'feedback';
+    f.textContent = '';
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

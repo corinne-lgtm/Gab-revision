@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P9.1 Speed & Distance–Time Graphs · Physics Revision</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── CSS Variables ── */
+    :root {
+      --bg: #e8f4fd;
+      --ink: #0d1b2a;
+      --muted: #5a7a95;
+      --paper: #ffffff;
+      --line: #c8dff0;
+      --card-border: #b8d4ea;
+      --hero-bg: #0d2b45;
+      --accent: #64b5f6;
+      --accent2: #1976d2;
+      --accent3: #0d47a1;
+      --green: #e8f5e9;
+      --green2: #2e7d32;
+      --orange: #fff3e0;
+      --orange2: #e65100;
+      --red: #fde8e8;
+      --red2: #c62828;
+      --purple: #6a1b9a;
+      --yellow: #f9a825;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--hero-bg);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { background: rgba(100,181,246,0.2); color: var(--accent); border-color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--hero-bg);
+      padding: 60px 28px 80px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(100,181,246,0.18) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(25,118,210,0.2) 0%, transparent 50%);
+    }
+    .floating-emojis {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .fe {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.12;
+      animation: floatUp 6s ease-in-out infinite;
+    }
+    .fe:nth-child(1) { left: 5%;  top: 20%; animation-delay: 0s;   font-size: 2.5rem; }
+    .fe:nth-child(2) { left: 15%; top: 60%; animation-delay: 1s;   font-size: 1.5rem; }
+    .fe:nth-child(3) { left: 75%; top: 15%; animation-delay: 2s;   font-size: 2rem;   }
+    .fe:nth-child(4) { left: 85%; top: 55%; animation-delay: 0.5s; font-size: 1.8rem; }
+    .fe:nth-child(5) { left: 50%; top: 75%; animation-delay: 3s;   font-size: 2.2rem; }
+    .fe:nth-child(6) { left: 60%; top: 30%; animation-delay: 1.5s; font-size: 1.4rem; }
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%       { transform: translateY(-20px) rotate(8deg); }
+    }
+
+    .chapter-badge {
+      display: inline-block;
+      background: rgba(100,181,246,0.25);
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.9rem, 5vw, 3.2rem);
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero .kicker {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .hero-tags {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ── Score bar ── */
+    .score-bar {
+      background: var(--hero-bg);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .score-label { color: rgba(255,255,255,0.6); font-size: 0.8rem; font-weight: 600; }
+    .progress-track {
+      flex: 1;
+      min-width: 140px;
+      height: 8px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #42a5f5);
+      border-radius: 99px;
+      transition: width 0.5s ease;
+    }
+    .score-count { color: var(--accent); font-size: 0.85rem; font-weight: 700; }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--paper);
+      border-radius: 24px;
+      border: 2px solid var(--card-border);
+      padding: 30px 28px;
+      box-shadow: 0 4px 20px rgba(13,43,69,0.06);
+    }
+    .card-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--accent3);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title .icon {
+      width: 36px; height: 36px;
+      background: var(--bg);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      border: 1.5px solid var(--line);
+    }
+
+    /* ── Learning objectives checklist ── */
+    .checklist { display: flex; flex-direction: column; gap: 10px; }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1.5px solid var(--line);
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .check-item:hover { border-color: var(--accent); background: var(--bg); }
+    .check-item.done {
+      background: #e8f5e9;
+      border-color: #81c784;
+    }
+    .check-item.done .check-label { text-decoration: line-through; color: #4caf50; }
+    .check-box {
+      width: 22px; height: 22px; min-width: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--line);
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .check-item.done .check-box { background: #4caf50; border-color: #4caf50; color: #fff; }
+    .check-label { font-size: 0.9rem; font-weight: 600; line-height: 1.35; }
+
+    /* ── Key fact box ── */
+    .key-fact {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-left: 5px solid var(--accent2);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .key-fact-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .key-fact p { font-size: 0.92rem; font-weight: 600; color: var(--ink); line-height: 1.55; }
+    .key-fact .formula {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent3);
+      margin-top: 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* ── Highlight strips ── */
+    .strip {
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.5;
+      border-left: 4px solid;
+    }
+    .strip.green  { background: var(--green);  border-color: var(--green2);  color: #1b5e20; }
+    .strip.orange { background: var(--orange); border-color: var(--orange2); color: #bf360c; }
+    .strip.red    { background: var(--red);    border-color: var(--red2);    color: #b71c1c; }
+    .strip.blue   { background: #e3f2fd;       border-color: var(--accent2); color: #0d47a1; }
+    .strip strong { font-weight: 800; }
+
+    /* ── Big idea grid ── */
+    .big-idea-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 4px;
+    }
+    .big-idea-tile {
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bi-red    { background: #fde8e8; border: 2px solid #ef9a9a; }
+    .bi-orange { background: #fff3e0; border: 2px solid #ffcc80; }
+    .bi-blue   { background: #e3f2fd; border: 2px solid #90caf9; }
+    .bi-green  { background: #e8f5e9; border: 2px solid #a5d6a7; }
+    .bi-purple { background: #f3e5f5; border: 2px solid #ce93d8; }
+    .big-idea-tile .bi-emoji { font-size: 1.6rem; }
+    .big-idea-tile .bi-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--ink);
+    }
+    .big-idea-tile .bi-body { font-size: 0.82rem; font-weight: 500; color: var(--muted); line-height: 1.4; }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      position: relative;
+      padding-bottom: 20px;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      width: 36px; min-width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+    .tl-item:not(:last-child) .tl-dot::after {
+      content: '';
+      position: absolute;
+      top: 36px; left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: calc(100% + 20px - 36px);
+      background: var(--line);
+      z-index: 0;
+    }
+    .tl-content { padding-top: 6px; }
+    .tl-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+    .tl-body  { font-size: 0.84rem; color: var(--muted); line-height: 1.45; }
+
+    /* ── Flow arrows ── */
+    .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    .flow-box {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border: 1.5px solid #90caf9;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent3);
+      text-align: center;
+    }
+    .flow-arrow { font-size: 1.2rem; color: var(--accent2); font-weight: 700; }
+
+    /* ── 2-col compare ── */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .compare-col {
+      border-radius: 14px;
+      padding: 18px;
+      border: 2px solid var(--line);
+    }
+    .compare-col h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+    }
+    .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .compare-col ul li { font-size: 0.84rem; font-weight: 500; padding-left: 18px; position: relative; }
+    .compare-col ul li::before { content: '•'; position: absolute; left: 4px; font-weight: 900; }
+    .col-a { background: #e8f5e9; }
+    .col-a h4 { color: var(--green2); border-color: #a5d6a7; }
+    .col-a ul li::before { color: var(--green2); }
+    .col-b { background: #fde8e8; }
+    .col-b h4 { color: var(--red2); border-color: #ef9a9a; }
+    .col-b ul li::before { color: var(--red2); }
+
+    /* ── 4-col table ── */
+    .info-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .info-table th {
+      background: var(--accent3);
+      color: #fff;
+      padding: 10px 12px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-align: left;
+    }
+    .info-table th:first-child { border-radius: 10px 0 0 0; }
+    .info-table th:last-child  { border-radius: 0 10px 0 0; }
+    .info-table td { padding: 9px 12px; border-bottom: 1px solid var(--line); font-weight: 500; }
+    .info-table tr:nth-child(even) td { background: var(--bg); }
+    .info-table tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+    .info-table tr:last-child td:last-child  { border-radius: 0 0 10px 0; }
+
+    /* ── Keywords pills ── */
+    .keywords { display: flex; flex-wrap: wrap; gap: 10px; }
+    .kw-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 20px;
+      padding: 6px 14px 6px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1.5px solid;
+    }
+    .kw-pill .kw-term {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+    }
+    .kw-blue   { background: #e3f2fd; border-color: #90caf9; color: #0d47a1; }
+    .kw-green  { background: #e8f5e9; border-color: #a5d6a7; color: #1b5e20; }
+    .kw-orange { background: #fff3e0; border-color: #ffcc80; color: #bf360c; }
+    .kw-purple { background: #f3e5f5; border-color: #ce93d8; color: #4a148c; }
+    .kw-red    { background: #fde8e8; border-color: #ef9a9a; color: #b71c1c; }
+
+    /* ── Interactive graph demo ── */
+    .demo-container {
+      background: var(--bg);
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .demo-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--accent2);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+    .demo-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .demo-controls label { font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+    .demo-controls input[type=range] { accent-color: var(--accent2); width: 140px; }
+    #speedDisplay {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      color: var(--accent2);
+      font-size: 0.95rem;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* ── Warning box ── */
+    .warning-box {
+      background: #fff3e0;
+      border: 2px solid #ffb74d;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .warning-box .w-icon { font-size: 1.4rem; }
+    .warning-box .w-body { font-size: 0.88rem; font-weight: 600; color: #bf360c; line-height: 1.5; }
+    .warning-box .w-body strong { font-weight: 800; }
+
+    /* ── Statement box ── */
+    .statement-box {
+      background: linear-gradient(135deg, var(--accent3), var(--accent2));
+      border-radius: 16px;
+      padding: 22px 24px;
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .statement-box .stat-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+
+    /* ── Exam tip ── */
+    .exam-tip {
+      background: #e8f5e9;
+      border: 2px solid #a5d6a7;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .exam-tip .et-icon { font-size: 1.4rem; }
+    .exam-tip .et-body { font-size: 0.88rem; font-weight: 600; color: #1b5e20; line-height: 1.5; }
+
+    /* ── Quiz CTA ── */
+    .quiz-cta {
+      background: linear-gradient(135deg, var(--accent3) 0%, var(--accent2) 100%);
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 8px 30px rgba(13,71,161,0.3);
+    }
+    .quiz-cta h3 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+    .quiz-cta p { opacity: 0.8; margin-bottom: 22px; font-size: 0.9rem; }
+    .quiz-btn {
+      display: inline-block;
+      background: #fff;
+      color: var(--accent3);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+    /* ── Mark as read ── */
+    .mar-wrap { text-align: center; margin-top: 8px; }
+    #markBtn {
+      background: none;
+      border: 2px solid var(--accent2);
+      color: var(--accent2);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 26px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #markBtn:hover { background: var(--accent2); color: #fff; }
+    #markBtn.done  { background: #4caf50; border-color: #4caf50; color: #fff; cursor: default; }
+    #markMsg { display: none; font-size: 0.82rem; color: #4caf50; font-weight: 700; margin-top: 8px; }
+
+    /* ── Section divider ── */
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      border: none;
+    }
+
+    @media (max-width: 600px) {
+      .compare { grid-template-columns: 1fr; }
+      .hero { padding: 40px 18px 60px; }
+      main { padding: 24px 14px 60px; }
+      .card { padding: 22px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">📚 Gab Revision</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="physics-p9-1-quickcheck.html">Quick Check ⚡</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="floating-emojis">
+    <span class="fe">🚗</span>
+    <span class="fe">📏</span>
+    <span class="fe">📈</span>
+    <span class="fe">⏱️</span>
+    <span class="fe">🏎️</span>
+    <span class="fe">🔭</span>
+  </div>
+  <div class="chapter-badge">Physics · P9 Motion · 9.1</div>
+  <h1>Speed &amp; <span>Distance–Time</span> Graphs</h1>
+  <p class="kicker">How fast? How far? How long? — Mastering motion on a graph.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">🏁 Speed equation</span>
+    <span class="hero-tag">📈 Distance–time graphs</span>
+    <span class="hero-tag">📐 Gradient = speed</span>
+    <span class="hero-tag">🧮 Rearranging formulas</span>
+  </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="score-bar">
+  <span class="score-label">🎯 Objectives done</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="score-count" id="progressCount">0 / 5</span>
+</div>
+
+<main>
+
+  <!-- LEARNING OBJECTIVES -->
+  <section class="card">
+    <div class="card-title"><div class="icon">🎯</div> Learning Objectives</div>
+    <div class="checklist" id="checklist">
+      <div class="check-item" data-key="1">
+        <div class="check-box">✓</div>
+        <div class="check-label">Explain how speed is calculated for an object moving at constant speed</div>
+      </div>
+      <div class="check-item" data-key="2">
+        <div class="check-box">✓</div>
+        <div class="check-label">Use a distance–time graph to determine whether an object is stationary or moving at constant speed</div>
+      </div>
+      <div class="check-item" data-key="3">
+        <div class="check-box">✓</div>
+        <div class="check-label">Explain what the gradient of a line on a distance–time graph tells you</div>
+      </div>
+      <div class="check-item" data-key="4">
+        <div class="check-box">✓</div>
+        <div class="check-label">Use the equation for constant speed to calculate distance moved or time taken</div>
+      </div>
+      <div class="check-item" data-key="5">
+        <div class="check-box">✓</div>
+        <div class="check-label">Compare multiple distance–time graphs to identify which object is fastest</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIG IDEAS -->
+  <section class="card">
+    <div class="card-title"><div class="icon">💡</div> Big Ideas</div>
+    <div class="big-idea-grid">
+      <div class="big-idea-tile bi-blue">
+        <div class="bi-emoji">📏</div>
+        <div class="bi-title">Speed</div>
+        <div class="bi-body">How far an object travels per second. Measured in metres per second (m/s).</div>
+      </div>
+      <div class="big-idea-tile bi-green">
+        <div class="bi-emoji">📈</div>
+        <div class="bi-title">Constant Speed</div>
+        <div class="bi-body">Uniform motion — the same distance is covered every second. Shown as a straight line on a d–t graph.</div>
+      </div>
+      <div class="big-idea-tile bi-orange">
+        <div class="bi-emoji">🗻</div>
+        <div class="bi-title">Gradient = Speed</div>
+        <div class="bi-body">The steeper the line, the faster the object. A flat line means the object is stationary.</div>
+      </div>
+      <div class="big-idea-tile bi-red">
+        <div class="bi-emoji">⏸️</div>
+        <div class="bi-title">Stationary</div>
+        <div class="bi-body">No movement at all. Shows as a completely horizontal (flat) section on the graph.</div>
+      </div>
+      <div class="big-idea-tile bi-purple">
+        <div class="bi-emoji">🧮</div>
+        <div class="bi-title">Average Speed</div>
+        <div class="bi-body">Total distance ÷ total time, even if the object was not moving at a constant speed throughout.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY FORMULA -->
+  <section class="card">
+    <div class="card-title"><div class="icon">⚗️</div> The Speed Equation</div>
+
+    <div class="statement-box">
+      <div class="stat-label">The core equation</div>
+      v = s ÷ t &nbsp;&nbsp;|&nbsp;&nbsp; s = v × t &nbsp;&nbsp;|&nbsp;&nbsp; t = s ÷ v
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="key-fact">
+        <div class="key-fact-title">🔵 Speed (v)</div>
+        <p>Speed is measured in <strong>metres per second (m/s)</strong>. It tells you how many metres an object travels every second.</p>
+        <div class="formula">v = s / t</div>
+      </div>
+      <div class="key-fact">
+        <div class="key-fact-title">🔵 Distance (s)</div>
+        <p>Distance is measured in <strong>metres (m)</strong>. Rearrange: if you know speed and time, find distance using <strong>s = v × t</strong>.</p>
+      </div>
+      <div class="key-fact">
+        <div class="key-fact-title">🔵 Time (t)</div>
+        <p>Time is measured in <strong>seconds (s)</strong>. Rearrange: if you know speed and distance, find time using <strong>t = s / v</strong>.</p>
+      </div>
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-icon">🎓</div>
+      <div class="et-body"><strong>Exam tip:</strong> If time is given in minutes or hours, <em>always convert to seconds first</em> before substituting into the equation. 1 minute = 60 s, 1 hour = 3600 s.</div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE GRAPH DEMO -->
+  <section class="card">
+    <div class="card-title"><div class="icon">📈</div> Interactive Distance–Time Graph</div>
+    <div class="demo-container">
+      <div class="demo-title">Drag the slider to change speed — watch the gradient change!</div>
+      <canvas id="dtGraph" width="500" height="280"></canvas>
+      <div class="demo-controls">
+        <label for="speedSlider">Speed:</label>
+        <input type="range" id="speedSlider" min="5" max="40" value="20" step="1" />
+        <div id="speedDisplay">20 m/s</div>
+      </div>
+    </div>
+    <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
+      <div class="strip green">✅ <strong>Steep line</strong> → fast speed (large gradient)</div>
+      <div class="strip orange">⚠️ <strong>Shallow line</strong> → slow speed (small gradient)</div>
+      <div class="strip red">🛑 <strong>Flat / horizontal line</strong> → object is stationary (speed = 0)</div>
+    </div>
+  </section>
+
+  <!-- READING A GRAPH -->
+  <section class="card">
+    <div class="card-title"><div class="icon">🔍</div> Reading a Distance–Time Graph</div>
+
+    <div style="margin-bottom:16px;">
+      <div class="strip blue">The <strong>gradient</strong> of a line on a distance–time graph represents the object's <strong>speed</strong>.</div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">1</div>
+        <div class="tl-content">
+          <div class="tl-title">Identify the type of line</div>
+          <div class="tl-body">Is it straight (constant speed), horizontal (stationary), or curved (changing speed)?</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">2</div>
+        <div class="tl-content">
+          <div class="tl-title">Pick two clear points on the line</div>
+          <div class="tl-body">Read off the distance values (y-axis) and time values (x-axis) at each point.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">3</div>
+        <div class="tl-content">
+          <div class="tl-title">Calculate the gradient</div>
+          <div class="tl-body">Gradient = change in distance ÷ change in time = (y₂ − y₁) ÷ (x₂ − x₁)</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">4</div>
+        <div class="tl-content">
+          <div class="tl-title">State the speed with units</div>
+          <div class="tl-body">Always write the unit — m/s. This gradient value is the speed of the object.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;">
+      <div class="warning-box">
+        <div class="w-icon">📌</div>
+        <div class="w-body"><strong>Study tip:</strong> When plotting points on a graph grid, make a clear point or a small cross — <em>not</em> a large blob. Accuracy matters in exam mark schemes!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKED EXAMPLE: LORRIES X Y Z -->
+  <section class="card">
+    <div class="card-title"><div class="icon">🚛</div> Worked Example — Lorries X, Y, Z</div>
+    <div class="strip blue" style="margin-bottom:16px;">Three lorries travel on the same motorway. Their distance–time graphs are plotted together. The steepest line = fastest lorry.</div>
+
+    <div class="flow" style="margin-bottom:16px;">
+      <div class="flow-box">X — Steepest<br>🥇 Fastest</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Y — Shallower<br>🥈 Medium</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Z — Flattest + stops<br>🥉 Slowest</div>
+    </div>
+
+    <div class="key-fact">
+      <div class="key-fact-title">📐 Calculating Y's speed from the graph</div>
+      <p>Y travels 30 000 m in 1250 s:</p>
+      <div class="formula">v = 30 000 ÷ 1250 = 24 m/s</div>
+    </div>
+
+    <div class="strip orange">⚠️ <strong>Z stopped</strong> for part of its journey (flat section from 500 s to 1000 s). This is visible as a <strong>horizontal segment</strong> on the graph — zero gradient, zero speed.</div>
+    <div class="strip green" style="margin-top:10px;">✅ To find <strong>Z's average speed</strong> over 1500 s: use total distance ÷ total time (including the stopped period).</div>
+  </section>
+
+  <!-- STATIONARY vs MOVING -->
+  <section class="card">
+    <div class="card-title"><div class="icon">⚖️</div> Stationary vs Moving at Constant Speed</div>
+    <div class="compare">
+      <div class="compare-col col-a">
+        <h4>✅ Moving at constant speed</h4>
+        <ul>
+          <li>Straight line sloping upwards</li>
+          <li>Gradient > 0</li>
+          <li>Equal distance in equal time intervals</li>
+          <li>Speed = gradient (m/s)</li>
+        </ul>
+      </div>
+      <div class="compare-col col-b">
+        <h4>🛑 Stationary</h4>
+        <ul>
+          <li>Completely horizontal line</li>
+          <li>Gradient = 0</li>
+          <li>No distance gained over time</li>
+          <li>Speed = 0 m/s</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNITS TABLE -->
+  <section class="card">
+    <div class="card-title"><div class="icon">📋</div> Quantities, Symbols &amp; Units</div>
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Symbol</th>
+          <th>Unit</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Speed</td>
+          <td><strong>v</strong></td>
+          <td>m/s (metres per second)</td>
+          <td>Also written as ms⁻¹</td>
+        </tr>
+        <tr>
+          <td>Distance</td>
+          <td><strong>s</strong></td>
+          <td>m (metres)</td>
+          <td>Sometimes shown as d in other books</td>
+        </tr>
+        <tr>
+          <td>Time</td>
+          <td><strong>t</strong></td>
+          <td>s (seconds)</td>
+          <td>Convert minutes → × 60; hours → × 3600</td>
+        </tr>
+        <tr>
+          <td>Gradient</td>
+          <td>Δs / Δt</td>
+          <td>m/s</td>
+          <td>Same value as speed on a d–t graph</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- KEYWORDS GLOSSARY -->
+  <section class="card">
+    <div class="card-title"><div class="icon">📖</div> Key Terms Glossary</div>
+    <div class="keywords">
+      <div class="kw-pill kw-blue"><span class="kw-term">Speed</span> how far per second</div>
+      <div class="kw-pill kw-green"><span class="kw-term">Constant speed</span> uniform motion</div>
+      <div class="kw-pill kw-orange"><span class="kw-term">Gradient</span> rise ÷ run on graph</div>
+      <div class="kw-pill kw-red"><span class="kw-term">Stationary</span> not moving, v = 0</div>
+      <div class="kw-pill kw-purple"><span class="kw-term">Average speed</span> total s ÷ total t</div>
+      <div class="kw-pill kw-blue"><span class="kw-term">Distance–time graph</span> d on y, t on x</div>
+      <div class="kw-pill kw-green"><span class="kw-term">Tachograph</span> lorry speed recorder</div>
+      <div class="kw-pill kw-orange"><span class="kw-term">Equation</span> v = s / t</div>
+    </div>
+  </section>
+
+  <!-- EXAM TIPS -->
+  <section class="card">
+    <div class="card-title"><div class="icon">🎓</div> Exam Tips</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="exam-tip">
+        <div class="et-icon">⏱️</div>
+        <div class="et-body"><strong>Always convert time to seconds</strong> before using v = s / t. Examiners frequently give time in minutes to catch you out.</div>
+      </div>
+      <div class="exam-tip">
+        <div class="et-icon">📐</div>
+        <div class="et-body"><strong>Show your gradient working</strong> — pick two widely spaced points and show (y₂ − y₁) ÷ (x₂ − x₁). Don't just state an answer.</div>
+      </div>
+      <div class="exam-tip">
+        <div class="et-icon">📊</div>
+        <div class="et-body"><strong>For "average speed"</strong> use total distance for entire journey ÷ total time for entire journey — including any stopped periods.</div>
+      </div>
+      <div class="warning-box" style="margin-top:4px;">
+        <div class="w-icon">⚠️</div>
+        <div class="w-body"><strong>Common mistake:</strong> Confusing a steeper gradient with a longer distance. A lorry that goes further is not necessarily faster — it may have had more time. Always compare gradients, not end distances.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h3>⚡ Ready to test yourself?</h3>
+    <p>Try the Quick Check quiz for P9.1 to see how much you've taken in.</p>
+    <a class="quiz-btn" href="physics-p9-1-quickcheck.html">Start Quiz →</a>
+  </div>
+
+  <!-- MARK AS READ -->
+  <div class="mar-wrap">
+    <button id="markBtn">✅ Mark as read</button>
+    <div id="markMsg">🎉 Well done! Show this to mum 💪</div>
+  </div>
+
+</main>
+
+<script>
+  const STEM = 'physics-p9-1-revision';
+  const READ_KEY = STEM + '-read';
+  const TOTAL_OBJ = 5;
+
+  /* ── Checklist ── */
+  const items = document.querySelectorAll('.check-item');
+  const fill  = document.getElementById('progressFill');
+  const count = document.getElementById('progressCount');
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.check-item.done').length;
+    fill.style.width = (done / TOTAL_OBJ * 100) + '%';
+    count.textContent = done + ' / ' + TOTAL_OBJ;
+  }
+
+  items.forEach(item => {
+    const key = 'check-' + STEM + '-' + item.dataset.key;
+    if (localStorage.getItem(key) === '1') item.classList.add('done');
+    item.addEventListener('click', () => {
+      item.classList.toggle('done');
+      localStorage.setItem(key, item.classList.contains('done') ? '1' : '0');
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  /* ── Mark as read ── */
+  const markBtn = document.getElementById('markBtn');
+  const markMsg = document.getElementById('markMsg');
+  if (localStorage.getItem(READ_KEY) === '1') {
+    markBtn.textContent = '✅ Already read!';
+    markBtn.classList.add('done');
+    markMsg.style.display = 'block';
+  }
+  markBtn.addEventListener('click', () => {
+    if (markBtn.classList.contains('done')) return;
+    localStorage.setItem(READ_KEY, '1');
+    markBtn.textContent = '✅ Already read!';
+    markBtn.classList.add('done');
+    markMsg.style.display = 'block';
+  });
+
+  /* ── Interactive graph demo ── */
+  const canvas = document.getElementById('dtGraph');
+  const ctx    = canvas.getContext('2d');
+  const slider = document.getElementById('speedSlider');
+  const display= document.getElementById('speedDisplay');
+
+  function drawGraph(speed) {
+    const W = canvas.width, H = canvas.height;
+    const PAD = { top: 30, right: 30, bottom: 50, left: 60 };
+    const gW = W - PAD.left - PAD.right;
+    const gH = H - PAD.top  - PAD.bottom;
+    const MAX_T = 240; // seconds
+    const MAX_S = 10000; // metres — scale dynamically
+    const dynMax = Math.max(speed * MAX_T, 1000);
+
+    ctx.clearRect(0, 0, W, H);
+
+    // BG
+    ctx.fillStyle = '#f0f7ff';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#c8dff0';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 6; i++) {
+      const x = PAD.left + (i / 6) * gW;
+      ctx.beginPath(); ctx.moveTo(x, PAD.top); ctx.lineTo(x, PAD.top + gH); ctx.stroke();
+    }
+    for (let i = 0; i <= 5; i++) {
+      const y = PAD.top + (i / 5) * gH;
+      ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left + gW, y); ctx.stroke();
+    }
+
+    // Axes
+    ctx.strokeStyle = '#0d2b45';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(PAD.left, PAD.top); ctx.lineTo(PAD.left, PAD.top + gH);
+    ctx.moveTo(PAD.left, PAD.top + gH); ctx.lineTo(PAD.left + gW, PAD.top + gH);
+    ctx.stroke();
+
+    // Labels
+    ctx.fillStyle = '#5a7a95';
+    ctx.font = '11px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= 6; i++) {
+      const t = Math.round(i * MAX_T / 6);
+      const x = PAD.left + (i / 6) * gW;
+      ctx.fillText(t, x, PAD.top + gH + 18);
+    }
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= 5; i++) {
+      const d = Math.round((1 - i / 5) * dynMax);
+      const y = PAD.top + (i / 5) * gH;
+      ctx.fillText(d.toLocaleString(), PAD.left - 8, y + 4);
+    }
+
+    // Axis titles
+    ctx.fillStyle = '#0d2b45';
+    ctx.font = 'bold 12px Nunito, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Time in seconds', PAD.left + gW / 2, H - 6);
+    ctx.save();
+    ctx.translate(14, PAD.top + gH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Distance in m', 0, 0);
+    ctx.restore();
+
+    // Line
+    const endDist = speed * MAX_T;
+    const x0 = PAD.left, y0 = PAD.top + gH;
+    const x1 = PAD.left + gW;
+    const y1 = PAD.top + gH - (endDist / dynMax) * gH;
+
+    ctx.strokeStyle = '#1976d2';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+
+    // Gradient annotation
+    const midX = (x0 + x1) / 2 + 20;
+    const midY = (y0 + y1) / 2 - 12;
+    ctx.fillStyle = '#1976d2';
+    ctx.font = 'bold 12px Poppins, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('gradient = ' + speed + ' m/s', midX, midY);
+  }
+
+  slider.addEventListener('input', () => {
+    const v = parseInt(slider.value);
+    display.textContent = v + ' m/s';
+    drawGraph(v);
+  });
+  drawGraph(20);
+</script>
+
+</body>
+</html>

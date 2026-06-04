@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.4 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin:8px 0 0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid #e8b878;border-radius:16px;padding:12px 18px;margin-bottom:14px;font-size:14px;font-weight:700;color:var(--ink)}
+
+/* progress */
+.prog-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:18px;overflow:hidden}
+.prog-bar{background:var(--yellow);height:10px;border-radius:999px;width:0%;transition:width .4s ease}
+
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);display:none}
+.q-block.active{display:block}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;font-weight:600;transition:all .18s;text-align:left}
+.opt:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a1010}
+.opt:disabled{cursor:default}
+
+/* TF */
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border:2px solid var(--line);border-radius:14px;background:var(--paper);font-size:17px;font-weight:900;cursor:pointer;transition:all .18s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+
+/* feedback */
+.feedback{display:none;margin-top:12px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:700;line-height:1.4}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #a8d4b0}
+.feedback.bad{background:var(--red2);color:#7a1010;border:1.5px solid #e0a8a0}
+
+/* next btn */
+.next-btn{display:none;margin-top:14px;background:var(--dark);color:white;border:none;border-radius:999px;padding:11px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit}
+.next-btn.show{display:inline-block}
+
+/* result box */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box.show{display:block}
+.result-emoji{font-size:56px;margin-bottom:10px}
+.result-score{font-size:48px;font-weight:900;color:var(--dark);letter-spacing:-2px;margin:0}
+.result-msg{font-size:18px;font-weight:700;margin:10px 0 6px}
+.result-sub{font-size:15px;color:var(--muted)}
+.reset-btn{margin-top:20px;background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;border-radius:999px;padding:13px 32px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+@media(max-width:550px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.4 Quick Check ⚡</h1>
+  <p>Helping the heart — 20 questions · pacemakers, valves &amp; artificial hearts</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b4-4-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
+
+<div id="quiz-area"></div>
+<div id="result-box">
+  <div class="result-emoji" id="r-emoji"></div>
+  <p class="result-score" id="r-score"></p>
+  <p class="result-msg" id="r-msg"></p>
+  <p class="result-sub" id="r-sub"></p>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const TOTAL = 20;
+const SCORE_KEY = 'bio-b4-4-score';
+const DATE_KEY  = 'bio-b4-4-date';
+
+const questions = [
+  // 10 MCQ (ans = index 0-3)
+  {type:'mcq', q:'Where is the natural pacemaker located in the heart?',
+    opts:['Left ventricle','Right atrium','Left atrium','Right ventricle'], ans:1,
+    fb:'The natural pacemaker is a group of cells in the right atrium that send electrical signals to coordinate the heartbeat.'},
+  {type:'mcq', q:'What is the approximate resting heart rate controlled by the natural pacemaker?',
+    opts:['40 beats/min','55 beats/min','70 beats/min','90 beats/min'], ans:2,
+    fb:'The natural pacemaker controls a resting heart rate of about 70 beats per minute.'},
+  {type:'mcq', q:'What materials are mechanical heart valves made from?',
+    opts:['Silicone and glass','Titanium and polymers','Ceramic and rubber','Carbon and nylon'], ans:1,
+    fb:'Mechanical heart valves are made of titanium and polymers, making them very durable.'},
+  {type:'mcq', q:'How long do biological heart valves typically last before needing replacement?',
+    opts:['2–5 years','5–10 years','12–15 years','20–25 years'], ans:2,
+    fb:'Biological valves last approximately 12–15 years before they need to be replaced.'},
+  {type:'mcq', q:'Why must patients with mechanical heart valves take blood-thinning medication for life?',
+    opts:['To prevent infection','To prevent blood clotting around the valve','To keep the heart rate stable','To reduce blood pressure'], ans:1,
+    fb:'Blood-thinning medication is needed to prevent dangerous blood clots forming around the mechanical valve.'},
+  {type:'mcq', q:'Where is an artificial pacemaker implanted?',
+    opts:['Inside the heart muscle','Under the skin of the abdomen','Under the skin of the chest','Behind the left ear'], ans:2,
+    fb:'An artificial pacemaker is implanted under the skin of the chest and attached to the heart by two wires.'},
+  {type:'mcq', q:'Approximately how much does a modern artificial pacemaker weigh?',
+    opts:['5–10 g','20–50 g','100–150 g','250–300 g'], ans:1,
+    fb:'Modern pacemakers are very small, weighing only 20–50 g.'},
+  {type:'mcq', q:'By 2015, approximately how many people worldwide had been fitted with a completely artificial heart?',
+    opts:['Around 500','Around 1 000','Around 1 500','Around 5 000'], ans:2,
+    fb:'By 2015, almost 1500 people worldwide had received a completely artificial heart.'},
+  {type:'mcq', q:'In 2011, Matthew Green was the first UK patient to leave hospital with a fully artificial heart. How did he carry it?',
+    opts:['In a wheelchair attachment','In a backpack','In a vest under his shirt','In a briefcase'], ans:1,
+    fb:'Matthew Green carried his artificial heart equipment in a backpack, allowing him to leave hospital for two years until a donor heart was found.'},
+  {type:'mcq', q:'What is the main reason most patients with an artificial heart must stay in hospital?',
+    opts:['Risk of infection','The heart needs constant reprogramming','The machinery needed to operate the device','They need daily surgery'], ans:2,
+    fb:'Artificial hearts require a lot of machinery to keep them working, meaning most patients must remain in hospital.'},
+
+  // 10 True/False (ans = true or false)
+  {type:'tf', q:'The natural pacemaker sends electrical signals through conducting fibres to make the heart beat in a coordinated rhythm.',
+    ans:true, fb:'Correct! The pacemaker cells send electrical impulses through conducting fibres to coordinate the heartbeat.'},
+  {type:'tf', q:'If the natural pacemaker beats too slowly, the person gets too much oxygen and feels fine.',
+    ans:false, fb:'False. If the heart beats too slowly, the person does NOT get enough oxygen and will feel unwell.'},
+  {type:'tf', q:'Biological heart valves require patients to take blood-thinning medication for life.',
+    ans:false, fb:'False. It is mechanical valves that require lifelong blood-thinning medication. Biological valves work well with no medication needed.'},
+  {type:'tf', q:'A leaky heart valve makes the heart less efficient at pumping blood.',
+    ans:true, fb:'Correct! Leaky or stiff valves reduce the heart\'s pumping efficiency, causing breathlessness and, without treatment, can be fatal.'},
+  {type:'tf', q:'Modern artificial pacemakers are sensitive to body needs and only activate when the natural rhythm goes wrong.',
+    ans:true, fb:'Correct! Modern pacemakers are demand pacemakers — they monitor the heart and only fire when needed.'},
+  {type:'tf', q:'Artificial hearts are mainly used as permanent, lifelong replacements for the heart.',
+    ans:false, fb:'False. Artificial hearts are mostly used temporarily to keep patients alive while waiting for a donor heart transplant, or to let a diseased heart recover.'},
+  {type:'tf', q:'Blood clotting inside an artificial heart is a key risk and can be fatal.',
+    ans:true, fb:'Correct! Blood clotting inside the artificial heart device is a major risk and can be fatal.'},
+  {type:'tf', q:'Some modern artificial pacemakers can stimulate the heart to beat faster during exercise.',
+    ans:true, fb:'Correct! Rate-responsive pacemakers detect body activity and increase the heart rate during exercise.'},
+  {type:'tf', q:'Mechanical heart valves typically only last about 12–15 years before needing replacement.',
+    ans:false, fb:'False. It is biological valves that last 12–15 years. Mechanical valves last a very long time — often the patient\'s lifetime.'},
+  {type:'tf', q:'One advantage of artificial hearts is that they help reduce pressure on donor waiting lists.',
+    ans:true, fb:'Correct! By keeping patients alive while waiting, artificial hearts reduce the urgency on donor lists and can bridge the gap to transplant.'},
+];
+
+let current = 0, score = 0, answered = false;
+
+// prev score banner
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s && d){
+    const b = document.getElementById('prev-banner');
+    b.style.display = 'block';
+    b.textContent = `🕐 Last attempt: ${s}/${TOTAL} on ${d}`;
+  }
+})();
+
+function buildQ(i){
+  const q = questions[i];
+  const div = document.createElement('div');
+  div.className = 'q-block active';
+  const numEl = document.createElement('div');
+  numEl.className = 'q-num';
+  numEl.textContent = `Question ${i+1} of ${TOTAL}`;
+  const qEl = document.createElement('div');
+  qEl.className = 'q-text';
+  qEl.textContent = q.q;
+  div.appendChild(numEl);
+  div.appendChild(qEl);
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  const nxt = document.createElement('button');
+  nxt.className = 'next-btn';
+  nxt.textContent = i < TOTAL-1 ? 'Next question →' : 'See results';
+  nxt.onclick = () => advance();
+
+  if(q.type === 'mcq'){
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.opts.forEach((o, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = o;
+      btn.onclick = function(){
+        if(answered) return;
+        answered = true;
+        opts.querySelectorAll('.opt').forEach(b => b.disabled = true);
+        if(oi === q.ans){
+          btn.classList.add('correct');
+          score++;
+          fb.className = 'feedback ok show';
+          fb.textContent = '✅ ' + q.fb;
+        } else {
+          btn.classList.add('wrong');
+          opts.querySelectorAll('.opt')[q.ans].classList.add('correct');
+          fb.className = 'feedback bad show';
+          fb.textContent = '❌ ' + q.fb;
+        }
+        nxt.classList.add('show');
+      };
+      opts.appendChild(btn);
+    });
+    div.appendChild(opts);
+  } else {
+    const row = document.createElement('div');
+    row.className = 'tf-row';
+    ['True','False'].forEach(label => {
+      const btn = document.createElement('button');
+      btn.className = 'tf-btn';
+      btn.textContent = label;
+      const val = label === 'True';
+      btn.onclick = function(){
+        if(answered) return;
+        answered = true;
+        row.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+        if(val === q.ans){
+          btn.classList.add('correct');
+          score++;
+          fb.className = 'feedback ok show';
+          fb.textContent = '✅ ' + q.fb;
+        } else {
+          btn.classList.add('wrong');
+          row.querySelectorAll('.tf-btn').forEach(b => { if((b.textContent==='True') === q.ans) b.classList.add('correct'); });
+          fb.className = 'feedback bad show';
+          fb.textContent = '❌ ' + q.fb;
+        }
+        nxt.classList.add('show');
+      };
+      row.appendChild(btn);
+    });
+    div.appendChild(row);
+  }
+
+  div.appendChild(fb);
+  div.appendChild(nxt);
+  return div;
+}
+
+function updateProg(){
+  document.getElementById('prog').style.width = ((current/TOTAL)*100) + '%';
+}
+
+function advance(){
+  current++;
+  updateProg();
+  document.getElementById('quiz-area').innerHTML = '';
+  answered = false;
+  if(current < TOTAL){
+    document.getElementById('quiz-area').appendChild(buildQ(current));
+  } else {
+    showResult();
+  }
+}
+
+function showResult(){
+  document.getElementById('prog').style.width = '100%';
+  const box = document.getElementById('result-box');
+  box.classList.add('show');
+  document.getElementById('r-score').textContent = score + '/' + TOTAL;
+  let emoji, msg, sub;
+  if(score >= 18){
+    emoji = '🏆'; msg = 'Outstanding!';
+    sub = `Show this to mum — ${score}/${TOTAL}`;
+  } else if(score >= 14){
+    emoji = '👍'; msg = 'Good effort!';
+    sub = `Show this to mum — ${score}/${TOTAL}`;
+  } else {
+    emoji = '📖'; msg = 'Keep revising!';
+    sub = `Show this to mum — ${score}/${TOTAL}`;
+  }
+  document.getElementById('r-emoji').textContent = emoji;
+  document.getElementById('r-msg').textContent = msg;
+  document.getElementById('r-sub').textContent = sub;
+  // save
+  const today = new Date().toLocaleDateString('en-GB');
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+}
+
+function resetQuiz(){
+  current = 0; score = 0; answered = false;
+  document.getElementById('result-box').classList.remove('show');
+  document.getElementById('quiz-area').innerHTML = '';
+  updateProg();
+  document.getElementById('quiz-area').appendChild(buildQ(0));
+}
+
+// init
+document.getElementById('quiz-area').appendChild(buildQ(0));
+</script>
+</body>
+</html>

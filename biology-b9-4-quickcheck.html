@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B9.4 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;padding-bottom:60px}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:16px;font-weight:700;font-size:14px;color:#7a3a00}
+
+/* progress */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+.progress-bar{background:var(--yellow);height:10px;border-radius:999px;width:0;transition:width .4s}
+
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;display:none}
+.q-block.active{display:block}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.higher-badge{display:inline-block;background:#e07b2a;color:white;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;margin-right:6px;vertical-align:middle}
+
+/* MCQ options */
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;text-align:left;font-family:inherit;color:var(--ink);transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2);border-color:var(--green);font-weight:700}
+.opt.wrong{background:var(--red2);border-color:var(--red)}
+.opt:disabled{cursor:default}
+
+/* TF */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border-radius:14px;border:2px solid var(--line);font-size:18px;font-weight:900;cursor:pointer;font-family:inherit;background:var(--paper);color:var(--ink);transition:.15s}
+.tf-btn:hover{border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green)}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red)}
+.tf-btn:disabled{cursor:default}
+
+/* feedback */
+.feedback{margin-top:14px;padding:12px 16px;border-radius:14px;font-size:14px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);border:2px solid var(--green);color:#1a4d22}
+.feedback.bad{background:var(--red2);border:2px solid var(--red);color:#7a1a14}
+
+/* nav buttons */
+.q-nav{margin-top:18px;display:flex;justify-content:flex-end}
+.btn-next{background:var(--dark);color:white;border:none;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;display:none}
+.btn-next.show{display:inline-block}
+
+/* result */
+#result{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:32px;text-align:center;margin-top:16px}
+#result .big-score{font-size:60px;font-weight:900;line-height:1}
+#result .msg{font-size:18px;margin:10px 0 18px}
+#result .mum{font-size:14px;background:var(--lime2);border:2px dashed var(--lime);border-radius:12px;padding:10px;margin-bottom:18px;font-weight:700}
+.btn-reset{background:var(--dark);color:white;border:none;border-radius:999px;padding:14px 30px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:20px}h1{font-size:24px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B9 Respiration</div>
+  <h1>B9.4 Metabolism and the liver ⚡ Quick Check</h1>
+  <p>20 questions — MCQ and True/False. Higher-tier questions are marked.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b9-4-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<!-- Q1 MCQ -->
+<div class="q-block active" id="q1">
+  <div class="q-num">Question 1 of 20</div>
+  <div class="q-text">What is metabolism?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,1)">The process of breaking down food in the digestive system</button>
+    <button class="opt" onclick="mcq(this,1,1)">The sum of all reactions that take place in a cell or organism</button>
+    <button class="opt" onclick="mcq(this,2,1)">The transfer of energy by aerobic respiration only</button>
+    <button class="opt" onclick="mcq(this,3,1)">The production of ATP in mitochondria</button>
+  </div>
+  <div class="feedback" id="fb1"></div>
+  <div class="q-nav"><button class="btn-next" id="nx1" onclick="next(1)">Next →</button></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="q-block" id="q2">
+  <div class="q-num">Question 2 of 20</div>
+  <div class="q-text">Which term describes reactions that <strong>build up</strong> molecules?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,2)">Catabolic reactions</button>
+    <button class="opt" onclick="mcq(this,1,2)">Anabolic reactions</button>
+    <button class="opt" onclick="mcq(this,2,2)">Oxidative reactions</button>
+    <button class="opt" onclick="mcq(this,3,2)">Exothermic reactions</button>
+  </div>
+  <div class="feedback" id="fb2"></div>
+  <div class="q-nav"><button class="btn-next" id="nx2" onclick="next(2)">Next →</button></div>
+</div>
+
+<!-- Q3 MCQ -->
+<div class="q-block" id="q3">
+  <div class="q-num">Question 3 of 20</div>
+  <div class="q-text">Glucose can be converted into which storage carbohydrate in <strong>animal</strong> cells?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,3)">Cellulose</button>
+    <button class="opt" onclick="mcq(this,1,3)">Starch</button>
+    <button class="opt" onclick="mcq(this,2,3)">Glycogen</button>
+    <button class="opt" onclick="mcq(this,3,3)">Sucrose</button>
+  </div>
+  <div class="feedback" id="fb3"></div>
+  <div class="q-nav"><button class="btn-next" id="nx3" onclick="next(3)">Next →</button></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="q-block" id="q4">
+  <div class="q-num">Question 4 of 20</div>
+  <div class="q-text">A lipid molecule is formed from one glycerol and how many fatty acid molecules?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,4)">One</button>
+    <button class="opt" onclick="mcq(this,1,4)">Two</button>
+    <button class="opt" onclick="mcq(this,2,4)">Three</button>
+    <button class="opt" onclick="mcq(this,3,4)">Four</button>
+  </div>
+  <div class="feedback" id="fb4"></div>
+  <div class="q-nav"><button class="btn-next" id="nx4" onclick="next(4)">Next →</button></div>
+</div>
+
+<!-- Q5 MCQ -->
+<div class="q-block" id="q5">
+  <div class="q-num">Question 5 of 20</div>
+  <div class="q-text">Plants use glucose and which ions to synthesise amino acids?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,5)">Chloride ions</button>
+    <button class="opt" onclick="mcq(this,1,5)">Phosphate ions</button>
+    <button class="opt" onclick="mcq(this,2,5)">Nitrate ions</button>
+    <button class="opt" onclick="mcq(this,3,5)">Potassium ions</button>
+  </div>
+  <div class="feedback" id="fb5"></div>
+  <div class="q-nav"><button class="btn-next" id="nx5" onclick="next(5)">Next →</button></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="q-block" id="q6">
+  <div class="q-num">Question 6 of 20</div>
+  <div class="q-text">Excess amino acids are broken down in the liver to produce which waste molecule?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,6)">Carbon dioxide</button>
+    <button class="opt" onclick="mcq(this,1,6)">Urea</button>
+    <button class="opt" onclick="mcq(this,2,6)">Lactic acid</button>
+    <button class="opt" onclick="mcq(this,3,6)">Ammonia</button>
+  </div>
+  <div class="feedback" id="fb6"></div>
+  <div class="q-nav"><button class="btn-next" id="nx6" onclick="next(6)">Next →</button></div>
+</div>
+
+<!-- Q7 MCQ -->
+<div class="q-block" id="q7">
+  <div class="q-num">Question 7 of 20</div>
+  <div class="q-text">The process of removing the amino group from excess amino acids is called…</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,7)">Detoxification</button>
+    <button class="opt" onclick="mcq(this,1,7)">Deamination</button>
+    <button class="opt" onclick="mcq(this,2,7)">Denaturation</button>
+    <button class="opt" onclick="mcq(this,3,7)">Decomposition</button>
+  </div>
+  <div class="feedback" id="fb7"></div>
+  <div class="q-nav"><button class="btn-next" id="nx7" onclick="next(7)">Next →</button></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="q-block" id="q8">
+  <div class="q-num">Question 8 of 20</div>
+  <div class="q-text">Urea produced in the liver is excreted from the body via which organ?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,8)">Lungs</button>
+    <button class="opt" onclick="mcq(this,1,8)">Liver</button>
+    <button class="opt" onclick="mcq(this,2,8)">Kidneys</button>
+    <button class="opt" onclick="mcq(this,3,8)">Skin</button>
+  </div>
+  <div class="feedback" id="fb8"></div>
+  <div class="q-nav"><button class="btn-next" id="nx8" onclick="next(8)">Next →</button></div>
+</div>
+
+<!-- Q9 MCQ Higher -->
+<div class="q-block" id="q9">
+  <div class="q-num">Question 9 of 20</div>
+  <div class="q-text"><span class="higher-badge">Higher</span>After anaerobic exercise, lactic acid is transported to the liver by the blood. What does the liver convert it into?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,9)">Urea</button>
+    <button class="opt" onclick="mcq(this,1,9)">Carbon dioxide and water</button>
+    <button class="opt" onclick="mcq(this,2,9)">Glucose</button>
+    <button class="opt" onclick="mcq(this,3,9)">Fatty acids</button>
+  </div>
+  <div class="feedback" id="fb9"></div>
+  <div class="q-nav"><button class="btn-next" id="nx9" onclick="next(9)">Next →</button></div>
+</div>
+
+<!-- Q10 MCQ Higher -->
+<div class="q-block" id="q10">
+  <div class="q-num">Question 10 of 20</div>
+  <div class="q-text"><span class="higher-badge">Higher</span>Why does heart rate stay elevated after intense exercise has stopped?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,0,10)">To continue releasing lactic acid into the muscles</button>
+    <button class="opt" onclick="mcq(this,1,10)">To deliver oxygen to the liver to repay the oxygen debt</button>
+    <button class="opt" onclick="mcq(this,2,10)">To cool the body down more quickly</button>
+    <button class="opt" onclick="mcq(this,3,10)">To store glycogen in muscle cells</button>
+  </div>
+  <div class="feedback" id="fb10"></div>
+  <div class="q-nav"><button class="btn-next" id="nx10" onclick="next(10)">Next →</button></div>
+</div>
+
+<!-- Q11 TF -->
+<div class="q-block" id="q11">
+  <div class="q-num">Question 11 of 20 — True or False?</div>
+  <div class="q-text">Metabolism includes both anabolic (build-up) and catabolic (break-down) reactions.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,11)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,11)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb11"></div>
+  <div class="q-nav"><button class="btn-next" id="nx11" onclick="next(11)">Next →</button></div>
+</div>
+
+<!-- Q12 TF -->
+<div class="q-block" id="q12">
+  <div class="q-num">Question 12 of 20 — True or False?</div>
+  <div class="q-text">Cellulose is used for energy storage in plant cells.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,12)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,12)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb12"></div>
+  <div class="q-nav"><button class="btn-next" id="nx12" onclick="next(12)">Next →</button></div>
+</div>
+
+<!-- Q13 TF -->
+<div class="q-block" id="q13">
+  <div class="q-num">Question 13 of 20 — True or False?</div>
+  <div class="q-text">Photosynthesis is a metabolic reaction that occurs in all living cells.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,13)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,13)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb13"></div>
+  <div class="q-nav"><button class="btn-next" id="nx13" onclick="next(13)">Next →</button></div>
+</div>
+
+<!-- Q14 TF -->
+<div class="q-block" id="q14">
+  <div class="q-num">Question 14 of 20 — True or False?</div>
+  <div class="q-text">The liver detoxifies ethanol from alcoholic drinks.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,14)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,14)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb14"></div>
+  <div class="q-nav"><button class="btn-next" id="nx14" onclick="next(14)">Next →</button></div>
+</div>
+
+<!-- Q15 TF -->
+<div class="q-block" id="q15">
+  <div class="q-num">Question 15 of 20 — True or False?</div>
+  <div class="q-text">The liver breaks down old, worn-out red blood cells and stores the iron for future use.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,15)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,15)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb15"></div>
+  <div class="q-nav"><button class="btn-next" id="nx15" onclick="next(15)">Next →</button></div>
+</div>
+
+<!-- Q16 TF Higher -->
+<div class="q-block" id="q16">
+  <div class="q-num">Question 16 of 20 — True or False?</div>
+  <div class="q-text"><span class="higher-badge">Higher</span>Lactic acid produced during anaerobic respiration in muscles is converted to glucose in the liver.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,16)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,16)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb16"></div>
+  <div class="q-nav"><button class="btn-next" id="nx16" onclick="next(16)">Next →</button></div>
+</div>
+
+<!-- Q17 TF Higher -->
+<div class="q-block" id="q17">
+  <div class="q-num">Question 17 of 20 — True or False?</div>
+  <div class="q-text"><span class="higher-badge">Higher</span>The liver is the organ where anaerobic respiration takes place during vigorous exercise.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,17)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,17)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb17"></div>
+  <div class="q-nav"><button class="btn-next" id="nx17" onclick="next(17)">Next →</button></div>
+</div>
+
+<!-- Q18 TF Higher -->
+<div class="q-block" id="q18">
+  <div class="q-num">Question 18 of 20 — True or False?</div>
+  <div class="q-text"><span class="higher-badge">Higher</span>After exercise, glucose produced in the liver from lactic acid can be stored as glycogen.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,18)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,18)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb18"></div>
+  <div class="q-nav"><button class="btn-next" id="nx18" onclick="next(18)">Next →</button></div>
+</div>
+
+<!-- Q19 TF -->
+<div class="q-block" id="q19">
+  <div class="q-num">Question 19 of 20 — True or False?</div>
+  <div class="q-text">Energy released by respiration is used to power all metabolic reactions in the body.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,19)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,19)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb19"></div>
+  <div class="q-nav"><button class="btn-next" id="nx19" onclick="next(19)">Next →</button></div>
+</div>
+
+<!-- Q20 TF -->
+<div class="q-block" id="q20">
+  <div class="q-num">Question 20 of 20 — True or False?</div>
+  <div class="q-text">Lipids are formed from two glycerol molecules and one fatty acid molecule.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="tf(this,true,20)">✅ True</button>
+    <button class="tf-btn" onclick="tf(this,false,20)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb20"></div>
+  <div class="q-nav"><button class="btn-next" id="nx20" onclick="finish()">See results 🎉</button></div>
+</div>
+
+<!-- Result box -->
+<div id="result">
+  <div class="big-score" id="score-display"></div>
+  <div class="msg" id="result-msg"></div>
+  <div class="mum" id="mum-msg"></div>
+  <button class="btn-reset" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const SCORE_KEY='biology-b9-4-score';
+const DATE_KEY='biology-b9-4-date';
+const TOTAL=20;
+
+// MCQ answers (1-indexed, answer = index 0-3)
+const MCQ_ANS={1:1,2:1,3:2,4:2,5:2,6:1,7:1,8:2,9:2,10:1};
+// TF answers (11-20)
+const TF_ANS={11:true,12:false,13:false,14:true,15:true,16:true,17:false,18:true,19:true,20:false};
+
+// Feedback messages
+const MCQ_FB={
+  1:{ok:'Correct! Metabolism = the sum of ALL reactions in a cell or organism.',bad:'Not quite. Metabolism is the sum of ALL reactions in a cell or organism — not just digestion or respiration.'},
+  2:{ok:'Correct! Anabolic = build up. Catabolic = break down. Good to know both.',bad:'Not quite. Catabolic reactions break DOWN molecules. Anabolic reactions BUILD UP molecules.'},
+  3:{ok:'Correct! Animals store glucose as glycogen (in liver and muscles). Plants use starch.',bad:'Not quite. Animals store glucose as glycogen. Starch is the plant storage form. Cellulose is for cell walls.'},
+  4:{ok:'Correct! One glycerol + three fatty acids = one lipid (triglyceride).',bad:'Not quite. A lipid is formed from one glycerol and THREE fatty acid molecules.'},
+  5:{ok:'Correct! Plants use glucose + nitrate ions to synthesise amino acids.',bad:'Not quite. Plants use nitrate ions (not chloride, phosphate or potassium) alongside glucose to make amino acids.'},
+  6:{ok:'Correct! Excess amino acids are deaminated in the liver → urea → excreted in urine.',bad:'Not quite. The liver deaminates excess amino acids → urea, which is then excreted by the kidneys.'},
+  7:{ok:'Correct! Deamination = removing the amino group from excess amino acids.',bad:'Not quite. Deamination is the specific term for removing the amino group from amino acids in the liver.'},
+  8:{ok:'Correct! Urea passes into the blood and is filtered out by the kidneys into urine.',bad:'Not quite. Urea is excreted by the kidneys (in urine), not the lungs or skin.'},
+  9:{ok:'Correct! (Higher) The liver converts lactic acid → glucose. This is how the oxygen debt is repaid.',bad:'Not quite. (Higher) The liver converts lactic acid BACK TO GLUCOSE. This glucose can then be respired aerobically or stored as glycogen.'},
+  10:{ok:'Correct! (Higher) Heart rate stays up to keep delivering oxygen to the liver so it can convert lactic acid → glucose.',bad:'Not quite. (Higher) Heart rate stays elevated to deliver oxygen to the liver to repay the oxygen debt — converting lactic acid back to glucose.'},
+};
+const TF_FB={
+  11:{ok:'Correct! Both build-up (anabolic) and break-down (catabolic) reactions are part of metabolism.',bad:'Not quite. Metabolism includes both anabolic AND catabolic reactions.'},
+  12:{ok:'Correct! Cellulose is used for cell wall structure, NOT energy storage. Starch/glycogen store energy.',bad:'Not quite. Cellulose strengthens cell walls — it is NOT a storage carbohydrate. Starch and glycogen store energy.'},
+  13:{ok:'Correct — False! Photosynthesis only occurs in plants and algae (cells with chloroplasts), not all cells.',bad:'Not quite — this is False. Photosynthesis only happens in plant and algal cells, not in all living cells.'},
+  14:{ok:'Correct! The liver detoxifies many harmful substances including ethanol.',bad:'Not quite. The liver DOES detoxify ethanol from alcoholic drinks — this is one of its key metabolic roles.'},
+  15:{ok:'Correct! The liver breaks down old red blood cells and stores the iron for making new ones.',bad:'Not quite. The liver DOES break down old red blood cells and stores the iron for future use.'},
+  16:{ok:'Correct! (Higher) Blood carries lactic acid from muscles to the liver, which converts it to glucose.',bad:'Not quite. (Higher) This is TRUE — the liver converts lactic acid from muscles back to glucose during recovery from exercise.'},
+  17:{ok:'Correct — False! (Higher) Anaerobic respiration happens in the MUSCLES, not the liver. The liver processes the resulting lactic acid.',bad:'Not quite. (Higher) This is FALSE. Anaerobic respiration takes place in the MUSCLES. The liver deals with the lactic acid produced afterwards.'},
+  18:{ok:'Correct! (Higher) Glucose made from lactic acid in the liver can be stored as glycogen or respired aerobically.',bad:'Not quite. (Higher) This is TRUE — glucose from lactic acid in the liver can be stored as glycogen or broken down by aerobic respiration.'},
+  19:{ok:'Correct! Respiration provides the energy that drives all metabolic reactions.',bad:'Not quite. This is TRUE — the energy transferred by respiration powers all the metabolic reactions in the body.'},
+  20:{ok:'Correct — False! A lipid is made from ONE glycerol + THREE fatty acids, not two glycerols.',bad:'Not quite. This is FALSE — a lipid is formed from ONE glycerol and THREE fatty acid molecules.'},
+};
+
+let score=0;
+let answered=new Set();
+
+// Show prev score banner
+(function(){
+  var s=localStorage.getItem(SCORE_KEY);
+  var d=localStorage.getItem(DATE_KEY);
+  if(s&&d){
+    var b=document.getElementById('prev-banner');
+    b.textContent='📊 Last attempt: '+s+'/'+TOTAL+' on '+d;
+    b.style.display='block';
+  }
+})();
+
+function updateProgress(q){
+  var pct=(q/TOTAL)*100;
+  document.getElementById('prog').style.width=pct+'%';
+}
+
+function mcq(btn,idx,qNum){
+  if(answered.has(qNum)) return;
+  answered.add(qNum);
+  var correct=MCQ_ANS[qNum];
+  var opts=btn.closest('.options').querySelectorAll('.opt');
+  opts.forEach(function(o){o.disabled=true;});
+  var fb=document.getElementById('fb'+qNum);
+  if(idx===correct){
+    btn.classList.add('correct');
+    fb.className='feedback show ok';
+    fb.textContent='✅ '+MCQ_FB[qNum].ok;
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    fb.className='feedback show bad';
+    fb.textContent='❌ '+MCQ_FB[qNum].bad;
+  }
+  document.getElementById('nx'+qNum).classList.add('show');
+  updateProgress(answered.size);
+}
+
+function tf(btn,val,qNum){
+  if(answered.has(qNum)) return;
+  answered.add(qNum);
+  var correct=TF_ANS[qNum];
+  var btns=btn.closest('.tf-wrap').querySelectorAll('.tf-btn');
+  btns.forEach(function(b){b.disabled=true;});
+  var fb=document.getElementById('fb'+qNum);
+  if(val===correct){
+    btn.classList.add('correct');
+    fb.className='feedback show ok';
+    fb.textContent='✅ '+TF_FB[qNum].ok;
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(function(b){if((b.textContent.includes('True')&&correct)||(b.textContent.includes('False')&&!correct))b.classList.add('correct');});
+    fb.className='feedback show bad';
+    fb.textContent='❌ '+TF_FB[qNum].bad;
+  }
+  if(qNum<20){document.getElementById('nx'+qNum).classList.add('show');}
+  else{document.getElementById('nx20').classList.add('show');}
+  updateProgress(answered.size);
+}
+
+function next(qNum){
+  document.getElementById('q'+qNum).classList.remove('active');
+  document.getElementById('q'+(qNum+1)).classList.add('active');
+}
+
+function finish(){
+  document.getElementById('q20').classList.remove('active');
+  var res=document.getElementById('result');
+  res.style.display='block';
+  document.getElementById('score-display').textContent=score+'/'+TOTAL;
+
+  var msg,emoji;
+  if(score>=18){emoji='🏆';msg='Outstanding! You really know your metabolism.';}
+  else if(score>=14){emoji='👍';msg='Good work — a few things to review, but mostly solid.';}
+  else{emoji='📖';msg='Keep revising — go back to the revision page and try again!';}
+  document.getElementById('result-msg').textContent=emoji+' '+msg;
+  document.getElementById('mum-msg').textContent='Show this to mum — '+score+'/'+TOTAL;
+
+  // Save to localStorage
+  var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,today);
+
+  updateProgress(TOTAL);
+}
+
+function resetQuiz(){
+  score=0;
+  answered=new Set();
+  document.getElementById('result').style.display='none';
+
+  // Reset all q-blocks
+  for(var i=1;i<=TOTAL;i++){
+    var block=document.getElementById('q'+i);
+    block.classList.remove('active');
+    var opts=block.querySelectorAll('.opt,.tf-btn');
+    opts.forEach(function(o){o.classList.remove('correct','wrong');o.disabled=false;});
+    var fb=document.getElementById('fb'+i);
+    fb.className='feedback';
+    fb.textContent='';
+    var nx=document.getElementById('nx'+i);
+    if(nx) nx.classList.remove('show');
+  }
+  document.getElementById('q1').classList.add('active');
+  document.getElementById('prog').style.width='0';
+}
+</script>
+</body>
+</html>

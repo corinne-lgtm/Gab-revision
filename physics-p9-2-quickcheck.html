@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P9.2 Quick Check — Physics</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d1b2a;
+    --muted: #5a7a9a;
+    --paper: #ffffff;
+    --line: #c5dff4;
+    --accent: #64b5f6;
+    --accent-dark: #1565c0;
+    --navy: #0d2b5e;
+    --navy2: #1a3a7a;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --hero-grad: linear-gradient(135deg, #0d2b5e 0%, #1565c0 60%, #1e88e5 100%);
+    --correct: #43a047;
+    --wrong: #ef5350;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 12px 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  nav a { color: #90caf9; text-decoration: none; font-size: .85rem; font-weight: 700; letter-spacing: .03em; }
+  nav a:hover { color: #fff; }
+  nav .sep { color: #3a5a8a; }
+
+  /* HERO */
+  .hero {
+    background: var(--hero-grad);
+    padding: 48px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(100,181,246,.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .floaters { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .floater { position: absolute; font-size: 2rem; opacity: .13; animation: floatUp 8s ease-in-out infinite; }
+  .floater:nth-child(1){ left:6%;  top:20%; animation-delay:0s; }
+  .floater:nth-child(2){ left:20%; top:65%; animation-delay:1.5s; font-size:1.5rem; }
+  .floater:nth-child(3){ left:78%; top:15%; animation-delay:.8s; }
+  .floater:nth-child(4){ left:89%; top:60%; animation-delay:2.2s; font-size:1.4rem; }
+  .floater:nth-child(5){ left:50%; top:78%; animation-delay:3s; font-size:1.7rem; }
+  @keyframes floatUp { 0%,100%{ transform:translateY(0) rotate(-5deg);} 50%{ transform:translateY(-16px) rotate(5deg);} }
+
+  .badge { display:inline-block; background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3); color:#e3f2fd; font-family:'Poppins',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:5px 16px; border-radius:100px; margin-bottom:16px; }
+  .hero h1 { font-family:'Poppins',sans-serif; font-size:clamp(1.7rem,5vw,2.8rem); font-weight:800; color:#fff; line-height:1.15; margin-bottom:12px; }
+  .hero h1 span { color:#90caf9; }
+  .hero-sub { color:#b0d4f5; font-size:1rem; max-width:480px; margin:0 auto 20px; line-height:1.6; }
+
+  /* SCORE BAR */
+  .score-bar { background:var(--navy); padding:10px 28px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .score-bar .score-label { color:#90caf9; font-weight:700; font-size:.9rem; }
+  .score-bar .score-num { color:#fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:1.1rem; }
+  .progress-wrap { background:rgba(255,255,255,.1); border-radius:100px; height:8px; width:200px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:100px; transition:width .4s ease; width:0%; }
+
+  /* MAIN */
+  main { max-width: 760px; margin: 0 auto; padding: 36px 20px 60px; }
+
+  /* QUESTION BLOCKS */
+  .q-block {
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 20px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    transition: border-color .2s;
+  }
+  .q-block.correct { border-color: var(--correct); }
+  .q-block.wrong   { border-color: var(--wrong); }
+
+  .q-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; }
+  .q-num {
+    background: var(--accent-dark); color:#fff;
+    font-family:'Poppins',sans-serif; font-weight:800; font-size:.85rem;
+    width:32px; height:32px; min-width:32px; border-radius:50%;
+    display:grid; place-items:center;
+  }
+  .q-type { font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:4px; }
+  .q-text { font-weight:700; font-size:.97rem; line-height:1.5; color:var(--ink); }
+
+  /* OPTIONS */
+  .options { display:flex; flex-direction:column; gap:9px; }
+  .opt {
+    display:flex; align-items:center; gap:12px;
+    padding:11px 16px; border-radius:12px;
+    border:2px solid var(--line); cursor:pointer;
+    font-size:.9rem; font-weight:600; line-height:1.4;
+    transition:background .15s, border-color .15s, transform .1s;
+    user-select: none;
+  }
+  .opt:hover:not(.disabled) { background:#f0f7ff; border-color:var(--accent); transform:translateX(3px); }
+  .opt .opt-letter {
+    width:26px; height:26px; min-width:26px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--line);
+    font-family:'Poppins',sans-serif; font-weight:800; font-size:.78rem;
+    display:grid; place-items:center; transition:background .15s, border-color .15s;
+  }
+  .opt.selected { background:#e3f2fd; border-color:var(--accent-dark); }
+  .opt.selected .opt-letter { background:var(--accent-dark); border-color:var(--accent-dark); color:#fff; }
+  .opt.correct-ans { background:var(--green2); border-color:var(--correct); }
+  .opt.correct-ans .opt-letter { background:var(--correct); border-color:var(--correct); color:#fff; }
+  .opt.wrong-ans { background:var(--red2); border-color:var(--wrong); }
+  .opt.wrong-ans .opt-letter { background:var(--wrong); border-color:var(--wrong); color:#fff; }
+  .opt.disabled { cursor:default; }
+
+  /* T/F */
+  .tf-row { display:flex; gap:12px; }
+  .tf-btn {
+    flex:1; padding:12px; border-radius:12px;
+    border:2px solid var(--line); cursor:pointer;
+    font-family:'Poppins',sans-serif; font-weight:800; font-size:.95rem;
+    text-align:center; transition:background .15s, border-color .15s, transform .1s;
+    user-select:none;
+  }
+  .tf-btn:hover:not(.disabled) { transform:scale(1.03); }
+  .tf-btn.true-btn:hover:not(.disabled)  { background:#e8f5e9; border-color:var(--correct); }
+  .tf-btn.false-btn:hover:not(.disabled) { background:var(--red2); border-color:var(--wrong); }
+  .tf-btn.selected.true-btn  { background:#e8f5e9; border-color:var(--correct); color:var(--correct); }
+  .tf-btn.selected.false-btn { background:var(--red2); border-color:var(--wrong); color:var(--wrong); }
+  .tf-btn.correct-ans { background:var(--green2); border-color:var(--correct); color:var(--correct); }
+  .tf-btn.wrong-ans   { background:var(--red2); border-color:var(--wrong); color:var(--wrong); }
+  .tf-btn.disabled { cursor:default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display:none; margin-top:14px;
+    padding:12px 16px; border-radius:12px;
+    font-size:.88rem; line-height:1.5; font-weight:600;
+  }
+  .feedback.show { display:block; }
+  .feedback.ok  { background:var(--green2); border:1.5px solid var(--correct); color:#1b5e20; }
+  .feedback.bad { background:var(--red2); border:1.5px solid var(--wrong); color:#b71c1c; }
+
+  /* RESULT BOX */
+  .result-box {
+    display:none;
+    background:var(--paper); border:2px solid var(--line); border-radius:24px;
+    padding:36px 32px; text-align:center; margin-top:8px;
+  }
+  .result-box.show { display:block; }
+  .result-emoji { font-size:3.5rem; margin-bottom:12px; }
+  .result-box h2 { font-family:'Poppins',sans-serif; font-size:1.6rem; font-weight:800; color:var(--navy); margin-bottom:8px; }
+  .result-score { font-size:2.8rem; font-family:'Poppins',sans-serif; font-weight:800; color:var(--accent-dark); margin:8px 0 4px; }
+  .result-msg { font-size:1rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+  .mum { display:inline-block; background:var(--hero-grad); color:#fff; font-family:'Poppins',sans-serif; font-weight:700; font-size:.95rem; padding:10px 24px; border-radius:100px; margin-bottom:20px; }
+  .btn-reset { background:var(--accent-dark); color:#fff; border:none; cursor:pointer; font-family:'Poppins',sans-serif; font-weight:700; font-size:.95rem; padding:12px 28px; border-radius:100px; transition:background .2s, transform .15s; }
+  .btn-reset:hover { background:var(--navy); transform:scale(1.04); }
+  .btn-revision { display:inline-block; background:#f0f7ff; color:var(--accent-dark); border:2px solid var(--accent); font-family:'Poppins',sans-serif; font-weight:700; font-size:.9rem; padding:10px 22px; border-radius:100px; text-decoration:none; margin-left:10px; transition:background .2s; }
+  .btn-revision:hover { background:#e3f2fd; }
+
+  @media(max-width:500px){ .progress-wrap{ width:120px; } main{ padding:24px 14px 48px; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p9-2-revision.html">📖 P9.2 Revision</a>
+  <span class="sep">›</span>
+  <a style="color:#fff">Quick Check</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="floaters">
+    <div class="floater">⚡</div>
+    <div class="floater">🚀</div>
+    <div class="floater">🏎️</div>
+    <div class="floater">📐</div>
+    <div class="floater">🧮</div>
+  </div>
+  <div class="badge">Physics · P9 Motion</div>
+  <h1>P9.2 <span>Quick Check</span></h1>
+  <p class="hero-sub">Velocity &amp; Acceleration — 20 questions, 10 MCQ + 10 True/False</p>
+</header>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span class="score-label">Score</span>
+  <span class="score-num" id="score-display">0 / 20</span>
+  <div class="progress-wrap"><div class="progress-fill" id="progress-fill"></div></div>
+  <span class="score-label" id="answered-display">0 answered</span>
+</div>
+
+<main>
+
+<!-- ═══════════════ MCQ QUESTIONS ═══════════════ -->
+
+<!-- Q1 -->
+<div class="q-block" id="q1">
+  <div class="q-header">
+    <div class="q-num">1</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">What is the definition of velocity?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q1','A','B')"><div class="opt-letter">A</div>Distance travelled per second</div>
+    <div class="opt" onclick="mcq(this,'q1','B','B')"><div class="opt-letter">B</div>Speed in a given direction</div>
+    <div class="opt" onclick="mcq(this,'q1','C','B')"><div class="opt-letter">C</div>Change in speed over time</div>
+    <div class="opt" onclick="mcq(this,'q1','D','B')"><div class="opt-letter">D</div>The total path length of a journey</div>
+  </div>
+  <div class="feedback" id="fb-q1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="q-block" id="q2">
+  <div class="q-header">
+    <div class="q-num">2</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">What are the units of acceleration?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q2','A','C')"><div class="opt-letter">A</div>m/s</div>
+    <div class="opt" onclick="mcq(this,'q2','B','C')"><div class="opt-letter">B</div>m/s³</div>
+    <div class="opt" onclick="mcq(this,'q2','C','C')"><div class="opt-letter">C</div>m/s²</div>
+    <div class="opt" onclick="mcq(this,'q2','D','C')"><div class="opt-letter">D</div>km/h</div>
+  </div>
+  <div class="feedback" id="fb-q2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="q-block" id="q3">
+  <div class="q-header">
+    <div class="q-num">3</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">A car accelerates from 0 m/s to 18 m/s in 6 s. What is its acceleration?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q3','A','B')"><div class="opt-letter">A</div>6 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q3','B','B')"><div class="opt-letter">B</div>3 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q3','C','B')"><div class="opt-letter">C</div>18 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q3','D','B')"><div class="opt-letter">D</div>108 m/s²</div>
+  </div>
+  <div class="feedback" id="fb-q3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="q-block" id="q4">
+  <div class="q-header">
+    <div class="q-num">4</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">A car brakes from 28 m/s to rest in 8 s. What is the magnitude of its deceleration?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q4','A','C')"><div class="opt-letter">A</div>4.0 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q4','B','C')"><div class="opt-letter">B</div>28 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q4','C','C')"><div class="opt-letter">C</div>3.5 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q4','D','C')"><div class="opt-letter">D</div>2.8 m/s²</div>
+  </div>
+  <div class="feedback" id="fb-q4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="q-block" id="q5">
+  <div class="q-header">
+    <div class="q-num">5</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">On a velocity–time graph, what does a horizontal (flat) line represent?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q5','A','D')"><div class="opt-letter">A</div>Increasing acceleration</div>
+    <div class="opt" onclick="mcq(this,'q5','B','D')"><div class="opt-letter">B</div>Deceleration</div>
+    <div class="opt" onclick="mcq(this,'q5','C','D')"><div class="opt-letter">C</div>Object at rest</div>
+    <div class="opt" onclick="mcq(this,'q5','D','D')"><div class="opt-letter">D</div>Constant velocity (zero acceleration)</div>
+  </div>
+  <div class="feedback" id="fb-q5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="q-block" id="q6">
+  <div class="q-header">
+    <div class="q-num">6</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">Which of the following is a scalar quantity?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q6','A','A')"><div class="opt-letter">A</div>Speed</div>
+    <div class="opt" onclick="mcq(this,'q6','B','A')"><div class="opt-letter">B</div>Velocity</div>
+    <div class="opt" onclick="mcq(this,'q6','C','A')"><div class="opt-letter">C</div>Displacement</div>
+    <div class="opt" onclick="mcq(this,'q6','D','A')"><div class="opt-letter">D</div>Acceleration</div>
+  </div>
+  <div class="feedback" id="fb-q6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="q-block" id="q7">
+  <div class="q-header">
+    <div class="q-num">7</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">Which formula correctly represents average acceleration?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q7','A','C')"><div class="opt-letter">A</div>a = v × t</div>
+    <div class="opt" onclick="mcq(this,'q7','B','C')"><div class="opt-letter">B</div>a = (u + v) ÷ t</div>
+    <div class="opt" onclick="mcq(this,'q7','C','C')"><div class="opt-letter">C</div>a = (v − u) ÷ t</div>
+    <div class="opt" onclick="mcq(this,'q7','D','C')"><div class="opt-letter">D</div>a = u ÷ t</div>
+  </div>
+  <div class="feedback" id="fb-q7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="q-block" id="q8">
+  <div class="q-header">
+    <div class="q-num">8</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">A sprinter starts from rest and reaches 9.2 m/s in 3.1 s. What is the acceleration? (Round to 2 s.f.)</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q8','A','B')"><div class="opt-letter">A</div>2.8 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q8','B','B')"><div class="opt-letter">B</div>3.0 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q8','C','B')"><div class="opt-letter">C</div>3.5 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q8','D','B')"><div class="opt-letter">D</div>9.2 m/s²</div>
+  </div>
+  <div class="feedback" id="fb-q8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="q-block" id="q9">
+  <div class="q-header">
+    <div class="q-num">9</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">A car on a motorway travels at 30 m/s for 500 s and overtakes a lorry at 22 m/s. How far ahead is the car after 500 s?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q9','A','B')"><div class="opt-letter">A</div>2 000 m</div>
+    <div class="opt" onclick="mcq(this,'q9','B','B')"><div class="opt-letter">B</div>4 000 m</div>
+    <div class="opt" onclick="mcq(this,'q9','C','B')"><div class="opt-letter">C</div>500 m</div>
+    <div class="opt" onclick="mcq(this,'q9','D','B')"><div class="opt-letter">D</div>8 000 m</div>
+  </div>
+  <div class="feedback" id="fb-q9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="q-block" id="q10">
+  <div class="q-header">
+    <div class="q-num">10</div>
+    <div>
+      <div class="q-type">Multiple Choice</div>
+      <div class="q-text">A car accelerates from 8 m/s to 28 m/s in 16 s without changing direction. What is its acceleration?</div>
+    </div>
+  </div>
+  <div class="options">
+    <div class="opt" onclick="mcq(this,'q10','A','C')"><div class="opt-letter">A</div>2.0 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q10','B','C')"><div class="opt-letter">B</div>1.0 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q10','C','C')"><div class="opt-letter">C</div>1.25 m/s²</div>
+    <div class="opt" onclick="mcq(this,'q10','D','C')"><div class="opt-letter">D</div>0.5 m/s²</div>
+  </div>
+  <div class="feedback" id="fb-q10"></div>
+</div>
+
+<!-- ═══════════════ TRUE / FALSE ═══════════════ -->
+
+<!-- Q11 -->
+<div class="q-block" id="q11">
+  <div class="q-header">
+    <div class="q-num">11</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">Velocity is a vector quantity because it has both magnitude and direction.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q11','true','true')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q11','false','true')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q11"></div>
+</div>
+
+<!-- Q12 -->
+<div class="q-block" id="q12">
+  <div class="q-header">
+    <div class="q-num">12</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">Two cars travelling at 30 m/s in opposite directions have the same velocity.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q12','true','false')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q12','false','false')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q12"></div>
+</div>
+
+<!-- Q13 -->
+<div class="q-block" id="q13">
+  <div class="q-header">
+    <div class="q-num">13</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">A car travelling round a roundabout at constant speed has a changing velocity.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q13','true','true')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q13','false','true')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q13"></div>
+</div>
+
+<!-- Q14 -->
+<div class="q-block" id="q14">
+  <div class="q-header">
+    <div class="q-num">14</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">Deceleration means the acceleration value is always positive.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q14','true','false')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q14','false','false')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q14"></div>
+</div>
+
+<!-- Q15 -->
+<div class="q-block" id="q15">
+  <div class="q-header">
+    <div class="q-num">15</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">On a velocity–time graph, a steeper upward slope indicates a greater acceleration.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q15','true','true')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q15','false','true')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q15"></div>
+</div>
+
+<!-- Q16 -->
+<div class="q-block" id="q16">
+  <div class="q-header">
+    <div class="q-num">16</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">Speed is a vector quantity because it has both size and direction.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q16','true','false')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q16','false','false')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q16"></div>
+</div>
+
+<!-- Q17 -->
+<div class="q-block" id="q17">
+  <div class="q-header">
+    <div class="q-num">17</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">The change in velocity (Δv) is calculated as final velocity minus initial velocity.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q17','true','true')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q17','false','true')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q17"></div>
+</div>
+
+<!-- Q18 -->
+<div class="q-block" id="q18">
+  <div class="q-header">
+    <div class="q-num">18</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">An object travelling at constant velocity on a straight road has zero acceleration.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q18','true','true')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q18','false','true')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q18"></div>
+</div>
+
+<!-- Q19 -->
+<div class="q-block" id="q19">
+  <div class="q-header">
+    <div class="q-num">19</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">Displacement is the same as distance — it does not include direction.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q19','true','false')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q19','false','false')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q19"></div>
+</div>
+
+<!-- Q20 -->
+<div class="q-block" id="q20">
+  <div class="q-header">
+    <div class="q-num">20</div>
+    <div>
+      <div class="q-type">True / False</div>
+      <div class="q-text">When describing deceleration in an exam, you must always include the minus sign with your answer.</div>
+    </div>
+  </div>
+  <div class="tf-row">
+    <div class="tf-btn true-btn"  onclick="tf(this,'q20','true','false')">✅ True</div>
+    <div class="tf-btn false-btn" onclick="tf(this,'q20','false','false')">❌ False</div>
+  </div>
+  <div class="feedback" id="fb-q20"></div>
+</div>
+
+<!-- RESULT BOX -->
+<div class="result-box" id="result-box">
+  <div class="result-emoji" id="result-emoji">🎉</div>
+  <h2 id="result-title">Quiz Complete!</h2>
+  <div class="result-score" id="result-score">0 / 20</div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="mum" id="result-mum"></div>
+  <br><br>
+  <button class="btn-reset" onclick="resetQuiz()">🔄 Try Again</button>
+  <a href="physics-p9-2-revision.html" class="btn-revision">📖 Back to Revision</a>
+</div>
+
+</main>
+
+<script>
+  const SCORE_KEY = 'physics-p9-2-score';
+  const TOTAL = 20;
+  let score = 0;
+  let answered = 0;
+
+  const feedbacks = {
+    q1:  { ok: "Correct! Velocity = speed in a given direction.", bad: "Not quite. Velocity is speed in a given direction — it includes direction." },
+    q2:  { ok: "Correct! Acceleration is measured in m/s² (metres per second squared).", bad: "The unit of acceleration is m/s², not m/s (that's speed)." },
+    q3:  { ok: "Correct! a = (18 − 0) ÷ 6 = 3.0 m/s².", bad: "Remember: a = (v − u) ÷ t = (18 − 0) ÷ 6 = 3.0 m/s²." },
+    q4:  { ok: "Correct! a = (0 − 28) ÷ 8 = −3.5 m/s². Deceleration = 3.5 m/s².", bad: "a = (0 − 28) ÷ 8 = −3.5 m/s², so the deceleration is 3.5 m/s²." },
+    q5:  { ok: "Correct! A flat line on a v–t graph means constant velocity — zero acceleration.", bad: "A flat line means constant velocity — zero acceleration, not rest (which would be a flat line at v = 0)." },
+    q6:  { ok: "Correct! Speed is a scalar — magnitude only, no direction.", bad: "Speed is the scalar. Velocity, displacement and acceleration are all vectors (they have direction)." },
+    q7:  { ok: "Correct! a = (v − u) ÷ t is the standard acceleration formula.", bad: "The correct formula is a = (v − u) ÷ t, where v is final and u is initial velocity." },
+    q8:  { ok: "Correct! a = 9.2 ÷ 3.1 ≈ 2.97 ≈ 3.0 m/s² (2 s.f.)", bad: "a = (9.2 − 0) ÷ 3.1 = 2.97 ≈ 3.0 m/s² to 2 significant figures." },
+    q9:  { ok: "Correct! Relative speed = 8 m/s. Distance ahead = 8 × 500 = 4 000 m.", bad: "Relative speed = 30 − 22 = 8 m/s. Distance = 8 × 500 = 4 000 m." },
+    q10: { ok: "Correct! a = (28 − 8) ÷ 16 = 20 ÷ 16 = 1.25 m/s².", bad: "a = (28 − 8) ÷ 16 = 20 ÷ 16 = 1.25 m/s²." },
+    q11: { ok: "Correct! Velocity is a vector — it has both magnitude (size) and direction.", bad: "Actually true! Velocity is a vector because it has both magnitude and direction." },
+    q12: { ok: "Correct — False! They have the same speed but opposite directions, so different velocities.", bad: "False! Same speed, opposite directions = different velocities. Velocity includes direction." },
+    q13: { ok: "Correct! Constant speed on a roundabout still means changing direction → changing velocity.", bad: "True! Even at constant speed, the direction changes continuously, so velocity keeps changing." },
+    q14: { ok: "Correct — False! Deceleration has a negative acceleration value (it's negative).", bad: "False! Deceleration is negative acceleration — the value is negative. You only drop the sign when explicitly asked for 'the deceleration'." },
+    q15: { ok: "Correct! A steeper slope on a v–t graph = greater rate of change of velocity = greater acceleration.", bad: "True! The gradient (slope) of a v–t graph gives acceleration — steeper = greater acceleration." },
+    q16: { ok: "Correct — False! Speed is a scalar — it has magnitude only, no direction.", bad: "False! Speed is a scalar. It has magnitude only. Velocity is the vector version." },
+    q17: { ok: "Correct! Δv = v − u (final minus initial).", bad: "True! Change in velocity = final velocity − initial velocity (v − u)." },
+    q18: { ok: "Correct! No change in velocity = zero acceleration.", bad: "True! Constant velocity means no change, so acceleration = 0." },
+    q19: { ok: "Correct — False! Displacement does include direction — it is a vector quantity.", bad: "False! Displacement is distance in a given direction — it's a vector, unlike distance." },
+    q20: { ok: "Correct — False! When describing deceleration, you state the positive value and say 'deceleration'. No minus sign needed.", bad: "False! In exams, when asked for a deceleration you give a positive value. The minus sign is only needed if you use 'acceleration'." },
+  };
+
+  function updateBar() {
+    document.getElementById('score-display').textContent = score + ' / ' + TOTAL;
+    document.getElementById('answered-display').textContent = answered + ' answered';
+    document.getElementById('progress-fill').style.width = (answered / TOTAL * 100) + '%';
+  }
+
+  function mcq(optEl, qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+    const opts = block.querySelectorAll('.opt');
+    opts.forEach(o => o.classList.add('disabled'));
+    optEl.classList.add('selected');
+
+    const fb = document.getElementById('fb-' + qid);
+    if (chosen === correct) {
+      score++; answered++;
+      block.classList.add('correct');
+      optEl.classList.add('correct-ans');
+      fb.textContent = '✅ ' + feedbacks[qid].ok;
+      fb.className = 'feedback ok show';
+    } else {
+      answered++;
+      block.classList.add('wrong');
+      optEl.classList.add('wrong-ans');
+      // highlight correct
+      opts.forEach(o => {
+        const letter = o.querySelector('.opt-letter').textContent.trim();
+        if (letter === correct) o.classList.add('correct-ans');
+      });
+      fb.textContent = '❌ ' + feedbacks[qid].bad;
+      fb.className = 'feedback bad show';
+    }
+    updateBar();
+    checkDone();
+  }
+
+  function tf(btnEl, qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+    const btns = block.querySelectorAll('.tf-btn');
+    btns.forEach(b => b.classList.add('disabled'));
+    btnEl.classList.add('selected');
+
+    const fb = document.getElementById('fb-' + qid);
+    if (chosen === correct) {
+      score++; answered++;
+      block.classList.add('correct');
+      btnEl.classList.add('correct-ans');
+      fb.textContent = '✅ ' + feedbacks[qid].ok;
+      fb.className = 'feedback ok show';
+    } else {
+      answered++;
+      block.classList.add('wrong');
+      btnEl.classList.add('wrong-ans');
+      btns.forEach(b => {
+        const isTrueBtn = b.classList.contains('true-btn');
+        if ((correct === 'true' && isTrueBtn) || (correct === 'false' && !isTrueBtn)) {
+          b.classList.add('correct-ans');
+        }
+      });
+      fb.textContent = '❌ ' + feedbacks[qid].bad;
+      fb.className = 'feedback bad show';
+    }
+    updateBar();
+    checkDone();
+  }
+
+  function checkDone() {
+    if (answered < TOTAL) return;
+    localStorage.setItem(SCORE_KEY, score + '/' + TOTAL);
+
+    const box = document.getElementById('result-box');
+    box.classList.add('show');
+    document.getElementById('result-score').textContent = score + ' / ' + TOTAL;
+
+    let emoji, title, msg, mum;
+    if (score >= 18) {
+      emoji = '🏆'; title = 'Outstanding!';
+      msg = 'You nailed it — ' + score + '/20. Everything is crystal clear!';
+      mum = '⭐ Show this to mum — ' + score + '/20!';
+    } else if (score >= 14) {
+      emoji = '🎉'; title = 'Great work!';
+      msg = 'Really solid — ' + score + '/20. Just a couple of gaps to tighten up.';
+      mum = '😊 Show this to mum — ' + score + '/20!';
+    } else if (score >= 10) {
+      emoji = '📚'; title = 'Not bad!';
+      msg = score + '/20 — getting there! Head back to the revision page to strengthen the tricky bits.';
+      mum = '📖 Show this to mum — ' + score + '/20 — still working on it!';
+    } else {
+      emoji = '💪'; title = 'Keep going!';
+      msg = score + '/20 — don\'t worry, reread the revision page and try again.';
+      mum = '📚 Show this to mum — ' + score + '/20 — revision needed!';
+    }
+
+    document.getElementById('result-emoji').textContent = emoji;
+    document.getElementById('result-title').textContent = title;
+    document.getElementById('result-msg').textContent = msg;
+    document.getElementById('result-mum').textContent = mum;
+
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    updateBar();
+
+    for (let i = 1; i <= TOTAL; i++) {
+      const block = document.getElementById('q' + i);
+      block.classList.remove('correct','wrong');
+      block.querySelectorAll('.opt').forEach(o => o.classList.remove('selected','correct-ans','wrong-ans','disabled'));
+      block.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected','correct-ans','wrong-ans','disabled'));
+      const fb = document.getElementById('fb-q' + i);
+      fb.className = 'feedback'; fb.textContent = '';
+    }
+
+    document.getElementById('result-box').classList.remove('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateBar();
+</script>
+</body>
+</html>

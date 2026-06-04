@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B7.3 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(20px,4vw,40px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px;max-width:680px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:12px 18px;margin-bottom:14px;font-weight:700;font-size:15px;color:var(--ink)}
+/* progress */
+#progress-bar-wrap{background:rgba(0,0,0,.08);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+#progress-bar{height:10px;border-radius:999px;background:var(--yellow);width:0%;transition:width .4s}
+/* question blocks */
+.qblock{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:28px;padding:22px;margin:14px 0;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.qblock .qnum{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.qblock .qtext{font-size:17px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-size:15px;font-family:inherit;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.opt-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt-btn.correct{border-color:#3a7d44;background:#d4edda;font-weight:700}
+.opt-btn.wrong{border-color:var(--red);background:var(--red2)}
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{border-color:#3a7d44;background:#d4edda}
+.tf-btn.wrong{border-color:var(--red);background:var(--red2)}
+/* feedback */
+.feedback{margin-top:10px;border-radius:12px;padding:10px 14px;font-size:14px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);border:1.5px solid #a8d4b0;color:#1a4d22}
+.feedback.bad{background:var(--red2);border:1.5px solid #e0a8a0;color:#7a1a12}
+/* result box */
+#result-box{display:none;background:white;border:3px solid var(--line);border-radius:30px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 8px 28px rgba(0,0,0,.1)}
+#result-box h2{font-size:clamp(22px,4vw,38px);margin:0 0 10px}
+#result-box .score-big{font-size:clamp(40px,8vw,72px);font-weight:900;letter-spacing:-2px;line-height:1}
+#result-box p{font-size:16px;color:var(--muted);margin:8px 0}
+#result-box .mum{font-size:18px;font-weight:900;color:var(--dark);margin-top:14px}
+#reset-btn{background:var(--dark);color:white;border:none;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:900;cursor:pointer;margin-top:18px;font-family:inherit}
+#reset-btn:hover{background:#2d4d2d}
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B7 Non-communicable diseases</div>
+  <h1>B7.3 Quick Check ⚡</h1>
+  <p>Smoking and the risk of disease — 20 questions, 10 MCQ + 10 True/False.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b7-3-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-area"></div>
+<div id="result-box">
+  <div id="result-emoji" style="font-size:52px;margin-bottom:6px"></div>
+  <h2 id="result-title"></h2>
+  <div class="score-big" id="score-display"></div>
+  <p id="result-msg"></p>
+  <div class="mum" id="mum-msg"></div>
+  <button id="reset-btn" onclick="resetQuiz()">Try again 🔄</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY='bio-b73-score';
+const DATE_KEY='bio-b73-date';
+const TOTAL=20;
+
+// Show previous score
+(function(){
+  var s=localStorage.getItem(SCORE_KEY),d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    var b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent='🕐 Last attempt: '+s+'/'+TOTAL+' on '+d;
+  }
+})();
+
+const MCQ=[
+  {q:"Which chemical in tobacco smoke is responsible for its addictive properties?",opts:["Carbon monoxide","Tar","Nicotine","Cyanide"],ans:2},
+  {q:"After smoking, what percentage of blood haemoglobin can be occupied by carbon monoxide instead of oxygen?",opts:["Up to 2%","Up to 5%","Up to 10%","Up to 20%"],ans:2},
+  {q:"Which component of tobacco smoke is described as a carcinogen?",opts:["Nicotine","Carbon monoxide","Tar","Acetaldehyde"],ans:2},
+  {q:"What does nicotine do to blood vessels?",opts:["Widens them (vasodilation)","Narrows them (vasoconstriction)","Has no effect on blood vessels","Makes them more permeable"],ans:1},
+  {q:"Chemicals in tobacco smoke anaesthetise the cilia. What is the main consequence of this?",opts:["Blood pressure rises sharply","Mucus and pathogens move deeper into the lungs","The alveoli swell and burst","Tar is broken down more slowly"],ans:1},
+  {q:"COPD (chronic obstructive pulmonary disease) is most directly caused by which effect of smoking?",opts:["Nicotine narrowing arteries","CO reducing oxygen in blood","Tar accumulation breaking down alveoli structure","Cilia paralysis trapping mucus"],ans:2},
+  {q:"Which effect of nicotine most directly increases the risk of a blood clot forming?",opts:["It raises heart rate","It narrows blood vessels and stimulates clot formation","It damages the lining of the alveoli","It reduces the oxygen-carrying capacity of blood"],ans:1},
+  {q:"According to CVD death-rate data, how do CVD deaths per 100,000 men change as cigarettes smoked per day increases from 0 to >24?",opts:["They stay roughly the same","They decrease steadily","They increase steadily","They increase then decrease"],ans:2},
+  {q:"A pregnant woman smokes 10+ cigarettes per day. What is the approximate stillbirth rate shown in the revision data?",opts:["3.6%","5.8%","8.0%","10.2%"],ans:2},
+  {q:"Which disease involves inflammation and infection of the bronchi, caused by tar build-up?",opts:["Emphysema","Bronchitis","Pneumonia","Laryngitis"],ans:1},
+];
+
+const TF=[
+  {q:"Nicotine is the chemical in tobacco smoke that causes lung cancer.",ans:false,fb:"Tar is the carcinogen linked to lung cancer. Nicotine is the addictive component."},
+  {q:"Carbon monoxide in tobacco smoke reduces the oxygen-carrying capacity of the blood.",ans:true,fb:"Correct — CO bonds to haemoglobin in place of O₂, reducing how much oxygen the blood can carry."},
+  {q:"Smoking has only a correlational link to cardiovascular disease — no causal mechanism has been identified.",ans:false,fb:"False — there is a proven causal mechanism: nicotine narrows vessels, increases heart rate, and other chemicals damage artery linings."},
+  {q:"Cilia are hair-like projections that normally waft mucus upwards and out of the lungs.",ans:true,fb:"Correct — healthy cilia sweep mucus (with trapped particles and pathogens) up and out."},
+  {q:"Tar in tobacco smoke turns the lungs from grey to pink over time.",ans:false,fb:"The opposite: tar turns lungs from pink to grey as it accumulates."},
+  {q:"Carbon monoxide is particularly dangerous in pregnancy because it restricts oxygen supply to the fetus.",ans:true,fb:"Correct — the mother's blood carries CO instead of O₂, leaving less oxygen available for the developing fetus."},
+  {q:"Low birthweight and premature birth are both associated with smoking during pregnancy.",ans:true,fb:"Correct — both are well-documented consequences linked to reduced oxygen from CO."},
+  {q:"Nicotine causes breathlessness by breaking down the walls of the alveoli.",ans:false,fb:"Alveoli damage is caused by tar accumulation (leading to COPD/emphysema), not nicotine."},
+  {q:"Smoking increases the risk of cancers of the throat, larynx, and trachea as well as lung cancer.",ans:true,fb:"Correct — tar and other carcinogens in smoke affect the whole respiratory tract."},
+  {q:"Scientists estimate that around 700 stillbirths per year in the UK result from mothers smoking.",ans:true,fb:"Correct — approximately 20% of ~3500 annual UK stillbirths are estimated to be linked to maternal smoking."},
+];
+
+let answered=0;
+let score=0;
+
+function buildQuiz(){
+  answered=0;score=0;
+  updateProgress();
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  // MCQ
+  MCQ.forEach((q,i)=>{
+    const block=document.createElement('div');
+    block.className='qblock';
+    block.id='q'+(i+1);
+    let optsHtml=q.opts.map((o,j)=>`<button class="opt-btn" onclick="answerMCQ(${i},${j},${q.ans},this)">${o}</button>`).join('');
+    block.innerHTML=`<div class="qnum">Question ${i+1} of ${TOTAL} · MCQ</div><div class="qtext">${q.q}</div><div class="options">${optsHtml}</div><div class="feedback" id="fb-q${i+1}"></div>`;
+    area.appendChild(block);
+  });
+  // TF
+  TF.forEach((q,i)=>{
+    const idx=MCQ.length+i;
+    const block=document.createElement('div');
+    block.className='qblock';
+    block.id='q'+(idx+1);
+    block.innerHTML=`<div class="qnum">Question ${idx+1} of ${TOTAL} · True or False</div><div class="qtext">${q.q}</div><div class="tf-row"><button class="tf-btn" onclick="answerTF(${i},true,${q.ans},this)">✅ True</button><button class="tf-btn" onclick="answerTF(${i},false,${q.ans},this)">❌ False</button></div><div class="feedback" id="fb-tf${i}"></div>`;
+    area.appendChild(block);
+  });
+  document.getElementById('result-box').style.display='none';
+}
+
+function answerMCQ(qi,chosen,correct,btn){
+  const block=document.getElementById('q'+(qi+1));
+  const btns=block.querySelectorAll('.opt-btn');
+  btns.forEach(b=>b.disabled=true);
+  btns[correct].classList.add('correct');
+  const fb=document.getElementById('fb-q'+(qi+1));
+  if(chosen===correct){
+    btn.classList.add('correct');
+    score++;
+    fb.className='feedback ok show';
+    fb.textContent='✓ Correct!';
+  } else {
+    btn.classList.add('wrong');
+    fb.className='feedback bad show';
+    fb.textContent='✗ The correct answer is: '+MCQ[qi].opts[correct];
+  }
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) setTimeout(showResult,600);
+}
+
+function answerTF(qi,chosen,correct,btn){
+  const block=document.getElementById('q'+(MCQ.length+qi+1));
+  const btns=block.querySelectorAll('.tf-btn');
+  btns.forEach(b=>b.disabled=true);
+  const correctBool=(correct===true||correct==='true');
+  const correctBtn=correctBool?btns[0]:btns[1];
+  correctBtn.classList.add('correct');
+  const fb=document.getElementById('fb-tf'+qi);
+  if(chosen===correctBool){
+    btn.classList.add('correct');
+    score++;
+    fb.className='feedback ok show';
+    fb.textContent='✓ Correct! '+TF[qi].fb;
+  } else {
+    btn.classList.add('wrong');
+    fb.className='feedback bad show';
+    fb.textContent='✗ '+(correctBool?'This is TRUE. ':'This is FALSE. ')+TF[qi].fb;
+  }
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) setTimeout(showResult,600);
+}
+
+function updateProgress(){
+  var pct=(answered/TOTAL)*100;
+  document.getElementById('progress-bar').style.width=pct+'%';
+}
+
+function showResult(){
+  document.getElementById('result-box').style.display='block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('score-display').textContent=score+'/'+TOTAL;
+  var emoji,title,msg;
+  if(score>=18){emoji='🏆';title='Outstanding!';msg='You really know your smoking and disease content.';}
+  else if(score>=14){emoji='👍';title='Good work!';msg='Solid understanding — revisit any questions you missed.';}
+  else{emoji='📖';title='Keep revising';msg='Go back to the revision page and review the key chemicals and their effects.';}
+  document.getElementById('result-emoji').textContent=emoji;
+  document.getElementById('result-title').textContent=title;
+  document.getElementById('result-msg').textContent=msg;
+  document.getElementById('mum-msg').textContent='Show this to mum — '+score+'/'+TOTAL;
+  // Save to localStorage
+  var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,today);
+  // Update banner
+  var b=document.getElementById('prev-banner');
+  b.style.display='block';
+  b.textContent='🕐 Last attempt: '+score+'/'+TOTAL+' on '+today;
+}
+
+function resetQuiz(){
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

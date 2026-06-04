@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B8.2 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:20px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:28px;padding:26px 28px;margin-bottom:18px;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:12px;margin-bottom:8px}
+.hero h1{font-size:clamp(20px,4vw,36px);letter-spacing:-1px;line-height:1.05}
+.hero p{font-size:15px;color:rgba(255,255,255,.78);margin-top:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:8px 13px;border-radius:999px;font-size:13px}
+
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:14px;padding:11px 16px;margin-bottom:14px;font-size:14px;font-weight:700;color:#7a3a00}
+
+/* PROGRESS */
+.progress-wrap{background:var(--line);border-radius:999px;height:8px;margin-bottom:18px;overflow:hidden}
+.progress-bar{height:100%;background:var(--yellow);border-radius:999px;transition:width .4s ease;width:0%}
+
+/* Q-BLOCKS */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px;line-height:1.35}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;font-family:inherit;color:var(--ink);cursor:pointer;text-align:left;font-weight:600;transition:border-color .15s,background .15s}
+.opt-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt-btn.correct{background:#d4edda;border-color:#3a7d44;color:#1a4d22}
+.opt-btn.wrong{background:#fde8e6;border-color:#c0392b;color:#7a0000}
+
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;padding:12px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{background:#d4edda;border-color:#3a7d44;color:#1a4d22}
+.tf-btn.wrong{background:#fde8e6;border-color:#c0392b;color:#7a0000}
+
+/* FEEDBACK */
+.feedback{display:none;margin-top:10px;border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600}
+.feedback.show{display:block}
+.feedback.ok{background:#d4edda;color:#1a4d22;border:1.5px solid #a8d4b0}
+.feedback.bad{background:#fde8e6;color:#7a0000;border:1.5px solid #e8a8a0}
+
+/* RESULT BOX */
+#result-box{display:none;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:28px;padding:28px;text-align:center;margin-top:20px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box h2{font-size:clamp(22px,4vw,36px);letter-spacing:-1px;margin-bottom:8px}
+#result-score{font-size:52px;font-weight:900;letter-spacing:-2px;margin:12px 0}
+#result-msg{font-size:16px;color:var(--muted);margin-bottom:18px}
+#result-mum{font-size:15px;font-weight:900;color:var(--dark);background:var(--yellow);display:inline-block;padding:8px 18px;border-radius:999px;margin-bottom:20px}
+.reset-btn{background:var(--dark);color:var(--yellow);border:none;border-radius:999px;padding:13px 28px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit}
+.reset-btn:hover{opacity:.85}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B8 Photosynthesis</div>
+  <h1>B8.2 Quick Check ⚡</h1>
+  <p>20 questions — rate of photosynthesis &amp; limiting factors</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b8-2-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<div id="quiz-area"></div>
+<div id="result-box">
+  <h2 id="result-emoji"></h2>
+  <div id="result-score"></div>
+  <div id="result-msg"></div>
+  <div id="result-mum"></div><br>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY = 'biology-b8-2-score';
+const DATE_KEY  = 'biology-b8-2-date';
+const TOTAL = 20;
+
+// ── QUESTIONS ──────────────────────────────────────────────────────────────
+// MCQ: ans = index of correct option (0-based)
+// TF:  ans = true or false
+const questions = [
+  // MCQ 1–10
+  {type:'mcq', q:'What is a limiting factor?',
+   opts:['A factor that speeds up photosynthesis to its maximum rate',
+         'Any factor in short supply that prevents photosynthesis going faster even if other conditions are ideal',
+         'The factor with the highest concentration around the plant',
+         'The amount of glucose produced per hour'],
+   ans:1,
+   fb:'A limiting factor is any factor in short supply that prevents photosynthesis going faster, even when other conditions are ideal.'},
+
+  {type:'mcq', q:'Which graph shape correctly describes the effect of light intensity on photosynthesis rate?',
+   opts:['Rises steeply, then falls sharply at high intensities',
+         'Stays flat, then rises suddenly',
+         'Rises steeply, then levels off',
+         'Rises linearly with no plateau'],
+   ans:2,
+   fb:'Rate rises with light intensity, then levels off when another factor (CO₂ or temperature) becomes limiting.'},
+
+  {type:'mcq', q:'Why does the rate of photosynthesis fall sharply above about 40–50°C?',
+   opts:['CO₂ dissolves in water at high temperatures',
+         'Chlorophyll breaks down into smaller molecules',
+         'Enzymes controlling the reactions are denatured',
+         'Light intensity decreases as temperature rises'],
+   ans:2,
+   fb:'Photosynthesis is enzyme-controlled. Above ~40–50°C, enzymes denature — their active sites permanently change shape — and the rate falls sharply.'},
+
+  {type:'mcq', q:'What approximate percentage of CO₂ does the atmosphere normally contain?',
+   opts:['0.4%','0.04%','4%','40%'],
+   ans:1,
+   fb:'The atmosphere is approximately 0.04% CO₂, making it often the most common limiting factor on a sunny day.'},
+
+  {type:'mcq', q:'A plant has a magnesium deficiency. How does this limit photosynthesis?',
+   opts:['Magnesium is needed to make glucose directly',
+         'Without magnesium, chlorophyll cannot be made, so less light energy is absorbed',
+         'Magnesium controls stomatal opening, so less CO₂ enters',
+         'Magnesium lowers the temperature inside the leaf'],
+   ans:1,
+   fb:'Magnesium is needed to make chlorophyll. Without it, less chlorophyll is produced, less light is absorbed, and the rate falls.'},
+
+  {type:'mcq', q:'According to the inverse square law, what happens to light intensity if you double the distance between the lamp and the plant?',
+   opts:['It halves','It falls to one quarter','It doubles','It stays the same'],
+   ans:1,
+   fb:'Light intensity ∝ 1/distance². Doubling distance → 1/2² = ¼ of the original intensity.'},
+
+  {type:'mcq', q:'On a bright, warm sunny day in a garden, which factor is most likely to be limiting photosynthesis?',
+   opts:['Light intensity','Temperature','CO₂ concentration','Chlorophyll levels'],
+   ans:2,
+   fb:'On a sunny warm day, light and temperature are both high, so CO₂ — at only 0.04% of the atmosphere — is usually used up and becomes the most common limiting factor.'},
+
+  {type:'mcq', q:'A student places a lamp at 10 cm from a water plant and counts 20 bubbles per minute. She moves the lamp to 20 cm. Approximately how many bubbles per minute would she expect?',
+   opts:['10 per minute','5 per minute','15 per minute','1 per minute'],
+   ans:1,
+   fb:'Doubling the distance reduces light intensity to ¼. So 20 × ¼ = 5 bubbles per minute.'},
+
+  {type:'mcq', q:'What happens to CO₂ levels around a plant at night?',
+   opts:['CO₂ levels fall because respiration slows down',
+         'CO₂ levels rise because the plant respires but does not photosynthesise',
+         'CO₂ levels stay constant',
+         'CO₂ levels rise because chlorophyll releases CO₂ in the dark'],
+   ans:1,
+   fb:'At night, photosynthesis stops but respiration continues, releasing CO₂. So CO₂ levels around the plant rise overnight.'},
+
+  {type:'mcq', q:'In a graph of temperature vs photosynthesis rate, which of the following best describes section b–c (the descending section)?',
+   opts:['Rate falls because light intensity decreases at high temperatures',
+         'Rate falls because enzymes are denatured and their active sites permanently change shape',
+         'Rate falls because CO₂ dissolves into water at high temperatures',
+         'Rate falls because chlorophyll absorbs less light at high temperatures'],
+   ans:1,
+   fb:'The fall in the temperature graph is due to enzyme denaturation — the active sites of enzymes permanently change shape, stopping the reactions.'},
+
+  // TF 11–20
+  {type:'tf', q:'An increase in light intensity will always increase the rate of photosynthesis, no matter how high the intensity gets.',
+   ans:false,
+   fb:'FALSE — rate levels off once another factor (CO₂ or temperature) becomes limiting, even if light intensity continues to increase.'},
+
+  {type:'tf', q:'Moving a lamp from 10 cm to 20 cm from a plant halves the light intensity reaching the plant.',
+   ans:false,
+   fb:'FALSE — it reduces light intensity to one quarter (inverse square law: 1/2² = ¼), not one half.'},
+
+  {type:'tf', q:'Variegated leaves have patches with less chlorophyll, which limits photosynthesis in those areas.',
+   ans:true,
+   fb:'TRUE — variegated (patchy green/white) leaves have less chlorophyll in white areas, absorbing less light, limiting photosynthesis there.'},
+
+  {type:'tf', q:'The rate of photosynthesis is controlled by enzymes, which is why temperature has a different effect compared to light intensity.',
+   ans:true,
+   fb:'TRUE — enzymes denature at high temperatures, causing the rate to fall sharply. Light intensity does not cause denaturation, so its graph only levels off, not fall.'},
+
+  {type:'tf', q:'In a greenhouse, artificially increasing CO₂ levels will always continue to increase the rate of photosynthesis indefinitely.',
+   ans:false,
+   fb:'FALSE — once CO₂ is no longer limiting, light intensity or temperature becomes the new limiting factor and the rate levels off.'},
+
+  {type:'tf', q:'At night, plants produce CO₂ through respiration but cannot use it for photosynthesis because there is no light.',
+   ans:true,
+   fb:'TRUE — without light, photosynthesis cannot occur. Plants continue respiring, releasing CO₂, which accumulates around the plant overnight.'},
+
+  {type:'tf', q:'CO₂ concentration is never the limiting factor for plants growing in a field on a warm, bright day.',
+   ans:false,
+   fb:'FALSE — on a warm, bright day, CO₂ is often the most common limiting factor, because light and temperature are both high and CO₂ gets used up quickly.'},
+
+  {type:'tf', q:'The graph of CO₂ concentration vs photosynthesis rate has a similar shape to the graph of light intensity vs photosynthesis rate.',
+   ans:true,
+   fb:'TRUE — both graphs rise then level off (plateau), because in both cases another factor eventually becomes limiting.'},
+
+  {type:'tf', q:'If a plant has plenty of light, CO₂, and water, increasing temperature will always increase the rate of photosynthesis.',
+   ans:false,
+   fb:'FALSE — above approximately 40–50°C, enzymes are denatured and the rate falls sharply, even with plenty of light, CO₂, and water.'},
+
+  {type:'tf', q:'Tropical plants tend to grow much larger than Arctic plants partly because more limiting factors are at optimal levels in tropical conditions.',
+   ans:true,
+   fb:'TRUE — tropical conditions provide high light, high temperature, and more CO₂ uptake opportunity, meaning fewer factors are limiting and photosynthesis is faster, supporting larger growth.'},
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let answered = 0;
+let score = 0;
+
+// ── PREV SCORE BANNER ──────────────────────────────────────────────────────
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null && d){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `Last attempt: ${s}/${TOTAL} on ${d}`;
+  }
+})();
+
+// ── BUILD QUIZ ─────────────────────────────────────────────────────────────
+function buildQuiz(){
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = `q${i}`;
+    const num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = `Question ${i+1} of ${TOTAL} · ${q.type === 'mcq' ? 'Multiple choice' : 'True or False'}`;
+    const qtext = document.createElement('div');
+    qtext.className = 'q-text';
+    qtext.textContent = q.q;
+    block.appendChild(num);
+    block.appendChild(qtext);
+
+    if(q.type === 'mcq'){
+      const opts = document.createElement('div');
+      opts.className = 'options';
+      q.opts.forEach((opt, j) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = opt;
+        btn.onclick = () => answerMCQ(i, j, btn, opts, fb);
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      const row = document.createElement('div');
+      row.className = 'tf-row';
+      ['✅ True','❌ False'].forEach((label, j) => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = label;
+        const val = j === 0;
+        btn.onclick = () => answerTF(i, val, btn, row, fb);
+        row.appendChild(btn);
+      });
+      block.appendChild(row);
+    }
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    block.appendChild(fb);
+    area.appendChild(block);
+  });
+}
+
+function answerMCQ(qi, chosen, btn, opts, fb){
+  if(btn.disabled) return;
+  Array.from(opts.children).forEach(b => b.disabled = true);
+  const correct = questions[qi].ans;
+  if(chosen === correct){
+    btn.classList.add('correct');
+    score++;
+    showFeedback(fb, true, questions[qi].fb);
+  } else {
+    btn.classList.add('wrong');
+    opts.children[correct].classList.add('correct');
+    showFeedback(fb, false, questions[qi].fb);
+  }
+  recordAnswer();
+}
+
+function answerTF(qi, chosen, btn, row, fb){
+  if(btn.disabled) return;
+  Array.from(row.children).forEach(b => b.disabled = true);
+  const correct = questions[qi].ans;
+  if(chosen === correct){
+    btn.classList.add('correct');
+    score++;
+    showFeedback(fb, true, questions[qi].fb);
+  } else {
+    btn.classList.add('wrong');
+    // highlight correct button
+    Array.from(row.children).forEach(b => {
+      const val = b.textContent.includes('True');
+      if(val === correct) b.classList.add('correct');
+    });
+    showFeedback(fb, false, questions[qi].fb);
+  }
+  recordAnswer();
+}
+
+function showFeedback(el, ok, text){
+  el.textContent = (ok ? '✅ ' : '❌ ') + text;
+  el.className = 'feedback show ' + (ok ? 'ok' : 'bad');
+}
+
+function recordAnswer(){
+  answered++;
+  document.getElementById('prog').style.width = (answered/TOTAL*100)+'%';
+  if(answered === TOTAL) showResult();
+}
+
+function showResult(){
+  document.getElementById('result-box').style.display = 'block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth'});
+  const pct = score/TOTAL;
+  let emoji, msg;
+  if(score >= 18){emoji='🏆'; msg='Outstanding! You\'ve nailed limiting factors.';}
+  else if(score >= 14){emoji='👍'; msg='Good work — review any questions you missed.';}
+  else {emoji='📖'; msg='Keep revising — go back to the revision sheet and try again.';}
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-score').textContent = `${score} / ${TOTAL}`;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-mum').textContent = `Show this to mum — ${score}/${TOTAL}`;
+  // Save to localStorage
+  const today = new Date().toLocaleDateString('en-GB');
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+}
+
+function resetQuiz(){
+  score = 0;
+  answered = 0;
+  document.getElementById('prog').style.width = '0%';
+  document.getElementById('result-box').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

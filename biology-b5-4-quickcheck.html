@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.4 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,5vw,46px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:18px;font-size:14px;font-weight:700;color:var(--ink)}
+
+/* progress */
+.progress-wrap{background:rgba(255,255,255,.4);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:100%;width:0;background:var(--yellow);border-radius:999px;transition:width .3s}
+
+/* question block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;display:none}
+.q-block.active{display:block}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;text-align:left;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2);border-color:var(--green);font-weight:700}
+.opt.wrong{background:var(--red2);border-color:var(--red)}
+.opt:disabled{cursor:default}
+
+/* TF */
+.tf-row{display:flex;gap:12px}
+.tf-row .opt{flex:1;text-align:center}
+
+/* feedback */
+.feedback{display:none;margin-top:12px;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:700}
+.feedback.ok{background:var(--green2);border:2px solid var(--green);color:var(--dark)}
+.feedback.bad{background:var(--red2);border:2px solid var(--red);color:var(--dark)}
+
+.next-btn{display:none;margin-top:14px;background:var(--dark);color:white;border:none;border-radius:999px;padding:11px 26px;font-weight:900;cursor:pointer;font-size:15px;font-family:inherit}
+.next-btn:hover{background:#2e4d2e}
+
+/* result box */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;margin-top:20px}
+#result-box .big-score{font-size:clamp(48px,10vw,90px);font-weight:900;line-height:1;color:var(--dark)}
+#result-box .result-msg{font-size:18px;font-weight:700;margin:10px 0 6px}
+#result-box .mum{font-size:15px;color:var(--muted);margin-bottom:20px}
+#reset-btn{background:var(--dark);color:white;border:none;border-radius:999px;padding:12px 30px;font-weight:900;cursor:pointer;font-size:16px;font-family:inherit}
+#reset-btn:hover{background:#2e4d2e}
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5.4 Viral diseases</div>
+  <h1>Quick Check ⚡</h1>
+  <p>20 questions — measles, HIV/AIDS and tobacco mosaic virus</p>
+  <div class="nav">
+    <a href="index.html">🏠 Hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b5-4-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-area"></div>
+<div id="result-box">
+  <div class="big-score"><span id="score-display"></span>/20</div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="mum" id="mum-msg"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY='biology-b5-4-score';
+const DATE_KEY='biology-b5-4-date';
+const TOTAL=20;
+
+// ── questions ─────────────────────────────────────────────────────────────────
+// MCQ: ans = index of correct option (0-based)
+// TF:  ans = true/false
+const questions=[
+  // MCQ 1-10
+  {type:'mcq',q:'What type of pathogen causes measles?',opts:['Bacterium','Virus','Fungus','Protist'],ans:1},
+  {type:'mcq',q:'How is measles mainly spread from person to person?',opts:['Contaminated water','Contact with infected blood','Droplet infection from coughs and sneezes','Insect vectors'],ans:2},
+  {type:'mcq',q:'Which of the following is a symptom of measles?',opts:['Mosaic discolouration of leaves','Fever and a red skin rash','Destruction of immune cells only','Blindness caused by antiretroviral drugs'],ans:1},
+  {type:'mcq',q:'HIV primarily attacks which type of cell?',opts:['Red blood cells','Nerve cells','Immune cells','Liver cells'],ans:2},
+  {type:'mcq',q:'A patient has HIV. Their immune system is now so damaged they can no longer fight off common infections. What stage have they reached?',opts:['The incubation period','AIDS','The symptomatic HIV phase','Full recovery'],ans:1},
+  {type:'mcq',q:'Which drug type is used to manage HIV and can give near-normal life expectancy?',opts:['Antibiotics','Antiretroviral drugs','Antihistamines','Antifungals'],ans:1},
+  {type:'mcq',q:'Tobacco mosaic virus (TMV) causes a distinctive pattern on plant leaves. What is this pattern called?',opts:['Necrosis','Chlorosis','Mosaic discolouration','Wilting'],ans:2},
+  {type:'mcq',q:'How does TMV reduce a plant\'s overall growth?',opts:['It destroys the root system','It blocks water uptake','It reduces photosynthesis, so less food is produced','It kills insect pollinators'],ans:2},
+  {type:'mcq',q:'How long can TMV remain infectious in soil?',opts:['About 1 week','About 6 months','Up to 50 years','It cannot survive in soil'],ans:2},
+  {type:'mcq',q:'An HIV-positive mother wants to minimise the risk of passing the virus to her baby. What should she do instead of breastfeeding?',opts:['Vaccinate the baby immediately','Bottle-feed with formula','Use antihistamine drugs','Isolate the baby from other children'],ans:1},
+
+  // TF 11-20
+  {type:'tf',q:'There is currently no cure for measles.',ans:true},
+  {type:'tf',q:'Measles can be prevented by vaccination.',ans:true},
+  {type:'tf',q:'HIV can be transmitted by sharing needles.',ans:true},
+  {type:'tf',q:'Antiretroviral drugs cure HIV completely.',ans:false},
+  {type:'tf',q:'A person infected with HIV will always develop AIDS within one year.',ans:false},
+  {type:'tf',q:'TMV can be spread between plants by insects acting as vectors.',ans:true},
+  {type:'tf',q:'Growing TMV-resistant crop strains is one way to prevent the disease.',ans:true},
+  {type:'tf',q:'TMV only affects tobacco plants and no other species.',ans:false},
+  {type:'tf',q:'Measles deaths have decreased in the UK mainly because of an effective vaccination programme.',ans:true},
+  {type:'tf',q:'Access to antiretroviral drugs is very easy in sub-Saharan Africa.',ans:false},
+];
+
+let current=0,score=0,answered=[];
+
+// prev score banner
+(function(){
+  const s=localStorage.getItem(SCORE_KEY);
+  const d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    const b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.innerHTML='🕐 Last attempt: <strong>'+s+'/'+TOTAL+'</strong> on '+d;
+  }
+})();
+
+function buildQuiz(){
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  questions.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.className='q-block'+(i===0?' active':'');
+    div.id='q'+i;
+    let inner='<div class="q-num">Question '+(i+1)+' of '+TOTAL+(q.type==='tf'?' — True or False':'')+'</div>';
+    inner+='<div class="q-text">'+q.q+'</div>';
+    if(q.type==='mcq'){
+      inner+='<div class="options">';
+      q.opts.forEach((o,j)=>{
+        inner+='<button class="opt" onclick="pick('+i+','+j+',this)">'+o+'</button>';
+      });
+      inner+='</div>';
+    } else {
+      inner+='<div class="options tf-row">';
+      inner+='<button class="opt" onclick="pickTF('+i+',true,this)">✅ True</button>';
+      inner+='<button class="opt" onclick="pickTF('+i+',false,this)">❌ False</button>';
+      inner+='</div>';
+    }
+    inner+='<div class="feedback" id="fb'+i+'"></div>';
+    inner+='<button class="next-btn" id="nb'+i+'" onclick="next('+(i+1)+')">'+( i<TOTAL-1 ? 'Next question →' : 'See my result 🎉')+'</button>';
+    div.innerHTML=inner;
+    area.appendChild(div);
+  });
+  updateProgress();
+}
+
+function pick(qi,chosen,btn){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=chosen;
+  const q=questions[qi];
+  const opts=btn.closest('.options').querySelectorAll('.opt');
+  opts.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('fb'+qi);
+  const nb=document.getElementById('nb'+qi);
+  if(chosen===q.ans){
+    btn.classList.add('correct');
+    score++;
+    fb.textContent='✅ Correct!';
+    fb.className='feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.textContent='❌ The correct answer is: '+q.opts[q.ans];
+    fb.className='feedback bad';
+  }
+  fb.style.display='block';
+  nb.style.display='inline-block';
+  updateProgress();
+}
+
+function pickTF(qi,chosen,btn){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=chosen;
+  const q=questions[qi];
+  const opts=btn.closest('.options').querySelectorAll('.opt');
+  opts.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('fb'+qi);
+  const nb=document.getElementById('nb'+qi);
+  if(chosen===q.ans){
+    btn.classList.add('correct');
+    score++;
+    fb.textContent='✅ Correct!';
+    fb.className='feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    opts[chosen?1:0].classList.add('correct');
+    fb.textContent='❌ The correct answer is: '+(q.ans?'True':'False');
+    fb.className='feedback bad';
+  }
+  fb.style.display='block';
+  nb.style.display='inline-block';
+  updateProgress();
+}
+
+function next(i){
+  document.getElementById('q'+(i-1)).classList.remove('active');
+  if(i<TOTAL){
+    document.getElementById('q'+i).classList.add('active');
+    updateProgress();
+  } else {
+    showResult();
+  }
+}
+
+function updateProgress(){
+  const done=answered.filter(x=>x!==undefined).length;
+  document.getElementById('progress-bar').style.width=(done/TOTAL*100)+'%';
+}
+
+function showResult(){
+  document.getElementById('quiz-area').style.display='none';
+  const box=document.getElementById('result-box');
+  box.style.display='block';
+  document.getElementById('score-display').textContent=score;
+  let emoji,msg;
+  if(score>=18){emoji='🏆';msg='Excellent work — you know your viral diseases!';}
+  else if(score>=14){emoji='👍';msg='Good effort — review the bits you missed.';}
+  else{emoji='📖';msg='Give the revision notes another read, then try again.';}
+  document.getElementById('result-msg').textContent=emoji+' '+msg;
+  document.getElementById('mum-msg').textContent='Show this to mum — '+score+'/'+TOTAL;
+  // save
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,dateStr);
+}
+
+function resetQuiz(){
+  score=0;answered=[];
+  document.getElementById('result-box').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+  buildQuiz();
+  window.scrollTo(0,0);
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

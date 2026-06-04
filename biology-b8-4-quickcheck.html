@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B8.4 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,40px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:680px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:18px;font-weight:700;color:#7a3a00;font-size:15px}
+/* progress */
+#progress-bar-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:10px;background:var(--yellow);border-radius:999px;width:0;transition:width .4s}
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;cursor:pointer;font-size:15px;font-weight:600;transition:border-color .15s,background .15s;text-align:left}
+.choice:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.choice.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.choice.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a0e0e}
+.choice:disabled{cursor:default}
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;padding:13px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:16px;font-weight:900;cursor:pointer;transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;color:#1a4d22}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a0e0e}
+.tf-btn:disabled{cursor:default}
+.feedback{display:none;margin-top:12px;padding:11px 15px;border-radius:12px;font-size:14px;font-weight:600}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid var(--green)}
+.feedback.bad{background:var(--red2);color:#7a0e0e;border:1.5px solid var(--red)}
+/* score bar */
+#score-bar{text-align:right;font-weight:900;font-size:15px;color:var(--muted);margin-bottom:8px}
+/* result box */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:28px;margin-top:24px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box .trophy{font-size:56px;margin-bottom:12px}
+#result-box h2{font-size:28px;margin:0 0 8px}
+#result-box p{font-size:17px;color:var(--muted);margin:0 0 20px}
+#result-box .mum{font-size:18px;font-weight:900;color:var(--green);margin-bottom:18px}
+#reset-btn{background:var(--dark);color:var(--yellow);border:none;padding:13px 28px;border-radius:999px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B8 Photosynthesis</div>
+  <h1>B8.4 Quick Check ⚡</h1>
+  <p>Making the most of photosynthesis — 20 questions, MCQ + True/False</p>
+  <div class="nav">
+    <a href="index.html">🏠 Hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b8-4-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+<div id="score-bar">Score: <span id="live-score">0</span> / 20</div>
+
+<div id="quiz-area"></div>
+
+<div id="result-box">
+  <div class="trophy" id="res-emoji"></div>
+  <h2 id="res-title"></h2>
+  <p id="res-msg"></p>
+  <div class="mum" id="res-mum"></div>
+  <button id="reset-btn" onclick="resetQuiz()">Try again 🔄</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY='biology-b8-4-qc-score';
+const DATE_KEY='biology-b8-4-qc-date';
+const TOTAL=20;
+
+// ── Questions ──────────────────────────────────────────────────────────────
+// MCQ: ans = index of correct option (0-based)
+// TF:  ans = true/false
+const questions=[
+  // 10 MCQ
+  {type:'mcq',q:'Which three factors, when all optimised, allow photosynthesis to run at its maximum rate?',
+   opts:['Light, temperature, CO₂','Light, O₂, temperature','CO₂, O₂, water','Temperature, water, minerals'],ans:0,
+   fb:'Light intensity, temperature, and CO₂ concentration are the three main limiting factors of photosynthesis.'},
+
+  {type:'mcq',q:'American research comparing greenhouse vs outdoor tomato growing found that the indoor yield was approximately:',
+   opts:['Double the outdoor yield','Triple the outdoor yield','The same as outdoor','50% lower than outdoor'],ans:0,
+   fb:'Indoor yield ≈ 11.3 kg/plant vs outdoor ≈ 6.75 kg/plant — nearly double.'},
+
+  {type:'mcq',q:'In a wheat field mid-morning, after several hours of photosynthesis, which factor is most likely to become limiting?',
+   opts:['CO₂ concentration','Light intensity','Temperature','Water availability'],ans:0,
+   fb:'Plants use up CO₂ around them as they photosynthesize all morning; once light and temperature are no longer limiting, CO₂ becomes the key bottleneck.'},
+
+  {type:'mcq',q:'Why is it impossible to be completely certain which single factor is limiting at any moment in the field?',
+   opts:['Factors constantly interact and several may limit equally','Photosynthesis only has one limiting factor at a time','Scientists have not studied this enough','CO₂ is always the only limiting factor'],ans:0,
+   fb:'There is always a constant interaction between factors — changing one changes which factor is limiting. Multiple factors may be equally or nearly equally limiting at once.'},
+
+  {type:'mcq',q:'On a woodland floor in summer, what is most likely to be the main limiting factor?',
+   opts:['Light intensity (shade from leaf canopy)','CO₂ concentration','Temperature','Mineral supply'],ans:0,
+   fb:'In summer, trees are in full leaf, creating dense shade. Very little light penetrates to the woodland floor, making light intensity the primary limiting factor.'},
+
+  {type:'mcq',q:'Why do many commercial growers choose 20°C rather than 30°C in their greenhouses, even though 30°C gives a higher photosynthesis rate?',
+   opts:['Heating to 30°C costs more — the extra profit may be wiped out by energy bills','30°C kills the plants','CO₂ cannot be added at 30°C','Photosynthesis rate is actually lower at 30°C'],ans:0,
+   fb:'The extra crop produced at 30°C may not offset the higher energy costs. Maximising profit — not maximum photosynthesis rate — drives the decision.'},
+
+  {type:'mcq',q:'Which of the following is NOT a benefit of hydroponics over soil-based growing?',
+   opts:['Plants still need soil preparation before planting','Crops are clean and soil-free','Can be grown on poor land','Faster turnover from seed to harvest'],ans:0,
+   fb:'In hydroponics, no soil preparation or ploughing is needed — that is one of its advantages, not a requirement.'},
+
+  {type:'mcq',q:'In a greenhouse, what is added artificially to the air to remove a key limiting factor?',
+   opts:['CO₂','O₂','Nitrogen','Water vapour'],ans:0,
+   fb:'CO₂ enrichment of greenhouse air removes CO₂ as a limiting factor, allowing photosynthesis to proceed faster.'},
+
+  {type:'mcq',q:'At first light in the morning in a wheat field, which TWO factors are most likely to be simultaneously limiting?',
+   opts:['Low light AND low temperature','CO₂ AND O₂','Temperature AND CO₂','Water AND minerals'],ans:0,
+   fb:'Early morning: the sun is just rising (low light) and temperatures are still low from the night — both are likely to limit photosynthesis at the same time.'},
+
+  {type:'mcq',q:'Which of the following best explains why greenhouses allow crops like peaches and lemons to be grown in the UK?',
+   opts:['Greenhouses maintain warmth, light and CO₂ at levels that would not occur naturally in the UK climate','Greenhouses use a special soil that increases photosynthesis','UK weather already provides enough light for tropical fruit','Greenhouses remove oxygen, which slows plant respiration'],ans:0,
+   fb:'Greenhouses control temperature, light, and CO₂ — creating conditions that mimic warmer climates, allowing crops that would not thrive outside in the UK.'},
+
+  // 10 TF
+  {type:'tf',q:'Hydroponics provides plants with a perfect balance of minerals dissolved in water instead of soil.',ans:true,
+   fb:'Correct — in hydroponics, plants grow in water with the ideal mineral balance, so mineral supply is never limiting.'},
+
+  {type:'tf',q:'On a woodland floor in winter, light is the only factor that could possibly be limiting photosynthesis.',ans:false,
+   fb:'In winter, both light intensity (short days, low sun angle) and temperature are low — both can be limiting factors simultaneously.'},
+
+  {type:'tf',q:'Greenhouses can use artificial lighting to extend the growing day beyond normal daylight hours.',ans:true,
+   fb:'Correct — artificial lighting is one of the key tools growers use to increase photosynthesis time each day.'},
+
+  {type:'tf',q:'At 30°C in a high-CO₂ greenhouse, photosynthesis rate is lower than at 20°C.',ans:false,
+   fb:'The photosynthesis rate is actually higher at 30°C with high CO₂ — but the heating costs may make it unprofitable.'},
+
+  {type:'tf',q:'The main reason commercial growers invest in greenhouse insulation is to keep temperatures as high as possible.',ans:false,
+   fb:'Insulation is used to reduce heating costs (keeping the greenhouse warm cheaply), and electronic cooling can even prevent overheating in summer.'},
+
+  {type:'tf',q:'In a fully controlled hydroponic greenhouse, limiting factors such as CO₂, temperature and minerals can all be effectively eliminated.',ans:true,
+   fb:'Correct — with computer-controlled light, CO₂, temperature, and mineral supply, all major limiting factors can be managed.'},
+
+  {type:'tf',q:'The decision to use 20°C rather than 30°C in a greenhouse is based purely on maximising the rate of photosynthesis.',ans:false,
+   fb:'The decision is based on maximising profit. The cost of heating must be weighed against the value of the increased yield.'},
+
+  {type:'tf',q:'In hydroponics, poor-quality land that cannot be ploughed can still be used to grow crops.',ans:true,
+   fb:'Correct — because no soil is needed, hydroponic systems can be set up on poor or unsuitable land.'},
+
+  {type:'tf',q:'CO₂ concentration in a field stays constant all day because plants produce CO₂ through respiration to replace what they use.',ans:false,
+   fb:'Although respiration does produce CO₂, intensive photosynthesis throughout the morning draws down local CO₂ levels — it does not stay constant.'},
+
+  {type:'tf',q:'Installing alarms in a greenhouse is an important cost because equipment failure could destroy an entire crop.',ans:true,
+   fb:'Correct — alarms are listed as an important (and costly) part of greenhouse operation, as things going wrong without warning can wipe out the whole crop.'},
+];
+
+let answered=0, score=0;
+
+function init(){
+  // prev score banner
+  const prev=localStorage.getItem(SCORE_KEY);
+  const prevDate=localStorage.getItem(DATE_KEY);
+  if(prev!==null){
+    const b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent=`Last attempt: ${prev}/20 — ${prevDate}`;
+  }
+  // render questions
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  questions.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.className='q-block';
+    div.id='qb'+i;
+    let inner=`<div class="q-num">Q${i+1} of ${TOTAL} · ${q.type==='mcq'?'Multiple choice':'True / False'}</div>`;
+    inner+=`<div class="q-text">${q.q}</div>`;
+    if(q.type==='mcq'){
+      inner+='<div class="choices">';
+      q.opts.forEach((o,j)=>{
+        inner+=`<button class="choice" onclick="answerMCQ(${i},${j})">${o}</button>`;
+      });
+      inner+='</div>';
+    } else {
+      inner+=`<div class="tf-row">
+        <button class="tf-btn" onclick="answerTF(${i},true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i},false)">❌ False</button>
+      </div>`;
+    }
+    inner+=`<div class="feedback" id="fb${i}"></div>`;
+    div.innerHTML=inner;
+    area.appendChild(div);
+  });
+  updateProgress();
+}
+
+function answerMCQ(qi,chosen){
+  const q=questions[qi];
+  const block=document.getElementById('qb'+qi);
+  const btns=block.querySelectorAll('.choice');
+  btns.forEach((b,j)=>{
+    b.disabled=true;
+    if(j===q.ans) b.classList.add('correct');
+    else if(j===chosen) b.classList.add('wrong');
+  });
+  const correct=(chosen===q.ans);
+  showFeedback(qi,correct,q.fb);
+  if(correct) score++;
+  answered++;
+  document.getElementById('live-score').textContent=score;
+  updateProgress();
+  checkDone();
+}
+
+function answerTF(qi,chosen){
+  const q=questions[qi];
+  const block=document.getElementById('qb'+qi);
+  const btns=block.querySelectorAll('.tf-btn');
+  btns.forEach(b=>b.disabled=true);
+  const correct=(chosen===q.ans);
+  // highlight buttons
+  btns.forEach(b=>{
+    const isTrue=b.textContent.includes('True');
+    const val=isTrue;
+    if(val===q.ans) b.classList.add('correct');
+    else if(val===chosen) b.classList.add('wrong');
+  });
+  showFeedback(qi,correct,q.fb);
+  if(correct) score++;
+  answered++;
+  document.getElementById('live-score').textContent=score;
+  updateProgress();
+  checkDone();
+}
+
+function showFeedback(qi,correct,text){
+  const fb=document.getElementById('fb'+qi);
+  fb.className='feedback show '+(correct?'ok':'bad');
+  fb.textContent=(correct?'✅ ':'❌ ')+text;
+}
+
+function updateProgress(){
+  const pct=(answered/TOTAL)*100;
+  document.getElementById('progress-bar').style.width=pct+'%';
+}
+
+function checkDone(){
+  if(answered<TOTAL) return;
+  // save to localStorage
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,dateStr);
+  // show result
+  const box=document.getElementById('result-box');
+  box.style.display='block';
+  let emoji,title,msg;
+  if(score>=18){emoji='🏆';title='Outstanding!';msg='Excellent work — you really know your limiting factors and greenhouse economics.';}
+  else if(score>=14){emoji='👍';title='Good effort!';msg='Solid understanding — review the bits you missed in the revision notes.';}
+  else{emoji='📖';title='Keep revising!';msg='Go back through the B8.4 revision page and try again.';}
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-msg').textContent=msg;
+  document.getElementById('res-mum').textContent=`Show this to mum — ${score}/${TOTAL}`;
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  score=0; answered=0;
+  document.getElementById('live-score').textContent='0';
+  document.getElementById('result-box').style.display='none';
+  init();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+init();
+</script>
+</body>
+</html>

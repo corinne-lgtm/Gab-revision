@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.6 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;padding-bottom:60px}
+.wrap{max-width:820px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(20px,4vw,38px);line-height:1.05;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:14px;font-weight:700;font-size:15px;color:var(--ink)}
+
+/* progress */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+.progress-bar{height:10px;background:var(--yellow);border-radius:999px;width:0%;transition:width .4s ease}
+
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px;line-height:1.35}
+.options{display:flex;flex-direction:column;gap:9px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;font-size:15px;font-weight:600;text-align:left;font-family:inherit;color:var(--ink);transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.opt:disabled{cursor:default}
+
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-row .opt{flex:1;text-align:center}
+
+/* feedback */
+.feedback{display:none;margin-top:10px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:600}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #a8d4b0}
+.feedback.bad{background:var(--red2);color:#7a1a14;border:1.5px solid #e0a8a0}
+
+/* result */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:32px;text-align:center;margin-top:10px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box h2{font-size:clamp(24px,4vw,40px);margin-bottom:10px}
+#result-box .score-line{font-size:22px;font-weight:900;margin-bottom:8px}
+#result-box .mum{background:var(--dark);color:var(--yellow);border-radius:16px;padding:14px 20px;font-weight:900;font-size:17px;display:inline-block;margin:14px 0}
+#result-box p{color:var(--muted);font-size:15px;margin-top:6px}
+.reset-btn{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;border-radius:999px;padding:13px 32px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:18px;transition:opacity .2s}
+.reset-btn:hover{opacity:.85}
+
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5.6</div>
+  <h1>Diseases caused by fungi and protists</h1>
+  <p>20 questions · Rose black spot &amp; malaria</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b5-6-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<!-- ===== MCQ 1–10 ===== -->
+
+<div class="q-block" id="q1">
+  <div class="q-num">Question 1 of 20</div>
+  <div class="q-text">Which type of pathogen causes rose black spot?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,1,0)">Bacterium</button>
+    <button class="opt" onclick="mcq(this,1,1)">Fungus</button>
+    <button class="opt" onclick="mcq(this,1,2)">Protist</button>
+    <button class="opt" onclick="mcq(this,1,3)">Virus</button>
+  </div>
+  <div class="feedback" id="fb1"></div>
+</div>
+
+<div class="q-block" id="q2">
+  <div class="q-num">Question 2 of 20</div>
+  <div class="q-text">What are the visible symptoms of rose black spot on leaves?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,2,0)">White powdery patches and leaf curl</button>
+    <button class="opt" onclick="mcq(this,2,1)">Brown dried edges and wilting</button>
+    <button class="opt" onclick="mcq(this,2,2)">Purple or black spots, then yellowing and early leaf drop</button>
+    <button class="opt" onclick="mcq(this,2,3)">Red galls on the stem surface</button>
+  </div>
+  <div class="feedback" id="fb2"></div>
+</div>
+
+<div class="q-block" id="q3">
+  <div class="q-num">Question 3 of 20</div>
+  <div class="q-text">How do rose black spot spores mainly spread from plant to plant?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,3,0)">Through soil contamination only</button>
+    <button class="opt" onclick="mcq(this,3,1)">By insects feeding on the leaves</button>
+    <button class="opt" onclick="mcq(this,3,2)">By wind and water splashes</button>
+    <button class="opt" onclick="mcq(this,3,3)">Via direct root contact between plants</button>
+  </div>
+  <div class="feedback" id="fb3"></div>
+</div>
+
+<div class="q-block" id="q4">
+  <div class="q-num">Question 4 of 20</div>
+  <div class="q-text">Why does rose black spot reduce the plant's ability to flower well?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,4,0)">It blocks water uptake through the roots</button>
+    <button class="opt" onclick="mcq(this,4,1)">Leaf loss reduces the area available for photosynthesis</button>
+    <button class="opt" onclick="mcq(this,4,2)">It produces toxins that directly kill flower buds</button>
+    <button class="opt" onclick="mcq(this,4,3)">It stops pollen production in stamens</button>
+  </div>
+  <div class="feedback" id="fb4"></div>
+</div>
+
+<div class="q-block" id="q5">
+  <div class="q-num">Question 5 of 20</div>
+  <div class="q-text">Which of the following is a correct method of controlling rose black spot?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,5,0)">Watering the roses more frequently</button>
+    <button class="opt" onclick="mcq(this,5,1)">Applying antiviral sprays</button>
+    <button class="opt" onclick="mcq(this,5,2)">Removing and burning affected leaves and applying fungicide</button>
+    <button class="opt" onclick="mcq(this,5,3)">Transplanting the rose to a shadier location</button>
+  </div>
+  <div class="feedback" id="fb5"></div>
+</div>
+
+<div class="q-block" id="q6">
+  <div class="q-num">Question 6 of 20</div>
+  <div class="q-text">What type of pathogen causes malaria?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,6,0)">Fungus</button>
+    <button class="opt" onclick="mcq(this,6,1)">Bacterium</button>
+    <button class="opt" onclick="mcq(this,6,2)">Virus</button>
+    <button class="opt" onclick="mcq(this,6,3)">Protist</button>
+  </div>
+  <div class="feedback" id="fb6"></div>
+</div>
+
+<div class="q-block" id="q7">
+  <div class="q-num">Question 7 of 20</div>
+  <div class="q-text">Which mosquito species acts as the vector for malaria?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,7,0)">Aedes aegypti</button>
+    <button class="opt" onclick="mcq(this,7,1)">Culex pipiens</button>
+    <button class="opt" onclick="mcq(this,7,2)">Anopheles</button>
+    <button class="opt" onclick="mcq(this,7,3)">Mansonia</button>
+  </div>
+  <div class="feedback" id="fb7"></div>
+</div>
+
+<div class="q-block" id="q8">
+  <div class="q-num">Question 8 of 20</div>
+  <div class="q-text">What causes the recurrent fever and shaking symptoms in malaria?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,8,0)">The mosquito venom reacting with white blood cells</button>
+    <button class="opt" onclick="mcq(this,8,1)">Protists bursting out of red blood cells</button>
+    <button class="opt" onclick="mcq(this,8,2)">The immune system attacking liver tissue</button>
+    <button class="opt" onclick="mcq(this,8,3)">Toxins produced by bacteria in the blood</button>
+  </div>
+  <div class="feedback" id="fb8"></div>
+</div>
+
+<div class="q-block" id="q9">
+  <div class="q-num">Question 9 of 20</div>
+  <div class="q-text">In the malaria life cycle, how do protists reproduce inside the human body?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,9,0)">Sexually, forming eggs in the liver</button>
+    <button class="opt" onclick="mcq(this,9,1)">Asexually, multiplying in red blood cells and liver cells</button>
+    <button class="opt" onclick="mcq(this,9,2)">By binary fission only in the lungs</button>
+    <button class="opt" onclick="mcq(this,9,3)">They do not reproduce inside humans</button>
+  </div>
+  <div class="feedback" id="fb9"></div>
+</div>
+
+<div class="q-block" id="q10">
+  <div class="q-num">Question 10 of 20</div>
+  <div class="q-text">Which prevention method can reduce malaria incidence by up to 75% in some areas?</div>
+  <div class="options">
+    <button class="opt" onclick="mcq(this,10,0)">Draining all rivers and lakes</button>
+    <button class="opt" onclick="mcq(this,10,1)">Insecticide-treated mosquito nets</button>
+    <button class="opt" onclick="mcq(this,10,2)">Vaccination with a live protist</button>
+    <button class="opt" onclick="mcq(this,10,3)">Wearing bright-coloured clothing</button>
+  </div>
+  <div class="feedback" id="fb10"></div>
+</div>
+
+<!-- ===== TRUE / FALSE 11–20 ===== -->
+
+<div class="q-block" id="q11">
+  <div class="q-num">Question 11 of 20 — True or False?</div>
+  <div class="q-text">Rose black spot spores can survive over winter on dead leaves and rose stems.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,11,true)">True</button>
+    <button class="opt" onclick="tf(this,11,false)">False</button>
+  </div>
+  <div class="feedback" id="fb11"></div>
+</div>
+
+<div class="q-block" id="q12">
+  <div class="q-num">Question 12 of 20 — True or False?</div>
+  <div class="q-text">Rose black spot can be completely cured by applying fungicide.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,12,false)">True</button>
+    <button class="opt" onclick="tf(this,12,true)">False</button>
+  </div>
+  <div class="feedback" id="fb12"></div>
+</div>
+
+<div class="q-block" id="q13">
+  <div class="q-num">Question 13 of 20 — True or False?</div>
+  <div class="q-text">The malaria protist is an example of a parasite — it lives and feeds on another organism.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,13,true)">True</button>
+    <button class="opt" onclick="tf(this,13,false)">False</button>
+  </div>
+  <div class="feedback" id="fb13"></div>
+</div>
+
+<div class="q-block" id="q14">
+  <div class="q-num">Question 14 of 20 — True or False?</div>
+  <div class="q-text">Only male Anopheles mosquitoes can spread malaria to humans.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,14,false)">True</button>
+    <button class="opt" onclick="tf(this,14,true)">False</button>
+  </div>
+  <div class="feedback" id="fb14"></div>
+</div>
+
+<div class="q-block" id="q15">
+  <div class="q-num">Question 15 of 20 — True or False?</div>
+  <div class="q-text">Mosquitoes breed in standing (still) water, so removing standing water helps prevent malaria.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,15,true)">True</button>
+    <button class="opt" onclick="tf(this,15,false)">False</button>
+  </div>
+  <div class="feedback" id="fb15"></div>
+</div>
+
+<div class="q-block" id="q16">
+  <div class="q-num">Question 16 of 20 — True or False?</div>
+  <div class="q-text">Chemoprophylaxis refers to taking antimalarial drugs before and during travel to a high-risk area.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,16,true)">True</button>
+    <button class="opt" onclick="tf(this,16,false)">False</button>
+  </div>
+  <div class="feedback" id="fb16"></div>
+</div>
+
+<div class="q-block" id="q17">
+  <div class="q-num">Question 17 of 20 — True or False?</div>
+  <div class="q-text">In the malaria life cycle, protists reproduce sexually inside the human body.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,17,false)">True</button>
+    <button class="opt" onclick="tf(this,17,true)">False</button>
+  </div>
+  <div class="feedback" id="fb17"></div>
+</div>
+
+<div class="q-block" id="q18">
+  <div class="q-num">Question 18 of 20 — True or False?</div>
+  <div class="q-text">Protists causing malaria are becoming resistant to some commonly used antimalarial medicines.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,18,true)">True</button>
+    <button class="opt" onclick="tf(this,18,false)">False</button>
+  </div>
+  <div class="feedback" id="fb18"></div>
+</div>
+
+<div class="q-block" id="q19">
+  <div class="q-num">Question 19 of 20 — True or False?</div>
+  <div class="q-text">Rose black spot is an example of an animal disease caused by a protist.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,19,false)">True</button>
+    <button class="opt" onclick="tf(this,19,true)">False</button>
+  </div>
+  <div class="feedback" id="fb19"></div>
+</div>
+
+<div class="q-block" id="q20">
+  <div class="q-num">Question 20 of 20 — True or False?</div>
+  <div class="q-text">A vector is an organism that transmits a pathogen from one host to another without being directly infected itself in a harmful way.</div>
+  <div class="tf-row">
+    <button class="opt" onclick="tf(this,20,true)">True</button>
+    <button class="opt" onclick="tf(this,20,false)">False</button>
+  </div>
+  <div class="feedback" id="fb20"></div>
+</div>
+
+<!-- Result box -->
+<div id="result-box">
+  <div id="result-emoji" style="font-size:56px;margin-bottom:10px"></div>
+  <h2 id="result-title"></h2>
+  <div class="score-line" id="result-score"></div>
+  <div class="mum" id="result-mum"></div>
+  <p id="result-msg"></p>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const TOTAL = 20;
+const SCORE_KEY = 'biology-b5-6-score';
+const DATE_KEY  = 'biology-b5-6-date';
+
+// MCQ answers (0-indexed option index)
+const MCQ_ANS = {
+  1:1, 2:2, 3:2, 4:1, 5:2,
+  6:3, 7:2, 8:1, 9:1, 10:1
+};
+
+// TF answers (true = first button is correct)
+const TF_ANS = {
+  11:true, 12:false, 13:true, 14:false, 15:true,
+  16:true, 17:false, 18:true, 19:false, 20:true
+};
+
+const FEEDBACK = {
+  1:  {ok:"Correct! Rose black spot is caused by a fungus.",                         bad:"Not quite. Rose black spot is a fungal disease, not bacterial, viral, or protist."},
+  2:  {ok:"Correct! Purple/black spots appear, then leaves yellow and drop early.",   bad:"Not quite. The symptoms are purple or black spots, then yellowing and early leaf drop."},
+  3:  {ok:"Correct! Spores are spread by wind and by water splashes.",               bad:"Not quite. Spores travel by wind and by water splashes (e.g. rain moving between leaves)."},
+  4:  {ok:"Correct! Fewer leaves means less photosynthesis, so less energy for flowering.", bad:"Not quite. Leaf loss reduces photosynthesis, leaving the plant with less energy to flower."},
+  5:  {ok:"Correct! Removing/burning affected leaves and using fungicide are the key controls.", bad:"Not quite. The correct methods are removing/burning affected material and applying fungicide."},
+  6:  {ok:"Correct! Malaria is caused by a protist parasite.",                        bad:"Not quite. Malaria is caused by a protist — not a fungus, bacterium, or virus."},
+  7:  {ok:"Correct! The female Anopheles mosquito is the vector for malaria.",        bad:"Not quite. It's the Anopheles mosquito that transmits malaria."},
+  8:  {ok:"Correct! Fever and shaking occur as protists burst out of red blood cells.", bad:"Not quite. The symptoms are caused by protists bursting out of red blood cells."},
+  9:  {ok:"Correct! In humans, protists reproduce asexually in red blood cells and liver cells.", bad:"Not quite. Inside the human host, protists reproduce asexually."},
+  10: {ok:"Correct! Insecticide-treated nets can cut malaria cases by up to 75%.",   bad:"Not quite. Insecticide-treated mosquito nets are the method shown to reduce incidence by up to 75%."},
+  11: {ok:"Correct! Spores can remain dormant over winter on dead leaves and stems.", bad:"Not quite. Spores do survive winter on dead leaves and rose stems."},
+  12: {ok:"Correct! Fungicide can control but not completely cure or prevent black spot.", bad:"Not quite. Fungicide helps but the disease cannot be completely prevented or cured."},
+  13: {ok:"Correct! The malaria protist is a parasite that lives and feeds on its host.", bad:"Not quite. A parasite is an organism that lives and feeds on another — the malaria protist fits this."},
+  14: {ok:"Correct! It is the female Anopheles mosquito that spreads malaria, not the male.", bad:"Not quite. Only female Anopheles mosquitoes bite and spread malaria — males do not."},
+  15: {ok:"Correct! Mosquito larvae develop in still water, so removing it breaks the life cycle.", bad:"Not quite. Mosquitoes do breed in still water — draining it prevents larvae from developing."},
+  16: {ok:"Correct! Chemoprophylaxis means taking preventative antimalarial medication.",  bad:"Not quite. Chemoprophylaxis is indeed the use of drugs to prevent malaria before/during travel."},
+  17: {ok:"Correct! Sexual reproduction happens inside the mosquito, not the human.", bad:"Not quite. Inside humans, protists reproduce asexually — sexual reproduction occurs in the mosquito."},
+  18: {ok:"Correct! Drug resistance is a growing problem for malaria control.",       bad:"Not quite. Resistance to antimalarials is indeed increasing and is a serious concern."},
+  19: {ok:"Correct! Rose black spot is a plant disease caused by a fungus, not an animal disease.", bad:"Not quite. Rose black spot is a fungal plant disease — malaria is the protist animal disease."},
+  20: {ok:"Correct! A vector carries and transmits a pathogen between hosts.",        bad:"Not quite. A vector transmits a pathogen from one host to another (e.g. the mosquito for malaria)."},
+};
+
+let answered = {};
+let score = 0;
+
+// Show previous score
+(function(){
+  const prev = localStorage.getItem(SCORE_KEY);
+  const date = localStorage.getItem(DATE_KEY);
+  if(prev !== null && date){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `🕒 Last attempt: ${prev}/${TOTAL} on ${date}`;
+  }
+})();
+
+function updateProgress(){
+  const pct = (Object.keys(answered).length / TOTAL) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+}
+
+function lockBlock(qNum, chosenBtn, isCorrect){
+  const block = document.getElementById('q'+qNum);
+  block.querySelectorAll('.opt').forEach(b => {
+    b.disabled = true;
+    b.style.opacity = (b === chosenBtn || isCorrect) ? '1' : '0.45';
+  });
+}
+
+function showFeedback(qNum, isCorrect){
+  const fb = document.getElementById('fb'+qNum);
+  fb.textContent = isCorrect ? '✅ ' + FEEDBACK[qNum].ok : '❌ ' + FEEDBACK[qNum].bad;
+  fb.className = 'feedback show ' + (isCorrect ? 'ok' : 'bad');
+}
+
+function mcq(btn, qNum, chosenIdx){
+  if(answered[qNum] !== undefined) return;
+  const correct = MCQ_ANS[qNum];
+  const isCorrect = (chosenIdx === correct);
+  answered[qNum] = isCorrect;
+  if(isCorrect) score++;
+
+  const block = document.getElementById('q'+qNum);
+  const opts = block.querySelectorAll('.opt');
+  opts[correct].classList.add('correct');
+  if(!isCorrect) btn.classList.add('wrong');
+  lockBlock(qNum, btn, false);
+  showFeedback(qNum, isCorrect);
+  updateProgress();
+  if(Object.keys(answered).length === TOTAL) setTimeout(showResult, 600);
+}
+
+function tf(btn, qNum, userVal){
+  if(answered[qNum] !== undefined) return;
+  const correct = TF_ANS[qNum];
+  const isCorrect = (userVal === correct);
+  answered[qNum] = isCorrect;
+  if(isCorrect) score++;
+
+  const block = document.getElementById('q'+qNum);
+  block.querySelectorAll('.opt').forEach(b => {
+    b.disabled = true;
+    b.style.opacity = '0.45';
+  });
+  if(isCorrect){
+    btn.classList.add('correct');
+    btn.style.opacity = '1';
+  } else {
+    btn.classList.add('wrong');
+    btn.style.opacity = '1';
+    // highlight correct button
+    const tfRow = block.querySelector('.tf-row');
+    const btns = tfRow.querySelectorAll('.opt');
+    // first button = true option (userVal=true), second = false option (userVal=false)
+    // we need to highlight the correct one
+    btns.forEach(b2 => {
+      const bVal = b2.getAttribute('onclick').includes(',true)');
+      if(bVal === correct){ b2.classList.add('correct'); b2.style.opacity='1'; }
+    });
+  }
+  showFeedback(qNum, isCorrect);
+  updateProgress();
+  if(Object.keys(answered).length === TOTAL) setTimeout(showResult, 600);
+}
+
+function showResult(){
+  document.getElementById('result-box').style.display = 'block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'start'});
+  const pct = score / TOTAL;
+  let emoji, title, msg;
+  if(pct >= 18/20){
+    emoji='🏆'; title='Outstanding!'; msg='You\'ve nailed fungi and protist diseases. Keep it up!';
+  } else if(pct >= 14/20){
+    emoji='👍'; title='Good effort!'; msg='Solid — review the questions you missed and try again.';
+  } else {
+    emoji='📖'; title='Keep revising!'; msg='Head back to the revision page to strengthen your knowledge.';
+  }
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score').textContent = score + ' / ' + TOTAL;
+  document.getElementById('result-mum').textContent = 'Show this to mum — ' + score + '/' + TOTAL;
+  document.getElementById('result-msg').textContent = msg;
+
+  // save to localStorage
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+}
+
+function resetQuiz(){
+  answered = {};
+  score = 0;
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('prog').style.width = '0%';
+  for(let i=1;i<=TOTAL;i++){
+    const block = document.getElementById('q'+i);
+    block.querySelectorAll('.opt').forEach(b => {
+      b.disabled = false;
+      b.className = 'opt';
+      b.style.opacity = '1';
+    });
+    const fb = document.getElementById('fb'+i);
+    fb.className = 'feedback';
+    fb.textContent = '';
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B6.2 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:820px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid #e8b878;border-radius:16px;padding:12px 16px;margin-bottom:16px;font-size:14px;font-weight:700;color:#7a3a00}
+
+/* PROGRESS */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+.progress-bar{height:100%;background:var(--yellow);border-radius:999px;transition:width .4s ease;width:0%}
+
+/* Q BLOCKS */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+/* MCQ */
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;font-size:15px;font-weight:600;transition:background .15s,border-color .15s;text-align:left;width:100%}
+.opt:hover{background:var(--lime2);border-color:#b0d880}
+.opt.selected{background:var(--blue2);border-color:#80b8d8}
+.opt.correct{background:var(--green2)!important;border-color:#6ab87a!important}
+.opt.wrong{background:var(--red2)!important;border-color:#e08080!important}
+.opt-letter{background:var(--dark);color:white;border-radius:999px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+/* TF */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:13px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:15px;font-weight:900;cursor:pointer;transition:background .15s,border-color .15s}
+.tf-btn:hover{background:var(--lime2);border-color:#b0d880}
+.tf-btn.selected{background:var(--blue2);border-color:#80b8d8}
+.tf-btn.correct{background:var(--green2)!important;border-color:#6ab87a!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:#e08080!important}
+/* Feedback */
+.feedback{display:none;margin-top:12px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #6ab87a}
+.feedback.bad{background:var(--red2);color:#7a0000;border:1.5px solid #e08080}
+
+/* RESULT BOX */
+#result-box{display:none;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box.show{display:block}
+.result-emoji{font-size:56px;margin-bottom:12px}
+.result-score{font-size:42px;font-weight:900;letter-spacing:-2px;color:var(--green)}
+.result-msg{font-size:18px;font-weight:700;margin:10px 0 6px}
+.result-sub{font-size:15px;color:var(--muted);margin-bottom:20px}
+.mum-tag{display:inline-block;background:var(--dark);color:var(--yellow);font-weight:900;border-radius:999px;padding:8px 20px;font-size:15px;margin-bottom:18px}
+#reset-btn{background:var(--green);color:white;border:none;font-weight:900;padding:13px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit;transition:opacity .2s}
+#reset-btn:hover{opacity:.85}
+#submit-btn{display:block;margin:6px auto 0;background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;font-weight:900;padding:15px 40px;border-radius:999px;cursor:pointer;font-size:17px;font-family:inherit;transition:opacity .2s;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+#submit-btn:hover{opacity:.88}
+#submit-btn:disabled{opacity:.4;cursor:default}
+@media(max-width:600px){.wrap{padding:14px}.tf-wrap{flex-direction:column}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B6 Preventing and treating disease</div>
+  <h1>B6.2 Antibiotics &amp; painkillers — Quick Check ⚡</h1>
+  <p>20 questions · Medicines, antibiotics and antibiotic resistance</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b6-2-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<div id="quiz"></div>
+
+<button id="submit-btn" onclick="submitQuiz()">Check my answers ✅</button>
+
+<div id="result-box">
+  <div class="result-emoji" id="res-emoji"></div>
+  <div class="result-score" id="res-score"></div>
+  <div class="result-msg" id="res-msg"></div>
+  <div class="result-sub" id="res-sub"></div>
+  <div class="mum-tag" id="res-mum"></div><br>
+  <button id="reset-btn" onclick="resetQuiz()">Try again 🔄</button>
+</div>
+
+<script>
+const SCORE_KEY='biology-b6-2-qc-score';
+const DATE_KEY='biology-b6-2-qc-date';
+const TOTAL=20;
+
+// Show previous score banner
+(function(){
+  var s=localStorage.getItem(SCORE_KEY);
+  var d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    var b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent='📊 Last attempt: '+s+'/'+TOTAL+' on '+d;
+  }
+})();
+
+const mcq=[
+  {
+    q:"Which of the following best describes what painkillers do?",
+    opts:["Kill bacteria inside the body","Kill viruses inside the body","Relieve symptoms without killing pathogens","Prevent pathogens entering the body"],
+    ans:2
+  },
+  {
+    q:"Penicillin is an example of which type of drug?",
+    opts:["Painkiller","Antiseptic","Disinfectant","Antibiotic"],
+    ans:3
+  },
+  {
+    q:"Why can antibiotics NOT be used to treat viral infections?",
+    opts:["Viruses are too large for antibiotics to reach","Viruses lack the cell structures that antibiotics target","Antibiotics dissolve before reaching viruses","Viruses produce enzymes that neutralise antibiotics"],
+    ans:1
+  },
+  {
+    q:"Antiseptics and disinfectants are NOT used inside the body because:",
+    opts:["They are too expensive to produce","They only work on bacteria, not viruses","They would poison and kill human cells","They react with stomach acid and become inactive"],
+    ans:2
+  },
+  {
+    q:"Antibiotics work by damaging which specific structure found in bacteria but NOT in human cells?",
+    opts:["Cell membrane","Cell wall","Nucleus","Mitochondria"],
+    ans:1
+  },
+  {
+    q:"When did antibiotics first become widely available, leading to a dramatic fall in deaths from bacterial infections?",
+    opts:["1910s","1920s","1940s","1960s"],
+    ans:2
+  },
+  {
+    q:"What is maternal septicaemia?",
+    opts:["A viral disease affecting newborn babies","A bacterial infection that can kill mothers after childbirth","A side effect of taking too many painkillers","A form of antibiotic resistance"],
+    ans:1
+  },
+  {
+    q:"Which of the following is the correct definition of antibiotic resistance?",
+    opts:["The human immune system becoming resistant to antibiotics","Bacteria evolving so that antibiotics no longer kill them","Viruses becoming more difficult to treat with antiviral drugs","Patients refusing to take their prescribed antibiotics"],
+    ans:1
+  },
+  {
+    q:"Why is it important to use the specific antibiotic recommended for a particular bacterium?",
+    opts:["To reduce cost to the NHS","Using the wrong one is ineffective and contributes to resistance","Specific antibiotics have fewer side effects","Only specific antibiotics can cross the blood–brain barrier"],
+    ans:1
+  },
+  {
+    q:"Which statement correctly distinguishes antibiotics from antibodies?",
+    opts:["Antibiotics are made by white blood cells; antibodies are drugs","Antibiotics are drugs that kill bacteria; antibodies are proteins made by white blood cells to fight pathogens","Antibiotics kill viruses; antibodies kill bacteria","Both are drugs used to treat bacterial infections"],
+    ans:1
+  }
+];
+
+const tf=[
+  {q:"Painkillers such as paracetamol kill the pathogen causing an infection.",ans:false,fb:"Painkillers only relieve symptoms — they have no effect on pathogens."},
+  {q:"Antibiotics can be used to cure both bacterial and viral diseases.",ans:false,fb:"Antibiotics only kill bacteria. They have no effect on viruses."},
+  {q:"Antiseptics are safe to use inside the human body to kill pathogens.",ans:false,fb:"Antiseptics are too toxic to use inside the body — they would kill your own cells."},
+  {q:"Viruses reproduce inside the host's own cells, making antiviral drugs difficult to develop without harming the host.",ans:true,fb:"Correct. Targeting viruses risks damaging the host cells they live in."},
+  {q:"The availability of antibiotics in the 1940s caused a sharp fall in deaths from bacterial diseases such as maternal septicaemia.",ans:true,fb:"Correct. The historical data on maternal septicaemia clearly shows this drop."},
+  {q:"Some strains of bacteria are now resistant to all known antibiotics.",ans:true,fb:"Correct. This is one of the greatest threats in modern medicine."},
+  {q:"Broad-spectrum antibiotics can be used to treat any pathogen, including viruses.",ans:false,fb:"Broad-spectrum means effective against many types of bacteria — not viruses."},
+  {q:"If antibiotics had been available before the 1940s, fewer people would have died from bacterial infections.",ans:true,fb:"Correct. Historical data supports this conclusion."},
+  {q:"The bacterium responsible for an infection does not need to be identified before prescribing an antibiotic.",ans:false,fb:"Identifying the bacterium is important so the correct, specific antibiotic can be prescribed."},
+  {q:"Antibiotic resistance develops because bacteria can evolve, and resistant strains survive and reproduce.",ans:true,fb:"Correct. This is natural selection — resistant bacteria are not killed and pass on their genes."}
+];
+
+// Build quiz
+const container=document.getElementById('quiz');
+let answered=new Array(TOTAL).fill(null);
+
+function buildMCQ(q,i){
+  const block=document.createElement('div');
+  block.className='q-block';
+  block.id='q'+i;
+  const letters=['A','B','C','D'];
+  block.innerHTML=`<div class="q-num">Question ${i+1} of ${TOTAL}</div>
+<div class="q-text">${q.q}</div>
+<div class="options" id="opts${i}">
+${q.opts.map((o,j)=>`<button class="opt" onclick="selectMCQ(${i},${j})" id="opt${i}_${j}">
+  <span class="opt-letter">${letters[j]}</span>${o}
+</button>`).join('')}
+</div>
+<div class="feedback" id="fb${i}"></div>`;
+  return block;
+}
+
+function buildTF(q,i){
+  const block=document.createElement('div');
+  block.className='q-block';
+  block.id='q'+i;
+  block.innerHTML=`<div class="q-num">Question ${i+1} of ${TOTAL}</div>
+<div class="q-text">${q.q}</div>
+<div class="tf-wrap">
+  <button class="tf-btn" onclick="selectTF(${i},true)" id="tf${i}_true">✅ True</button>
+  <button class="tf-btn" onclick="selectTF(${i},false)" id="tf${i}_false">❌ False</button>
+</div>
+<div class="feedback" id="fb${i}"></div>`;
+  return block;
+}
+
+mcq.forEach((q,i)=>container.appendChild(buildMCQ(q,i)));
+tf.forEach((q,i)=>container.appendChild(buildTF(q,i+10)));
+
+function selectMCQ(qi,oi){
+  if(answered[qi]!==null) return;
+  answered[qi]=oi;
+  updateProgress();
+  ['A','B','C','D'].forEach((_,j)=>document.getElementById('opt'+qi+'_'+j).classList.remove('selected'));
+  document.getElementById('opt'+qi+'_'+oi).classList.add('selected');
+}
+function selectTF(qi,val){
+  if(answered[qi]!==null) return;
+  answered[qi]=val;
+  updateProgress();
+  document.getElementById('tf'+qi+'_true').classList.remove('selected');
+  document.getElementById('tf'+qi+'_false').classList.remove('selected');
+  document.getElementById('tf'+qi+'_'+val).classList.add('selected');
+}
+
+function updateProgress(){
+  const done=answered.filter(a=>a!==null).length;
+  document.getElementById('prog').style.width=(done/TOTAL*100)+'%';
+}
+
+function submitQuiz(){
+  // Lock all
+  document.querySelectorAll('.opt,.tf-btn').forEach(b=>b.style.pointerEvents='none');
+  let score=0;
+  // Mark MCQ
+  mcq.forEach((q,i)=>{
+    const userAns=answered[i];
+    const fb=document.getElementById('fb'+i);
+    for(let j=0;j<q.opts.length;j++){
+      const btn=document.getElementById('opt'+i+'_'+j);
+      if(j===q.ans) btn.classList.add('correct');
+      else if(j===userAns) btn.classList.add('wrong');
+    }
+    if(userAns===q.ans){score++;fb.textContent='✅ Correct!';fb.className='feedback show ok';}
+    else if(userAns===null){fb.textContent='⚠️ Not answered. Correct answer: '+String.fromCharCode(65+q.ans);fb.className='feedback show bad';}
+    else{fb.textContent='❌ Incorrect. Correct answer: '+String.fromCharCode(65+q.ans);fb.className='feedback show bad';}
+  });
+  // Mark TF
+  tf.forEach((q,i)=>{
+    const qi=i+10;
+    const userAns=answered[qi];
+    const fb=document.getElementById('fb'+qi);
+    const tBtn=document.getElementById('tf'+qi+'_true');
+    const fBtn=document.getElementById('tf'+qi+'_false');
+    if(q.ans===true) tBtn.classList.add('correct'); else fBtn.classList.add('correct');
+    if(userAns===q.ans){score++;fb.innerHTML='✅ Correct! '+q.fb;fb.className='feedback show ok';}
+    else if(userAns===null){fb.innerHTML='⚠️ Not answered. Correct: '+(q.ans?'True':'False')+'. '+q.fb;fb.className='feedback show bad';}
+    else{fb.innerHTML='❌ Incorrect. Correct: '+(q.ans?'True':'False')+'. '+q.fb;fb.className='feedback show bad';}
+  });
+
+  // Save
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,today);
+
+  // Show result
+  document.getElementById('submit-btn').style.display='none';
+  const box=document.getElementById('result-box');
+  box.classList.add('show');
+  document.getElementById('res-score').textContent=score+'/'+TOTAL;
+  let emoji,msg,sub;
+  if(score>=18){emoji='🏆';msg='Outstanding!';sub='You really know your antibiotics and painkillers.';}
+  else if(score>=14){emoji='👍';msg='Good effort!';sub='Solid understanding — review any questions you missed.';}
+  else{emoji='📖';msg='Keep revising!';sub='Go back to the revision sheet and try again.';}
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-msg').textContent=msg;
+  document.getElementById('res-sub').textContent=sub;
+  document.getElementById('res-mum').textContent='Show this to mum — '+score+'/'+TOTAL;
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  answered=new Array(TOTAL).fill(null);
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('result-box').classList.remove('show');
+  document.getElementById('submit-btn').style.display='block';
+  document.getElementById('quiz').innerHTML='';
+  mcq.forEach((q,i)=>container.appendChild(buildMCQ(q,i)));
+  tf.forEach((q,i)=>container.appendChild(buildTF(q,i+10)));
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Refresh banner
+  var s=localStorage.getItem(SCORE_KEY);
+  var d=localStorage.getItem(DATE_KEY);
+  var b=document.getElementById('prev-banner');
+  if(s!==null&&d){b.style.display='block';b.textContent='📊 Last attempt: '+s+'/'+TOTAL+' on '+d;}
+}
+</script>
+</div>
+</body>
+</html>

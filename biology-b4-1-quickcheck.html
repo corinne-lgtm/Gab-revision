@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check – B4.1 The blood</title>
+<style>
+:root{
+  --bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;
+  --green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;
+  --blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;
+  --purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;
+  --red:#c0392b;--red2:#fde8e6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),
+             radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),
+             var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  line-height:1.4;
+  min-height:100vh;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#1a2e1a,#3a7d44);
+  color:white;border-radius:30px;padding:30px;
+  margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18);
+}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;letter-spacing:-1px;margin-bottom:8px}
+.hero p{font-size:17px;color:rgba(255,255,255,.8);max-width:780px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PREVIOUS SCORE BANNER */
+#prev-banner{
+  display:none;
+  background:var(--orange2);border:2px solid var(--orange);
+  border-radius:18px;padding:14px 18px;margin-bottom:18px;
+  color:var(--orange);font-weight:700;font-size:15px;
+}
+
+/* PROGRESS */
+#progress-bar-wrap{background:var(--line);border-radius:999px;height:8px;margin-bottom:20px;overflow:hidden;display:none}
+#progress-bar{height:8px;background:var(--yellow);border-radius:999px;width:0%;transition:width .4s}
+#progress-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:none}
+
+/* QUESTION CARD */
+.q-card{
+  background:rgba(255,255,255,.85);border:2px solid var(--line);
+  border-radius:28px;padding:24px;margin-bottom:20px;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+  animation:fadeUp .35s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.q-type{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.35}
+
+/* MCQ OPTIONS */
+.options{display:grid;gap:10px}
+.opt-btn{
+  width:100%;text-align:left;background:var(--paper);
+  border:2px solid var(--line);border-radius:14px;
+  padding:11px 16px;font-size:15px;font-family:inherit;
+  cursor:pointer;transition:background .15s,border-color .15s;
+  color:var(--ink);font-weight:500;
+}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt-btn.correct{background:var(--green2)!important;border-color:var(--green)!important;font-weight:700}
+.opt-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.opt-btn:disabled{cursor:default}
+
+/* TRUE/FALSE */
+.tf-row{display:flex;gap:12px}
+.tf-btn{
+  flex:1;background:var(--paper);border:2px solid var(--line);
+  border-radius:14px;padding:12px 0;font-size:15px;font-weight:700;
+  font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s;
+  color:var(--ink);
+}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2)!important;border-color:var(--green)!important}
+.tf-btn.wrong{background:var(--red2)!important;border-color:var(--red)!important}
+.tf-btn:disabled{cursor:default}
+
+/* FEEDBACK */
+.feedback{
+  margin-top:12px;padding:10px 14px;border-radius:12px;
+  font-size:14px;font-weight:600;display:none;
+}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:1.5px solid #3a7d44}
+.feedback.wrong{background:var(--red2);color:#7a1a14;border:1.5px solid #c0392b}
+
+/* NEXT BUTTON */
+.next-btn{
+  display:none;margin-top:14px;
+  background:var(--yellow);color:var(--ink);font-weight:900;
+  border:none;border-radius:999px;padding:11px 26px;
+  font-size:15px;font-family:inherit;cursor:pointer;
+  transition:opacity .15s;
+}
+.next-btn:hover{opacity:.85}
+
+/* RESULT */
+#result{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.07)}
+#result-emoji{font-size:56px;margin-bottom:10px}
+#result-title{font-size:28px;font-weight:900;margin-bottom:6px}
+#result-score{font-size:48px;font-weight:900;color:var(--green);margin:10px 0}
+#result-msg{font-size:17px;color:var(--muted);margin-bottom:20px;max-width:520px;margin-left:auto;margin-right:auto}
+#result-mum{
+  background:var(--dark);color:white;border-radius:18px;
+  padding:16px 24px;font-size:18px;font-weight:900;margin-bottom:20px;display:inline-block;
+}
+.try-again-btn{
+  background:var(--yellow);color:var(--ink);font-weight:900;border:none;
+  border-radius:999px;padding:13px 30px;font-size:16px;font-family:inherit;cursor:pointer;
+}
+.try-again-btn:hover{opacity:.85}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>⚡ Quick Check — B4.1 The blood</h1>
+  <p>20 questions on plasma, red blood cells, white blood cells, platelets and blood clotting.</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b4-1-revision.html">📖 Revision notes</a>
+  </div>
+</section>
+
+<!-- PREVIOUS SCORE BANNER -->
+<div id="prev-banner"></div>
+
+<!-- PROGRESS -->
+<div id="progress-label"></div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<!-- QUIZ CONTAINER -->
+<div id="quiz-container"></div>
+
+<!-- RESULT -->
+<div id="result">
+  <div id="result-emoji"></div>
+  <div id="result-title"></div>
+  <div id="result-score"></div>
+  <div id="result-msg"></div>
+  <div id="result-mum"></div><br>
+  <button class="try-again-btn" onclick="restartQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const SCORE_KEY = 'biology-b4-1-score';
+const DATE_KEY  = 'biology-b4-1-score-date';
+const TOTAL = 20;
+
+/* ── QUESTIONS ─────────────────────────────────────────── */
+const questions = [
+
+  /* MCQ 1–10 */
+  {
+    type:'mcq',
+    q:'What percentage of blood is made up of plasma?',
+    opts:['About 44%','About 55%','About 70%','About 30%'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which component of blood carries oxygen from the lungs to the body\'s cells?',
+    opts:['Plasma','Platelets','Red blood cells','White blood cells'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What is the name of the red pigment inside red blood cells that binds to oxygen?',
+    opts:['Fibrin','Haemoglobin','Oxyhaemoglobin','Lymphocyte'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which adaptation of red blood cells gives them a greater surface area to volume ratio for faster diffusion of oxygen?',
+    opts:['They have no nucleus','They are packed with haemoglobin','Their biconcave disc shape','Their small size'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'Where is urea transported in the blood — and where is it taken to?',
+    opts:['From kidneys to the liver','From liver to the kidneys','From small intestine to cells','From lungs to muscles'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which type of white blood cell engulfs and digests invading bacteria?',
+    opts:['Lymphocyte','Platelet','Phagocyte','Fibrinogen'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What do lymphocytes produce to help fight infection?',
+    opts:['Haemoglobin','Fibrin','Antibodies','Platelets'],
+    ans:2
+  },
+  {
+    type:'mcq',
+    q:'What is the correct name for the compound formed when haemoglobin binds to oxygen?',
+    opts:['Fibrinogen','Oxyhaemoglobin','Antitoxin','Phagocyte'],
+    ans:1
+  },
+  {
+    type:'mcq',
+    q:'Which substance is converted into fibrin during blood clotting?',
+    opts:['Haemoglobin','Oxyhaemoglobin','Plasma','Fibrinogen'],
+    ans:3
+  },
+  {
+    type:'mcq',
+    q:'What is the colour of plasma?',
+    opts:['Red','Colourless','Yellow','White'],
+    ans:2
+  },
+
+  /* TF 11–20 */
+  {
+    type:'tf',
+    q:'Red blood cells have a nucleus, which allows them to produce more haemoglobin.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'Platelets are small fragments of cells, not whole cells, and they have no nucleus.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'White blood cells are more numerous in the blood than red blood cells.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'Fibrin forms a network of protein fibres that traps red blood cells to form a clot.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Plasma carries digested food molecules from the small intestine to body cells.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'White blood cells defend the body against microorganisms and are part of the immune system.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Blood clotting is triggered by red blood cells responding to a wound.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'The biconcave disc shape of red blood cells increases their surface area to volume ratio.',
+    ans:true
+  },
+  {
+    type:'tf',
+    q:'Plasma transports carbon dioxide from the lungs back to body cells.',
+    ans:false
+  },
+  {
+    type:'tf',
+    q:'Some white blood cells produce antitoxins to neutralise poisons made by microorganisms.',
+    ans:true
+  }
+];
+
+/* ── STATE ─────────────────────────────────────────────── */
+let current  = 0;
+let score    = 0;
+let answered = false;
+
+/* ── INIT ──────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  showPrevScore();
+  renderQuestion();
+});
+
+function showPrevScore(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.innerHTML = `📊 Your last score: <strong>${s}/${TOTAL}</strong>${d ? ' — '+d : ''}`;
+  }
+}
+
+/* ── RENDER ────────────────────────────────────────────── */
+function renderQuestion(){
+  const container = document.getElementById('quiz-container');
+  const result    = document.getElementById('result');
+  result.style.display = 'none';
+
+  if(current >= TOTAL){
+    showResult();
+    container.innerHTML = '';
+    return;
+  }
+
+  const pLabel = document.getElementById('progress-label');
+  const pWrap  = document.getElementById('progress-bar-wrap');
+  const pBar   = document.getElementById('progress-bar');
+  pLabel.style.display = 'block';
+  pWrap.style.display  = 'block';
+  pLabel.textContent   = `Question ${current + 1} of ${TOTAL}`;
+  pBar.style.width     = `${(current / TOTAL) * 100}%`;
+
+  const q = questions[current];
+  answered = false;
+
+  if(q.type === 'mcq'){
+    container.innerHTML = buildMCQ(q, current);
+  } else {
+    container.innerHTML = buildTF(q, current);
+  }
+}
+
+function buildMCQ(q, idx){
+  const letters = ['A','B','C','D'];
+  const optsHTML = q.opts.map((o,i) =>
+    `<button class="opt-btn" onclick="checkMCQ(${i},${idx})">${letters[i]}. ${o}</button>`
+  ).join('');
+  return `
+  <div class="q-card">
+    <div class="q-type">Multiple choice · Question ${idx+1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">${optsHTML}</div>
+    <div class="feedback" id="fb-${idx}"></div>
+    <button class="next-btn" id="next-${idx}" onclick="nextQ()">Next →</button>
+  </div>`;
+}
+
+function buildTF(q, idx){
+  return `
+  <div class="q-card">
+    <div class="q-type">True / False · Question ${idx+1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="checkTF(true,${idx})">✅ True</button>
+      <button class="tf-btn" onclick="checkTF(false,${idx})">❌ False</button>
+    </div>
+    <div class="feedback" id="fb-${idx}"></div>
+    <button class="next-btn" id="next-${idx}" onclick="nextQ()">Next →</button>
+  </div>`;
+}
+
+/* ── CHECK MCQ ─────────────────────────────────────────── */
+function checkMCQ(chosen, idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[idx];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${idx}`);
+  if(chosen === q.ans){
+    score++;
+    btns[chosen].classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✓ Correct!';
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `✗ Incorrect. The correct answer is: ${q.opts[q.ans]}`;
+  }
+  fb.style.display = 'block';
+  document.getElementById(`next-${idx}`).style.display = 'inline-block';
+}
+
+/* ── CHECK TF ──────────────────────────────────────────── */
+function checkTF(chosen, idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[idx];
+  const btns = document.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const chosenBtn = chosen ? btns[0] : btns[1];
+  const fb = document.getElementById(`fb-${idx}`);
+  if(chosen === q.ans){
+    score++;
+    chosenBtn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✓ Correct!';
+  } else {
+    chosenBtn.classList.add('wrong');
+    const correctBtn = q.ans ? btns[0] : btns[1];
+    correctBtn.classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `✗ Incorrect. The correct answer is: ${q.ans ? 'True' : 'False'}`;
+  }
+  fb.style.display = 'block';
+  document.getElementById(`next-${idx}`).style.display = 'inline-block';
+}
+
+/* ── NEXT ──────────────────────────────────────────────── */
+function nextQ(){
+  current++;
+  renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── RESULT ────────────────────────────────────────────── */
+function showResult(){
+  document.getElementById('progress-label').style.display = 'none';
+  document.getElementById('progress-bar-wrap').style.display = 'none';
+  document.getElementById('prev-banner').style.display = 'none';
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, dateStr);
+
+  let emoji, title, msg;
+  if(score >= 18){
+    emoji = '🏆'; title = 'Excellent work!';
+    msg = 'You really know your blood! That\'s a top-tier score — keep it up.';
+  } else if(score >= 14){
+    emoji = '👍'; title = 'Good effort!';
+    msg = 'Solid score — but there\'s still a bit of room to sharpen up. Go back and check any questions you got wrong.';
+  } else {
+    emoji = '📖'; title = 'Time to revise!';
+    msg = 'Don\'t worry — head back to the revision notes and give this topic another read through.';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score').textContent = `${score} / ${TOTAL}`;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-mum').textContent = `Show this to mum — ${score}/${TOTAL} ${emoji}`;
+
+  document.getElementById('result').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── RESTART ───────────────────────────────────────────── */
+function restartQuiz(){
+  current  = 0;
+  score    = 0;
+  answered = false;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('prev-banner').style.display = 'none';
+  renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

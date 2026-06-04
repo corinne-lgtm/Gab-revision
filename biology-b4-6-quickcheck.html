@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.6 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:28px 30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:12px;margin-bottom:8px}
+h1{font-size:clamp(22px,4vw,40px);line-height:1.05;letter-spacing:-1px}
+.hero p{font-size:15px;color:rgba(255,255,255,.8);margin-top:6px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:8px 14px;border-radius:999px;font-size:13px}
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 16px;margin-bottom:18px;font-size:14px;font-weight:700;color:#7a3a00}
+/* PROGRESS */
+.progress-wrap{height:10px;background:var(--line);border-radius:999px;margin-bottom:20px;overflow:hidden}
+#progress-bar{height:100%;width:0%;background:var(--yellow);border-radius:999px;transition:width .35s}
+/* Q BLOCKS */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px}
+/* MCQ options */
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:10px 14px;cursor:pointer;font-size:14px;font-weight:600;text-align:left;transition:background .15s,border-color .15s;width:100%}
+.opt:hover:not(:disabled){background:var(--lime2);border-color:#a8cf68}
+.opt.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#7a0f0a}
+.opt:disabled{cursor:default}
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-btn{flex:1;padding:11px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-weight:900;font-size:15px;cursor:pointer;transition:background .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:#a8cf68}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a0f0a}
+.tf-btn:disabled{cursor:default}
+/* FEEDBACK */
+.feedback{margin-top:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid var(--green)}
+.feedback.bad{background:var(--red2);color:#7a0f0a;border:1.5px solid var(--red)}
+/* RESULT BOX */
+#result{display:none;background:rgba(255,255,255,.9);border:3px solid var(--line);border-radius:28px;padding:28px;text-align:center;margin-top:20px}
+#result .emoji{font-size:56px;margin-bottom:10px}
+#result h2{font-size:28px;margin-bottom:6px}
+#result .score-big{font-size:48px;font-weight:900;color:var(--green);margin:8px 0}
+#result .msg{font-size:16px;margin-bottom:18px;color:var(--muted)}
+#result .mum{font-weight:900;color:var(--dark);font-size:18px;margin-bottom:18px}
+#reset-btn{background:var(--dark);color:white;border:none;padding:14px 30px;border-radius:999px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+#reset-btn:hover{background:#3a7d44}
+@media(max-width:600px){.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.6 Quick Check ⚡</h1>
+  <p>Tissues and organs in plants — 20 questions, do your best!</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b4-6-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div class="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz"></div>
+<div id="result">
+  <div class="emoji" id="r-emoji"></div>
+  <h2 id="r-head"></h2>
+  <div class="score-big" id="r-score"></div>
+  <div class="msg" id="r-msg"></div>
+  <div class="mum" id="r-mum"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY='biology-b4-6-score';
+const DATE_KEY='biology-b4-6-date';
+const TOTAL=20;
+
+// Show previous score banner
+(function(){
+  var prev=localStorage.getItem(SCORE_KEY);
+  var date=localStorage.getItem(DATE_KEY);
+  if(prev!==null){
+    var banner=document.getElementById('prev-banner');
+    banner.style.display='block';
+    banner.textContent='🕐 Last attempt: '+prev+'/'+TOTAL+' — '+date;
+  }
+})();
+
+const MCQ=[
+  {q:"Which tissue is the main site of photosynthesis in a leaf?",opts:["Spongy mesophyll","Epidermal tissue","Palisade mesophyll","Meristem tissue"],ans:2},
+  {q:"What does xylem transport?",opts:["Dissolved sugars downwards","Water and dissolved mineral ions upwards","Oxygen only","Glucose from leaves to roots"],ans:1},
+  {q:"Which tissue secretes a waxy cuticle to waterproof the leaf surface?",opts:["Palisade mesophyll","Spongy mesophyll","Epidermal tissue","Phloem"],ans:2},
+  {q:"Where is meristem tissue found?",opts:["Leaf surface only","Vascular bundles","Tips of roots and shoots","Spongy mesophyll layer"],ans:2},
+  {q:"What is the function of phloem tissue?",opts:["Transport water upwards","Rapid cell division","Transport dissolved sugars up and down the plant","Provide structural support only"],ans:2},
+  {q:"Which adaptation allows the palisade mesophyll to absorb maximum light?",opts:["Large air spaces","Positioned at the top of the leaf, packed with chloroplasts","Thin cell walls","Connection to stomata"],ans:1},
+  {q:"What do guard cells do?",opts:["Carry water up the stem","Open and close stomata","Produce sugars by photosynthesis","Absorb minerals from the soil"],ans:1},
+  {q:"How is xylem adapted for its function?",opts:["Living cells with sieve plates","Thin permeable cell walls","Dead hollow tubes with lignified walls","Cells with many mitochondria"],ans:2},
+  {q:"Which of the following is NOT a plant organ?",opts:["Root","Stem","Vascular bundle","Leaf"],ans:2},
+  {q:"Air spaces in spongy mesophyll tissue allow which process to occur more easily?",opts:["Active transport of minerals","Diffusion of gases (CO₂ and O₂)","Water absorption from soil","Cell division"],ans:1},
+];
+
+const TF=[
+  {q:"Phloem transport is unidirectional — it can only move sugars upwards from the leaves.",ans:false,exp:"Phloem transports sugars in BOTH directions — up and down the plant."},
+  {q:"The upper epidermis of a leaf is thin and transparent so that light can pass through to the palisade cells.",ans:true,exp:"Correct — the transparent epidermis lets light reach the palisade mesophyll beneath."},
+  {q:"Root hair cells are found in the vascular bundles at the centre of the root.",ans:false,exp:"Root hair cells are on the surface of the root, not in the vascular bundles."},
+  {q:"Meristem cells are undifferentiated and can divide to produce all other plant cell types.",ans:true,exp:"Correct — meristem cells divide and then differentiate into all the plant's cell types."},
+  {q:"The waxy cuticle on a leaf increases water loss by making the surface more permeable.",ans:false,exp:"The waxy cuticle REDUCES water loss by waterproofing the leaf surface."},
+  {q:"Xylem and phloem are found together in structures called vascular bundles.",ans:true,exp:"Correct — vascular bundles contain both xylem and phloem throughout the plant."},
+  {q:"Spongy mesophyll cells contain more chloroplasts than palisade mesophyll cells.",ans:false,exp:"Palisade mesophyll is packed with chloroplasts — it is the main site of photosynthesis."},
+  {q:"Roots, stems, and leaves together form a plant organ system for transporting substances.",ans:true,exp:"Correct — this is the plant organ system for transport described in B4.6."},
+  {q:"Stomata are found mainly on the upper surface of leaves to maximise gas exchange.",ans:false,exp:"Stomata are mostly found on the LOWER epidermis of leaves."},
+  {q:"Companion cells in phloem provide energy for the active transport of sugars.",ans:true,exp:"Correct — companion cells have many mitochondria and support the living sieve tube cells."},
+];
+
+let scores=[];
+let answered=0;
+
+function buildQuiz(){
+  const container=document.getElementById('quiz');
+  container.innerHTML='';
+  scores=[];
+  answered=0;
+  updateProgress();
+
+  MCQ.forEach((q,i)=>{
+    const block=document.createElement('div');
+    block.className='q-block';
+    block.id='q'+i;
+    const optsHtml=q.opts.map((o,j)=>`<button class="opt" onclick="answerMCQ(${i},${j})">${o}</button>`).join('');
+    block.innerHTML=`<div class="q-num">Question ${i+1} of ${TOTAL}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts${i}">${optsHtml}</div>
+      <div class="feedback" id="fb${i}"></div>`;
+    container.appendChild(block);
+  });
+
+  TF.forEach((q,i)=>{
+    const idx=MCQ.length+i;
+    const block=document.createElement('div');
+    block.className='q-block';
+    block.id='q'+idx;
+    block.innerHTML=`<div class="q-num">Question ${idx+1} of ${TOTAL}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="answerTF(${i},true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i},false)">❌ False</button>
+      </div>
+      <div class="feedback" id="fbtf${i}"></div>`;
+    container.appendChild(block);
+  });
+}
+
+function answerMCQ(qi,chosen){
+  const correct=MCQ[qi].ans;
+  const opts=document.querySelectorAll(`#opts${qi} .opt`);
+  opts.forEach(b=>b.disabled=true);
+  opts[chosen].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct) opts[correct].classList.add('correct');
+  const fb=document.getElementById('fb'+qi);
+  const ok=chosen===correct;
+  fb.textContent=ok?'✅ Correct!':'❌ The correct answer was: '+MCQ[qi].opts[correct];
+  fb.className='feedback show '+(ok?'ok':'bad');
+  scores[qi]=ok?1:0;
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) showResult();
+}
+
+function answerTF(ti,chosen){
+  const correct=TF[ti].ans;
+  const btns=document.querySelectorAll(`#q${MCQ.length+ti} .tf-btn`);
+  btns.forEach(b=>b.disabled=true);
+  const chosenIdx=chosen?0:1;
+  const correctIdx=correct?0:1;
+  btns[chosenIdx].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct) btns[correctIdx].classList.add('correct');
+  const fb=document.getElementById('fbtf'+ti);
+  const ok=chosen===correct;
+  fb.textContent=ok?'✅ Correct! '+TF[ti].exp:'❌ '+TF[ti].exp;
+  fb.className='feedback show '+(ok?'ok':'bad');
+  scores[MCQ.length+ti]=ok?1:0;
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) showResult();
+}
+
+function updateProgress(){
+  document.getElementById('progress-bar').style.width=(answered/TOTAL*100)+'%';
+}
+
+function showResult(){
+  const total=scores.reduce((a,b)=>a+b,0);
+  localStorage.setItem(SCORE_KEY,total);
+  const now=new Date();
+  localStorage.setItem(DATE_KEY,now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
+
+  const r=document.getElementById('result');
+  r.style.display='block';
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+
+  document.getElementById('r-score').textContent=total+'/'+TOTAL;
+
+  if(total>=18){
+    document.getElementById('r-emoji').textContent='🏆';
+    document.getElementById('r-head').textContent='Outstanding!';
+    document.getElementById('r-msg').textContent='You really know your plant tissues!';
+  } else if(total>=14){
+    document.getElementById('r-emoji').textContent='👍';
+    document.getElementById('r-head').textContent='Good work!';
+    document.getElementById('r-msg').textContent='Solid understanding — review any you got wrong and try again.';
+  } else {
+    document.getElementById('r-emoji').textContent='📖';
+    document.getElementById('r-head').textContent='Keep revising!';
+    document.getElementById('r-msg').textContent='Go back over the revision page, then try again.';
+  }
+  document.getElementById('r-mum').textContent='Show this to mum — '+total+'/'+TOTAL;
+}
+
+function resetQuiz(){
+  document.getElementById('result').style.display='none';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

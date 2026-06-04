@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B7.5 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(20px,4vw,38px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:15px;color:rgba(255,255,255,.8);margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-weight:700;font-size:14px;color:#7a3a00}
+/* progress */
+#progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:18px;overflow:hidden}
+#progress-bar{height:10px;border-radius:999px;background:var(--yellow);width:0%;transition:width .4s}
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:20px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-block .label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-block .question{font-size:16px;font-weight:700;margin-bottom:12px}
+.choices{display:flex;flex-direction:column;gap:8px}
+.choice{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;font-size:14px;font-weight:600;text-align:left;transition:border-color .15s,background .15s;width:100%}
+.choice:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.choice.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.choice.wrong{background:var(--red2);border-color:var(--red);color:#6b1010}
+.choice:disabled{cursor:default}
+/* TF */
+.tf-wrap{display:flex;gap:10px}
+.tf-btn{flex:1;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--paper);font-size:15px;font-weight:900;cursor:pointer;transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#6b1010}
+.tf-btn:disabled{cursor:default}
+/* feedback */
+.feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
+.feedback.correct{background:var(--green2);border:1.5px solid var(--green);color:#1a4d22;display:block}
+.feedback.wrong{background:var(--red2);border:1.5px solid var(--red);color:#6b1010;display:block}
+/* result */
+#result-box{display:none;background:rgba(255,255,255,.9);border:3px solid var(--line);border-radius:28px;padding:28px;text-align:center;margin-top:10px;box-shadow:0 8px 28px rgba(0,0,0,.1)}
+#result-box .emoji{font-size:60px;margin-bottom:10px}
+#result-box h2{font-size:28px;margin:0 0 8px}
+#result-box .score-display{font-size:48px;font-weight:900;color:var(--green);letter-spacing:-2px;margin:8px 0}
+#result-box .msg{font-size:15px;margin-bottom:16px;color:var(--muted)}
+#result-box .mum{font-weight:900;font-size:16px;color:var(--ink);background:var(--yellow);display:inline-block;padding:8px 18px;border-radius:999px;margin-bottom:14px}
+#reset-btn{background:var(--dark);color:white;border:none;font-weight:900;padding:12px 28px;border-radius:999px;cursor:pointer;font-size:15px;font-family:inherit}
+#reset-btn:hover{background:var(--green)}
+@media(max-width:600px){.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B7 Non-communicable diseases</div>
+  <h1>B7.5 Quick Check ⚡</h1>
+  <p>Alcohol &amp; other carcinogens — 20 questions, 10 MCQ + 10 True/False</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b7-5-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-container"></div>
+
+<div id="result-box">
+  <div class="emoji" id="res-emoji"></div>
+  <h2 id="res-title"></h2>
+  <div class="score-display" id="res-score"></div>
+  <div class="msg" id="res-msg"></div>
+  <div class="mum" id="res-mum"></div>
+  <br>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY = 'biology-b7-5-score';
+const DATE_KEY  = 'biology-b7-5-date';
+const TOTAL = 20;
+
+// ── QUESTIONS ────────────────────────────────────────────────────────────────
+const mcq = [
+  {
+    q: "What is the chemical name for the alcohol found in alcoholic drinks?",
+    opts: ["Methanol","Propanol","Ethanol","Butanol"],
+    ans: 2
+  },
+  {
+    q: "Which organ is primarily responsible for breaking down alcohol in the body?",
+    opts: ["Kidney","Pancreas","Liver","Stomach"],
+    ans: 2
+  },
+  {
+    q: "Cirrhosis of the liver means that active liver cells are replaced by:",
+    opts: ["Fat deposits","Scar tissue","Cancer cells","White blood cells"],
+    ans: 1
+  },
+  {
+    q: "What type of cancer are heavy drinkers at greatly increased risk of?",
+    opts: ["Lung cancer","Bowel cancer","Liver cancer","Skin cancer"],
+    ans: 2
+  },
+  {
+    q: "How does alcohol reach an unborn baby?",
+    opts: ["Through breast milk","Via the umbilical vein directly","Across the placenta","Through amniotic fluid"],
+    ans: 2
+  },
+  {
+    q: "The collection of problems caused by drinking during pregnancy is called:",
+    opts: ["Fetal Liver Syndrome","Fetal Alcohol Syndrome","Prenatal Poisoning Disorder","Ethanol Exposure Syndrome"],
+    ans: 1
+  },
+  {
+    q: "UV light from the sun increases the risk of which type of skin cancer?",
+    opts: ["Leukaemia","Melanoma","Lymphoma","Mesothelioma"],
+    ans: 1
+  },
+  {
+    q: "Radon gas is particularly concentrated in areas with a lot of:",
+    opts: ["Limestone","Sandstone","Granite","Clay"],
+    ans: 2
+  },
+  {
+    q: "Ionising radiation causes cancer by damaging:",
+    opts: ["Cell membranes","Ribosomes","Mitochondria","DNA / chromosomes"],
+    ans: 3
+  },
+  {
+    q: "Which nuclear accident (1986) spread ionising radiation across wide areas of Europe?",
+    opts: ["Fukushima, Japan","Three Mile Island, USA","Chernobyl, Ukraine","Windscale, UK"],
+    ans: 2
+  }
+];
+
+const tf = [
+  { q:"Alcohol affects the nervous system by speeding up thought processes and reflexes.", ans:false, explain:"Alcohol SLOWS thought processes, reflexes, and reactions." },
+  { q:"Very large doses of alcohol can lead to unconsciousness, coma, or death.", ans:true, explain:"Correct — very large doses are potentially fatal." },
+  { q:"Long-term heavy drinking can cause the brain to become so damaged that normal brain structures are lost.", ans:true, explain:"Correct — in severe alcoholism the brain can become soft and pulpy." },
+  { q:"Alcohol is NOT classified as a carcinogen.", ans:false, explain:"Alcohol IS a carcinogen — it can directly cause DNA mutations leading to cancer." },
+  { q:"The developing baby has a fully mature liver that can process alcohol passed through the placenta.", ans:false, explain:"The developing baby's liver cannot cope with alcohol — this is why FAS occurs." },
+  { q:"Ionising radiation is more dangerous when radioactive material is taken directly into the body.", ans:true, explain:"Correct — it can then penetrate cells directly from inside." },
+  { q:"Medical X-rays are completely safe because they use non-ionising radiation.", ans:false, explain:"X-rays ARE ionising radiation — doses are kept to the necessary minimum for this reason." },
+  { q:"Radon gas can accumulate inside homes, increasing the risk of lung cancer.", ans:true, explain:"Correct — especially in granite-rich areas like Cornwall and the Pennines." },
+  { q:"Tar in tobacco smoke, alcohol, and ionising radiation are all examples of carcinogens.", ans:true, explain:"Correct — all three cause DNA mutations that can lead to cancer." },
+  { q:"Doctors recommend that pregnant women limit themselves to one unit of alcohol per day.", ans:false, explain:"The advice is not to drink at all during pregnancy, as there is no known safe amount." }
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let answered = 0;
+let score = 0;
+
+// ── PREV SCORE BANNER ────────────────────────────────────────────────────────
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s && d){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `⏱ Last attempt: ${s}/${TOTAL} on ${d}`;
+  }
+})();
+
+// ── BUILD QUIZ ───────────────────────────────────────────────────────────────
+function buildQuiz(){
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  answered = 0; score = 0;
+  updateProgress();
+
+  mcq.forEach((item, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = `q${i}`;
+    block.innerHTML = `
+      <div class="label">Question ${i+1} of ${TOTAL} · Multiple choice</div>
+      <div class="question">${item.q}</div>
+      <div class="choices" id="choices${i}">
+        ${item.opts.map((o,j)=>`<button class="choice" onclick="answerMCQ(${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb${i}"></div>
+    `;
+    container.appendChild(block);
+  });
+
+  tf.forEach((item, i) => {
+    const idx = mcq.length + i;
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = `q${idx}`;
+    block.innerHTML = `
+      <div class="label">Question ${idx+1} of ${TOTAL} · True or False</div>
+      <div class="question">${item.q}</div>
+      <div class="tf-wrap">
+        <button class="tf-btn" onclick="answerTF(${i},true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i},false)">❌ False</button>
+      </div>
+      <div class="feedback" id="tffb${i}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+// ── ANSWER HANDLERS ──────────────────────────────────────────────────────────
+function answerMCQ(qi, chosen){
+  const item = mcq[qi];
+  const buttons = document.querySelectorAll(`#choices${qi} .choice`);
+  buttons.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb${qi}`);
+  if(chosen === item.ans){
+    score++;
+    buttons[chosen].classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = '✓ Correct!';
+  } else {
+    buttons[chosen].classList.add('wrong');
+    buttons[item.ans].classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `✗ The correct answer is: ${item.opts[item.ans]}`;
+  }
+  onAnswered();
+}
+
+function answerTF(i, chosen){
+  const item = tf[i];
+  const idx = mcq.length + i;
+  const wrap = document.querySelector(`#q${idx} .tf-wrap`);
+  const btns = wrap.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`tffb${i}`);
+  const correct = chosen === item.ans;
+  if(correct){
+    score++;
+    btns[chosen ? 0 : 1].classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = `✓ Correct! ${item.explain}`;
+  } else {
+    btns[chosen ? 0 : 1].classList.add('wrong');
+    btns[item.ans ? 0 : 1].classList.add('correct');
+    fb.className = 'feedback wrong';
+    fb.textContent = `✗ ${item.explain}`;
+  }
+  onAnswered();
+}
+
+function onAnswered(){
+  answered++;
+  updateProgress();
+  if(answered === TOTAL) setTimeout(showResult, 500);
+}
+
+function updateProgress(){
+  document.getElementById('progress-bar').style.width = (answered/TOTAL*100)+'%';
+}
+
+// ── RESULT ───────────────────────────────────────────────────────────────────
+function showResult(){
+  document.getElementById('result-box').style.display = 'block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('res-score').textContent = `${score} / ${TOTAL}`;
+
+  let emoji, title, msg;
+  if(score >= 18){
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'Excellent work — you really know your carcinogens and alcohol effects!';
+  } else if(score >= 14){
+    emoji = '👍'; title = 'Good effort!';
+    msg = 'Solid understanding — check back over any questions you missed.';
+  } else {
+    emoji = '📖'; title = 'Keep revising!';
+    msg = 'Head back to the revision page and give it another go.';
+  }
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-mum').textContent = `Show this to mum — ${score}/${TOTAL}`;
+
+  // save to localStorage
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+}
+
+function resetQuiz(){
+  document.getElementById('result-box').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+buildQuiz();
+</script>
+</body>
+</html>

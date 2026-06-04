@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B8.1 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:800px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:700px;margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:18px;font-weight:700;color:#6b3a10;font-size:14px}
+
+/* PROGRESS */
+#progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:10px;border-radius:999px;background:var(--yellow);transition:width .35s ease;width:0%}
+
+/* Q-BLOCKS */
+.q-block{background:rgba(255,255,255,.82);border:2px solid var(--line);border-radius:24px;padding:22px;margin:16px 0;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 15px;cursor:pointer;font-size:15px;text-align:left;font-family:inherit;color:var(--ink);transition:background .15s,border-color .15s}
+.opt:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.opt.correct{background:var(--green2);border-color:var(--green);color:#1a4d22;font-weight:700}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#7a1010;font-weight:700}
+.opt:disabled{cursor:default}
+/* TF */
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border-radius:16px;border:2px solid var(--line);background:var(--paper);font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;color:var(--ink);transition:background .15s,border-color .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:var(--lime)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a1010}
+.tf-btn:disabled{cursor:default}
+/* FEEDBACK */
+.feedback{display:none;margin-top:12px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:1.5px solid var(--green);display:block}
+.feedback.wrong{background:var(--red2);color:#7a1010;border:1.5px solid var(--red);display:block}
+
+/* RESULT */
+#result-box{display:none;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:28px;padding:28px;margin-top:24px;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+#result-box .badge{font-size:60px;margin-bottom:10px}
+#result-box .score-big{font-size:48px;font-weight:900;letter-spacing:-2px}
+#result-box .msg{font-size:18px;margin:8px 0 6px;font-weight:700}
+#result-box .sub{font-size:15px;color:var(--muted)}
+#reset-btn{margin-top:20px;background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;font-weight:900;padding:13px 30px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}body{background:white}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B8 Photosynthesis</div>
+  <h1>B8.1 Quick Check ⚡</h1>
+  <p>20 questions — 10 multiple choice, 10 true or false. How well do you know your photosynthesis?</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b8-1-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-area"></div>
+
+<div id="result-box">
+  <div class="badge" id="res-badge"></div>
+  <div class="score-big" id="res-score"></div>
+  <div class="msg" id="res-msg"></div>
+  <div class="sub" id="res-sub"></div>
+  <br>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'biology-b8-1-score';
+const DATE_KEY  = 'biology-b8-1-date';
+const TOTAL     = 20;
+
+// ── QUESTIONS ────────────────────────────────────────────
+// MCQ: ans = index of correct option (0-based)
+// TF:  ans = true / false
+const questions = [
+  // 10 MCQ
+  {type:'mcq', q:'What is the raw material that enters a leaf through the stomata for photosynthesis?',
+    opts:['Glucose','Oxygen','Carbon dioxide','Nitrogen'], ans:2},
+  {type:'mcq', q:'Which organelle is the site of photosynthesis in plant cells?',
+    opts:['Mitochondrion','Nucleus','Ribosome','Chloroplast'], ans:3},
+  {type:'mcq', q:'What pigment inside the chloroplast absorbs light energy?',
+    opts:['Haemoglobin','Chlorophyll','Melanin','Carotene'], ans:1},
+  {type:'mcq', q:'Which of the following correctly describes photosynthesis in terms of energy transfer?',
+    opts:['Exothermic — releases energy to surroundings','Endothermic — takes in energy from light','Exothermic — releases light as a by-product','Neutral — no net energy change'], ans:1},
+  {type:'mcq', q:'What is the correct balanced symbol equation for photosynthesis?',
+    opts:['C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O','6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂','6CO₂ + 6O₂ → C₆H₁₂O₆ + 6H₂O','C₆H₁₂O₆ + 6H₂O → 6CO₂ + 6O₂'], ans:1},
+  {type:'mcq', q:'Where does a plant obtain the water it needs for photosynthesis?',
+    opts:['From the stomata in the leaves','From the air around the leaf','Absorbed from the soil through the roots','Produced by respiration in the roots'], ans:2},
+  {type:'mcq', q:'Glucose made in photosynthesis can be converted for storage. What insoluble substance is it stored as?',
+    opts:['Glycogen','Cellulose','Starch','Fat'], ans:2},
+  {type:'mcq', q:'Which aquatic plant is commonly used in class experiments to demonstrate photosynthesis by counting oxygen bubbles?',
+    opts:['Water lily','Seaweed','Duckweed','Elodea (Cabomba)'], ans:3},
+  {type:'mcq', q:'What is the by-product of photosynthesis that is released into the air?',
+    opts:['Carbon dioxide','Nitrogen','Water vapour','Oxygen'], ans:3},
+  {type:'mcq', q:'In a leaf, palisade mesophyll cells are found near the top. Why is this an advantage?',
+    opts:['They are closer to the stomata for gas exchange','They receive the most light from the sun','They can store water more efficiently','They are further from the veins'], ans:1},
+
+  // 10 TF
+  {type:'tf', q:'Photosynthesis is an endothermic reaction because energy from light is absorbed and stored in glucose.', ans:true},
+  {type:'tf', q:'Carbon dioxide enters a leaf through the xylem vessels.', ans:false},
+  {type:'tf', q:'The word equation for photosynthesis is: carbon dioxide + water → glucose + oxygen.', ans:true},
+  {type:'tf', q:'Algae absorb carbon dioxide dissolved in the water around them rather than from the air.', ans:true},
+  {type:'tf', q:'Oxygen is the main product of photosynthesis and is immediately used by the plant for growth.', ans:false},
+  {type:'tf', q:'A glowing splint relights in the gas produced by aquatic plants during photosynthesis, confirming it is oxygen.', ans:true},
+  {type:'tf', q:'Guard cells control the opening and closing of stomata to regulate gas exchange.', ans:true},
+  {type:'tf', q:'A leaf kept in the dark for 24 hours will test blue-black with iodine, showing it is full of starch.', ans:false},
+  {type:'tf', q:'The xylem transports water to leaf cells, while the phloem removes glucose products from the leaf.', ans:true},
+  {type:'tf', q:'Chlorophyll is found inside the mitochondria of plant cells.', ans:false},
+];
+
+let answered = 0;
+let score    = 0;
+
+// ── PREV SCORE BANNER ────────────────────────────────────
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null && d){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `🕐 Last attempt: ${s}/${TOTAL} on ${d}`;
+  }
+})();
+
+// ── BUILD QUIZ ───────────────────────────────────────────
+function buildQuiz(){
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+  answered = 0; score = 0;
+  updateProgress();
+
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q'+i;
+
+    const num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = (q.type === 'mcq' ? 'Multiple choice' : 'True or false') + ' · Question '+(i+1);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.q;
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.id = 'fb'+i;
+
+    block.appendChild(num);
+    block.appendChild(text);
+
+    if(q.type === 'mcq'){
+      const opts = document.createElement('div');
+      opts.className = 'options';
+      q.opts.forEach((o, j) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt';
+        btn.textContent = o;
+        btn.onclick = () => answerMCQ(i, j, btn, opts, feedback, q.ans);
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      const row = document.createElement('div');
+      row.className = 'tf-row';
+      ['✅ True','❌ False'].forEach((label, j) => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = label;
+        const val = (j === 0);
+        btn.onclick = () => answerTF(i, val, btn, row, feedback, q.ans);
+        row.appendChild(btn);
+      });
+      block.appendChild(row);
+    }
+
+    block.appendChild(feedback);
+    area.appendChild(block);
+  });
+}
+
+function answerMCQ(qi, chosen, btn, container, feedback, correct){
+  const btns = container.querySelectorAll('.opt');
+  btns.forEach(b => b.disabled = true);
+  if(chosen === correct){
+    btn.classList.add('correct');
+    feedback.className = 'feedback correct';
+    feedback.textContent = '✅ Correct!';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns[correct].classList.add('correct');
+    feedback.className = 'feedback wrong';
+    feedback.textContent = '❌ Not quite — the correct answer is highlighted in green.';
+  }
+  finishQ(qi);
+}
+
+function answerTF(qi, chosen, btn, container, feedback, correct){
+  const btns = container.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  if(chosen === correct){
+    btn.classList.add('correct');
+    feedback.className = 'feedback correct';
+    feedback.textContent = '✅ Correct!';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    // highlight the right one
+    btns[correct ? 0 : 1].classList.add('correct');
+    feedback.className = 'feedback wrong';
+    feedback.textContent = `❌ Not quite — the answer is ${correct ? 'True' : 'False'}.`;
+  }
+  finishQ(qi);
+}
+
+function finishQ(qi){
+  answered++;
+  updateProgress();
+  if(answered === TOTAL) setTimeout(showResult, 500);
+}
+
+function updateProgress(){
+  const pct = (answered / TOTAL) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function showResult(){
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  let badge, msg, sub;
+  if(score >= 18){
+    badge = '🏆'; msg = `Amazing — ${score}/${TOTAL}!`; sub = 'Show this to mum 🌟';
+  } else if(score >= 14){
+    badge = '👍'; msg = `Good effort — ${score}/${TOTAL}`; sub = 'Show this to mum — nearly there!';
+  } else {
+    badge = '📖'; msg = `${score}/${TOTAL} — keep revising`; sub = 'Go back over the revision notes, then try again.';
+  }
+
+  document.getElementById('res-badge').textContent = badge;
+  document.getElementById('res-score').textContent = score + ' / ' + TOTAL;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-sub').textContent = sub;
+
+  // save to localStorage
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+
+  // update banner
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'block';
+  banner.textContent = `🕐 Last attempt: ${score}/${TOTAL} on ${today}`;
+}
+
+function resetQuiz(){
+  document.getElementById('result-box').style.display = 'none';
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

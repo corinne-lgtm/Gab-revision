@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B7.2 Cancer · Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--red:#c0392b;--red2:#fde8e6;--green:#3a7d44;--green2:#d4edda;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:820px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(26px,5vw,50px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:18px;font-weight:700;color:#7a3a00;font-size:15px}
+
+/* Progress */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+.progress-bar{height:10px;border-radius:999px;background:var(--yellow);transition:width .4s ease;width:0%}
+
+/* Q blocks */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 16px;cursor:pointer;font-size:15px;text-align:left;font-family:inherit;color:var(--ink);transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:#7ab648;background:#f0fae8}
+.opt.correct{background:var(--green2)!important;border-color:var(--green)!important;font-weight:700;color:#1a4d22}
+.opt.wrong{background:var(--red2)!important;border-color:var(--red)!important;color:#7a0000}
+.opt:disabled{cursor:default}
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-row .opt{flex:1;text-align:center;font-weight:700;font-size:16px}
+
+/* Feedback */
+.feedback{display:none;margin-top:12px;border-radius:12px;padding:10px 14px;font-size:14px}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #a0d4a8}
+.feedback.bad{background:var(--red2);color:#7a0000;border:1.5px solid #e0a8a0}
+
+/* Result box */
+#result{display:none;background:rgba(255,255,255,.9);border:3px solid var(--green);border-radius:28px;padding:30px;text-align:center;margin-top:10px}
+#result.show{display:block}
+.result-icon{font-size:52px;margin-bottom:8px}
+.result-score{font-size:46px;font-weight:900;letter-spacing:-2px;color:var(--ink)}
+.result-msg{font-size:18px;font-weight:700;margin:10px 0 6px}
+.result-sub{font-size:14px;color:var(--muted);margin-bottom:18px}
+#reset-btn{background:var(--dark);color:white;border:none;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+#reset-btn:hover{background:#2e5a2e}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B7 Non-communicable diseases</div>
+  <h1>B7.2 Cancer ⚡ Quick Check</h1>
+  <p>20 questions — 10 multiple choice, 10 true / false</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b7-2-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<div id="quiz"></div>
+
+<div id="result">
+  <div class="result-icon" id="r-icon"></div>
+  <div class="result-score" id="r-score"></div>
+  <div class="result-msg" id="r-msg"></div>
+  <div class="result-sub" id="r-sub"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY='biology-b7-2-qs';
+const DATE_KEY='biology-b7-2-qd';
+const TOTAL=20;
+
+// ── Questions ──────────────────────────────────────────────
+const mcq=[
+  {q:"What is a tumour?",opts:["A bacterial infection in body tissue","A mass of cells produced by uncontrolled cell division","A type of white blood cell","A blocked lymph node"],ans:1},
+  {q:"Which process do tumour cells lose control of?",opts:["The digestive cycle","Osmosis","The cell cycle","Meiosis"],ans:2},
+  {q:"A benign tumour is best described as one that:",opts:["Spreads through the bloodstream","Stays contained in one place","Always causes death","Invades neighbouring organs"],ans:1},
+  {q:"Which type of tumour is described as cancerous?",opts:["Benign","Cystic","Malignant","Fibrous"],ans:2},
+  {q:"How do cancer cells spread around the body?",opts:["Via the digestive system only","By osmosis through cell membranes","Small clumps enter the bloodstream or lymphatic system","They walk between organs"],ans:2},
+  {q:"What name is given to tumours that form at a new site after cancer has spread?",opts:["Primary tumours","Benign tumours","Tertiary tumours","Secondary tumours"],ans:3},
+  {q:"Which chemical is a well-known carcinogen found in cigarettes?",opts:["Carbon dioxide","Asbestos","Tar","Nitrogen"],ans:2},
+  {q:"Approximately what percentage of human cancers are caused by virus infections?",opts:["5%","15%","35%","50%"],ans:1},
+  {q:"Which virus is routinely vaccinated against in UK teenagers to reduce cervical cancer risk?",opts:["HIV","HPV","HBV","Influenza"],ans:1},
+  {q:"Why do chemotherapy drugs cause hair loss and nausea as side effects?",opts:["They raise body temperature","They only target cancer cells","They affect all rapidly-dividing cells, including hair follicles and stomach lining","They destroy red blood cells only"],ans:2},
+];
+
+const tf=[
+  {q:"Benign tumours can never be life-threatening.",ans:false,explain:"Benign brain tumours are dangerous because there is no space for them to grow into inside the skull."},
+  {q:"Cancer cells divide more rapidly and live longer than normal cells.",ans:true,explain:"This is why they form tumours so quickly and are hard to eliminate."},
+  {q:"UV light from the sun can cause melanomas by disrupting the normal cell cycle.",ans:true,explain:"UV radiation is a carcinogen that can cause mutations in skin cells."},
+  {q:"Radiotherapy uses chemicals to stop cancer cells dividing.",ans:false,explain:"Radiotherapy uses targeted doses of radiation. Chemotherapy uses chemicals."},
+  {q:"Malignant tumours are generally easier to treat than benign tumours.",ans:false,explain:"Malignant tumours are much harder to treat because they spread through the body."},
+  {q:"Asbestos is a carcinogen that can cause mutations leading to tumour formation.",ans:true,explain:"Asbestos fibres are a well-established carcinogen linked to lung cancer and mesothelioma."},
+  {q:"All cancers are directly caused by inherited gene mutations.",ans:false,explain:"Most cancers result from mutations acquired during life (e.g. from carcinogens or radiation). Only some have a clear inherited genetic risk factor."},
+  {q:"Secondary tumours form when cancer cells travel to a new organ and continue dividing uncontrollably.",ans:true,explain:"This process, called metastasis, is what makes malignant cancers so dangerous."},
+  {q:"X-rays are a form of ionising radiation that can cause tumours.",ans:true,explain:"This is why radiographers stand behind protective screens, and X-rays are used sparingly."},
+  {q:"Chemotherapy drugs are becoming more specific to cancer cells, which should reduce side effects.",ans:true,explain:"Targeted therapies are an active area of cancer research."},
+];
+
+// ── State ──────────────────────────────────────────────────
+let answered=0, score=0;
+
+// ── Prev score banner ──────────────────────────────────────
+(function(){
+  const s=localStorage.getItem(SCORE_KEY);
+  const d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    const b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent=`🕐 Last attempt: ${s}/${TOTAL} — ${d}`;
+  }
+})();
+
+// ── Build quiz ─────────────────────────────────────────────
+function buildQuiz(){
+  const el=document.getElementById('quiz');
+  el.innerHTML='';
+  answered=0; score=0;
+  updateProgress();
+
+  mcq.forEach((q,i)=>{
+    el.innerHTML+=`
+    <div class="q-block" id="qb-${i}">
+      <div class="q-num">Question ${i+1} of ${TOTAL} · Multiple choice</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts-${i}">
+        ${q.opts.map((o,j)=>`<button class="opt" onclick="answerMCQ(${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb-${i}"></div>
+    </div>`;
+  });
+
+  tf.forEach((q,i)=>{
+    const gi=i+10;
+    el.innerHTML+=`
+    <div class="q-block" id="qb-${gi}">
+      <div class="q-num">Question ${gi+1} of ${TOTAL} · True or False</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-row" id="opts-${gi}">
+        <button class="opt" onclick="answerTF(${i},true)">✅ True</button>
+        <button class="opt" onclick="answerTF(${i},false)">❌ False</button>
+      </div>
+      <div class="feedback" id="fb-${gi}"></div>
+    </div>`;
+  });
+}
+
+// ── Answer MCQ ─────────────────────────────────────────────
+function answerMCQ(qi,chosen){
+  const correct=mcq[qi].ans;
+  const opts=document.querySelectorAll(`#opts-${qi} .opt`);
+  opts.forEach(b=>b.disabled=true);
+  opts[chosen].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct) opts[correct].classList.add('correct');
+  const fb=document.getElementById(`fb-${qi}`);
+  if(chosen===correct){score++;fb.textContent='✅ Correct!';fb.className='feedback show ok';}
+  else{fb.textContent=`❌ The correct answer was: "${mcq[qi].opts[correct]}"`;fb.className='feedback show bad';}
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) showResult();
+}
+
+// ── Answer TF ──────────────────────────────────────────────
+function answerTF(qi,chosen){
+  const gi=qi+10;
+  const correct=tf[qi].ans;
+  const opts=document.querySelectorAll(`#opts-${gi} .opt`);
+  opts.forEach(b=>b.disabled=true);
+  const chosenIdx=chosen?0:1;
+  const correctIdx=correct?0:1;
+  opts[chosenIdx].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct) opts[correctIdx].classList.add('correct');
+  const fb=document.getElementById(`fb-${gi}`);
+  if(chosen===correct){score++;fb.textContent='✅ Correct! '+tf[qi].explain;fb.className='feedback show ok';}
+  else{fb.textContent=`❌ The answer is ${correct?'True':'False'}. ${tf[qi].explain}`;fb.className='feedback show bad';}
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) showResult();
+}
+
+// ── Progress ───────────────────────────────────────────────
+function updateProgress(){
+  document.getElementById('prog').style.width=(answered/TOTAL*100)+'%';
+}
+
+// ── Result ─────────────────────────────────────────────────
+function showResult(){
+  const r=document.getElementById('result');
+  r.classList.add('show');
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('r-score').textContent=`${score} / ${TOTAL}`;
+
+  let icon,msg,sub;
+  if(score>=18){icon='🏆';msg='Outstanding! Show this to mum — '+score+'/'+TOTAL;sub='You really know your cancer biology!';}
+  else if(score>=14){icon='👍';msg='Good effort! Show this to mum — '+score+'/'+TOTAL;sub='A few gaps to iron out — check the revision sheet.';}
+  else{icon='📖';msg='Keep going — '+score+'/'+TOTAL;sub='Go back to the revision page and try again.';}
+
+  document.getElementById('r-icon').textContent=icon;
+  document.getElementById('r-msg').textContent=msg;
+  document.getElementById('r-sub').textContent=sub;
+
+  // Save to localStorage
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,today);
+}
+
+// ── Reset ──────────────────────────────────────────────────
+function resetQuiz(){
+  document.getElementById('result').classList.remove('show');
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B6.4 Developing drugs · Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:820px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,5vw,48px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:600px;margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 16px;margin-bottom:16px;font-weight:700;font-size:14px;color:#7a3a00}
+
+/* progress */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+#progress-bar{height:100%;width:0%;background:var(--yellow);border-radius:999px;transition:width .4s}
+
+/* q block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.q-num{font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;font-size:15px;font-weight:600;text-align:left;width:100%;transition:border-color .2s,background .2s;font-family:inherit}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt.correct{border-color:var(--green)!important;background:var(--green2)!important}
+.opt.wrong{border-color:var(--red)!important;background:var(--red2)!important}
+.opt:disabled{cursor:default}
+/* TF */
+.tf-wrap{display:flex;gap:10px}
+.tf-wrap .opt{flex:1;text-align:center;font-size:17px;padding:14px}
+/* feedback */
+.feedback{display:none;margin-top:10px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:600}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22}
+.feedback.bad{background:var(--red2);color:#7a1a10}
+
+/* result box */
+#result{display:none;background:rgba(255,255,255,.9);border:3px solid var(--green);border-radius:28px;padding:32px;text-align:center;margin-top:20px}
+#result .trophy{font-size:60px;margin-bottom:12px}
+#result h2{font-size:32px;margin:0 0 8px}
+#result .score-big{font-size:52px;font-weight:900;color:var(--green);line-height:1}
+#result .mum{font-size:15px;font-weight:700;background:var(--yellow);color:var(--dark);border-radius:999px;display:inline-block;padding:7px 18px;margin:14px 0}
+#result p{color:var(--muted);margin:6px 0}
+#reset-btn{margin-top:18px;background:var(--dark);color:white;border:none;font-weight:900;padding:12px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+#reset-btn:hover{background:var(--green)}
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:15px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B6 Preventing and treating disease</div>
+  <h1>B6.4 Developing drugs</h1>
+  <p>20 questions · drug testing, clinical trials &amp; thalidomide</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b6-4-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div class="progress-wrap"><div id="progress-bar"></div></div>
+<div id="quiz-area"></div>
+<div id="result">
+  <div class="trophy" id="res-trophy"></div>
+  <h2 id="res-title"></h2>
+  <div class="score-big" id="res-score"></div>
+  <div class="mum" id="res-mum"></div>
+  <p id="res-msg"></p>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+<script>
+const SCORE_KEY='biology-b6-4-qs';
+const DATE_KEY='biology-b6-4-qd';
+const TOTAL=20;
+
+// ── Questions ────────────────────────────────────────────────
+const MCQ=[
+  {q:"Which THREE properties must a new medicine have before it can be approved?",
+   opts:["Effective, safe, and correct dosage","Cheap, fast-acting, and colourful","Stable, expensive, and easy to make","Effective, expensive, and injectable"],
+   ans:0},
+  {q:"What is the correct order of stages in drug development?",
+   opts:["Preclinical → Clinical Phase 1 → Phase 2 → Phase 3 → Licencing","Phase 1 → Phase 2 → Preclinical → Phase 3 → Licencing","Licencing → Preclinical → Phase 1 → Phase 2 → Phase 3","Phase 3 → Phase 2 → Phase 1 → Preclinical → Licencing"],
+   ans:0},
+  {q:"In preclinical testing, drugs are tested on…",
+   opts:["Cells, tissues, and live animals","Healthy human volunteers","Patients with the disease","Elderly hospital patients only"],
+   ans:0},
+  {q:"What does 'efficacy' mean in the context of drug testing?",
+   opts:["How well the drug works at treating or preventing disease","How poisonous the drug is","How long the drug stays in the body","Whether the drug dissolves in water"],
+   ans:0},
+  {q:"Phase 1 clinical trials use…",
+   opts:["Healthy volunteers given very low doses","Patients with the target disease","Large groups of thousands of patients","Animals in laboratory conditions"],
+   ans:0},
+  {q:"Phase 3 clinical trials are designed to…",
+   opts:["Confirm safety and efficacy on a larger population and find optimum dose","Test the drug on animals for the first time","Give the drug only to healthy volunteers","Decide the retail price of the medicine"],
+   ans:0},
+  {q:"In a double blind trial, who is unaware of who received the real drug?",
+   opts:["Neither the patient nor the doctor","Only the patient","Only the doctor","Only the pharmacist"],
+   ans:0},
+  {q:"Why is a placebo often an existing drug rather than a sugar pill?",
+   opts:["So patients are not deprived of any treatment for their condition","To make the trial cheaper to run","So the placebo tastes the same","To confuse the patients"],
+   ans:0},
+  {q:"What is the purpose of peer review in drug development?",
+   opts:["Other scientists check the results to prevent false claims","To set the price of the drug","To advertise the drug to doctors","To replace clinical trials"],
+   ans:0},
+  {q:"Why did the thalidomide disaster occur?",
+   opts:["It was not adequately tested for safety during pregnancy","It was tested on too many animals","The drug was given only to healthy volunteers","It was tested for too long before release"],
+   ans:0},
+];
+
+const TF=[
+  {q:"A stable drug must be usable under normal conditions and can be stored for some time.",ans:true},
+  {q:"Many chemicals fail during preclinical testing — this is expected in drug development.",ans:true},
+  {q:"Phase 2 trials test the drug on thousands of patients to confirm large-scale safety.",ans:false},
+  {q:"In a double blind trial, the doctor knows who has received the real drug throughout the trial.",ans:false},
+  {q:"Thalidomide caused limb deformities in developing foetuses when taken by pregnant women.",ans:true},
+  {q:"The modern drug development process typically takes up to 12 years to complete.",ans:true},
+  {q:"Licencing a drug means it can be prescribed without any further monitoring.",ans:false},
+  {q:"NICE decides whether a drug offers good value for money and should be prescribed on the NHS.",ans:true},
+  {q:"Florey and Chain's approach of testing penicillin directly on a human volunteer would be acceptable under today's regulations.",ans:false},
+  {q:"A drug that is absorbable must be able to reach its target in the body.",ans:true},
+];
+
+// ── State ─────────────────────────────────────────────────────
+let answered=0, score=0;
+const results=new Array(TOTAL).fill(null);
+
+// ── Prev score banner ─────────────────────────────────────────
+(function(){
+  const ps=localStorage.getItem(SCORE_KEY);
+  const pd=localStorage.getItem(DATE_KEY);
+  if(ps!==null&&pd){
+    const b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent='🕐 Last attempt: '+ps+'/'+TOTAL+' on '+pd;
+  }
+})();
+
+// ── Build quiz ────────────────────────────────────────────────
+function buildQuiz(){
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  MCQ.forEach((item,i)=>{area.appendChild(makeMCQ(item,i));});
+  TF.forEach((item,i)=>{area.appendChild(makeTF(item,i+10));});
+}
+
+function makeMCQ(item,idx){
+  const div=document.createElement('div');
+  div.className='q-block';
+  div.id='q'+idx;
+  div.innerHTML=`<div class="q-num">Question ${idx+1} of ${TOTAL}</div>
+<div class="q-text">${item.q}</div>
+<div class="options">${item.opts.map((o,i)=>`<button class="opt" onclick="answerMCQ(${idx},${i},${item.ans})">${o}</button>`).join('')}</div>
+<div class="feedback" id="fb${idx}"></div>`;
+  return div;
+}
+
+function makeTF(item,idx){
+  const div=document.createElement('div');
+  div.className='q-block';
+  div.id='q'+idx;
+  div.innerHTML=`<div class="q-num">Question ${idx+1} of ${TOTAL}</div>
+<div class="q-text">${item.q}</div>
+<div class="tf-wrap">
+  <button class="opt" onclick="answerTF(${idx},true,${item.ans})">✅ True</button>
+  <button class="opt" onclick="answerTF(${idx},false,${item.ans})">❌ False</button>
+</div>
+<div class="feedback" id="fb${idx}"></div>`;
+  return div;
+}
+
+function answerMCQ(idx,chosen,correct){
+  if(results[idx]!==null)return;
+  const block=document.getElementById('q'+idx);
+  const btns=block.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const right=chosen===correct;
+  btns[chosen].classList.add(right?'correct':'wrong');
+  if(!right)btns[correct].classList.add('correct');
+  recordAnswer(idx,right);
+}
+
+function answerTF(idx,chosen,correct){
+  if(results[idx]!==null)return;
+  const block=document.getElementById('q'+idx);
+  const btns=block.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  const right=chosen===correct;
+  // true btn index 0, false btn index 1
+  const chosenIdx=chosen?0:1;
+  const correctIdx=correct?0:1;
+  btns[chosenIdx].classList.add(right?'correct':'wrong');
+  if(!right)btns[correctIdx].classList.add('correct');
+  recordAnswer(idx,right);
+}
+
+function recordAnswer(idx,right){
+  results[idx]=right;
+  if(right)score++;
+  answered++;
+  const fb=document.getElementById('fb'+idx);
+  fb.className='feedback show '+(right?'ok':'bad');
+  fb.textContent=right?'✅ Correct!':'❌ Incorrect — check your revision notes.';
+  updateProgress();
+  if(answered===TOTAL)setTimeout(showResult,700);
+}
+
+function updateProgress(){
+  document.getElementById('progress-bar').style.width=(answered/TOTAL*100)+'%';
+}
+
+function showResult(){
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+  const trophy=score>=18?'🏆':score>=14?'👍':'📖';
+  const title=score>=18?'Outstanding!':score>=14?'Good work!':'Keep revising';
+  const msg=score>=18?'Excellent understanding of drug development and testing.':score>=14?'Solid effort — revisit any questions you got wrong.':'Go back over the revision notes and try again.';
+  document.getElementById('res-trophy').textContent=trophy;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-score').textContent=score+'/'+TOTAL;
+  document.getElementById('res-mum').textContent='Show this to mum — '+score+'/'+TOTAL;
+  document.getElementById('res-msg').textContent=msg;
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,today);
+}
+
+function resetQuiz(){
+  answered=0;score=0;results.fill(null);
+  document.getElementById('result').style.display='none';
+  document.getElementById('progress-bar').style.width='0%';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</div>
+</body>
+</html>

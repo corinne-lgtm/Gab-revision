@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.9 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:820px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(20px,4vw,38px);line-height:1.1;margin:0;letter-spacing:-1px}
+.hero p{font-size:15px;color:rgba(255,255,255,.8);margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* Prev score banner */
+#prev-banner{background:var(--orange2);border:2px solid #e8b878;border-radius:16px;padding:12px 18px;margin-bottom:18px;font-weight:700;font-size:15px;display:none}
+
+/* Progress bar */
+.progress-wrap{background:rgba(0,0,0,.08);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+.progress-bar{height:10px;background:var(--yellow);border-radius:999px;transition:width .4s ease;width:0%}
+
+/* Question blocks */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;display:none}
+.q-block.active{display:block}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;font-size:15px;font-family:inherit;cursor:pointer;text-align:left;transition:background .15s,border-color .15s;font-weight:600;color:var(--ink)}
+.opt-btn:hover:not(:disabled){background:var(--lime2);border-color:#7ab648}
+.opt-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.opt-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a1010}
+.opt-btn:disabled{cursor:default}
+/* TF */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;font-size:16px;font-weight:900;border:2px solid var(--line);border-radius:14px;background:var(--paper);cursor:pointer;font-family:inherit;color:var(--ink);transition:background .15s}
+.tf-btn:hover:not(:disabled){background:var(--lime2);border-color:#7ab648}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a1010}
+.tf-btn:disabled{cursor:default}
+/* Feedback */
+.feedback{margin-top:14px;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:600;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);border:2px solid var(--green);color:#1a4d22}
+.feedback.bad{background:var(--red2);border:2px solid var(--red);color:#7a1010}
+.next-btn{margin-top:14px;background:var(--dark);color:var(--yellow);border:none;border-radius:999px;padding:11px 24px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;display:none}
+.next-btn.show{display:inline-block}
+
+/* Result box */
+#result-box{background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:28px;text-align:center;display:none;margin-top:10px}
+#result-box.show{display:block}
+.result-emoji{font-size:56px;margin-bottom:10px}
+#result-box h2{font-size:28px;margin:0 0 8px}
+#result-box p{font-size:16px;color:var(--muted);margin:0 0 18px}
+.score-big{font-size:48px;font-weight:900;color:var(--green);margin:8px 0}
+.mum-msg{background:var(--lime2);border:2px dashed #7ab648;border-radius:16px;padding:14px;font-size:16px;font-weight:700;margin:14px 0}
+.reset-btn{background:var(--dark);color:var(--yellow);border:none;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.9 Factors affecting transpiration ⚡ Quick Check</h1>
+  <p>20 questions · 10 multiple choice + 10 true / false</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b4-9-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div class="progress-bar" id="prog-bar"></div></div>
+
+<div id="quiz-area"></div>
+<div id="result-box">
+  <div class="result-emoji" id="res-emoji"></div>
+  <h2 id="res-title"></h2>
+  <div class="score-big" id="res-score"></div>
+  <p id="res-sub"></p>
+  <div class="mum-msg" id="res-mum"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY='biology-b4-9-score';
+const DATE_KEY='biology-b4-9-date';
+const TOTAL=20;
+
+// Show previous score banner
+(function(){
+  var s=localStorage.getItem(SCORE_KEY);
+  var d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    var b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent='🕐 Last attempt: '+s+'/'+TOTAL+' — '+d;
+  }
+})();
+
+const questions=[
+  // MCQ (10) — ans = index (0-based)
+  {type:'mcq',q:'Which of the following conditions increases the rate of transpiration the most?',opts:['Cold, humid, still, dark','Hot, dry, windy, bright','Warm, humid, windy, dark','Cold, dry, still, bright'],ans:1,fb:'Hot, dry, windy and bright conditions all increase the concentration gradient and rate of evaporation, maximising transpiration.'},
+  {type:'mcq',q:'Why does high humidity decrease the rate of transpiration?',opts:['Guard cells close the stomata','Less water vapour in the air outside','Smaller concentration gradient between leaf interior and outside air','More water is absorbed by the roots'],ans:2,fb:'High humidity means more water vapour in the surrounding air, reducing the concentration gradient and so slowing diffusion of water vapour out of the leaf.'},
+  {type:'mcq',q:'A potometer is used to measure…',opts:['The rate of photosynthesis','The rate of water uptake by a plant shoot','The rate of mineral ion absorption','The rate of oxygen production'],ans:1,fb:'A potometer measures the rate of water uptake. Almost all water taken up is lost through transpiration, so this gives a close estimate of the transpiration rate.'},
+  {type:'mcq',q:'What does wind (air movement) do to the concentration gradient at the leaf surface?',opts:['Reduces the gradient by adding water vapour','Maintains a steep gradient by removing water vapour','Has no effect on the gradient','Causes stomata to close'],ans:1,fb:'Wind sweeps away water vapour that has diffused out of the stomata, keeping the concentration of water vapour low outside and maintaining a steep gradient.'},
+  {type:'mcq',q:'Why does increased light intensity increase the rate of transpiration?',opts:['Light heats the water in the xylem directly','More light → more photosynthesis → more stomata open → more water vapour can escape','More light → stomata close to prevent damage','Light converts water to oxygen inside the leaf'],ans:1,fb:'More light drives more photosynthesis, so guard cells open stomata wider to allow CO₂ in — this also allows more water vapour to escape.'},
+  {type:'mcq',q:'Where are most stomata found on a typical leaf?',opts:['Upper epidermis','Palisade mesophyll layer','Lower epidermis','Waxy cuticle'],ans:2,fb:'Most stomata are on the lower epidermis, which is shaded from direct sunlight, helping to reduce the rate of water loss by evaporation.'},
+  {type:'mcq',q:'What is the function of the waxy cuticle on a leaf?',opts:['Absorbs light for photosynthesis','Prevents uncontrolled water loss from the leaf surface','Allows gas exchange across the leaf','Stores water for use in photosynthesis'],ans:1,fb:'The waxy cuticle is waterproof and prevents uncontrolled water loss from the upper leaf surface.'},
+  {type:'mcq',q:'Coating the lower surface of a leaf with petroleum jelly will…',opts:['Have almost no effect on transpiration','Greatly increase transpiration','Greatly reduce transpiration, because most stomata are there','Only reduce transpiration at night'],ans:2,fb:'Most stomata are on the lower epidermis. Blocking them with petroleum jelly greatly reduces the rate of transpiration.'},
+  {type:'mcq',q:'In a potometer, what moves along the scale as the plant transpires?',opts:['A column of xylem sap','A water droplet on the outside of the tube','An air bubble inside the capillary tube','A dye solution'],ans:2,fb:'An air bubble is introduced into the capillary tubing. As the plant takes up water it pulls the air bubble along — the rate of movement equals the rate of water uptake.'},
+  {type:'mcq',q:'Why might a plant close its stomata even though this stops photosynthesis?',opts:['To absorb more mineral ions','To prevent water loss when water is scarce — survival is more important','To increase the rate of respiration','To cool the leaf surface down'],ans:1,fb:'When water is scarce, guard cells close the stomata to prevent further water loss. Although this halts photosynthesis, it prevents the plant from wilting and dying.'},
+
+  // TF (10) — ans = true/false
+  {type:'tf',q:'Transpiration rate increases as temperature increases.',ans:true,fb:'Higher temperature increases the kinetic energy of water molecules, speeding up evaporation and increasing the transpiration rate.'},
+  {type:'tf',q:'High humidity increases the rate of transpiration.',ans:false,fb:'High humidity reduces the concentration gradient between the inside of the leaf and the outside air, slowing transpiration.'},
+  {type:'tf',q:'Wilting reduces the surface area of the leaf exposed to sunlight, which limits further water loss.',ans:true,fb:'When a plant wilts, leaves droop and fold, reducing the area exposed to the sun and so limiting evaporation and further water loss.'},
+  {type:'tf',q:'A potometer measures the rate of photosynthesis directly.',ans:false,fb:'A potometer measures water uptake. Almost all water taken up is lost through transpiration — only a tiny amount is used in photosynthesis.'},
+  {type:'tf',q:'Water lily stomata are on the upper surface of the leaf because the leaves float on water.',ans:true,fb:'Because water lily leaves float, the upper surface is exposed to the air. Having stomata on top allows gas exchange while the lower surface rests on water.'},
+  {type:'tf',q:'Wind decreases the rate of transpiration by cooling the leaf.',ans:false,fb:'Wind increases transpiration by removing water vapour near the stomata, maintaining a steep concentration gradient that speeds up diffusion.'},
+  {type:'tf',q:'Guard cells close stomata when the plant is short of water.',ans:true,fb:'Guard cells detect water shortage and close the stomata to prevent further water loss, even though this also prevents CO₂ entering for photosynthesis.'},
+  {type:'tf',q:'Coating the upper surface of a leaf with petroleum jelly has the same effect as coating the lower surface.',ans:false,fb:'Most stomata are on the lower epidermis. Coating the lower surface greatly reduces transpiration; coating the upper surface has much less effect.'},
+  {type:'tf',q:'Increased light intensity causes stomata to open wider.',ans:true,fb:'More light stimulates more photosynthesis. Guard cells open stomata to allow more CO₂ in, which also allows more water vapour to escape.'},
+  {type:'tf',q:'The waxy cuticle is found mainly on the lower surface of the leaf.',ans:false,fb:'The waxy cuticle is mainly on the upper surface, which receives the most direct sunlight and would otherwise lose the most water.'},
+];
+
+let current=0, score=0, answered=false;
+
+function buildQuestion(i){
+  const qa=document.getElementById('quiz-area');
+  qa.innerHTML='';
+  const q=questions[i];
+  const div=document.createElement('div');
+  div.className='q-block active';
+
+  const num=document.createElement('div');
+  num.className='q-num';
+  num.textContent='Question '+(i+1)+' of '+TOTAL+' · '+(q.type==='mcq'?'Multiple choice':'True / False');
+  div.appendChild(num);
+
+  const qt=document.createElement('div');
+  qt.className='q-text';
+  qt.textContent=q.q;
+  div.appendChild(qt);
+
+  const fb=document.createElement('div');
+  fb.className='feedback';
+
+  const nxt=document.createElement('button');
+  nxt.className='next-btn';
+  nxt.textContent=i===TOTAL-1?'See results →':'Next →';
+  nxt.onclick=()=>advance();
+
+  if(q.type==='mcq'){
+    const opts=document.createElement('div');
+    opts.className='options';
+    q.opts.forEach((o,idx)=>{
+      const b=document.createElement('button');
+      b.className='opt-btn';
+      b.textContent=o;
+      b.onclick=()=>{
+        if(answered)return;
+        answered=true;
+        opts.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(idx===q.ans){score++;b.classList.add('correct');fb.className='feedback ok show';fb.textContent='✅ '+q.fb;}
+        else{b.classList.add('wrong');opts.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');fb.className='feedback bad show';fb.textContent='❌ '+q.fb;}
+        nxt.className='next-btn show';
+      };
+      opts.appendChild(b);
+    });
+    div.appendChild(opts);
+  } else {
+    const tf=document.createElement('div');
+    tf.className='tf-wrap';
+    ['True','False'].forEach(label=>{
+      const b=document.createElement('button');
+      b.className='tf-btn';
+      b.textContent=label;
+      b.onclick=()=>{
+        if(answered)return;
+        answered=true;
+        tf.querySelectorAll('.tf-btn').forEach(x=>x.disabled=true);
+        const chosen=label==='True';
+        if(chosen===q.ans){score++;b.classList.add('correct');fb.className='feedback ok show';fb.textContent='✅ '+q.fb;}
+        else{b.classList.add('wrong');tf.querySelectorAll('.tf-btn').forEach(x=>{if((x.textContent==='True')===q.ans)x.classList.add('correct');});fb.className='feedback bad show';fb.textContent='❌ '+q.fb;}
+        nxt.className='next-btn show';
+      };
+      tf.appendChild(b);
+    });
+    div.appendChild(tf);
+  }
+
+  div.appendChild(fb);
+  div.appendChild(nxt);
+  qa.appendChild(div);
+  updateProgress(i);
+  answered=false;
+}
+
+function updateProgress(i){
+  document.getElementById('prog-bar').style.width=((i/TOTAL)*100)+'%';
+}
+
+function advance(){
+  current++;
+  if(current>=TOTAL){showResult();}
+  else{buildQuestion(current);}
+}
+
+function showResult(){
+  document.getElementById('prog-bar').style.width='100%';
+  document.getElementById('quiz-area').innerHTML='';
+  const rb=document.getElementById('result-box');
+  rb.classList.add('show');
+
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,dateStr);
+
+  document.getElementById('res-score').textContent=score+'/'+TOTAL;
+
+  let emoji,title,sub;
+  if(score>=18){emoji='🏆';title='Outstanding!';sub='You\'ve really nailed the transpiration factors.';}
+  else if(score>=14){emoji='👍';title='Good effort!';sub='Solid understanding — review any mistakes before the exam.';}
+  else{emoji='📖';title='Keep revising!';sub='Go back to the revision page and try again.';}
+
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-sub').textContent=sub;
+  document.getElementById('res-mum').textContent='Show this to mum — '+score+'/'+TOTAL;
+}
+
+function resetQuiz(){
+  current=0;score=0;answered=false;
+  document.getElementById('result-box').classList.remove('show');
+  buildQuestion(0);
+}
+
+buildQuestion(0);
+</script>
+</body>
+</html>

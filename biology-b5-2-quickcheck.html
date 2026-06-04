@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.2 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:820px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,4vw,44px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:16px;padding:12px 18px;margin-bottom:16px;font-weight:700;font-size:15px;color:#7a3a00}
+
+/* progress */
+.prog-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+#prog-bar{height:100%;width:0;background:var(--yellow);border-radius:999px;transition:width .4s}
+
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-block h3{font-size:17px;margin:0 0 14px}
+.q-num{display:inline-block;background:var(--dark);color:var(--yellow);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:900;margin-bottom:8px}
+
+/* options */
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 15px;cursor:pointer;font-size:15px;font-weight:600;transition:border-color .15s,background .15s;text-align:left}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt.correct{background:#d4edda;border-color:#3a7d44;color:#1a4d22}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#7a0f0f}
+.opt:disabled{cursor:default}
+
+/* TF */
+.tf-row{display:flex;gap:12px}
+.tf-row .opt{flex:1;text-align:center}
+
+/* feedback */
+.feedback{margin-top:10px;padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700;display:none}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:2px solid #a8d4b0;display:block}
+.feedback.wrong{background:var(--red2);color:#7a0f0f;border:2px solid #e0a8a0;display:block}
+
+/* result */
+#result-box{display:none;background:rgba(255,255,255,.9);border:3px solid var(--green);border-radius:28px;padding:28px;text-align:center;margin-top:24px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box h2{font-size:clamp(22px,3vw,36px);margin:0 0 8px}
+#result-box .score-big{font-size:clamp(48px,8vw,80px);font-weight:900;line-height:1;color:var(--green)}
+#result-box p{font-size:17px;color:var(--muted);margin:8px 0 18px}
+#mum-msg{font-size:18px;font-weight:900;color:var(--dark);margin:12px 0}
+#reset-btn{background:var(--dark);color:var(--yellow);border:none;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+#reset-btn:hover{background:#2e4d2e}
+
+@media(max-width:600px){.wrap{padding:14px}.tf-row{flex-direction:column}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.2 Pathogens &amp; disease ⚡ Quick Check</h1>
+  <p>20 questions — 10 multiple choice, 10 true/false. Good luck!</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b5-2-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div class="prog-wrap"><div id="prog-bar"></div></div>
+
+<div id="quiz"></div>
+<div id="result-box">
+  <div id="res-emoji" style="font-size:52px;margin-bottom:6px"></div>
+  <h2 id="res-title"></h2>
+  <div class="score-big" id="res-score"></div>
+  <p id="res-sub"></p>
+  <div id="mum-msg"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+<script>
+const SCORE_KEY='biology-b5-2-score';
+const DATE_KEY='biology-b5-2-date';
+const TOTAL=20;
+
+// Show previous score
+(function(){
+  var s=localStorage.getItem(SCORE_KEY);
+  var d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    var b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent='📊 Last attempt: '+s+'/'+TOTAL+' on '+d;
+  }
+})();
+
+const MCQ=[
+  {q:"What is a pathogen?",opts:["A type of white blood cell","A microorganism that causes communicable disease","A chemical produced by the immune system","A beneficial gut bacterium"],ans:1},
+  {q:"Which of the following is NOT a type of pathogen?",opts:["Bacteria","Virus","Protist","Red blood cell"],ans:3},
+  {q:"How do bacteria reproduce?",opts:["By cell lysis","By mitosis","By binary fission","By budding"],ans:2},
+  {q:"How do viruses cause cell damage?",opts:["They produce toxins that dissolve cell walls","They replicate inside host cells and burst out","They block enzyme activity in the nucleus","They release acid into the bloodstream"],ans:1},
+  {q:"Which disease is caused by a protist?",opts:["Tuberculosis","Influenza","Malaria","Athlete's foot"],ans:2},
+  {q:"What are toxins?",opts:["Proteins made by white blood cells","Poisons produced by bacteria that damage body cells","Viruses that attack the nervous system","Enzymes that digest cell membranes"],ans:1},
+  {q:"Which method of spread involves breathing in tiny drops expelled when someone sneezes?",opts:["Direct contact","Vector transmission","Droplet infection","Contaminated water"],ans:2},
+  {q:"Which of these is spread mainly through contaminated water?",opts:["HIV","Measles","Cholera","Tuberculosis"],ans:2},
+  {q:"Why do overcrowded conditions with poor sanitation increase disease spread?",opts:["There is less sunlight, reducing vitamin D","Infectious diseases can spread much more rapidly","People have weaker immune systems","There are more vectors present"],ans:1},
+  {q:"What causes most common symptoms such as high temperature and headaches?",opts:["The pathogen directly heating the blood","Toxins and the body's own immune response","Viruses blocking nerve signals","Bacteria destroying red blood cells"],ans:1}
+];
+
+const TF=[
+  {q:"Viruses are larger than bacteria.",ans:false,explain:"Viruses are even smaller than bacteria — bacteria are already much smaller than animal cells."},
+  {q:"Bacteria can live and reproduce outside of host cells.",ans:true,explain:"Unlike viruses, bacteria can live and reproduce outside of cells."},
+  {q:"Viruses are considered living cells.",ans:false,explain:"Viruses are not cells — they are not considered living organisms in the traditional sense."},
+  {q:"Most bacteria are harmful to humans.",ans:false,explain:"Most bacteria are harmless or beneficial — e.g. gut bacteria, decomposers, used in food production."},
+  {q:"Diseases caused by viruses include flu, HIV, and measles.",ans:true,explain:"All three are well-known viral diseases."},
+  {q:"Fungi are a type of pathogen found mainly in animal diseases.",ans:false,explain:"Fungi are pathogens most commonly associated with plant diseases, though they can also cause human diseases."},
+  {q:"A vector is an organism that carries a pathogen from one host to another.",ans:true,explain:"Vectors (e.g. mosquitoes, animals) carry and transmit pathogens between hosts."},
+  {q:"Symptoms of disease are always caused directly by the pathogen itself.",ans:false,explain:"Many symptoms (fever, headaches) are caused by the body's immune response to the damage and toxins, not the pathogen alone."},
+  {q:"Chlamydia is an example of a disease spread by direct contact.",ans:true,explain:"Chlamydia is a bacterial sexually transmitted infection — spread by direct/sexual contact."},
+  {q:"Tuberculosis can be spread by droplet infection.",ans:true,explain:"TB is spread through the air when an infected person coughs, sneezes or talks — droplet infection."}
+];
+
+let answered=0;
+let score=0;
+
+function buildQuiz(){
+  const container=document.getElementById('quiz');
+  container.innerHTML='';
+  answered=0;score=0;
+  updateProgress();
+
+  MCQ.forEach(function(q,i){
+    var block=document.createElement('div');
+    block.className='q-block';
+    block.id='q'+i;
+    var html='<div class="q-num">Q'+(i+1)+'</div>';
+    html+='<h3>'+q.q+'</h3><div class="opts">';
+    q.opts.forEach(function(o,j){
+      html+='<button class="opt" onclick="answerMCQ('+i+','+j+')">'+o+'</button>';
+    });
+    html+='</div><div class="feedback" id="fb'+i+'"></div>';
+    block.innerHTML=html;
+    container.appendChild(block);
+  });
+
+  TF.forEach(function(q,i){
+    var idx=MCQ.length+i;
+    var block=document.createElement('div');
+    block.className='q-block';
+    block.id='q'+idx;
+    var html='<div class="q-num">Q'+(idx+1)+'</div>';
+    html+='<h3>'+q.q+'</h3>';
+    html+='<div class="tf-row">';
+    html+='<button class="opt" onclick="answerTF('+i+',true)">✅ True</button>';
+    html+='<button class="opt" onclick="answerTF('+i+',false)">❌ False</button>';
+    html+='</div><div class="feedback" id="tffb'+i+'"></div>';
+    block.innerHTML=html;
+    container.appendChild(block);
+  });
+}
+
+function answerMCQ(qi,chosen){
+  var block=document.getElementById('q'+qi);
+  var btns=block.querySelectorAll('.opt');
+  var correct=MCQ[qi].ans;
+  btns.forEach(function(b,j){
+    b.disabled=true;
+    if(j===correct)b.classList.add('correct');
+    else if(j===chosen)b.classList.add('wrong');
+  });
+  var fb=document.getElementById('fb'+qi);
+  if(chosen===correct){
+    score++;
+    fb.className='feedback correct';
+    fb.textContent='✅ Correct!';
+  } else {
+    fb.className='feedback wrong';
+    fb.textContent='❌ Correct answer: '+MCQ[qi].opts[correct];
+  }
+  answered++;
+  updateProgress();
+  if(answered===TOTAL)setTimeout(showResult,600);
+}
+
+function answerTF(qi,chosen){
+  var idx=MCQ.length+qi;
+  var block=document.getElementById('q'+idx);
+  var btns=block.querySelectorAll('.opt');
+  var correct=TF[qi].ans;
+  btns.forEach(function(b){b.disabled=true;});
+  if(chosen===correct){
+    score++;
+    btns[chosen?0:1].classList.add('correct');
+    var fb=document.getElementById('tffb'+qi);
+    fb.className='feedback correct';
+    fb.textContent='✅ Correct! '+TF[qi].explain;
+  } else {
+    btns[chosen?0:1].classList.add('wrong');
+    btns[correct?0:1].classList.add('correct');
+    var fb=document.getElementById('tffb'+qi);
+    fb.className='feedback wrong';
+    fb.textContent='❌ '+TF[qi].explain;
+  }
+  answered++;
+  updateProgress();
+  if(answered===TOTAL)setTimeout(showResult,600);
+}
+
+function updateProgress(){
+  var pct=(answered/TOTAL)*100;
+  document.getElementById('prog-bar').style.width=pct+'%';
+}
+
+function showResult(){
+  document.getElementById('result-box').style.display='block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth'});
+  document.getElementById('res-score').textContent=score+'/'+TOTAL;
+
+  var title,emoji,sub;
+  if(score>=18){
+    emoji='🏆';title='Excellent work!';
+    sub='Outstanding score — you know this topic really well.';
+  } else if(score>=14){
+    emoji='👍';title='Good effort!';
+    sub='Solid understanding — review any questions you got wrong.';
+  } else {
+    emoji='📖';title='Keep practising!';
+    sub='Go back to the revision notes and try again.';
+  }
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-sub').textContent=sub;
+  document.getElementById('mum-msg').textContent='Show this to mum — '+score+'/'+TOTAL;
+
+  // Save to localStorage
+  var today=new Date().toLocaleDateString('en-GB');
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,today);
+}
+
+function resetQuiz(){
+  document.getElementById('result-box').style.display='none';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</div>
+</body>
+</html>

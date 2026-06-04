@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P9.4 Quick Check – Motion Graphs</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d1b2a;
+    --muted: #5a7a99;
+    --paper: #ffffff;
+    --line: #cde5f7;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --navy: #0d2b5e;
+    --card-border: #b3d9f7;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --red: #c62828;
+    --red2: #ffebee;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  nav a {
+    color: #90caf9;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(255,255,255,0.18); }
+  nav .sep { color: #4a7aaa; font-size: 0.9rem; }
+  nav .current {
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.4);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d2b5e 0%, #1565c0 55%, #1976d2 100%);
+    padding: 40px 24px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 75% 50%, rgba(100,181,246,0.18) 0%, transparent 70%);
+  }
+  .hero-floats {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    pointer-events: none; overflow: hidden;
+  }
+  .hero-floats span {
+    position: absolute; font-size: 2rem; opacity: 0.1;
+    animation: floatUp 8s ease-in-out infinite;
+  }
+  .hero-floats span:nth-child(1){left:6%;  top:20%; animation-delay:0s;   font-size:2.2rem;}
+  .hero-floats span:nth-child(2){left:18%; top:65%; animation-delay:1.8s;}
+  .hero-floats span:nth-child(3){left:72%; top:18%; animation-delay:0.6s; font-size:1.7rem;}
+  .hero-floats span:nth-child(4){left:87%; top:62%; animation-delay:2.4s; font-size:2.6rem;}
+  .hero-floats span:nth-child(5){left:48%; top:72%; animation-delay:1.2s; font-size:1.5rem;}
+  @keyframes floatUp {
+    0%,100%{transform:translateY(0) rotate(-5deg);}
+    50%{transform:translateY(-16px) rotate(5deg);}
+  }
+
+  .hero-inner { position:relative; z-index:1; max-width:760px; margin:0 auto; }
+  .chapter-badge {
+    display:inline-block;
+    background:rgba(100,181,246,0.25);
+    border:1px solid rgba(100,181,246,0.5);
+    color:#90caf9;
+    font-family:'Poppins',sans-serif;
+    font-weight:700; font-size:0.75rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    padding:5px 14px; border-radius:20px; margin-bottom:14px;
+  }
+  .hero h1 {
+    font-family:'Poppins',sans-serif;
+    font-size:clamp(1.6rem,4.5vw,2.4rem);
+    font-weight:800; color:#fff; line-height:1.15; margin-bottom:8px;
+  }
+  .hero h1 span { color:var(--accent); }
+  .hero-sub { color:#90caf9; font-size:0.95rem; font-weight:600; margin-bottom:18px; }
+  .hero-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .hero-tags span {
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    color:#cde5f7;
+    font-size:0.77rem; font-weight:700;
+    padding:4px 12px; border-radius:20px;
+  }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--navy);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .score-bar .sb-label {
+    font-family:'Poppins',sans-serif;
+    font-weight:700; font-size:0.85rem;
+    color:#90caf9;
+  }
+  .progress-track {
+    flex:1; min-width:120px; max-width:340px;
+    height:10px; background:rgba(255,255,255,0.12);
+    border-radius:10px; overflow:hidden;
+  }
+  .progress-fill {
+    height:100%;
+    background:linear-gradient(90deg,#42a5f5,#64b5f6);
+    border-radius:10px;
+    transition: width 0.4s ease;
+    width:0%;
+  }
+  .score-badge {
+    font-family:'Poppins',sans-serif;
+    font-weight:800; font-size:0.95rem;
+    color:#fff;
+    background:rgba(100,181,246,0.2);
+    border:1px solid rgba(100,181,246,0.35);
+    padding:4px 14px; border-radius:20px;
+    white-space:nowrap;
+  }
+
+  /* ── MAIN ── */
+  main { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
+
+  /* ── QUESTION BLOCK ── */
+  .q-block {
+    background:var(--paper);
+    border-radius:20px;
+    border:2px solid var(--card-border);
+    padding:24px 24px 20px;
+    margin-bottom:18px;
+    box-shadow:0 2px 10px rgba(13,43,94,0.06);
+    transition: border-color 0.3s;
+  }
+  .q-block.correct { border-color:#a5d6a7; background:#f9fff9; }
+  .q-block.wrong   { border-color:#ef9a9a; background:#fffafa; }
+
+  .q-header {
+    display:flex; align-items:flex-start; gap:12px; margin-bottom:14px;
+  }
+  .q-num {
+    min-width:32px; height:32px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1565c0,#42a5f5);
+    color:#fff;
+    font-family:'Poppins',sans-serif;
+    font-weight:800; font-size:0.82rem;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .q-type-tag {
+    font-size:0.68rem; font-weight:800; letter-spacing:0.1em;
+    text-transform:uppercase; padding:3px 9px; border-radius:10px;
+    margin-right:6px; flex-shrink:0;
+  }
+  .q-type-tag.mcq  { background:#e3f0ff; color:#1565c0; }
+  .q-type-tag.tf   { background:#fff3e0; color:#e65100; }
+
+  .q-text {
+    font-weight:700; font-size:0.97rem;
+    line-height:1.55; color:var(--ink);
+    flex:1;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display:flex; flex-direction:column; gap:9px; }
+  .opt {
+    display:flex; align-items:center; gap:12px;
+    padding:11px 16px; border-radius:12px;
+    border:2px solid var(--line);
+    background:var(--bg);
+    cursor:pointer;
+    font-weight:700; font-size:0.9rem;
+    color:var(--ink);
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select:none;
+  }
+  .opt:hover:not(.disabled) { border-color:var(--accent); background:#f0f8ff; transform:translateX(3px); }
+  .opt .opt-letter {
+    min-width:26px; height:26px; border-radius:8px;
+    background:#fff; border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins',sans-serif; font-weight:800; font-size:0.78rem;
+    color:var(--muted);
+    transition: all 0.15s;
+  }
+  .opt.selected { border-color:var(--accent2); background:#e3f0ff; }
+  .opt.selected .opt-letter { background:var(--accent2); border-color:var(--accent2); color:#fff; }
+  .opt.correct-ans { border-color:var(--green); background:var(--green2); color:var(--green); }
+  .opt.correct-ans .opt-letter { background:var(--green); border-color:var(--green); color:#fff; }
+  .opt.wrong-ans { border-color:var(--red); background:var(--red2); color:var(--red); }
+  .opt.wrong-ans .opt-letter { background:var(--red); border-color:var(--red); color:#fff; }
+  .opt.disabled { cursor:default; }
+
+  /* ── T/F OPTIONS ── */
+  .tf-opts { display:flex; gap:10px; }
+  .tf-opts .opt { flex:1; justify-content:center; font-size:0.95rem; }
+
+  /* ── FEEDBACK ── */
+  .feedback {
+    margin-top:12px; padding:10px 16px;
+    border-radius:10px;
+    font-size:0.88rem; font-weight:700;
+    display:none; line-height:1.5;
+  }
+  .feedback.show { display:block; }
+  .feedback.correct { background:var(--green2); color:var(--green); border-left:4px solid var(--green); }
+  .feedback.wrong   { background:var(--red2);   color:var(--red);   border-left:4px solid var(--red); }
+
+  /* ── SUBMIT ── */
+  .submit-wrap { text-align:center; margin:28px 0 10px; }
+  .submit-btn {
+    font-family:'Poppins',sans-serif;
+    font-weight:700; font-size:1rem;
+    padding:14px 40px; border-radius:30px; border:none;
+    background:linear-gradient(135deg,#1565c0,#42a5f5);
+    color:#fff; cursor:pointer;
+    box-shadow:0 4px 18px rgba(21,101,192,0.35);
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  }
+  .submit-btn:hover { transform:translateY(-2px); box-shadow:0 7px 24px rgba(21,101,192,0.45); }
+  .submit-btn:disabled { opacity:0.45; cursor:default; transform:none; }
+
+  /* ── RESULT BOX ── */
+  .result-box {
+    display:none;
+    border-radius:24px;
+    padding:36px 28px;
+    text-align:center;
+    margin-bottom:24px;
+    border:3px solid transparent;
+  }
+  .result-box.show { display:block; }
+  .result-box.great  { background:var(--green2); border-color:#a5d6a7; }
+  .result-box.ok     { background:var(--orange2); border-color:#ffcc80; }
+  .result-box.retry  { background:var(--red2);    border-color:#ef9a9a; }
+
+  .result-box .res-emoji { font-size:3.5rem; margin-bottom:10px; }
+  .result-box .res-score {
+    font-family:'Poppins',sans-serif;
+    font-weight:800; font-size:2.2rem;
+    margin-bottom:6px;
+  }
+  .result-box.great  .res-score { color:var(--green); }
+  .result-box.ok     .res-score { color:var(--orange); }
+  .result-box.retry  .res-score { color:var(--red); }
+  .result-box .res-msg {
+    font-weight:700; font-size:1rem;
+    margin-bottom:6px;
+  }
+  .result-box.great  .res-msg { color:var(--green); }
+  .result-box.ok     .res-msg { color:var(--orange); }
+  .result-box.retry  .res-msg { color:var(--red); }
+  .result-box .res-sub {
+    font-size:0.88rem; font-weight:600;
+    color:var(--muted); margin-bottom:20px;
+  }
+
+  .reset-btn {
+    font-family:'Poppins',sans-serif;
+    font-weight:700; font-size:0.9rem;
+    padding:11px 30px; border-radius:25px; border:none;
+    background:linear-gradient(135deg,#1565c0,#42a5f5);
+    color:#fff; cursor:pointer;
+    box-shadow:0 3px 14px rgba(21,101,192,0.3);
+    transition: transform 0.15s;
+  }
+  .reset-btn:hover { transform:translateY(-2px); }
+
+  @media(max-width:540px){
+    .q-block { padding:18px 16px; }
+    .tf-opts { flex-direction:column; }
+    .hero { padding:30px 16px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p9-4-revision.html">📖 Revision</a>
+  <span class="sep">›</span>
+  <span class="current">P9.4 Quick Check</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-floats">
+    <span>📈</span><span>⚡</span><span>🚀</span><span>📐</span><span>🎯</span>
+  </div>
+  <div class="hero-inner">
+    <div class="chapter-badge">P9 · Motion · Topic 4</div>
+    <h1>Quick Check: <span>Motion Graphs</span></h1>
+    <p class="hero-sub">20 questions · 10 MCQ + 10 True / False</p>
+    <div class="hero-tags">
+      <span>📏 d–t graphs</span>
+      <span>📐 v–t graphs</span>
+      <span>🔺 Gradients</span>
+      <span>⬛ Area = distance</span>
+      <span>v² = u² + 2as</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span class="sb-label" id="sbLabel">0 / 20 answered</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="score-badge" id="scoreBadge">Score: —</span>
+</div>
+
+<main>
+
+  <!-- RESULT BOX (hidden until submit) -->
+  <div class="result-box" id="resultBox">
+    <div class="res-emoji" id="resEmoji"></div>
+    <div class="res-score" id="resScore"></div>
+    <div class="res-msg"   id="resMsg"></div>
+    <div class="res-sub"   id="resSub"></div>
+    <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="quizForm"></div>
+
+  <div class="submit-wrap">
+    <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">Submit answers ✓</button>
+  </div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p9-4-score';
+
+const questions = [
+  // ── MCQ (1–10) ──────────────────────────────────────────────────
+  {
+    type:'mcq',
+    q:'What does the gradient of a distance–time graph represent?',
+    opts:['Acceleration','Distance','Speed','Force'],
+    ans:2,
+    fb:'The gradient (rise ÷ run) of a d–t graph equals speed. On a v–t graph it would give acceleration.'
+  },
+  {
+    type:'mcq',
+    q:'An object\'s distance–time graph is a straight line sloping upwards. What can you conclude?',
+    opts:['The object is accelerating','The object is moving at constant speed','The object is decelerating','The object is stationary'],
+    ans:1,
+    fb:'A straight line on a d–t graph means constant gradient → constant speed. A curve would indicate changing speed.'
+  },
+  {
+    type:'mcq',
+    q:'A velocity–time graph shows a straight horizontal line. What does this tell you about the object\'s motion?',
+    opts:['It is stationary','It is accelerating uniformly','It is moving at constant velocity','It is decelerating'],
+    ans:2,
+    fb:'A horizontal line on a v–t graph means velocity is not changing → constant velocity → zero acceleration.'
+  },
+  {
+    type:'mcq',
+    q:'How do you find the acceleration from a velocity–time graph?',
+    opts:['Calculate the area under the line','Calculate the gradient of the line','Draw a tangent to the curve','Read the y-intercept'],
+    ans:1,
+    fb:'Gradient = change in velocity ÷ time taken = acceleration. Area under the line gives distance.'
+  },
+  {
+    type:'mcq',
+    q:'A velocity–time graph shows a triangle shape above the time axis (starting and ending at v = 0). What does the area of this triangle represent?',
+    opts:['Average velocity','Acceleration','Total distance travelled','Maximum speed'],
+    ans:2,
+    fb:'Area under any v–t graph = distance travelled. For a triangle: area = ½ × base × height = ½ × time × max velocity.'
+  },
+  {
+    type:'mcq',
+    q:'An object has u = 0 m/s, a = 2 m/s², and travels s = 50 m. Using v² = u² + 2as, what is its final velocity?',
+    opts:['10 m/s','14.1 m/s','100 m/s','200 m/s'],
+    ans:0,
+    fb:'v² = 0² + 2 × 2 × 50 = 200. Wait — v = √200 ≈ 14.1 m/s. Actually the correct answer is 14.1 m/s — let\'s check: v² = 0 + 2(2)(50) = 200, v = √200 ≈ 14.1 m/s.'
+  },
+  {
+    type:'mcq',
+    q:'On a curved distance–time graph, how do you find the instantaneous speed at a particular moment?',
+    opts:['Calculate the area under the curve','Draw a tangent to the curve at that point and find its gradient','Read the y-value at that point','Divide the total distance by total time'],
+    ans:1,
+    fb:'The tangent is a straight line touching the curve at exactly one point. Its gradient equals the instantaneous speed at that moment.'
+  },
+  {
+    type:'mcq',
+    q:'An object accelerates from u = 4 m/s to v = 12 m/s in 10 s. What is its acceleration?',
+    opts:['0.8 m/s²','1.2 m/s²','8 m/s²','16 m/s²'],
+    ans:0,
+    fb:'a = (v − u) ÷ t = (12 − 4) ÷ 10 = 8 ÷ 10 = 0.8 m/s². This matches the worked example in Figure 3.'
+  },
+  {
+    type:'mcq',
+    q:'A velocity–time graph has a negative gradient. What is happening to the object?',
+    opts:['It is speeding up','It is moving backwards','It is decelerating (slowing down)','It is stationary'],
+    ans:2,
+    fb:'Negative gradient on a v–t graph means velocity is decreasing over time → deceleration.'
+  },
+  {
+    type:'mcq',
+    q:'Which equation links final velocity, initial velocity, acceleration, and distance — without needing time?',
+    opts:['a = (v − u) / t','s = ½(u + v)t','v² = u² + 2as','F = ma'],
+    ans:2,
+    fb:'v² = u² + 2as is the kinematic equation that connects v, u, a, and s without using time t.'
+  },
+
+  // ── TRUE / FALSE (11–20) ─────────────────────────────────────────
+  {
+    type:'tf',
+    q:'The gradient of a velocity–time graph gives the distance travelled.',
+    ans:1, // false
+    fb:'FALSE. The gradient of a v–t graph gives acceleration. It is the AREA under the graph that gives distance travelled.'
+  },
+  {
+    type:'tf',
+    q:'A curved line on a distance–time graph means the object\'s speed is changing.',
+    ans:0, // true
+    fb:'TRUE. A curve means the gradient is changing, so the speed is changing. A straight line indicates constant speed.'
+  },
+  {
+    type:'tf',
+    q:'You can only use v² = u² + 2as when time is known.',
+    ans:1, // false
+    fb:'FALSE. This equation is specifically useful when time is NOT given. It connects v, u, a, and s without t.'
+  },
+  {
+    type:'tf',
+    q:'The area under a velocity–time graph represents the distance travelled by the object.',
+    ans:0, // true
+    fb:'TRUE. This is a key Higher skill. For complex shapes, split into triangles and rectangles and sum their areas.'
+  },
+  {
+    type:'tf',
+    q:'A straight horizontal line on a distance–time graph means the object is moving at constant speed.',
+    ans:1, // false
+    fb:'FALSE. A horizontal line on a d–t graph means distance is not changing → the object is STATIONARY.'
+  },
+  {
+    type:'tf',
+    q:'To find instantaneous speed on a curved d–t graph, you draw a tangent at that point and calculate its gradient.',
+    ans:0, // true
+    fb:'TRUE. The tangent touches the curve at one point only. Its gradient equals the instantaneous speed at that moment.'
+  },
+  {
+    type:'tf',
+    q:'The gradient of a d–t graph and the gradient of a v–t graph both represent the same physical quantity.',
+    ans:1, // false
+    fb:'FALSE. The gradient of a d–t graph = speed. The gradient of a v–t graph = acceleration. These are different quantities.'
+  },
+  {
+    type:'tf',
+    q:'For a v–t graph showing a triangle shape (starting at rest, rising then falling back to zero), the total distance is found using ½ × base × height.',
+    ans:0, // true
+    fb:'TRUE. Area of a triangle = ½ × base × height. Here base = total time, height = maximum velocity.'
+  },
+  {
+    type:'tf',
+    q:'An object with a constant positive velocity has zero acceleration.',
+    ans:0, // true
+    fb:'TRUE. Acceleration = rate of change of velocity. If velocity is constant (not changing), acceleration = 0 m/s².'
+  },
+  {
+    type:'tf',
+    q:'The equation v² = u² + 2as can only be used when the acceleration is changing.',
+    ans:1, // false
+    fb:'FALSE. This equation applies only when acceleration is CONSTANT. It cannot be used when acceleration is varying.'
+  }
+];
+
+// Fix MCQ 6 — recalculate correctly
+questions[5].ans = 1; // 14.1 m/s
+questions[5].fb = 'v² = u² + 2as = 0² + 2 × 2 × 50 = 200. So v = √200 ≈ 14.1 m/s.';
+
+// Track state
+let answered = new Array(questions.length).fill(null);
+let submitted = false;
+
+// ── BUILD UI ────────────────────────────────────────────────────────
+function buildQuiz() {
+  const form = document.getElementById('quizForm');
+  form.innerHTML = '';
+
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'qblock-' + i;
+
+    const typeTag = q.type === 'mcq'
+      ? '<span class="q-type-tag mcq">MCQ</span>'
+      : '<span class="q-type-tag tf">True / False</span>';
+
+    let optHtml = '';
+    if (q.type === 'mcq') {
+      optHtml = '<div class="options">' + q.opts.map((o, j) =>
+        `<div class="opt" id="opt-${i}-${j}" onclick="pick(${i},${j})">
+          <span class="opt-letter">${'ABCD'[j]}</span>${o}
+        </div>`
+      ).join('') + '</div>';
+    } else {
+      optHtml = `<div class="tf-opts">
+        <div class="opt" id="opt-${i}-0" onclick="pick(${i},0)"><span class="opt-letter">T</span>True</div>
+        <div class="opt" id="opt-${i}-1" onclick="pick(${i},1)"><span class="opt-letter">F</span>False</div>
+      </div>`;
+    }
+
+    block.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${i+1}</div>
+        <div class="q-text">${typeTag}${q.q}</div>
+      </div>
+      ${optHtml}
+      <div class="feedback" id="fb-${i}"></div>
+    `;
+    form.appendChild(block);
+  });
+}
+
+// ── PICK ────────────────────────────────────────────────────────────
+function pick(qi, oi) {
+  if (submitted) return;
+  const q = questions[qi];
+  const numOpts = q.type === 'mcq' ? q.opts.length : 2;
+
+  // deselect all
+  for (let j = 0; j < numOpts; j++) {
+    const el = document.getElementById(`opt-${qi}-${j}`);
+    if (el) el.classList.remove('selected');
+  }
+  // select chosen
+  document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  answered[qi] = oi;
+  updateProgress();
+}
+
+// ── PROGRESS ────────────────────────────────────────────────────────
+function updateProgress() {
+  const done = answered.filter(a => a !== null).length;
+  const total = questions.length;
+  document.getElementById('sbLabel').textContent = `${done} / ${total} answered`;
+  document.getElementById('progressFill').style.width = (done / total * 100) + '%';
+}
+
+// ── SUBMIT ──────────────────────────────────────────────────────────
+function submitQuiz() {
+  if (submitted) return;
+  const unanswered = answered.filter(a => a === null).length;
+  if (unanswered > 0) {
+    if (!confirm(`You have ${unanswered} unanswered question${unanswered>1?'s':''}. Submit anyway?`)) return;
+  }
+  submitted = true;
+
+  let score = 0;
+
+  questions.forEach((q, i) => {
+    const block = document.getElementById('qblock-' + i);
+    const fb = document.getElementById('fb-' + i);
+    const userAns = answered[i];
+    const correct = q.ans;
+    const numOpts = q.type === 'mcq' ? q.opts.length : 2;
+
+    // disable all
+    for (let j = 0; j < numOpts; j++) {
+      const el = document.getElementById(`opt-${i}-${j}`);
+      if (el) el.classList.add('disabled');
+    }
+
+    // mark correct option always
+    document.getElementById(`opt-${i}-${correct}`).classList.add('correct-ans');
+
+    if (userAns === null) {
+      block.classList.add('wrong');
+    } else if (userAns === correct) {
+      score++;
+      block.classList.add('correct');
+    } else {
+      block.classList.add('wrong');
+      document.getElementById(`opt-${i}-${userAns}`).classList.add('wrong-ans');
+    }
+
+    // show feedback
+    fb.textContent = (userAns === correct ? '✅ ' : '❌ ') + q.fb;
+    fb.className = 'feedback show ' + (userAns === correct ? 'correct' : 'wrong');
+  });
+
+  // save score
+  localStorage.setItem(SCORE_KEY, score + '/20');
+
+  // update badge
+  document.getElementById('scoreBadge').textContent = `Score: ${score}/20`;
+  document.getElementById('sbLabel').textContent = `Scored ${score} out of 20`;
+  document.getElementById('progressFill').style.width = (score / 20 * 100) + '%';
+
+  // show result box
+  const box = document.getElementById('resultBox');
+  const pct = score / 20;
+  let tier, emoji, msg, sub;
+
+  if (pct >= 0.85) {
+    tier='great'; emoji='🏆';
+    msg='Excellent! Show this to mum — she\'ll be so proud!';
+    sub=`You scored ${score}/20. You\'ve really nailed motion graphs!`;
+  } else if (pct >= 0.6) {
+    tier='ok'; emoji='👍';
+    msg='Good effort! Show this to mum and tell her you\'re getting there!';
+    sub=`You scored ${score}/20. A bit more revision on the tricky bits and you\'ll smash it.`;
+  } else {
+    tier='retry'; emoji='📖';
+    msg='Not quite — go back over the revision page, then show mum a better score!';
+    sub=`You scored ${score}/20. Re-read the revision notes and try again.`;
+  }
+
+  box.className = 'result-box show ' + tier;
+  document.getElementById('resEmoji').textContent = emoji;
+  document.getElementById('resScore').textContent = score + ' / 20';
+  document.getElementById('resMsg').textContent = msg;
+  document.getElementById('resSub').textContent = sub;
+
+  box.scrollIntoView({ behavior:'smooth', block:'start' });
+
+  // disable submit
+  document.getElementById('submitBtn').disabled = true;
+}
+
+// ── RESET ───────────────────────────────────────────────────────────
+function resetQuiz() {
+  answered = new Array(questions.length).fill(null);
+  submitted = false;
+  document.getElementById('resultBox').className = 'result-box';
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('scoreBadge').textContent = 'Score: —';
+  document.getElementById('sbLabel').textContent = '0 / 20 answered';
+  document.getElementById('progressFill').style.width = '0%';
+  buildQuiz();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────
+buildQuiz();
+updateProgress();
+</script>
+</body>
+</html>

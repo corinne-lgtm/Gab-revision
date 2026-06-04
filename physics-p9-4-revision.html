@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P9.4 Analysing Motion Graphs – Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d1b2a;
+    --muted: #5a7a99;
+    --paper: #ffffff;
+    --line: #cde5f7;
+    --accent: #64b5f6;
+    --accent2: #1565c0;
+    --navy: #0d2b5e;
+    --card-border: #b3d9f7;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --red: #c62828;
+    --red2: #ffebee;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --teal: #00695c;
+    --teal2: #e0f2f1;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  nav a {
+    color: #90caf9;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(255,255,255,0.18); }
+  nav .sep { color: #4a7aaa; font-size: 0.9rem; }
+  nav .current {
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.4);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d2b5e 0%, #1565c0 55%, #1976d2 100%);
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(100,181,246,0.18) 0%, transparent 70%);
+  }
+  .hero-floats {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden;
+  }
+  .hero-floats span {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.12;
+    animation: floatUp 8s ease-in-out infinite;
+  }
+  .hero-floats span:nth-child(1) { left:8%;  top:20%; animation-delay:0s;    font-size:2.4rem; }
+  .hero-floats span:nth-child(2) { left:20%; top:60%; animation-delay:1.5s; }
+  .hero-floats span:nth-child(3) { left:75%; top:15%; animation-delay:0.8s; font-size:1.6rem; }
+  .hero-floats span:nth-child(4) { left:85%; top:65%; animation-delay:2.5s; font-size:2.8rem; }
+  .hero-floats span:nth-child(5) { left:50%; top:75%; animation-delay:1s;   font-size:1.4rem; }
+  @keyframes floatUp {
+    0%,100% { transform: translateY(0) rotate(-5deg); }
+    50%      { transform: translateY(-18px) rotate(5deg); }
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+
+  .chapter-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.5);
+    color: #90caf9;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); }
+
+  .hero-sub {
+    color: #90caf9;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero-tags span {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #cde5f7;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* ── MARK AS READ ── */
+  .mar-wrap { text-align: center; margin-bottom: 32px; }
+  .mar-btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(21,101,192,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .mar-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(21,101,192,0.45); }
+  .mar-btn.done {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    box-shadow: 0 4px 16px rgba(46,125,50,0.35);
+  }
+  .mar-confirm {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--green);
+    display: none;
+  }
+  .mar-confirm.show { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--paper);
+    border-radius: 24px;
+    border: 2px solid var(--card-border);
+    padding: 28px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(13,43,94,0.06);
+  }
+  .card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .icon { font-size: 1.3rem; }
+  .card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--accent2);
+    margin: 18px 0 8px;
+  }
+  .card p { font-size: 0.95rem; line-height: 1.65; color: #1a3050; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a3050;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    transition: background 0.2s, border-color 0.2s;
+    user-select: none;
+  }
+  .checklist li.done {
+    background: #e8f5e9;
+    border-color: #a5d6a7;
+    color: #2e7d32;
+    text-decoration: line-through;
+  }
+  .checklist li .cb {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    background: #fff;
+    transition: background 0.15s;
+  }
+  .checklist li.done .cb { background: #2e7d32; border-color: #2e7d32; color: #fff; }
+
+  /* ── KEY FACT BOX ── */
+  .key-fact {
+    background: linear-gradient(135deg, #e3f0ff 0%, #ddeeff 100%);
+    border-left: 5px solid var(--accent2);
+    border-radius: 0 16px 16px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 0.95rem;
+    color: #0d2b5e;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+  .key-fact .label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 5px;
+  }
+
+  /* ── HIGHLIGHT STRIPS ── */
+  .strip {
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .strip.green  { background: var(--green2);  color: var(--green);  border-left: 4px solid var(--green); }
+  .strip.orange { background: var(--orange2); color: var(--orange); border-left: 4px solid var(--orange); }
+  .strip.red    { background: var(--red2);    color: var(--red);    border-left: 4px solid var(--red); }
+  .strip.blue   { background: #e3f2fd;        color: #0d47a1;       border-left: 4px solid #1976d2; }
+  .strip.purple { background: var(--purple2); color: var(--purple); border-left: 4px solid var(--purple); }
+  .strip .st-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 4px; }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin: 8px 0 4px;
+  }
+  .big-idea-tile {
+    border-radius: 16px;
+    padding: 18px 16px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+  .big-idea-tile .emoji { font-size: 2rem; margin-bottom: 8px; display: block; }
+  .big-idea-tile.blue   { background: #e3f2fd; color: #0d47a1; }
+  .big-idea-tile.green  { background: var(--green2); color: var(--green); }
+  .big-idea-tile.orange { background: var(--orange2); color: var(--orange); }
+  .big-idea-tile.red    { background: var(--red2); color: var(--red); }
+  .big-idea-tile.purple { background: var(--purple2); color: var(--purple); }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 12px 0;
+  }
+  .compare-col {
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .compare-col h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .compare-col ul { list-style: none; }
+  .compare-col ul li {
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+    line-height: 1.4;
+  }
+  .compare-col ul li:last-child { border-bottom: none; }
+  .compare-col.left  { background: #e3f0ff; color: #0d2b5e; }
+  .compare-col.right { background: #fff3e0; color: #4a2000; }
+  .compare-col.left h4  { color: #1565c0; }
+  .compare-col.right h4 { color: var(--orange); }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    background: linear-gradient(135deg, #0d2b5e, #1565c0);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    text-align: center;
+    color: #fff;
+  }
+  .formula .f-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #90caf9;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .formula .f-eq {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .formula .f-note { font-size: 0.82rem; color: #b3d9f7; font-weight: 600; }
+
+  /* ── INTERACTIVE GRAPH DEMO ── */
+  .graph-demo {
+    background: #f0f7ff;
+    border-radius: 16px;
+    border: 2px solid var(--line);
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .graph-demo h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .graph-demo canvas {
+    display: block;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .graph-demo .demo-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .demo-btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--accent);
+    background: transparent;
+    color: var(--accent2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .demo-btn:hover, .demo-btn.active { background: var(--accent); color: #fff; }
+
+  /* ── KEYWORDS GRID ── */
+  .kw-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin: 8px 0;
+  }
+  .kw-pill {
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.87rem;
+    border: 2px solid transparent;
+  }
+  .kw-pill strong {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    margin-bottom: 3px;
+  }
+  .kw-pill.blue   { background: #e3f2fd; border-color: #90caf9; color: #0d3c6e; }
+  .kw-pill.blue strong { color: #1565c0; }
+  .kw-pill.green  { background: var(--green2); border-color: #a5d6a7; color: #1b5e20; }
+  .kw-pill.green strong { color: var(--green); }
+  .kw-pill.orange { background: var(--orange2); border-color: #ffcc80; color: #3e2000; }
+  .kw-pill.orange strong { color: var(--orange); }
+  .kw-pill.red    { background: var(--red2); border-color: #ef9a9a; color: #4a0000; }
+  .kw-pill.red strong { color: var(--red); }
+  .kw-pill.purple { background: var(--purple2); border-color: #ce93d8; color: #3a0060; }
+  .kw-pill.purple strong { color: var(--purple); }
+  .kw-pill.teal   { background: var(--teal2); border-color: #80cbc4; color: #003d35; }
+  .kw-pill.teal strong { color: var(--teal); }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    background: linear-gradient(135deg, #0d2b5e, #1565c0);
+    border-radius: 24px;
+    padding: 32px 28px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .quiz-cta h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .quiz-cta p { color: #90caf9; font-size: 0.95rem; font-weight: 600; margin-bottom: 20px; }
+  .quiz-btn {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px 36px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #42a5f5, #64b5f6);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .quiz-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.35); }
+
+  @media (max-width: 560px) {
+    .compare { grid-template-columns: 1fr; }
+    .card { padding: 20px 18px; }
+    .hero { padding: 36px 18px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <span class="current">P9.4 Analysing Motion Graphs</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-floats">
+    <span>📈</span><span>⚡</span><span>🚀</span><span>📐</span><span>🎯</span>
+  </div>
+  <div class="hero-inner">
+    <div class="chapter-badge">P9 · Motion · Topic 4</div>
+    <h1>Analysing <span>Motion Graphs</span></h1>
+    <p class="hero-sub">Distance–time · Velocity–time · Gradients · Areas</p>
+    <div class="hero-tags">
+      <span>📏 Gradient = speed</span>
+      <span>🔺 Gradient = acceleration</span>
+      <span>⬛ Area = distance</span>
+      <span>📐 Tangent method</span>
+      <span>v² = u² + 2as</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- MARK AS READ -->
+  <div class="mar-wrap">
+    <button class="mar-btn" id="marBtn" onclick="toggleRead()">✅ Mark as read</button>
+    <div class="mar-confirm" id="marConfirm">🎉 Nice work! Show this to mum!</div>
+  </div>
+
+  <!-- LEARNING OBJECTIVES CHECKLIST -->
+  <div class="card">
+    <h2><span class="icon">🎯</span> Learning Objectives — tick off as you go</h2>
+    <ul class="checklist" id="checklist">
+      <li id="chk-0" onclick="tick(0)"><span class="cb">✓</span>Calculate acceleration from a velocity–time graph</li>
+      <li id="chk-1" onclick="tick(1)"><span class="cb">✓</span>Calculate distance from a velocity–time graph</li>
+      <li id="chk-2" onclick="tick(2)"><span class="cb">✓</span>Calculate speed from a distance–time graph where speed is constant</li>
+      <li id="chk-3" onclick="tick(3)"><span class="cb">✓</span>Calculate speed from a distance–time graph where speed is changing (tangent method)</li>
+      <li id="chk-4" onclick="tick(4)"><span class="cb">✓</span>Interpret the shape of distance–time and velocity–time graphs</li>
+      <li id="chk-5" onclick="tick(5)"><span class="cb">✓</span>Use the equation v² = u² + 2as</li>
+    </ul>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div class="card">
+    <h2><span class="icon">💡</span> The Big Ideas</h2>
+    <div class="big-idea-grid">
+      <div class="big-idea-tile blue"><span class="emoji">📏</span>Gradient of a d–t graph = <strong>Speed</strong></div>
+      <div class="big-idea-tile orange"><span class="emoji">📐</span>Gradient of a v–t graph = <strong>Acceleration</strong></div>
+      <div class="big-idea-tile green"><span class="emoji">⬛</span>Area under a v–t graph = <strong>Distance travelled</strong></div>
+      <div class="big-idea-tile purple"><span class="emoji">🖊️</span>Tangent to curve = <strong>Instantaneous speed</strong></div>
+    </div>
+  </div>
+
+  <!-- DISTANCE-TIME GRAPHS -->
+  <div class="card">
+    <h2><span class="icon">📏</span> Distance–Time Graphs</h2>
+
+    <div class="key-fact">
+      <div class="label">Key Rule</div>
+      For an object moving at constant speed, the d–t graph is a straight line sloping upwards. The gradient = speed.
+    </div>
+
+    <div class="formula">
+      <div class="f-label">Speed from gradient</div>
+      <div class="f-eq">speed = height of triangle ÷ base of triangle</div>
+      <div class="f-note">= change in distance (m) ÷ change in time (s)</div>
+    </div>
+
+    <div class="strip green">
+      <div class="st-label">✅ Constant speed</div>
+      Straight line → gradient is the same everywhere → speed is constant.
+    </div>
+
+    <div class="strip orange">
+      <div class="st-label">⚠️ Changing speed</div>
+      Curved line → gradient changes → draw a <strong>tangent</strong> to find the speed at a specific instant.
+    </div>
+
+    <h3>The Tangent Method (changing speed)</h3>
+    <p>A <strong>tangent</strong> is a straight line that touches the curve at one point without crossing it. Draw it at the time you care about, then calculate its gradient — that gradient is the instantaneous speed at that moment.</p>
+
+    <div class="strip blue">
+      <div class="st-label">📌 Example (Figure 2)</div>
+      Tangent drawn at t = 12 s gives height = 130 m, base = 11 s → speed ≈ 11.8 m/s
+    </div>
+  </div>
+
+  <!-- VELOCITY-TIME GRAPHS -->
+  <div class="card">
+    <h2><span class="icon">📐</span> Velocity–Time Graphs</h2>
+
+    <div class="key-fact">
+      <div class="label">Key Rule</div>
+      The gradient of a v–t graph gives the acceleration. The area under a v–t graph gives the distance travelled.
+    </div>
+
+    <div class="formula">
+      <div class="f-label">Acceleration from gradient</div>
+      <div class="f-eq">acceleration = change in velocity ÷ time taken</div>
+      <div class="f-note">Units: m/s² &nbsp;|&nbsp; a = (v − u) / t</div>
+    </div>
+
+    <div class="strip green">
+      <div class="st-label">✅ Constant acceleration</div>
+      Straight line on v–t graph → gradient is constant → acceleration is constant.
+    </div>
+
+    <h3>Finding Distance from a v–t Graph</h3>
+    <p>Calculate the <strong>area under the line</strong> (between the line and the time axis). Split complex shapes into triangles and rectangles and add them up.</p>
+
+    <div class="strip purple">
+      <div class="st-label">📌 Example (Figure 3 — Higher)</div>
+      Shape = triangle (top) + rectangle (bottom). Each represents 40 m → total distance = 80 m.
+    </div>
+
+    <div class="strip orange">
+      <div class="st-label">⚠️ Study Tip</div>
+      Always check: is it a <strong>distance–time</strong> or <strong>velocity–time</strong> graph? The same gradient rule gives completely different quantities on each!
+    </div>
+  </div>
+
+  <!-- INTERACTIVE GRAPH DEMO -->
+  <div class="card">
+    <h2><span class="icon">🎮</span> Interactive Graph Viewer</h2>
+    <div class="graph-demo">
+      <h4 id="demoTitle">Velocity–Time Graph: Constant Acceleration</h4>
+      <canvas id="graphCanvas" width="520" height="260"></canvas>
+      <div class="demo-controls">
+        <button class="demo-btn active" onclick="showGraph('vt-const')" id="btn-vt-const">v–t Const. Accel.</button>
+        <button class="demo-btn" onclick="showGraph('dt-const')" id="btn-dt-const">d–t Const. Speed</button>
+        <button class="demo-btn" onclick="showGraph('dt-change')" id="btn-dt-change">d–t Changing Speed</button>
+        <button class="demo-btn" onclick="showGraph('vt-cyclist')" id="btn-vt-cyclist">v–t Cyclist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKED EXAMPLE: ACCELERATION -->
+  <div class="card">
+    <h2><span class="icon">🧮</span> Worked Example: Finding Acceleration</h2>
+    <p>From Figure 3: a velocity–time graph with u = 4 m/s and v = 12 m/s over t = 10 s.</p>
+
+    <div class="key-fact">
+      <div class="label">Step-by-step</div>
+      Height of triangle = 12 − 4 = <strong>8 m/s</strong> (change in velocity)<br>
+      Base of triangle = <strong>10 s</strong> (time taken)<br>
+      Acceleration = 8 ÷ 10 = <strong>0.8 m/s²</strong>
+    </div>
+
+    <div class="strip green">
+      <div class="st-label">✅ Check</div>
+      The line is straight → constant acceleration confirmed. Units are m/s² ✓
+    </div>
+  </div>
+
+  <!-- HIGHER: v² = u² + 2as -->
+  <div class="card">
+    <h2><span class="icon">⚠️</span> Higher: The v² = u² + 2as Equation</h2>
+
+    <div class="strip blue">
+      <div class="st-label">💡 Where it comes from</div>
+      Derived by combining a = (v − u)/t and s = ½(u + v) × t. Rearranging gives v² − u² = 2as.
+    </div>
+
+    <div class="formula">
+      <div class="f-label">The Equation</div>
+      <div class="f-eq">v² = u² + 2as</div>
+      <div class="f-note">v = final velocity (m/s) &nbsp;·&nbsp; u = initial velocity (m/s)<br>a = acceleration (m/s²) &nbsp;·&nbsp; s = distance (m)</div>
+    </div>
+
+    <div class="strip orange">
+      <div class="st-label">⚠️ When to use it</div>
+      Use when you are <strong>not given time t</strong> but you know u, v, a or s. You do NOT need to prove this derivation in an exam.
+    </div>
+
+    <div class="strip green">
+      <div class="st-label">📌 Example</div>
+      A motorcycle accelerates from rest (u = 0) at a = 2 m/s² for s = 1000 m.<br>
+      v² = 0² + 2 × 2 × 1000 = 4000 → v = √4000 ≈ <strong>63.2 m/s</strong>
+    </div>
+  </div>
+
+  <!-- COMPARE TABLE -->
+  <div class="card">
+    <h2><span class="icon">⚖️</span> d–t vs v–t: What Does Each Tell You?</h2>
+    <div class="compare">
+      <div class="compare-col left">
+        <h4>📏 Distance–Time Graph</h4>
+        <ul>
+          <li>Gradient = <strong>speed</strong></li>
+          <li>Straight line = constant speed</li>
+          <li>Curved line = changing speed</li>
+          <li>Tangent gradient = instantaneous speed</li>
+          <li>Flat line = object stationary</li>
+        </ul>
+      </div>
+      <div class="compare-col right">
+        <h4>📐 Velocity–Time Graph</h4>
+        <ul>
+          <li>Gradient = <strong>acceleration</strong></li>
+          <li>Straight line = constant acceleration</li>
+          <li>Flat line = constant velocity (a = 0)</li>
+          <li>Area under line = distance</li>
+          <li>Negative gradient = deceleration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY POINTS -->
+  <div class="card">
+    <h2><span class="icon">⭐</span> Key Points to Remember</h2>
+    <div class="key-fact">
+      <div class="label">Exam checklist</div>
+      The speed of an object at constant speed = gradient of the d–t graph.<br><br>
+      The acceleration = gradient of the v–t graph.<br><br>
+      (Higher) Distance = area under the v–t graph.<br><br>
+      (Higher) Instantaneous speed at any point on a curved d–t graph = gradient of the tangent at that point.
+    </div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="card">
+    <h2><span class="icon">📚</span> Keywords & Glossary</h2>
+    <div class="kw-grid">
+      <div class="kw-pill blue"><strong>Gradient</strong>Rise divided by run on a graph — gives speed or acceleration depending on graph type.</div>
+      <div class="kw-pill orange"><strong>Tangent</strong>A straight line that touches a curve at exactly one point without crossing it.</div>
+      <div class="kw-pill green"><strong>Acceleration</strong>The rate of change of velocity; gradient of a v–t graph. Units: m/s².</div>
+      <div class="kw-pill red"><strong>Deceleration</strong>Negative acceleration — velocity is decreasing. Negative gradient on a v–t graph.</div>
+      <div class="kw-pill purple"><strong>Instantaneous speed</strong>The speed at a single moment in time, found from the tangent to a d–t curve.</div>
+      <div class="kw-pill teal"><strong>Area under v–t graph</strong>(Higher) The total distance travelled by the object.</div>
+      <div class="kw-pill blue"><strong>Initial velocity (u)</strong>Velocity at the start of the time period being considered.</div>
+      <div class="kw-pill orange"><strong>Final velocity (v)</strong>Velocity at the end of the time period being considered.</div>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h2>⚡ Ready to test yourself?</h2>
+    <p>Try the quick-check quiz for P9.4 and show mum your score!</p>
+    <a class="quiz-btn" href="physics-p9-4-quickcheck.html">Start Quick Check →</a>
+  </div>
+
+</main>
+
+<script>
+// ─── STORAGE KEYS ───────────────────────────────────────────────
+const STEM = 'physics-p9-4-revision';
+const READ_KEY = STEM + '-read';
+const CHK_PREFIX = 'check-' + STEM + '-';
+const N_CHECKS = 6;
+
+// ─── MARK AS READ ───────────────────────────────────────────────
+function toggleRead() {
+  const btn = document.getElementById('marBtn');
+  const conf = document.getElementById('marConfirm');
+  const current = localStorage.getItem(READ_KEY);
+  if (!current) {
+    localStorage.setItem(READ_KEY, 'true');
+    btn.textContent = '📖 Mark as unread';
+    btn.classList.add('done');
+    conf.classList.add('show');
+    conf.textContent = '🎉 Saved! Show this to mum!';
+  } else {
+    localStorage.removeItem(READ_KEY);
+    btn.textContent = '✅ Mark as read';
+    btn.classList.remove('done');
+    conf.classList.remove('show');
+  }
+}
+
+function initRead() {
+  const btn = document.getElementById('marBtn');
+  const conf = document.getElementById('marConfirm');
+  if (localStorage.getItem(READ_KEY)) {
+    btn.textContent = '📖 Mark as unread';
+    btn.classList.add('done');
+    conf.classList.add('show');
+    conf.textContent = '🎉 Saved! Show this to mum!';
+  }
+}
+
+// ─── CHECKLIST ──────────────────────────────────────────────────
+function tick(i) {
+  const li = document.getElementById('chk-' + i);
+  const key = CHK_PREFIX + i;
+  if (li.classList.contains('done')) {
+    li.classList.remove('done');
+    localStorage.removeItem(key);
+  } else {
+    li.classList.add('done');
+    localStorage.setItem(key, 'true');
+  }
+}
+
+function initChecks() {
+  for (let i = 0; i < N_CHECKS; i++) {
+    if (localStorage.getItem(CHK_PREFIX + i)) {
+      document.getElementById('chk-' + i).classList.add('done');
+    }
+  }
+}
+
+// ─── GRAPH DEMOS ────────────────────────────────────────────────
+const graphs = {
+  'vt-const': {
+    title: 'Velocity–Time Graph: Constant Acceleration (u=4, v=12, t=10s)',
+    draw(ctx, W, H) {
+      const pad = { t:20, r:20, b:40, l:50 };
+      const gw = W - pad.l - pad.r;
+      const gh = H - pad.t - pad.b;
+      // axes
+      ctx.strokeStyle = '#333'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t+gh); ctx.lineTo(pad.l+gw, pad.t+gh); ctx.stroke();
+      // labels
+      ctx.fillStyle = '#0d2b5e'; ctx.font = 'bold 12px Nunito, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('time in s', pad.l + gw/2, H - 4);
+      ctx.save(); ctx.translate(14, pad.t + gh/2); ctx.rotate(-Math.PI/2);
+      ctx.fillText('velocity in m/s', 0, 0); ctx.restore();
+      // grid + tick labels
+      ctx.strokeStyle = '#d0e8f8'; ctx.lineWidth = 1;
+      for (let i=0; i<=10; i++) {
+        const x = pad.l + (i/10)*gw;
+        ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t+gh); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.font='11px Nunito'; ctx.textAlign='center';
+        ctx.fillText(i, x, pad.t+gh+14);
+      }
+      for (let v=0; v<=14; v+=2) {
+        const y = pad.t + gh - (v/14)*gh;
+        ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+gw, y); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.textAlign='right';
+        ctx.fillText(v, pad.l-6, y+4);
+      }
+      // shaded area
+      const x0 = pad.l; const x1 = pad.l + gw;
+      const y_u = pad.t + gh - (4/14)*gh;
+      const y_v = pad.t + gh - (12/14)*gh;
+      const yBase = pad.t + gh;
+      ctx.fillStyle = 'rgba(100,181,246,0.18)';
+      ctx.beginPath(); ctx.moveTo(x0, y_u); ctx.lineTo(x1, y_v); ctx.lineTo(x1, yBase); ctx.lineTo(x0, yBase); ctx.closePath(); ctx.fill();
+      // v-t line
+      ctx.strokeStyle = '#1565c0'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(x0, y_u); ctx.lineTo(x1, y_v); ctx.stroke();
+      // annotations
+      ctx.fillStyle='#1565c0'; ctx.font='bold 12px Nunito'; ctx.textAlign='left';
+      ctx.fillText('Gradient = acceleration = 0.8 m/s²', pad.l+4, pad.t+14);
+      ctx.fillStyle='rgba(100,181,246,0.6)';
+      ctx.fillText('Area = distance = 80 m', pad.l + gw*0.4, pad.t + gh - 10);
+    }
+  },
+  'dt-const': {
+    title: 'Distance–Time Graph: Constant Speed',
+    draw(ctx, W, H) {
+      const pad = {t:20,r:20,b:40,l:50};
+      const gw = W-pad.l-pad.r; const gh = H-pad.t-pad.b;
+      ctx.strokeStyle='#333'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,pad.t+gh); ctx.lineTo(pad.l+gw,pad.t+gh); ctx.stroke();
+      ctx.fillStyle='#0d2b5e'; ctx.font='bold 12px Nunito,sans-serif'; ctx.textAlign='center';
+      ctx.fillText('time in s', pad.l+gw/2, H-4);
+      ctx.save(); ctx.translate(14, pad.t+gh/2); ctx.rotate(-Math.PI/2);
+      ctx.fillText('distance in m', 0, 0); ctx.restore();
+      ctx.strokeStyle='#d0e8f8'; ctx.lineWidth=1;
+      for (let i=0;i<=10;i++) {
+        const x=pad.l+(i/10)*gw;
+        ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+gh); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.font='11px Nunito'; ctx.textAlign='center';
+        ctx.fillText(i,x,pad.t+gh+14);
+      }
+      for (let d=0;d<=160;d+=40) {
+        const y=pad.t+gh-(d/160)*gh;
+        ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+gw,y); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.textAlign='right';
+        ctx.fillText(d,pad.l-6,y+4);
+      }
+      // straight line
+      ctx.strokeStyle='#e65100'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(pad.l, pad.t+gh); ctx.lineTo(pad.l+gw, pad.t); ctx.stroke();
+      // triangle
+      ctx.strokeStyle='#1565c0'; ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
+      const tx0=pad.l+gw*0.2, tx1=pad.l+gw*0.7;
+      const ty0=pad.t+gh-(0.2), ty1=pad.t+gh-(0.7);
+      const slope = -gh/gw;
+      const ty0r = pad.t+gh + slope*(tx0-pad.l);
+      const ty1r = pad.t+gh + slope*(tx1-pad.l);
+      ctx.beginPath(); ctx.moveTo(tx0,ty0r); ctx.lineTo(tx1,ty0r); ctx.lineTo(tx1,ty1r); ctx.closePath(); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='#1565c0'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
+      ctx.fillText('height = Δd', (tx0+tx1)/2+14, ty0r+14);
+      ctx.fillText('base = Δt', (tx0+tx1)/2, ty0r+28);
+      ctx.fillStyle='#e65100'; ctx.textAlign='left';
+      ctx.fillText('Gradient = speed', pad.l+4, pad.t+14);
+    }
+  },
+  'dt-change': {
+    title: 'Distance–Time Graph: Changing Speed (tangent shown)',
+    draw(ctx, W, H) {
+      const pad={t:20,r:20,b:40,l:50};
+      const gw=W-pad.l-pad.r; const gh=H-pad.t-pad.b;
+      ctx.strokeStyle='#333'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,pad.t+gh); ctx.lineTo(pad.l+gw,pad.t+gh); ctx.stroke();
+      ctx.fillStyle='#0d2b5e'; ctx.font='bold 12px Nunito,sans-serif'; ctx.textAlign='center';
+      ctx.fillText('time in s', pad.l+gw/2, H-4);
+      ctx.save(); ctx.translate(14, pad.t+gh/2); ctx.rotate(-Math.PI/2);
+      ctx.fillText('distance in m', 0, 0); ctx.restore();
+      ctx.strokeStyle='#d0e8f8'; ctx.lineWidth=1;
+      for (let i=0;i<=20;i+=5) {
+        const x=pad.l+(i/20)*gw;
+        ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+gh); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.font='11px Nunito'; ctx.textAlign='center';
+        ctx.fillText(i,x,pad.t+gh+14);
+      }
+      for (let d=0;d<=200;d+=40) {
+        const y=pad.t+gh-(d/200)*gh;
+        ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+gw,y); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.textAlign='right'; ctx.fillText(d,pad.l-6,y+4);
+      }
+      // curved line
+      ctx.strokeStyle='#c62828'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(pad.l, pad.t+gh);
+      ctx.bezierCurveTo(pad.l+gw*0.2, pad.t+gh, pad.l+gw*0.5, pad.t+gh*0.4, pad.l+gw, pad.t);
+      ctx.stroke();
+      // tangent at t=12 (x-frac=0.6)
+      const tx = pad.l + 0.6*gw;
+      // derivative of bezier at t~0.6 approximated
+      const tSlope = -gh*1.35/gw;
+      const ty = pad.t + gh*0.18;
+      ctx.strokeStyle='#1565c0'; ctx.lineWidth=2; ctx.setLineDash([6,4]);
+      ctx.beginPath(); ctx.moveTo(tx-80, ty - tSlope*(-80)); ctx.lineTo(tx+60, ty - tSlope*60); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='#1565c0'; ctx.font='bold 11px Nunito'; ctx.textAlign='left';
+      ctx.fillText('tangent at t=12s', tx-75, ty-tSlope*(-75)-12);
+      ctx.fillText('gradient ≈ 11.8 m/s', tx-75, ty-tSlope*(-75)+4);
+      ctx.fillStyle='#c62828'; ctx.textAlign='left';
+      ctx.fillText('Curved → changing speed', pad.l+4, pad.t+14);
+    }
+  },
+  'vt-cyclist': {
+    title: 'Velocity–Time Graph: Cyclist (Summary Q2)',
+    draw(ctx, W, H) {
+      const pad={t:20,r:20,b:40,l:50};
+      const gw=W-pad.l-pad.r; const gh=H-pad.t-pad.b;
+      ctx.strokeStyle='#333'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,pad.t+gh); ctx.lineTo(pad.l+gw,pad.t+gh); ctx.stroke();
+      ctx.fillStyle='#0d2b5e'; ctx.font='bold 12px Nunito,sans-serif'; ctx.textAlign='center';
+      ctx.fillText('time in s', pad.l+gw/2, H-4);
+      ctx.save(); ctx.translate(14, pad.t+gh/2); ctx.rotate(-Math.PI/2);
+      ctx.fillText('velocity in m/s', 0, 0); ctx.restore();
+      ctx.strokeStyle='#d0e8f8'; ctx.lineWidth=1;
+      const tMax=60; const vMax=9;
+      for (let t=0;t<=tMax;t+=10) {
+        const x=pad.l+(t/tMax)*gw;
+        ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+gh); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.font='11px Nunito'; ctx.textAlign='center'; ctx.fillText(t,x,pad.t+gh+14);
+      }
+      for (let v=0;v<=vMax;v+=1) {
+        const y=pad.t+gh-(v/vMax)*gh;
+        ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+gw,y); ctx.stroke();
+        ctx.fillStyle='#555'; ctx.textAlign='right'; ctx.fillText(v,pad.l-6,y+4);
+      }
+      // cyclist line: 0→0 at t0, rise to 8 at t40, constant to t50, fall to 0 at t60
+      function px(t){return pad.l+(t/tMax)*gw;}
+      function py(v){return pad.t+gh-(v/vMax)*gh;}
+      // shade area
+      ctx.fillStyle='rgba(100,181,246,0.15)';
+      ctx.beginPath();
+      ctx.moveTo(px(0),py(0));
+      ctx.lineTo(px(40),py(8));
+      ctx.lineTo(px(50),py(8));
+      ctx.lineTo(px(60),py(0));
+      ctx.lineTo(px(60),py(0));
+      ctx.lineTo(px(0),py(0));
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle='#1565c0'; ctx.lineWidth=3;
+      ctx.beginPath();
+      ctx.moveTo(px(0),py(0));
+      ctx.lineTo(px(40),py(8));
+      ctx.lineTo(px(50),py(8));
+      ctx.lineTo(px(60),py(0));
+      ctx.stroke();
+      // annotations
+      ctx.fillStyle='#1565c0'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
+      ctx.fillText('Accelerating', px(20), py(4)-8);
+      ctx.fillText('Constant v', px(45), py(8)-8);
+      ctx.fillText('Decelerating', px(55), py(4)+16);
+      ctx.fillStyle='rgba(100,181,246,0.9)';
+      ctx.fillText('Area = total distance', px(30), py(3));
+    }
+  }
+};
+
+let currentGraph = 'vt-const';
+
+function showGraph(id) {
+  document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + id).classList.add('active');
+  document.getElementById('demoTitle').textContent = graphs[id].title;
+  currentGraph = id;
+  drawGraph();
+}
+
+function drawGraph() {
+  const canvas = document.getElementById('graphCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  graphs[currentGraph].draw(ctx, W, H);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  initRead();
+  initChecks();
+  drawGraph();
+});
+</script>
+</body>
+</html>

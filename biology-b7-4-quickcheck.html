@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B7.4 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4}
+.wrap{max-width:760px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,40px);line-height:1;margin:0;letter-spacing:-1px}
+.hero p{font-size:15px;color:rgba(255,255,255,.8);margin-top:8px;margin-bottom:0}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:12px 18px;margin-bottom:18px;font-weight:700;color:#6b3a0a;font-size:14px}
+
+/* progress bar */
+.prog-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+#prog-bar{height:100%;width:0%;background:var(--yellow);border-radius:999px;transition:width .4s}
+
+/* question blocks */
+.q-block{background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:22px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:16px;font-weight:700;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 16px;cursor:pointer;font-size:14px;font-weight:600;text-align:left;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--lime);background:var(--lime2)}
+.opt.selected{border-color:var(--green);background:var(--green2)}
+.opt.correct{border-color:#2e7d32;background:#c8e6c9;color:#1b5e20}
+.opt.wrong{border-color:var(--red);background:var(--red2);color:#7f0000}
+/* TF */
+.tf-row{display:flex;gap:10px}
+.tf-row .opt{flex:1;text-align:center}
+/* feedback */
+.feedback{display:none;margin-top:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:600}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #8ac68e}
+.feedback.bad{background:var(--red2);color:#7f0000;border:1.5px solid #e0a0a0}
+
+/* result box */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;margin-top:8px}
+#result-box h2{font-size:2rem;margin:0 0 6px}
+#result-box .score-big{font-size:3.5rem;font-weight:900;letter-spacing:-2px;line-height:1}
+#result-box .msg{font-size:17px;font-weight:700;margin:12px 0}
+#result-box .mum{font-size:15px;color:var(--muted);margin-bottom:20px}
+.btn-reset{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;border-radius:999px;padding:13px 30px;font-size:15px;font-weight:900;cursor:pointer;letter-spacing:.5px}
+.btn-reset:hover{opacity:.88}
+
+/* submit */
+#submit-btn{display:block;width:100%;background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;border-radius:999px;padding:15px;font-size:16px;font-weight:900;cursor:pointer;margin-top:8px;letter-spacing:.5px}
+#submit-btn:hover{opacity:.88}
+#submit-btn:disabled{opacity:.4;cursor:not-allowed}
+
+@media(max-width:520px){.wrap{padding:14px}.hero{padding:20px}.score-big{font-size:2.8rem!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B7 Non-communicable diseases</div>
+  <h1>B7.4 Quick Check ⚡</h1>
+  <p>Diet, exercise, and disease — 20 questions, 10 minutes</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b7-4-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="prog-wrap"><div id="prog-bar"></div></div>
+
+<div id="quiz-area"></div>
+
+<button id="submit-btn" onclick="submitQuiz()" disabled>Submit answers</button>
+
+<div id="result-box">
+  <div id="res-icon" style="font-size:3rem;margin-bottom:8px"></div>
+  <h2 id="res-title"></h2>
+  <div class="score-big" id="res-score"></div>
+  <div class="msg" id="res-msg"></div>
+  <div class="mum" id="res-mum"></div>
+  <button class="btn-reset" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+<script>
+const SCORE_KEY='biology-b7-4-qs';
+const DATE_KEY='biology-b7-4-qd';
+const TOTAL=20;
+
+const questions=[
+  // --- 10 MCQ ---
+  {type:'mcq',q:'What happens to excess food consumed beyond what the body needs?',opts:['It is excreted immediately','It is stored as fat','It is converted into muscle','It is broken down by the liver into water'],ans:1,fb:'Excess food is stored as fat in the body, which can lead to obesity over time.'},
+  {type:'mcq',q:'Which of the following is NOT listed as a direct benefit of regular exercise?',opts:['Lower blood cholesterol','Higher blood pressure','Fitter heart','Healthy body weight'],ans:1,fb:'Exercise LOWERS blood pressure — it does not raise it. Lower blood pressure reduces strain on the heart and arteries.'},
+  {type:'mcq',q:'In type 2 diabetes, what happens to insulin?',opts:['Too much insulin is produced','The body cannot make enough insulin and/or cells stop responding to it','Insulin destroys blood glucose too quickly','The pancreas produces the wrong type of insulin'],ans:1,fb:'In type 2 diabetes, the body either doesn\'t produce enough insulin, or the cells develop insulin resistance (stop responding to insulin).'},
+  {type:'mcq',q:'Approximately what percentage of daily food energy goes on basic body reactions (metabolism)?',opts:['10–15%','60–75%','30–40%','50–55%'],ans:1,fb:'Around 60–75% of daily food energy is used for basic body reactions. Only 15–30% is affected by physical activity level.'},
+  {type:'mcq',q:'According to the BMI data, what percentage of WOMEN with very obese BMI (≥35) develop type 2 diabetes?',opts:['42%','12%','40%','93%'],ans:3,fb:'Women with very obese BMI (≥35) have a 93% rate of developing type 2 diabetes — compared to 42% for men at the same BMI.'},
+  {type:'mcq',q:'By 2025, approximately how many people in the UK are estimated to have diabetes?',opts:['1 million','4 million','10 million','7 million'],ans:1,fb:'By 2025, around 4 million people in the UK are estimated to have diabetes, with 90% of those being type 2.'},
+  {type:'mcq',q:'How can many cases of type 2 diabetes be managed or even reversed?',opts:['Taking daily insulin injections only','Avoiding all exercise','Eating a balanced diet, losing weight, and regular exercise','Surgery to remove fat deposits'],ans:2,fb:'Type 2 diabetes can often be managed or reversed by eating a balanced diet, controlling carbohydrate intake, losing weight, and doing regular exercise.'},
+  {type:'mcq',q:'Muscles make up approximately what proportion of body mass in a well-exercised person?',opts:['Up to 20%','Up to 40%','Up to 60%','Up to 10%'],ans:1,fb:'Muscles can make up up to 40% of body mass. Muscle tissue needs much more energy than fat, which raises metabolic rate.'},
+  {type:'mcq',q:'Why does exercise help lower cardiovascular disease risk via cholesterol?',opts:['Exercise destroys all cholesterol in the blood','Exercise lowers blood cholesterol and reduces fatty deposits building up in coronary arteries','Exercise increases good cholesterol to dangerous levels','Exercise moves cholesterol to muscles where it is burned'],ans:1,fb:'Exercise lowers blood cholesterol levels and helps prevent fatty deposits (plaques) building up in coronary arteries, directly reducing heart disease risk.'},
+  {type:'mcq',q:'Which group of people has approximately 5× the relative risk of cardiovascular death?',opts:['Those who eat the most fat','The least active people compared to the most active','Those with the highest BMI','Those who never eat vegetables'],ans:1,fb:'The least active people have approximately 5× the relative risk of cardiovascular death compared to the most active people.'},
+
+  // --- 10 True / False ---
+  {type:'tf',q:'Obesity is only a risk factor for cardiovascular disease, not for type 2 diabetes.',ans:false,fb:'FALSE — obesity is a major risk factor for BOTH cardiovascular disease AND type 2 diabetes.'},
+  {type:'tf',q:'Regular exercise raises metabolic rate because larger muscles need more energy than fat.',ans:true,fb:'TRUE — exercise builds bigger muscles. Muscle tissue requires far more energy than fat, raising your resting metabolic rate.'},
+  {type:'tf',q:'Type 2 diabetes is purely a genetic disease and lifestyle has no effect on risk.',ans:false,fb:'FALSE — while genetics play a role, being overweight, obese, and physically inactive are strong risk factors that can be changed.'},
+  {type:'tf',q:'At the same BMI, women appear to be at greater risk of developing type 2 diabetes than men.',ans:true,fb:'TRUE — the BMI data shows women develop type 2 diabetes at higher rates than men at the same BMI, possibly due to higher body fat percentage or hormonal differences.'},
+  {type:'tf',q:'Exercise increases blood pressure, which is why very active people are at higher cardiovascular risk.',ans:false,fb:'FALSE — regular exercise LOWERS blood pressure over time, reducing cardiovascular risk. Short-term rises during exercise are normal but the long-term effect is a reduction.'},
+  {type:'tf',q:'About 90% of UK diabetes cases are type 2.',ans:true,fb:'TRUE — approximately 90% of the estimated 4 million UK diabetes cases by 2025 are type 2 diabetes.'},
+  {type:'tf',q:'People who exercise regularly need a higher proportion of their food energy for physical activity than sedentary people.',ans:true,fb:'TRUE — physical activity accounts for 15–30% of daily energy use in active people, compared to much less in sedentary people.'},
+  {type:'tf',q:'Insulin resistance means cells respond too strongly to insulin signals.',ans:false,fb:'FALSE — insulin resistance means cells STOP responding adequately to insulin, making it harder to regulate blood glucose levels.'},
+  {type:'tf',q:'A BMI of 31 (obese) gives a higher type 2 diabetes risk than a BMI of 25 (overweight) for both men and women.',ans:true,fb:'TRUE — the data clearly shows risk rises at every BMI level. Men: 2.2% (overweight) vs 12% (obese). Women: 8.1% vs 40%.'},
+  {type:'tf',q:'Exercise helps protect the heart only by reducing body weight — it has no direct effect on heart fitness.',ans:false,fb:'FALSE — exercise directly gives you a fitter heart and bigger lungs, INDEPENDENT of weight loss. It also lowers cholesterol and blood pressure directly.'},
+];
+
+let answered=new Array(TOTAL).fill(null);
+let submitted=false;
+
+function buildQuiz(){
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  questions.forEach((q,i)=>{
+    const block=document.createElement('div');
+    block.className='q-block';
+    block.id='qb'+i;
+    const label=q.type==='mcq'?`Question ${i+1} of ${TOTAL}`:`True or False — Question ${i+1} of ${TOTAL}`;
+    let optsHTML='';
+    if(q.type==='mcq'){
+      optsHTML='<div class="options">'+q.opts.map((o,j)=>`<button class="opt" id="q${i}o${j}" onclick="pick(${i},${j})">${o}</button>`).join('')+'</div>';
+    } else {
+      optsHTML=`<div class="options tf-row"><button class="opt" id="q${i}o0" onclick="pick(${i},true)">✅ True</button><button class="opt" id="q${i}o1" onclick="pick(${i},false)">❌ False</button></div>`;
+    }
+    block.innerHTML=`<div class="q-num">${label}</div><div class="q-text">${q.text||q.q}</div>${optsHTML}<div class="feedback" id="fb${i}"></div>`;
+    // fix q.text vs q.q
+    block.querySelector('.q-text').textContent=q.q;
+    area.appendChild(block);
+  });
+}
+
+function pick(qi,val){
+  if(submitted) return;
+  answered[qi]=val;
+  const q=questions[qi];
+  // clear selection
+  if(q.type==='mcq'){
+    q.opts.forEach((_,j)=>document.getElementById(`q${qi}o${j}`).classList.remove('selected'));
+    document.getElementById(`q${qi}o${val}`).classList.add('selected');
+  } else {
+    document.getElementById(`q${qi}o0`).classList.remove('selected');
+    document.getElementById(`q${qi}o1`).classList.remove('selected');
+    document.getElementById(`q${qi}o${val===true?0:1}`).classList.add('selected');
+  }
+  updateProgress();
+  checkSubmit();
+}
+
+function updateProgress(){
+  const done=answered.filter(a=>a!==null).length;
+  document.getElementById('prog-bar').style.width=(done/TOTAL*100)+'%';
+}
+
+function checkSubmit(){
+  const done=answered.filter(a=>a!==null).length;
+  document.getElementById('submit-btn').disabled=(done<TOTAL);
+}
+
+function submitQuiz(){
+  if(submitted) return;
+  submitted=true;
+  document.getElementById('submit-btn').style.display='none';
+  let score=0;
+  questions.forEach((q,i)=>{
+    const userAns=answered[i];
+    const correct=(userAns===q.ans);
+    if(correct) score++;
+    // highlight options
+    if(q.type==='mcq'){
+      q.opts.forEach((_,j)=>{
+        const btn=document.getElementById(`q${i}o${j}`);
+        if(j===q.ans) btn.classList.add('correct');
+        else if(j===userAns && !correct) btn.classList.add('wrong');
+      });
+    } else {
+      const trueBtn=document.getElementById(`q${i}o0`);
+      const falseBtn=document.getElementById(`q${i}o1`);
+      if(q.ans===true){ trueBtn.classList.add('correct'); if(!correct) falseBtn.classList.add('wrong'); }
+      else { falseBtn.classList.add('correct'); if(!correct) trueBtn.classList.add('wrong'); }
+    }
+    const fb=document.getElementById('fb'+i);
+    fb.textContent=(correct?'✅ ':'❌ ')+q.fb;
+    fb.className='feedback '+(correct?'ok':'bad');
+    fb.style.display='block';
+  });
+  showResult(score);
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,new Date().toLocaleDateString('en-GB'));
+}
+
+function showResult(score){
+  const box=document.getElementById('result-box');
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('res-score').textContent=score+'/'+TOTAL;
+  let icon,title,msg;
+  if(score>=18){icon='🏆';title='Excellent!';msg='Outstanding work — you really know this topic.';}
+  else if(score>=14){icon='👍';title='Good effort!';msg='Solid understanding. Review any questions you missed.';}
+  else{icon='📖';title='Keep revising!';msg='Go back to the revision page and try again.';}
+  document.getElementById('res-icon').textContent=icon;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-msg').textContent=msg;
+  document.getElementById('res-mum').textContent='Show this to mum — '+score+'/'+TOTAL;
+}
+
+function resetQuiz(){
+  answered=new Array(TOTAL).fill(null);
+  submitted=false;
+  document.getElementById('result-box').style.display='none';
+  document.getElementById('submit-btn').style.display='block';
+  document.getElementById('submit-btn').disabled=true;
+  document.getElementById('prog-bar').style.width='0%';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// prev score banner
+(function(){
+  const s=localStorage.getItem(SCORE_KEY);
+  const d=localStorage.getItem(DATE_KEY);
+  if(s!==null){
+    const b=document.getElementById('prev-banner');
+    b.textContent='📊 Last attempt: '+s+'/'+TOTAL+' on '+d;
+    b.style.display='block';
+  }
+})();
+
+buildQuiz();
+</script>
+</div>
+</body>
+</html>

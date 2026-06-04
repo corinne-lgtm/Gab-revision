@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.7 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:28px 30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:8px}
+h1{font-size:clamp(22px,4vw,42px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:15px;color:rgba(255,255,255,.8);margin-top:6px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:8px 13px;border-radius:999px;font-size:13px}
+
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:12px 16px;margin-bottom:14px;font-weight:700;font-size:14px;color:#7a3a00}
+
+/* PROGRESS */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:18px;overflow:hidden}
+.progress-bar{height:10px;border-radius:999px;background:var(--yellow);transition:width .4s ease;width:0%}
+
+/* Q-BLOCK */
+.q-block{background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.05);display:none}
+.q-block.active{display:block}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.35}
+.options{display:flex;flex-direction:column;gap:9px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 15px;font-size:15px;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink);transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--lime2)}
+.opt.correct{background:var(--green2);border-color:var(--green);font-weight:700}
+.opt.wrong{background:var(--red2);border-color:var(--red)}
+.opt:disabled{cursor:default}
+
+/* TF */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:18px;font-weight:900;cursor:pointer;font-family:inherit;color:var(--ink);transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--lime2)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green)}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red)}
+.tf-btn:disabled{cursor:default}
+
+/* FEEDBACK */
+.feedback{margin-top:13px;padding:11px 15px;border-radius:14px;font-size:14px;font-weight:700;display:none}
+.feedback.correct{background:var(--green2);border:2px solid var(--green);color:#1a4d22}
+.feedback.wrong{background:var(--red2);border:2px solid var(--red);color:#7a1a10}
+
+/* NEXT BTN */
+.next-btn{display:none;margin-top:13px;background:var(--dark);color:white;border:none;padding:11px 22px;border-radius:999px;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit}
+.next-btn:hover{background:var(--green)}
+
+/* RESULT BOX */
+#result-box{display:none;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:28px;padding:28px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-box .score-num{font-size:clamp(52px,10vw,90px);font-weight:900;line-height:1;letter-spacing:-3px}
+#result-box .score-label{font-size:16px;color:var(--muted);margin-bottom:16px}
+#result-box .result-msg{font-size:20px;font-weight:900;margin:12px 0}
+#result-box .mum{background:var(--lime2);border:2px dashed var(--lime);border-radius:16px;padding:13px;font-size:16px;font-weight:700;color:#2a4a10;margin:14px 0}
+.reset-btn{background:var(--dark);color:white;border:none;padding:12px 28px;border-radius:999px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:4px}
+.reset-btn:hover{background:var(--green)}
+
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:16px}}
+@media print{.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5.7</div>
+  <h1>Human defence responses ⚡</h1>
+  <p>20 questions · MCQ + True / False · How does your body keep pathogens out?</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b5-7-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<!-- ===== MCQ 1–10 ===== -->
+
+<div class="q-block active" id="q1">
+  <div class="q-num">Question 1 of 20 — Multiple Choice</div>
+  <div class="q-text">What is the main function of the skin as a first line of defence?</div>
+  <div class="options">
+    <button class="opt" data-i="0">It produces antibodies to destroy pathogens</button>
+    <button class="opt" data-i="1">It acts as a physical barrier preventing pathogens reaching tissues</button>
+    <button class="opt" data-i="2">It releases antitoxins into the blood</button>
+    <button class="opt" data-i="3">It filters pathogens out of the air</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q2">
+  <div class="q-num">Question 2 of 20 — Multiple Choice</div>
+  <div class="q-text">When skin is cut, which cells help seal the wound by forming a clot?</div>
+  <div class="options">
+    <button class="opt" data-i="0">White blood cells</button>
+    <button class="opt" data-i="1">Red blood cells</button>
+    <button class="opt" data-i="2">Platelets</button>
+    <button class="opt" data-i="3">Cilia cells</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q3">
+  <div class="q-num">Question 3 of 20 — Multiple Choice</div>
+  <div class="q-text">What does the nose produce to trap pathogens from the air?</div>
+  <div class="options">
+    <button class="opt" data-i="0">Acid</button>
+    <button class="opt" data-i="1">Antitoxins</button>
+    <button class="opt" data-i="2">Mucus</button>
+    <button class="opt" data-i="3">Antibodies</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q4">
+  <div class="q-num">Question 4 of 20 — Multiple Choice</div>
+  <div class="q-text">What do cilia in the trachea and bronchi do with the mucus that has trapped pathogens?</div>
+  <div class="options">
+    <button class="opt" data-i="0">They push it down into the lungs</button>
+    <button class="opt" data-i="1">They waft it up to the back of the throat to be swallowed</button>
+    <button class="opt" data-i="2">They destroy it with acid</button>
+    <button class="opt" data-i="3">They absorb antibodies from it</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q5">
+  <div class="q-num">Question 5 of 20 — Multiple Choice</div>
+  <div class="q-text">What happens to most microorganisms that reach the stomach?</div>
+  <div class="options">
+    <button class="opt" data-i="0">They are engulfed by cilia</button>
+    <button class="opt" data-i="1">They are destroyed by stomach acid</button>
+    <button class="opt" data-i="2">They are absorbed into the blood</button>
+    <button class="opt" data-i="3">They trigger antibody production immediately</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q6">
+  <div class="q-num">Question 6 of 20 — Multiple Choice</div>
+  <div class="q-text">Which white blood cell action is called phagocytosis?</div>
+  <div class="options">
+    <button class="opt" data-i="0">Producing antibodies to match antigens</button>
+    <button class="opt" data-i="1">Releasing antitoxins into the blood</button>
+    <button class="opt" data-i="2">Engulfing and digesting pathogens</button>
+    <button class="opt" data-i="3">Forming a clot over a wound</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q7">
+  <div class="q-num">Question 7 of 20 — Multiple Choice</div>
+  <div class="q-text">Why do you need a different antibody for each type of pathogen?</div>
+  <div class="options">
+    <button class="opt" data-i="0">Because all pathogens have the same antigens</button>
+    <button class="opt" data-i="1">Because each antibody matches a specific antigen on the pathogen's surface</button>
+    <button class="opt" data-i="2">Because antibodies only work inside the stomach</button>
+    <button class="opt" data-i="3">Because white blood cells can only make one type of antibody per day</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q8">
+  <div class="q-num">Question 8 of 20 — Multiple Choice</div>
+  <div class="q-text">What do antitoxins do?</div>
+  <div class="options">
+    <button class="opt" data-i="0">They engulf bacteria by phagocytosis</button>
+    <button class="opt" data-i="1">They counteract toxins released by bacteria</button>
+    <button class="opt" data-i="2">They form a scab over a wound</button>
+    <button class="opt" data-i="3">They trap pathogens in sticky mucus</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q9">
+  <div class="q-num">Question 9 of 20 — Multiple Choice</div>
+  <div class="q-text">Why does nasal mucus turn green when you have a cold?</div>
+  <div class="options">
+    <button class="opt" data-i="0">Because viruses are naturally green</button>
+    <button class="opt" data-i="1">Because stomach acid reaches the nose</button>
+    <button class="opt" data-i="2">Because dead white blood cells and bacteria contain green enzymes that colour the mucus</button>
+    <button class="opt" data-i="3">Because platelets release a green pigment when clotting</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q10">
+  <div class="q-num">Question 10 of 20 — Multiple Choice</div>
+  <div class="q-text">Why are you unlikely to get the same infectious disease twice?</div>
+  <div class="options">
+    <button class="opt" data-i="0">The skin grows thicker after infection</button>
+    <button class="opt" data-i="1">Stomach acid becomes stronger after infection</button>
+    <button class="opt" data-i="2">Once antibodies are produced, they can be made much more quickly if the same pathogen appears again</button>
+    <button class="opt" data-i="3">Cilia beat faster after the first infection</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<!-- ===== TRUE / FALSE 11–20 ===== -->
+
+<div class="q-block" id="q11">
+  <div class="q-num">Question 11 of 20 — True or False</div>
+  <div class="q-text">Skin produces antimicrobial secretions that help destroy pathogenic bacteria.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q12">
+  <div class="q-num">Question 12 of 20 — True or False</div>
+  <div class="q-text">Healthy skin is completely free of microorganisms.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q13">
+  <div class="q-num">Question 13 of 20 — True or False</div>
+  <div class="q-text">Cilia are found lining the trachea and bronchi.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q14">
+  <div class="q-num">Question 14 of 20 — True or False</div>
+  <div class="q-text">Mucus in the airways is moved downwards towards the lungs by cilia.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q15">
+  <div class="q-num">Question 15 of 20 — True or False</div>
+  <div class="q-text">White blood cells are part of the body's second line of defence.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q16">
+  <div class="q-num">Question 16 of 20 — True or False</div>
+  <div class="q-text">Antibodies are produced by platelets.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q17">
+  <div class="q-num">Question 17 of 20 — True or False</div>
+  <div class="q-text">Antigens are found on the surface of pathogens.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q18">
+  <div class="q-num">Question 18 of 20 — True or False</div>
+  <div class="q-text">Antitoxins are produced to counteract the toxins released by bacteria.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q19">
+  <div class="q-num">Question 19 of 20 — True or False</div>
+  <div class="q-text">If blood does not clot properly, there is an increased risk of pathogens entering the body through wounds.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Next →</button>
+</div>
+
+<div class="q-block" id="q20">
+  <div class="q-num">Question 20 of 20 — True or False</div>
+  <div class="q-text">Having fewer white blood cells reduces the body's ability to fight infection.</div>
+  <div class="tf-wrap">
+    <button class="tf-btn" data-tf="true">✅ True</button>
+    <button class="tf-btn" data-tf="false">❌ False</button>
+  </div>
+  <div class="feedback"></div>
+  <button class="next-btn">Finish →</button>
+</div>
+
+<!-- RESULT BOX -->
+<div id="result-box">
+  <div class="score-num" id="score-num"></div>
+  <div class="score-label">out of 20</div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="mum" id="mum-msg"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div><!-- .wrap -->
+
+<script>
+// ── ANSWERS ──────────────────────────────────────────────────────────────────
+// MCQ: index of correct option (0-based)
+const MCQ_ANS = [1,2,2,1,1,2,1,1,2,2]; // q1–q10
+
+// TF: boolean correct answer
+const TF_ANS = [true,false,true,false,true,false,true,true,true,true]; // q11–q20
+
+const TOTAL = 20;
+const SCORE_KEY = 'biology-b5-7-score';
+const DATE_KEY  = 'biology-b5-7-date';
+
+const FEEDBACK_CORRECT = [
+  "Spot on! 🎉",
+  "Correct — well done!",
+  "That's right! ✅",
+  "Excellent! 💚",
+  "Perfect! Keep going!"
+];
+const FEEDBACK_WRONG = {
+  // per-question explanations
+  q1:  "Skin acts as a physical barrier — not antibody production.",
+  q2:  "Platelets clump together to form a clot and seal the wound.",
+  q3:  "The nose produces sticky mucus (and has hairs) to trap airborne pathogens.",
+  q4:  "Cilia beat upwards, wafting mucus to the throat where it's swallowed.",
+  q5:  "Stomach acid destroys most microorganisms swallowed with mucus or food.",
+  q6:  "Phagocytosis = engulfing and digesting pathogens.",
+  q7:  "Each antibody has a specific shape to match one type of antigen.",
+  q8:  "Antitoxins counteract (neutralise) the toxins produced by bacteria.",
+  q9:  "Dead white blood cells contain green enzymes — that's what colours the mucus.",
+  q10: "Memory means the same antibodies are produced much faster if the same pathogen returns.",
+  q11: "True — skin secretes antimicrobial chemicals to help destroy bacteria.",
+  q12: "False — healthy skin is covered in harmless microorganisms that form an extra barrier.",
+  q13: "True — cilia line the trachea and bronchi.",
+  q14: "False — cilia waft mucus upwards to the throat, not downwards to the lungs.",
+  q15: "True — the first line is physical barriers; WBCs are the second line.",
+  q16: "False — antibodies are produced by white blood cells, not platelets.",
+  q17: "True — antigens sit on the pathogen's surface and trigger antibody production.",
+  q18: "True — antitoxins cancel out bacterial toxins.",
+  q19: "True — without a clot/scab, wounds stay open and pathogens can enter.",
+  q20: "True — fewer WBCs means less phagocytosis, fewer antibodies, fewer antitoxins."
+};
+
+let current = 1;
+let score = 0;
+let answered = new Array(TOTAL+1).fill(false);
+
+// ── SHOW PREV SCORE ───────────────────────────────────────────────────────────
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null && d){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `Last attempt: ${s}/20 on ${d}`;
+  }
+})();
+
+// ── PROGRESS ─────────────────────────────────────────────────────────────────
+function updateProgress(q){
+  document.getElementById('prog').style.width = ((q-1)/TOTAL*100)+'%';
+}
+
+// ── MCQ HANDLER ───────────────────────────────────────────────────────────────
+document.querySelectorAll('.q-block').forEach((block,bi)=>{
+  const qNum = bi+1;
+  const isMCQ = qNum <= 10;
+
+  if(isMCQ){
+    block.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(answered[qNum]) return;
+        answered[qNum]=true;
+        const chosen = parseInt(btn.dataset.i);
+        const correct = MCQ_ANS[qNum-1];
+        block.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+        if(chosen===correct){
+          score++;
+          btn.classList.add('correct');
+          showFeedback(block,'correct','✅ '+randCorrect());
+        } else {
+          btn.classList.add('wrong');
+          block.querySelectorAll('.opt')[correct].classList.add('correct');
+          showFeedback(block,'wrong','❌ '+FEEDBACK_WRONG['q'+qNum]);
+        }
+        block.querySelector('.next-btn').style.display='inline-block';
+      });
+    });
+  } else {
+    block.querySelectorAll('.tf-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(answered[qNum]) return;
+        answered[qNum]=true;
+        const chosen = btn.dataset.tf==='true';
+        const correct = TF_ANS[qNum-11];
+        block.querySelectorAll('.tf-btn').forEach(b=>b.disabled=true);
+        if(chosen===correct){
+          score++;
+          btn.classList.add('correct');
+          showFeedback(block,'correct','✅ '+randCorrect());
+        } else {
+          btn.classList.add('wrong');
+          block.querySelectorAll('.tf-btn').forEach(b=>{ if(b.dataset.tf===(correct?'true':'false')) b.classList.add('correct'); });
+          showFeedback(block,'wrong','❌ '+FEEDBACK_WRONG['q'+qNum]);
+        }
+        block.querySelector('.next-btn').style.display='inline-block';
+      });
+    });
+  }
+
+  block.querySelector('.next-btn').addEventListener('click',()=>{
+    block.style.display='none';
+    if(qNum<TOTAL){
+      current=qNum+1;
+      document.getElementById('q'+current).style.display='block';
+      updateProgress(current);
+    } else {
+      showResult();
+    }
+  });
+});
+
+function showFeedback(block,type,msg){
+  const f=block.querySelector('.feedback');
+  f.textContent=msg;
+  f.className='feedback '+type;
+  f.style.display='block';
+}
+function randCorrect(){
+  return FEEDBACK_CORRECT[Math.floor(Math.random()*FEEDBACK_CORRECT.length)];
+}
+
+// ── RESULT ────────────────────────────────────────────────────────────────────
+function showResult(){
+  document.getElementById('prog').style.width='100%';
+  const box = document.getElementById('result-box');
+  box.style.display='block';
+  document.getElementById('score-num').textContent=score;
+
+  let emoji,msg;
+  if(score>=18){emoji='🏆';msg='Outstanding! You really know your defences.';}
+  else if(score>=14){emoji='👍';msg='Good effort! A little more revision and you\'ll nail it.';}
+  else{emoji='📖';msg='Keep going — review the revision notes and try again.';}
+
+  document.getElementById('result-msg').textContent=emoji+' '+msg;
+  document.getElementById('mum-msg').textContent='Show this to mum — '+score+'/20';
+
+  // Save to localStorage
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+
+  // Update banner
+  const banner=document.getElementById('prev-banner');
+  banner.style.display='none';
+
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetQuiz(){
+  score=0;current=1;answered.fill(false);
+  document.getElementById('result-box').style.display='none';
+  document.querySelectorAll('.q-block').forEach((b,i)=>{
+    b.style.display= i===0?'block':'none';
+    b.querySelectorAll('.opt').forEach(o=>{o.disabled=false;o.className='opt';});
+    b.querySelectorAll('.tf-btn').forEach(o=>{o.disabled=false;o.className='tf-btn';});
+    b.querySelector('.feedback').style.display='none';
+    b.querySelector('.next-btn').style.display='none';
+  });
+  updateProgress(1);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+updateProgress(1);
+</script>
+</body>
+</html>

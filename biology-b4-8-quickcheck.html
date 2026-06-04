@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B4.8 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:22px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,40px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid #e8b878;border-radius:18px;padding:14px 18px;margin-bottom:18px;font-weight:700;font-size:15px;color:#7a3a00}
+/* PROGRESS */
+#progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:22px;overflow:hidden}
+#progress-bar{height:10px;background:var(--yellow);border-radius:999px;width:0%;transition:width .4s ease}
+/* Q-BLOCKS */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+/* MCQ */
+.options{display:flex;flex-direction:column;gap:10px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:12px 16px;text-align:left;font-size:15px;font-family:inherit;cursor:pointer;transition:border-color .15s,background .15s;font-weight:600;color:var(--ink)}
+.opt-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.opt-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a0a00}
+.opt-btn:disabled{cursor:default}
+/* TF */
+.tf-row{display:flex;gap:12px}
+.tf-btn{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:14px;font-size:16px;font-weight:900;font-family:inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green)}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red)}
+.tf-btn:disabled{cursor:default}
+/* FEEDBACK */
+.feedback{margin-top:12px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:600;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid var(--green)}
+.feedback.bad{background:var(--red2);color:#7a0a00;border:1.5px solid var(--red)}
+/* RESULT */
+#result-box{display:none;background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:32px;text-align:center;margin-top:10px}
+#result-box h2{font-size:clamp(24px,5vw,42px);letter-spacing:-1px;margin-bottom:8px}
+#result-box .sub{font-size:17px;color:rgba(255,255,255,.8);margin-bottom:18px}
+#result-box .show-mum{font-size:20px;font-weight:900;color:#c8e040;margin-bottom:20px}
+#reset-btn{background:#c8e040;color:#1a2e1a;border:none;font-weight:900;padding:14px 28px;border-radius:999px;cursor:pointer;font-size:16px;font-family:inherit}
+#reset-btn:hover{background:#d4f050}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B4 Organising animals and plants</div>
+  <h1>B4.8 Quick Check ⚡</h1>
+  <p>Evaporation and transpiration — 20 questions</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b4-8-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-area"></div>
+
+<div id="result-box">
+  <h2 id="result-emoji"></h2>
+  <div id="result-score" class="sub"></div>
+  <div id="result-msg" class="show-mum"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+
+<script>
+const SCORE_KEY='bio-b4-8-score';
+const DATE_KEY='bio-b4-8-date';
+const TOTAL=20;
+
+// ── QUESTIONS ──────────────────────────────────────────
+// MCQ: ans = index of correct option (0-based)
+// TF:  ans = true/false
+const questions=[
+  // --- 10 MCQ ---
+  {type:'mcq',q:'Where are stomata mostly found on a leaf?',opts:['Upper epidermis only','Lower epidermis','Inside the xylem','On the stem'],ans:1,
+   fb:'Stomata are mostly on the lower epidermis — this reduces water loss because the underside of the leaf is shadier and cooler.'},
+  {type:'mcq',q:'What is the main role of guard cells?',opts:['Photosynthesise and store glucose','Absorb water from the soil by osmosis','Control the opening and closing of stomata','Transport water up the stem'],ans:2,
+   fb:'Guard cells change shape to open or close each stoma, balancing CO₂ uptake and water loss.'},
+  {type:'mcq',q:'When guard cells are turgid (full of water), what happens to the stoma?',opts:['It closes','It opens','It has no effect','It ruptures'],ans:1,
+   fb:'Turgid guard cells bow outward, pulling the stoma open.'},
+  {type:'mcq',q:'By what process does water vapour leave the leaf through open stomata?',opts:['Osmosis','Active transport','Diffusion','Evaporation only'],ans:2,
+   fb:'Water vapour diffuses down a concentration gradient — high concentration inside the leaf, lower outside.'},
+  {type:'mcq',q:'What drives the transpiration stream — i.e. what pulls water up from the roots?',opts:['Active transport in the stem','Osmosis in the xylem','Evaporation from the leaves','Pressure from the roots pushing water up'],ans:2,
+   fb:'Evaporation of water from the leaf surface creates a pull that draws water up through the xylem behind it.'},
+  {type:'mcq',q:'Which vessel carries water up from roots to leaves?',opts:['Phloem','Xylem','Capillaries','Guard cells'],ans:1,
+   fb:'Xylem vessels carry water (and dissolved minerals) up through the plant.'},
+  {type:'mcq',q:'How does water enter the roots from the soil?',opts:['Diffusion','Active transport','Transpiration','Osmosis'],ans:3,
+   fb:'Water moves from the soil (high water potential) into root cells (lower water potential) by osmosis.'},
+  {type:'mcq',q:'A student counts stomata in five fields of view: 8, 10, 12, 10, 10. What is the mean?',opts:['9','10','11','12'],ans:1,
+   fb:'(8+10+12+10+10) ÷ 5 = 50 ÷ 5 = 10.'},
+  {type:'mcq',q:'If mean stomata count = 12 per 0.1 mm², how many stomata are there per 1 mm²?',opts:['12','120','1200','0.12'],ans:1,
+   fb:'Multiply by 10: 12 × 10 = 120 per mm².'},
+  {type:'mcq',q:'Which condition makes stomata CLOSE to limit water loss?',opts:['Bright sunlight and plenty of water','High CO₂ concentration only','Hot, dry conditions and water shortage','Darkness with high humidity'],ans:2,
+   fb:'In hot, dry conditions the plant is at risk of wilting, so guard cells lose water and the stomata close.'},
+
+  // --- 10 True/False ---
+  {type:'tf',q:'Transpiration is the loss of water vapour from the leaf surface through stomata.',ans:true,
+   fb:'Correct — transpiration is specifically the loss of water vapour through open stomata.'},
+  {type:'tf',q:'Stomata allow CO₂ in and O₂ out during photosynthesis.',ans:true,
+   fb:'Yes — stomata are essential for gas exchange as well as transpiration.'},
+  {type:'tf',q:'Guard cells open the stoma by losing water and becoming flaccid.',ans:false,
+   fb:'The opposite is true — guard cells become turgid (full of water) to open the stoma; they close when flaccid.'},
+  {type:'tf',q:'The transpiration stream moves water from leaves down to the roots.',ans:false,
+   fb:'The transpiration stream moves water UPWARDS — from roots, through the stem, to the leaves.'},
+  {type:'tf',q:'Water evaporates from cells lining the air spaces inside the leaf.',ans:true,
+   fb:'Correct — these internal cells are moist, and water evaporates into the air spaces before diffusing out through stomata.'},
+  {type:'tf',q:'Closing stomata completely stops photosynthesis immediately because no CO₂ can enter.',ans:false,
+   fb:'Closing stomata limits CO₂ entry, but CO₂ already inside the leaf can still be used for a while. It reduces but does not immediately stop photosynthesis.'},
+  {type:'tf',q:'Xylem transports water and dissolved minerals from roots to leaves.',ans:true,
+   fb:'Correct — xylem is the specialised vessel for carrying water and minerals up the plant.'},
+  {type:'tf',q:'Stomata are found only on the lower surface of leaves.',ans:false,
+   fb:'Stomata are mostly on the lower epidermis, but they can be found on both surfaces — the question says "only", which is too strong.'},
+  {type:'tf',q:'The rate of transpiration increases in hotter, windier, and less humid conditions.',ans:true,
+   fb:'Correct — heat speeds evaporation, wind removes moist air near the leaf, and lower humidity increases the concentration gradient for diffusion.'},
+  {type:'tf',q:'To calculate the mean number of stomata, you multiply all the values together.',ans:false,
+   fb:'To find the mean, you ADD all values together then DIVIDE by the number of samples — not multiply.'},
+];
+
+// ── STATE ──────────────────────────────────────────────
+let answered=0, score=0;
+
+// ── INIT ───────────────────────────────────────────────
+(function init(){
+  // prev score banner
+  const prev=localStorage.getItem(SCORE_KEY);
+  const prevDate=localStorage.getItem(DATE_KEY);
+  if(prev!==null){
+    const banner=document.getElementById('prev-banner');
+    banner.style.display='block';
+    banner.textContent=`📊 Last attempt: ${prev}/${TOTAL} — ${prevDate}`;
+  }
+  renderQuiz();
+})();
+
+function renderQuiz(){
+  answered=0; score=0;
+  updateProgress();
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  document.getElementById('result-box').style.display='none';
+  questions.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.className='q-block';
+    div.id='qb'+i;
+    div.innerHTML=`<div class="q-num">Question ${i+1} of ${TOTAL} ${q.type==='tf'?'· True / False':'· Multiple choice'}</div>
+      <div class="q-text">${q.q}</div>
+      ${q.type==='mcq'?renderMCQ(q,i):renderTF(q,i)}
+      <div class="feedback" id="fb${i}"></div>`;
+    area.appendChild(div);
+  });
+}
+
+function renderMCQ(q,i){
+  return `<div class="options">${q.opts.map((o,j)=>`<button class="opt-btn" onclick="answerMCQ(${i},${j})">${o}</button>`).join('')}</div>`;
+}
+function renderTF(q,i){
+  return `<div class="tf-row"><button class="tf-btn" onclick="answerTF(${i},true)">✅ True</button><button class="tf-btn" onclick="answerTF(${i},false)">❌ False</button></div>`;
+}
+
+// ── ANSWER HANDLERS ────────────────────────────────────
+function answerMCQ(qi,chosen){
+  const q=questions[qi];
+  const block=document.getElementById('qb'+qi);
+  const btns=block.querySelectorAll('.opt-btn');
+  btns.forEach((b,j)=>{
+    b.disabled=true;
+    if(j===q.ans) b.classList.add('correct');
+    else if(j===chosen) b.classList.add('wrong');
+  });
+  const correct=chosen===q.ans;
+  if(correct) score++;
+  showFeedback(qi,correct,q.fb);
+  onAnswered();
+}
+
+function answerTF(qi,chosen){
+  const q=questions[qi];
+  const block=document.getElementById('qb'+qi);
+  const btns=block.querySelectorAll('.tf-btn');
+  btns.forEach(b=>b.disabled=true);
+  const trueBtn=btns[0], falseBtn=btns[1];
+  const correct=chosen===q.ans;
+  if(correct) score++;
+  if(q.ans===true) trueBtn.classList.add('correct');
+  else falseBtn.classList.add('correct');
+  if(!correct){
+    if(chosen===true) trueBtn.classList.add('wrong');
+    else falseBtn.classList.add('wrong');
+  }
+  showFeedback(qi,correct,q.fb);
+  onAnswered();
+}
+
+function showFeedback(qi,correct,text){
+  const fb=document.getElementById('fb'+qi);
+  fb.className='feedback show '+(correct?'ok':'bad');
+  fb.textContent=(correct?'✅ ':'❌ ')+text;
+}
+
+function onAnswered(){
+  answered++;
+  updateProgress();
+  if(answered===TOTAL) setTimeout(showResult,600);
+}
+
+function updateProgress(){
+  document.getElementById('progress-bar').style.width=(answered/TOTAL*100)+'%';
+}
+
+function showResult(){
+  document.getElementById('result-box').style.display='block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'center'});
+  const emoji=score>=18?'🏆':score>=14?'👍':'📖';
+  document.getElementById('result-emoji').textContent=emoji;
+  document.getElementById('result-score').textContent=`You scored ${score} out of ${TOTAL}`;
+  const msg=score>=18?`Amazing — Show this to mum — ${score}/${TOTAL}!`:
+             score>=14?`Good effort — Show this to mum — ${score}/${TOTAL}`:
+             `Keep revising — Show this to mum — ${score}/${TOTAL}`;
+  document.getElementById('result-msg').textContent=msg;
+  // save
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,dateStr);
+  // update banner
+  const banner=document.getElementById('prev-banner');
+  banner.style.display='block';
+  banner.textContent=`📊 Last attempt: ${score}/${TOTAL} — ${dateStr}`;
+}
+
+function resetQuiz(){
+  renderQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

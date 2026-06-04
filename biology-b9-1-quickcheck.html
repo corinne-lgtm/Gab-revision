@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B9.1 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.12),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.14),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto;padding:24px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,5vw,46px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* PREV SCORE BANNER */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:12px 18px;font-weight:700;color:#7a3a00;margin-bottom:14px;font-size:15px}
+/* PROGRESS */
+.progress-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+#progress-bar{height:10px;background:var(--yellow);border-radius:999px;width:0;transition:width .4s}
+/* Q BLOCKS */
+.q-block{background:rgba(255,255,255,.88);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+/* MCQ options */
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 16px;cursor:pointer;font-size:15px;text-align:left;font-family:inherit;color:var(--ink);transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt.correct{background:var(--green2);border-color:var(--green);color:#1a4d22;font-weight:700}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#7a1a1a}
+/* TF buttons */
+.tf-wrap{display:flex;gap:10px}
+.tf-btn{flex:1;padding:14px;border:2px solid var(--line);border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;background:var(--paper);color:var(--ink);transition:all .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:#1a4d22}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:#7a1a1a}
+/* Feedback */
+.feedback{display:none;margin-top:12px;padding:12px;border-radius:12px;font-size:14px;font-weight:600}
+.feedback.correct{background:var(--green2);color:#1a4d22;border:1.5px solid #a8d4b0;display:block}
+.feedback.wrong{background:var(--red2);color:#7a1a1a;border:1.5px solid #e0a8a0;display:block}
+/* RESULT */
+#result-box{display:none;background:rgba(255,255,255,.92);border:3px solid var(--line);border-radius:28px;padding:32px;text-align:center;margin-top:20px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+#result-emoji{font-size:60px;margin-bottom:10px}
+#result-title{font-size:28px;font-weight:900;margin-bottom:6px}
+#result-score{font-size:20px;color:var(--muted);margin-bottom:10px}
+#result-msg{font-size:16px;font-weight:700;color:var(--green);margin-bottom:20px}
+#reset-btn{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border:none;border-radius:999px;padding:14px 30px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+#reset-btn:hover{opacity:.9}
+@media(max-width:600px){.wrap{padding:14px}.hero{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B9 Respiration</div>
+  <h1>B9.1 Quick Check ⚡</h1>
+  <p>20 questions on aerobic respiration. How well do you know it?</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b9-1-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="progress-wrap"><div id="progress-bar"></div></div>
+
+<div id="quiz-container"></div>
+
+<div id="result-box">
+  <div id="result-emoji"></div>
+  <div id="result-title"></div>
+  <div id="result-score"></div>
+  <div id="result-msg"></div>
+  <button id="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY = 'biology-b9-1-score';
+const DATE_KEY  = 'biology-b9-1-date';
+const TOTAL = 20;
+
+// ── QUESTIONS ────────────────────────────────────────────────
+// MCQ: ans = index of correct option (0-based)
+// TF:  ans = true/false
+const questions = [
+  // ── 10 MCQ ──
+  {type:'mcq', q:'What is the word equation for aerobic respiration?',
+   opts:['glucose + carbon dioxide → oxygen + water','glucose + oxygen → carbon dioxide + water','oxygen + water → glucose + carbon dioxide','carbon dioxide + water → glucose + oxygen'], ans:1,
+   fb:'Glucose + oxygen → carbon dioxide + water (+ energy transferred to environment).'},
+
+  {type:'mcq', q:'Aerobic respiration is described as an exothermic reaction. What does this mean?',
+   opts:['It absorbs energy from the environment','It takes place only in plants','It transfers energy TO the environment','It requires light to proceed'], ans:2,
+   fb:'Exothermic = energy is transferred TO the surroundings. More energy is released forming product bonds than is taken in to break reactant bonds.'},
+
+  {type:'mcq', q:'In the symbol equation for aerobic respiration, how many molecules of oxygen are used?',
+   opts:['3','4','6','12'], ans:2,
+   fb:'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O. Six oxygen molecules are consumed.'},
+
+  {type:'mcq', q:'Where do MOST of the reactions of aerobic respiration take place?',
+   opts:['Nucleus','Cell membrane','Ribosomes','Mitochondria'], ans:3,
+   fb:'Most aerobic respiration reactions occur in the mitochondria, which have a large folded inner membrane for enzymes.'},
+
+  {type:'mcq', q:'Why do muscle cells contain more mitochondria than fat cells?',
+   opts:['Muscle cells are smaller','Muscle cells are more active and need more energy','Fat cells carry out photosynthesis','Muscle cells store more glucose'], ans:1,
+   fb:'More active cells need more ATP from aerobic respiration, so they have more mitochondria. Muscle cells are highly active; fat cells are not.'},
+
+  {type:'mcq', q:'Which reagent is used in experiments to detect carbon dioxide produced during respiration?',
+   opts:['Iodine solution','Benedict\'s solution','Limewater','Biuret reagent'], ans:2,
+   fb:'Limewater turns cloudy (milky) in the presence of CO₂. The faster it turns cloudy, the higher the CO₂ concentration.'},
+
+  {type:'mcq', q:'Which of the following is NOT a use of energy transferred during cellular respiration in animals?',
+   opts:['Muscle contraction','Maintaining body temperature','Synthesis of large molecules','Producing chlorophyll'], ans:3,
+   fb:'Chlorophyll is produced by plants via photosynthesis, not a use of energy in animal respiration.'},
+
+  {type:'mcq', q:'Approximately how much energy does a teenage boy need per day?',
+   opts:['6 500 kJ','8 830 kJ','11 510 kJ','15 000 kJ'], ans:2,
+   fb:'Teenage boys need approximately 11 510 kJ per day; girls need approximately 8 830 kJ. Boys generally have larger bodies and more muscle mass.'},
+
+  {type:'mcq', q:'In plants, energy from aerobic respiration is used to absorb mineral ions from the soil. What process is this?',
+   opts:['Osmosis','Diffusion','Active transport','Transpiration'], ans:2,
+   fb:'Active transport uses energy to move ions (e.g. nitrates) against a concentration gradient from the soil into root hair cells.'},
+
+  {type:'mcq', q:'The early stages of aerobic respiration take place in which part of the cell?',
+   opts:['Mitochondria','Nucleus','Cytoplasm','Vacuole'], ans:2,
+   fb:'The early stages (glycolysis) happen in the cytoplasm; the later stages occur in the mitochondria.'},
+
+  // ── 10 TF ──
+  {type:'tf', q:'Aerobic respiration requires oxygen.', ans:true,
+   fb:'True. The "aerobic" in aerobic respiration means "with air/oxygen". Oxygen is a reactant.'},
+
+  {type:'tf', q:'Photosynthesis and aerobic respiration are both exothermic reactions.', ans:false,
+   fb:'False. Photosynthesis is endothermic (absorbs energy from light). Aerobic respiration is exothermic (releases energy).'},
+
+  {type:'tf', q:'Carbon dioxide is a product of aerobic respiration.', ans:true,
+   fb:'True. CO₂ is produced along with water when glucose is broken down in aerobic respiration.'},
+
+  {type:'tf', q:'Only animal cells carry out aerobic respiration; plant cells do not.', ans:false,
+   fb:'False. Both plant AND animal cells carry out aerobic respiration. Plants respire continuously, day and night.'},
+
+  {type:'tf', q:'A cell with many mitochondria is likely to be very metabolically active.', ans:true,
+   fb:'True. More mitochondria = more capacity for aerobic respiration = more energy available = more active cell.'},
+
+  {type:'tf', q:'Aerobic respiration produces water as one of its products.', ans:true,
+   fb:'True. The symbol equation shows 6H₂O produced: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O.'},
+
+  {type:'tf', q:'The energy released by aerobic respiration is used directly to power chemical reactions without any intermediate.', ans:false,
+   fb:'False. Energy is transferred to ATP molecules, which then power reactions. ATP is the intermediary energy currency of the cell.'},
+
+  {type:'tf', q:'Mammals use energy from respiration to maintain a constant body temperature.', ans:true,
+   fb:'True. Mammals (and birds) are warm-blooded. Respiration provides energy to keep body temperature stable.'},
+
+  {type:'tf', q:'The inner membrane of the mitochondria is folded to increase surface area for enzymes involved in respiration.', ans:true,
+   fb:'True. The folded inner membrane (cristae) greatly increases surface area, allowing more enzyme molecules and faster respiration.'},
+
+  {type:'tf', q:'Teenage girls have higher average daily energy needs than teenage boys.', ans:false,
+   fb:'False. Teenage boys need more energy (~11 510 kJ/day) than girls (~8 830 kJ/day) due to greater body size and muscle mass.'},
+];
+
+// ── STATE ─────────────────────────────────────────────────────
+let answered = new Array(TOTAL).fill(false);
+let score = 0;
+
+// ── PREV SCORE BANNER ─────────────────────────────────────────
+(function(){
+  const s = localStorage.getItem(SCORE_KEY);
+  const d = localStorage.getItem(DATE_KEY);
+  if(s !== null && d){
+    const banner = document.getElementById('prev-banner');
+    banner.style.display = 'block';
+    banner.textContent = `Last attempt: ${s}/${TOTAL} — ${d}`;
+  }
+})();
+
+// ── RENDER ────────────────────────────────────────────────────
+function render(){
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = `q${i}`;
+
+    let inner = `<div class="q-num">Question ${i+1} of ${TOTAL} · ${q.type==='mcq'?'Multiple choice':'True / False'}</div>`;
+    inner += `<div class="q-text">${q.q}</div>`;
+
+    if(q.type === 'mcq'){
+      inner += '<div class="options">';
+      q.opts.forEach((opt, j) => {
+        inner += `<button class="opt" onclick="answerMCQ(${i},${j})">${opt}</button>`;
+      });
+      inner += '</div>';
+    } else {
+      inner += `<div class="tf-wrap">
+        <button class="tf-btn" onclick="answerTF(${i},true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i},false)">❌ False</button>
+      </div>`;
+    }
+
+    inner += `<div class="feedback" id="fb${i}"></div>`;
+    block.innerHTML = inner;
+    container.appendChild(block);
+  });
+}
+
+// ── ANSWER MCQ ────────────────────────────────────────────────
+function answerMCQ(qi, selected){
+  if(answered[qi]) return;
+  answered[qi] = true;
+  const block = document.getElementById(`q${qi}`);
+  const btns = block.querySelectorAll('.opt');
+  const correct = questions[qi].ans === selected;
+  if(correct) score++;
+  btns.forEach((btn, j) => {
+    btn.disabled = true;
+    if(j === questions[qi].ans) btn.classList.add('correct');
+    else if(j === selected && !correct) btn.classList.add('wrong');
+  });
+  showFeedback(qi, correct);
+  updateProgress();
+}
+
+// ── ANSWER TF ─────────────────────────────────────────────────
+function answerTF(qi, selected){
+  if(answered[qi]) return;
+  answered[qi] = true;
+  const block = document.getElementById(`q${qi}`);
+  const btns = block.querySelectorAll('.tf-btn');
+  const correct = questions[qi].ans === selected;
+  if(correct) score++;
+  btns.forEach(btn => btn.disabled = true);
+  // true btn index 0, false btn index 1
+  btns[0].classList.add(questions[qi].ans === true ? 'correct' : (selected === true ? 'wrong' : ''));
+  btns[1].classList.add(questions[qi].ans === false ? 'correct' : (selected === false ? 'wrong' : ''));
+  showFeedback(qi, correct);
+  updateProgress();
+}
+
+// ── FEEDBACK + PROGRESS ───────────────────────────────────────
+function showFeedback(qi, correct){
+  const fb = document.getElementById(`fb${qi}`);
+  fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+  fb.textContent = (correct ? '✅ Correct! ' : '❌ Not quite. ') + questions[qi].fb;
+  if(answered.every(a => a)) showResult();
+}
+
+function updateProgress(){
+  const done = answered.filter(Boolean).length;
+  document.getElementById('progress-bar').style.width = (done/TOTAL*100) + '%';
+}
+
+// ── RESULT ────────────────────────────────────────────────────
+function showResult(){
+  const box = document.getElementById('result-box');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+
+  const emoji = score >= 18 ? '🏆' : score >= 14 ? '👍' : '📖';
+  const title = score >= 18 ? 'Excellent!' : score >= 14 ? 'Good effort!' : 'Keep revising!';
+  const msg   = score >= 18
+    ? 'Outstanding — you really know your aerobic respiration!'
+    : score >= 14
+    ? 'Solid work. Review the questions you missed and try again.'
+    : 'Go back to the revision page and read through it again.';
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score').textContent = `${score} / ${TOTAL}`;
+  document.getElementById('result-msg').textContent = `Show this to mum — ${score}/${TOTAL} 🌿`;
+
+  // save to localStorage
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY, score);
+  localStorage.setItem(DATE_KEY, today);
+
+  // update banner
+  const banner = document.getElementById('prev-banner');
+  banner.style.display = 'block';
+  banner.textContent = `Last attempt: ${score}/${TOTAL} — ${today}`;
+}
+
+// ── RESET ─────────────────────────────────────────────────────
+function resetQuiz(){
+  score = 0;
+  answered = new Array(TOTAL).fill(false);
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('progress-bar').style.width = '0';
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+render();
+</script>
+</body>
+</html>

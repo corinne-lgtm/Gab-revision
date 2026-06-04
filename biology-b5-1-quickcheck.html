@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – B5.1 Quick Check</title>
+<style>
+:root{--bg:#f0f7ee;--ink:#1a2e1a;--muted:#5a7a5a;--paper:#f9fdf7;--line:#c8dfc8;--green:#3a7d44;--green2:#d4edda;--lime:#7ab648;--lime2:#e8f5d8;--blue:#2e6b8a;--blue2:#d4eaf5;--orange:#e07b2a;--orange2:#fde8cc;--purple:#6b4a9a;--purple2:#e8daf5;--dark:#1a2e1a;--yellow:#c8e040;--red:#c0392b;--red2:#fde8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top left,rgba(58,125,68,.1),transparent 34%),radial-gradient(circle at top right,rgba(122,182,72,.12),transparent 34%),var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.4;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,#1a2e1a,#3a7d44);color:white;border-radius:30px;padding:30px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.18)}
+.kicker{font-weight:900;text-transform:uppercase;letter-spacing:2px;color:#c8e040;font-size:13px;margin-bottom:10px}
+h1{font-size:clamp(24px,5vw,48px);line-height:1;letter-spacing:-1px}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);margin-top:8px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.nav a{background:white;color:#1a2e1a;text-decoration:none;font-weight:900;padding:9px 14px;border-radius:999px;font-size:14px}
+/* prev score banner */
+#prev-banner{display:none;background:var(--orange2);border:2px solid var(--orange);border-radius:18px;padding:12px 18px;margin-bottom:14px;font-weight:700;color:#7a3a0a;font-size:14px}
+/* progress */
+.prog-wrap{background:var(--line);border-radius:999px;height:10px;margin-bottom:20px;overflow:hidden}
+.prog-bar{height:10px;background:var(--yellow);border-radius:999px;width:0%;transition:width .4s ease}
+/* q-block */
+.q-block{background:rgba(255,255,255,.85);border:2px solid var(--line);border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.q-num{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:17px;font-weight:700;margin-bottom:14px}
+/* MCQ options */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt-btn{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:11px 15px;font-size:15px;font-family:inherit;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.opt-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.opt-btn.correct{background:#d4edda;border-color:#3a7d44;font-weight:700}
+.opt-btn.wrong{background:var(--red2);border-color:var(--red)}
+.opt-btn:disabled{cursor:default}
+/* TF */
+.tf-wrap{display:flex;gap:12px}
+.tf-btn{flex:1;padding:13px;border-radius:14px;border:2px solid var(--line);background:var(--paper);font-size:16px;font-weight:900;font-family:inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.tf-btn:hover:not(:disabled){border-color:var(--green);background:var(--green2)}
+.tf-btn.correct{background:#d4edda;border-color:#3a7d44}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red)}
+.tf-btn:disabled{cursor:default}
+/* feedback */
+.feedback{margin-top:10px;font-size:14px;border-radius:12px;padding:10px 14px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green2);color:#1a4d22;border:1.5px solid #a8d4b0}
+.feedback.bad{background:var(--red2);color:#7a1a10;border:1.5px solid #e0a8a0}
+/* result */
+#result-box{display:none;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:28px;padding:30px;text-align:center;margin-top:24px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+#result-box h2{font-size:36px;margin-bottom:8px}
+#result-box .score-big{font-size:64px;font-weight:900;line-height:1;color:var(--green)}
+#result-box .result-msg{font-size:18px;margin:10px 0 18px;font-weight:700}
+#result-box .mum{font-size:15px;color:var(--muted);margin-bottom:20px}
+.reset-btn{background:var(--dark);color:white;border:none;padding:14px 28px;border-radius:999px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit}
+.reset-btn:hover{opacity:.85}
+@media(max-width:600px){.wrap{padding:14px}.q-text{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Biology · B5 Communicable diseases</div>
+  <h1>B5.1 Quick Check ⚡</h1>
+  <p>20 questions — 10 multiple choice, 10 true or false. How well do you know Health and disease?</p>
+  <div class="nav">
+    <a href="index.html">🏠 Main hub</a>
+    <a href="biology-index.html">📚 Biology</a>
+    <a href="biology-b5-1-revision.html">📖 Revision</a>
+  </div>
+</section>
+
+<div id="prev-banner"></div>
+
+<div class="prog-wrap"><div class="prog-bar" id="prog-bar"></div></div>
+
+<div id="quiz-area"></div>
+
+<div id="result-box">
+  <h2 id="res-emoji"></h2>
+  <div class="score-big" id="res-score"></div>
+  <div class="result-msg" id="res-msg"></div>
+  <div class="mum" id="res-mum"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+</div>
+<script>
+const SCORE_KEY='biology-b5-1-qc-score';
+const DATE_KEY='biology-b5-1-qc-date';
+const TOTAL=20;
+
+// Show previous score
+(function(){
+  var s=localStorage.getItem(SCORE_KEY),d=localStorage.getItem(DATE_KEY);
+  if(s!==null&&d){
+    var b=document.getElementById('prev-banner');
+    b.style.display='block';
+    b.textContent='📊 Last attempt: '+s+'/'+TOTAL+' on '+d;
+  }
+})();
+
+const questions=[
+  // ── 10 MCQ (ans = index of correct option) ──
+  {type:'mcq',q:'Which of the following best defines "health" according to AQA Biology?',
+   opts:['The absence of all disease and illness',
+         'A state of complete physical and mental well-being',
+         'Being free from communicable diseases',
+         'Having a balanced diet and regular exercise'],
+   ans:1,
+   fb:'Health is defined as a state of physical AND mental well-being — not simply the absence of disease.'},
+
+  {type:'mcq',q:'Which type of disease is caused by a pathogen that can be passed from person to person?',
+   opts:['Non-communicable disease','Genetic disease','Communicable disease','Deficiency disease'],
+   ans:2,
+   fb:'Communicable (infectious) diseases are caused by pathogens and can be transmitted between individuals.'},
+
+  {type:'mcq',q:'Which of the following is an example of a NON-communicable disease?',
+   opts:['Tuberculosis','Malaria','Type 2 diabetes','Influenza'],
+   ans:2,
+   fb:'Type 2 diabetes cannot be passed from person to person — it is non-communicable. TB, malaria, and flu are all communicable.'},
+
+  {type:'mcq',q:'The human papilloma virus (HPV) is linked to which type of cancer?',
+   opts:['Lung cancer','Breast cancer','Cervical cancer','Skin cancer'],
+   ans:2,
+   fb:'HPV can trigger cell changes in the cervix, leading to cervical cancer — a key example of a virus causing cancer.'},
+
+  {type:'mcq',q:'Which of the following is NOT a pathogen type mentioned in B5.1?',
+   opts:['Bacteria','Viruses','Prions','Protists'],
+   ans:2,
+   fb:'The four pathogen types are bacteria, viruses, fungi, and protists. Prions are not included in this specification topic.'},
+
+  {type:'mcq',q:'A person with a severely deficient immune system is most at risk of which of the following?',
+   opts:['Developing allergies to pollen',
+         'Getting more communicable diseases',
+         'Developing type 2 diabetes',
+         'Increased stress levels'],
+   ans:1,
+   fb:'Immune deficiency means the body cannot fight pathogens effectively, so the person becomes vulnerable to more communicable diseases.'},
+
+  {type:'mcq',q:'Which life situation factor is listed as a cause of ill health?',
+   opts:['Eating too much sugar',
+         'Having a virus',
+         'Financial status and access to free healthcare',
+         'Doing too much exercise'],
+   ans:2,
+   fb:'Life situations include where you live, gender, ethnic group, financial status, and access to healthcare — often outside individual control.'},
+
+  {type:'mcq',q:'Malnutrition is linked to which group of health problems?',
+   opts:['Communicable diseases only',
+         'Mental health problems only',
+         'Deficiency diseases, weakened immunity, obesity, cardiovascular disease, diabetes, and cancer',
+         'Allergies and asthma only'],
+   ans:2,
+   fb:'Malnutrition has wide-ranging effects — both under- and over-nutrition can lead to many different types of disease.'},
+
+  {type:'mcq',q:'Which statement about stress and health is most accurate?',
+   opts:['Stress has no effect on physical health',
+         'Some stress is necessary, but too much is linked to heart disease and some cancers',
+         'Stress only affects mental health, not physical health',
+         'Stress is a communicable disease'],
+   ans:1,
+   fb:'Stress is increasingly recognised as a risk factor for heart disease, some cancers, and mental health problems — but some stress is normal.'},
+
+  {type:'mcq',q:'How can a pathogen trigger an allergy?',
+   opts:['By directly damaging the nervous system',
+         'By causing an immune reaction that then triggers sensitivity to environmental factors',
+         'By producing toxins that cause skin rashes directly',
+         'By destroying white blood cells permanently'],
+   ans:1,
+   fb:'An immune reaction caused by a pathogen (e.g. a cold) can trigger allergies to environmental factors, leading to rashes, hives, or asthma.'},
+
+  // ── 10 True/False (ans = boolean) ──
+  {type:'tf',q:'Communicable diseases can be passed from one person to another.',
+   ans:true,
+   fb:'True — communicable diseases are caused by pathogens that can be transmitted between people.'},
+
+  {type:'tf',q:'Non-communicable diseases such as heart disease are caused by pathogens.',
+   ans:false,
+   fb:'False — non-communicable diseases cannot be passed from person to person and are not caused by pathogens.'},
+
+  {type:'tf',q:'HIV/AIDS can cause immune deficiency, making a person more vulnerable to other communicable diseases.',
+   ans:true,
+   fb:'True — HIV attacks the immune system, leaving the body unable to fight other infections effectively.'},
+
+  {type:'tf',q:'Children generally have a great deal of control over their life situation factors.',
+   ans:false,
+   fb:'False — children in particular have very little control over factors like where they live, their financial situation, or access to healthcare.'},
+
+  {type:'tf',q:'Physical ill health can lead to mental health problems such as depression.',
+   ans:true,
+   fb:'True — severe physical illness is closely linked to depression and other mental health conditions.'},
+
+  {type:'tf',q:'Good health means only being free from communicable diseases.',
+   ans:false,
+   fb:'False — good health is a state of complete physical AND mental well-being, not merely the absence of disease.'},
+
+  {type:'tf',q:'Eating too much of the wrong food can lead to obesity and type 2 diabetes.',
+   ans:true,
+   fb:'True — overconsumption of certain foods is a major risk factor for obesity, type 2 diabetes, and some cancers.'},
+
+  {type:'tf',q:'HPV is an example of a non-communicable disease that can cause cancer.',
+   ans:false,
+   fb:'False — HPV is a virus (a communicable pathogen). It is the virus that can cause cervical cancer, but HPV itself is communicable.'},
+
+  {type:'tf',q:'Malnutrition can weaken the immune system, making communicable diseases more likely.',
+   ans:true,
+   fb:'True — malnutrition reduces the immune system\'s ability to fight pathogens, increasing the risk of communicable diseases.'},
+
+  {type:'tf',q:'Stress is classified as a communicable disease.',
+   ans:false,
+   fb:'False — stress is not a disease at all; it is a factor that can contribute to ill health, including heart disease and mental health problems.'},
+];
+
+let answered=0;
+let score=0;
+
+function buildQuiz(){
+  answered=0;score=0;
+  updateProgress();
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';
+  questions.forEach(function(q,i){
+    var block=document.createElement('div');
+    block.className='q-block';
+    block.id='qb'+i;
+
+    var numDiv=document.createElement('div');
+    numDiv.className='q-num';
+    numDiv.textContent='Question '+(i+1)+' of '+TOTAL+(q.type==='tf'?' · True or False':' · Multiple choice');
+    block.appendChild(numDiv);
+
+    var qDiv=document.createElement('div');
+    qDiv.className='q-text';
+    qDiv.textContent=q.q;
+    block.appendChild(qDiv);
+
+    if(q.type==='mcq'){
+      var opts=document.createElement('div');
+      opts.className='opts';
+      q.opts.forEach(function(o,oi){
+        var btn=document.createElement('button');
+        btn.className='opt-btn';
+        btn.textContent=o;
+        btn.onclick=function(){answerMcq(i,oi,btn,opts,q);};
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      var tf=document.createElement('div');
+      tf.className='tf-wrap';
+      ['✅ True','❌ False'].forEach(function(label,ti){
+        var btn=document.createElement('button');
+        btn.className='tf-btn';
+        btn.textContent=label;
+        btn.onclick=function(){answerTf(i,ti===0,btn,tf,q);};
+        tf.appendChild(btn);
+      });
+      block.appendChild(tf);
+    }
+
+    var fb=document.createElement('div');
+    fb.className='feedback';
+    fb.id='fb'+i;
+    block.appendChild(fb);
+
+    area.appendChild(block);
+  });
+}
+
+function answerMcq(qi,chosen,btn,opts,q){
+  var correct=chosen===q.ans;
+  Array.from(opts.children).forEach(function(b,bi){
+    b.disabled=true;
+    if(bi===q.ans) b.classList.add('correct');
+    else if(bi===chosen&&!correct) b.classList.add('wrong');
+  });
+  recordAnswer(qi,correct,q.fb);
+}
+
+function answerTf(qi,chosen,btn,wrap,q){
+  var correct=chosen===q.ans;
+  Array.from(wrap.children).forEach(function(b,bi){
+    b.disabled=true;
+    var isTrue=bi===0;
+    if(isTrue===q.ans) b.classList.add('correct');
+    else if(isTrue===chosen&&!correct) b.classList.add('wrong');
+  });
+  recordAnswer(qi,correct,q.fb);
+}
+
+function recordAnswer(qi,correct,fbText){
+  if(correct) score++;
+  answered++;
+  updateProgress();
+  var fb=document.getElementById('fb'+qi);
+  fb.className='feedback show '+(correct?'ok':'bad');
+  fb.textContent=(correct?'✅ ':'❌ ')+fbText;
+  if(answered===TOTAL) setTimeout(showResult,500);
+}
+
+function updateProgress(){
+  var pct=(answered/TOTAL)*100;
+  document.getElementById('prog-bar').style.width=pct+'%';
+}
+
+function showResult(){
+  document.getElementById('result-box').style.display='block';
+  document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('res-score').textContent=score+'/'+TOTAL;
+
+  var emoji,msg;
+  if(score>=18){emoji='🏆';msg='Outstanding! You really know this topic.';}
+  else if(score>=14){emoji='👍';msg='Good work — a solid understanding!';}
+  else{emoji='📖';msg='Keep revising — you\'ll get there!';}
+
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-msg').textContent=msg;
+  document.getElementById('res-mum').textContent='Show this to mum — '+score+'/'+TOTAL;
+
+  // Save to localStorage
+  var now=new Date();
+  var dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  localStorage.setItem(SCORE_KEY,score);
+  localStorage.setItem(DATE_KEY,dateStr);
+}
+
+function resetQuiz(){
+  document.getElementById('result-box').style.display='none';
+  buildQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
