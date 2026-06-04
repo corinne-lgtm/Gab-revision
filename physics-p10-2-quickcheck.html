@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.2 Quiz — Weight and Terminal Velocity</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2b5e;
+  --accent: #64b5f6;
+  --accent2: #29b6f6;
+  --bg: #e8f4fd;
+  --paper: #ffffff;
+  --ink: #0d2b5e;
+  --muted: #5a7a95;
+  --red: #ef5350;
+  --red2: #ffebee;
+  --green: #43a047;
+  --green2: #e8f5e9;
+  --line: #cce3f5;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+.hero {
+  background: linear-gradient(135deg, #0d2b5e 0%, #1a4a82 55%, #0a3a6c 100%);
+  padding: 32px 28px 24px; position: relative; overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 75% 10%, rgba(100,181,246,.2) 0%, transparent 55%);
+  pointer-events: none;
+}
+.badge { display: inline-block; background: var(--accent); color: var(--navy); font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; margin-bottom: 10px; }
+.hero h1 { font-size: clamp(20px,5vw,30px); font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+.hero h1 span { color: var(--accent); }
+.hero-sub { font-size: 13px; color: rgba(255,255,255,.65); font-weight: 500; }
+
+.score-bar {
+  background: var(--navy); padding: 12px 24px; display: flex; align-items: center; gap: 18px;
+  border-bottom: 2px solid var(--accent); flex-wrap: wrap;
+}
+.score-item { display: flex; flex-direction: column; align-items: center; }
+.score-val { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: var(--accent); }
+.score-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: rgba(255,255,255,.5); text-transform: uppercase; }
+.score-div { width: 1px; height: 36px; background: rgba(255,255,255,.15); }
+.progress-wrap { flex: 1; min-width: 120px; }
+.progress-track { height: 6px; background: rgba(255,255,255,.15); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px; transition: width .4s ease; }
+.progress-lbl { font-size: 10px; color: rgba(255,255,255,.5); font-weight: 600; }
+
+nav { background: #0a2248; padding: 0 20px; display: flex; overflow-x: auto; border-bottom: 1px solid rgba(100,181,246,.2); }
+nav a { color: rgba(255,255,255,.5); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; padding: 10px 14px; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .2s; }
+nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+main { max-width: 720px; margin: 0 auto; padding: 24px 18px 60px; }
+
+.section-label { font-size: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--accent2); margin: 28px 0 14px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+
+.q-block {
+  background: var(--paper); border-radius: 12px; border: 1.5px solid var(--line);
+  padding: 18px 20px; margin-bottom: 14px;
+  box-shadow: 0 1px 8px rgba(13,43,93,.06);
+}
+.q-block.answered { border-color: #b0cfe8; }
+.q-num { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--accent2); text-transform: uppercase; margin-bottom: 7px; }
+.q-text { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.5; margin-bottom: 14px; }
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border-radius: 8px; border: 1.5px solid var(--line); cursor: pointer;
+  font-size: 13.5px; color: #2a4a60; transition: all .15s; user-select: none;
+}
+.opt:hover:not(.locked) { background: #f0f8ff; border-color: var(--accent); }
+.opt-key {
+  width: 28px; height: 28px; min-width: 28px; border-radius: 6px;
+  background: var(--bg); border: 1.5px solid var(--line); display: flex;
+  align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; font-weight: 700; color: var(--muted); transition: all .15s;
+}
+.opt.selected .opt-key { background: var(--accent); border-color: var(--accent); color: var(--navy); }
+.opt.selected { border-color: var(--accent); background: #eaf5ff; }
+.opt.correct { background: var(--green2); border-color: #81c784; }
+.opt.correct .opt-key { background: var(--green); border-color: var(--green); color: #fff; }
+.opt.wrong { background: var(--red2); border-color: #ef9a9a; }
+.opt.wrong .opt-key { background: var(--red); border-color: var(--red); color: #fff; }
+.opt.reveal-correct { background: var(--green2); border-color: #81c784; opacity: .7; }
+.opt.reveal-correct .opt-key { background: var(--green); border-color: var(--green); color: #fff; }
+.opt.locked { cursor: default; }
+
+.tf-wrap { display: flex; gap: 10px; }
+.tf-btn {
+  flex: 1; padding: 12px; border-radius: 8px; border: 1.5px solid var(--line);
+  cursor: pointer; font-size: 14px; font-weight: 700; text-align: center;
+  transition: all .15s; user-select: none; color: var(--muted); background: var(--bg);
+}
+.tf-btn:hover:not(.locked) { border-color: var(--accent); color: var(--navy); background: #eaf5ff; }
+.tf-btn.selected { border-color: var(--accent); background: #eaf5ff; color: var(--navy); }
+.tf-btn.correct { background: var(--green2); border-color: #81c784; color: var(--green); }
+.tf-btn.wrong { background: var(--red2); border-color: #ef9a9a; color: var(--red); }
+.tf-btn.reveal-correct { background: var(--green2); border-color: #81c784; color: var(--green); opacity: .7; }
+.tf-btn.locked { cursor: default; }
+
+.feedback {
+  margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+  font-size: 13px; line-height: 1.5; display: none;
+}
+.feedback.show { display: block; }
+.feedback.ok { background: var(--green2); color: #1b5e20; border-left: 3px solid var(--green); }
+.feedback.bad { background: var(--red2); color: #7f0000; border-left: 3px solid var(--red); }
+.feedback strong { font-weight: 700; }
+
+.submit-btn {
+  display: block; width: 100%; padding: 13px; margin-top: 8px;
+  background: var(--accent); color: var(--navy); font-family: 'Sora', sans-serif;
+  font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  border: none; border-radius: 8px; cursor: pointer; transition: opacity .2s;
+}
+.submit-btn:hover { opacity: .88; }
+.submit-btn:disabled { opacity: .35; cursor: default; }
+
+.result-box {
+  display: none; background: var(--navy); border-radius: 14px; padding: 28px 24px;
+  text-align: center; margin-top: 28px; border: 2px solid rgba(100,181,246,.3);
+}
+.result-box.show { display: block; }
+.result-emoji { font-size: 52px; margin-bottom: 10px; }
+.result-score { font-family: 'JetBrains Mono', monospace; font-size: 42px; font-weight: 700; color: var(--accent); }
+.result-label { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 14px; }
+.result-msg { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.result-sub { font-size: 13px; color: rgba(255,255,255,.7); margin-bottom: 20px; }
+.result-mum { display: inline-block; background: var(--accent); color: var(--navy); font-size: 13px; font-weight: 800; padding: 10px 22px; border-radius: 8px; letter-spacing: .5px; margin-bottom: 18px; }
+.reset-btn {
+  display: inline-block; padding: 11px 28px; border-radius: 8px;
+  border: 2px solid rgba(100,181,246,.4); color: var(--accent);
+  background: transparent; font-family: 'Sora', sans-serif; font-size: 13px;
+  font-weight: 700; cursor: pointer; transition: all .2s; letter-spacing: 1px; text-transform: uppercase;
+}
+.reset-btn:hover { background: rgba(100,181,246,.1); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">PHYSICS · P10.2</div>
+  <h1>Weight and <span>Terminal Velocity</span></h1>
+  <div class="hero-sub">20 questions · Multiple Choice + True/False</div>
+</div>
+
+<div class="score-bar">
+  <div class="score-item"><div class="score-val" id="sb-score">0</div><div class="score-lbl">Score</div></div>
+  <div class="score-div"></div>
+  <div class="score-item"><div class="score-val" id="sb-ans">0</div><div class="score-lbl">Answered</div></div>
+  <div class="score-div"></div>
+  <div class="progress-wrap">
+    <div class="progress-lbl" id="sb-prog-lbl">0 / 20</div>
+    <div class="progress-track"><div class="progress-fill" id="sb-prog-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<nav>
+  <a href="#mcq">Multiple Choice</a>
+  <a href="#tf">True / False</a>
+</nav>
+
+<main>
+
+<div id="mcq-label" class="section-label">— Multiple Choice (Q1–10)</div>
+<div id="mcq"></div>
+
+<div class="section-label" id="tf">— True or False (Q11–20)</div>
+<div id="tf-container"></div>
+
+<div class="result-box" id="result-box">
+  <div class="result-emoji" id="res-emoji"></div>
+  <div class="result-score" id="res-score"></div>
+  <div class="result-label">/ 20</div>
+  <div class="result-msg" id="res-msg"></div>
+  <div class="result-sub" id="res-sub"></div>
+  <div class="result-mum" id="res-mum"></div>
+  <br>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p10-2-quiz-best';
+
+const MCQ = [
+  {
+    q: "What is the unit used to measure weight?",
+    opts: ["Kilogram (kg)", "Newton (N)", "Metre (m)", "Pascal (Pa)"],
+    ans: "B",
+    fb: "Weight is a force, so it is measured in Newtons (N). Mass is measured in kilograms."
+  },
+  {
+    q: "Which equation is used to calculate the weight of an object?",
+    opts: ["W = m + g", "W = m / g", "W = m × g", "W = g / m"],
+    ans: "C",
+    fb: "W = m × g. Weight (N) = mass (kg) × gravitational field strength (N/kg)."
+  },
+  {
+    q: "What is the approximate gravitational field strength at the Earth's surface?",
+    opts: ["1.6 N/kg", "5 N/kg", "9.8 N/kg", "12 N/kg"],
+    ans: "C",
+    fb: "The Earth's gravitational field strength is approximately 9.8 N/kg (often rounded to 10 N/kg)."
+  },
+  {
+    q: "What is the weight of a 5 kg object on Earth (g = 9.8 N/kg)?",
+    opts: ["5 N", "9.8 N", "49 N", "98 N"],
+    ans: "C",
+    fb: "W = 5 × 9.8 = 49 N."
+  },
+  {
+    q: "What happens to the resultant force on an object falling through a fluid as its speed increases?",
+    opts: ["It increases", "It stays the same", "It decreases", "It becomes negative"],
+    ans: "C",
+    fb: "As speed increases, the frictional force from the fluid increases. So the resultant force (weight − friction) decreases."
+  },
+  {
+    q: "At terminal velocity, what is the resultant force on a falling object?",
+    opts: ["Equal to its weight", "Zero", "Equal to the frictional force only", "Equal to its acceleration"],
+    ans: "B",
+    fb: "At terminal velocity, weight = frictional force, so the resultant force is zero and acceleration is zero."
+  },
+  {
+    q: "How does the mass of an object on the Moon compare to its mass on Earth?",
+    opts: ["Greater", "Smaller", "The same", "Six times smaller"],
+    ans: "C",
+    fb: "Mass does not depend on gravitational field strength — it is the same everywhere in the universe."
+  },
+  {
+    q: "Which instrument is used to measure the weight of an object?",
+    opts: ["Balance scale", "Thermometer", "Newton-meter (forcemeter)", "Voltmeter"],
+    ans: "C",
+    fb: "A newton-meter (or forcemeter) measures forces, and weight is a force."
+  },
+  {
+    q: "Why does the acceleration of an object falling through a fluid decrease over time?",
+    opts: [
+      "The weight of the object decreases",
+      "The frictional force increases with speed, reducing the resultant force",
+      "Gravity decreases as the object speeds up",
+      "The object loses mass as it falls"
+    ],
+    ans: "B",
+    fb: "The faster the object moves, the greater the friction, so the resultant force gets smaller — less acceleration."
+  },
+  {
+    q: "On the Moon (g = 1.6 N/kg), what is the weight of a 70 kg person?",
+    opts: ["70 N", "112 N", "43.75 N", "686 N"],
+    ans: "B",
+    fb: "W = 70 × 1.6 = 112 N. Weight is much less on the Moon because g is smaller."
+  }
+];
+
+const TF = [
+  { q: "The mass of an object depends on where in the universe it is located.", ans: "false", fb: "False. Mass is an intrinsic property of an object — it does not change with location." },
+  { q: "The weight of an object is less on the Moon than on Earth.", ans: "true", fb: "True. The Moon's gravitational field strength (1.6 N/kg) is much less than Earth's (9.8 N/kg), so weight is smaller." },
+  { q: "An object in free fall has only one force acting on it — its weight.", ans: "true", fb: "True. By definition, free fall means only gravity acts on the object (no air resistance or other forces)." },
+  { q: "At terminal velocity, the object has stopped moving.", ans: "false", fb: "False! At terminal velocity the object moves at constant speed — it does not stop." },
+  { q: "The frictional force from a fluid on a falling object increases as the object speeds up.", ans: "true", fb: "True. The faster the object moves through the fluid, the greater the frictional force acting on it." },
+  { q: "An object reaches terminal velocity more quickly in air than in water.", ans: "false", fb: "False. Water provides much greater resistance than air, so the object reaches terminal velocity much sooner in water." },
+  { q: "When an object falls at terminal velocity, its acceleration is zero.", ans: "true", fb: "True. Resultant force = 0 → acceleration = 0. The velocity stays constant." },
+  { q: "Gravitational field strength is measured in m/s².", ans: "false", fb: "False. Gravitational field strength is measured in N/kg. The acceleration of free fall is measured in m/s² (they are numerically equal but different quantities)." },
+  { q: "Air resistance on a falling object is much smaller than the frictional force from a liquid.", ans: "true", fb: "True. That is why on a velocity–time graph, the object in air takes much longer to reach terminal velocity than the object in liquid." },
+  { q: "For an object falling through a fluid, the resultant force equals weight minus the frictional force.", ans: "true", fb: "True. Resultant force = W − f. When f = W, resultant force = 0 → terminal velocity." }
+];
+
+let scores = { score: 0, answered: 0 };
+let answers = {};
+
+function buildMCQ() {
+  const container = document.getElementById('mcq');
+  MCQ.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q' + i;
+    const letters = ['A','B','C','D'];
+    block.innerHTML = `
+      <div class="q-num">Question ${i+1} · Multiple Choice</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,j) => `
+          <div class="opt" data-q="${i}" data-key="${letters[j]}" onclick="selectMCQ(${i},'${letters[j]}')">
+            <div class="opt-key">${letters[j]}</div>
+            <span>${o}</span>
+          </div>`).join('')}
+      </div>
+      <button class="submit-btn" id="btn${i}" onclick="submitMCQ(${i})" disabled>Submit Answer</button>
+      <div class="feedback" id="fb${i}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+function buildTF() {
+  const container = document.getElementById('tf-container');
+  TF.forEach((q, i) => {
+    const qi = i + 10;
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q' + qi;
+    block.innerHTML = `
+      <div class="q-num">Question ${qi+1} · True or False</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-wrap">
+        <div class="tf-btn" data-q="${qi}" data-val="true" onclick="selectTF(${qi},'true')">✓ True</div>
+        <div class="tf-btn" data-q="${qi}" data-val="false" onclick="selectTF(${qi},'false')">✗ False</div>
+      </div>
+      <div class="feedback" id="fb${qi}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+function selectMCQ(qi, key) {
+  if (answers[qi] !== undefined) return;
+  document.querySelectorAll(`[data-q="${qi}"].opt`).forEach(o => o.classList.remove('selected'));
+  document.querySelector(`[data-q="${qi}"][data-key="${key}"]`).classList.add('selected');
+  const btn = document.getElementById('btn' + qi);
+  btn.disabled = false;
+  btn._pending = key;
+}
+
+function submitMCQ(qi) {
+  const btn = document.getElementById('btn' + qi);
+  const key = btn._pending;
+  if (!key) return;
+  answers[qi] = key;
+  const correct = MCQ[qi].ans === key;
+  if (correct) scores.score++;
+  scores.answered++;
+
+  document.querySelectorAll(`[data-q="${qi}"].opt`).forEach(o => {
+    o.classList.add('locked');
+    if (o.dataset.key === MCQ[qi].ans) o.classList.add(correct ? 'correct' : 'reveal-correct');
+    if (o.dataset.key === key && !correct) o.classList.add('wrong');
+  });
+
+  btn.disabled = true; btn.style.display = 'none';
+  const fb = document.getElementById('fb' + qi);
+  fb.className = 'feedback show ' + (correct ? 'ok' : 'bad');
+  fb.innerHTML = `<strong>${correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${MCQ[qi].fb}`;
+  document.getElementById('q' + qi).classList.add('answered');
+  updateScoreBar();
+  checkFinished();
+}
+
+function selectTF(qi, val) {
+  if (answers[qi] !== undefined) return;
+  const tfIdx = qi - 10;
+  document.querySelectorAll(`[data-q="${qi}"].tf-btn`).forEach(b => b.classList.remove('selected'));
+  document.querySelector(`[data-q="${qi}"][data-val="${val}"]`).classList.add('selected');
+
+  answers[qi] = val;
+  const correct = TF[tfIdx].ans === val;
+  if (correct) scores.score++;
+  scores.answered++;
+
+  document.querySelectorAll(`[data-q="${qi}"].tf-btn`).forEach(b => {
+    b.classList.add('locked');
+    if (b.dataset.val === TF[tfIdx].ans) b.classList.add(correct ? 'correct' : 'reveal-correct');
+    if (b.dataset.val === val && !correct) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fb' + qi);
+  fb.className = 'feedback show ' + (correct ? 'ok' : 'bad');
+  fb.innerHTML = `<strong>${correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${TF[tfIdx].fb}`;
+  document.getElementById('q' + qi).classList.add('answered');
+  updateScoreBar();
+  checkFinished();
+}
+
+function updateScoreBar() {
+  document.getElementById('sb-score').textContent = scores.score;
+  document.getElementById('sb-ans').textContent = scores.answered;
+  document.getElementById('sb-prog-lbl').textContent = scores.answered + ' / 20';
+  document.getElementById('sb-prog-fill').style.width = (scores.answered / 20 * 100) + '%';
+}
+
+function checkFinished() {
+  if (scores.answered < 20) return;
+  const s = scores.score;
+  try {
+    const prev = parseInt(localStorage.getItem(SCORE_KEY) || '0');
+    if (s > prev) localStorage.setItem(SCORE_KEY, s);
+  } catch(e){}
+
+  let emoji, msg, sub;
+  if (s >= 18)      { emoji = '🏆'; msg = 'Outstanding!';    sub = 'You have mastered this topic.'; }
+  else if (s >= 14) { emoji = '🎉'; msg = 'Great work!';     sub = 'Just a few things to brush up on.'; }
+  else if (s >= 10) { emoji = '📚'; msg = 'Good effort!';    sub = 'Re-read the revision sheet and try again.'; }
+  else              { emoji = '💪'; msg = 'Keep going!';     sub = 'Go back to the revision sheet — you\'ll get there!'; }
+
+  const box = document.getElementById('result-box');
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = s;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-sub').textContent = sub;
+  document.getElementById('res-mum').textContent = 'Show this to mum — ' + s + '/20';
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  scores = { score: 0, answered: 0 };
+  answers = {};
+  document.getElementById('mcq').innerHTML = '';
+  document.getElementById('tf-container').innerHTML = '';
+  document.getElementById('result-box').classList.remove('show');
+  updateScoreBar();
+  buildMCQ(); buildTF();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildMCQ();
+buildTF();
+</script>
+</body>
+</html>

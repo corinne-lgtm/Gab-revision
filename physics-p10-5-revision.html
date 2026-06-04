@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.5 Forces and Elasticity — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d2b45;
+    --muted: #4a6d8c;
+    --paper: #ffffff;
+    --line: #c5dff0;
+    --accent: #64b5f6;
+    --accent2: #1e88e5;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --yellow: #f9a825;
+    --yellow2: #fffde7;
+    --navy: #0d2b45;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    padding-bottom: 60px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d2b45 0%, #1a4a72 55%, #1565c0 100%);
+    color: white;
+    padding: 36px 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .hero-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--paper);
+    border-bottom: 2px solid var(--line);
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 16px;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* ── CHECKLIST ── */
+  .checklist-section {
+    background: var(--paper);
+    margin: 24px 20px 0;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .checklist-header {
+    background: var(--navy);
+    color: white;
+    padding: 14px 20px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checklist-progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+  }
+  .checklist-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width .4s ease;
+  }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item:hover { background: var(--bg); }
+  .checklist-item input[type=checkbox] {
+    width: 18px; height: 18px;
+    accent-color: var(--accent2);
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .checklist-item label {
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .checklist-item.done label { text-decoration: line-through; color: var(--muted); }
+  .progress-count { font-size: 12px; color: var(--accent); margin-left: auto; font-family: 'DM Mono', monospace; }
+
+  /* ── LAYOUT ── */
+  .content { padding: 0 20px; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 28px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ── BIG IDEA GRID ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .big-idea-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    border-top: 4px solid var(--accent2);
+  }
+  .big-idea-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .big-idea-card h3 { font-family: 'Syne', sans-serif; font-size: 14px; margin-bottom: 6px; }
+  .big-idea-card p { font-size: 13px; color: var(--muted); }
+
+  /* ── FORMULA HIGHLIGHT ── */
+  .formula-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 12px;
+  }
+  .formula-box .formula {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 10px 0;
+    letter-spacing: 0.05em;
+  }
+  .formula-box .legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .formula-box .legend-item {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    display: flex;
+    gap: 6px;
+  }
+  .formula-box .legend-item strong { color: var(--accent); }
+
+  /* ── STATEMENT BOX ── */
+  .statement-box {
+    border-left: 4px solid var(--accent2);
+    background: var(--paper);
+    padding: 14px 18px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: var(--green2);
+    border: 1px solid #a5d6a7;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px;
+  }
+  .exam-tip .tip-icon { font-size: 18px; flex-shrink: 0; }
+  .exam-tip .tip-body { font-size: 13px; }
+  .exam-tip .tip-body strong { color: var(--green); display: block; margin-bottom: 2px; }
+
+  /* ── WARNING BOX ── */
+  .warning-box {
+    background: var(--red2);
+    border: 1px solid #ef9a9a;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px;
+  }
+  .warning-box .warn-icon { font-size: 18px; flex-shrink: 0; }
+  .warning-box .warn-body { font-size: 13px; }
+  .warning-box .warn-body strong { color: var(--red); display: block; margin-bottom: 2px; }
+
+  /* ── COMPARE ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .compare-col {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .compare-col .col-head {
+    padding: 10px 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
+  .compare-col .col-head.elastic { background: #1565c0; }
+  .compare-col .col-head.inelastic { background: #c62828; }
+  .compare-col ul {
+    list-style: none;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .compare-col ul li {
+    font-size: 13px;
+    padding-left: 14px;
+    position: relative;
+    color: var(--muted);
+  }
+  .compare-col ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* ── TILES ── */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .tile {
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+  .tile h4 { font-family: 'Syne', sans-serif; font-size: 13px; margin-bottom: 5px; }
+  .tile.red { background: var(--red2); border: 1px solid #ef9a9a; }
+  .tile.red h4 { color: var(--red); }
+  .tile.orange { background: var(--orange2); border: 1px solid #ffcc80; }
+  .tile.orange h4 { color: var(--orange); }
+  .tile.blue { background: #e3f2fd; border: 1px solid #90caf9; }
+  .tile.blue h4 { color: #1565c0; }
+  .tile.green { background: var(--green2); border: 1px solid #a5d6a7; }
+  .tile.green h4 { color: var(--green); }
+  .tile.purple { background: var(--purple2); border: 1px solid #ce93d8; }
+  .tile.purple h4 { color: var(--purple); }
+  .tile.yellow { background: var(--yellow2); border: 1px solid #ffe082; }
+  .tile.yellow h4 { color: var(--yellow); }
+
+  /* ── UNITS TABLE ── */
+  .units-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+  .units-table thead tr {
+    background: var(--navy);
+    color: white;
+  }
+  .units-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  .units-table td {
+    padding: 10px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line);
+  }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table tr:nth-child(even) td { background: #f0f7ff; }
+  .mono { font-family: 'DM Mono', monospace; font-size: 13px; }
+
+  /* ── KEYWORDS ── */
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .keyword {
+    background: var(--paper);
+    border: 1.5px solid var(--accent);
+    color: var(--ink);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* ── INTERACTIVE CANVAS ── */
+  .canvas-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .canvas-card .canvas-head {
+    background: var(--navy);
+    color: white;
+    padding: 12px 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .canvas-card .canvas-body { padding: 18px; }
+  canvas#hookesCanvas {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .slider-row label { font-size: 13px; font-weight: 500; color: var(--muted); }
+  input[type=range] {
+    flex: 1;
+    min-width: 120px;
+    accent-color: var(--accent2);
+  }
+  .slider-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent2);
+    min-width: 60px;
+  }
+  .calc-result {
+    margin-top: 12px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── MARK AS READ ── */
+  .mark-read-btn {
+    display: block;
+    margin: 28px auto 0;
+    background: var(--accent2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 32px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    letter-spacing: 0.03em;
+  }
+  .mark-read-btn:hover { background: #1a5ca8; transform: translateY(-1px); }
+  .mark-read-btn.done { background: var(--green); }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy), #1565c0);
+    color: white;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .quiz-cta h3 { font-family: 'Syne', sans-serif; font-size: 18px; margin-bottom: 4px; }
+  .quiz-cta p { font-size: 13px; opacity: 0.8; }
+  .quiz-cta-btn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .quiz-cta-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 480px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .hero { padding: 24px 18px 20px; }
+    .content { padding: 0 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">GCSE PHYSICS</div>
+  <div class="hero-kicker">P10 Force and Motion · Topic 5</div>
+  <h1>Forces &amp; Elasticity</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">🔗 Hooke's Law</span>
+    <span class="hero-tag">📏 Extension</span>
+    <span class="hero-tag">🌀 Spring Constant</span>
+    <span class="hero-tag">⚠️ Limit of Proportionality</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#objectives">Objectives</a>
+  <a href="#keyfacts">Key Facts</a>
+  <a href="#formula">Formula</a>
+  <a href="#graph">Graph</a>
+  <a href="#keywords">Keywords</a>
+  <a href="#calculator">Calculator</a>
+</nav>
+
+<!-- CHECKLIST -->
+<div class="checklist-section" id="objectives">
+  <div class="checklist-header">
+    ✅ Learning Objectives
+    <span class="progress-count" id="progressCount">0 / 4</span>
+  </div>
+  <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="checklist-item" id="ci0" onclick="toggleCheck(0)">
+    <input type="checkbox" id="cb0"> <label for="cb0">What is meant when an object is called elastic</label>
+  </div>
+  <div class="checklist-item" id="ci1" onclick="toggleCheck(1)">
+    <input type="checkbox" id="cb1"> <label for="cb1">How to measure the extension of an object when it is stretched</label>
+  </div>
+  <div class="checklist-item" id="ci2" onclick="toggleCheck(2)">
+    <input type="checkbox" id="cb2"> <label for="cb2">How the extension of a spring changes with the force applied to it</label>
+  </div>
+  <div class="checklist-item" id="ci3" onclick="toggleCheck(3)">
+    <input type="checkbox" id="cb3"> <label for="cb3">What is meant by the limit of proportionality of a spring</label>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- BIG IDEAS -->
+  <div class="section-title" id="keyfacts">🧠 Big Ideas</div>
+  <div class="big-idea-grid">
+    <div class="big-idea-card">
+      <div class="icon">🔄</div>
+      <h3>Elastic Objects</h3>
+      <p>Return to their original shape when deforming forces are removed (rubber bands, springs).</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">📦</div>
+      <h3>Inelastic Objects</h3>
+      <p>Do <em>not</em> return to their original shape — permanently deformed (e.g. polythene bag).</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">📐</div>
+      <h3>Extension</h3>
+      <p>The increase in length from the original length when a force is applied.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">📈</div>
+      <h3>Hooke's Law</h3>
+      <p>Extension is directly proportional to force — as long as the limit of proportionality is not exceeded.</p>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="section-title" id="formula">⚡ Hooke's Law Formula</div>
+  <div class="formula-box">
+    <div style="font-size:13px;opacity:0.7;margin-bottom:4px;">Force = spring constant × extension</div>
+    <div class="formula">F = k × e</div>
+    <div class="legend">
+      <div class="legend-item"><strong>F</strong> = Force (newtons, N)</div>
+      <div class="legend-item"><strong>k</strong> = Spring constant (N/m)</div>
+      <div class="legend-item"><strong>e</strong> = Extension (metres, m)</div>
+    </div>
+  </div>
+
+  <div class="statement-box">
+    The spring constant <em>k</em> equals the force needed per unit extension. A stiffer spring has a <strong>higher</strong> spring constant.
+  </div>
+
+  <div class="exam-tip">
+    <div class="tip-icon">💡</div>
+    <div class="tip-body">
+      <strong>Exam Tip — Finding k from a graph</strong>
+      Plot Force (F) on the y-axis and extension (e) on the x-axis. The gradient of the straight line = spring constant k.
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <div class="warn-icon">⚠️</div>
+    <div class="warn-body">
+      <strong>Limit of Proportionality</strong>
+      Once exceeded, extension is no longer proportional to force — the relationship becomes non-linear. Hooke's Law no longer applies.
+    </div>
+  </div>
+
+  <!-- GRAPH SECTION -->
+  <div class="section-title" id="graph">📊 Graph Behaviour</div>
+  <div class="tiles">
+    <div class="tile blue">
+      <h4>Steel Spring</h4>
+      Straight line through origin — high limit of proportionality. Stays linear for much longer.
+    </div>
+    <div class="tile orange">
+      <h4>Rubber Band</h4>
+      Low limit of proportionality — quickly becomes non-linear after a small force.
+    </div>
+    <div class="tile red">
+      <h4>Polythene Strip</h4>
+      Very low limit — extension is non-linear at low forces. Inelastic (doesn't recover).
+    </div>
+    <div class="tile green">
+      <h4>Direct Proportion</h4>
+      Doubling the weight doubles the extension — only true before the limit of proportionality.
+    </div>
+  </div>
+
+  <!-- ELASTIC vs INELASTIC -->
+  <div class="section-title">⚖️ Elastic vs Inelastic Deformation</div>
+  <div class="compare-grid">
+    <div class="compare-col">
+      <div class="col-head elastic">✅ Elastic</div>
+      <ul>
+        <li>Returns to original shape</li>
+        <li>Deformation is temporary</li>
+        <li>Example: spring, rubber band</li>
+        <li>Elastic potential energy stored</li>
+      </ul>
+    </div>
+    <div class="compare-col">
+      <div class="col-head inelastic">✗ Inelastic</div>
+      <ul>
+        <li>Does <em>not</em> return to original shape</li>
+        <li>Deformation is permanent</li>
+        <li>Example: polythene bag</li>
+        <li>Energy is dissipated as heat</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- UNITS TABLE -->
+  <div class="section-title">📋 Units Summary</div>
+  <table class="units-table">
+    <thead>
+      <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Force</td>
+        <td class="mono">F</td>
+        <td>Newtons (N)</td>
+        <td>Applied to spring</td>
+      </tr>
+      <tr>
+        <td>Spring constant</td>
+        <td class="mono">k</td>
+        <td>N/m</td>
+        <td>Stiffness measure</td>
+      </tr>
+      <tr>
+        <td>Extension</td>
+        <td class="mono">e</td>
+        <td>Metres (m)</td>
+        <td>Length added − original length</td>
+      </tr>
+      <tr>
+        <td>Original length</td>
+        <td class="mono">L₀</td>
+        <td>Metres (m)</td>
+        <td>Measured with no load</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- KEYWORDS -->
+  <div class="section-title" id="keywords">🔑 Keywords</div>
+  <div class="keywords">
+    <span class="keyword">Elastic</span>
+    <span class="keyword">Inelastic</span>
+    <span class="keyword">Extension</span>
+    <span class="keyword">Compression</span>
+    <span class="keyword">Spring constant (k)</span>
+    <span class="keyword">Hooke's Law</span>
+    <span class="keyword">Limit of proportionality</span>
+    <span class="keyword">Directly proportional</span>
+    <span class="keyword">Non-linear</span>
+    <span class="keyword">Elastic potential energy</span>
+  </div>
+
+  <!-- INTERACTIVE CALCULATOR -->
+  <div class="section-title" id="calculator">🧮 Hooke's Law Calculator</div>
+  <div class="canvas-card">
+    <div class="canvas-head">📈 Interactive F–e Graph + Calculator</div>
+    <div class="canvas-body">
+      <canvas id="hookesCanvas" width="480" height="260"></canvas>
+      <div class="slider-row">
+        <label>Spring constant k:</label>
+        <input type="range" id="kSlider" min="5" max="50" value="25" oninput="updateCalc()">
+        <span class="slider-val" id="kVal">25 N/m</span>
+      </div>
+      <div class="slider-row">
+        <label>Extension e:</label>
+        <input type="range" id="eSlider" min="0" max="0.2" step="0.01" value="0.08" oninput="updateCalc()">
+        <span class="slider-val" id="eVal">0.08 m</span>
+      </div>
+      <div class="calc-result" id="calcResult">F = 25 × 0.08 = 2.00 N</div>
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <div class="tip-icon">📝</div>
+    <div class="tip-body">
+      <strong>Exam Tip — Extension vs Total Length</strong>
+      Extension = current length − original length. Don't confuse total length with extension — the question will usually give you the original length separately.
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <div class="tip-icon">🔁</div>
+    <div class="tip-body">
+      <strong>Exam Tip — Compression</strong>
+      Hooke's Law also applies when a spring is <em>compressed</em>. In this case, the change in length is a compression, not an extension.
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <div>
+      <h3>Ready to test yourself?</h3>
+      <p>Try the quick check quiz for P10.5</p>
+    </div>
+    <button class="quiz-cta-btn" onclick="alert('Open physics-p10-5-quickcheck.html')">Start Quiz →</button>
+  </div>
+
+  <!-- MARK AS READ -->
+  <button class="mark-read-btn" id="markReadBtn" onclick="markRead()">Mark as Read ✓</button>
+</div>
+
+<script>
+  const STORAGE_KEY = 'physics-p10-5-read';
+  const CHECK_KEY = 'physics-p10-5-checks';
+  const TOTAL = 4;
+
+  // ── Checklist ──
+  function loadChecks() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CHECK_KEY) || '[]');
+      saved.forEach(i => {
+        document.getElementById('cb'+i).checked = true;
+        document.getElementById('ci'+i).classList.add('done');
+      });
+      updateProgress();
+    } catch(e) {}
+  }
+
+  function toggleCheck(i) {
+    const cb = document.getElementById('cb'+i);
+    const ci = document.getElementById('ci'+i);
+    cb.checked = !cb.checked;
+    ci.classList.toggle('done', cb.checked);
+    saveChecks();
+    updateProgress();
+  }
+
+  function saveChecks() {
+    const checked = [];
+    for(let i=0;i<TOTAL;i++) if(document.getElementById('cb'+i).checked) checked.push(i);
+    localStorage.setItem(CHECK_KEY, JSON.stringify(checked));
+  }
+
+  function updateProgress() {
+    let count = 0;
+    for(let i=0;i<TOTAL;i++) if(document.getElementById('cb'+i).checked) count++;
+    document.getElementById('progressCount').textContent = count+' / '+TOTAL;
+    document.getElementById('progressFill').style.width = (count/TOTAL*100)+'%';
+  }
+
+  // ── Mark as Read ──
+  function markRead() {
+    localStorage.setItem(STORAGE_KEY, 'true');
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '✓ Marked as Read';
+    btn.classList.add('done');
+  }
+
+  if(localStorage.getItem(STORAGE_KEY)==='true') {
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '✓ Marked as Read';
+    btn.classList.add('done');
+  }
+
+  loadChecks();
+
+  // ── Hooke's Law Graph + Calculator ──
+  function updateCalc() {
+    const k = parseFloat(document.getElementById('kSlider').value);
+    const e = parseFloat(document.getElementById('eSlider').value);
+    document.getElementById('kVal').textContent = k+' N/m';
+    document.getElementById('eVal').textContent = e.toFixed(2)+' m';
+    const F = k * e;
+    document.getElementById('calcResult').textContent = 'F = '+k+' × '+e.toFixed(2)+' = '+F.toFixed(2)+' N';
+    drawGraph(k, e);
+  }
+
+  function drawGraph(k, e) {
+    const canvas = document.getElementById('hookesCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const pad = { top: 20, right: 20, bottom: 40, left: 52 };
+    const gW = W - pad.left - pad.right;
+    const gH = H - pad.top - pad.bottom;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = '#f8fbff';
+    ctx.fillRect(0, 0, W, H);
+
+    const eMax = 0.2;
+    const fMax = k * eMax * 1.1;
+
+    // Axes
+    ctx.strokeStyle = '#0d2b45';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top);
+    ctx.lineTo(pad.left, pad.top + gH);
+    ctx.lineTo(pad.left + gW, pad.top + gH);
+    ctx.stroke();
+
+    // Grid lines
+    ctx.strokeStyle = '#c5dff0';
+    ctx.lineWidth = 0.5;
+    for(let i=1;i<=5;i++) {
+      const x = pad.left + (i/5)*gW;
+      const y = pad.top + (i/5)*gH;
+      ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top+gH); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left+gW, y); ctx.stroke();
+    }
+
+    // Axis labels
+    ctx.fillStyle = '#4a6d8c';
+    ctx.font = '11px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    for(let i=0;i<=5;i++) {
+      const xVal = (eMax*i/5*1000).toFixed(0);
+      ctx.fillText(xVal, pad.left+(i/5)*gW, pad.top+gH+14);
+    }
+    ctx.fillStyle = '#4a6d8c';
+    ctx.textAlign = 'right';
+    for(let i=0;i<=5;i++) {
+      const yVal = (fMax*(1-i/5)).toFixed(1);
+      ctx.fillText(yVal, pad.left-6, pad.top+(i/5)*gH+4);
+    }
+    ctx.fillStyle = '#0d2b45';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 12px DM Sans, sans-serif';
+    ctx.fillText('Extension e (mm)', pad.left+gW/2, H-4);
+    ctx.save();
+    ctx.translate(13, pad.top+gH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('Force F (N)', 0, 0);
+    ctx.restore();
+
+    // Hooke's line
+    ctx.strokeStyle = '#1e88e5';
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top + gH);
+    ctx.lineTo(pad.left + (eMax/eMax)*gW, pad.top + gH - (k*eMax/fMax)*gH);
+    ctx.stroke();
+
+    // Current point
+    const px = pad.left + (e/eMax)*gW;
+    const py = pad.top + gH - (k*e/fMax)*gH;
+    // Dashed lines to axes
+    ctx.strokeStyle = '#90caf9';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, pad.top+gH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(pad.left, py); ctx.stroke();
+    ctx.setLineDash([]);
+    // Dot
+    ctx.fillStyle = '#e53935';
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(px, py, 3, 0, Math.PI*2);
+    ctx.fill();
+
+    // Label
+    ctx.fillStyle = '#e53935';
+    ctx.font = 'bold 12px DM Mono, monospace';
+    ctx.textAlign = 'left';
+    const F = k * e;
+    ctx.fillText('F='+F.toFixed(1)+'N', Math.min(px+8, W-80), Math.max(py-8, pad.top+16));
+  }
+
+  updateCalc();
+</script>
+
+</body>
+</html>

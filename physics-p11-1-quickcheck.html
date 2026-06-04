@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.1 Quick Check — The Nature of Waves</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b5e;
+    --muted: #5a7a94;
+    --line: #c9dff0;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #26a69a;
+    --green2: #e0f2f1;
+    --orange: #ffa726;
+    --orange2: #fff3e0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(140deg, #0d2b5e 0%, #1a4a8a 55%, #0d4f6e 100%);
+    color: white;
+    padding: 28px 24px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 20px,
+      rgba(100,181,246,0.05) 20px, rgba(100,181,246,0.05) 21px
+    );
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 1.0;
+    margin-bottom: 4px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 13px; opacity: 0.65; margin-bottom: 16px; }
+
+  /* SCORE BAR */
+  .score-bar {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 14px 0 0;
+  }
+  .score-cell {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid rgba(100,181,246,0.2);
+  }
+  .score-cell-label { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+  .score-cell-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 26px; color: var(--accent); }
+  .score-cell-val span { font-size: 14px; opacity: 0.6; font-weight: 600; }
+
+  .progress-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 14px 0 18px;
+  }
+  .progress-track { background: rgba(255,255,255,0.12); border-radius: 10px; height: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #00e5ff); border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+  .progress-label { font-size: 11px; opacity: 0.55; margin-top: 5px; }
+
+  /* QUESTIONS */
+  .questions { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong { border-color: var(--red); }
+
+  .q-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 14px 10px;
+  }
+  .q-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    color: var(--accent);
+    background: var(--navy);
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .q-type {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .q-text { font-size: 14px; font-weight: 500; line-height: 1.45; }
+
+  /* MCQ OPTIONS */
+  .q-options { padding: 0 14px 12px; display: flex; flex-direction: column; gap: 6px; }
+  .opt-btn {
+    width: 100%;
+    text-align: left;
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: all 0.15s;
+    color: var(--ink);
+  }
+  .opt-btn:hover:not(:disabled) { background: #dceefb; border-color: var(--accent); }
+  .opt-btn .opt-letter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    min-width: 20px;
+    height: 20px;
+    background: var(--navy);
+    color: var(--accent);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .opt-btn.selected { border-color: var(--navy); background: #dceefb; }
+  .opt-btn.correct-opt { background: var(--green2); border-color: var(--green); }
+  .opt-btn.correct-opt .opt-letter { background: var(--green); color: white; }
+  .opt-btn.wrong-opt { background: var(--red2); border-color: var(--red); }
+  .opt-btn.wrong-opt .opt-letter { background: var(--red); color: white; }
+  .opt-btn:disabled { cursor: default; }
+
+  /* TRUE/FALSE */
+  .tf-wrap { padding: 0 14px 12px; display: flex; gap: 8px; }
+  .tf-btn {
+    flex: 1;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    background: var(--bg);
+    color: var(--ink);
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #dceefb; }
+  .tf-btn.selected { border-color: var(--navy); background: #dceefb; }
+  .tf-btn.correct-opt { background: var(--green2); border-color: var(--green); color: var(--green); }
+  .tf-btn.wrong-opt { background: var(--red2); border-color: var(--red); color: var(--red); }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .q-feedback {
+    display: none;
+    margin: 0 14px 12px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .q-feedback.show { display: block; }
+  .q-feedback.correct { background: var(--green2); color: #004d40; border-left: 4px solid var(--green); }
+  .q-feedback.wrong { background: var(--red2); color: #b71c1c; border-left: 4px solid var(--red); }
+  .q-feedback strong { font-weight: 600; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    margin: 0 16px 32px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+  }
+  .result-box.show { display: block; }
+  .result-hero {
+    background: linear-gradient(135deg, #0d2b5e, #1a4a8a);
+    color: white;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .result-emoji { font-size: 48px; margin-bottom: 8px; }
+  .result-score {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .result-score span { font-size: 24px; opacity: 0.6; }
+  .result-msg { font-size: 15px; opacity: 0.85; margin-bottom: 6px; }
+  .result-mum {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    background: var(--accent);
+    color: var(--navy);
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+  .result-body { background: var(--paper); padding: 16px 20px; }
+  .result-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .rb-cell { background: var(--bg); border-radius: 8px; padding: 10px; text-align: center; }
+  .rb-cell-label { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .rb-cell-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 22px; }
+  .rb-cell-val.green { color: var(--green); }
+  .rb-cell-val.red { color: var(--red); }
+  .reset-btn {
+    width: 100%;
+    background: var(--navy);
+    color: white;
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    padding: 13px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .reset-btn:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="badge">⚡ Quick Check</div>
+    <h1>P11.1 <span>Nature</span><br>of Waves</h1>
+    <div class="hero-sub">20 questions · MCQ + True/False · Physics GCSE</div>
+  </div>
+  <div class="score-bar">
+    <div class="score-cell">
+      <div class="score-cell-label">Score</div>
+      <div class="score-cell-val" id="scoreVal">0 <span>/ 20</span></div>
+    </div>
+    <div class="score-cell">
+      <div class="score-cell-label">Answered</div>
+      <div class="score-cell-val" id="answeredVal">0 <span>/ 20</span></div>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">Answer all 20 questions to see your result</div>
+  </div>
+</div>
+
+<div class="questions" id="questionsWrap"></div>
+<div class="result-box" id="resultBox">
+  <div class="result-hero">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-mum" id="resultMum"></div>
+  </div>
+  <div class="result-body">
+    <div class="result-breakdown">
+      <div class="rb-cell">
+        <div class="rb-cell-label">Correct</div>
+        <div class="rb-cell-val green" id="rbCorrect">—</div>
+      </div>
+      <div class="rb-cell">
+        <div class="rb-cell-label">Wrong</div>
+        <div class="rb-cell-val red" id="rbWrong">—</div>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz()">↺ Try Again</button>
+  </div>
+</div>
+
+<script>
+const SCORE_KEY = 'physics-p11-1-quiz-score';
+
+const questions = [
+  // MCQ (10)
+  {
+    type: 'mcq',
+    text: 'What do waves transfer from one place to another?',
+    options: ['Matter and energy', 'Energy and information', 'Only matter', 'Only information'],
+    ans: 'B',
+    feedback: 'Waves transfer energy and information — they do NOT transfer matter. The medium (e.g. water, air) stays in place.'
+  },
+  {
+    type: 'mcq',
+    text: 'In a transverse wave, how do the oscillations relate to the direction of energy transfer?',
+    options: ['Parallel to energy transfer', 'Perpendicular to energy transfer', 'At 45° to energy transfer', 'There are no oscillations'],
+    ans: 'B',
+    feedback: 'Transverse wave oscillations are perpendicular (at right angles) to the direction of energy transfer. Think of a rope moved up and down.'
+  },
+  {
+    type: 'mcq',
+    text: 'Which of the following is an example of a longitudinal wave?',
+    options: ['Light from a torch', 'Water ripples on a pond', 'Sound travelling through air', 'A wave on a guitar string'],
+    ans: 'C',
+    feedback: 'Sound waves are longitudinal — the air particles oscillate parallel to the direction the sound travels, creating compressions and rarefactions.'
+  },
+  {
+    type: 'mcq',
+    text: 'What is a compression in a longitudinal wave?',
+    options: ['Where particles are spread far apart', 'Where particles are pushed close together', 'The peak of the wave', 'The trough of the wave'],
+    ans: 'B',
+    feedback: 'A compression is where the coils (or air particles) are squashed together. Rarefaction is where they are spread apart.'
+  },
+  {
+    type: 'mcq',
+    text: 'Which type of wave requires a medium (substance) to travel through?',
+    options: ['Electromagnetic waves only', 'Both mechanical and electromagnetic', 'Mechanical waves only', 'Neither type needs a medium'],
+    ans: 'C',
+    feedback: 'Mechanical waves need a medium. Electromagnetic waves can travel through a vacuum (e.g. light from the Sun reaches Earth through space).'
+  },
+  {
+    type: 'mcq',
+    text: 'At what speed do all electromagnetic waves travel through a vacuum?',
+    options: ['300 km/s', '300,000 km/s', '3,000 km/s', '30,000 km/s'],
+    ans: 'B',
+    feedback: 'All EM waves travel at 300,000 kilometres per second (3 × 10⁸ m/s) through a vacuum. This is the speed of light.'
+  },
+  {
+    type: 'mcq',
+    text: 'A student ties a ribbon to the middle of a rope and moves one end up and down. What does the ribbon do?',
+    options: ['Travels along the rope', 'Moves up and down only', 'Moves towards the student', 'Stays completely still'],
+    ans: 'B',
+    feedback: 'The ribbon moves up and down (oscillates) but does not travel along the rope. This shows waves transfer energy, not matter.'
+  },
+  {
+    type: 'mcq',
+    text: 'Which of these is a transverse wave?',
+    options: ['Sound in air', 'Seismic P-waves deep underground', 'Microwaves', 'Sound in water'],
+    ans: 'C',
+    feedback: 'Microwaves are electromagnetic waves, and all EM waves are transverse. Sound waves (in any medium) are longitudinal.'
+  },
+  {
+    type: 'mcq',
+    text: 'When a tuning fork vibrates in air, why is no vacuum created around it?',
+    options: ['Because the air moves away with the sound', 'Because the air itself oscillates but does not travel away', 'Because tuning forks are too slow', 'Because vacuums only form in space'],
+    ans: 'B',
+    feedback: 'The air particles oscillate back and forth around their rest positions — they do not travel away from the tuning fork, so no vacuum is created.'
+  },
+  {
+    type: 'mcq',
+    text: 'A slinky is pushed in and out from one end repeatedly. What type of wave does this produce?',
+    options: ['Transverse', 'Electromagnetic', 'Longitudinal', 'Surface'],
+    ans: 'C',
+    feedback: 'Pushing and pulling a slinky creates a longitudinal wave. The coils oscillate parallel to the direction of energy travel, with visible compressions and rarefactions.'
+  },
+  // TRUE/FALSE (10)
+  {
+    type: 'tf',
+    text: 'Electromagnetic waves can travel through a vacuum.',
+    ans: 'true',
+    feedback: 'TRUE. EM waves (light, radio, microwaves, etc.) do not need a medium — they travel through empty space at 300,000 km/s.'
+  },
+  {
+    type: 'tf',
+    text: 'Sound waves are transverse waves.',
+    ans: 'false',
+    feedback: 'FALSE. Sound waves are longitudinal — the air particles oscillate parallel to the direction of energy transfer.'
+  },
+  {
+    type: 'tf',
+    text: 'In a transverse wave, the oscillations are perpendicular to the direction of energy transfer.',
+    ans: 'true',
+    feedback: 'TRUE. This is the definition of a transverse wave. Perpendicular means at right angles (90°).'
+  },
+  {
+    type: 'tf',
+    text: 'Water molecules move along the surface of a pond as a wave passes.',
+    ans: 'false',
+    feedback: 'FALSE. Water molecules oscillate up and down as the wave passes — they do not travel with the wave. Waves transfer energy, not matter.'
+  },
+  {
+    type: 'tf',
+    text: 'Mechanical waves can be both transverse and longitudinal.',
+    ans: 'true',
+    feedback: 'TRUE. Mechanical waves need a medium but can be either type. Waves on a rope are transverse; sound waves are longitudinal.'
+  },
+  {
+    type: 'tf',
+    text: 'A rarefaction is where particles in a longitudinal wave are squeezed close together.',
+    ans: 'false',
+    feedback: 'FALSE. A rarefaction is where particles are spread far apart. A compression is where they are squeezed together.'
+  },
+  {
+    type: 'tf',
+    text: 'Light waves are an example of electromagnetic waves.',
+    ans: 'true',
+    feedback: 'TRUE. Visible light is part of the electromagnetic spectrum, along with radio waves, microwaves, infrared, UV, X-rays, and gamma rays.'
+  },
+  {
+    type: 'tf',
+    text: 'When a ribbon tied to a rope vibrates, it shows that matter travels along with the wave.',
+    ans: 'false',
+    feedback: 'FALSE. The ribbon moves up and down only — it does not travel along the rope. This demonstrates that waves transfer energy, not matter.'
+  },
+  {
+    type: 'tf',
+    text: 'All electromagnetic waves travel at the same speed through a vacuum.',
+    ans: 'true',
+    feedback: 'TRUE. All EM waves travel at exactly 300,000 km/s (3 × 10⁸ m/s) through a vacuum, regardless of their frequency or wavelength.'
+  },
+  {
+    type: 'tf',
+    text: 'Sound waves travel through a vacuum because they are so powerful.',
+    ans: 'false',
+    feedback: 'FALSE. Sound waves cannot travel through a vacuum at all. They are mechanical waves and need a medium (like air, water, or solid) to propagate.'
+  }
+];
+
+let state = {}; // { qIndex: { answered: bool, correct: bool, chosen: 'A'/'true'/etc } }
+let score = 0;
+let answered = 0;
+
+function buildQuiz() {
+  const wrap = document.getElementById('questionsWrap');
+  wrap.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q' + i;
+
+    const head = document.createElement('div');
+    head.className = 'q-head';
+    head.innerHTML = `<div class="q-num">${i + 1}</div>
+      <div>
+        <div class="q-type">${q.type === 'mcq' ? 'Multiple Choice' : 'True / False'}</div>
+        <div class="q-text">${q.text}</div>
+      </div>`;
+    block.appendChild(head);
+
+    if (q.type === 'mcq') {
+      const opts = document.createElement('div');
+      opts.className = 'q-options';
+      const letters = ['A','B','C','D'];
+      q.options.forEach((opt, j) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.id = `q${i}opt${letters[j]}`;
+        btn.innerHTML = `<span class="opt-letter">${letters[j]}</span>${opt}`;
+        btn.onclick = () => selectMCQ(i, letters[j]);
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      const tf = document.createElement('div');
+      tf.className = 'tf-wrap';
+      ['true','false'].forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.id = `q${i}opt${val}`;
+        btn.textContent = val === 'true' ? '✓ True' : '✗ False';
+        btn.onclick = () => selectTF(i, val);
+        tf.appendChild(btn);
+      });
+      block.appendChild(tf);
+    }
+
+    const fb = document.createElement('div');
+    fb.className = 'q-feedback';
+    fb.id = 'fb' + i;
+    block.appendChild(fb);
+
+    wrap.appendChild(block);
+  });
+}
+
+function selectMCQ(i, letter) {
+  if (state[i]?.answered) return;
+  const q = questions[i];
+  const correct = letter === q.ans;
+  lockMCQ(i, letter, q.ans, correct);
+  recordAnswer(i, correct);
+}
+
+function lockMCQ(i, chosen, correct, isCorrect) {
+  const letters = ['A','B','C','D'];
+  letters.forEach(l => {
+    const btn = document.getElementById(`q${i}opt${l}`);
+    btn.disabled = true;
+    if (l === correct) btn.classList.add('correct-opt');
+    else if (l === chosen && !isCorrect) btn.classList.add('wrong-opt');
+  });
+}
+
+function selectTF(i, val) {
+  if (state[i]?.answered) return;
+  const q = questions[i];
+  const correct = val === q.ans;
+  ['true','false'].forEach(v => {
+    const btn = document.getElementById(`q${i}opt${v}`);
+    btn.disabled = true;
+    if (v === q.ans) btn.classList.add('correct-opt');
+    else if (v === val && !correct) btn.classList.add('wrong-opt');
+  });
+  recordAnswer(i, correct);
+}
+
+function recordAnswer(i, correct) {
+  state[i] = { answered: true, correct };
+  answered++;
+  if (correct) score++;
+
+  const block = document.getElementById('q' + i);
+  block.classList.add(correct ? 'correct' : 'wrong');
+
+  const fb = document.getElementById('fb' + i);
+  fb.className = 'q-feedback show ' + (correct ? 'correct' : 'wrong');
+  fb.innerHTML = (correct ? '✓ Correct! ' : '✗ Not quite. ') + '<strong>' + questions[i].feedback + '</strong>';
+
+  updateScoreBar();
+
+  if (answered === 20) {
+    setTimeout(showResult, 600);
+  }
+}
+
+function updateScoreBar() {
+  document.getElementById('scoreVal').innerHTML = score + ' <span>/ 20</span>';
+  document.getElementById('answeredVal').innerHTML = answered + ' <span>/ 20</span>';
+  const pct = Math.round(answered / 20 * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = answered < 20
+    ? `${20 - answered} question${20 - answered === 1 ? '' : 's'} remaining`
+    : 'All done!';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  document.getElementById('resultScore').innerHTML = score + ' <span>/ 20</span>';
+  document.getElementById('rbCorrect').textContent = score;
+  document.getElementById('rbWrong').textContent = 20 - score;
+
+  let emoji, msg;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! You really know your waves.'; }
+  else if (score >= 14) { emoji = '🎉'; msg = 'Great work — solid understanding!'; }
+  else if (score >= 10) { emoji = '📚'; msg = 'Good effort — review the topics you missed.'; }
+  else { emoji = '💪'; msg = 'Keep going — re-read the revision notes and try again!'; }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMum').textContent = `Show this to mum — ${score}/20`;
+
+  localStorage.setItem(SCORE_KEY, score);
+}
+
+function resetQuiz() {
+  state = {}; score = 0; answered = 0;
+  document.getElementById('resultBox').classList.remove('show');
+  updateScoreBar();
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuiz();
+updateScoreBar();
+</script>
+</body>
+</html>

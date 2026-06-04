@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.4 Momentum — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --accent2: #1e88e5;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b5e;
+    --muted: #5a7a94;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --yellow: #f9a825;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a8e 65%, var(--accent2) 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -30px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.13);
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 0.18rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .hero-kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  .hero h1 { font-size: 2rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.3rem; }
+  .hero-sub { font-size: 0.82rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .score-stat { color: white; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+  .score-stat span { color: var(--accent); font-size: 1rem; font-weight: 900; }
+  .progress-wrap { flex: 1; background: rgba(255,255,255,0.15); border-radius: 10px; height: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+
+  /* NAV */
+  nav {
+    background: #0a2040;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  nav a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.6rem 0.85rem;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    letter-spacing: 0.04em;
+  }
+  nav a.active { color: white; border-bottom-color: var(--accent); }
+
+  /* QUESTIONS */
+  .questions { padding: 1.2rem 1.2rem 2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.4rem 0;
+  }
+  .section-divider span {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    border-radius: 2px;
+  }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong { border-color: var(--red); }
+
+  .q-header { display: flex; gap: 0.6rem; align-items: flex-start; margin-bottom: 0.8rem; }
+  .q-num {
+    background: var(--navy);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    font-family: 'Fira Mono', monospace;
+  }
+  .q-text { font-size: 0.9rem; font-weight: 700; line-height: 1.45; }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.4rem; }
+  .opt-btn {
+    background: var(--bg);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 0.55rem 0.9rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .opt-btn:hover:not(:disabled) { background: #d6eaf8; border-color: var(--accent2); }
+  .opt-btn .opt-letter {
+    background: var(--navy);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    font-size: 0.68rem;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .opt-btn.selected { border-color: var(--accent2); background: #e3f2fd; }
+  .opt-btn.correct-ans { background: var(--green2) !important; border-color: var(--green) !important; color: var(--green) !important; }
+  .opt-btn.wrong-ans { background: var(--red2) !important; border-color: var(--red) !important; color: var(--red) !important; }
+  .opt-btn:disabled { cursor: default; }
+
+  /* TRUE/FALSE */
+  .tf-options { display: flex; gap: 0.6rem; }
+  .tf-btn {
+    flex: 1;
+    background: var(--bg);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 0.6rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .tf-btn:hover:not(:disabled) { background: #d6eaf8; border-color: var(--accent2); }
+  .tf-btn.selected { border-color: var(--accent2); background: #e3f2fd; }
+  .tf-btn.correct-ans { background: var(--green2) !important; border-color: var(--green) !important; color: var(--green) !important; }
+  .tf-btn.wrong-ans { background: var(--red2) !important; border-color: var(--red) !important; color: var(--red) !important; }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 0.6rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: none;
+    line-height: 1.4;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: var(--green); }
+  .feedback.wrong { background: var(--red2); color: var(--red); }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    margin: 1rem 1.2rem 2rem;
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    color: white;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3rem; margin-bottom: 0.6rem; }
+  .result-score { font-size: 2.5rem; font-weight: 900; color: var(--accent); margin-bottom: 0.4rem; }
+  .result-label { font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .result-msg { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 1.2rem; line-height: 1.5; }
+  .show-mum {
+    background: var(--accent);
+    color: var(--navy);
+    border-radius: 10px;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* RESET */
+  .reset-btn {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.4rem;
+  }
+  .reset-btn:hover { background: rgba(255,255,255,0.1); border-color: white; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Higher Tier · P10 Force and Motion</div>
+  <div class="hero-kicker">GCSE Physics</div>
+  <h1>P10.4 Momentum</h1>
+  <div class="hero-sub">Quick Check — 20 questions · MCQ + True/False</div>
+</div>
+
+<div class="score-bar">
+  <div class="score-stat">Score <span id="scoreVal">0</span></div>
+  <div class="score-stat">Answered <span id="answeredVal">0</span>/20</div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav>
+  <a href="#mcq" class="active">MCQ (1–10)</a>
+  <a href="#tf">True/False (11–20)</a>
+</nav>
+
+<div class="questions" id="questionsContainer"></div>
+<div class="result-box" id="resultBox"></div>
+
+<script>
+const SCORE_KEY = 'physics-p10-4-momentum-quiz-score';
+
+const questions = [
+  // MCQ (10)
+  {
+    id: 1, type: 'mcq',
+    text: 'What is the formula for momentum?',
+    options: ['p = m ÷ v', 'p = m × v', 'p = F × t', 'p = v ÷ m'],
+    correct: 'B',
+    feedback: 'Momentum p = mass × velocity. Both mass and velocity must be multiplied together.'
+  },
+  {
+    id: 2, type: 'mcq',
+    text: 'What is the unit of momentum?',
+    options: ['kg m/s²', 'N', 'kg m/s', 'J'],
+    correct: 'C',
+    feedback: 'Momentum is measured in kg m/s (kilogram metres per second).'
+  },
+  {
+    id: 3, type: 'mcq',
+    text: 'A 40 kg person runs at 6 m/s. What is their momentum?',
+    options: ['46 kg m/s', '240 kg m/s', '6.67 kg m/s', '34 kg m/s'],
+    correct: 'B',
+    feedback: 'p = 40 × 6 = 240 kg m/s.'
+  },
+  {
+    id: 4, type: 'mcq',
+    text: 'An 80 kg rugby player runs at a velocity of 5 m/s. What is his momentum?',
+    options: ['16 kg m/s', '85 kg m/s', '400 kg m/s', '40 kg m/s'],
+    correct: 'C',
+    feedback: 'p = 80 × 5 = 400 kg m/s.'
+  },
+  {
+    id: 5, type: 'mcq',
+    text: 'The same 400 kg m/s momentum is carried by a car of mass 800 kg. What is its velocity?',
+    options: ['0.5 m/s', '320000 m/s', '2 m/s', '5 m/s'],
+    correct: 'A',
+    feedback: 'v = p ÷ m = 400 ÷ 800 = 0.5 m/s.'
+  },
+  {
+    id: 6, type: 'mcq',
+    text: 'What is a "closed system" in terms of momentum?',
+    options: [
+      'A system with no moving objects',
+      'A system with no external resultant force acting on it',
+      'A system where all objects have the same mass',
+      'A system where no collisions occur'
+    ],
+    correct: 'B',
+    feedback: 'A closed system has no external resultant force, so total momentum is conserved.'
+  },
+  {
+    id: 7, type: 'mcq',
+    text: 'Trolley A (2 kg, 4 m/s) hits stationary trolley B (2 kg) and they stick together. What is their combined velocity?',
+    options: ['4 m/s', '8 m/s', '2 m/s', '1 m/s'],
+    correct: 'C',
+    feedback: 'p before = 2×4 = 8 kg m/s. Combined mass = 4 kg. v = 8÷4 = 2 m/s.'
+  },
+  {
+    id: 8, type: 'mcq',
+    text: 'Why is momentum described as a vector quantity?',
+    options: [
+      'Because it has a large numerical value',
+      'Because it has both magnitude and direction',
+      'Because it can only be positive',
+      'Because it is measured in kg'
+    ],
+    correct: 'B',
+    feedback: 'Vectors have both magnitude (size) and direction. Momentum depends on velocity which is a vector.'
+  },
+  {
+    id: 9, type: 'mcq',
+    text: 'A 60 kg skater moves away at 2.0 m/s after pushing off an 80 kg skater (both were at rest). What is the velocity of the 80 kg skater?',
+    options: ['2.0 m/s in the same direction', '1.5 m/s in the opposite direction', '1.5 m/s in the same direction', '2.5 m/s in the opposite direction'],
+    correct: 'B',
+    feedback: 'Total momentum = 0. So 80v + 60×2.0 = 0 → v = −1.5 m/s (opposite direction).'
+  },
+  {
+    id: 10, type: 'mcq',
+    text: 'In the law of conservation of momentum, what must be true about the system?',
+    options: [
+      'All objects must have equal mass',
+      'No external resultant force acts on the system',
+      'The objects must move in the same direction',
+      'No energy is transferred'
+    ],
+    correct: 'B',
+    feedback: 'Conservation of momentum applies only to closed systems — those with no external resultant force.'
+  },
+
+  // TRUE / FALSE (10)
+  {
+    id: 11, type: 'tf',
+    text: 'Momentum is a scalar quantity because it has no direction.',
+    correct: 'false',
+    feedback: 'FALSE — Momentum is a vector quantity. It has both magnitude and direction.'
+  },
+  {
+    id: 12, type: 'tf',
+    text: 'The unit of momentum is kg m/s.',
+    correct: 'true',
+    feedback: 'TRUE — kg m/s comes directly from the formula p = m (kg) × v (m/s).'
+  },
+  {
+    id: 13, type: 'tf',
+    text: 'In a closed system, the total momentum before a collision equals the total momentum after.',
+    correct: 'true',
+    feedback: 'TRUE — This is the law of conservation of momentum.'
+  },
+  {
+    id: 14, type: 'tf',
+    text: 'When two trolleys of equal mass collide and stick together, the combined velocity equals the original velocity.',
+    correct: 'false',
+    feedback: 'FALSE — The combined mass doubles, so velocity halves to conserve momentum.'
+  },
+  {
+    id: 15, type: 'tf',
+    text: 'In an explosion from rest, the two objects move apart with equal and opposite momentum.',
+    correct: 'true',
+    feedback: 'TRUE — Starting from zero total momentum, the two pieces must have equal and opposite momenta so the total remains zero.'
+  },
+  {
+    id: 16, type: 'tf',
+    text: 'A heavier object always has more momentum than a lighter one.',
+    correct: 'false',
+    feedback: 'FALSE — Momentum depends on both mass AND velocity. A light object moving very fast can have more momentum than a heavy slow object.'
+  },
+  {
+    id: 17, type: 'tf',
+    text: 'If two objects move in opposite directions, one momentum can be given a negative value.',
+    correct: 'true',
+    feedback: 'TRUE — We assign a positive direction; objects moving the other way get a negative momentum value.'
+  },
+  {
+    id: 18, type: 'tf',
+    text: 'Conservation of momentum only applies to collisions, not explosions.',
+    correct: 'false',
+    feedback: 'FALSE — Conservation of momentum applies to any event in a closed system, including explosions.'
+  },
+  {
+    id: 19, type: 'tf',
+    text: 'A stationary object has zero momentum.',
+    correct: 'true',
+    feedback: 'TRUE — p = m × v = m × 0 = 0.'
+  },
+  {
+    id: 20, type: 'tf',
+    text: 'The momentum of a 0.40 kg ball with 400 kg m/s momentum is the same as an 80 kg rugby player running at 5 m/s.',
+    correct: 'true',
+    feedback: 'TRUE — Ball: p = 0.40 × 1000 = 400 kg m/s. Rugby player: p = 80 × 5 = 400 kg m/s. Equal!'
+  }
+];
+
+let score = 0;
+let answered = 0;
+
+function updateScoreBar() {
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('answeredVal').textContent = answered;
+  document.getElementById('progressFill').style.width = (answered / 20 * 100) + '%';
+  if (answered === 20) showResult();
+}
+
+function buildQuiz() {
+  const container = document.getElementById('questionsContainer');
+  let html = '';
+
+  html += `<div class="section-divider"><span>Part 1 — Multiple Choice</span></div>`;
+
+  questions.forEach((q, idx) => {
+    if (q.id === 11) html += `<div class="section-divider"><span>Part 2 — True or False</span></div>`;
+
+    html += `<div class="q-block" id="qblock-${q.id}">
+      <div class="q-header">
+        <div class="q-num">Q${q.id}</div>
+        <div class="q-text">${q.text}</div>
+      </div>`;
+
+    if (q.type === 'mcq') {
+      html += `<div class="options">`;
+      ['A','B','C','D'].forEach((letter, i) => {
+        html += `<button class="opt-btn" id="opt-${q.id}-${letter}" onclick="answerMCQ(${q.id},'${letter}')">
+          <div class="opt-letter">${letter}</div>${q.options[i]}
+        </button>`;
+      });
+      html += `</div>`;
+    } else {
+      html += `<div class="tf-options">
+        <button class="tf-btn" id="tf-${q.id}-true" onclick="answerTF(${q.id},'true')">✓ True</button>
+        <button class="tf-btn" id="tf-${q.id}-false" onclick="answerTF(${q.id},'false')">✗ False</button>
+      </div>`;
+    }
+
+    html += `<div class="feedback" id="fb-${q.id}"></div></div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function answerMCQ(qid, chosen) {
+  const q = questions.find(x => x.id === qid);
+  if (!q) return;
+  const block = document.getElementById('qblock-' + qid);
+  if (block.dataset.answered) return;
+  block.dataset.answered = '1';
+
+  ['A','B','C','D'].forEach(l => {
+    const btn = document.getElementById('opt-' + qid + '-' + l);
+    btn.disabled = true;
+    if (l === q.correct) btn.classList.add('correct-ans');
+    else if (l === chosen) btn.classList.add('wrong-ans');
+  });
+
+  const isCorrect = chosen === q.correct;
+  if (isCorrect) score++;
+  answered++;
+
+  const fb = document.getElementById('fb-' + qid);
+  fb.textContent = (isCorrect ? '✓ Correct! ' : '✗ Incorrect. ') + q.feedback;
+  fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  updateScoreBar();
+}
+
+function answerTF(qid, chosen) {
+  const q = questions.find(x => x.id === qid);
+  if (!q) return;
+  const block = document.getElementById('qblock-' + qid);
+  if (block.dataset.answered) return;
+  block.dataset.answered = '1';
+
+  ['true','false'].forEach(val => {
+    const btn = document.getElementById('tf-' + qid + '-' + val);
+    btn.disabled = true;
+    if (val === q.correct) btn.classList.add('correct-ans');
+    else if (val === chosen) btn.classList.add('wrong-ans');
+  });
+
+  const isCorrect = chosen === q.correct;
+  if (isCorrect) score++;
+  answered++;
+
+  const fb = document.getElementById('fb-' + qid);
+  fb.textContent = (isCorrect ? '✓ Correct! ' : '✗ Incorrect. ') + q.feedback;
+  fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  updateScoreBar();
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  let emoji, label, msg;
+  if (score >= 18) {
+    emoji = '🏆'; label = 'Outstanding!';
+    msg = 'You have mastered P10.4 Momentum. Excellent work!';
+  } else if (score >= 14) {
+    emoji = '🎉'; label = 'Great work!';
+    msg = 'Solid understanding of momentum. Review any questions you missed.';
+  } else if (score >= 10) {
+    emoji = '📚'; label = 'Keep going!';
+    msg = 'You\'re getting there. Re-read the revision sheet and try again.';
+  } else {
+    emoji = '💪'; label = 'More practice needed';
+    msg = 'Go back to the revision sheet, focus on p = mv and conservation of momentum, then retry.';
+  }
+
+  localStorage.setItem(SCORE_KEY, score);
+
+  box.innerHTML = `
+    <div class="result-emoji">${emoji}</div>
+    <div class="result-score">${score}/20</div>
+    <div class="result-label">${label}</div>
+    <div class="result-msg">${msg}</div>
+    <div class="show-mum">Show this to mum — ${score}/20</div>
+    <button class="reset-btn" onclick="resetQuiz()">↺ Try again</button>
+  `;
+
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  score = 0;
+  answered = 0;
+  document.getElementById('resultBox').classList.remove('show');
+  document.getElementById('resultBox').innerHTML = '';
+  updateScoreBar();
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.4 More About Waves — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #29b6f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #26a69a;
+    --green2: #e0f2f1;
+    --orange: #ff8f00;
+    --orange2: #fff8e1;
+    --purple: #7c3aed;
+    --purple2: #f3e8ff;
+    --line: #cde4f5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1565c0 100%);
+    color: white;
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40%;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .kicker {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.7rem;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(100,181,246,0.18);
+    border: 1px solid rgba(100,181,246,0.35);
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* NAV */
+  nav {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: var(--navy);
+    border-bottom: 2px solid var(--accent);
+  }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a:hover { background: rgba(100,181,246,0.2); color: var(--accent); }
+
+  /* CHECKLIST */
+  .checklist-section {
+    background: var(--paper);
+    border-left: 4px solid var(--accent);
+    margin: 1.5rem 1.5rem 0;
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+  }
+  .checklist-section h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.9rem;
+  }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .checklist li {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.88rem; cursor: pointer; padding: 0.4rem 0;
+    border-bottom: 1px solid var(--line);
+    transition: color 0.2s;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
+  .checklist li.checked { color: var(--muted); text-decoration: line-through; }
+  .progress-bar-wrap { margin-top: 1rem; background: var(--line); border-radius: 99px; height: 7px; }
+  .progress-bar { height: 7px; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.4s; }
+  .progress-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem; text-align: right; }
+
+  /* CONTENT */
+  .content { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.4rem; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .big-idea-card {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 1rem;
+    border-top: 3px solid var(--accent);
+    box-shadow: 0 1px 6px rgba(13,43,69,0.06);
+  }
+  .big-idea-card .icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+  .big-idea-card h3 { font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .big-idea-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* FORMULA */
+  .formula-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .formula-row { display: flex; align-items: center; gap: 1rem; }
+  .formula { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+  .formula-desc { font-size: 0.78rem; color: rgba(255,255,255,0.75); line-height: 1.4; }
+  .formula-legend { font-size: 0.72rem; color: rgba(255,255,255,0.55); font-style: italic; }
+
+  /* STATEMENT BOX */
+  .statement-box {
+    background: var(--paper);
+    border-left: 4px solid var(--green);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  }
+  .statement-box strong { color: var(--green); }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: var(--orange2);
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    display: flex; gap: 0.7rem; align-items: flex-start;
+  }
+  .exam-tip .tip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .exam-tip strong { color: var(--orange); display: block; margin-bottom: 0.2rem; font-size: 0.8rem; }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: var(--red2);
+    border: 1px solid #ef9a9a;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    display: flex; gap: 0.7rem; align-items: flex-start;
+  }
+  .warning-box .warn-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .warning-box strong { color: var(--red); display: block; margin-bottom: 0.2rem; font-size: 0.8rem; }
+
+  /* COMPARE 2-COL */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .compare-card {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  }
+  .compare-card h4 {
+    font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700;
+    margin-bottom: 0.6rem; padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--line);
+  }
+  .compare-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .compare-card ul li { font-size: 0.78rem; color: var(--ink); line-height: 1.45; display: flex; gap: 0.4rem; }
+  .compare-card ul li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+  .compare-card.sound h4 { color: #e53935; border-color: #ef9a9a; }
+  .compare-card.em h4 { color: #5c6bc0; border-color: #c5cae9; }
+
+  /* TILES GRID */
+  .tiles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .tile {
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  .tile h4 { font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .tile.red { background: var(--red2); border: 1px solid #ef9a9a; }
+  .tile.red h4 { color: var(--red); }
+  .tile.blue { background: #e3f2fd; border: 1px solid #90caf9; }
+  .tile.blue h4 { color: #1565c0; }
+  .tile.green { background: var(--green2); border: 1px solid #80cbc4; }
+  .tile.green h4 { color: var(--green); }
+  .tile.purple { background: var(--purple2); border: 1px solid #c4b5fd; }
+  .tile.purple h4 { color: var(--purple); }
+
+  /* UNITS TABLE */
+  .units-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; background: var(--paper); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 5px rgba(0,0,0,0.05); }
+  .units-table th { background: var(--navy); color: white; padding: 0.55rem 0.8rem; text-align: left; font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; }
+  .units-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--line); }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table tr:nth-child(even) td { background: var(--bg); }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .kw-pill {
+    background: var(--navy);
+    color: white;
+    border-radius: 99px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .kw-pill span { color: var(--accent); font-size: 0.65rem; }
+
+  /* CANVAS INTERACTIVE */
+  .interactive-box {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  }
+  .interactive-box h4 { font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 0.8rem; }
+  .slider-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; font-size: 0.78rem; }
+  .slider-row label { width: 90px; font-weight: 600; color: var(--muted); }
+  .slider-row input[type=range] { flex: 1; accent-color: var(--accent); }
+  .slider-row .val { width: 70px; text-align: right; font-weight: 700; color: var(--accent2); font-family: 'Sora', sans-serif; font-size: 0.8rem; }
+  canvas { width: 100%; height: 120px; border-radius: 8px; background: #f0f7ff; display: block; margin-bottom: 0.7rem; }
+  .wave-result { background: var(--navy); color: white; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.82rem; text-align: center; }
+  .wave-result strong { color: var(--accent); font-family: 'Sora', sans-serif; font-size: 1rem; }
+
+  /* MARK AS READ */
+  .mark-read-btn {
+    display: block;
+    width: calc(100% - 3rem);
+    margin: 0 1.5rem 2rem;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, var(--navy), #1565c0);
+    color: white;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .mark-read-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .mark-read-btn.done { background: var(--green); }
+
+  @media(max-width: 500px) {
+    .big-idea-grid, .compare-grid, .tiles-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · P11 Wave Properties</div>
+  <h1>P11.4 More About Waves</h1>
+  <div class="badge">⚡ GCSE Revision</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Sound waves</span>
+    <span class="hero-tag">Wave speed equation</span>
+    <span class="hero-tag">Echoes</span>
+    <span class="hero-tag">Vacuum</span>
+    <span class="hero-tag">Practical skills</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#objectives">Objectives</a>
+  <a href="#big-ideas">Key Ideas</a>
+  <a href="#formulas">Formulas</a>
+  <a href="#methods">Methods</a>
+  <a href="#keywords">Keywords</a>
+  <a href="#interactive">Wave Simulator</a>
+</nav>
+
+<!-- CHECKLIST -->
+<div class="checklist-section" id="objectives">
+  <h2>📋 Learning Objectives</h2>
+  <ul class="checklist" id="checklist">
+    <li><input type="checkbox" data-key="w1"> I can describe what sound waves are and how they are produced</li>
+    <li><input type="checkbox" data-key="w2"> I can explain why sound waves are longitudinal</li>
+    <li><input type="checkbox" data-key="w3"> I know that sound waves cannot travel through a vacuum</li>
+    <li><input type="checkbox" data-key="w4"> I can use the wave speed equation: speed = frequency × wavelength</li>
+    <li><input type="checkbox" data-key="w5"> I can describe how to investigate waves on a string</li>
+    <li><input type="checkbox" data-key="w6"> I can describe how to investigate waves in a ripple tank</li>
+    <li><input type="checkbox" data-key="w7"> I can use the echo equation to calculate the speed of sound</li>
+  </ul>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 / 7 done</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- BIG IDEAS -->
+  <div id="big-ideas">
+    <div class="section-title">Big Ideas</div>
+    <div class="big-idea-grid">
+      <div class="big-idea-card">
+        <div class="icon">🔊</div>
+        <h3>Sound = Vibration</h3>
+        <p>Any vibrating object makes the air particles next to it vibrate, creating waves of compressions and rarefactions.</p>
+      </div>
+      <div class="big-idea-card">
+        <div class="icon">🌊</div>
+        <h3>Longitudinal</h3>
+        <p>Air particles vibrate <em>along</em> the direction of travel — parallel to energy transfer. This makes sound longitudinal.</p>
+      </div>
+      <div class="big-idea-card">
+        <div class="icon">🚫</div>
+        <h3>No Vacuum Travel</h3>
+        <p>Sound needs a medium. In a bell-jar experiment, the ringing fades as air is pumped out.</p>
+      </div>
+      <div class="big-idea-card">
+        <div class="icon">🌡️</div>
+        <h3>Speed in Air</h3>
+        <p>Speed of sound in air ≈ 340 m/s at 15°C. Speed increases with temperature.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULAS -->
+  <div id="formulas">
+    <div class="section-title">Essential Formulas</div>
+    <div class="formula-box">
+      <div class="formula-row">
+        <div>
+          <div class="formula">v = f × λ</div>
+          <div class="formula-legend">speed = frequency × wavelength</div>
+        </div>
+        <div class="formula-desc">v in m/s · f in Hz · λ in m<br>Use for any wave — sound, water, string.</div>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,0.12)"></div>
+      <div class="formula-row">
+        <div>
+          <div class="formula">s = 2d / t</div>
+          <div class="formula-legend">speed of sound from an echo</div>
+        </div>
+        <div class="formula-desc">d = distance to wall · t = time delay<br>Multiply distance by 2 because sound travels <em>there and back</em>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATEMENT BOX -->
+  <div class="statement-box">
+    <strong>Remember:</strong> When measuring wavelength on a string with a single loop, the loop length L = half a wavelength, so <strong>λ = 2L</strong>. With 3 equal loops, one loop length = λ/2, so λ = ⅔ × total string length.
+  </div>
+
+  <!-- EXAM TIP -->
+  <div class="exam-tip">
+    <div class="tip-icon">💡</div>
+    <div>
+      <strong>Exam Tip</strong>
+      In echo questions, always divide the total distance by 2 before calculating — or use s = 2d/t directly. Forgetting the factor of 2 is the most common mistake. Also check units: convert ms to s if needed.
+    </div>
+  </div>
+
+  <!-- METHODS -->
+  <div id="methods">
+    <div class="section-title">Practical Methods</div>
+    <div class="tiles-grid">
+      <div class="tile blue">
+        <h4>🎸 Waves on a String</h4>
+        Attach string to oscillator + pulley + weight. Find single loop (λ = 2L). Measure f from oscillator. Use v = f × λ. Increase f → more loops → check speed is constant.
+      </div>
+      <div class="tile green">
+        <h4>🌊 Ripple Tank</h4>
+        Use ruler to create plane waves. Time wave from one end to other with stopwatch. Measure distance. Use speed = distance ÷ time. Move ruler faster → waves closer together (↑f).
+      </div>
+      <div class="tile red">
+        <h4>🔔 Bell Jar (Vacuum)</h4>
+        Bell rings inside sealed jar. Pump out air progressively. Sound fades away → proves sound needs a medium. Bell still vibrates (light still seen) but no sound transmitted.
+      </div>
+      <div class="tile purple">
+        <h4>📢 Loudspeaker</h4>
+        Connect loudspeaker to signal generator. Loudspeaker vibrates → pushes air back and forth → creates compressions and rarefactions. Change frequency dial → change pitch of sound.
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE -->
+  <div>
+    <div class="section-title">Sound vs Light</div>
+    <div class="compare-grid">
+      <div class="compare-card sound">
+        <h4>🔊 Sound Waves</h4>
+        <ul>
+          <li>Longitudinal (particles vibrate parallel to travel)</li>
+          <li>Need a medium (solid, liquid, gas)</li>
+          <li>Cannot travel through vacuum</li>
+          <li>~340 m/s in air at 15°C</li>
+          <li>Speed increases with temperature</li>
+        </ul>
+      </div>
+      <div class="compare-card em">
+        <h4>💡 Light / EM Waves</h4>
+        <ul>
+          <li>Transverse (particles vibrate perpendicular)</li>
+          <li>Do NOT need a medium</li>
+          <li>Travel through vacuum</li>
+          <li>3 × 10⁸ m/s in vacuum</li>
+          <li>Speed constant in vacuum</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WARNING -->
+  <div class="warning-box">
+    <div class="warn-icon">⚠️</div>
+    <div>
+      <strong>Common Misconception</strong>
+      Sound waves are NOT transverse. The particles move back and forth <em>along</em> the direction of travel (longitudinal), creating alternating compressions (high pressure) and rarefactions (low pressure).
+    </div>
+  </div>
+
+  <!-- UNITS TABLE -->
+  <div>
+    <div class="section-title">Quantities & Units</div>
+    <table class="units-table">
+      <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Notes</th></tr>
+      <tr><td>Wave speed</td><td>v or s</td><td>m/s</td><td>~340 m/s for sound in air</td></tr>
+      <tr><td>Frequency</td><td>f</td><td>Hz (hertz)</td><td>Oscillations per second</td></tr>
+      <tr><td>Wavelength</td><td>λ (lambda)</td><td>m</td><td>Distance of one full cycle</td></tr>
+      <tr><td>Distance</td><td>d</td><td>m</td><td>Distance to wall in echo</td></tr>
+      <tr><td>Time</td><td>t</td><td>s</td><td>Convert ms → s (÷1000)</td></tr>
+    </table>
+  </div>
+
+  <!-- INTERACTIVE WAVE SIMULATOR -->
+  <div class="interactive-box" id="interactive">
+    <h4>🎛️ Wave Speed Calculator — Try It</h4>
+    <canvas id="waveCanvas" height="120"></canvas>
+    <div class="slider-row">
+      <label>Frequency</label>
+      <input type="range" id="freqSlider" min="100" max="500" value="180" step="10">
+      <span class="val" id="freqVal">180 Hz</span>
+    </div>
+    <div class="slider-row">
+      <label>Wavelength</label>
+      <input type="range" id="waveSlider" min="0.5" max="3" value="1.89" step="0.01">
+      <span class="val" id="waveVal">1.89 m</span>
+    </div>
+    <div class="wave-result">
+      Wave speed = <strong id="speedResult">340.2 m/s</strong>
+    </div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div id="keywords">
+    <div class="section-title">Key Vocabulary</div>
+    <div class="keywords">
+      <div class="kw-pill">Longitudinal <span>wave type</span></div>
+      <div class="kw-pill">Compression <span>high pressure region</span></div>
+      <div class="kw-pill">Rarefaction <span>low pressure region</span></div>
+      <div class="kw-pill">Frequency <span>Hz</span></div>
+      <div class="kw-pill">Wavelength <span>λ in m</span></div>
+      <div class="kw-pill">Medium <span>material for travel</span></div>
+      <div class="kw-pill">Vacuum <span>no particles</span></div>
+      <div class="kw-pill">Echo <span>reflected sound</span></div>
+      <div class="kw-pill">Oscillator <span>produces vibrations</span></div>
+      <div class="kw-pill">Signal generator <span>controls frequency</span></div>
+      <div class="kw-pill">Ripple tank <span>water wave practical</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MARK AS READ -->
+<button class="mark-read-btn" id="markReadBtn" onclick="markRead()">✓ Mark as Read</button>
+
+<script>
+  // CHECKLIST
+  const STORAGE_KEY = 'physics-p11-4-read';
+  const CHECKLIST_KEY = 'physics-p11-4-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  const bar = document.getElementById('progressBar');
+  const label = document.getElementById('progressLabel');
+
+  function updateProgress() {
+    const checked = [...boxes].filter(b => b.checked).length;
+    const pct = Math.round((checked / boxes.length) * 100);
+    bar.style.width = pct + '%';
+    label.textContent = checked + ' / ' + boxes.length + ' done';
+    // save
+    const state = {};
+    boxes.forEach(b => state[b.dataset.key] = b.checked);
+    localStorage.setItem(CHECKLIST_KEY, JSON.stringify(state));
+  }
+
+  // Load checklist state
+  try {
+    const saved = JSON.parse(localStorage.getItem(CHECKLIST_KEY) || '{}');
+    boxes.forEach(b => { if (saved[b.dataset.key]) b.checked = true; });
+  } catch(e) {}
+  updateProgress();
+  boxes.forEach(b => b.addEventListener('change', updateProgress));
+
+  // MARK AS READ
+  const btn = document.getElementById('markReadBtn');
+  if (localStorage.getItem(STORAGE_KEY) === 'true') {
+    btn.textContent = '✓ Already Marked as Read';
+    btn.classList.add('done');
+  }
+  function markRead() {
+    localStorage.setItem(STORAGE_KEY, 'true');
+    btn.textContent = '✓ Marked as Read!';
+    btn.classList.add('done');
+  }
+
+  // WAVE CANVAS
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  const freqSlider = document.getElementById('freqSlider');
+  const waveSlider = document.getElementById('waveSlider');
+  const freqVal = document.getElementById('freqVal');
+  const waveVal = document.getElementById('waveVal');
+  const speedResult = document.getElementById('speedResult');
+  let animFrame;
+
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resizeCanvas();
+
+  let t = 0;
+  function drawWave() {
+    const W = canvas.offsetWidth, H = canvas.offsetHeight;
+    ctx.clearRect(0, 0, W, H);
+
+    const freq = parseFloat(freqSlider.value);
+    const lambda = parseFloat(waveSlider.value);
+    const speed = freq * lambda;
+
+    // background
+    ctx.fillStyle = '#f0f7ff';
+    ctx.fillRect(0, 0, W, H);
+
+    // draw wave
+    const amp = H * 0.32;
+    const cycles = 4;
+    const k = (2 * Math.PI * cycles) / W;
+
+    ctx.beginPath();
+    ctx.moveTo(0, H / 2);
+    for (let x = 0; x <= W; x++) {
+      const y = H / 2 + amp * Math.sin(k * x - t * freq * 0.012);
+      ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#1565c0';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // wavelength indicator
+    const wPx = W / cycles;
+    const startX = 20;
+    ctx.beginPath();
+    ctx.moveTo(startX, H * 0.85);
+    ctx.lineTo(startX + wPx, H * 0.85);
+    ctx.strokeStyle = '#ef5350';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#ef5350';
+    ctx.font = '11px Sora, sans-serif';
+    ctx.fillText('λ', startX + wPx / 2 - 4, H * 0.82);
+
+    t++;
+    animFrame = requestAnimationFrame(drawWave);
+  }
+
+  function updateCalc() {
+    const f = parseFloat(freqSlider.value);
+    const lam = parseFloat(waveSlider.value);
+    freqVal.textContent = f + ' Hz';
+    waveVal.textContent = lam.toFixed(2) + ' m';
+    speedResult.textContent = (f * lam).toFixed(1) + ' m/s';
+  }
+
+  freqSlider.addEventListener('input', updateCalc);
+  waveSlider.addEventListener('input', updateCalc);
+  updateCalc();
+  drawWave();
+</script>
+</body>
+</html>

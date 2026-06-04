@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.4 More About Waves — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #29b6f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --line: #cde4f5;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #26a69a;
+    --green2: #e0f2f1;
+    --orange: #ff8f00;
+    --orange2: #fff8e1;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 55%, #1565c0 100%);
+    color: white;
+    padding: 2.2rem 1.5rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.13);
+  }
+  .kicker {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(100,181,246,0.18);
+    border: 1px solid rgba(100,181,246,0.35);
+    border-radius: 20px;
+    padding: 0.22rem 0.7rem;
+    font-size: 0.72rem; font-weight: 600; color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    padding: 0.8rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    border-bottom: 2px solid var(--accent);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .score-stat { text-align: center; }
+  .score-stat .num {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.1rem; font-weight: 800; color: var(--accent);
+    display: block;
+  }
+  .score-stat .lbl { font-size: 0.62rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+  .divider { width: 1px; height: 36px; background: rgba(255,255,255,0.12); }
+  .progress-wrap { flex: 1; }
+  .progress-track { background: rgba(255,255,255,0.12); border-radius: 99px; height: 6px; }
+  .progress-fill { height: 6px; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.4s; width: 0%; }
+  .progress-pct { font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; text-align: right; }
+
+  /* NAV */
+  nav {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    padding: 0.7rem 1.5rem;
+    background: rgba(13,43,69,0.92);
+    border-bottom: 1px solid rgba(100,181,246,0.2);
+  }
+  nav a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a:hover { background: rgba(100,181,246,0.18); color: var(--accent); }
+
+  /* SECTIONS */
+  .section {
+    padding: 1.4rem 1.5rem 0;
+  }
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent2);
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* Q BLOCK */
+  .q-block {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 0.9rem;
+    box-shadow: 0 1px 6px rgba(13,43,69,0.07);
+    border-left: 4px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong { border-color: var(--red); }
+
+  .q-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.5rem;
+  }
+  .q-text {
+    font-size: 0.88rem; font-weight: 600;
+    line-height: 1.5; margin-bottom: 0.85rem;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+  .opt-btn {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem; font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    width: 100%;
+  }
+  .opt-btn:hover:not(:disabled) { background: #d6eaf8; border-color: var(--accent); transform: translateX(2px); }
+  .opt-label {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: 0.78rem;
+    color: var(--accent2); min-width: 18px;
+  }
+  .opt-btn.selected { background: #d6eaf8; border-color: var(--accent2); }
+  .opt-btn.correct-ans { background: var(--green2); border-color: var(--green); }
+  .opt-btn.correct-ans .opt-label { color: var(--green); }
+  .opt-btn.wrong-ans { background: var(--red2); border-color: var(--red); }
+  .opt-btn.wrong-ans .opt-label { color: var(--red); }
+  .opt-btn:disabled { cursor: default; transform: none; }
+
+  /* TF OPTIONS */
+  .tf-row { display: flex; gap: 0.6rem; }
+  .tf-btn {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s;
+  }
+  .tf-btn:hover:not(:disabled) { background: #d6eaf8; border-color: var(--accent); }
+  .tf-btn.selected { background: #d6eaf8; border-color: var(--accent2); }
+  .tf-btn.correct-ans { background: var(--green2); border-color: var(--green); color: var(--green); }
+  .tf-btn.wrong-ans { background: var(--red2); border-color: var(--red); color: var(--red); }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 0.7rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 7px;
+    font-size: 0.78rem; line-height: 1.5;
+    font-weight: 500;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: #00695c; border: 1px solid #80cbc4; }
+  .feedback.wrong { background: var(--red2); color: #c62828; border: 1px solid #ef9a9a; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    margin: 1.5rem 1.5rem 0;
+    background: var(--navy);
+    border-radius: 14px;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    color: white;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 2.5rem; margin-bottom: 0.6rem; }
+  .result-score {
+    font-family: 'Sora', sans-serif;
+    font-size: 2.2rem; font-weight: 800;
+    color: var(--accent); margin-bottom: 0.3rem;
+  }
+  .result-msg { font-size: 0.88rem; color: rgba(255,255,255,0.75); margin-bottom: 0.5rem; line-height: 1.5; }
+  .result-mum {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: white; margin-top: 0.8rem;
+    background: rgba(100,181,246,0.15);
+    border: 1px solid rgba(100,181,246,0.3);
+    border-radius: 8px; padding: 0.6rem 1rem;
+    display: inline-block;
+  }
+
+  /* RESET */
+  .reset-btn {
+    display: block;
+    width: calc(100% - 3rem);
+    margin: 1rem 1.5rem 0;
+    padding: 0.85rem;
+    background: rgba(100,181,246,0.15);
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    border-radius: 10px; cursor: pointer;
+    transition: background 0.2s;
+    display: none;
+  }
+  .reset-btn:hover { background: rgba(100,181,246,0.25); }
+  .reset-btn.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · P11 Wave Properties</div>
+  <h1>P11.4 Quick Check</h1>
+  <div class="badge">⚡ 20 Questions</div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <div class="score-stat">
+    <span class="num" id="scoreNum">0</span>
+    <span class="lbl">Score</span>
+  </div>
+  <div class="divider"></div>
+  <div class="score-stat">
+    <span class="num" id="answeredNum">0</span>
+    <span class="lbl">Answered</span>
+  </div>
+  <div class="divider"></div>
+  <div class="progress-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-pct" id="progressPct">0 / 20</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#mcq">MCQ (1–10)</a>
+  <a href="#tf">True / False (11–20)</a>
+</nav>
+
+<!-- MCQ -->
+<div class="section" id="mcq">
+  <div class="section-title">Multiple Choice</div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-num">Question 1</div>
+    <div class="q-text">What type of wave is a sound wave?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(1,'A','C')"><span class="opt-label">A</span> Transverse</button>
+      <button class="opt-btn" onclick="answerMCQ(1,'B','C')"><span class="opt-label">B</span> Electromagnetic</button>
+      <button class="opt-btn" onclick="answerMCQ(1,'C','C')"><span class="opt-label">C</span> Longitudinal</button>
+      <button class="opt-btn" onclick="answerMCQ(1,'D','C')"><span class="opt-label">D</span> Seismic P-wave only</button>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-num">Question 2</div>
+    <div class="q-text">The speed of sound in air at 15°C is approximately:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(2,'A','C')"><span class="opt-label">A</span> 150 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(2,'B','C')"><span class="opt-label">B</span> 3 × 10⁸ m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(2,'C','C')"><span class="opt-label">C</span> 340 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(2,'D','C')"><span class="opt-label">D</span> 1500 m/s</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-num">Question 3</div>
+    <div class="q-text">A sound wave has a frequency of 200 Hz and a wavelength of 1.7 m. What is its speed?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(3,'A','B')"><span class="opt-label">A</span> 200 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(3,'B','B')"><span class="opt-label">B</span> 340 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(3,'C','B')"><span class="opt-label">C</span> 117.6 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(3,'D','B')"><span class="opt-label">D</span> 1.7 m/s</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-num">Question 4</div>
+    <div class="q-text">A student claps near a wall 85 m away. The echo returns after 0.5 s. What is the calculated speed of sound?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(4,'A','B')"><span class="opt-label">A</span> 170 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(4,'B','B')"><span class="opt-label">B</span> 340 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(4,'C','B')"><span class="opt-label">C</span> 425 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(4,'D','B')"><span class="opt-label">D</span> 85 m/s</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-num">Question 5</div>
+    <div class="q-text">In the bell jar experiment, what happens to the sound as air is pumped out?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(5,'A','B')"><span class="opt-label">A</span> The sound gets louder</button>
+      <button class="opt-btn" onclick="answerMCQ(5,'B','B')"><span class="opt-label">B</span> The sound fades away</button>
+      <button class="opt-btn" onclick="answerMCQ(5,'C','B')"><span class="opt-label">C</span> The pitch increases</button>
+      <button class="opt-btn" onclick="answerMCQ(5,'D','B')"><span class="opt-label">D</span> The bell stops vibrating</button>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-num">Question 6</div>
+    <div class="q-text">In a string experiment, a single loop has length L = 0.62 m. What is the wavelength of the wave?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(6,'A','C')"><span class="opt-label">A</span> 0.31 m</button>
+      <button class="opt-btn" onclick="answerMCQ(6,'B','C')"><span class="opt-label">B</span> 0.62 m</button>
+      <button class="opt-btn" onclick="answerMCQ(6,'C','C')"><span class="opt-label">C</span> 1.24 m</button>
+      <button class="opt-btn" onclick="answerMCQ(6,'D','C')"><span class="opt-label">D</span> 2.48 m</button>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-num">Question 7</div>
+    <div class="q-text">A stretched string of length 1.24 m vibrates with 3 equal loops at 180 Hz. What is the wavelength?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(7,'A','A')"><span class="opt-label">A</span> 0.827 m</button>
+      <button class="opt-btn" onclick="answerMCQ(7,'B','A')"><span class="opt-label">B</span> 1.24 m</button>
+      <button class="opt-btn" onclick="answerMCQ(7,'C','A')"><span class="opt-label">C</span> 0.413 m</button>
+      <button class="opt-btn" onclick="answerMCQ(7,'D','A')"><span class="opt-label">D</span> 2.48 m</button>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-num">Question 8</div>
+    <div class="q-text">Using Q7 data (f = 180 Hz, λ = 0.827 m), what is the wave speed on the string?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(8,'A','B')"><span class="opt-label">A</span> 180 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(8,'B','B')"><span class="opt-label">B</span> 148.9 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(8,'C','B')"><span class="opt-label">C</span> 340 m/s</button>
+      <button class="opt-btn" onclick="answerMCQ(8,'D','B')"><span class="opt-label">D</span> 217.8 m/s</button>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-num">Question 9</div>
+    <div class="q-text">Which equation gives the speed of sound from an echo experiment?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(9,'A','D')"><span class="opt-label">A</span> s = d × t</button>
+      <button class="opt-btn" onclick="answerMCQ(9,'B','D')"><span class="opt-label">B</span> s = d / t</button>
+      <button class="opt-btn" onclick="answerMCQ(9,'C','D')"><span class="opt-label">C</span> s = d / 2t</button>
+      <button class="opt-btn" onclick="answerMCQ(9,'D','D')"><span class="opt-label">D</span> s = 2d / t</button>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-num">Question 10</div>
+    <div class="q-text">A lightning strike is seen, then heard 4 seconds later. Speed of sound = 340 m/s. How far away was the strike?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(10,'A','C')"><span class="opt-label">A</span> 85 m</button>
+      <button class="opt-btn" onclick="answerMCQ(10,'B','C')"><span class="opt-label">B</span> 680 m</button>
+      <button class="opt-btn" onclick="answerMCQ(10,'C','C')"><span class="opt-label">C</span> 1360 m</button>
+      <button class="opt-btn" onclick="answerMCQ(10,'D','C')"><span class="opt-label">D</span> 2720 m</button>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+</div>
+
+<!-- TRUE / FALSE -->
+<div class="section" id="tf">
+  <div class="section-title">True or False</div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-num">Question 11</div>
+    <div class="q-text">Sound waves are transverse waves.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(11,'true','false')">True</button>
+      <button class="tf-btn" onclick="answerTF(11,'false','false')">False</button>
+    </div>
+    <div class="feedback" id="fb11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-num">Question 12</div>
+    <div class="q-text">Sound can travel through a vacuum.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(12,'true','false')">True</button>
+      <button class="tf-btn" onclick="answerTF(12,'false','false')">False</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-num">Question 13</div>
+    <div class="q-text">The speed of sound in air increases with temperature.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(13,'true','true')">True</button>
+      <button class="tf-btn" onclick="answerTF(13,'false','true')">False</button>
+    </div>
+    <div class="feedback" id="fb13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-num">Question 14</div>
+    <div class="q-text">Increasing the frequency on a signal generator connected to a loudspeaker lowers the pitch of the sound.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(14,'true','false')">True</button>
+      <button class="tf-btn" onclick="answerTF(14,'false','false')">False</button>
+    </div>
+    <div class="feedback" id="fb14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-num">Question 15</div>
+    <div class="q-text">In the wave speed equation v = f × λ, the unit of frequency is Hz (hertz).</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(15,'true','true')">True</button>
+      <button class="tf-btn" onclick="answerTF(15,'false','true')">False</button>
+    </div>
+    <div class="feedback" id="fb15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-num">Question 16</div>
+    <div class="q-text">When a single loop is visible on a vibrating string, the length of that loop equals a full wavelength.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(16,'true','false')">True</button>
+      <button class="tf-btn" onclick="answerTF(16,'false','false')">False</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-num">Question 17</div>
+    <div class="q-text">In a ripple tank experiment, moving the ruler faster increases the frequency of waves produced.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(17,'true','true')">True</button>
+      <button class="tf-btn" onclick="answerTF(17,'false','true')">False</button>
+    </div>
+    <div class="feedback" id="fb17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-num">Question 18</div>
+    <div class="q-text">In sound waves, air particles vibrate perpendicular to the direction of energy transfer.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(18,'true','false')">True</button>
+      <button class="tf-btn" onclick="answerTF(18,'false','false')">False</button>
+    </div>
+    <div class="feedback" id="fb18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-num">Question 19</div>
+    <div class="q-text">An echo is caused by sound reflecting off a smooth hard surface.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(19,'true','true')">True</button>
+      <button class="tf-btn" onclick="answerTF(19,'false','true')">False</button>
+    </div>
+    <div class="feedback" id="fb19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-num">Question 20</div>
+    <div class="q-text">When a vibrating string produces sound waves, the string and the surrounding air vibrate at the same frequency.</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(20,'true','true')">True</button>
+      <button class="tf-btn" onclick="answerTF(20,'false','true')">False</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+  </div>
+
+</div>
+
+<!-- RESULT BOX -->
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-mum" id="resultMum"></div>
+</div>
+
+<!-- RESET -->
+<button class="reset-btn" id="resetBtn" onclick="resetQuiz()">↩ Try Again</button>
+
+<script>
+  const SCORE_KEY = 'physics-p11-4-quiz-score';
+
+  let score = 0;
+  let answered = 0;
+  const total = 20;
+
+  const feedbacks = {
+    1: { correct: 'Correct! Sound waves are longitudinal — particles vibrate parallel to the direction of travel.', wrong: 'Incorrect. Sound waves are longitudinal, not transverse.' },
+    2: { correct: 'Correct! Speed of sound in air ≈ 340 m/s at 15°C.', wrong: 'Incorrect. The speed of sound in air at 15°C is approximately 340 m/s.' },
+    3: { correct: 'Correct! v = f × λ = 200 × 1.7 = 340 m/s.', wrong: 'Incorrect. Use v = f × λ: 200 × 1.7 = 340 m/s.' },
+    4: { correct: 'Correct! s = 2d/t = (2 × 85) / 0.5 = 340 m/s.', wrong: 'Incorrect. s = 2d/t = (2 × 85) / 0.5 = 340 m/s. Remember to double the distance!' },
+    5: { correct: 'Correct! As air is removed, there is no medium for sound, so it fades. The bell still vibrates.', wrong: 'Incorrect. As air is removed there is no medium for sound — it fades away.' },
+    6: { correct: 'Correct! One loop = half a wavelength, so λ = 2L = 2 × 0.62 = 1.24 m.', wrong: 'Incorrect. One loop = λ/2, so λ = 2 × 0.62 = 1.24 m.' },
+    7: { correct: 'Correct! 3 loops → loop length = 1.24/3 = 0.413 m = λ/2, so λ = 0.827 m.', wrong: 'Incorrect. 3 loops on 1.24 m: each loop = 0.413 m = λ/2, so λ = 0.827 m.' },
+    8: { correct: 'Correct! v = f × λ = 180 × 0.827 = 148.9 m/s.', wrong: 'Incorrect. v = f × λ = 180 × 0.827 ≈ 148.9 m/s.' },
+    9: { correct: 'Correct! s = 2d/t because sound travels to the wall AND back (twice the distance).', wrong: 'Incorrect. The echo equation is s = 2d/t — sound travels there AND back.' },
+    10: { correct: 'Correct! distance = speed × time = 340 × 4 = 1360 m. No factor of 2 needed here — this is a one-way journey (light is instant).', wrong: 'Incorrect. distance = 340 × 4 = 1360 m. Light reaches you instantly; only sound has the 4 s delay.' },
+    11: { correct: 'Correct! Sound waves are longitudinal, not transverse.', wrong: 'Actually False — sound waves are longitudinal (particles vibrate along direction of travel).' },
+    12: { correct: 'Correct! Sound cannot travel through a vacuum — it needs a medium.', wrong: 'Actually False — sound cannot travel through a vacuum (proven by the bell jar experiment).' },
+    13: { correct: 'Correct! The speed of sound increases as temperature increases.', wrong: 'Actually True — the speed of sound in air increases with temperature.' },
+    14: { correct: 'Correct! Increasing frequency raises the pitch (higher note), not lowers it.', wrong: 'Actually False — increasing frequency raises the pitch of the sound.' },
+    15: { correct: 'Correct! Frequency is measured in hertz (Hz), meaning oscillations per second.', wrong: 'Actually True — frequency is measured in Hz (hertz = oscillations per second).' },
+    16: { correct: 'Correct! One loop = half a wavelength (λ/2), so λ = 2L.', wrong: 'Actually False — one loop = half a wavelength, so λ = 2 × loop length.' },
+    17: { correct: 'Correct! Faster movement → more waves per second → higher frequency.', wrong: 'Actually True — moving the ruler faster produces more waves per second (higher frequency).' },
+    18: { correct: 'Correct! In sound (longitudinal), particles vibrate parallel to travel, not perpendicular.', wrong: 'Actually False — in longitudinal waves, particles vibrate parallel to energy transfer.' },
+    19: { correct: 'Correct! Sound reflects off smooth hard surfaces creating an echo.', wrong: 'Actually True — echoes are caused by sound reflecting off smooth hard surfaces.' },
+    20: { correct: 'Correct! The string transfers its frequency to the surrounding air — they vibrate at the same frequency.', wrong: 'Actually True — the string and surrounding air vibrate at the same frequency.' }
+  };
+
+  function updateScoreBar() {
+    document.getElementById('scoreNum').textContent = score;
+    document.getElementById('answeredNum').textContent = answered;
+    const pct = Math.round((answered / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = answered + ' / ' + total;
+
+    if (answered === total) showResult();
+  }
+
+  function answerMCQ(qNum, chosen, correct) {
+    const block = document.getElementById('q' + qNum);
+    if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+    const buttons = block.querySelectorAll('.opt-btn');
+    const letters = ['A','B','C','D'];
+    const isCorrect = chosen === correct;
+
+    buttons.forEach((btn, i) => {
+      btn.disabled = true;
+      if (letters[i] === correct) btn.classList.add('correct-ans');
+      else if (letters[i] === chosen && !isCorrect) btn.classList.add('wrong-ans');
+    });
+
+    const fb = document.getElementById('fb' + qNum);
+    fb.textContent = isCorrect ? '✓ ' + feedbacks[qNum].correct : '✗ ' + feedbacks[qNum].wrong;
+    fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+    block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    if (isCorrect) score++;
+    answered++;
+    updateScoreBar();
+  }
+
+  function answerTF(qNum, chosen, correct) {
+    const block = document.getElementById('q' + qNum);
+    if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+    const buttons = block.querySelectorAll('.tf-btn');
+    const isCorrect = chosen === correct;
+
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      const val = btn.textContent.toLowerCase() === 'true' ? 'true' : 'false';
+      if (val === correct) btn.classList.add('correct-ans');
+      else if (val === chosen && !isCorrect) btn.classList.add('wrong-ans');
+    });
+
+    const fb = document.getElementById('fb' + qNum);
+    fb.textContent = isCorrect ? '✓ ' + feedbacks[qNum].correct : '✗ ' + feedbacks[qNum].wrong;
+    fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+    block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    if (isCorrect) score++;
+    answered++;
+    updateScoreBar();
+  }
+
+  function showResult() {
+    const box = document.getElementById('resultBox');
+    box.classList.add('show');
+    document.getElementById('resetBtn').classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    let emoji, msg;
+    if (score >= 18) {
+      emoji = '🏆';
+      msg = 'Outstanding! You clearly know your wave physics inside out. Excellent work!';
+    } else if (score >= 14) {
+      emoji = '🎉';
+      msg = 'Great job! Strong understanding of wave properties. Review any questions you missed.';
+    } else if (score >= 10) {
+      emoji = '📚';
+      msg = 'Good effort! Go back over the revision sheet — focus on the formulas and practical methods.';
+    } else {
+      emoji = '💪';
+      msg = 'Keep going! Revisit P11.4 on the revision sheet before trying again.';
+    }
+
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultScore').textContent = score + ' / 20';
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('resultMum').textContent = '📋 Show this to mum — ' + score + '/20';
+
+    localStorage.setItem(SCORE_KEY, JSON.stringify({ score, date: new Date().toISOString() }));
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    updateScoreBar();
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('resetBtn').classList.remove('show');
+
+    document.querySelectorAll('.q-block').forEach(b => {
+      b.classList.remove('correct', 'wrong');
+    });
+    document.querySelectorAll('.opt-btn, .tf-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('correct-ans', 'wrong-ans', 'selected');
+    });
+    document.querySelectorAll('.feedback').forEach(fb => {
+      fb.className = 'feedback';
+      fb.textContent = '';
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

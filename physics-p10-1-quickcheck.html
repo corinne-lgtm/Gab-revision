@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.1 Quick Check – Forces & Acceleration</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --navy2: #163a7a;
+    --accent: #64b5f6;
+    --accent2: #1e88e5;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b5e;
+    --muted: #5a7a9a;
+    --line: #c5ddf0;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --dark: #061830;
+    --yellow: #f9a825;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 55%, #1a4a9a 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -50px; left: 20%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.07);
+  }
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.18);
+    border: 1px solid rgba(100,181,246,0.35);
+    color: var(--accent); font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 0.08em;
+    padding: 0.2rem 0.65rem; border-radius: 20px;
+    margin-bottom: 0.7rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.75rem; font-weight: 800; line-height: 1.15;
+  }
+  .hero h1 span { color: var(--accent); }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 1rem;
+    display: flex; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+    border-bottom: 2px solid var(--accent2);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none; font-size: 0.77rem;
+    font-weight: 600; letter-spacing: 0.04em;
+    padding: 0.75rem 0.9rem; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px; transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: white; border-color: var(--accent); }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+    position: sticky; top: 36px; z-index: 99;
+    box-shadow: 0 2px 8px rgba(13,43,94,0.07);
+  }
+  .score-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--accent2); white-space: nowrap;
+  }
+  .answered-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; color: var(--muted);
+    white-space: nowrap;
+  }
+  .progress-wrap {
+    flex: 1;
+    height: 6px;
+    background: var(--line);
+    border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* QUESTION BLOCKS */
+  .questions { padding: 1rem 1rem 2rem; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent2);
+    font-weight: 600; margin: 1.4rem 0 0.8rem;
+    padding-left: 0.3rem;
+    border-left: 3px solid var(--accent2);
+  }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 8px rgba(13,43,94,0.05);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .q-block.correct { border-color: #a5d6a7; }
+  .q-block.wrong   { border-color: #ef9a9a; }
+
+  .q-header {
+    display: flex; align-items: flex-start;
+    gap: 0.75rem; padding: 1.1rem 1.2rem 0.8rem;
+  }
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 600;
+    color: white; background: var(--navy);
+    border-radius: 6px; padding: 0.2rem 0.45rem;
+    flex-shrink: 0; margin-top: 1px;
+    letter-spacing: 0.04em;
+  }
+  .q-text { font-size: 0.9rem; line-height: 1.55; font-weight: 500; }
+  .q-text .formula {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent2); font-weight: 600;
+  }
+
+  /* MCQ OPTIONS */
+  .options { padding: 0 1.2rem 1rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .opt {
+    display: flex; align-items: center; gap: 0.7rem;
+    padding: 0.55rem 0.8rem; border-radius: 8px;
+    border: 1.5px solid var(--line);
+    cursor: pointer; transition: all 0.15s;
+    font-size: 0.865rem; background: var(--bg);
+    user-select: none;
+  }
+  .opt:hover:not(.locked) { border-color: var(--accent2); background: #ddeef8; }
+  .opt-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--muted); min-width: 18px;
+  }
+  .opt.selected { border-color: var(--accent2); background: #ddeef8; }
+  .opt.correct-ans { border-color: var(--green); background: var(--green2); }
+  .opt.correct-ans .opt-letter { color: var(--green); }
+  .opt.wrong-ans { border-color: var(--red); background: var(--red2); }
+  .opt.wrong-ans .opt-letter { color: var(--red); }
+
+  /* TF OPTIONS */
+  .tf-options { padding: 0 1.2rem 1rem; display: flex; gap: 0.6rem; }
+  .tf-btn {
+    flex: 1; padding: 0.6rem 1rem;
+    border-radius: 8px; border: 1.5px solid var(--line);
+    background: var(--bg); cursor: pointer;
+    font-size: 0.875rem; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s; color: var(--ink);
+    text-align: center;
+  }
+  .tf-btn:hover:not(.locked) { border-color: var(--accent2); background: #ddeef8; }
+  .tf-btn.selected { border-color: var(--accent2); background: #ddeef8; }
+  .tf-btn.correct-ans { border-color: var(--green); background: var(--green2); color: var(--green); }
+  .tf-btn.wrong-ans { border-color: var(--red); background: var(--red2); color: var(--red); }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none; margin: 0 1.2rem 1rem;
+    padding: 0.75rem 1rem; border-radius: 8px;
+    font-size: 0.84rem; line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: var(--green2); border-left: 3px solid var(--green); color: #1b4a1e; }
+  .feedback.wrong-fb   { background: var(--red2);   border-left: 3px solid var(--red);   color: #5a0000; }
+  .feedback strong { font-weight: 700; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 16px; border: 1px solid var(--line);
+    box-shadow: 0 4px 24px rgba(13,43,94,0.12);
+    margin: 1.5rem 1rem 2rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3rem; margin-bottom: 0.6rem; display: block; }
+  .result-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem; font-weight: 800;
+    color: var(--navy); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .result-score span { color: var(--accent2); }
+  .result-msg {
+    font-size: 1rem; font-weight: 600;
+    color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .result-sub {
+    font-size: 0.82rem; color: var(--muted);
+    margin-bottom: 1.4rem;
+  }
+  .mum-banner {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+    color: white; border-radius: 10px;
+    padding: 0.9rem 1.2rem; margin-bottom: 1.4rem;
+    font-size: 0.88rem; font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .mum-banner .score-highlight {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent); font-size: 1.1rem;
+  }
+  .reset-btn {
+    background: var(--navy);
+    color: white; border: none;
+    border-radius: 30px; padding: 0.75rem 2rem;
+    font-size: 0.9rem; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 3px 12px rgba(13,43,94,0.25);
+  }
+  .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 18px rgba(13,43,94,0.3); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · Topic P10.1</div>
+  <div class="badge">⚡ Quick Check</div>
+  <h1>Forces &amp; <span>Acceleration</span></h1>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#mcq">MCQ ×10</a>
+  <a href="#tf">True / False ×10</a>
+</nav>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <div class="score-pill" id="scorePill">Score: 0</div>
+  <div class="answered-pill" id="answeredPill">0 / 20</div>
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="questions">
+
+  <!-- MCQ -->
+  <div class="section-label" id="mcq">Multiple Choice</div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-header">
+      <span class="q-num">Q1</span>
+      <span class="q-text">What is the resultant force on a 4 kg object accelerating at 3 m/s²?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q1','A','C')"><span class="opt-letter">A</span> 1.3 N</div>
+      <div class="opt" onclick="selectMCQ('q1','B','C')"><span class="opt-letter">B</span> 7 N</div>
+      <div class="opt" onclick="selectMCQ('q1','C','C')"><span class="opt-letter">C</span> 12 N</div>
+      <div class="opt" onclick="selectMCQ('q1','D','C')"><span class="opt-letter">D</span> 43 N</div>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-header">
+      <span class="q-num">Q2</span>
+      <span class="q-text">A force of 30 N acts on a 6 kg object. What is the acceleration?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q2','A','B')"><span class="opt-letter">A</span> 0.2 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q2','B','B')"><span class="opt-letter">B</span> 5 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q2','C','B')"><span class="opt-letter">C</span> 180 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q2','D','B')"><span class="opt-letter">D</span> 36 m/s²</div>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-header">
+      <span class="q-num">Q3</span>
+      <span class="q-text">A car of mass 800 kg is acted on by a resultant force of 3200 N. What is its acceleration?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q3','A','C')"><span class="opt-letter">A</span> 0.25 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q3','B','C')"><span class="opt-letter">B</span> 2.5 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q3','C','C')"><span class="opt-letter">C</span> 4 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q3','D','C')"><span class="opt-letter">D</span> 40 m/s²</div>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-header">
+      <span class="q-num">Q4</span>
+      <span class="q-text">A sprinter of mass 80 kg accelerates at 8 m/s². What is the resultant force?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q4','A','B')"><span class="opt-letter">A</span> 10 N</div>
+      <div class="opt" onclick="selectMCQ('q4','B','B')"><span class="opt-letter">B</span> 640 N</div>
+      <div class="opt" onclick="selectMCQ('q4','C','B')"><span class="opt-letter">C</span> 88 N</div>
+      <div class="opt" onclick="selectMCQ('q4','D','B')"><span class="opt-letter">D</span> 72 N</div>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-header">
+      <span class="q-num">Q5</span>
+      <span class="q-text">If the resultant force on an object doubles and the mass stays the same, what happens to the acceleration?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q5','A','B')"><span class="opt-letter">A</span> It halves</div>
+      <div class="opt" onclick="selectMCQ('q5','B','B')"><span class="opt-letter">B</span> It doubles</div>
+      <div class="opt" onclick="selectMCQ('q5','C','B')"><span class="opt-letter">C</span> It stays the same</div>
+      <div class="opt" onclick="selectMCQ('q5','D','B')"><span class="opt-letter">D</span> It quadruples</div>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-header">
+      <span class="q-num">Q6</span>
+      <span class="q-text">An object decelerates. What can you say about the direction of the resultant force?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q6','A','C')"><span class="opt-letter">A</span> In the same direction as the velocity</div>
+      <div class="opt" onclick="selectMCQ('q6','B','C')"><span class="opt-letter">B</span> Perpendicular to the velocity</div>
+      <div class="opt" onclick="selectMCQ('q6','C','C')"><span class="opt-letter">C</span> Opposite to the direction of velocity</div>
+      <div class="opt" onclick="selectMCQ('q6','D','C')"><span class="opt-letter">D</span> There is no resultant force</div>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-header">
+      <span class="q-num">Q7</span>
+      <span class="q-text">The unit of force, the Newton, is defined as the force that gives a mass of 1 kg an acceleration of:</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q7','A','B')"><span class="opt-letter">A</span> 10 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q7','B','B')"><span class="opt-letter">B</span> 1 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q7','C','B')"><span class="opt-letter">C</span> 9.8 m/s²</div>
+      <div class="opt" onclick="selectMCQ('q7','D','B')"><span class="opt-letter">D</span> 0.1 m/s²</div>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-header">
+      <span class="q-num">Q8</span>
+      <span class="q-text">A trolley has a mass of 2 kg and a 0.5 kg mass is added. The same force is applied. What happens to the acceleration?</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q8','A','C')"><span class="opt-letter">A</span> It increases</div>
+      <div class="opt" onclick="selectMCQ('q8','B','C')"><span class="opt-letter">B</span> It stays the same</div>
+      <div class="opt" onclick="selectMCQ('q8','C','C')"><span class="opt-letter">C</span> It decreases</div>
+      <div class="opt" onclick="selectMCQ('q8','D','C')"><span class="opt-letter">D</span> It becomes zero</div>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-header">
+      <span class="q-num">Q9</span>
+      <span class="q-text">From the velocity–time graph, the gradient of the line gives you the:</span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q9','A','B')"><span class="opt-letter">A</span> Resultant force</div>
+      <div class="opt" onclick="selectMCQ('q9','B','B')"><span class="opt-letter">B</span> Acceleration</div>
+      <div class="opt" onclick="selectMCQ('q9','C','B')"><span class="opt-letter">C</span> Distance</div>
+      <div class="opt" onclick="selectMCQ('q9','D','B')"><span class="opt-letter">D</span> Mass</div>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-header">
+      <span class="q-num">Q10</span>
+      <span class="q-text">Inertial mass is defined as: <span class="formula">(Higher)</span></span>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="selectMCQ('q10','A','C')"><span class="opt-letter">A</span> mass × acceleration</div>
+      <div class="opt" onclick="selectMCQ('q10','B','C')"><span class="opt-letter">B</span> force × mass</div>
+      <div class="opt" onclick="selectMCQ('q10','C','C')"><span class="opt-letter">C</span> force ÷ acceleration</div>
+      <div class="opt" onclick="selectMCQ('q10','D','C')"><span class="opt-letter">D</span> acceleration ÷ force</div>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- TRUE / FALSE -->
+  <div class="section-label" id="tf">True or False</div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-header">
+      <span class="q-num">Q11</span>
+      <span class="q-text">The acceleration of an object is always in the same direction as the resultant force acting on it.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q11','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q11','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-header">
+      <span class="q-num">Q12</span>
+      <span class="q-text">If the mass of an object increases and the force stays the same, the acceleration also increases.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q12','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q12','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-header">
+      <span class="q-num">Q13</span>
+      <span class="q-text">Newton's Second Law states that the acceleration of an object is proportional to the resultant force on it.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q13','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q13','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-header">
+      <span class="q-num">Q14</span>
+      <span class="q-text">An object moving at constant velocity has a non-zero resultant force acting on it.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q14','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q14','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-header">
+      <span class="q-num">Q15</span>
+      <span class="q-text">The resultant force on an object is the single force that has the same effect as all the individual forces combined.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q15','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q15','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-header">
+      <span class="q-num">Q16</span>
+      <span class="q-text">Tripling the force on an object (same mass) will triple its acceleration.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q16','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q16','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-header">
+      <span class="q-num">Q17</span>
+      <span class="q-text">In the equation F = ma, the force F refers to any single force acting on the object.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q17','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q17','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-header">
+      <span class="q-num">Q18</span>
+      <span class="q-text">Inertia is the tendency of an object to resist changes to its velocity. <span class="formula">(Higher)</span></span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q18','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q18','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-header">
+      <span class="q-num">Q19</span>
+      <span class="q-text">A negative acceleration means the object is always stationary.</span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q19','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q19','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-header">
+      <span class="q-num">Q20</span>
+      <span class="q-text">An object with a larger inertial mass is harder to accelerate for a given force. <span class="formula">(Higher)</span></span>
+    </div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="selectTF('q20','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="selectTF('q20','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <span class="result-emoji" id="resultEmoji"></span>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <div class="mum-banner" id="mumBanner"></div>
+    <button class="reset-btn" onclick="resetQuiz()">↺ Try again</button>
+  </div>
+
+</div><!-- /questions -->
+
+<script>
+  const SCORE_KEY = 'physics-p10-1-quiz-score';
+  const TOTAL = 20;
+  let score = 0;
+  let answered = 0;
+  const answers = {};
+
+  const feedbacks = {
+    q1: { correct: 'Correct! F = m × a = 4 × 3 = 12 N.', wrong: 'Not quite. Use F = m × a: 4 kg × 3 m/s² = 12 N.' },
+    q2: { correct: 'Correct! a = F ÷ m = 30 ÷ 6 = 5 m/s².', wrong: 'Not quite. Use a = F ÷ m: 30 ÷ 6 = 5 m/s².' },
+    q3: { correct: 'Correct! a = 3200 ÷ 800 = 4 m/s².', wrong: 'Not quite. a = F ÷ m = 3200 ÷ 800 = 4 m/s².' },
+    q4: { correct: 'Correct! F = 80 × 8 = 640 N.', wrong: 'Not quite. F = m × a = 80 × 8 = 640 N.' },
+    q5: { correct: 'Correct! F and a are directly proportional (same mass), so doubling F doubles a.', wrong: 'Not quite. F ∝ a when mass is constant — doubling force doubles acceleration.' },
+    q6: { correct: 'Correct! Deceleration means acceleration is negative — i.e. opposite to velocity.', wrong: 'Not quite. Deceleration means the resultant force opposes the direction of motion.' },
+    q7: { correct: 'Correct! 1 N is defined as the force giving 1 kg an acceleration of 1 m/s².', wrong: 'Not quite. The Newton is defined as the force that gives 1 kg an acceleration of 1 m/s².' },
+    q8: { correct: 'Correct! More mass → less acceleration for the same force (a = F ÷ m).', wrong: 'Not quite. Adding mass means a = F ÷ m gives a smaller acceleration.' },
+    q9: { correct: 'Correct! The gradient of a velocity–time graph equals acceleration.', wrong: 'Not quite. gradient = Δv ÷ Δt = acceleration.' },
+    q10: { correct: 'Correct! Inertial mass = force ÷ acceleration (F/a). Higher tier definition.', wrong: 'Not quite. Inertial mass is defined as force ÷ acceleration.' },
+    q11: { correct: 'Correct! Acceleration is always in the same direction as the resultant force.', wrong: 'Not quite. Acceleration is always in the same direction as the resultant force — this is Newton\'s Second Law.' },
+    q12: { correct: 'Correct — False! More mass → LESS acceleration for the same force.', wrong: 'Careful! More mass → LESS acceleration. a = F ÷ m, so they are inversely proportional.' },
+    q13: { correct: 'Correct! Newton\'s Second Law: a ∝ F (for constant mass).', wrong: 'Not quite. Newton\'s Second Law does state that acceleration is proportional to resultant force.' },
+    q14: { correct: 'Correct — False! Constant velocity means zero resultant force (Newton\'s First Law).', wrong: 'Not quite. Constant velocity means zero acceleration, so the resultant force must be zero.' },
+    q15: { correct: 'Correct! The resultant (net) force replaces all individual forces.', wrong: 'Not quite. The resultant force is the single equivalent of all forces combined.' },
+    q16: { correct: 'Correct! F ∝ a, so tripling F triples a (same mass).', wrong: 'Not quite. F and a are directly proportional — tripling force triples acceleration.' },
+    q17: { correct: 'Correct — False! F in F = ma is always the RESULTANT (net) force, not just one force.', wrong: 'Careful! F must be the RESULTANT force — the total net force — not just one of the forces.' },
+    q18: { correct: 'Correct! Inertia is resistance to changes in velocity.', wrong: 'Not quite. Inertia is indeed the tendency to resist changes in velocity.' },
+    q19: { correct: 'Correct — False! Negative acceleration means the object is decelerating (slowing down), not necessarily stationary.', wrong: 'Not quite. Negative acceleration means the object is slowing down, not that it is stationary.' },
+    q20: { correct: 'Correct! Greater inertial mass = more resistance to acceleration.', wrong: 'Not quite. Greater inertial mass means it is harder to accelerate the object.' },
+  };
+
+  function updateScoreBar() {
+    document.getElementById('scorePill').textContent = 'Score: ' + score;
+    document.getElementById('answeredPill').textContent = answered + ' / ' + TOTAL;
+    document.getElementById('progressFill').style.width = (answered / TOTAL * 100) + '%';
+    if (answered === TOTAL) showResult();
+  }
+
+  function selectMCQ(qid, chosen, correct) {
+    if (answers[qid]) return;
+    answers[qid] = chosen;
+    const block = document.getElementById(qid);
+    const opts = block.querySelectorAll('.opt');
+    const letters = ['A','B','C','D'];
+    opts.forEach((opt, i) => {
+      opt.classList.add('locked');
+      if (letters[i] === correct) opt.classList.add('correct-ans');
+      else if (letters[i] === chosen && chosen !== correct) opt.classList.add('wrong-ans');
+    });
+    const isCorrect = chosen === correct;
+    if (isCorrect) { score++; block.classList.add('correct'); }
+    else block.classList.add('wrong');
+    answered++;
+    showFeedback(qid, isCorrect);
+    updateScoreBar();
+  }
+
+  function selectTF(qid, chosen, correct) {
+    if (answers[qid]) return;
+    answers[qid] = chosen;
+    const block = document.getElementById(qid);
+    const btns = block.querySelectorAll('.tf-btn');
+    btns.forEach(btn => {
+      btn.classList.add('locked');
+      const val = btn.textContent.includes('True') ? 'true' : 'false';
+      if (val === correct) btn.classList.add('correct-ans');
+      else if (val === chosen && chosen !== correct) btn.classList.add('wrong-ans');
+    });
+    const isCorrect = chosen === correct;
+    if (isCorrect) { score++; block.classList.add('correct'); }
+    else block.classList.add('wrong');
+    answered++;
+    showFeedback(qid, isCorrect);
+    updateScoreBar();
+  }
+
+  function showFeedback(qid, isCorrect) {
+    const fb = document.getElementById('fb-' + qid);
+    const data = feedbacks[qid];
+    fb.textContent = isCorrect ? '✓ ' + data.correct : '✗ ' + data.wrong;
+    fb.className = 'feedback show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+  }
+
+  function showResult() {
+    localStorage.setItem(SCORE_KEY, score);
+    const box = document.getElementById('resultBox');
+    box.classList.add('show');
+    document.getElementById('resultScore').innerHTML = score + '<span>/20</span>';
+    let emoji, msg, sub;
+    if (score >= 18) {
+      emoji = '🏆'; msg = 'Outstanding!'; sub = 'You have mastered Forces & Acceleration.';
+    } else if (score >= 14) {
+      emoji = '🎉'; msg = 'Great work!'; sub = 'Strong understanding — review any questions you missed.';
+    } else if (score >= 10) {
+      emoji = '📚'; msg = 'Good effort!'; sub = 'Go back over the revision notes and try again.';
+    } else {
+      emoji = '💪'; msg = 'Keep going!'; sub = 'Re-read the revision sheet carefully before retrying.';
+    }
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('resultSub').textContent = sub;
+    document.getElementById('mumBanner').innerHTML =
+      'Show this to mum — <span class="score-highlight">' + score + '/20</span>';
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    Object.keys(answers).forEach(k => delete answers[k]);
+    for (let i = 1; i <= 20; i++) {
+      const block = document.getElementById('q' + i);
+      block.classList.remove('correct','wrong');
+      block.querySelectorAll('.opt').forEach(o => o.className = 'opt');
+      block.querySelectorAll('.tf-btn').forEach(b => b.className = 'tf-btn');
+      const fb = document.getElementById('fb-q' + i);
+      fb.className = 'feedback';
+      fb.textContent = '';
+    }
+    document.getElementById('resultBox').classList.remove('show');
+    updateScoreBar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // re-add onclick since class reset clears them - use event delegation instead
+  document.querySelectorAll('.opt').forEach(opt => {
+    opt._origOnclick = opt.getAttribute('onclick');
+  });
+</script>
+</body>
+</html>

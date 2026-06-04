@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.1 The Nature of Waves — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #00e5ff;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a94;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #26a69a;
+    --green2: #e0f2f1;
+    --orange: #ffa726;
+    --orange2: #fff3e0;
+    --purple: #7c4dff;
+    --purple2: #ede7f6;
+    --line: #c9dff0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d2b45 0%, #1a5276 50%, #0d4f6e 100%);
+    color: white;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(100,181,246,0.07) 40px,
+      rgba(100,181,246,0.07) 41px
+    );
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding: 32px 28px 24px;
+  }
+  .kicker {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 1.0;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 14px;
+    opacity: 0.75;
+    margin-bottom: 18px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 20px;
+  }
+  .hero-tag {
+    background: rgba(100,181,246,0.18);
+    border: 1px solid rgba(100,181,246,0.35);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 14px 28px;
+    background: rgba(0,0,0,0.25);
+    position: relative;
+    z-index: 1;
+  }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { background: rgba(100,181,246,0.2); color: white; }
+
+  /* MARK AS READ */
+  .mark-bar {
+    background: var(--navy);
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .mark-btn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .mark-btn:hover { opacity: 0.85; }
+  .mark-btn.done { background: var(--green); color: white; }
+  .mark-label { color: rgba(255,255,255,0.55); font-size: 12px; }
+
+  /* CHECKLIST */
+  .checklist-section {
+    background: var(--paper);
+    border-radius: 10px;
+    margin: 20px 16px 0;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 14px;
+  }
+  .checklist li.checked { background: var(--green2); text-decoration: line-through; color: var(--muted); }
+  .checklist li input[type=checkbox] { accent-color: var(--green); width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+  .progress-bar-wrap { margin-top: 12px; background: var(--line); border-radius: 10px; height: 7px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 10px; transition: width 0.4s; }
+  .progress-label { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+  /* CONTENT */
+  .content { padding: 16px 16px 40px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .big-idea {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px;
+    padding: 14px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .big-idea::after {
+    content: attr(data-icon);
+    position: absolute;
+    bottom: -6px;
+    right: 6px;
+    font-size: 38px;
+    opacity: 0.12;
+    line-height: 1;
+  }
+  .big-idea h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .big-idea p { font-size: 13px; line-height: 1.45; opacity: 0.9; }
+
+  /* PANEL */
+  .panel {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--line);
+  }
+
+  /* STATEMENT BOX */
+  .statement {
+    background: linear-gradient(135deg, #0d2b45, #1a5276);
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    border-left: 5px solid var(--accent);
+  }
+  .statement p { font-size: 14px; line-height: 1.6; }
+  .statement strong { color: var(--accent); }
+
+  /* COMPARE 2-COL */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+  .compare-col { padding: 14px; }
+  .compare-col:first-child { background: #fff3e0; border-right: 1px solid var(--line); }
+  .compare-col:last-child { background: #e8f4fd; }
+  .compare-col h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .compare-col:first-child h3 { color: #e65100; }
+  .compare-col:last-child h3 { color: #1565c0; }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .compare-col ul li { font-size: 13px; padding-left: 14px; position: relative; line-height: 1.4; }
+  .compare-col ul li::before { content: '▸'; position: absolute; left: 0; font-size: 10px; top: 3px; }
+  .compare-col:first-child ul li::before { color: #e65100; }
+  .compare-col:last-child ul li::before { color: #1565c0; }
+
+  /* EXAMPLES TILES */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tile { border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.4; }
+  .tile h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.3px; margin-bottom: 4px; }
+  .tile.red { background: var(--red2); }
+  .tile.red h4 { color: var(--red); }
+  .tile.blue { background: #e3f2fd; }
+  .tile.blue h4 { color: #1565c0; }
+  .tile.green { background: var(--green2); }
+  .tile.green h4 { color: #00695c; }
+  .tile.orange { background: var(--orange2); }
+  .tile.orange h4 { color: #e65100; }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 7px; }
+  .kw {
+    background: var(--navy);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 11px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid rgba(100,181,246,0.3);
+  }
+  .kw:hover { background: #1a5276; }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: #fff8e1;
+    border-left: 5px solid var(--orange);
+    border-radius: 8px;
+    padding: 13px 14px;
+    font-size: 13.5px;
+  }
+  .exam-tip-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 5px; }
+
+  /* WARNING */
+  .warning {
+    background: #ffebee;
+    border-left: 5px solid var(--red);
+    border-radius: 8px;
+    padding: 13px 14px;
+    font-size: 13.5px;
+  }
+  .warning-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--red); margin-bottom: 5px; }
+
+  /* INTERACTIVE CANVAS */
+  .canvas-wrap { background: #f0f7ff; border-radius: 8px; padding: 12px; }
+  .canvas-wrap canvas { display: block; width: 100%; border-radius: 6px; background: #0d2b45; }
+  .canvas-label { font-size: 12px; color: var(--muted); margin-top: 7px; text-align: center; }
+  .wave-controls { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .wave-controls label { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+  .wave-controls input[type=range] { accent-color: var(--accent); flex: 1; min-width: 80px; }
+  .wave-type-btns { display: flex; gap: 6px; margin-bottom: 8px; }
+  .wave-type-btn {
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(100,181,246,0.3);
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Barlow', sans-serif;
+  }
+  .wave-type-btn.active { background: var(--accent); color: var(--navy); border-color: var(--accent); }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--accent), #0097c4);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    color: var(--navy);
+  }
+  .quiz-cta h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 22px; margin-bottom: 6px; }
+  .quiz-cta p { font-size: 13px; margin-bottom: 12px; opacity: 0.8; }
+  .quiz-cta-btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 10px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Physics · P11</div>
+    <h1>11.1 <span>The Nature</span><br>of Waves</h1>
+    <div class="hero-sub">GCSE Revision · Wave Properties</div>
+    <div class="hero-tags">
+      <span class="hero-tag">Transverse</span>
+      <span class="hero-tag">Longitudinal</span>
+      <span class="hero-tag">Mechanical waves</span>
+      <span class="hero-tag">EM waves</span>
+      <span class="hero-tag">Compression</span>
+      <span class="hero-tag">Rarefaction</span>
+    </div>
+  </div>
+  <nav>
+    <a href="#objectives">Objectives</a>
+    <a href="#big-ideas">Big Ideas</a>
+    <a href="#compare">Transverse vs Long.</a>
+    <a href="#examples">Examples</a>
+    <a href="#canvas">Wave Visualiser</a>
+    <a href="#keywords">Keywords</a>
+    <a href="#exam-tip">Exam Tips</a>
+  </nav>
+</div>
+
+<!-- MARK AS READ -->
+<div class="mark-bar">
+  <button class="mark-btn" id="markBtn" onclick="toggleRead()">✓ Mark as read</button>
+  <span class="mark-label" id="markLabel">Not yet marked</span>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<div class="checklist-section" id="objectives">
+  <div class="section-title">Learning Objectives</div>
+  <ul class="checklist" id="checklist">
+    <li onclick="toggleCheck(0)"><input type="checkbox" id="c0"> I can explain what waves can be used for</li>
+    <li onclick="toggleCheck(1)"><input type="checkbox" id="c1"> I can describe what transverse waves are</li>
+    <li onclick="toggleCheck(2)"><input type="checkbox" id="c2"> I can describe what longitudinal waves are</li>
+    <li onclick="toggleCheck(3)"><input type="checkbox" id="c3"> I can identify which wave types are transverse and which are longitudinal</li>
+    <li onclick="toggleCheck(4)"><input type="checkbox" id="c4"> I can explain the difference between compression and rarefaction</li>
+  </ul>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 5 objectives complete</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- BIG IDEAS -->
+  <div id="big-ideas">
+    <div class="section-title">Big Ideas</div>
+    <div class="big-idea-grid">
+      <div class="big-idea" data-icon="〰">
+        <h3>Waves transfer…</h3>
+        <p>Energy and information — <strong>not matter</strong>. The medium itself doesn't travel.</p>
+      </div>
+      <div class="big-idea" data-icon="↕">
+        <h3>Transverse</h3>
+        <p>Oscillations are <strong>perpendicular</strong> to the direction of energy transfer.</p>
+      </div>
+      <div class="big-idea" data-icon="↔">
+        <h3>Longitudinal</h3>
+        <p>Oscillations are <strong>parallel</strong> to the direction of energy transfer.</p>
+      </div>
+      <div class="big-idea" data-icon="⚙">
+        <h3>Mechanical</h3>
+        <p>Need a <strong>medium</strong> (substance) to travel through. Can be either type.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATEMENT BOX -->
+  <div class="statement">
+    <p>Waves transfer <strong>energy</strong> without transferring <strong>matter</strong>. The oscillations of a transverse wave are <strong>perpendicular</strong> to the direction of energy transfer, while the oscillations of a longitudinal wave are <strong>parallel</strong> to the direction of energy transfer.</p>
+  </div>
+
+  <!-- COMPARE -->
+  <div id="compare">
+    <div class="section-title">Transverse vs Longitudinal</div>
+    <div class="compare">
+      <div class="compare-col">
+        <h3>⟺ Transverse</h3>
+        <ul>
+          <li>Oscillations perpendicular to energy transfer</li>
+          <li>Water ripples on a surface</li>
+          <li>All EM waves (light, radio, microwaves)</li>
+          <li>Waves on a rope moved up and down</li>
+          <li>Can travel through a vacuum</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <h3>⟺ Longitudinal</h3>
+        <ul>
+          <li>Oscillations parallel to energy transfer</li>
+          <li>Sound waves in air</li>
+          <li>Slinky pushed in and out</li>
+          <li>Has compressions &amp; rarefactions</li>
+          <li>Needs a medium to travel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAMPLES TILES -->
+  <div id="examples">
+    <div class="section-title">Examples</div>
+    <div class="tiles">
+      <div class="tile red">
+        <h4>🔊 Sound Waves</h4>
+        Longitudinal. Vibrations in air — compressions and rarefactions travel in the same direction as energy.
+      </div>
+      <div class="tile blue">
+        <h4>💡 Light &amp; EM Waves</h4>
+        All transverse. Travel through a vacuum at 300,000 km/s. No medium needed.
+      </div>
+      <div class="tile green">
+        <h4>🌊 Water Ripples</h4>
+        Transverse — the surface moves up and down while energy travels outward.
+      </div>
+      <div class="tile orange">
+        <h4>〰️ Slinky Spring</h4>
+        Move it side-to-side → transverse. Push and pull it → longitudinal (compressions visible).
+      </div>
+    </div>
+  </div>
+
+  <!-- WAVE VISUALISER -->
+  <div class="panel" id="canvas">
+    <div class="section-title">Wave Visualiser</div>
+    <div class="wave-type-btns">
+      <button class="wave-type-btn active" id="btnT" onclick="setWaveType('transverse')">Transverse</button>
+      <button class="wave-type-btn" id="btnL" onclick="setWaveType('longitudinal')">Longitudinal</button>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="waveCanvas" height="120"></canvas>
+      <div class="wave-controls">
+        <label>Speed</label>
+        <input type="range" id="speedSlider" min="0.5" max="4" step="0.1" value="1.5">
+        <label>Amplitude</label>
+        <input type="range" id="ampSlider" min="10" max="45" step="1" value="28">
+      </div>
+    </div>
+    <div class="canvas-label" id="canvasLabel">Transverse wave — particles oscillate up and down, energy travels right →</div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="panel" id="keywords">
+    <div class="section-title">Key Terms</div>
+    <div class="keywords">
+      <span class="kw">Wave</span>
+      <span class="kw">Energy transfer</span>
+      <span class="kw">Transverse</span>
+      <span class="kw">Longitudinal</span>
+      <span class="kw">Oscillation</span>
+      <span class="kw">Vibration</span>
+      <span class="kw">Mechanical wave</span>
+      <span class="kw">Electromagnetic wave</span>
+      <span class="kw">Compression</span>
+      <span class="kw">Rarefaction</span>
+      <span class="kw">Medium</span>
+      <span class="kw">Perpendicular</span>
+      <span class="kw">Parallel</span>
+      <span class="kw">Peak / Crest</span>
+    </div>
+  </div>
+
+  <!-- EXAM TIP -->
+  <div class="exam-tip" id="exam-tip">
+    <div class="exam-tip-label">⭐ Exam Tip</div>
+    In the exam, always state the direction of oscillation relative to the direction of energy transfer. For a <strong>transverse wave</strong>: oscillations are <strong>perpendicular</strong>. For a <strong>longitudinal wave</strong>: oscillations are <strong>parallel</strong>. Learn these definitions exactly — they are 1-mark answers.
+  </div>
+
+  <!-- WARNING -->
+  <div class="warning">
+    <div class="warning-label">⚠ Common Mistake</div>
+    Don't say "sound is transverse" or "light is longitudinal" — it's the other way round. Sound = longitudinal, light = transverse. Also remember: EM waves travel through a vacuum; mechanical waves do not.
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h3>Ready to test yourself?</h3>
+    <p>Try the 20-question quick check for this topic</p>
+    <a class="quiz-cta-btn" href="physics-p11-1-quickcheck.html">Start Quick Check →</a>
+  </div>
+
+</div>
+
+<script>
+  // ── MARK AS READ ──────────────────────────────────
+  const READ_KEY = 'physics-p11-1-read';
+  function toggleRead() {
+    const done = localStorage.getItem(READ_KEY) === '1';
+    if (done) {
+      localStorage.removeItem(READ_KEY);
+      document.getElementById('markBtn').className = 'mark-btn';
+      document.getElementById('markBtn').textContent = '✓ Mark as read';
+      document.getElementById('markLabel').textContent = 'Not yet marked';
+    } else {
+      localStorage.setItem(READ_KEY, '1');
+      document.getElementById('markBtn').className = 'mark-btn done';
+      document.getElementById('markBtn').textContent = '✓ Read!';
+      document.getElementById('markLabel').textContent = 'Marked as read ✓';
+    }
+  }
+  if (localStorage.getItem(READ_KEY) === '1') {
+    document.getElementById('markBtn').className = 'mark-btn done';
+    document.getElementById('markBtn').textContent = '✓ Read!';
+    document.getElementById('markLabel').textContent = 'Marked as read ✓';
+  }
+
+  // ── CHECKLIST ────────────────────────────────────
+  const CHECKS = Array.from({length: 5}, (_, i) => localStorage.getItem('p11-1-c' + i) === '1');
+  function renderChecks() {
+    const items = document.querySelectorAll('#checklist li');
+    let done = 0;
+    items.forEach((li, i) => {
+      document.getElementById('c' + i).checked = CHECKS[i];
+      li.classList.toggle('checked', CHECKS[i]);
+      if (CHECKS[i]) done++;
+    });
+    const pct = Math.round(done / 5 * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' / 5 objectives complete';
+  }
+  function toggleCheck(i) {
+    CHECKS[i] = !CHECKS[i];
+    localStorage.setItem('p11-1-c' + i, CHECKS[i] ? '1' : '0');
+    renderChecks();
+  }
+  renderChecks();
+
+  // ── WAVE VISUALISER ───────────────────────────────
+  let waveType = 'transverse';
+  let animId;
+
+  function setWaveType(type) {
+    waveType = type;
+    document.getElementById('btnT').className = 'wave-type-btn' + (type === 'transverse' ? ' active' : '');
+    document.getElementById('btnL').className = 'wave-type-btn' + (type === 'longitudinal' ? ' active' : '');
+    document.getElementById('canvasLabel').textContent = type === 'transverse'
+      ? 'Transverse wave — particles oscillate up and down, energy travels right →'
+      : 'Longitudinal wave — compressions and rarefactions travel right →';
+  }
+
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  let t = 0;
+
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+    canvas.height = 120 * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function drawTransverse(W, H, amp, speed) {
+    ctx.clearRect(0, 0, W, H);
+    const cy = H / 2;
+    const λ = W / 2;
+
+    // Wave line
+    ctx.beginPath();
+    ctx.strokeStyle = '#64b5f6';
+    ctx.lineWidth = 2.5;
+    for (let x = 0; x <= W; x++) {
+      const y = cy + amp * Math.sin(2 * Math.PI * (x / λ - speed * t));
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Particles
+    const nPts = 12;
+    for (let i = 0; i <= nPts; i++) {
+      const x = (i / nPts) * W;
+      const phase = 2 * Math.PI * (x / λ - speed * t);
+      const y = cy + amp * Math.sin(phase);
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#00e5ff';
+      ctx.fill();
+      // oscillation guide
+      ctx.beginPath();
+      ctx.setLineDash([2, 3]);
+      ctx.strokeStyle = 'rgba(100,181,246,0.2)';
+      ctx.lineWidth = 1;
+      ctx.moveTo(x, cy - amp - 6);
+      ctx.lineTo(x, cy + amp + 6);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Direction arrow
+    ctx.fillStyle = '#ffa726';
+    ctx.font = 'bold 11px Barlow, sans-serif';
+    ctx.fillText('Energy →', W - 65, 14);
+  }
+
+  function drawLongitudinal(W, H, amp, speed) {
+    ctx.clearRect(0, 0, W, H);
+    const cy = H / 2;
+    const nDots = 40;
+    const baseSpacing = W / nDots;
+
+    for (let i = 0; i < nDots; i++) {
+      const baseX = (i + 0.5) * baseSpacing;
+      const displacement = amp * 0.5 * Math.sin(2 * Math.PI * (i / nDots * 2 - speed * t));
+      const x = baseX + displacement;
+
+      // Colour by compression / rarefaction
+      const density = Math.cos(2 * Math.PI * (i / nDots * 2 - speed * t));
+      const r = Math.round(lerp(30, 100, (density + 1) / 2));
+      const g = Math.round(lerp(80, 181, (density + 1) / 2));
+      const b = Math.round(lerp(120, 246, (density + 1) / 2));
+
+      ctx.beginPath();
+      ctx.arc(x, cy, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fill();
+    }
+
+    // Labels
+    ctx.font = '10px Barlow, sans-serif';
+    ctx.fillStyle = '#ff8a65';
+    ctx.fillText('C = compression', 8, H - 8);
+    ctx.fillStyle = '#64b5f6';
+    ctx.fillText('R = rarefaction', 110, H - 8);
+    ctx.fillStyle = '#ffa726';
+    ctx.font = 'bold 11px Barlow, sans-serif';
+    ctx.fillText('Energy →', W - 65, 14);
+  }
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function animate() {
+    const W = canvas.offsetWidth;
+    const H = 120;
+    const speed = parseFloat(document.getElementById('speedSlider').value);
+    const amp = parseFloat(document.getElementById('ampSlider').value);
+    t += 0.016;
+    if (waveType === 'transverse') drawTransverse(W, H, amp, speed);
+    else drawLongitudinal(W, H, amp, speed);
+    animId = requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+</body>
+</html>

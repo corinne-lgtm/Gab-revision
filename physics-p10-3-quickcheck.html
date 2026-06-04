@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.3 Forces & Braking · Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a94;
+    --red: #ef5350;
+    --red2: #ffeaea;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --line: #c5ddf0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d2b45 0%, #1565c0 60%, #0288d1 100%);
+    color: white;
+    padding: 32px 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero-kicker {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.5);
+    color: #e3f2fd;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-right: 6px;
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 24px;
+    flex-wrap: wrap;
+  }
+  .score-stat {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  .score-stat span { color: var(--accent); }
+  .score-bar-progress {
+    flex: 1;
+    min-width: 100px;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #42a5f5);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* Q BLOCK */
+  .q-block {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+    transition: border-color 0.2s;
+  }
+  .q-block.correct { border-color: var(--green); background: var(--green2); }
+  .q-block.wrong { border-color: var(--red); background: var(--red2); }
+
+  .q-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    background: white;
+    transition: all 0.15s;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .option:hover:not(.disabled) { border-color: var(--accent); background: #f0f9ff; }
+  .option.selected { border-color: #1565c0; background: #e3f2fd; }
+  .option.correct-ans { border-color: var(--green); background: var(--green2); font-weight: 700; }
+  .option.wrong-ans { border-color: var(--red); background: var(--red2); }
+  .option.disabled { cursor: default; }
+  .opt-letter {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .option.selected .opt-letter { background: #1565c0; color: white; }
+  .option.correct-ans .opt-letter { background: var(--green); color: white; }
+  .option.wrong-ans .opt-letter { background: var(--red); color: white; }
+
+  /* TRUE/FALSE */
+  .tf-options { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    transition: all 0.15s;
+    color: var(--ink);
+  }
+  .tf-btn:hover:not(.disabled) { border-color: var(--accent); background: #f0f9ff; }
+  .tf-btn.selected { border-color: #1565c0; background: #e3f2fd; color: #1565c0; }
+  .tf-btn.correct-ans { border-color: var(--green); background: var(--green2); color: var(--green); }
+  .tf-btn.wrong-ans { border-color: var(--red); background: var(--red2); color: var(--red); }
+  .tf-btn.disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: #c8e6c9; color: #1b5e20; border-left: 4px solid var(--green); }
+  .feedback.wrong { background: #ffcdd2; color: #b71c1c; border-left: 4px solid var(--red); }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 52px; margin-bottom: 10px; }
+  .result-score {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .result-msg {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .result-show-mum {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 8px 22px;
+    border-radius: 20px;
+    margin: 14px 0 20px;
+    text-transform: uppercase;
+  }
+  .reset-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { background: #1565c0; color: white; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">GCSE Physics · P10.3</div>
+  <h1>Forces &amp; Braking<br>Quick Check</h1>
+  <span class="hero-badge">20 Questions</span>
+  <span class="hero-badge">10 MCQ + 10 True/False</span>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <div class="score-stat">Score: <span id="scoreDisplay">0</span></div>
+  <div class="score-stat">Answered: <span id="answeredDisplay">0</span>/20</div>
+  <div class="score-bar-progress"><div class="score-bar-fill" id="scoreBarFill"></div></div>
+</div>
+
+<main>
+  <div id="quizContainer"></div>
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-show-mum" id="resultShowMum"></div>
+    <br>
+    <button class="reset-btn" onclick="resetQuiz()">Try Again</button>
+  </div>
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p103-quiz-score';
+
+const questions = [
+  // ── 10 MCQ ──
+  {
+    type: 'mcq',
+    q: 'A car travels at constant velocity. What does this tell us about the forces acting on it?',
+    options: ['The driving force is greater than air resistance', 'The resultant force is zero', 'There are no forces acting on it', 'The braking force equals the driving force'],
+    correct: 'B',
+    feedback: 'At constant velocity, the resultant force is zero — driving force equals the resistive forces (friction and air resistance).'
+  },
+  {
+    type: 'mcq',
+    q: 'What is the stopping distance of a vehicle?',
+    options: ['The distance travelled during the driver\'s reaction time only', 'The distance the vehicle travels once the brakes are applied', 'The thinking distance plus the braking distance', 'The distance from when the driver notices a hazard to a full stop'],
+    correct: 'C',
+    feedback: 'Stopping distance = thinking distance + braking distance. Both must be included.'
+  },
+  {
+    type: 'mcq',
+    q: 'A car of mass 1200 kg decelerates at 5 m/s². What is the braking force?',
+    options: ['240 N', '6000 N', '1205 N', '5 N'],
+    correct: 'B',
+    feedback: 'F = ma = 1200 × 5 = 6000 N. Remember to use the full mass in kilograms.'
+  },
+  {
+    type: 'mcq',
+    q: 'Which factor increases the THINKING distance but NOT the braking distance?',
+    options: ['Wet road surface', 'Worn tyres', 'Driver tiredness', 'Greater vehicle mass'],
+    correct: 'C',
+    feedback: 'Tiredness slows reaction time, increasing thinking distance. It does not affect the braking distance, which depends on speed, mass, and road/tyre conditions.'
+  },
+  {
+    type: 'mcq',
+    q: 'A driver\'s reaction time is 0.8 s and they are travelling at 20 m/s. What is the thinking distance?',
+    options: ['25 m', '8 m', '16 m', '0.04 m'],
+    correct: 'C',
+    feedback: 'Thinking distance = speed × reaction time = 20 × 0.8 = 16 m.'
+  },
+  {
+    type: 'mcq',
+    q: 'If a car\'s speed doubles, how does its braking distance change (assuming the same braking force)?',
+    options: ['It doubles', 'It triples', 'It quadruples', 'It stays the same'],
+    correct: 'C',
+    feedback: 'Braking distance is proportional to speed². Doubling the speed quadruples the kinetic energy the brakes must remove, so braking distance × 4.'
+  },
+  {
+    type: 'mcq',
+    q: 'Which equation would you use to calculate the deceleration of a car that stops from 30 m/s over 75 m? (Higher)',
+    options: ['F = ma', 'v = u + at', 'v² = u² + 2as', 'p = mv'],
+    correct: 'C',
+    feedback: 'v² = u² + 2as links initial speed (u), final speed (v = 0), acceleration (a), and distance (s). Rearranged: a = −u² / 2s.'
+  },
+  {
+    type: 'mcq',
+    q: 'On a dry flat road, the maximum safe deceleration is about 6 m/s². A car is travelling at 12 m/s. What is the minimum braking distance?',
+    options: ['2 m', '12 m', '24 m', '72 m'],
+    correct: 'B',
+    feedback: 's = u² / (2a) = 144 / 12 = 12 m. Using a = −u²/2s rearranged gives s = u²/2a.'
+  },
+  {
+    type: 'mcq',
+    q: 'Which of the following BEST explains why a heavily loaded lorry needs a larger braking force than a car to stop in the same distance?',
+    options: ['It has more wheels', 'It has greater mass so needs more force for the same deceleration (F = ma)', 'It travels more slowly', 'It has a larger engine'],
+    correct: 'B',
+    feedback: 'F = ma. For the same deceleration, greater mass means a proportionally greater force is needed.'
+  },
+  {
+    type: 'mcq',
+    q: 'A student claims "braking distance is proportional to speed." Using Figure 2 data (30 mph = 14 m, 60 mph = 55 m), is this correct?',
+    options: ['Yes, because 55 is roughly double 14', 'No, because doubling the speed roughly quadruples the braking distance', 'Yes, because speed and distance always increase together', 'No, because braking distance does not depend on speed'],
+    correct: 'B',
+    feedback: 'Doubling speed from 30 to 60 mph increases braking distance from 14 m to ~55 m (≈ ×4), consistent with distance ∝ speed², not direct proportion.'
+  },
+
+  // ── 10 TRUE/FALSE ──
+  {
+    type: 'tf',
+    q: 'The thinking distance is proportional to the speed of the vehicle.',
+    correct: 'true',
+    feedback: 'True. Thinking distance = speed × reaction time. If reaction time is constant, thinking distance scales directly with speed.'
+  },
+  {
+    type: 'tf',
+    q: 'Driving on an icy road increases the thinking distance but does not affect the braking distance.',
+    correct: 'false',
+    feedback: 'False. Icy roads reduce friction, which increases the BRAKING distance. Thinking distance is unaffected by road conditions.'
+  },
+  {
+    type: 'tf',
+    q: 'At constant velocity, the driving force of a car\'s engine is zero.',
+    correct: 'false',
+    feedback: 'False. At constant velocity the resultant force is zero, but the driving force must still balance air resistance and friction — so it is not zero.'
+  },
+  {
+    type: 'tf',
+    q: 'Using a mobile phone while driving can increase the thinking distance.',
+    correct: 'true',
+    feedback: 'True. Distractions like mobile phones slow reaction time, directly increasing the distance travelled before the driver reacts.'
+  },
+  {
+    type: 'tf',
+    q: 'Braking distance is proportional to speed squared.',
+    correct: 'true',
+    feedback: 'True. The kinetic energy that must be removed = ½mv². Since KE ∝ v², the braking distance is also proportional to v².'
+  },
+  {
+    type: 'tf',
+    q: 'A car with worn tyres will have a shorter braking distance because there is less rubber to slow the wheels.',
+    correct: 'false',
+    feedback: 'False. Worn tyres reduce friction between tyre and road, which INCREASES the braking distance as less force opposes the motion.'
+  },
+  {
+    type: 'tf',
+    q: 'The formula F = ma can be used to estimate the braking force of a vehicle if you know its mass and deceleration.',
+    correct: 'true',
+    feedback: 'True. Braking force F = ma, where a is the magnitude of the deceleration. This is a direct application of Newton\'s second law.'
+  },
+  {
+    type: 'tf',
+    q: 'Alcohol consumption decreases a driver\'s reaction time, meaning they stop faster.',
+    correct: 'false',
+    feedback: 'False. Alcohol INCREASES reaction time, which INCREASES thinking distance and therefore total stopping distance.'
+  },
+  {
+    type: 'tf',
+    q: 'For a vehicle stopping from speed u with deceleration a, the braking distance s = u² / (2a). (Higher)',
+    correct: 'true',
+    feedback: 'True. From v² = u² + 2as with v = 0: 0 = u² + 2as → s = −u²/2a. Taking magnitude: s = u²/(2a).'
+  },
+  {
+    type: 'tf',
+    q: 'Increasing the speed of a car from 30 mph to 60 mph doubles the stopping distance.',
+    correct: 'false',
+    feedback: 'False. Thinking distance doubles, but braking distance quadruples (∝ speed²). So overall stopping distance more than doubles.'
+  }
+];
+
+let score = 0;
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = `q${i}`;
+
+    const num = document.createElement('div');
+    num.className = 'q-number';
+    num.textContent = `Question ${i + 1} of 20 · ${q.type === 'mcq' ? 'Multiple Choice' : 'True / False'}`;
+
+    const qtext = document.createElement('div');
+    qtext.className = 'q-text';
+    qtext.textContent = q.q;
+
+    block.appendChild(num);
+    block.appendChild(qtext);
+
+    if (q.type === 'mcq') {
+      const opts = document.createElement('div');
+      opts.className = 'options';
+      const letters = ['A','B','C','D'];
+      q.options.forEach((opt, j) => {
+        const btn = document.createElement('div');
+        btn.className = 'option';
+        btn.dataset.letter = letters[j];
+        btn.innerHTML = `<div class="opt-letter">${letters[j]}</div><span>${opt}</span>`;
+        btn.onclick = () => selectMCQ(i, j, letters[j], q.correct, q.feedback);
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      const tf = document.createElement('div');
+      tf.className = 'tf-options';
+      ['True','False'].forEach(val => {
+        const btn = document.createElement('div');
+        btn.className = 'tf-btn';
+        btn.textContent = val;
+        btn.dataset.val = val.toLowerCase();
+        btn.onclick = () => selectTF(i, val.toLowerCase(), q.correct, q.feedback);
+        tf.appendChild(btn);
+      });
+      block.appendChild(tf);
+    }
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = `fb${i}`;
+    block.appendChild(fb);
+
+    container.appendChild(block);
+  });
+}
+
+function selectMCQ(qi, optIndex, letter, correct, feedback) {
+  const block = document.getElementById(`q${qi}`);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+  const opts = block.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+
+  const chosen = opts[optIndex];
+  const isCorrect = letter === correct;
+
+  chosen.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+  if (!isCorrect) {
+    opts.forEach(o => {
+      if (o.dataset.letter === correct) o.classList.add('correct-ans');
+    });
+  }
+
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+  showFeedback(qi, isCorrect, feedback);
+  if (isCorrect) score++;
+  answered++;
+  updateScoreBar();
+  checkComplete();
+}
+
+function selectTF(qi, val, correct, feedback) {
+  const block = document.getElementById(`q${qi}`);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+  const btns = block.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+
+  const isCorrect = val === correct;
+  btns.forEach(b => {
+    if (b.dataset.val === val) b.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+    if (!isCorrect && b.dataset.val === correct) b.classList.add('correct-ans');
+  });
+
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+  showFeedback(qi, isCorrect, feedback);
+  if (isCorrect) score++;
+  answered++;
+  updateScoreBar();
+  checkComplete();
+}
+
+function showFeedback(qi, isCorrect, text) {
+  const fb = document.getElementById(`fb${qi}`);
+  fb.className = `feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  fb.textContent = (isCorrect ? '✅ Correct! ' : '❌ Not quite. ') + text;
+}
+
+function updateScoreBar() {
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('answeredDisplay').textContent = answered;
+  document.getElementById('scoreBarFill').style.width = (score / 20 * 100) + '%';
+}
+
+function checkComplete() {
+  if (answered < 20) return;
+
+  localStorage.setItem(SCORE_KEY, score);
+
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  let emoji, msg;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! You\'ve mastered P10.3.'; }
+  else if (score >= 14) { emoji = '🎉'; msg = 'Great work — nearly there!'; }
+  else if (score >= 10) { emoji = '📚'; msg = 'Good effort. Review the areas you missed.'; }
+  else { emoji = '💪'; msg = 'Keep practising — you\'ll get there!'; }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = `${score} / 20`;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultShowMum').textContent = `Show this to mum — ${score}/20`;
+
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  score = 0;
+  answered = 0;
+  updateScoreBar();
+  document.getElementById('resultBox').classList.remove('show');
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

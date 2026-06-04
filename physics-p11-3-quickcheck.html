@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.3 Quick Check — Reflection & Refraction</title>
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --line: #c5dff0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1e6fa8 100%);
+    color: white;
+    padding: 1.8rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .kicker {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  .hero h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.8rem; }
+
+  /* SCORE BAR */
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .score-stat { text-align: center; }
+  .score-stat .val { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .score-stat .lbl { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.7); }
+  .score-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.2); }
+  .progress-wrap { flex: 1; }
+  .progress-lbl { font-size: 0.65rem; color: rgba(255,255,255,0.7); margin-bottom: 0.3rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .progress-track { background: rgba(255,255,255,0.2); border-radius: 10px; height: 8px; overflow: hidden; }
+  .progress-fill { background: var(--accent); height: 100%; border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.7rem 1rem;
+    background: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .nav span { color: var(--accent); font-weight: 700; }
+
+  /* QUESTIONS */
+  main { padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: var(--navy);
+    color: white;
+  }
+  .q-num {
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 800;
+    border-radius: 20px;
+    padding: 0.15rem 0.6rem;
+    white-space: nowrap;
+  }
+  .q-type {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-left: auto;
+  }
+  .q-text { padding: 0.9rem 1rem 0.5rem; font-size: 0.85rem; font-weight: 600; line-height: 1.45; }
+
+  /* MCQ OPTIONS */
+  .options { padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.8rem;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    transition: all 0.15s;
+    background: white;
+  }
+  .opt:hover:not(.locked) { border-color: var(--accent); background: var(--bg); }
+  .opt .letter {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: var(--navy);
+    color: white;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .opt.correct { border-color: var(--green); background: var(--green2); }
+  .opt.correct .letter { background: var(--green); }
+  .opt.wrong { border-color: var(--red); background: var(--red2); }
+  .opt.wrong .letter { background: var(--red); }
+  .opt.locked { cursor: default; }
+
+  /* TRUE/FALSE */
+  .tf-wrap { padding: 0.5rem 1rem 1rem; display: flex; gap: 0.6rem; }
+  .tf-btn {
+    flex: 1;
+    padding: 0.7rem;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: white;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .tf-btn:hover:not(.locked) { border-color: var(--accent); background: var(--bg); }
+  .tf-btn.correct { border-color: var(--green); background: var(--green2); color: var(--green); }
+  .tf-btn.wrong { border-color: var(--red); background: var(--red2); color: var(--red); }
+  .tf-btn.locked { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin: 0 1rem 1rem;
+    padding: 0.65rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+  .feedback.correct { background: var(--green2); border-left: 3px solid var(--green); color: var(--green); }
+  .feedback.wrong { background: var(--red2); border-left: 3px solid var(--red); color: #b71c1c; }
+  .feedback.show { display: block; }
+  .feedback strong { display: block; margin-bottom: 0.2rem; font-size: 0.82rem; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 2.8rem; margin-bottom: 0.5rem; }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--navy); margin-bottom: 0.3rem; }
+  .result-msg { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin-bottom: 0.3rem; }
+  .result-mum { font-size: 0.85rem; color: var(--navy); font-weight: 700; margin-top: 0.6rem; background: var(--bg); border-radius: 8px; padding: 0.5rem; }
+
+  /* RESET */
+  .reset-btn {
+    display: block;
+    width: 100%;
+    padding: 0.85rem;
+    margin-top: 1rem;
+    background: var(--navy);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { background: var(--accent); color: var(--navy); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">Physics · P11.3 · Quick Check</div>
+  <h1>Reflection &amp; Refraction</h1>
+  <div class="score-bar">
+    <div class="score-stat">
+      <div class="val" id="score-val">0</div>
+      <div class="lbl">Score</div>
+    </div>
+    <div class="score-divider"></div>
+    <div class="score-stat">
+      <div class="val" id="answered-val">0</div>
+      <div class="lbl">Answered</div>
+    </div>
+    <div class="score-divider"></div>
+    <div class="progress-wrap">
+      <div class="progress-lbl">Progress — <span id="prog-text">0 / 20</span></div>
+      <div class="progress-track"><div class="progress-fill" id="prog-bar"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  Questions 1–10: <span>Multiple Choice</span> &nbsp;|&nbsp; Questions 11–20: <span>True / False</span>
+</div>
+
+<main id="quiz-main">
+
+<!-- Q1 MCQ -->
+<div class="q-block" id="q1">
+  <div class="q-header"><span class="q-num">Q1</span> When plane waves reflect off a straight barrier, the angle of the reflected wavefront to the barrier is… <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(1,'A','A')"><span class="letter">A</span> Greater than the angle of the incident wavefront</div>
+    <div class="opt" onclick="answerMCQ(1,'B','A')"><span class="letter">B</span> Smaller than the angle of the incident wavefront</div>
+    <div class="opt" onclick="answerMCQ(1,'C','A')"><span class="letter">C</span> Equal to the angle of the incident wavefront</div>
+    <div class="opt" onclick="answerMCQ(1,'D','A')"><span class="letter">D</span> Zero — the wave goes straight back</div>
+  </div>
+  <div class="feedback" id="fb1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="q-block" id="q2">
+  <div class="q-header"><span class="q-num">Q2</span> What happens to the speed of waves when they cross a boundary from deep to shallow water in a ripple tank? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(2,'A','B')"><span class="letter">A</span> Speed increases</div>
+    <div class="opt" onclick="answerMCQ(2,'B','B')"><span class="letter">B</span> Speed decreases</div>
+    <div class="opt" onclick="answerMCQ(2,'C','B')"><span class="letter">C</span> Speed stays the same</div>
+    <div class="opt" onclick="answerMCQ(2,'D','B')"><span class="letter">D</span> Speed doubles</div>
+  </div>
+  <div class="feedback" id="fb2"></div>
+</div>
+
+<!-- Q3 MCQ -->
+<div class="q-block" id="q3">
+  <div class="q-header"><span class="q-num">Q3</span> When a wave is refracted, which property does NOT change? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(3,'A','C')"><span class="letter">A</span> Speed</div>
+    <div class="opt" onclick="answerMCQ(3,'B','C')"><span class="letter">B</span> Wavelength</div>
+    <div class="opt" onclick="answerMCQ(3,'C','C')"><span class="letter">C</span> Frequency</div>
+    <div class="opt" onclick="answerMCQ(3,'D','C')"><span class="letter">D</span> Direction</div>
+  </div>
+  <div class="feedback" id="fb3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="q-block" id="q4">
+  <div class="q-header"><span class="q-num">Q4</span> What is refraction? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(4,'A','B')"><span class="letter">A</span> The bouncing of a wave off a surface</div>
+    <div class="opt" onclick="answerMCQ(4,'B','B')"><span class="letter">B</span> The change in direction of a wave as it crosses a boundary between two media</div>
+    <div class="opt" onclick="answerMCQ(4,'C','B')"><span class="letter">C</span> The absorption of a wave by a material</div>
+    <div class="opt" onclick="answerMCQ(4,'D','B')"><span class="letter">D</span> The increase in amplitude of a wave</div>
+  </div>
+  <div class="feedback" id="fb4"></div>
+</div>
+
+<!-- Q5 MCQ -->
+<div class="q-block" id="q5">
+  <div class="q-header"><span class="q-num">Q5</span> Plane waves hit a boundary at normal incidence (90°). What happens? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(5,'A','B')"><span class="letter">A</span> Speed changes and direction changes</div>
+    <div class="opt" onclick="answerMCQ(5,'B','B')"><span class="letter">B</span> Speed changes but direction does NOT change</div>
+    <div class="opt" onclick="answerMCQ(5,'C','B')"><span class="letter">C</span> Neither speed nor direction changes</div>
+    <div class="opt" onclick="answerMCQ(5,'D','B')"><span class="letter">D</span> The wave is completely absorbed</div>
+  </div>
+  <div class="feedback" id="fb5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="q-block" id="q6">
+  <div class="q-header"><span class="q-num">Q6</span> In the wavelet model, what causes a wavefront to bend (refract) at a boundary? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(6,'A','C')"><span class="letter">A</span> One side of the wavefront increases in frequency</div>
+    <div class="opt" onclick="answerMCQ(6,'B','C')"><span class="letter">B</span> The amplitude decreases suddenly</div>
+    <div class="opt" onclick="answerMCQ(6,'C','C')"><span class="letter">C</span> One side of the wavefront slows down before the other, causing it to bend</div>
+    <div class="opt" onclick="answerMCQ(6,'D','C')"><span class="letter">D</span> The wavelength becomes infinite at the boundary</div>
+  </div>
+  <div class="feedback" id="fb6"></div>
+</div>
+
+<!-- Q7 MCQ -->
+<div class="q-block" id="q7">
+  <div class="q-header"><span class="q-num">Q7</span> When waves go from deep to shallow water at a non-zero angle, the refracted wavefronts are… <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(7,'A','B')"><span class="letter">A</span> Further apart and at a larger angle to the boundary</div>
+    <div class="opt" onclick="answerMCQ(7,'B','B')"><span class="letter">B</span> Closer together and at a smaller angle to the boundary</div>
+    <div class="opt" onclick="answerMCQ(7,'C','B')"><span class="letter">C</span> The same distance apart at the same angle</div>
+    <div class="opt" onclick="answerMCQ(7,'D','B')"><span class="letter">D</span> Further apart and at a smaller angle to the boundary</div>
+  </div>
+  <div class="feedback" id="fb7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="q-block" id="q8">
+  <div class="q-header"><span class="q-num">Q8</span> Microwaves are fired at a metal surface. What mostly happens? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(8,'A','A')"><span class="letter">A</span> Reflected</div>
+    <div class="opt" onclick="answerMCQ(8,'B','A')"><span class="letter">B</span> Transmitted</div>
+    <div class="opt" onclick="answerMCQ(8,'C','A')"><span class="letter">C</span> Absorbed, heating the metal</div>
+    <div class="opt" onclick="answerMCQ(8,'D','A')"><span class="letter">D</span> Refracted through the metal</div>
+  </div>
+  <div class="feedback" id="fb8"></div>
+</div>
+
+<!-- Q9 MCQ -->
+<div class="q-block" id="q9">
+  <div class="q-header"><span class="q-num">Q9</span> Why does food heat up in a microwave oven? <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(9,'A','C')"><span class="letter">A</span> Microwaves are transmitted through the food without interacting</div>
+    <div class="opt" onclick="answerMCQ(9,'B','C')"><span class="letter">B</span> Microwaves reflect off the food, causing vibration</div>
+    <div class="opt" onclick="answerMCQ(9,'C','C')"><span class="letter">C</span> The food absorbs the microwaves, gaining energy</div>
+    <div class="opt" onclick="answerMCQ(9,'D','C')"><span class="letter">D</span> Microwaves refract inside the food, concentrating heat</div>
+  </div>
+  <div class="feedback" id="fb9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="q-block" id="q10">
+  <div class="q-header"><span class="q-num">Q10</span> As waves travel through a substance that absorbs some energy, the amplitude… <span class="q-type">MCQ</span></div>
+  <div class="q-text"></div>
+  <div class="options">
+    <div class="opt" onclick="answerMCQ(10,'A','B')"><span class="letter">A</span> Increases gradually</div>
+    <div class="opt" onclick="answerMCQ(10,'B','B')"><span class="letter">B</span> Decreases gradually</div>
+    <div class="opt" onclick="answerMCQ(10,'C','B')"><span class="letter">C</span> Stays the same</div>
+    <div class="opt" onclick="answerMCQ(10,'D','B')"><span class="letter">D</span> Oscillates up and down</div>
+  </div>
+  <div class="feedback" id="fb10"></div>
+</div>
+
+<!-- Q11 TF -->
+<div class="q-block" id="q11">
+  <div class="q-header"><span class="q-num">Q11</span> The wavelength of a wave changes when it is reflected. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(11,'true','false')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(11,'false','false')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb11"></div>
+</div>
+
+<!-- Q12 TF -->
+<div class="q-block" id="q12">
+  <div class="q-header"><span class="q-num">Q12</span> Refraction only occurs when waves cross a boundary at a non-zero angle. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(12,'true','false')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(12,'false','false')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb12"></div>
+</div>
+
+<!-- Q13 TF -->
+<div class="q-block" id="q13">
+  <div class="q-header"><span class="q-num">Q13</span> The frequency of a wave increases when it refracts into a slower medium. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(13,'true','false')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(13,'false','false')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb13"></div>
+</div>
+
+<!-- Q14 TF -->
+<div class="q-block" id="q14">
+  <div class="q-header"><span class="q-num">Q14</span> Waves in shallow water travel more slowly than waves in deep water. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(14,'true','true')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(14,'false','true')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb14"></div>
+</div>
+
+<!-- Q15 TF -->
+<div class="q-block" id="q15">
+  <div class="q-header"><span class="q-num">Q15</span> Light is mostly transmitted by ordinary glass. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(15,'true','true')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(15,'false','true')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb15"></div>
+</div>
+
+<!-- Q16 TF -->
+<div class="q-block" id="q16">
+  <div class="q-header"><span class="q-num">Q16</span> The angle of incidence equals the angle of reflection for plane waves in a ripple tank. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(16,'true','true')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(16,'false','true')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb16"></div>
+</div>
+
+<!-- Q17 TF -->
+<div class="q-block" id="q17">
+  <div class="q-header"><span class="q-num">Q17</span> Microwaves can pass through paper. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(17,'true','true')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(17,'false','true')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb17"></div>
+</div>
+
+<!-- Q18 TF -->
+<div class="q-block" id="q18">
+  <div class="q-header"><span class="q-num">Q18</span> When waves refract, they must always change direction. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(18,'true','false')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(18,'false','false')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb18"></div>
+</div>
+
+<!-- Q19 TF -->
+<div class="q-block" id="q19">
+  <div class="q-header"><span class="q-num">Q19</span> Darkened glass absorbs almost all light passing through it. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(19,'true','true')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(19,'false','true')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb19"></div>
+</div>
+
+<!-- Q20 TF -->
+<div class="q-block" id="q20">
+  <div class="q-header"><span class="q-num">Q20</span> The speed of a wave changes on reflection. <span class="q-type">True / False</span></div>
+  <div class="q-text"></div>
+  <div class="tf-wrap">
+    <button class="tf-btn" onclick="answerTF(20,'true','false')">TRUE</button>
+    <button class="tf-btn" onclick="answerTF(20,'false','false')">FALSE</button>
+  </div>
+  <div class="feedback" id="fb20"></div>
+</div>
+
+<!-- RESULT BOX -->
+<div class="result-box" id="result-box">
+  <div class="result-emoji" id="result-emoji"></div>
+  <div class="result-score" id="result-score"></div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="result-mum" id="result-mum"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+</main>
+
+<script>
+  const SCORE_KEY = 'physics-p11-3-quiz-score';
+
+  const feedbackText = {
+    1: { correct: 'Correct! The angle of reflection always equals the angle of incidence — speed and wavelength don\'t change on reflection.', wrong: 'Not quite. The reflected wavefront leaves at the same angle as the incident wavefront approaches.' },
+    2: { correct: 'Correct! Waves slow down when moving from deep to shallow water — this is what causes refraction.', wrong: 'Incorrect. Waves travel more slowly in shallow water than in deep water.' },
+    3: { correct: 'Correct! Frequency never changes when a wave refracts. Only speed and wavelength change (v = fλ).', wrong: 'Incorrect. Frequency stays the same when a wave refracts — only speed and wavelength change.' },
+    4: { correct: 'Correct! Refraction is the change in direction (and speed) of a wave as it crosses a boundary between two media.', wrong: 'Not quite. Refraction is the change in direction as waves cross a boundary — caused by a change in speed.' },
+    5: { correct: 'Correct! At normal incidence the wave slows down but continues in the same direction — no bending occurs.', wrong: 'Incorrect. At normal incidence (90°), speed changes but direction does NOT change.' },
+    6: { correct: 'Correct! When one side of the wavefront hits the boundary first and slows down, the wavefront bends — this is refraction.', wrong: 'Incorrect. Bending happens because one side slows before the other, causing the wavefront to rotate.' },
+    7: { correct: 'Correct! In shallow water the waves are slower, so wavefronts are closer together (shorter wavelength) and at a smaller angle to the boundary.', wrong: 'Incorrect. Slower waves in shallow water means shorter wavelength — wavefronts are closer together and at a smaller angle.' },
+    8: { correct: 'Correct! Microwaves are reflected by metal surfaces.', wrong: 'Incorrect. Microwaves are reflected by metal surfaces (that\'s how microwave ovens keep the microwaves inside).' },
+    9: { correct: 'Correct! The food absorbs microwave energy, which heats it up.', wrong: 'Incorrect. The food absorbs the microwaves — this transfers energy and heats the food.' },
+    10: { correct: 'Correct! As energy is absorbed by the substance, the amplitude of the wave gradually decreases.', wrong: 'Incorrect. Absorption removes energy from the wave, so amplitude decreases gradually.' },
+    11: { correct: 'Correct — FALSE! Wavelength does NOT change on reflection. Speed and wavelength stay the same.', wrong: 'Incorrect — it\'s FALSE. Reflection does not change speed or wavelength.' },
+    12: { correct: 'Correct — FALSE! Refraction (change in speed) still occurs at normal incidence — but the direction doesn\'t change. Direction only changes at non-zero angles.', wrong: 'Incorrect — it\'s FALSE. Speed still changes at normal incidence; only direction stays the same.' },
+    13: { correct: 'Correct — FALSE! Frequency never changes when a wave refracts. Only speed and wavelength change.', wrong: 'Incorrect — it\'s FALSE. Frequency is constant during refraction; only speed and wavelength change.' },
+    14: { correct: 'Correct — TRUE! Shallow water slows waves down, which is why they refract at the boundary.', wrong: 'Incorrect — it\'s TRUE. Waves travel more slowly in shallow water than deep water.' },
+    15: { correct: 'Correct — TRUE! Ordinary glass transmits most light; darkened glass absorbs most of it.', wrong: 'Incorrect — it\'s TRUE. Light is mostly transmitted by ordinary glass.' },
+    16: { correct: 'Correct — TRUE! Angle of incidence = angle of reflection. This is the law of reflection.', wrong: 'Incorrect — it\'s TRUE. The law of reflection states the two angles are always equal.' },
+    17: { correct: 'Correct — TRUE! Microwaves pass through paper but are reflected by metal.', wrong: 'Incorrect — it\'s TRUE. Microwaves can pass through paper.' },
+    18: { correct: 'Correct — FALSE! At normal incidence, waves refract (speed changes) but do NOT change direction.', wrong: 'Incorrect — it\'s FALSE. At normal incidence, speed changes but direction stays the same.' },
+    19: { correct: 'Correct — TRUE! Darkened glass absorbs almost all light, unlike ordinary glass which transmits most of it.', wrong: 'Incorrect — it\'s TRUE. Darkened glass absorbs almost all light passing through it.' },
+    20: { correct: 'Correct — FALSE! Speed does NOT change on reflection — that\'s one of the key differences from refraction.', wrong: 'Incorrect — it\'s FALSE. Speed stays the same on reflection.' },
+  };
+
+  let score = 0;
+  let answered = 0;
+  const total = 20;
+
+  function updateUI() {
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('answered-val').textContent = answered;
+    document.getElementById('prog-text').textContent = answered + ' / ' + total;
+    document.getElementById('prog-bar').style.width = (answered / total * 100) + '%';
+
+    if (answered === total) {
+      showResult();
+    }
+  }
+
+  function lockBlock(qNum) {
+    const block = document.getElementById('q' + qNum);
+    block.querySelectorAll('.opt, .tf-btn').forEach(el => el.classList.add('locked'));
+  }
+
+  function answerMCQ(qNum, chosen, correct) {
+    const block = document.getElementById('q' + qNum);
+    if (block.querySelector('.locked')) return;
+
+    const opts = block.querySelectorAll('.opt');
+    const letters = ['A','B','C','D'];
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+    answered++;
+
+    opts.forEach((opt, i) => {
+      if (letters[i] === correct) opt.classList.add('correct');
+      else if (letters[i] === chosen && !isCorrect) opt.classList.add('wrong');
+    });
+
+    showFeedback(qNum, isCorrect);
+    lockBlock(qNum);
+    updateUI();
+  }
+
+  function answerTF(qNum, chosen, correct) {
+    const block = document.getElementById('q' + qNum);
+    if (block.querySelector('.locked')) return;
+
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+    answered++;
+
+    block.querySelectorAll('.tf-btn').forEach(btn => {
+      const val = btn.textContent === 'TRUE' ? 'true' : 'false';
+      if (val === correct) btn.classList.add('correct');
+      else if (val === chosen && !isCorrect) btn.classList.add('wrong');
+    });
+
+    showFeedback(qNum, isCorrect);
+    lockBlock(qNum);
+    updateUI();
+  }
+
+  function showFeedback(qNum, isCorrect) {
+    const fb = document.getElementById('fb' + qNum);
+    fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+    const data = feedbackText[qNum];
+    fb.innerHTML = '<strong>' + (isCorrect ? '✅ Correct!' : '❌ Not quite') + '</strong>' + (isCorrect ? data.correct : data.wrong);
+  }
+
+  function showResult() {
+    const box = document.getElementById('result-box');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    let emoji, msg;
+    if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! You\'ve nailed reflection and refraction!'; }
+    else if (score >= 14) { emoji = '🎉'; msg = 'Great work! Just a few things to review.'; }
+    else if (score >= 10) { emoji = '📚'; msg = 'Good effort — go back over the revision notes and try again.'; }
+    else { emoji = '💪'; msg = 'Keep going! Re-read P11.3 and have another go.'; }
+
+    document.getElementById('result-emoji').textContent = emoji;
+    document.getElementById('result-score').textContent = score + ' / 20';
+    document.getElementById('result-msg').textContent = msg;
+    document.getElementById('result-mum').textContent = '📋 Show this to mum — ' + score + '/20';
+
+    localStorage.setItem(SCORE_KEY, score);
+  }
+
+  function resetQuiz() {
+    score = 0;
+    answered = 0;
+    updateUI();
+
+    document.getElementById('result-box').classList.remove('show');
+
+    for (let i = 1; i <= 20; i++) {
+      const block = document.getElementById('q' + i);
+      block.querySelectorAll('.opt').forEach(o => o.classList.remove('correct','wrong','locked'));
+      block.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('correct','wrong','locked'));
+      const fb = document.getElementById('fb' + i);
+      fb.classList.remove('show','correct','wrong');
+      fb.innerHTML = '';
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

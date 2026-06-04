@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.5 Quick Check — Forces &amp; Elasticity</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e8f4fd;
+    --ink: #0d2b45;
+    --muted: #4a6d8c;
+    --paper: #ffffff;
+    --line: #c5dff0;
+    --accent: #64b5f6;
+    --accent2: #1e88e5;
+    --navy: #0d2b45;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    padding-bottom: 60px;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d2b45 0%, #1a4a72 55%, #1565c0 100%);
+    color: white;
+    padding: 32px 24px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-50px; right:-50px;
+    width:220px; height:220px; border-radius:50%;
+    background:rgba(100,181,246,0.1);
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+  }
+  .hero-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .hero p { font-size: 13px; opacity: 0.75; }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--paper);
+    border-bottom: 2px solid var(--line);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .score-pill {
+    background: var(--navy);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .score-pill span { color: var(--accent); font-weight: 700; }
+  .progress-wrap {
+    flex: 1;
+    background: var(--line);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 10px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+  .answered-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── CONTENT ── */
+  .content { padding: 20px 16px; max-width: 660px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content:''; flex:1; height:1px; background:var(--line); }
+
+  /* ── Q BLOCK ── */
+  .q-block {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .q-block.correct { border-color: #66bb6a; }
+  .q-block.wrong   { border-color: var(--red); }
+
+  .q-header {
+    padding: 14px 16px 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .q-num {
+    background: var(--navy);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* MCQ options */
+  .options { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 7px; }
+  .option-btn {
+    width: 100%;
+    text-align: left;
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .1s;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .option-btn .opt-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    min-width: 18px;
+  }
+  .option-btn:not(:disabled):hover { border-color: var(--accent2); background: #ddeeff; transform: translateX(2px); }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.selected-correct { background: var(--green2); border-color: #66bb6a; }
+  .option-btn.selected-correct .opt-letter { color: var(--green); }
+  .option-btn.selected-wrong   { background: var(--red2);   border-color: var(--red); }
+  .option-btn.selected-wrong .opt-letter { color: var(--red); }
+  .option-btn.reveal-correct   { background: var(--green2); border-color: #66bb6a; }
+
+  /* TF options */
+  .tf-options { padding: 0 14px 14px; display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    color: var(--ink);
+  }
+  .tf-btn:not(:disabled):hover { border-color: var(--accent2); background: #ddeeff; }
+  .tf-btn:disabled { cursor: default; }
+  .tf-btn.selected-correct { background: var(--green2); border-color: #66bb6a; color: var(--green); }
+  .tf-btn.selected-wrong   { background: var(--red2);   border-color: var(--red);   color: var(--red); }
+  .tf-btn.reveal-correct   { background: var(--green2); border-color: #66bb6a; }
+
+  /* Feedback */
+  .feedback {
+    display: none;
+    padding: 10px 16px 14px;
+    font-size: 13px;
+    border-top: 1px solid var(--line);
+    gap: 8px;
+  }
+  .feedback.show { display: flex; align-items: flex-start; gap: 8px; }
+  .feedback.fb-correct { background: var(--green2); }
+  .feedback.fb-wrong   { background: var(--red2); }
+  .feedback .fb-icon { font-size: 16px; flex-shrink: 0; }
+  .feedback .fb-text strong { display: block; font-size: 13px; margin-bottom: 2px; }
+  .feedback.fb-correct .fb-text strong { color: var(--green); }
+  .feedback.fb-wrong   .fb-text strong { color: var(--red); }
+  .feedback .fb-text { font-size: 13px; color: var(--muted); }
+
+  /* ── RESULT BOX ── */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 52px; margin-bottom: 12px; }
+  .result-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .result-score span { color: var(--accent2); }
+  .result-msg {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .result-mum {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    margin: 12px 0 20px;
+    letter-spacing: 0.03em;
+  }
+  .reset-btn {
+    background: var(--accent2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .reset-btn:hover { background: #1565c0; }
+
+  @media (max-width: 480px) {
+    .score-bar { padding: 10px 12px; gap: 10px; }
+    .content { padding: 14px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">GCSE PHYSICS</div>
+  <div class="hero-kicker">P10.5 · Quick Check</div>
+  <h1>Forces &amp; Elasticity</h1>
+  <p>20 questions — MCQ &amp; True / False</p>
+</div>
+
+<div class="score-bar">
+  <div class="score-pill">Score <span id="scoreDisplay">0</span>/20</div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="answered-count" id="answeredCount">0/20 answered</div>
+</div>
+
+<div class="content">
+
+  <div class="section-label">Part 1 — Multiple Choice</div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-header"><span class="q-num">Q1</span><span class="q-text">What does it mean for an object to be elastic?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q1','A','A')"><span class="opt-letter">A</span>It stretches without breaking</button>
+      <button class="option-btn" onclick="answerMCQ('q1','B','A')"><span class="opt-letter">B</span>It returns to its original shape when deforming forces are removed</button>
+      <button class="option-btn" onclick="answerMCQ('q1','C','A')"><span class="opt-letter">C</span>It permanently changes shape</button>
+      <button class="option-btn" onclick="answerMCQ('q1','D','A')"><span class="opt-letter">D</span>It is made of rubber</button>
+    </div>
+    <div class="feedback" id="fb-q1">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-header"><span class="q-num">Q2</span><span class="q-text">How is extension calculated?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q2','A','C')"><span class="opt-letter">A</span>Original length + current length</button>
+      <button class="option-btn" onclick="answerMCQ('q2','B','C')"><span class="opt-letter">B</span>Current length × original length</button>
+      <button class="option-btn" onclick="answerMCQ('q2','C','C')"><span class="opt-letter">C</span>Current length − original length</button>
+      <button class="option-btn" onclick="answerMCQ('q2','D','C')"><span class="opt-letter">D</span>Force ÷ spring constant</button>
+    </div>
+    <div class="feedback" id="fb-q2">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-header"><span class="q-num">Q3</span><span class="q-text">What is Hooke's Law?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q3','A','B')"><span class="opt-letter">A</span>Force is inversely proportional to extension</button>
+      <button class="option-btn" onclick="answerMCQ('q3','B','B')"><span class="opt-letter">B</span>Extension is directly proportional to force, as long as the limit of proportionality is not exceeded</button>
+      <button class="option-btn" onclick="answerMCQ('q3','C','B')"><span class="opt-letter">C</span>Extension is directly proportional to mass</button>
+      <button class="option-btn" onclick="answerMCQ('q3','D','B')"><span class="opt-letter">D</span>Force equals mass times acceleration</button>
+    </div>
+    <div class="feedback" id="fb-q3">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-header"><span class="q-num">Q4</span><span class="q-text">The spring constant k has units of:</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q4','A','C')"><span class="opt-letter">A</span>Newtons (N)</button>
+      <button class="option-btn" onclick="answerMCQ('q4','B','C')"><span class="opt-letter">B</span>Metres per newton (m/N)</button>
+      <button class="option-btn" onclick="answerMCQ('q4','C','C')"><span class="opt-letter">C</span>Newtons per metre (N/m)</button>
+      <button class="option-btn" onclick="answerMCQ('q4','D','C')"><span class="opt-letter">D</span>Newton metres (Nm)</button>
+    </div>
+    <div class="feedback" id="fb-q4">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-header"><span class="q-num">Q5</span><span class="q-text">A spring has k = 20 N/m. What force is needed to extend it by 0.15 m?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q5','A','B')"><span class="opt-letter">A</span>0.0075 N</button>
+      <button class="option-btn" onclick="answerMCQ('q5','B','B')"><span class="opt-letter">B</span>3 N</button>
+      <button class="option-btn" onclick="answerMCQ('q5','C','B')"><span class="opt-letter">C</span>133 N</button>
+      <button class="option-btn" onclick="answerMCQ('q5','D','B')"><span class="opt-letter">D</span>20.15 N</button>
+    </div>
+    <div class="feedback" id="fb-q5">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-header"><span class="q-num">Q6</span><span class="q-text">On an F–e graph, the spring constant equals:</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q6','A','A')"><span class="opt-letter">A</span>The gradient of the straight line</button>
+      <button class="option-btn" onclick="answerMCQ('q6','B','A')"><span class="opt-letter">B</span>The y-intercept</button>
+      <button class="option-btn" onclick="answerMCQ('q6','C','A')"><span class="opt-letter">C</span>The area under the line</button>
+      <button class="option-btn" onclick="answerMCQ('q6','D','A')"><span class="opt-letter">D</span>The x-intercept</button>
+    </div>
+    <div class="feedback" id="fb-q6">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-header"><span class="q-num">Q7</span><span class="q-text">A spring with k = 25 N/m stretches by 0.10 m. What is the applied force?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q7','A','C')"><span class="opt-letter">A</span>0.25 N</button>
+      <button class="option-btn" onclick="answerMCQ('q7','B','C')"><span class="opt-letter">B</span>250 N</button>
+      <button class="option-btn" onclick="answerMCQ('q7','C','C')"><span class="opt-letter">C</span>2.5 N</button>
+      <button class="option-btn" onclick="answerMCQ('q7','D','C')"><span class="opt-letter">D</span>0.004 N</button>
+    </div>
+    <div class="feedback" id="fb-q7">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-header"><span class="q-num">Q8</span><span class="q-text">Which material has the highest limit of proportionality?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q8','A','C')"><span class="opt-letter">A</span>Polythene strip</button>
+      <button class="option-btn" onclick="answerMCQ('q8','B','C')"><span class="opt-letter">B</span>Rubber band</button>
+      <button class="option-btn" onclick="answerMCQ('q8','C','C')"><span class="opt-letter">C</span>Steel spring</button>
+      <button class="option-btn" onclick="answerMCQ('q8','D','C')"><span class="opt-letter">D</span>They all have the same limit</button>
+    </div>
+    <div class="feedback" id="fb-q8">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-header"><span class="q-num">Q9</span><span class="q-text">A force of 6 N extends a spring by 0.12 m. What is the spring constant?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q9','A','B')"><span class="opt-letter">A</span>0.72 N/m</button>
+      <button class="option-btn" onclick="answerMCQ('q9','B','B')"><span class="opt-letter">B</span>50 N/m</button>
+      <button class="option-btn" onclick="answerMCQ('q9','C','B')"><span class="opt-letter">C</span>6.12 N/m</button>
+      <button class="option-btn" onclick="answerMCQ('q9','D','B')"><span class="opt-letter">D</span>72 N/m</button>
+    </div>
+    <div class="feedback" id="fb-q9">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-header"><span class="q-num">Q10</span><span class="q-text">What happens to extension beyond the limit of proportionality?</span></div>
+    <div class="options">
+      <button class="option-btn" onclick="answerMCQ('q10','A','D')"><span class="opt-letter">A</span>Extension decreases</button>
+      <button class="option-btn" onclick="answerMCQ('q10','B','D')"><span class="opt-letter">B</span>Extension becomes proportional</button>
+      <button class="option-btn" onclick="answerMCQ('q10','C','D')"><span class="opt-letter">C</span>Extension stays the same</button>
+      <button class="option-btn" onclick="answerMCQ('q10','D','D')"><span class="opt-letter">D</span>Extension is no longer proportional to force — the relationship becomes non-linear</button>
+    </div>
+    <div class="feedback" id="fb-q10">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <div class="section-label">Part 2 — True or False</div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-header"><span class="q-num">Q11</span><span class="q-text">A rubber band is an example of an elastic material.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q11','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q11','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q11">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-header"><span class="q-num">Q12</span><span class="q-text">A polythene bag returns to its original shape after being stretched — it is inelastically deformed.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q12','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q12','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q12">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-header"><span class="q-num">Q13</span><span class="q-text">Hooke's Law applies when a spring is compressed as well as when it is stretched.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q13','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q13','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q13">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-header"><span class="q-num">Q14</span><span class="q-text">The stiffer the spring, the smaller the value of k.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q14','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q14','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q14">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-header"><span class="q-num">Q15</span><span class="q-text">On an F–e graph, a steel spring gives a straight line through the origin.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q15','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q15','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q15">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-header"><span class="q-num">Q16</span><span class="q-text">Extension is the total length of a stretched spring.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q16','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q16','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q16">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-header"><span class="q-num">Q17</span><span class="q-text">Doubling the force doubles the extension, as long as the limit of proportionality is not exceeded.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q17','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q17','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q17">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-header"><span class="q-num">Q18</span><span class="q-text">A polythene strip has a higher limit of proportionality than a steel spring.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q18','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q18','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q18">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-header"><span class="q-num">Q19</span><span class="q-text">The equation F = k × e can be rearranged to find the spring constant: k = F ÷ e.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q19','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q19','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q19">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-header"><span class="q-num">Q20</span><span class="q-text">When a spring is compressed, the change in length is called an extension.</span></div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF('q20','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q20','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q20">
+      <span class="fb-icon"></span>
+      <div class="fb-text"><strong></strong><span></span></div>
+    </div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <div class="result-score"><span id="finalScore">0</span>/20</div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <button class="reset-btn" onclick="resetQuiz()">Try Again 🔄</button>
+  </div>
+
+</div>
+
+<script>
+  const SCORE_KEY = 'physics-p10-5-quiz-score';
+  let score = 0;
+  let answered = 0;
+  const total = 20;
+
+  const feedbacks = {
+    'q1':  { ok: 'Correct! Elastic objects always return to their original shape.', bad: 'Not quite. Elastic means the object returns to its original shape when forces are removed.' },
+    'q2':  { ok: 'Correct! Extension = current length − original length.', bad: 'Remember: Extension = current length − original length, not the total length.' },
+    'q3':  { ok: 'Correct! Hooke\'s Law states extension is directly proportional to force, before the limit of proportionality.', bad: 'Hooke\'s Law: extension ∝ force, as long as the limit of proportionality is not exceeded.' },
+    'q4':  { ok: 'Correct! Spring constant k is measured in N/m (newtons per metre).', bad: 'k is in N/m — force per unit extension.' },
+    'q5':  { ok: 'Correct! F = 20 × 0.15 = 3 N.', bad: 'Use F = k × e → 20 × 0.15 = 3 N.' },
+    'q6':  { ok: 'Correct! The gradient of the F–e graph equals the spring constant k.', bad: 'The gradient of the straight section of the F–e graph gives k.' },
+    'q7':  { ok: 'Correct! F = 25 × 0.10 = 2.5 N.', bad: 'F = k × e = 25 × 0.10 = 2.5 N.' },
+    'q8':  { ok: 'Correct! Steel springs have a much higher limit of proportionality than rubber or polythene.', bad: 'Steel springs stay proportional for much longer — they have the highest limit of proportionality.' },
+    'q9':  { ok: 'Correct! k = F ÷ e = 6 ÷ 0.12 = 50 N/m.', bad: 'Rearrange F = ke → k = F ÷ e = 6 ÷ 0.12 = 50 N/m.' },
+    'q10': { ok: 'Correct! Beyond the limit, the F–e relationship becomes non-linear.', bad: 'Past the limit of proportionality, extension is no longer proportional to force — the graph curves.' },
+    'q11': { ok: 'Correct! Rubber bands are elastic — they return to their original shape.', bad: 'Rubber bands are elastic; they snap back to shape after stretching.' },
+    'q12': { ok: 'Correct — it is FALSE. A polythene bag does NOT return to its original shape; it is inelastically deformed.', bad: 'False — polythene bags are inelastic and do NOT return to their original shape.' },
+    'q13': { ok: 'Correct! Hooke\'s Law applies for both extension and compression.', bad: 'Hooke\'s Law applies to compression too — the change in length is a compression, not extension.' },
+    'q14': { ok: 'Correct — FALSE. A stiffer spring has a HIGHER spring constant k.', bad: 'False! A stiffer spring has a LARGER k value, not smaller.' },
+    'q15': { ok: 'Correct! A steel spring gives a straight line through the origin on an F–e graph.', bad: 'Yes — steel springs obey Hooke\'s Law and plot as a straight line through the origin.' },
+    'q16': { ok: 'Correct — FALSE. Extension is the INCREASE in length, not the total length.', bad: 'False. Extension = current length − original length. Don\'t confuse it with total length.' },
+    'q17': { ok: 'Correct! Direct proportionality means doubling F doubles e.', bad: 'Before the limit of proportionality, the relationship is directly proportional — doubling F doubles e.' },
+    'q18': { ok: 'Correct — FALSE. Steel springs have a much higher limit of proportionality than polythene.', bad: 'False. Polythene has a very LOW limit of proportionality compared to steel springs.' },
+    'q19': { ok: 'Correct! Rearranging F = ke gives k = F ÷ e.', bad: 'Yes — F = ke rearranges to k = F/e and e = F/k.' },
+    'q20': { ok: 'Correct — FALSE. When a spring is compressed, the change in length is a COMPRESSION, not an extension.', bad: 'False. Compression is not the same as extension — the change in length when compressed is called a compression.' },
+  };
+
+  function answerMCQ(qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.dataset.answered) return;
+    block.dataset.answered = '1';
+    answered++;
+
+    const btns = block.querySelectorAll('.option-btn');
+    const letters = ['A','B','C','D'];
+    btns.forEach((btn, i) => {
+      btn.disabled = true;
+      if (letters[i] === correct) btn.classList.add('reveal-correct');
+    });
+
+    const isCorrect = chosen === correct;
+    // Find chosen button
+    const chosenBtn = btns[letters.indexOf(chosen)];
+    if (isCorrect) {
+      chosenBtn.classList.remove('reveal-correct');
+      chosenBtn.classList.add('selected-correct');
+      score++;
+      block.classList.add('correct');
+    } else {
+      chosenBtn.classList.add('selected-wrong');
+      block.classList.add('wrong');
+    }
+
+    showFeedback(qid, isCorrect);
+    updateBar();
+    if (answered === total) showResult();
+  }
+
+  function answerTF(qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.dataset.answered) return;
+    block.dataset.answered = '1';
+    answered++;
+
+    const btns = block.querySelectorAll('.tf-btn');
+    btns.forEach(btn => { btn.disabled = true; });
+    // btns[0]=true, btns[1]=false
+    const trueBtn = btns[0], falseBtn = btns[1];
+    if (correct === 'true') trueBtn.classList.add('reveal-correct');
+    else falseBtn.classList.add('reveal-correct');
+
+    const isCorrect = chosen === correct;
+    const chosenBtn = chosen === 'true' ? trueBtn : falseBtn;
+    if (isCorrect) {
+      chosenBtn.classList.remove('reveal-correct');
+      chosenBtn.classList.add('selected-correct');
+      score++;
+      block.classList.add('correct');
+    } else {
+      chosenBtn.classList.add('selected-wrong');
+      block.classList.add('wrong');
+    }
+
+    showFeedback(qid, isCorrect);
+    updateBar();
+    if (answered === total) showResult();
+  }
+
+  function showFeedback(qid, isCorrect) {
+    const fb = document.getElementById('fb-' + qid);
+    const data = feedbacks[qid];
+    fb.classList.add('show');
+    fb.classList.add(isCorrect ? 'fb-correct' : 'fb-wrong');
+    fb.querySelector('.fb-icon').textContent = isCorrect ? '✅' : '❌';
+    fb.querySelector('strong').textContent = isCorrect ? 'Correct!' : 'Not quite.';
+    fb.querySelector('span').textContent = isCorrect ? data.ok : data.bad;
+  }
+
+  function updateBar() {
+    document.getElementById('scoreDisplay').textContent = score;
+    document.getElementById('answeredCount').textContent = answered + '/20 answered';
+    document.getElementById('progressFill').style.width = (answered / total * 100) + '%';
+  }
+
+  function showResult() {
+    const box = document.getElementById('resultBox');
+    box.classList.add('show');
+    document.getElementById('finalScore').textContent = score;
+
+    let emoji, msg, mum;
+    if (score >= 18) {
+      emoji = '🏆'; msg = 'Outstanding! You\'ve nailed Forces & Elasticity.';
+      mum = 'Show this to mum — ' + score + '/20 🏆';
+    } else if (score >= 14) {
+      emoji = '🎉'; msg = 'Great work! A solid understanding — review a few gaps.';
+      mum = 'Show this to mum — ' + score + '/20 🎉';
+    } else if (score >= 10) {
+      emoji = '📚'; msg = 'Good effort — go back over the revision sheet and try again.';
+      mum = 'Show this to mum — ' + score + '/20 📚';
+    } else {
+      emoji = '💪'; msg = 'Keep going! Read the revision sheet carefully and have another go.';
+      mum = 'Show this to mum — ' + score + '/20 💪';
+    }
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('resultMum').textContent = mum;
+
+    localStorage.setItem(SCORE_KEY, score);
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('scoreDisplay').textContent = '0';
+    document.getElementById('answeredCount').textContent = '0/20 answered';
+    document.getElementById('progressFill').style.width = '0%';
+
+    for (let i = 1; i <= 20; i++) {
+      const block = document.getElementById('q' + i);
+      delete block.dataset.answered;
+      block.classList.remove('correct', 'wrong');
+      block.querySelectorAll('button').forEach(b => {
+        b.disabled = false;
+        b.classList.remove('selected-correct','selected-wrong','reveal-correct');
+      });
+      const fb = document.getElementById('fb-q' + i);
+      fb.classList.remove('show','fb-correct','fb-wrong');
+      fb.querySelector('.fb-icon').textContent = '';
+      fb.querySelector('strong').textContent = '';
+      fb.querySelector('span').textContent = '';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

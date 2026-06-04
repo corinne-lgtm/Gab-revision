@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.4 Momentum — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #1e88e5;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a94;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --yellow: #f9a825;
+    --yellow2: #fffde7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, var(--accent2) 100%);
+    color: white;
+    padding: 2rem 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .hero-kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.65rem 0.9rem;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+  nav a:hover { color: white; border-bottom-color: var(--accent); }
+
+  /* CHECKLIST */
+  .checklist-section {
+    background: var(--paper);
+    margin: 1.5rem 1.5rem 0;
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    border: 2px solid var(--accent);
+  }
+  .checklist-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.8rem;
+  }
+  .checklist-items { display: flex; flex-direction: column; gap: 0.4rem; }
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    padding: 0.35rem 0.5rem;
+    border-radius: 8px;
+    transition: background 0.15s;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .checklist-item:hover { background: var(--bg); }
+  .checklist-item input[type=checkbox] { display: none; }
+  .check-box {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--accent2);
+    background: white;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.75rem;
+  }
+  .checklist-item.done .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .checklist-item.done span { text-decoration: line-through; color: var(--muted); }
+  .checklist-progress {
+    margin-top: 0.8rem;
+    background: var(--bg);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .checklist-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* MAIN CONTENT */
+  .content { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  @media (max-width: 500px) { .big-idea-grid { grid-template-columns: 1fr; } }
+
+  .idea-card {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    border-left: 4px solid var(--accent2);
+  }
+  .idea-card.red { border-left-color: var(--red); }
+  .idea-card.green { border-left-color: var(--green); }
+  .idea-card.orange { border-left-color: var(--orange); }
+  .idea-card.purple { border-left-color: var(--purple); }
+  .idea-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .idea-card p { font-size: 0.87rem; font-weight: 600; line-height: 1.45; }
+
+  /* FORMULA HIGHLIGHT */
+  .formula-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 14px;
+    padding: 1.3rem 1.5rem;
+    text-align: center;
+  }
+  .formula-box .formula-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .formula {
+    font-family: 'Fira Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .formula span { color: var(--accent); }
+  .formula-note { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 0.3rem; }
+
+  /* STATEMENT BOX */
+  .statement-box {
+    background: var(--accent2);
+    color: white;
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+  }
+  .statement-box .s-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 0.4rem;
+  }
+  .statement-box p { font-size: 0.92rem; font-weight: 700; line-height: 1.5; }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: var(--yellow2);
+    border: 2px solid var(--yellow);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.25rem;
+  }
+  .exam-tip p { font-size: 0.85rem; font-weight: 600; line-height: 1.45; }
+
+  /* WARNING */
+  .warning-box {
+    background: var(--red2);
+    border: 2px solid var(--red);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+  .warning-box .tip-title { color: var(--red); }
+  .warning-box p { font-size: 0.85rem; font-weight: 600; line-height: 1.45; }
+
+  /* COMPARE 2-COL */
+  .compare-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  @media (max-width: 480px) { .compare-2col { grid-template-columns: 1fr; } }
+  .compare-card {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+  }
+  .compare-card .c-head {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--bg);
+  }
+  .compare-card .c-head.blue { color: var(--accent2); border-bottom-color: var(--accent); }
+  .compare-card .c-head.orange { color: var(--orange); border-bottom-color: var(--orange); }
+  .compare-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+  .compare-card ul li { font-size: 0.84rem; font-weight: 600; padding-left: 1rem; position: relative; line-height: 1.4; }
+  .compare-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--muted); font-size: 0.75rem; top: 0.1rem; }
+
+  /* UNITS TABLE */
+  .units-table {
+    background: var(--paper);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .units-table table { width: 100%; border-collapse: collapse; }
+  .units-table th {
+    background: var(--navy);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+  }
+  .units-table td {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.83rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--bg);
+  }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table tr:nth-child(even) td { background: #f5fbff; }
+  .units-table .mono { font-family: 'Fira Mono', monospace; font-size: 0.85rem; color: var(--accent2); }
+
+  /* KEYWORDS */
+  .keywords-section { background: var(--paper); border-radius: 12px; padding: 1rem 1.2rem; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.7rem;
+  }
+  .keywords-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .pill {
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .pill.blue { background: #e3f2fd; color: var(--accent2); }
+  .pill.red { background: var(--red2); color: var(--red); }
+  .pill.green { background: var(--green2); color: var(--green); }
+  .pill.orange { background: var(--orange2); color: var(--orange); }
+  .pill.purple { background: var(--purple2); color: var(--purple); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.1rem 1.3rem;
+    border-top: 4px solid var(--accent2);
+  }
+  .worked-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.6rem; }
+  .worked-q { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--ink); }
+  .worked-steps { display: flex; flex-direction: column; gap: 0.35rem; }
+  .worked-step { display: flex; gap: 0.6rem; align-items: baseline; }
+  .step-num {
+    background: var(--accent2);
+    color: white;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    font-size: 0.68rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .worked-step p { font-size: 0.84rem; font-weight: 600; line-height: 1.4; }
+  .worked-ans {
+    margin-top: 0.7rem;
+    background: var(--navy);
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    font-family: 'Fira Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  /* SECTION HEADER */
+  .section-hdr {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-hdr::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 2px;
+  }
+
+  /* MARK AS READ */
+  .mark-read-btn {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+    margin-top: 0.5rem;
+  }
+  .mark-read-btn:hover { background: #1b5e20; transform: translateY(-1px); }
+  .mark-read-btn.done { background: var(--muted); cursor: default; transform: none; }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy), #1a4a6e);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    text-align: center;
+    color: white;
+  }
+  .quiz-cta p { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-bottom: 0.7rem; font-weight: 600; }
+  .quiz-cta a {
+    background: var(--accent);
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 800;
+    padding: 0.65rem 1.4rem;
+    border-radius: 10px;
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Higher Tier · P10 Force and Motion</div>
+  <div class="hero-kicker">GCSE Physics</div>
+  <h1>P10.4 Momentum</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">p = mv</span>
+    <span class="hero-tag">kg m/s</span>
+    <span class="hero-tag">Vector quantity</span>
+    <span class="hero-tag">Conservation of momentum</span>
+    <span class="hero-tag">Closed systems</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#objectives">Objectives</a>
+  <a href="#formula">Formula</a>
+  <a href="#conservation">Conservation</a>
+  <a href="#collisions">Collisions</a>
+  <a href="#worked">Worked examples</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<!-- LEARNING OBJECTIVES CHECKLIST -->
+<div class="checklist-section" id="objectives">
+  <div class="checklist-title">📋 Learning Objectives — tick when confident</div>
+  <div class="checklist-items" id="checklist">
+    <label class="checklist-item" data-key="mo1">
+      <input type="checkbox"><div class="check-box">✓</div>
+      <span>Calculate momentum using p = mv</span>
+    </label>
+    <label class="checklist-item" data-key="mo2">
+      <input type="checkbox"><div class="check-box">✓</div>
+      <span>State the unit of momentum (kg m/s)</span>
+    </label>
+    <label class="checklist-item" data-key="mo3">
+      <input type="checkbox"><div class="check-box">✓</div>
+      <span>Explain what momentum means for a closed system</span>
+    </label>
+    <label class="checklist-item" data-key="mo4">
+      <input type="checkbox"><div class="check-box">✓</div>
+      <span>Describe conservation of momentum in collisions and explosions</span>
+    </label>
+    <label class="checklist-item" data-key="mo5">
+      <input type="checkbox"><div class="check-box">✓</div>
+      <span>Explain why momentum is a vector quantity</span>
+    </label>
+  </div>
+  <div class="checklist-progress"><div class="checklist-bar" id="checkbar"></div></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- WHAT IS MOMENTUM -->
+  <div id="formula">
+    <div class="section-hdr">What is momentum?</div>
+    <div class="big-idea-grid">
+      <div class="idea-card">
+        <div class="idea-label">Definition</div>
+        <p>Momentum is a property of any moving object. The greater the mass and speed, the more momentum it has.</p>
+      </div>
+      <div class="idea-card red">
+        <div class="idea-label">Vector quantity</div>
+        <p>Momentum has both size and direction — it is a <strong>vector</strong>. Direction matters in calculations!</p>
+      </div>
+      <div class="idea-card green">
+        <div class="idea-label">Unit</div>
+        <p>The unit of momentum is <strong>kg m/s</strong> (kilogram metres per second).</p>
+      </div>
+      <div class="idea-card orange">
+        <div class="idea-label">Real life</div>
+        <p>A rugby player with lots of momentum is very hard to stop. More mass or speed = more momentum.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="formula-box">
+    <div class="formula-label">The Momentum Equation</div>
+    <div class="formula"><span>p</span> = <span>m</span> × <span>v</span></div>
+    <div class="formula-note">
+      <strong style="color:var(--accent)">p</strong> = momentum (kg m/s) &nbsp;·&nbsp;
+      <strong style="color:var(--accent)">m</strong> = mass (kg) &nbsp;·&nbsp;
+      <strong style="color:var(--accent)">v</strong> = velocity (m/s)
+    </div>
+  </div>
+
+  <!-- CONSERVATION -->
+  <div id="conservation">
+    <div class="section-hdr">Conservation of Momentum</div>
+    <div class="statement-box">
+      <div class="s-label">The Law</div>
+      <p>In a closed system, the total momentum before an event is equal to the total momentum after the event.</p>
+    </div>
+  </div>
+
+  <div class="big-idea-grid">
+    <div class="idea-card purple">
+      <div class="idea-label">Closed system</div>
+      <p>A system where <strong>no external forces</strong> act on the objects — so momentum is conserved.</p>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label">When does it apply?</div>
+      <p>Any collision or explosion — as long as no external resultant force acts on the system.</p>
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <div class="tip-icon">💡</div>
+    <div>
+      <div class="tip-title">Exam Tip</div>
+      <p>Always write: "total momentum before = total momentum after" before setting up your calculation. This shows the examiner you know the law.</p>
+    </div>
+  </div>
+
+  <!-- COLLISIONS VS EXPLOSIONS -->
+  <div id="collisions">
+    <div class="section-hdr">Collisions vs Explosions</div>
+    <div class="compare-2col">
+      <div class="compare-card">
+        <div class="c-head blue">Collisions</div>
+        <ul>
+          <li>Objects come together or bounce apart</li>
+          <li>Total momentum conserved</li>
+          <li>Objects may stick together (velocity of A halved when mass doubles)</li>
+          <li>Example: trolley A hits stationary trolley B</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <div class="c-head orange">Explosions</div>
+        <ul>
+          <li>Objects push apart from rest</li>
+          <li>Both start with zero momentum</li>
+          <li>They recoil in opposite directions with equal and opposite momentum</li>
+          <li>Example: two trolleys pushed apart by a spring</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <div class="tip-icon">⚠️</div>
+    <div>
+      <div class="tip-title">Watch out — direction!</div>
+      <p>If objects move in opposite directions, one momentum is positive and the other is negative. Always assign a positive direction first, then use signs consistently.</p>
+    </div>
+  </div>
+
+  <!-- WORKED EXAMPLES -->
+  <div id="worked">
+    <div class="section-hdr">Worked Examples</div>
+
+    <div class="worked">
+      <div class="worked-title">Example 1 — Calculate momentum</div>
+      <div class="worked-q">A sprinter of mass 50 kg runs at 10 m/s. What is their momentum?</div>
+      <div class="worked-steps">
+        <div class="worked-step"><div class="step-num">1</div><p>Write the formula: p = m × v</p></div>
+        <div class="worked-step"><div class="step-num">2</div><p>Substitute: p = 50 × 10</p></div>
+      </div>
+      <div class="worked-ans">p = 500 kg m/s</div>
+    </div>
+
+    <div class="worked" style="margin-top:0.8rem">
+      <div class="worked-title">Example 2 — Conservation in a collision</div>
+      <div class="worked-q">Trolley A (2 kg, 3 m/s) hits stationary trolley B (2 kg). They stick together. What is their combined velocity?</div>
+      <div class="worked-steps">
+        <div class="worked-step"><div class="step-num">1</div><p>Total momentum before = 2 × 3 + 2 × 0 = 6 kg m/s</p></div>
+        <div class="worked-step"><div class="step-num">2</div><p>Total mass after = 2 + 2 = 4 kg</p></div>
+        <div class="worked-step"><div class="step-num">3</div><p>6 = 4 × v → v = 6 ÷ 4</p></div>
+      </div>
+      <div class="worked-ans">v = 1.5 m/s</div>
+    </div>
+
+    <div class="worked" style="margin-top:0.8rem">
+      <div class="worked-title">Example 3 — Explosion (ice skaters)</div>
+      <div class="worked-q">An 80 kg skater and a 60 kg skater push apart from rest. The 60 kg skater moves away at 2.0 m/s. Find the velocity of the 80 kg skater.</div>
+      <div class="worked-steps">
+        <div class="worked-step"><div class="step-num">1</div><p>Total momentum before = 0 (both at rest)</p></div>
+        <div class="worked-step"><div class="step-num">2</div><p>Momentum after: 80v + 60 × 2.0 = 0</p></div>
+        <div class="worked-step"><div class="step-num">3</div><p>80v = −120 → v = −120 ÷ 80</p></div>
+      </div>
+      <div class="worked-ans">v = −1.5 m/s (opposite direction to the 60 kg skater)</div>
+    </div>
+  </div>
+
+  <!-- UNITS TABLE -->
+  <div>
+    <div class="section-hdr">Quantities, Symbols &amp; Units</div>
+    <div class="units-table">
+      <table>
+        <thead>
+          <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Momentum</td><td class="mono">p</td><td class="mono">kg m/s</td><td>Vector — direction matters</td></tr>
+          <tr><td>Mass</td><td class="mono">m</td><td class="mono">kg</td><td>Scalar</td></tr>
+          <tr><td>Velocity</td><td class="mono">v</td><td class="mono">m/s</td><td>Vector — assign + and −</td></tr>
+          <tr><td>Force</td><td class="mono">F</td><td class="mono">N</td><td>Needed to change momentum</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="keywords-section" id="keywords">
+    <div class="section-label">Key Terms</div>
+    <div class="keywords-pills">
+      <span class="pill blue">momentum</span>
+      <span class="pill blue">p = mv</span>
+      <span class="pill red">vector</span>
+      <span class="pill green">conservation of momentum</span>
+      <span class="pill green">closed system</span>
+      <span class="pill orange">collision</span>
+      <span class="pill orange">explosion</span>
+      <span class="pill purple">recoil</span>
+      <span class="pill purple">resultant force</span>
+      <span class="pill blue">kg m/s</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <p>Ready to test yourself?</p>
+    <a href="physics-p10-4-momentum-quickcheck.html">Take the Quick Check Quiz →</a>
+  </div>
+
+  <!-- MARK AS READ -->
+  <button class="mark-read-btn" id="markReadBtn" onclick="markRead()">✓ Mark as read</button>
+
+</div>
+
+<script>
+  const READ_KEY = 'physics-p10-4-momentum-read';
+  const CHECK_KEYS = ['mo1','mo2','mo3','mo4','mo5'];
+
+  function updateBar() {
+    const done = CHECK_KEYS.filter(k => localStorage.getItem('check-'+k) === '1').length;
+    document.getElementById('checkbar').style.width = (done / CHECK_KEYS.length * 100) + '%';
+  }
+
+  // Init checklist
+  document.querySelectorAll('.checklist-item').forEach(item => {
+    const key = item.dataset.key;
+    const saved = localStorage.getItem('check-' + key) === '1';
+    if (saved) item.classList.add('done');
+    item.addEventListener('click', () => {
+      item.classList.toggle('done');
+      localStorage.setItem('check-' + key, item.classList.contains('done') ? '1' : '0');
+      updateBar();
+    });
+  });
+  updateBar();
+
+  // Mark as read
+  function markRead() {
+    localStorage.setItem(READ_KEY, '1');
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '✓ Marked as read!';
+    btn.classList.add('done');
+  }
+  if (localStorage.getItem(READ_KEY) === '1') {
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '✓ Marked as read!';
+    btn.classList.add('done');
+  }
+</script>
+</body>
+</html>

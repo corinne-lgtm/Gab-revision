@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.3 Forces and Braking · Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a94;
+    --red: #ef5350;
+    --red2: #ffeaea;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7b1fa2;
+    --purple2: #f3e5f5;
+    --blue2: #e3f2fd;
+    --line: #c5ddf0;
+    --yellow: #ffd600;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d2b45 0%, #1565c0 60%, #0288d1 100%);
+    color: white;
+    padding: 36px 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero-kicker {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.5);
+    color: #e3f2fd;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .hero-tags { margin-top: 10px; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 11px 18px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: white; border-bottom-color: var(--accent); }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist-section { margin-bottom: 32px; }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title svg { opacity: 0.7; }
+
+  .checklist-progress {
+    height: 6px;
+    background: var(--line);
+    border-radius: 3px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .checklist-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #1565c0);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-align: right;
+  }
+
+  .checklist { display: flex; flex-direction: column; gap: 6px; }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .checklist-item:hover { border-color: var(--accent); background: #f0f9ff; }
+  .checklist-item.done {
+    background: var(--green2);
+    border-color: #a5d6a7;
+  }
+  .checklist-item.done .item-text { text-decoration: line-through; color: var(--muted); }
+  .check-box {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    background: white;
+  }
+  .checklist-item.done .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .item-text { font-size: 14px; font-weight: 500; }
+
+  /* ── PANELS ── */
+  .panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 600px) { .panel-grid { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 18px;
+    border: 1.5px solid var(--line);
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .panel.red { border-color: var(--red); background: var(--red2); }
+  .panel.red .panel-title { color: var(--red); }
+  .panel.orange { border-color: var(--orange); background: var(--orange2); }
+  .panel.orange .panel-title { color: var(--orange); }
+  .panel.blue { border-color: #1565c0; background: var(--blue2); }
+  .panel.blue .panel-title { color: #1565c0; }
+  .panel.green { border-color: var(--green); background: var(--green2); }
+  .panel.green .panel-title { color: var(--green); }
+  .panel.purple { border-color: var(--purple); background: var(--purple2); }
+  .panel.purple .panel-title { color: var(--purple); }
+
+  .panel ul { padding-left: 18px; }
+  .panel li { margin-bottom: 5px; font-size: 14px; }
+
+  /* ── BIG IDEA ── */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 600px) { .big-idea-grid { grid-template-columns: 1fr; } }
+  .big-idea-card {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .big-idea-icon { font-size: 28px; margin-bottom: 6px; }
+  .big-idea-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .big-idea-desc { font-size: 12.5px; color: rgba(255,255,255,0.75); }
+
+  /* ── FORMULA BOX ── */
+  .formula-highlight {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+  }
+  .formula-block { flex: 1; min-width: 180px; text-align: center; }
+  .formula-block .formula {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -1px;
+  }
+  .formula-block .formula-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .formula-divider { width: 1px; background: rgba(255,255,255,0.15); align-self: stretch; }
+
+  /* ── STATEMENT BOX ── */
+  .statement-box {
+    border-left: 5px solid var(--accent);
+    background: var(--blue2);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    font-weight: 500;
+  }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    background: #fff8e1;
+    border: 1.5px solid #ffd600;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .exam-tip-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #e65100;
+    margin-bottom: 5px;
+  }
+
+  /* ── WARNING ── */
+  .warning-box {
+    background: #fff3e0;
+    border: 1.5px solid var(--orange);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .warning-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--orange);
+    margin-bottom: 4px;
+  }
+
+  /* ── COMPARE ── */
+  .compare-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .compare-col { padding: 16px; }
+  .compare-col:first-child { background: #e3f2fd; border-right: 1.5px solid var(--line); }
+  .compare-col:last-child { background: #fce4ec; }
+  .compare-col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .compare-col:first-child .compare-col-title { color: #1565c0; }
+  .compare-col:last-child .compare-col-title { color: #c62828; }
+  .compare-col li { font-size: 13.5px; margin-bottom: 5px; }
+  @media (max-width: 600px) { .compare-2col { grid-template-columns: 1fr; } }
+
+  /* ── UNITS TABLE ── */
+  .units-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    background: var(--paper);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid var(--line);
+  }
+  .units-table th {
+    background: var(--navy);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .units-table td { padding: 9px 14px; border-bottom: 1px solid var(--line); }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table tr:nth-child(even) td { background: #f5faff; }
+  .units-table .sym { font-style: italic; font-weight: 600; color: #1565c0; }
+
+  /* ── KEYWORDS ── */
+  .keywords-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .keyword {
+    background: var(--navy);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .keyword:hover { background: #1565c0; transform: translateY(-1px); }
+  .keyword-def {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    background: var(--ink);
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: 220px;
+    z-index: 10;
+    line-height: 1.4;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .keyword-def::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 14px;
+    border: 6px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .keyword:hover .keyword-def { display: block; }
+
+  /* ── INTERACTIVE CANVAS ── */
+  .canvas-section {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .canvas-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .slider-row label {
+    font-size: 13.5px;
+    font-weight: 600;
+    min-width: 100px;
+    color: var(--navy);
+  }
+  .slider-row input[type=range] {
+    flex: 1;
+    min-width: 120px;
+    accent-color: var(--accent);
+  }
+  .slider-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1565c0;
+    min-width: 60px;
+    text-align: right;
+  }
+  canvas#stopCanvas {
+    width: 100%;
+    height: 140px;
+    display: block;
+    border-radius: 6px;
+    background: #f0f9ff;
+    margin-top: 14px;
+  }
+  .canvas-result {
+    margin-top: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: center;
+    min-height: 20px;
+  }
+
+  /* ── MARK AS READ ── */
+  .mark-read-btn {
+    display: block;
+    width: 100%;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+  }
+  .mark-read-btn:hover { background: #1565c0; }
+  .mark-read-btn.done {
+    background: var(--green);
+    cursor: default;
+  }
+
+  /* ── QUIZ CTA ── */
+  .quiz-cta {
+    background: linear-gradient(135deg, #1565c0, #0288d1);
+    color: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .quiz-cta-text { font-size: 15px; font-weight: 600; }
+  .quiz-cta-text strong {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .quiz-cta-btn {
+    background: white;
+    color: #1565c0;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .quiz-cta-btn:hover { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">GCSE Physics · P10 Force and Motion</div>
+  <h1>P10.3 Forces<br>& Braking</h1>
+  <div class="hero-tags">
+    <span class="hero-badge">Stopping distance</span>
+    <span class="hero-badge">Reaction time</span>
+    <span class="hero-badge">Braking force</span>
+    <span class="hero-badge">Deceleration</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#objectives">Objectives</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#formulas">Formulas</a>
+  <a href="#factors">Factors</a>
+  <a href="#interactive">Interactive</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<main>
+
+  <!-- ── LEARNING OBJECTIVES (CHECKLIST) ── -->
+  <section id="objectives" class="checklist-section">
+    <div class="section-title">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Learning Objectives
+    </div>
+    <div class="progress-label" id="progressLabel">0 / 4 completed</div>
+    <div class="checklist-progress"><div class="checklist-progress-bar" id="progressBar"></div></div>
+    <div class="checklist" id="checklist">
+      <div class="checklist-item" data-key="p103-obj1" onclick="toggleItem(this)">
+        <div class="check-box">✓</div>
+        <div class="item-text">Describe the forces that oppose the driving force of a vehicle</div>
+      </div>
+      <div class="checklist-item" data-key="p103-obj2" onclick="toggleItem(this)">
+        <div class="check-box">✓</div>
+        <div class="item-text">Explain what the stopping distance of a vehicle depends on</div>
+      </div>
+      <div class="checklist-item" data-key="p103-obj3" onclick="toggleItem(this)">
+        <div class="check-box">✓</div>
+        <div class="item-text">State what can increase the stopping distance of a vehicle</div>
+      </div>
+      <div class="checklist-item" data-key="p103-obj4" onclick="toggleItem(this)">
+        <div class="check-box">✓</div>
+        <div class="item-text">Calculate the braking force of a vehicle using F = ma</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BIG IDEAS ── -->
+  <section id="concepts">
+    <div class="section-title">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Core Concepts
+    </div>
+    <div class="big-idea-grid">
+      <div class="big-idea-card">
+        <div class="big-idea-icon">🚗</div>
+        <div class="big-idea-label">Constant Velocity</div>
+        <div class="big-idea-desc">Driving force = resistive forces (friction + air resistance). Net force = zero.</div>
+      </div>
+      <div class="big-idea-card">
+        <div class="big-idea-icon">🧠</div>
+        <div class="big-idea-label">Thinking Distance</div>
+        <div class="big-idea-desc">Distance travelled during reaction time. Proportional to speed.</div>
+      </div>
+      <div class="big-idea-card">
+        <div class="big-idea-icon">🛑</div>
+        <div class="big-idea-label">Braking Distance</div>
+        <div class="big-idea-desc">Distance to stop once brakes are applied. Proportional to speed².</div>
+      </div>
+    </div>
+
+    <div class="statement-box">
+      <strong>Stopping distance = Thinking distance + Braking distance</strong><br>
+      At 30 mph (13 m/s): thinking 9 m + braking 14 m = <strong>23 m</strong> total.
+      At 70 mph (31 m/s): thinking 21 m + braking 75 m = <strong>96 m</strong> total.
+    </div>
+  </section>
+
+  <!-- ── FORMULAS ── -->
+  <section id="formulas">
+    <div class="section-title">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      Key Formulas
+    </div>
+    <div class="formula-highlight">
+      <div class="formula-block">
+        <div class="formula">F = ma</div>
+        <div class="formula-label">Braking force (N) = mass × deceleration</div>
+      </div>
+      <div class="formula-divider"></div>
+      <div class="formula-block">
+        <div class="formula">v² = u² + 2as</div>
+        <div class="formula-label">Higher: links speed, deceleration, distance</div>
+      </div>
+      <div class="formula-divider"></div>
+      <div class="formula-block">
+        <div class="formula">a = −u² / 2s</div>
+        <div class="formula-label">Higher: deceleration when final speed = 0</div>
+      </div>
+    </div>
+
+    <div class="units-table-wrap">
+      <div class="section-title" style="margin-top:0">Units Table</div>
+      <table class="units-table">
+        <thead>
+          <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Force</td><td class="sym">F</td><td>Newtons (N)</td><td>Braking or driving force</td></tr>
+          <tr><td>Mass</td><td class="sym">m</td><td>Kilograms (kg)</td><td>Car ~1000 kg; lorry ~38 000 kg</td></tr>
+          <tr><td>Acceleration / Deceleration</td><td class="sym">a</td><td>m/s²</td><td>Negative value when slowing</td></tr>
+          <tr><td>Initial speed</td><td class="sym">u</td><td>m/s</td><td>Speed when brakes applied</td></tr>
+          <tr><td>Final speed</td><td class="sym">v</td><td>m/s</td><td>v = 0 when vehicle stops</td></tr>
+          <tr><td>Distance</td><td class="sym">s</td><td>Metres (m)</td><td>Braking distance</td></tr>
+          <tr><td>Reaction time</td><td class="sym">t</td><td>Seconds (s)</td><td>Typical: 0.4 – 0.9 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── FACTORS ── -->
+  <section id="factors">
+    <div class="section-title">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Factors Affecting Stopping Distance
+    </div>
+    <div class="compare-2col">
+      <div class="compare-col">
+        <div class="compare-col-title">📐 Thinking Distance Increases When…</div>
+        <ul>
+          <li>Driver is tired or drowsy</li>
+          <li>Driver has drunk alcohol</li>
+          <li>Driver has taken certain drugs</li>
+          <li>Driver is distracted (e.g. mobile phone)</li>
+          <li>Vehicle is travelling faster</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="compare-col-title">🛞 Braking Distance Increases When…</div>
+        <ul>
+          <li>Road is wet or icy</li>
+          <li>Tyres are worn or under-inflated</li>
+          <li>Brakes are poorly maintained</li>
+          <li>Vehicle is travelling faster</li>
+          <li>Vehicle has greater mass</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <div class="panel red">
+        <div class="panel-title">⚠️ Common Mistake</div>
+        <ul>
+          <li>Students often confuse <strong>thinking distance</strong> with <strong>braking distance</strong> — remember: thinking = reaction time; braking = force applied.</li>
+        </ul>
+      </div>
+      <div class="panel orange">
+        <div class="panel-title">🔢 Proportionality</div>
+        <ul>
+          <li>Thinking distance ∝ <strong>speed</strong> (double speed → double thinking distance)</li>
+          <li>Braking distance ∝ <strong>speed²</strong> (double speed → × 4 braking distance)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exam-tip">
+      <div class="exam-tip-label">⭐ Exam Tip</div>
+      When explaining why doubling speed more than doubles braking distance, say: <em>"The braking distance is proportional to speed squared. Doubling the speed quadruples the kinetic energy, so the brakes must do four times more work, meaning four times the braking distance."</em>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-label">⚡ Higher Tier Only</div>
+      To find deceleration on a flat dry road (max ~6 m/s²), use <strong>a = −u² / 2s</strong>. Rearranging v² = u² + 2as with v = 0 gives s = −u² / 2a. This shows braking distance is proportional to u².
+    </div>
+
+    <div class="panel-grid">
+      <div class="panel blue">
+        <div class="panel-title">🚗 Constant Velocity</div>
+        <ul>
+          <li>Net force = zero</li>
+          <li>Driving force = air resistance + friction</li>
+          <li>Accelerator varies engine's driving force</li>
+        </ul>
+      </div>
+      <div class="panel green">
+        <div class="panel-title">🏋️ Mass Matters</div>
+        <ul>
+          <li>Car: ~1 000 kg → braking force ~6 kN</li>
+          <li>Heavy truck: ~38 000 kg → braking force ~250 kN</li>
+          <li>Same forces needed to accelerate both</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTERACTIVE ── -->
+  <section id="interactive" class="canvas-section">
+    <div class="canvas-title">🔬 Stopping Distance Calculator</div>
+    <div class="slider-row">
+      <label>Speed (m/s)</label>
+      <input type="range" id="speedSlider" min="5" max="35" value="13" step="1" oninput="updateCanvas()">
+      <div class="slider-val" id="speedVal">13 m/s</div>
+    </div>
+    <div class="slider-row">
+      <label>Reaction time (s)</label>
+      <input type="range" id="reactSlider" min="0.2" max="1.5" value="0.7" step="0.1" oninput="updateCanvas()">
+      <div class="slider-val" id="reactVal">0.7 s</div>
+    </div>
+    <canvas id="stopCanvas" width="820" height="140"></canvas>
+    <div class="canvas-result" id="canvasResult"></div>
+  </section>
+
+  <!-- ── KEYWORDS ── -->
+  <section id="keywords">
+    <div class="section-title">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Key Terms — hover to reveal
+    </div>
+    <div class="keywords-row">
+      <span class="keyword">Stopping distance<span class="keyword-def">The shortest distance a vehicle can safely stop in. = Thinking distance + Braking distance.</span></span>
+      <span class="keyword">Thinking distance<span class="keyword-def">Distance travelled at constant speed during the driver's reaction time.</span></span>
+      <span class="keyword">Braking distance<span class="keyword-def">Distance the vehicle travels from when the brakes are applied until it stops.</span></span>
+      <span class="keyword">Reaction time<span class="keyword-def">Time between a stimulus and a response. Typical range: 0.4–0.9 s.</span></span>
+      <span class="keyword">Resultant force<span class="keyword-def">The single force that has the same effect as all forces acting combined. Zero = constant velocity.</span></span>
+      <span class="keyword">Deceleration<span class="keyword-def">Negative acceleration — the rate at which a vehicle slows down (m/s²).</span></span>
+      <span class="keyword">Friction<span class="keyword-def">A resistive force between surfaces in contact. Opposes motion.</span></span>
+      <span class="keyword">Air resistance<span class="keyword-def">Drag force from the air that opposes a vehicle's motion; increases with speed.</span></span>
+    </div>
+  </section>
+
+  <!-- KEY POINTS -->
+  <div class="panel" style="margin-bottom:20px">
+    <div class="panel-title" style="color:var(--navy)">📌 Key Points Summary</div>
+    <ul>
+      <li>Friction and air resistance oppose the driving force of a vehicle.</li>
+      <li>Stopping distance = thinking distance + braking distance.</li>
+      <li>High speed, poor weather conditions, and poor vehicle maintenance all increase the braking distance.</li>
+      <li>Tiredness, alcohol, drugs, or high speed increase the thinking distance.</li>
+      <li>F = ma gives the braking force of a vehicle.</li>
+    </ul>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <div class="quiz-cta-text">
+      <strong>Ready to test yourself?</strong>
+      Try the P10.3 Quick Check — 20 questions, instant feedback
+    </div>
+    <button class="quiz-cta-btn" onclick="alert('Open the P10.3 quiz file!')">Take the Quiz →</button>
+  </div>
+
+  <!-- MARK AS READ -->
+  <button class="mark-read-btn" id="markReadBtn" onclick="markRead()">Mark as Read ✓</button>
+
+</main>
+
+<script>
+  const READ_KEY = 'physics-p103-read';
+  const CHECKLIST_KEY = 'physics-p103-checklist';
+
+  // ── Checklist ──
+  function loadChecklist() {
+    const saved = JSON.parse(localStorage.getItem(CHECKLIST_KEY) || '{}');
+    document.querySelectorAll('.checklist-item').forEach(item => {
+      const key = item.dataset.key;
+      if (saved[key]) item.classList.add('done');
+    });
+    updateProgress();
+  }
+
+  function toggleItem(el) {
+    el.classList.toggle('done');
+    const saved = JSON.parse(localStorage.getItem(CHECKLIST_KEY) || '{}');
+    saved[el.dataset.key] = el.classList.contains('done');
+    localStorage.setItem(CHECKLIST_KEY, JSON.stringify(saved));
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('.checklist-item');
+    const done = document.querySelectorAll('.checklist-item.done').length;
+    const pct = (done / items.length) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = `${done} / ${items.length} completed`;
+  }
+
+  // ── Mark as read ──
+  function markRead() {
+    localStorage.setItem(READ_KEY, 'true');
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '✅ Marked as Read!';
+    btn.classList.add('done');
+  }
+  function loadReadState() {
+    if (localStorage.getItem(READ_KEY)) {
+      const btn = document.getElementById('markReadBtn');
+      btn.textContent = '✅ Marked as Read!';
+      btn.classList.add('done');
+    }
+  }
+
+  // ── Interactive canvas ──
+  function updateCanvas() {
+    const speed = parseFloat(document.getElementById('speedSlider').value);
+    const react = parseFloat(document.getElementById('reactSlider').value);
+    document.getElementById('speedVal').textContent = speed + ' m/s';
+    document.getElementById('reactVal').textContent = react.toFixed(1) + ' s';
+
+    const thinkDist = +(speed * react).toFixed(1);
+    const brakeDist = +(speed * speed / (2 * 6)).toFixed(1);
+    const total = +(thinkDist + brakeDist).toFixed(1);
+
+    const canvas = document.getElementById('stopCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const maxDist = Math.max(total, 30);
+    const scale = (W - 40) / maxDist;
+    const barH = 38, barY = 50;
+
+    // Thinking distance bar
+    ctx.fillStyle = '#1565c0';
+    ctx.beginPath();
+    ctx.roundRect(20, barY, thinkDist * scale, barH, [6,0,0,6]);
+    ctx.fill();
+
+    // Braking distance bar
+    ctx.fillStyle = '#ef5350';
+    const bx = 20 + thinkDist * scale;
+    ctx.beginPath();
+    ctx.roundRect(bx, barY, brakeDist * scale, barH, [0,6,6,0]);
+    ctx.fill();
+
+    // Labels inside bars
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 13px Barlow, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (thinkDist * scale > 40) ctx.fillText(`${thinkDist}m`, 20 + thinkDist * scale / 2, barY + barH / 2);
+    if (brakeDist * scale > 40) ctx.fillText(`${brakeDist}m`, bx + brakeDist * scale / 2, barY + barH / 2);
+
+    // Legend
+    ctx.font = '12px Barlow, sans-serif';
+    ctx.fillStyle = '#1565c0'; ctx.textAlign = 'left';
+    ctx.fillRect(20, 18, 14, 10);
+    ctx.fillStyle = '#0d2b45';
+    ctx.fillText('Thinking', 38, 27);
+
+    ctx.fillStyle = '#ef5350'; ctx.textAlign = 'left';
+    ctx.fillRect(130, 18, 14, 10);
+    ctx.fillStyle = '#0d2b45';
+    ctx.fillText('Braking', 148, 27);
+
+    // Arrow line
+    ctx.strokeStyle = '#0d2b45';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath();
+    ctx.moveTo(20, barY + barH + 14);
+    ctx.lineTo(20 + total * scale, barY + barH + 14);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#0d2b45';
+    ctx.font = 'bold 13px Barlow Condensed, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Total: ${total} m`, 20 + total * scale / 2, barY + barH + 28);
+
+    document.getElementById('canvasResult').textContent =
+      `At ${speed} m/s with reaction time ${react.toFixed(1)} s → Thinking: ${thinkDist} m | Braking: ${brakeDist} m | Total: ${total} m`;
+  }
+
+  loadChecklist();
+  loadReadState();
+  updateCanvas();
+</script>
+</body>
+</html>

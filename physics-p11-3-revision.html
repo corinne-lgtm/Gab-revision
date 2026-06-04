@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.3 Reflection & Refraction — Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #29b6f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --blue2: #e3f2fd;
+    --line: #c5dff0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1e6fa8 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 40%;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.22rem 0.7rem;
+    border-radius: 20px;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .hero-tags { margin-top: 0.8rem; }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--navy);
+    border-bottom: 2px solid var(--accent);
+  }
+  .nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .nav a:hover { background: rgba(100,181,246,0.15); }
+
+  /* CHECKLIST */
+  .checklist-section {
+    background: var(--paper);
+    margin: 1rem 1rem 0;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .checklist-header {
+    background: var(--navy);
+    color: white;
+    padding: 0.7rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    height: 6px;
+    width: 100px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    background: var(--accent);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item:hover { background: var(--bg); }
+  .checklist-item input[type="checkbox"] { margin-top: 2px; accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+  .checklist-item label { font-size: 0.82rem; line-height: 1.4; cursor: pointer; }
+  .checklist-item.done label { color: var(--muted); text-decoration: line-through; }
+
+  /* MAIN CONTENT */
+  main { padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  /* PANELS */
+  .panel {
+    background: var(--paper);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 0.65rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: white;
+  }
+  .panel-body { padding: 1rem; }
+
+  .ph-navy { background: var(--navy); }
+  .ph-red { background: var(--red); }
+  .ph-green { background: var(--green); }
+  .ph-orange { background: var(--orange); }
+  .ph-purple { background: var(--purple); }
+  .ph-accent { background: #1565c0; }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .big-idea-card {
+    border-radius: 8px;
+    padding: 0.8rem;
+    border: 1px solid var(--line);
+  }
+  .bic-red { background: var(--red2); border-color: #ef9a9a; }
+  .bic-blue { background: var(--blue2); border-color: #90caf9; }
+  .bic-green { background: var(--green2); border-color: #a5d6a7; }
+  .bic-orange { background: var(--orange2); border-color: #ffcc80; }
+  .bic-purple { background: var(--purple2); border-color: #ce93d8; }
+  .big-idea-card .icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
+  .big-idea-card .title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .bic-red .title { color: var(--red); }
+  .bic-blue .title { color: #1565c0; }
+  .bic-green .title { color: var(--green); }
+  .bic-orange .title { color: var(--orange); }
+  .bic-purple .title { color: var(--purple); }
+  .big-idea-card p { font-size: 0.79rem; line-height: 1.4; color: var(--ink); }
+
+  /* STATEMENT BOX */
+  .statement-box {
+    border-left: 4px solid var(--accent);
+    background: var(--blue2);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: #fffde7;
+    border: 1px solid #f9a825;
+    border-left: 4px solid #f9a825;
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+  }
+  .exam-tip .tip-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #e65100;
+    margin-bottom: 0.3rem;
+  }
+  .exam-tip p { font-size: 0.81rem; line-height: 1.45; }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: var(--red2);
+    border: 1px solid #ef9a9a;
+    border-left: 4px solid var(--red);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+  }
+  .warning-box .warn-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    margin-bottom: 0.3rem;
+  }
+  .warning-box p { font-size: 0.81rem; line-height: 1.45; }
+
+  /* COMPARE 2-COL */
+  .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+  .compare-col { padding: 0.8rem; }
+  .compare-col:first-child { background: #e3f2fd; border-right: 1px solid var(--line); }
+  .compare-col:last-child { background: #fce4ec; }
+  .compare-col h4 { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .compare-col:first-child h4 { color: #1565c0; }
+  .compare-col:last-child h4 { color: #c62828; }
+  .compare-col ul { padding-left: 1rem; }
+  .compare-col ul li { font-size: 0.79rem; line-height: 1.5; }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .kw {
+    background: var(--navy);
+    color: var(--accent);
+    border-radius: 20px;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.73rem;
+    font-weight: 700;
+  }
+
+  /* DEFINITION LIST */
+  .def-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .def-item { border-bottom: 1px dashed var(--line); padding-bottom: 0.6rem; }
+  .def-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .def-term { font-size: 0.78rem; font-weight: 800; color: var(--accent2); margin-bottom: 0.15rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .def-desc { font-size: 0.82rem; line-height: 1.45; }
+
+  /* FLOW ARROWS */
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
+  .flow-step {
+    background: var(--navy);
+    color: white;
+    border-radius: 6px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .flow-arrow { color: var(--accent); font-size: 1rem; font-weight: 700; }
+
+  /* WAVE DIAGRAM */
+  .wave-diagram {
+    background: #f0f7ff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .wave-diagram svg { max-width: 100%; }
+
+  /* MARK AS READ */
+  .mar-btn {
+    display: block;
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--navy);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+  .mar-btn:hover { background: var(--accent); color: var(--navy); }
+  .mar-btn.done { background: var(--green); border-color: var(--green); color: white; }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    display: block;
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, #1565c0, var(--accent));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    transition: opacity 0.2s;
+  }
+  .quiz-cta:hover { opacity: 0.9; }
+
+  p { font-size: 0.82rem; line-height: 1.5; }
+  h3 { font-size: 0.9rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
+
+  .gap { display: flex; flex-direction: column; gap: 0.7rem; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · P11 Wave Properties</div>
+  <h1>P11.3 Reflection &amp; Refraction</h1>
+  <div class="hero-tags">
+    <span class="badge">Higher Tier</span>
+    <span class="badge">GCSE</span>
+    <span class="badge">Waves</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#objectives">Objectives</a>
+  <a href="#big-ideas">Big Ideas</a>
+  <a href="#definitions">Definitions</a>
+  <a href="#reflection">Reflection</a>
+  <a href="#refraction">Refraction</a>
+  <a href="#materials">Materials &amp; Waves</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<!-- LEARNING OBJECTIVES CHECKLIST -->
+<div class="checklist-section" id="objectives">
+  <div class="checklist-header">
+    Learning Objectives
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="obj-bar"></div></div>
+  </div>
+  <div class="checklist-item" onclick="toggleObj(this)">
+    <input type="checkbox" id="obj1"><label for="obj1">Describe the patterns of reflection and refraction of plane waves in a ripple tank</label>
+  </div>
+  <div class="checklist-item" onclick="toggleObj(this)">
+    <input type="checkbox" id="obj2"><label for="obj2">Explain whether plane waves crossing a boundary between two different materials are refracted</label>
+  </div>
+  <div class="checklist-item" onclick="toggleObj(this)">
+    <input type="checkbox" id="obj3"><label for="obj3">Describe how the behaviour of waves can be used to explain reflection and refraction</label>
+  </div>
+  <div class="checklist-item" onclick="toggleObj(this)">
+    <input type="checkbox" id="obj4"><label for="obj4">Explain what can happen to a wave when it crosses a boundary between two different materials</label>
+  </div>
+</div>
+
+<main>
+
+  <!-- BIG IDEAS -->
+  <div class="panel" id="big-ideas">
+    <div class="panel-header ph-navy">Big Ideas</div>
+    <div class="panel-body">
+      <div class="big-idea-grid">
+        <div class="big-idea-card bic-blue">
+          <div class="icon">🔵</div>
+          <div class="title">Reflection</div>
+          <p>The reflected wavefront leaves the barrier at the same angle as the incident wavefront — speed and wavelength don't change.</p>
+        </div>
+        <div class="big-idea-card bic-red">
+          <div class="icon">🔴</div>
+          <div class="title">Refraction</div>
+          <p>Waves change speed and direction at a boundary between two different materials — except at normal incidence.</p>
+        </div>
+        <div class="big-idea-card bic-green">
+          <div class="icon">🟢</div>
+          <div class="title">Same Frequency</div>
+          <p>Reflected and refracted waves have the same frequency as the incident wave, but different speeds give different wavelengths.</p>
+        </div>
+        <div class="big-idea-card bic-orange">
+          <div class="icon">🟠</div>
+          <div class="title">At a Boundary</div>
+          <p>Waves can be reflected, refracted (transmitted) or absorbed — or a combination of all three.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY DEFINITIONS -->
+  <div class="panel" id="definitions">
+    <div class="panel-header ph-accent">Key Definitions</div>
+    <div class="panel-body">
+      <div class="def-list">
+        <div class="def-item">
+          <div class="def-term">Reflection</div>
+          <div class="def-desc">The bouncing back of a wave from a surface or barrier without it passing through.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Refraction</div>
+          <div class="def-desc">The change in direction of a wave as it crosses a boundary between two media, caused by a change in speed.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Incident wavefront</div>
+          <div class="def-desc">The wavefront travelling toward a boundary or barrier (before reflection or refraction).</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Normal incidence</div>
+          <div class="def-desc">When a wave hits a boundary at exactly 90° (perpendicular). The wave changes speed but NOT direction.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Wavelet</div>
+          <div class="def-desc">A tiny section of a wavefront. Many wavelets travelling and combining together form the advancing wavefront.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Transmitted wave</div>
+          <div class="def-desc">A wave that passes through a substance rather than being reflected or absorbed by it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="panel" id="reflection">
+    <div class="panel-header ph-red">Reflection</div>
+    <div class="panel-body gap">
+
+      <div class="wave-diagram">
+        <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;">
+          <!-- barrier -->
+          <rect x="10" y="60" width="260" height="6" fill="#0d2b45" rx="2"/>
+          <text x="140" y="78" text-anchor="middle" font-size="9" fill="#5a7a96">Straight Barrier</text>
+          <!-- incident wavefronts -->
+          <line x1="30" y1="10" x2="90" y2="57" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <line x1="60" y1="10" x2="110" y2="57" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <line x1="90" y1="10" x2="130" y2="57" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="25" y="8" font-size="8" fill="#1565c0" font-weight="700">Incident</text>
+          <!-- arrow -->
+          <line x1="55" y1="18" x2="85" y2="50" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+          <!-- reflected wavefronts -->
+          <line x1="90" y1="66" x2="150" y2="10" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <line x1="120" y1="66" x2="180" y2="10" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <line x1="150" y1="66" x2="210" y2="10" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="215" y="8" font-size="8" fill="#e53935" font-weight="700">Reflected</text>
+          <!-- arrow -->
+          <line x1="135" y1="55" x2="165" y2="22" stroke="#e53935" stroke-width="1.5" marker-end="url(#arr-red)"/>
+          <!-- angle labels -->
+          <text x="100" y="55" font-size="8" fill="#1565c0">θᵢ</text>
+          <text x="125" y="55" font-size="8" fill="#e53935">θᵣ</text>
+          <defs>
+            <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565c0"/></marker>
+            <marker id="arr-red" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e53935"/></marker>
+          </defs>
+        </svg>
+        <p style="font-size:0.74rem;color:var(--muted);margin-top:0.3rem;">θᵢ = θᵣ — angle of incidence equals angle of reflection</p>
+      </div>
+
+      <div class="statement-box">
+        The reflected wavefront moves away from the barrier at the same angle as the incident wavefront approaches it. The speed and wavelength of the wave do not change on reflection.
+      </div>
+
+      <div class="exam-tip">
+        <div class="tip-label">⚡ Exam Tip</div>
+        <p>Angles are always measured between the wavefront and the barrier (or equivalently between the ray and the normal to the barrier). The reflected angle always equals the incident angle.</p>
+      </div>
+
+      <h3>Ripple Tank — Reflection Test</h3>
+      <div class="flow">
+        <div class="flow-step">Plane waves created by ruler</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Hit straight barrier</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Reflected at same angle</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Align second ruler to measure both angles</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFRACTION -->
+  <div class="panel" id="refraction">
+    <div class="panel-header ph-purple">Refraction</div>
+    <div class="panel-body gap">
+
+      <div class="wave-diagram">
+        <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;">
+          <!-- deep water -->
+          <rect x="0" y="0" width="280" height="70" fill="#bbdefb" opacity="0.5" rx="0"/>
+          <text x="10" y="15" font-size="9" fill="#1565c0" font-weight="700">Deep water (faster)</text>
+          <!-- shallow water -->
+          <rect x="0" y="70" width="280" height="70" fill="#e3f2fd" opacity="0.6" rx="0"/>
+          <text x="10" y="130" font-size="9" fill="#29b6f6" font-weight="700">Shallow water (slower)</text>
+          <!-- boundary line -->
+          <line x1="0" y1="70" x2="280" y2="70" stroke="#0d2b45" stroke-width="2" stroke-dasharray="6,3"/>
+          <text x="140" y="67" text-anchor="middle" font-size="8" fill="#0d2b45">Boundary</text>
+          <!-- incident wavefronts (diagonal) -->
+          <line x1="20" y1="20" x2="100" y2="68" stroke="#1565c0" stroke-width="1.5"/>
+          <line x1="55" y1="10" x2="135" y2="58" stroke="#1565c0" stroke-width="1.5"/>
+          <line x1="90" y1="3" x2="170" y2="51" stroke="#1565c0" stroke-width="1.5"/>
+          <!-- refracted wavefronts (steeper/closer together) -->
+          <line x1="100" y1="72" x2="145" y2="135" stroke="#6a1b9a" stroke-width="1.5"/>
+          <line x1="125" y1="72" x2="170" y2="135" stroke="#6a1b9a" stroke-width="1.5"/>
+          <line x1="150" y1="72" x2="195" y2="135" stroke="#6a1b9a" stroke-width="1.5"/>
+          <!-- arrows -->
+          <line x1="60" y1="20" x2="95" y2="60" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arr2-blue)"/>
+          <line x1="120" y1="80" x2="145" y2="120" stroke="#6a1b9a" stroke-width="1.5" marker-end="url(#arr2-purple)"/>
+          <defs>
+            <marker id="arr2-blue" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1565c0"/></marker>
+            <marker id="arr2-purple" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6a1b9a"/></marker>
+          </defs>
+        </svg>
+        <p style="font-size:0.74rem;color:var(--muted);margin-top:0.3rem;">Waves slow down → wavelength decreases → direction changes towards boundary</p>
+      </div>
+
+      <div class="compare-wrap">
+        <div class="compare-col">
+          <h4>Normal Incidence (90°)</h4>
+          <ul>
+            <li>Waves hit boundary perpendicularly</li>
+            <li>Speed changes ✓</li>
+            <li>Wavelength changes ✓</li>
+            <li>Direction does NOT change</li>
+            <li>Frequency stays the same</li>
+          </ul>
+        </div>
+        <div class="compare-col">
+          <h4>Non-Zero Angle</h4>
+          <ul>
+            <li>Waves hit boundary at an angle</li>
+            <li>Speed changes ✓</li>
+            <li>Wavelength changes ✓</li>
+            <li>Direction changes ✓</li>
+            <li>Frequency stays the same</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="statement-box">
+        When waves slow down crossing a boundary (e.g. deep → shallow water), the refracted wavefronts are closer together (shorter wavelength) and are at a smaller angle to the boundary than the incident wavefronts.
+      </div>
+
+      <div class="warning-box">
+        <div class="warn-label">⚠ Common Mistake</div>
+        <p>Frequency does NOT change when waves refract. Only speed and wavelength change. Remember: <em>v = fλ</em>, so if speed halves, wavelength halves — frequency stays the same.</p>
+      </div>
+
+      <div class="exam-tip">
+        <div class="tip-label">⚡ Exam Tip — Explaining Refraction</div>
+        <p>Use the wavelet model: each tiny section of the wavefront creates a wavelet. When one side of the wavefront slows down before the other (hitting the boundary first), the wavefront bends. This explains the direction change.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATERIALS AND WAVES -->
+  <div class="panel" id="materials">
+    <div class="panel-header ph-green">What Happens at a Boundary?</div>
+    <div class="panel-body gap">
+      <div class="big-idea-grid">
+        <div class="big-idea-card bic-blue">
+          <div class="icon">↩️</div>
+          <div class="title">Reflected</div>
+          <p>Some or all of the wave bounces back from the surface. e.g. microwaves reflected by metal surfaces.</p>
+        </div>
+        <div class="big-idea-card bic-green">
+          <div class="icon">➡️</div>
+          <div class="title">Transmitted</div>
+          <p>Wave passes through the substance. e.g. light is mostly transmitted by ordinary glass.</p>
+        </div>
+        <div class="big-idea-card bic-orange">
+          <div class="icon">🔥</div>
+          <div class="title">Absorbed</div>
+          <p>Wave energy is transferred to the substance, heating it. e.g. food heated in microwave ovens.</p>
+        </div>
+        <div class="big-idea-card bic-purple">
+          <div class="icon">📉</div>
+          <div class="title">Amplitude Decreases</div>
+          <p>As waves travel through a substance, their amplitude gradually decreases as energy is absorbed.</p>
+        </div>
+      </div>
+      <div class="exam-tip">
+        <div class="tip-label">⚡ Exam Tip</div>
+        <p>What happens depends on the wavelength of the wave AND the substance. Microwaves pass through paper but are reflected by metal. Darkened glass absorbs almost all light; ordinary glass transmits most of it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY POINTS SUMMARY -->
+  <div class="panel">
+    <div class="panel-header ph-navy">Key Points Summary</div>
+    <div class="panel-body">
+      <div class="def-list">
+        <div class="def-item">
+          <div class="def-term">Reflection — same angle</div>
+          <div class="def-desc">Plane waves in a ripple tank are reflected from a straight barrier at the same angle as the incident waves because their speed and wavelength do not change on reflection.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Refraction — boundary + non-zero angle</div>
+          <div class="def-desc">Plane waves crossing a boundary between two different materials are refracted unless they cross the boundary at normal incidence.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">Cause of refraction</div>
+          <div class="def-desc">Refraction occurs at a boundary between two different materials because the speed and wavelength of the waves change at the boundary.</div>
+        </div>
+        <div class="def-item">
+          <div class="def-term">At a boundary</div>
+          <div class="def-desc">Waves can be reflected, transmitted, or absorbed — or a combination. Which happens depends on the wavelength and the material.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="panel" id="keywords">
+    <div class="panel-header ph-navy">Keywords</div>
+    <div class="panel-body">
+      <div class="keywords">
+        <span class="kw">Reflection</span>
+        <span class="kw">Refraction</span>
+        <span class="kw">Wavefront</span>
+        <span class="kw">Incident wave</span>
+        <span class="kw">Reflected wave</span>
+        <span class="kw">Refracted wave</span>
+        <span class="kw">Normal incidence</span>
+        <span class="kw">Boundary</span>
+        <span class="kw">Wavelength</span>
+        <span class="kw">Frequency</span>
+        <span class="kw">Amplitude</span>
+        <span class="kw">Wavelet</span>
+        <span class="kw">Absorbed</span>
+        <span class="kw">Transmitted</span>
+        <span class="kw">Ripple tank</span>
+        <span class="kw">Plane waves</span>
+        <span class="kw">Deep water</span>
+        <span class="kw">Shallow water</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK AS READ + QUIZ CTA -->
+  <button class="mar-btn" id="mar-btn" onclick="markAsRead()">Mark as Read ✓</button>
+  <button class="quiz-cta" onclick="alert('Open the P11.3 Quick Check quiz!')">📝 Take the Quick Check Quiz →</button>
+
+</main>
+
+<script>
+  const STORAGE_KEY = 'physics-p11-3-read';
+  const OBJ_KEY = 'physics-p11-3-objectives';
+
+  // Mark as read
+  function markAsRead() {
+    const btn = document.getElementById('mar-btn');
+    const done = btn.classList.toggle('done');
+    localStorage.setItem(STORAGE_KEY, done ? '1' : '0');
+    btn.textContent = done ? '✅ Marked as Read' : 'Mark as Read ✓';
+  }
+
+  // Objectives
+  function toggleObj(item) {
+    const cb = item.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    item.classList.toggle('done', cb.checked);
+    saveObjs();
+    updateBar();
+  }
+
+  function saveObjs() {
+    const checks = [...document.querySelectorAll('.checklist-item input')].map(cb => cb.checked);
+    localStorage.setItem(OBJ_KEY, JSON.stringify(checks));
+  }
+
+  function updateBar() {
+    const checks = [...document.querySelectorAll('.checklist-item input')];
+    const done = checks.filter(cb => cb.checked).length;
+    document.getElementById('obj-bar').style.width = (done / checks.length * 100) + '%';
+  }
+
+  // Restore state
+  window.onload = function() {
+    if (localStorage.getItem(STORAGE_KEY) === '1') {
+      const btn = document.getElementById('mar-btn');
+      btn.classList.add('done');
+      btn.textContent = '✅ Marked as Read';
+    }
+    try {
+      const saved = JSON.parse(localStorage.getItem(OBJ_KEY) || '[]');
+      const items = document.querySelectorAll('.checklist-item');
+      items.forEach((item, i) => {
+        if (saved[i]) {
+          item.querySelector('input').checked = true;
+          item.classList.add('done');
+        }
+      });
+      updateBar();
+    } catch(e) {}
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.2 – The Properties of Waves</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #00e5ff;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a99;
+    --red: #e53935;
+    --red2: #fde8e8;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --line: #cce0f0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #0a3d5c 100%);
+    color: white;
+    padding: 36px 28px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(100,181,246,0.05) 40px,
+      rgba(100,181,246,0.05) 41px
+    );
+    pointer-events: none;
+  }
+  .hero-wave {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 48px;
+    opacity: 0.15;
+  }
+  .kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 14px;
+  }
+  .badge {
+    background: rgba(100,181,246,0.18);
+    border: 1px solid rgba(100,181,246,0.35);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--navy);
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 10px 14px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .nav a:hover { color: white; border-color: var(--accent); }
+
+  /* ── CHECKLIST ── */
+  .checklist-section {
+    background: var(--paper);
+    margin: 18px 16px 0;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: background .15s;
+    font-size: 14px;
+    user-select: none;
+  }
+  .checklist li:hover { background: var(--bg); }
+  .checklist li.done { background: var(--green2); border-color: #a5d6a7; }
+  .checklist li .tick {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    transition: background .15s, border-color .15s;
+  }
+  .checklist li.done .tick {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .progress-bar-wrap {
+    margin-top: 12px;
+    background: var(--line);
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width .4s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main { padding: 18px 16px 40px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* big-idea grid */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 480px) { .big-idea-grid { grid-template-columns: 1fr; } }
+  .big-idea-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .big-idea-card .bi-icon {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .big-idea-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .big-idea-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* panel */
+  .panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .panel h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  /* formula highlight */
+  .formula-box {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 22px 24px;
+    color: white;
+    text-align: center;
+  }
+  .formula-box .formula-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .formula-main {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 500;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .formula-main .sym { color: var(--accent2); }
+  .formula-units {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'DM Mono', monospace;
+  }
+  .formula-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .formula-row .formula-box { flex: 1; min-width: 160px; }
+
+  /* units table */
+  .units-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .units-table th {
+    background: var(--bg);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .units-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table .sym-cell {
+    font-family: 'DM Mono', monospace;
+    color: var(--purple);
+    font-weight: 500;
+  }
+
+  /* statement box */
+  .statement-box {
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(135deg, #e3f2fd, #e8f4fd);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+
+  /* exam tip */
+  .exam-tip {
+    background: var(--orange2);
+    border: 1px solid #ffcc80;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--orange);
+  }
+  .exam-tip strong {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: var(--orange);
+  }
+
+  /* warning box */
+  .warning-box {
+    background: var(--red2);
+    border: 1px solid #ef9a9a;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--red);
+  }
+  .warning-box strong {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  /* compare 2-col */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .compare-card {
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13.5px;
+  }
+  .compare-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .compare-card ul { padding-left: 16px; }
+  .compare-card ul li { margin-bottom: 4px; font-size: 13px; }
+  .compare-card.left { background: #e3f2fd; border: 1px solid #90caf9; }
+  .compare-card.left h4 { color: #1565c0; }
+  .compare-card.right { background: #e8f5e9; border: 1px solid #a5d6a7; }
+  .compare-card.right h4 { color: #2e7d32; }
+
+  /* keyword pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    display: inline-flex;
+    flex-direction: column;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  .pill strong { color: var(--navy); font-weight: 600; }
+  .pill span { color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+  /* interactive canvas */
+  .canvas-wrap {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 18px;
+    color: white;
+  }
+  .canvas-wrap h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  canvas { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .slider-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.75);
+  }
+  .slider-row label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); flex-shrink: 0; }
+  input[type=range] {
+    flex: 1; accent-color: var(--accent2);
+  }
+  .slider-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent2);
+    min-width: 50px;
+  }
+  .canvas-readout {
+    margin-top: 10px;
+    background: rgba(100,181,246,0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  /* quiz CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy), #1a4a6e);
+    border-radius: 12px;
+    padding: 22px 20px;
+    text-align: center;
+    color: white;
+  }
+  .quiz-cta p { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+  .quiz-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity .15s;
+  }
+  .quiz-btn:hover { opacity: 0.85; }
+
+  /* mark as read */
+  .mark-wrap { padding: 0 16px 8px; }
+  .mark-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: 2px solid var(--accent);
+    background: transparent;
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .mark-btn.marked {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* section spacing */
+  .section-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 0 2px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <svg class="hero-wave" viewBox="0 0 400 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,24 C40,4 80,44 120,24 C160,4 200,44 240,24 C280,4 320,44 360,24 L400,24 L400,48 L0,48 Z" fill="white"/>
+  </svg>
+  <div class="kicker">Physics · P11.2 · GCSE Revision</div>
+  <h1>The Properties<br>of Waves</h1>
+  <div class="hero-tags">
+    <span class="badge">Amplitude</span>
+    <span class="badge">Wavelength</span>
+    <span class="badge">Frequency</span>
+    <span class="badge">Wave Speed</span>
+    <span class="badge">v = f × λ</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#objectives">Objectives</a>
+  <a href="#key-terms">Key Terms</a>
+  <a href="#formulae">Formulae</a>
+  <a href="#wave-parts">Wave Parts</a>
+  <a href="#compare">Compare</a>
+  <a href="#tips">Exam Tips</a>
+  <a href="#interactive">Interactive</a>
+</nav>
+
+<!-- LEARNING OBJECTIVES CHECKLIST -->
+<section class="checklist-section" id="objectives">
+  <div class="section-label">Learning Objectives</div>
+  <ul class="checklist" id="checklist">
+    <li data-key="p11-2-obj-1"><span class="tick">✓</span>I can describe what amplitude, frequency, and wavelength mean for a wave.</li>
+    <li data-key="p11-2-obj-2"><span class="tick">✓</span>I can explain how the period of a wave relates to its frequency (T = 1/f).</li>
+    <li data-key="p11-2-obj-3"><span class="tick">✓</span>I can describe the relationship between wave speed, wavelength, and frequency.</li>
+    <li data-key="p11-2-obj-4"><span class="tick">✓</span>I can use the wave speed equation v = f × λ in calculations.</li>
+  </ul>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 4 completed</div>
+</section>
+
+<!-- MARK AS READ -->
+<div class="mark-wrap">
+  <button class="mark-btn" id="markBtn" onclick="toggleMark()">Mark as Read</button>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- BIG IDEAS -->
+  <div class="section-heading" id="key-terms">Key Concepts</div>
+  <div class="big-idea-grid">
+    <div class="big-idea-card">
+      <div class="bi-icon">〰️</div>
+      <h3>Amplitude</h3>
+      <p>Maximum displacement of a point from its rest position — the height of the crest (or depth of the trough) from the middle. <strong>Bigger amplitude = more energy carried.</strong></p>
+    </div>
+    <div class="big-idea-card">
+      <div class="bi-icon">↔️</div>
+      <h3>Wavelength (λ)</h3>
+      <p>Distance from a point on one wave to the equivalent point on the next wave — e.g. crest to crest. Measured in <strong>metres (m)</strong>.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="bi-icon">🔁</div>
+      <h3>Frequency (f)</h3>
+      <p>Number of complete waves passing a fixed point every second. Unit: <strong>hertz (Hz)</strong>. 1 Hz = 1 wave per second.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="bi-icon">⏱️</div>
+      <h3>Period (T)</h3>
+      <p>Time for one complete wave to pass a fixed point. Measured in <strong>seconds (s)</strong>. Directly linked to frequency.</p>
+    </div>
+  </div>
+
+  <!-- FORMULAE -->
+  <div class="section-heading" id="formulae">Formulae</div>
+  <div class="formula-row">
+    <div class="formula-box">
+      <div class="formula-label">Wave Speed Equation</div>
+      <div class="formula-main"><span class="sym">v</span> = <span class="sym">f</span> × <span class="sym">λ</span></div>
+      <div class="formula-units">v (m/s) &nbsp;·&nbsp; f (Hz) &nbsp;·&nbsp; λ (m)</div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">Period &amp; Frequency</div>
+      <div class="formula-main"><span class="sym">T</span> = <span class="sym">1</span> / <span class="sym">f</span></div>
+      <div class="formula-units">T (s) &nbsp;·&nbsp; f (Hz)</div>
+    </div>
+  </div>
+
+  <div class="statement-box">
+    💡 The bigger the amplitude, the <strong>more energy</strong> the wave carries — but amplitude does <em>not</em> affect wave speed, frequency, or wavelength.
+  </div>
+
+  <!-- WAVE PARTS TABLE -->
+  <div class="panel" id="wave-parts">
+    <h2>Wave Properties at a Glance</h2>
+    <table class="units-table">
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Symbol</th>
+          <th>Unit</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wave speed</td>
+          <td class="sym-cell">v</td>
+          <td>m/s</td>
+          <td>Distance travelled per second through a medium</td>
+        </tr>
+        <tr>
+          <td>Frequency</td>
+          <td class="sym-cell">f</td>
+          <td>Hz</td>
+          <td>Waves passing a point per second; 1 Hz = 1 wave/s</td>
+        </tr>
+        <tr>
+          <td>Wavelength</td>
+          <td class="sym-cell">λ</td>
+          <td>m</td>
+          <td>Crest-to-crest (or trough-to-trough) distance</td>
+        </tr>
+        <tr>
+          <td>Amplitude</td>
+          <td class="sym-cell">A</td>
+          <td>m</td>
+          <td>Max displacement from equilibrium (rest position)</td>
+        </tr>
+        <tr>
+          <td>Period</td>
+          <td class="sym-cell">T</td>
+          <td>s</td>
+          <td>Time for one complete wave; T = 1/f</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMPARE -->
+  <div class="section-heading" id="compare">Frequency vs Wavelength</div>
+  <div class="compare-grid">
+    <div class="compare-card left">
+      <h4>Higher Frequency</h4>
+      <ul>
+        <li>More waves per second</li>
+        <li>Shorter wavelength</li>
+        <li>Higher period is shorter (T↓)</li>
+        <li>Same speed in same medium</li>
+      </ul>
+    </div>
+    <div class="compare-card right">
+      <h4>Lower Frequency</h4>
+      <ul>
+        <li>Fewer waves per second</li>
+        <li>Longer wavelength</li>
+        <li>Period is longer (T↑)</li>
+        <li>Same speed in same medium</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE -->
+  <div class="canvas-wrap" id="interactive">
+    <h3>🌊 Interactive Wave — adjust frequency &amp; amplitude</h3>
+    <canvas id="waveCanvas" width="600" height="160"></canvas>
+    <div class="slider-row">
+      <label>Frequency</label>
+      <input type="range" id="freqSlider" min="0.5" max="4" step="0.1" value="1.5">
+      <span class="slider-val" id="freqVal">1.5 Hz</span>
+    </div>
+    <div class="slider-row">
+      <label>Amplitude</label>
+      <input type="range" id="ampSlider" min="10" max="60" step="1" value="35">
+      <span class="slider-val" id="ampVal">35 units</span>
+    </div>
+    <div class="canvas-readout" id="readout">
+      <span>v = 200 m/s</span>
+      <span>λ = — m</span>
+      <span>T = — s</span>
+    </div>
+  </div>
+
+  <!-- EXAM TIPS -->
+  <div class="section-heading" id="tips">Exam Tips</div>
+  <div class="exam-tip">
+    <strong>⭐ Exam Tip — Rearranging v = f × λ</strong>
+    If you're given speed and frequency, rearrange: <strong>λ = v ÷ f</strong>. If given speed and wavelength: <strong>f = v ÷ λ</strong>. Always show your rearrangement and include units.
+  </div>
+
+  <div class="exam-tip">
+    <strong>⭐ Exam Tip — Period</strong>
+    If a question gives frequency in kHz (kilohertz), convert first: 1 kHz = 1000 Hz. Then calculate T = 1/f. Show all steps.
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ Common Mistake</strong>
+    Don't confuse <em>amplitude</em> with <em>wavelength</em>. Amplitude is the height of the wave from the middle — not from crest to trough (that's twice the amplitude).
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ Common Mistake</strong>
+    Changing the amplitude does NOT change the wave speed, frequency, or wavelength — those depend on the source and medium only.
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="panel">
+    <h2>Key Vocabulary</h2>
+    <div class="pills">
+      <div class="pill"><strong>Crest</strong><span>Top (peak) of a wave</span></div>
+      <div class="pill"><strong>Trough</strong><span>Bottom of a wave</span></div>
+      <div class="pill"><strong>Amplitude</strong><span>Max displacement from rest</span></div>
+      <div class="pill"><strong>Wavelength λ</strong><span>Distance — one full wave</span></div>
+      <div class="pill"><strong>Frequency f</strong><span>Waves per second (Hz)</span></div>
+      <div class="pill"><strong>Period T</strong><span>Time for one wave (s)</span></div>
+      <div class="pill"><strong>Wave speed v</strong><span>Distance/time (m/s)</span></div>
+      <div class="pill"><strong>Hertz (Hz)</strong><span>Unit of frequency</span></div>
+      <div class="pill"><strong>Ripple tank</strong><span>Used to study water waves</span></div>
+      <div class="pill"><strong>Plane waves</strong><span>Straight waves in a ripple tank</span></div>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <p>Ready to test yourself?</p>
+    <a class="quiz-btn" href="physics-p11-2-quickcheck.html">Take the Quick-Check Quiz →</a>
+  </div>
+
+</main>
+
+<script>
+// ── CHECKLIST ──
+const CHECK_KEY = 'physics-p11-2-checklist';
+const items = document.querySelectorAll('#checklist li');
+const fill = document.getElementById('progressFill');
+const label = document.getElementById('progressLabel');
+
+function loadChecklist() {
+  const saved = JSON.parse(localStorage.getItem(CHECK_KEY) || '{}');
+  items.forEach(li => {
+    if (saved[li.dataset.key]) li.classList.add('done');
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const done = document.querySelectorAll('#checklist li.done').length;
+  const pct = Math.round((done / items.length) * 100);
+  fill.style.width = pct + '%';
+  label.textContent = `${done} / ${items.length} completed`;
+}
+
+items.forEach(li => {
+  li.addEventListener('click', () => {
+    li.classList.toggle('done');
+    const saved = JSON.parse(localStorage.getItem(CHECK_KEY) || '{}');
+    saved[li.dataset.key] = li.classList.contains('done');
+    localStorage.setItem(CHECK_KEY, JSON.stringify(saved));
+    updateProgress();
+  });
+});
+loadChecklist();
+
+// ── MARK AS READ ──
+const MARK_KEY = 'physics-p11-2-read';
+const markBtn = document.getElementById('markBtn');
+function toggleMark() {
+  const isMarked = localStorage.getItem(MARK_KEY) === 'true';
+  localStorage.setItem(MARK_KEY, !isMarked);
+  markBtn.classList.toggle('marked', !isMarked);
+  markBtn.textContent = !isMarked ? '✓ Marked as Read' : 'Mark as Read';
+}
+if (localStorage.getItem(MARK_KEY) === 'true') {
+  markBtn.classList.add('marked');
+  markBtn.textContent = '✓ Marked as Read';
+}
+
+// ── WAVE CANVAS ──
+const canvas = document.getElementById('waveCanvas');
+const ctx = canvas.getContext('2d');
+const freqSlider = document.getElementById('freqSlider');
+const ampSlider = document.getElementById('ampSlider');
+const freqVal = document.getElementById('freqVal');
+const ampVal = document.getElementById('ampVal');
+const readout = document.getElementById('readout');
+
+let t = 0;
+const WAVE_SPEED = 200; // display units/s — fixed "speed"
+
+function drawWave() {
+  const f = parseFloat(freqSlider.value);
+  const amp = parseFloat(ampSlider.value);
+  const W = canvas.width, H = canvas.height;
+  const lambda = WAVE_SPEED / f; // wavelength in display pixels (scaled)
+  const k = (2 * Math.PI) / (lambda * 0.5); // scale factor for display
+  const omega = 2 * Math.PI * f;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#0d2b45';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(100,181,246,0.08)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < W; x += 40) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  // Centre line
+  ctx.strokeStyle = 'rgba(100,181,246,0.2)';
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Wave
+  const grad = ctx.createLinearGradient(0, H/2 - amp, 0, H/2 + amp);
+  grad.addColorStop(0, '#00e5ff');
+  grad.addColorStop(0.5, '#64b5f6');
+  grad.addColorStop(1, '#1565c0');
+
+  ctx.beginPath();
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = '#00e5ff';
+  ctx.shadowBlur = 8;
+
+  for (let x = 0; x <= W; x++) {
+    const y = H / 2 + amp * Math.sin(k * x - omega * t);
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Labels
+  ctx.fillStyle = 'rgba(100,181,246,0.7)';
+  ctx.font = '11px DM Mono, monospace';
+  ctx.fillText('crest', 10, H/2 - amp - 4);
+  ctx.fillText('trough', 10, H/2 + amp + 14);
+  ctx.fillText('rest', 10, H/2 - 4);
+
+  // Amplitude arrow
+  const arrowX = W - 24;
+  ctx.strokeStyle = '#00e5ff';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(arrowX, H/2);
+  ctx.lineTo(arrowX, H/2 - amp);
+  ctx.stroke();
+  ctx.fillStyle = '#00e5ff';
+  ctx.font = '10px DM Mono, monospace';
+  ctx.fillText('A', arrowX + 4, H/2 - amp/2 + 4);
+
+  // Readout
+  const lambdaM = (WAVE_SPEED / f).toFixed(1);
+  const period = (1 / f).toFixed(2);
+  readout.innerHTML = `<span>v = ${WAVE_SPEED} m/s (fixed)</span><span>λ = ${lambdaM} m</span><span>T = ${period} s</span><span>f = ${f} Hz</span>`;
+
+  t += 0.016;
+  requestAnimationFrame(drawWave);
+}
+
+freqSlider.addEventListener('input', () => { freqVal.textContent = parseFloat(freqSlider.value).toFixed(1) + ' Hz'; });
+ampSlider.addEventListener('input', () => { ampVal.textContent = ampSlider.value + ' units'; });
+drawWave();
+</script>
+</body>
+</html>

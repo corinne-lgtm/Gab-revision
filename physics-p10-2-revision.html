@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10.2 Revision — Weight and Terminal Velocity</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #29b6f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a95;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7b1fa2;
+    --purple2: #f3e5f5;
+    --yellow: #f9a825;
+    --yellow2: #fffde7;
+    --line: #cce3f5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  .hero {
+    background: linear-gradient(135deg, #0d2b45 0%, #1a4a72 50%, #0a3a5c 100%);
+    padding: 36px 32px 28px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(100,181,246,0.18) 0%, transparent 60%);
+  }
+  .hero-kicker { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; opacity: 0.9; }
+  .hero h1 { font-size: clamp(22px, 5vw, 34px); font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 14px; position: relative; }
+  .hero h1 span { color: var(--accent); }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; position: relative; }
+  .hero-tag { background: rgba(100,181,246,0.15); border: 1px solid rgba(100,181,246,0.35); color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 1px; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+  .badge { position: absolute; top: 32px; right: 28px; background: var(--accent); color: var(--navy); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 4px; }
+
+  nav { background: var(--navy); padding: 0 24px; display: flex; gap: 0; overflow-x: auto; border-bottom: 2px solid var(--accent); }
+  nav a { color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; padding: 12px 16px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .2s, border-color .2s; }
+  nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  main { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .checklist-wrap { background: var(--paper); border-radius: 12px; border: 1px solid var(--line); padding: 20px 22px; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(13,43,69,.07); }
+  .section-label { font-size: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--accent2); margin-bottom: 14px; }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 8px; cursor: pointer; transition: background .15s; border: 1.5px solid var(--line); user-select: none; }
+  .checklist li:hover { background: #f0f8ff; }
+  .checklist li.done { background: var(--green2); border-color: #a5d6a7; }
+  .check-box { width: 20px; height: 20px; min-width: 20px; border-radius: 5px; border: 2px solid var(--muted); background: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; transition: all .2s; margin-top: 1px; }
+  .checklist li.done .check-box { background: var(--green); border-color: var(--green); color: #fff; }
+  .checklist li span { font-size: 13.5px; line-height: 1.5; color: var(--ink); }
+  .checklist-progress { margin-top: 14px; }
+  .progress-bar-bg { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 3px; transition: width .4s ease; }
+  .progress-label { font-size: 11px; color: var(--muted); font-weight: 600; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  @media(max-width:600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--paper); border-radius: 12px; border: 1px solid var(--line); padding: 18px 20px; box-shadow: 0 2px 12px rgba(13,43,69,.06); }
+  .panel h3 { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--line); }
+  .panel.red h3 { color: var(--red); border-bottom-color: #ffcdd2; }
+  .panel.blue h3 { color: #1565c0; border-bottom-color: #bbdefb; }
+  .panel.green h3 { color: var(--green); border-bottom-color: #c8e6c9; }
+  .panel.orange h3 { color: var(--orange); border-bottom-color: #ffe0b2; }
+  .panel p, .panel li { font-size: 13.5px; line-height: 1.6; color: #2a4a60; }
+  .panel ul { padding-left: 16px; display: flex; flex-direction: column; gap: 5px; }
+
+  .big-idea { background: linear-gradient(135deg, var(--navy), #1a4a72); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; color: #fff; border-left: 5px solid var(--accent); }
+  .big-idea .label { font-size: 10px; font-weight: 800; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .big-idea p { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.92); }
+  .big-idea strong { color: var(--accent); }
+
+  .formula-box { background: var(--navy); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; text-align: center; border: 2px solid rgba(100,181,246,0.3); }
+  .formula-box .label { font-size: 10px; font-weight: 800; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+  .formula { font-family: 'JetBrains Mono', monospace; font-size: clamp(20px, 4vw, 28px); font-weight: 600; color: #fff; letter-spacing: 2px; padding: 14px 20px; background: rgba(100,181,246,0.1); border-radius: 8px; display: inline-block; margin-bottom: 12px; }
+  .formula span { color: var(--accent); }
+  .formula-vars { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+  .formula-var { background: rgba(255,255,255,.08); border-radius: 6px; padding: 6px 14px; font-size: 12px; color: rgba(255,255,255,.8); }
+  .formula-var b { color: var(--accent2); }
+
+  .statement { background: var(--yellow2); border-left: 4px solid var(--yellow); border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+
+  .exam-tip { background: var(--purple2); border: 1.5px solid #ce93d8; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; }
+  .exam-tip .tip-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--purple); text-transform: uppercase; margin-bottom: 6px; }
+  .exam-tip p { font-size: 13px; color: #4a1a5c; line-height: 1.6; }
+
+  .warning { background: var(--red2); border: 1.5px solid #ef9a9a; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; }
+  .warning .warn-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--red); text-transform: uppercase; margin-bottom: 6px; }
+  .warning p { font-size: 13px; color: #7f1010; line-height: 1.6; }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 20px; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--line); }
+  .compare-col { padding: 16px 18px; }
+  .compare-col:first-child { background: #e3f2fd; border-right: 1.5px solid var(--line); }
+  .compare-col:last-child { background: #fce4ec; }
+  .compare-col h4 { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .compare-col:first-child h4 { color: #1565c0; }
+  .compare-col:last-child h4 { color: #c62828; }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .compare-col li { font-size: 13px; line-height: 1.5; color: #1a2a3a; padding-left: 14px; position: relative; }
+  .compare-col li::before { content: '→'; position: absolute; left: 0; color: var(--muted); font-size: 11px; top: 2px; }
+
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .kw { background: var(--navy); color: var(--accent); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px; border: 1.5px solid rgba(100,181,246,0.3); }
+
+  .canvas-wrap { background: var(--paper); border-radius: 12px; border: 1px solid var(--line); padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(13,43,69,.07); }
+  .canvas-wrap h3 { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 14px; }
+  #velCanvas { width: 100%; height: 200px; border-radius: 8px; background: #f5faff; border: 1px solid var(--line); display: block; }
+  .slider-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+  .slider-row label { font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+  .slider-row input[type=range] { flex: 1; accent-color: var(--accent); }
+  .slider-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--navy); font-weight: 700; min-width: 50px; }
+
+  .units-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 6px; }
+  .units-table th { background: var(--navy); color: var(--accent); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 8px 12px; text-align: left; }
+  .units-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: #2a4a60; }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table code { font-family: 'JetBrains Mono', monospace; background: #e8f4fd; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+
+  .quiz-cta { display: block; text-align: center; padding: 14px; background: linear-gradient(135deg, #1565c0, #0d2b45); color: #fff; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 16px; text-decoration: none; transition: opacity .2s; }
+  .quiz-cta:hover { opacity: .88; }
+
+  .mark-btn { display: block; width: 100%; padding: 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--navy); font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 1px; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase; margin-top: 24px; transition: opacity .2s, transform .1s; }
+  .mark-btn:hover { opacity: .9; transform: translateY(-1px); }
+  .mark-btn.done-btn { background: linear-gradient(135deg, var(--green), #66bb6a); color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">PHYSICS</div>
+  <div class="hero-kicker">P10 · Force and Motion</div>
+  <h1>P10.2 <span>Weight and Terminal Velocity</span></h1>
+  <div class="hero-tags">
+    <span class="hero-tag">Free Fall</span>
+    <span class="hero-tag">Terminal Velocity</span>
+    <span class="hero-tag">Friction</span>
+    <span class="hero-tag">Mass vs Weight</span>
+  </div>
+</div>
+
+<nav>
+  <a href="#objectives" class="active">Objectives</a>
+  <a href="#key-ideas">Key Ideas</a>
+  <a href="#formula">Formula</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#graph">Interactive Graph</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<main>
+
+  <!-- LEARNING OBJECTIVES -->
+  <div id="objectives" class="checklist-wrap">
+    <div class="section-label">Learning Objectives</div>
+    <ul class="checklist" id="checklist">
+      <li data-id="obj1" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Explain the difference between mass and weight</span>
+      </li>
+      <li data-id="obj2" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Describe the motion of an object acted on only by gravity (free fall)</span>
+      </li>
+      <li data-id="obj3" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>Explain what terminal velocity means</span>
+      </li>
+      <li data-id="obj4" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span>State what can be said about the resultant force on an object falling at terminal velocity</span>
+      </li>
+    </ul>
+    <div class="checklist-progress">
+      <div class="progress-label" id="prog-label">0 / 4 completed</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- BIG IDEA -->
+  <div id="key-ideas" class="big-idea">
+    <div class="label">The Big Idea</div>
+    <p>When an object falls through a fluid, the <strong>frictional force increases</strong> with speed. The resultant force gradually decreases until it reaches <strong>zero</strong> — at that point the object has reached its <strong>terminal velocity</strong> and no longer accelerates.</p>
+  </div>
+
+  <!-- FORMULA -->
+  <div id="formula" class="formula-box">
+    <div class="label">Key Formula</div>
+    <div class="formula"><span>W</span> = m × g</div>
+    <div class="formula-vars">
+      <div class="formula-var"><b>W</b> = weight (N)</div>
+      <div class="formula-var"><b>m</b> = mass (kg)</div>
+      <div class="formula-var"><b>g</b> = gravitational field strength (N/kg)</div>
+    </div>
+  </div>
+
+  <!-- UNITS TABLE -->
+  <div id="concepts" class="panel" style="margin-bottom:20px;">
+    <h3 style="color:#1a4a72; border-bottom-color:#cce3f5;">Quantities, Symbols &amp; Units</h3>
+    <table class="units-table">
+      <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Notes</th></tr>
+      <tr><td>Weight</td><td><code>W</code></td><td>Newtons (N)</td><td>Gravitational force acting on the object</td></tr>
+      <tr><td>Mass</td><td><code>m</code></td><td>Kilograms (kg)</td><td>Amount of matter — same everywhere</td></tr>
+      <tr><td>Gravitational field strength</td><td><code>g</code></td><td>N/kg</td><td>Earth ≈ 9.8 N/kg · Moon ≈ 1.6 N/kg</td></tr>
+      <tr><td>Acceleration (free fall)</td><td><code>a</code></td><td>m/s²</td><td>≈ 10 m/s² on Earth</td></tr>
+    </table>
+  </div>
+
+  <!-- COMPARE -->
+  <div class="compare" style="margin-bottom:20px;">
+    <div class="compare-col">
+      <h4>Mass</h4>
+      <ul>
+        <li>The amount of matter in an object</li>
+        <li>Measured in kilograms (kg)</li>
+        <li>Does not change with location</li>
+        <li>Same on Earth and on the Moon</li>
+      </ul>
+    </div>
+    <div class="compare-col">
+      <h4>Weight</h4>
+      <ul>
+        <li>The force due to gravity on an object</li>
+        <li>Measured in Newtons (N)</li>
+        <li>Changes depending on value of g</li>
+        <li>Less on the Moon (smaller g)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GRID PANELS -->
+  <div class="grid-2">
+    <div class="panel blue">
+      <h3>Free Fall</h3>
+      <ul>
+        <li>Only gravity acts → free fall</li>
+        <li>Constant acceleration ≈ 10 m/s²</li>
+        <li>Resultant force = weight</li>
+        <li>Velocity increases steadily</li>
+      </ul>
+    </div>
+    <div class="panel orange">
+      <h3>Falling in a Fluid</h3>
+      <ul>
+        <li>Friction (drag) increases with speed</li>
+        <li>Resultant force = weight − friction</li>
+        <li>Acceleration decreases over time</li>
+        <li>At terminal velocity: resultant = 0</li>
+      </ul>
+    </div>
+    <div class="panel green">
+      <h3>Terminal Velocity</h3>
+      <ul>
+        <li>Weight = frictional force</li>
+        <li>Resultant force = zero</li>
+        <li>Acceleration = zero</li>
+        <li>Object moves at constant speed</li>
+      </ul>
+    </div>
+    <div class="panel red">
+      <h3>Air vs Liquid</h3>
+      <ul>
+        <li>Air resistance is much smaller</li>
+        <li>→ terminal velocity reached much later</li>
+        <li>In liquid: terminal velocity reached quickly</li>
+        <li>Graph: shallower slope in liquid</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STATEMENT -->
+  <div class="statement">
+    💡 <strong>Remember:</strong> A 1 kg object weighs 9.8 N on Earth. A 5 kg object weighs 49 N. Use W = m × g anywhere in the universe — just change the value of g.
+  </div>
+
+  <!-- EXAM TIP -->
+  <div class="exam-tip">
+    <div class="tip-label">💜 Exam Tip</div>
+    <p>When asked to <em>explain</em> why an object reaches terminal velocity, always mention two forces and compare them: <em>"The frictional force increases until it equals the weight. The resultant force is therefore zero, so the acceleration is zero and the velocity remains constant."</em></p>
+  </div>
+
+  <!-- WARNING -->
+  <div class="warning">
+    <div class="warn-label">⚠️ Common Mistake</div>
+    <p>At terminal velocity, the object does <strong>not stop</strong> — it continues to move at constant speed! The resultant force is zero but the velocity is not zero. Don't confuse <em>zero acceleration</em> with <em>zero velocity</em>.</p>
+  </div>
+
+  <!-- INTERACTIVE GRAPH -->
+  <div id="graph" class="canvas-wrap">
+    <h3>📈 Interactive — Velocity–Time Graph</h3>
+    <canvas id="velCanvas"></canvas>
+    <div class="slider-row">
+      <label>Fluid resistance:</label>
+      <input type="range" id="fluidSlider" min="1" max="10" value="5" oninput="drawGraph()">
+      <span class="slider-val" id="fluidVal">×5</span>
+    </div>
+    <div class="slider-row">
+      <label>Object mass (kg):</label>
+      <input type="range" id="massSlider" min="1" max="20" value="5" oninput="drawGraph()">
+      <span class="slider-val" id="massVal">5 kg</span>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;">Blue = air · Red = liquid. Dashed line = calculated terminal velocity.</p>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div id="keywords">
+    <div class="section-label" style="margin-bottom:10px;">Key Words</div>
+    <div class="keywords">
+      <span class="kw">Weight (W)</span>
+      <span class="kw">Mass (m)</span>
+      <span class="kw">Gravitational field strength (g)</span>
+      <span class="kw">Free fall</span>
+      <span class="kw">Terminal velocity</span>
+      <span class="kw">Resultant force</span>
+      <span class="kw">Friction / drag</span>
+      <span class="kw">Air resistance</span>
+      <span class="kw">Newton-meter</span>
+      <span class="kw">Acceleration</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <a href="physics-p10-2-quickcheck.html" class="quiz-cta" style="margin-top:24px;">🧠 Test Yourself — Take the Quiz</a>
+
+  <!-- MARK AS READ -->
+  <button class="mark-btn" id="markBtn" onclick="markRead()">Mark as Read ✓</button>
+
+</main>
+
+<script>
+const STORAGE_KEY = 'physics-p10-2-read';
+const CHECK_PREFIX = 'physics-p10-2-obj-';
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  try { localStorage.setItem(CHECK_PREFIX + el.dataset.id, el.classList.contains('done') ? '1' : '0'); } catch(e){}
+  updateProgress();
+}
+function updateProgress() {
+  const items = document.querySelectorAll('#checklist li');
+  const done = document.querySelectorAll('#checklist li.done').length;
+  document.getElementById('prog-label').textContent = done + ' / ' + items.length + ' completed';
+  document.getElementById('prog-fill').style.width = (done / items.length * 100) + '%';
+}
+function loadChecks() {
+  document.querySelectorAll('#checklist li').forEach(li => {
+    try { if (localStorage.getItem(CHECK_PREFIX + li.dataset.id) === '1') li.classList.add('done'); } catch(e){}
+  });
+  updateProgress();
+}
+function markRead() {
+  try { localStorage.setItem(STORAGE_KEY, '1'); } catch(e){}
+  const btn = document.getElementById('markBtn');
+  btn.textContent = '✅ Done! Show this to mum';
+  btn.classList.add('done-btn');
+}
+function loadMarkRead() {
+  try {
+    if (localStorage.getItem(STORAGE_KEY) === '1') {
+      const btn = document.getElementById('markBtn');
+      btn.textContent = '✅ Done! Show this to mum';
+      btn.classList.add('done-btn');
+    }
+  } catch(e){}
+}
+
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', function() {
+    document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+function drawGraph() {
+  const canvas = document.getElementById('velCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  canvas.width = W; canvas.height = H;
+
+  const fluid = parseInt(document.getElementById('fluidSlider').value);
+  const mass = parseInt(document.getElementById('massSlider').value);
+  document.getElementById('fluidVal').textContent = '×' + fluid;
+  document.getElementById('massVal').textContent = mass + ' kg';
+
+  const g = 9.8, weight = mass * g;
+  const kAir = fluid * 0.5, kLiq = fluid * 5;
+  const vtAir = weight / kAir, vtLiq = weight / kLiq;
+  const pad = { l: 44, r: 20, t: 16, b: 36 };
+  const gW = W - pad.l - pad.r, gH = H - pad.t - pad.b;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#f5faff'; ctx.fillRect(0,0,W,H);
+
+  ctx.strokeStyle = '#d0e8f8'; ctx.lineWidth = 1;
+  for (let i=0;i<=5;i++) {
+    const y = pad.t + gH*i/5;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+gW,y); ctx.stroke();
+    const x = pad.l + gW*i/5;
+    ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+gH); ctx.stroke();
+  }
+
+  const tMax = 2.5, vMax = Math.max(vtAir * 1.1, 3);
+  const tx = t => pad.l + (t/tMax)*gW;
+  const ty = v => pad.t + gH - (v/vMax)*gH;
+  const vFunc = (t, k) => (weight/k) * (1 - Math.exp(-(k/mass)*t));
+
+  [[kAir,'#1976d2'],[kLiq,'#e53935']].forEach(([k,col]) => {
+    ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let i=0;i<=200;i++) {
+      const t = tMax*i/200, v = vFunc(t,k);
+      i===0 ? ctx.moveTo(tx(t),ty(v)) : ctx.lineTo(tx(t),ty(v));
+    }
+    ctx.stroke();
+  });
+
+  [[vtAir,'#90caf9'],[vtLiq,'#ef9a9a']].forEach(([vt,col]) => {
+    if (vt/vMax < 1.05) {
+      ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.setLineDash([5,4]);
+      ctx.beginPath(); ctx.moveTo(pad.l,ty(vt)); ctx.lineTo(pad.l+gW,ty(vt)); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  });
+
+  ctx.fillStyle = '#5a7a95'; ctx.font = '600 11px Sora,sans-serif'; ctx.textAlign = 'center';
+  for (let i=0;i<=5;i++) ctx.fillText((tMax*i/5).toFixed(2)+'s', tx(tMax*i/5), H-6);
+  ctx.textAlign = 'right';
+  for (let i=0;i<=5;i++) ctx.fillText((vMax*(5-i)/5).toFixed(1), pad.l-4, ty(vMax*(5-i)/5)+4);
+
+  ctx.fillStyle = '#0d2b45'; ctx.font = 'bold 11px Sora,sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Time (s)', pad.l+gW/2, H);
+  ctx.save(); ctx.translate(11,pad.t+gH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Velocity (m/s)', 0, 0); ctx.restore();
+
+  const lx = pad.l+gW-100, ly = pad.t+10;
+  ctx.fillStyle='#1976d2'; ctx.fillRect(lx,ly,22,3);
+  ctx.fillStyle='#2a4a60'; ctx.font='11px Sora'; ctx.textAlign='left'; ctx.fillText('Air',lx+26,ly+5);
+  ctx.fillStyle='#e53935'; ctx.fillRect(lx,ly+14,22,3);
+  ctx.fillStyle='#2a4a60'; ctx.fillText('Liquid',lx+26,ly+19);
+}
+
+window.addEventListener('load', () => { loadChecks(); loadMarkRead(); drawGraph(); });
+window.addEventListener('resize', drawGraph);
+</script>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11.2 Quick-Check Quiz – Wave Properties</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #e8f4fd;
+  --navy: #0d2b45;
+  --accent: #64b5f6;
+  --accent2: #00e5ff;
+  --ink: #0d2b45;
+  --muted: #5a7a99;
+  --paper: #ffffff;
+  --line: #cce0f0;
+  --red: #c62828;
+  --red2: #fde8e8;
+  --green: #2e7d32;
+  --green2: #e8f5e9;
+  --orange: #e65100;
+  --orange2: #fff3e0;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #0a3d5c 100%);
+  color: white;
+  padding: 32px 24px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute;inset:0;
+  background: repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(100,181,246,0.05) 40px,rgba(100,181,246,0.05) 41px);
+  pointer-events:none;
+}
+.kicker {
+  font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px;
+}
+.hero h1 {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(22px,5vw,32px);font-weight:800;line-height:1.1;
+  margin-bottom:8px;
+}
+.hero-badge {
+  display:inline-block;
+  background:rgba(100,181,246,0.18);
+  border:1px solid rgba(100,181,246,0.35);
+  color:var(--accent);
+  font-family:'DM Mono',monospace;
+  font-size:11px;padding:3px 10px;border-radius:20px;
+  margin-top:6px;
+}
+
+/* SCORE BAR */
+.score-bar {
+  background: var(--navy);
+  padding: 10px 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.score-bar .score-item {
+  display:flex;flex-direction:column;align-items:center;
+  font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.5);
+}
+.score-bar .score-item span {
+  font-size:18px;font-weight:700;color:white;line-height:1.1;
+}
+.score-bar .prog-wrap {
+  flex:1;height:6px;background:rgba(255,255,255,0.15);border-radius:99px;overflow:hidden;
+}
+.score-bar .prog-fill {
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:99px;transition:width .4s;
+}
+
+/* NAV */
+.nav {
+  background:var(--navy);
+  padding:0 16px;
+  display:flex;gap:0;overflow-x:auto;scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a {
+  color:rgba(255,255,255,.5);font-size:12px;font-weight:500;text-decoration:none;
+  padding:9px 12px;white-space:nowrap;border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.nav a:hover{color:white;border-color:var(--accent)}
+
+/* QUESTIONS */
+main { padding: 18px 16px 80px; display:flex;flex-direction:column;gap:14px; }
+
+.section-label {
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);display:flex;align-items:center;gap:8px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+.q-block {
+  background:var(--paper);border:1.5px solid var(--line);
+  border-radius:12px;padding:18px;
+  transition: border-color .2s;
+}
+.q-block.correct { border-color:#81c784; background: #f1f8f1; }
+.q-block.wrong   { border-color:#ef9a9a; background: #fff5f5; }
+
+.q-number {
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);
+  margin-bottom:6px;display:block;
+}
+.q-text { font-size:14.5px;font-weight:500;color:var(--navy);margin-bottom:12px;line-height:1.5; }
+
+/* MCQ options */
+.options { display:flex;flex-direction:column;gap:7px; }
+.option-btn {
+  width:100%;text-align:left;padding:10px 14px;
+  border:1.5px solid var(--line);border-radius:8px;
+  background:white;color:var(--ink);
+  font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;
+  transition:background .15s,border-color .15s;
+  display:flex;align-items:center;gap:10px;
+}
+.option-btn:hover:not(:disabled) { background:var(--bg);border-color:var(--accent); }
+.option-btn .opt-letter {
+  font-family:'DM Mono',monospace;font-size:12px;
+  background:var(--bg);border-radius:4px;
+  padding:1px 6px;color:var(--muted);flex-shrink:0;
+}
+.option-btn.selected-correct { background:var(--green2);border-color:#81c784; }
+.option-btn.selected-correct .opt-letter { background:#81c784;color:white; }
+.option-btn.selected-wrong   { background:var(--red2);border-color:#ef9a9a; }
+.option-btn.selected-wrong   .opt-letter { background:#ef9a9a;color:white; }
+.option-btn.reveal-correct   { background:var(--green2);border-color:#81c784; }
+.option-btn:disabled { cursor:default; }
+
+/* TF options */
+.tf-row { display:flex;gap:8px; }
+.tf-btn {
+  flex:1;padding:11px;border:1.5px solid var(--line);border-radius:8px;
+  background:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:background .15s,border-color .15s;
+}
+.tf-btn:hover:not(:disabled) { background:var(--bg);border-color:var(--accent); }
+.tf-btn.selected-correct { background:var(--green2);border-color:#81c784;color:var(--green); }
+.tf-btn.selected-wrong   { background:var(--red2);border-color:#ef9a9a;color:var(--red); }
+.tf-btn.reveal-correct   { background:var(--green2);border-color:#81c784;color:var(--green); }
+.tf-btn:disabled { cursor:default; }
+
+/* FEEDBACK */
+.feedback {
+  margin-top:10px;padding:10px 14px;border-radius:8px;
+  font-size:13px;line-height:1.5;display:none;
+}
+.feedback.correct { background:var(--green2);color:var(--green);display:block; }
+.feedback.wrong   { background:var(--red2);color:var(--red);display:block; }
+
+/* RESULT BOX */
+.result-box {
+  display:none;
+  background:var(--navy);color:white;
+  border-radius:16px;padding:32px 24px;text-align:center;
+  margin-top:8px;
+}
+.result-box.show { display:block; }
+.result-emoji { font-size:52px;margin-bottom:10px; }
+.result-box h2 { font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:6px; }
+.result-score { font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:10px; }
+.result-msg { font-size:14px;color:rgba(255,255,255,.7);margin-bottom:20px;line-height:1.5; }
+.result-mum {
+  background:rgba(100,181,246,.15);border:1px solid rgba(100,181,246,.35);
+  border-radius:8px;padding:10px 14px;
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);
+  margin-bottom:20px;
+}
+.reset-btn {
+  background:var(--accent);color:var(--navy);border:none;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:14px;
+  padding:12px 32px;border-radius:8px;cursor:pointer;
+  transition:opacity .15s;
+}
+.reset-btn:hover { opacity:.85; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · P11.2 · Quick-Check</div>
+  <h1>Wave Properties<br>Quiz</h1>
+  <div class="hero-badge">20 Questions</div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <div class="score-item"><span id="scoreNum">0</span>score</div>
+  <div class="score-item"><span id="answeredNum">0</span>done</div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  <div class="score-item"><span>20</span>total</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="physics-p11-2-revision.html">← Revision</a>
+  <a href="#mcq">MCQ (1–10)</a>
+  <a href="#tf">True / False (11–20)</a>
+</nav>
+
+<main>
+
+<!-- ══════════ MCQ ══════════ -->
+<div class="section-label" id="mcq">Multiple Choice — Questions 1–10</div>
+
+<!-- Q1 -->
+<div class="q-block" id="q1">
+  <span class="q-number">Question 1 of 20</span>
+  <div class="q-text">What is the amplitude of a wave?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(1,'A','B')"><span class="opt-letter">A</span>The distance from one crest to the next</button>
+    <button class="option-btn" onclick="mcq(1,'B','B')"><span class="opt-letter">B</span>The maximum displacement of a point from its rest position</button>
+    <button class="option-btn" onclick="mcq(1,'C','B')"><span class="opt-letter">C</span>The number of waves passing a point per second</button>
+    <button class="option-btn" onclick="mcq(1,'D','B')"><span class="opt-letter">D</span>The time taken for one complete wave</button>
+  </div>
+  <div class="feedback" id="f1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="q-block" id="q2">
+  <span class="q-number">Question 2 of 20</span>
+  <div class="q-text">The unit of frequency is:</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(2,'A','C')"><span class="opt-letter">A</span>Metres (m)</button>
+    <button class="option-btn" onclick="mcq(2,'B','C')"><span class="opt-letter">B</span>Seconds (s)</button>
+    <button class="option-btn" onclick="mcq(2,'C','C')"><span class="opt-letter">C</span>Hertz (Hz)</button>
+    <button class="option-btn" onclick="mcq(2,'D','C')"><span class="opt-letter">D</span>Metres per second (m/s)</button>
+  </div>
+  <div class="feedback" id="f2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="q-block" id="q3">
+  <span class="q-number">Question 3 of 20</span>
+  <div class="q-text">A wave has a frequency of 4 Hz and a wavelength of 3 m. What is its speed?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(3,'A','B')"><span class="opt-letter">A</span>0.75 m/s</button>
+    <button class="option-btn" onclick="mcq(3,'B','B')"><span class="opt-letter">B</span>12 m/s</button>
+    <button class="option-btn" onclick="mcq(3,'C','B')"><span class="opt-letter">C</span>7 m/s</button>
+    <button class="option-btn" onclick="mcq(3,'D','B')"><span class="opt-letter">D</span>1.33 m/s</button>
+  </div>
+  <div class="feedback" id="f3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="q-block" id="q4">
+  <span class="q-number">Question 4 of 20</span>
+  <div class="q-text">What does a bigger amplitude mean for a wave?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(4,'A','A')"><span class="opt-letter">A</span>More energy is carried by the wave</button>
+    <button class="option-btn" onclick="mcq(4,'B','A')"><span class="opt-letter">B</span>Higher frequency</button>
+    <button class="option-btn" onclick="mcq(4,'C','A')"><span class="opt-letter">C</span>Greater wave speed</button>
+    <button class="option-btn" onclick="mcq(4,'D','A')"><span class="opt-letter">D</span>Shorter wavelength</button>
+  </div>
+  <div class="feedback" id="f4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="q-block" id="q5">
+  <span class="q-number">Question 5 of 20</span>
+  <div class="q-text">A wave has a frequency of 50 Hz. What is its period?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(5,'A','C')"><span class="opt-letter">A</span>50 s</button>
+    <button class="option-btn" onclick="mcq(5,'B','C')"><span class="opt-letter">B</span>0.5 s</button>
+    <button class="option-btn" onclick="mcq(5,'C','C')"><span class="opt-letter">C</span>0.02 s</button>
+    <button class="option-btn" onclick="mcq(5,'D','C')"><span class="opt-letter">D</span>0.2 s</button>
+  </div>
+  <div class="feedback" id="f5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="q-block" id="q6">
+  <span class="q-number">Question 6 of 20</span>
+  <div class="q-text">A wave travels at 340 m/s with a frequency of 1700 Hz. What is its wavelength?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(6,'A','B')"><span class="opt-letter">A</span>5 m</button>
+    <button class="option-btn" onclick="mcq(6,'B','B')"><span class="opt-letter">B</span>0.2 m</button>
+    <button class="option-btn" onclick="mcq(6,'C','B')"><span class="opt-letter">C</span>578000 m</button>
+    <button class="option-btn" onclick="mcq(6,'D','B')"><span class="opt-letter">D</span>2 m</button>
+  </div>
+  <div class="feedback" id="f6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="q-block" id="q7">
+  <span class="q-number">Question 7 of 20</span>
+  <div class="q-text">What is the wavelength of a wave?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(7,'A','D')"><span class="opt-letter">A</span>The height of a wave from crest to trough</button>
+    <button class="option-btn" onclick="mcq(7,'B','D')"><span class="opt-letter">B</span>The time for one complete wave to pass</button>
+    <button class="option-btn" onclick="mcq(7,'C','D')"><span class="opt-letter">C</span>The number of waves per second</button>
+    <button class="option-btn" onclick="mcq(7,'D','D')"><span class="opt-letter">D</span>The distance from a point on one wave to the equivalent point on the next</button>
+  </div>
+  <div class="feedback" id="f7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="q-block" id="q8">
+  <span class="q-number">Question 8 of 20</span>
+  <div class="q-text">Sound waves in air travel at 330 m/s. A sound has a wavelength of 0.5 m. What is its frequency?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(8,'A','C')"><span class="opt-letter">A</span>165 Hz</button>
+    <button class="option-btn" onclick="mcq(8,'B','C')"><span class="opt-letter">B</span>0.0015 Hz</button>
+    <button class="option-btn" onclick="mcq(8,'C','C')"><span class="opt-letter">C</span>660 Hz</button>
+    <button class="option-btn" onclick="mcq(8,'D','C')"><span class="opt-letter">D</span>330 Hz</button>
+  </div>
+  <div class="feedback" id="f8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="q-block" id="q9">
+  <span class="q-number">Question 9 of 20</span>
+  <div class="q-text">Which equation correctly gives the period of a wave?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(9,'A','B')"><span class="opt-letter">A</span>T = f × λ</button>
+    <button class="option-btn" onclick="mcq(9,'B','B')"><span class="opt-letter">B</span>T = 1 ÷ f</button>
+    <button class="option-btn" onclick="mcq(9,'C','B')"><span class="opt-letter">C</span>T = v ÷ f</button>
+    <button class="option-btn" onclick="mcq(9,'D','B')"><span class="opt-letter">D</span>T = f × v</button>
+  </div>
+  <div class="feedback" id="f9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="q-block" id="q10">
+  <span class="q-number">Question 10 of 20</span>
+  <div class="q-text">A ripple tank is used to study which type of waves?</div>
+  <div class="options">
+    <button class="option-btn" onclick="mcq(10,'A','C')"><span class="opt-letter">A</span>Sound waves in air</button>
+    <button class="option-btn" onclick="mcq(10,'B','C')"><span class="opt-letter">B</span>Light waves</button>
+    <button class="option-btn" onclick="mcq(10,'C','C')"><span class="opt-letter">C</span>Water waves</button>
+    <button class="option-btn" onclick="mcq(10,'D','C')"><span class="opt-letter">D</span>Seismic waves</button>
+  </div>
+  <div class="feedback" id="f10"></div>
+</div>
+
+<!-- ══════════ TRUE / FALSE ══════════ -->
+<div class="section-label" id="tf">True or False — Questions 11–20</div>
+
+<!-- Q11 -->
+<div class="q-block" id="q11">
+  <span class="q-number">Question 11 of 20</span>
+  <div class="q-text">The frequency of a wave is the number of complete waves passing a fixed point every second.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(11,'true','true')">True</button>
+    <button class="tf-btn" onclick="tf(11,'false','true')">False</button>
+  </div>
+  <div class="feedback" id="f11"></div>
+</div>
+
+<!-- Q12 -->
+<div class="q-block" id="q12">
+  <span class="q-number">Question 12 of 20</span>
+  <div class="q-text">A larger amplitude means the wave travels faster.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(12,'true','false')">True</button>
+    <button class="tf-btn" onclick="tf(12,'false','false')">False</button>
+  </div>
+  <div class="feedback" id="f12"></div>
+</div>
+
+<!-- Q13 -->
+<div class="q-block" id="q13">
+  <span class="q-number">Question 13 of 20</span>
+  <div class="q-text">The wave speed equation is v = f × λ.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(13,'true','true')">True</button>
+    <button class="tf-btn" onclick="tf(13,'false','true')">False</button>
+  </div>
+  <div class="feedback" id="f13"></div>
+</div>
+
+<!-- Q14 -->
+<div class="q-block" id="q14">
+  <span class="q-number">Question 14 of 20</span>
+  <div class="q-text">The amplitude of a wave is measured from the crest to the trough.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(14,'true','false')">True</button>
+    <button class="tf-btn" onclick="tf(14,'false','false')">False</button>
+  </div>
+  <div class="feedback" id="f14"></div>
+</div>
+
+<!-- Q15 -->
+<div class="q-block" id="q15">
+  <span class="q-number">Question 15 of 20</span>
+  <div class="q-text">If the frequency of a wave doubles, its period halves (assuming the same medium).</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(15,'true','true')">True</button>
+    <button class="tf-btn" onclick="tf(15,'false','true')">False</button>
+  </div>
+  <div class="feedback" id="f15"></div>
+</div>
+
+<!-- Q16 -->
+<div class="q-block" id="q16">
+  <span class="q-number">Question 16 of 20</span>
+  <div class="q-text">Wavelength is measured in hertz (Hz).</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(16,'true','false')">True</button>
+    <button class="tf-btn" onclick="tf(16,'false','false')">False</button>
+  </div>
+  <div class="feedback" id="f16"></div>
+</div>
+
+<!-- Q17 -->
+<div class="q-block" id="q17">
+  <span class="q-number">Question 17 of 20</span>
+  <div class="q-text">The crests of a wave are at the top, and the troughs are at the bottom.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(17,'true','true')">True</button>
+    <button class="tf-btn" onclick="tf(17,'false','true')">False</button>
+  </div>
+  <div class="feedback" id="f17"></div>
+</div>
+
+<!-- Q18 -->
+<div class="q-block" id="q18">
+  <span class="q-number">Question 18 of 20</span>
+  <div class="q-text">A wave with a frequency of 2.0 Hz and wavelength of 3.0 m has a speed of 6.0 m/s.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(18,'true','true')">True</button>
+    <button class="tf-btn" onclick="tf(18,'false','true')">False</button>
+  </div>
+  <div class="feedback" id="f18"></div>
+</div>
+
+<!-- Q19 -->
+<div class="q-block" id="q19">
+  <span class="q-number">Question 19 of 20</span>
+  <div class="q-text">Period and frequency are independent of each other — one does not affect the other.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(19,'true','false')">True</button>
+    <button class="tf-btn" onclick="tf(19,'false','false')">False</button>
+  </div>
+  <div class="feedback" id="f19"></div>
+</div>
+
+<!-- Q20 -->
+<div class="q-block" id="q20">
+  <span class="q-number">Question 20 of 20</span>
+  <div class="q-text">All waves in a ripple tank (plane waves) travel at the same speed and stay the same distance apart.</div>
+  <div class="tf-row">
+    <button class="tf-btn" onclick="tf(20,'true','true')">True</button>
+    <button class="tf-btn" onclick="tf(20,'false','true')">False</button>
+  </div>
+  <div class="feedback" id="f20"></div>
+</div>
+
+<!-- RESULT BOX -->
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <h2 id="resultTitle"></h2>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-mum" id="resultMum"></div>
+  <button class="reset-btn" onclick="resetQuiz()">Try Again</button>
+</div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p11-2-quiz-score';
+let score = 0;
+let answered = 0;
+const total = 20;
+
+const feedbacks = {
+  1:  { c: "✅ Correct! Amplitude is the maximum displacement from the rest (undisturbed) position.", w: "❌ Not quite. Amplitude is the maximum displacement from the rest position — not the wavelength or frequency." },
+  2:  { c: "✅ Correct! Frequency is measured in hertz (Hz). 1 Hz = 1 wave per second.", w: "❌ Frequency is measured in hertz (Hz), not metres or seconds." },
+  3:  { c: "✅ Correct! v = f × λ = 4 × 3 = 12 m/s.", w: "❌ Use v = f × λ: 4 Hz × 3 m = 12 m/s." },
+  4:  { c: "✅ Correct! Bigger amplitude = more energy carried. It does not affect speed, frequency, or wavelength.", w: "❌ Bigger amplitude means more energy carried — it does not change wave speed, frequency, or wavelength." },
+  5:  { c: "✅ Correct! T = 1/f = 1/50 = 0.02 s.", w: "❌ Use T = 1/f: 1 ÷ 50 = 0.02 s." },
+  6:  { c: "✅ Correct! λ = v ÷ f = 340 ÷ 1700 = 0.2 m.", w: "❌ Rearrange: λ = v ÷ f = 340 ÷ 1700 = 0.2 m." },
+  7:  { c: "✅ Correct! Wavelength is the distance from a point on one wave to the same point on the next.", w: "❌ Wavelength is the distance from a point on one wave to the equivalent point on the next (e.g. crest to crest)." },
+  8:  { c: "✅ Correct! f = v ÷ λ = 330 ÷ 0.5 = 660 Hz.", w: "❌ Rearrange: f = v ÷ λ = 330 ÷ 0.5 = 660 Hz." },
+  9:  { c: "✅ Correct! Period T = 1 ÷ f (in seconds).", w: "❌ The period formula is T = 1 ÷ f." },
+  10: { c: "✅ Correct! A ripple tank is used to study water waves in controlled conditions.", w: "❌ A ripple tank is specifically used to study water waves." },
+  11: { c: "✅ Correct! Frequency = number of complete waves passing a point per second.", w: "❌ That is actually the definition of frequency — it is true!" },
+  12: { c: "✅ You spotted the misconception! Amplitude does NOT affect wave speed.", w: "❌ This is false — amplitude does not affect wave speed. Speed depends on the medium." },
+  13: { c: "✅ Correct! v = f × λ is the wave speed equation.", w: "❌ This is true — v = f × λ is the wave speed equation." },
+  14: { c: "✅ You spotted the trick! Amplitude is measured from the rest position to the crest (or trough) — not crest to trough (that's twice the amplitude).", w: "❌ False! Amplitude is from the rest position to the crest — not crest to trough (that's 2× amplitude)." },
+  15: { c: "✅ Correct! T = 1/f, so if f doubles, T halves.", w: "❌ True! Since T = 1/f, doubling the frequency halves the period." },
+  16: { c: "✅ You spotted it — wavelength is measured in metres (m), not hertz.", w: "❌ False. Wavelength is measured in metres (m). Hertz is the unit of frequency." },
+  17: { c: "✅ Correct! Crests are the peaks (top), troughs are the dips (bottom).", w: "❌ This is true — crests are at the top, troughs at the bottom." },
+  18: { c: "✅ Correct! v = f × λ = 2.0 × 3.0 = 6.0 m/s.", w: "❌ True — v = 2.0 × 3.0 = 6.0 m/s." },
+  19: { c: "✅ You spotted it — they ARE related: T = 1/f.", w: "❌ False — period and frequency are directly linked: T = 1/f." },
+  20: { c: "✅ Correct! In a ripple tank, plane waves all move at the same speed and stay equally spaced.", w: "❌ True — all plane waves in a ripple tank travel at the same speed and keep the same distance apart." },
+};
+
+function mcq(qNum, chosen, correct) {
+  const block = document.getElementById('q' + qNum);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+  const btns = block.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  const letters = ['A','B','C','D'];
+  const isCorrect = chosen === correct;
+  btns.forEach((b, i) => {
+    if (letters[i] === correct) b.classList.add('reveal-correct');
+    if (letters[i] === chosen && !isCorrect) b.classList.add('selected-wrong');
+    if (letters[i] === chosen && isCorrect) b.classList.add('selected-correct');
+  });
+  showFeedback(qNum, isCorrect);
+  updateScore(isCorrect);
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+}
+
+function tf(qNum, chosen, correct) {
+  const block = document.getElementById('q' + qNum);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+  const btns = block.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = chosen === correct;
+  btns.forEach(b => {
+    const val = b.textContent.toLowerCase() === 'true' ? 'true' : 'false';
+    if (val === correct) b.classList.add('reveal-correct');
+    if (val === chosen && !isCorrect) b.classList.add('selected-wrong');
+    if (val === chosen && isCorrect) b.classList.add('selected-correct');
+  });
+  showFeedback(qNum, isCorrect);
+  updateScore(isCorrect);
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+}
+
+function showFeedback(qNum, isCorrect) {
+  const el = document.getElementById('f' + qNum);
+  el.textContent = isCorrect ? feedbacks[qNum].c : feedbacks[qNum].w;
+  el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+}
+
+function updateScore(isCorrect) {
+  if (isCorrect) score++;
+  answered++;
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('answeredNum').textContent = answered;
+  document.getElementById('progFill').style.width = (answered / total * 100) + '%';
+  localStorage.setItem(SCORE_KEY, JSON.stringify({ score, answered, date: new Date().toISOString() }));
+  if (answered === total) showResult();
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  let emoji, title, msg;
+  if (score >= 18) {
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'Brilliant work — you know P11.2 inside out. Wave properties are no problem for you!';
+  } else if (score >= 14) {
+    emoji = '🎉'; title = 'Great job!';
+    msg = 'Really solid performance. Review the questions you missed and you\'ll nail this topic.';
+  } else if (score >= 10) {
+    emoji = '📚'; title = 'Getting there!';
+    msg = 'A decent start — go back through the revision sheet and focus on the formulae.';
+  } else {
+    emoji = '💪'; title = 'Keep going!';
+    msg = 'Don\'t worry — read through the revision sheet again, especially v = f × λ and T = 1/f, then try again.';
+  }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultScore').textContent = `${score} / 20`;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMum').textContent = `Show this to mum — ${score}/20`;
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  document.getElementById('scoreNum').textContent = '0';
+  document.getElementById('answeredNum').textContent = '0';
+  document.getElementById('progFill').style.width = '0%';
+  document.getElementById('resultBox').classList.remove('show');
+  for (let i = 1; i <= 20; i++) {
+    const block = document.getElementById('q' + i);
+    block.classList.remove('correct','wrong');
+    block.querySelectorAll('button').forEach(b => {
+      b.disabled = false;
+      b.className = b.classList.contains('tf-btn') ? 'tf-btn' : 'option-btn';
+      if (!b.classList.contains('tf-btn')) {
+        const letter = b.querySelector('.opt-letter').textContent;
+        b.innerHTML = `<span class="opt-letter">${letter}</span>` + b.innerHTML.replace(/<span class="opt-letter">.*?<\/span>/, '');
+      }
+    });
+    // Re-render option buttons cleanly
+    const opts = block.querySelectorAll('.option-btn');
+    opts.forEach(b => { b.classList.remove('selected-correct','selected-wrong','reveal-correct'); });
+    const tfs = block.querySelectorAll('.tf-btn');
+    tfs.forEach(b => { b.classList.remove('selected-correct','selected-wrong','reveal-correct'); });
+    const fb = document.getElementById('f' + i);
+    fb.className = 'feedback';
+    fb.textContent = '';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
