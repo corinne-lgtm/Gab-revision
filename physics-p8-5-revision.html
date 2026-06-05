@@ -54,6 +54,8 @@
     letter-spacing: 0.3px;
   }
   nav a:hover { color: #fff; }
+  nav .sep { color: rgba(255,255,255,0.3); font-size: 11px; padding: 0 2px; }
+  nav .current { color: rgba(255,255,255,0.45); font-size: 12px; padding: 10px 6px; white-space: nowrap; }
   nav span { color: #4a7aaa; font-size: 0.8rem; }
 
   /* ── HERO ── */
@@ -537,12 +539,12 @@
 
 <nav>
   <a href="index.html">🏠 Home</a>
-  <span>›</span>
-  <a href="#">Physics</a>
-  <span>›</span>
-  <a href="#">P8 Forces</a>
-  <span>›</span>
-  <a style="color:#fff">P8.5 Parallelogram of Forces</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p8-5-quickcheck.html">⚡ Quick Check</a>
+  <span class="sep">›</span>
+  <span class="current">P8.5 Parallelogram of Forces</span>
 </nav>
 
 <header class="hero">
@@ -819,7 +821,7 @@
 </main>
 
 <script>
-  const STEM = 'physics-p8-5-revision';
+  const STEM = 'physics-p8-5-read';
   const OBJ_COUNT = 4;
 
   // ── Objectives ──

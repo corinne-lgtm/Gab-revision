@@ -112,6 +112,8 @@
     transition: all 0.2s;
   }
   nav a:hover { color: white; border-bottom-color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,0.3); font-size: 11px; padding: 0 2px; }
+  nav .current { color: rgba(255,255,255,0.45); font-size: 12px; padding: 10px 6px; white-space: nowrap; }
 
   /* ── MAIN ── */
   main {
@@ -574,12 +576,13 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#objectives">Objectives</a>
-  <a href="#concepts">Concepts</a>
-  <a href="#formulas">Formulas</a>
-  <a href="#factors">Factors</a>
-  <a href="#interactive">Interactive</a>
-  <a href="#keywords">Keywords</a>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p10-3-quickcheck.html">⚡ Quick Check</a>
+  <span class="sep">›</span>
+  <span class="current">P10.3 Forces & Braking</span>
 </nav>
 
 <main>
@@ -822,7 +825,7 @@
 </main>
 
 <script>
-  const READ_KEY = 'physics-p103-read';
+  const READ_KEY = 'physics-p10-3-read';
   const CHECKLIST_KEY = 'physics-p103-checklist';
 
   // ── Checklist ──

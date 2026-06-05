@@ -52,6 +52,8 @@
     transition: color .2s;
   }
   nav a:hover { color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,0.3); font-size: 11px; padding: 0 2px; }
+  nav .current { color: rgba(255,255,255,0.45); font-size: 12px; padding: 10px 6px; white-space: nowrap; }
   nav span { color: rgba(255,255,255,0.3); }
   nav .current { color: var(--accent); font-weight: 700; }
 
@@ -535,12 +537,12 @@
 <!-- NAV -->
 <nav>
   <a href="index.html">🏠 Home</a>
-  <span>›</span>
-  <a href="#">Physics</a>
-  <span>›</span>
-  <a href="#">P8 Forces in Balance</a>
-  <span>›</span>
-  <span class="current">8.1 Vectors & Scalars</span>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p8-1-quickcheck.html">⚡ Quick Check</a>
+  <span class="sep">›</span>
+  <span class="current">P8.1 Vectors & Scalars</span>
 </nav>
 
 <!-- HERO -->
@@ -847,7 +849,7 @@ function toggleCheck(el) {
 }
 
 // ── MARK AS READ ──
-const STORAGE_KEY = 'physics-p8-8-1-read';
+const STORAGE_KEY = 'physics-p8-1-read';
 window.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem(STORAGE_KEY) === 'true') {
     setReadDone();
