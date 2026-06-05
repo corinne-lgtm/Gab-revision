@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.4 Ultraviolet Waves, X-rays and Gamma Rays – Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #1a1a2e;
+    --muted: #5a7a9a;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --blue2: #e3f2fd;
+    --yellow: #f9a825;
+    --yellow2: #fffde7;
+    --line: #c5ddf0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 60%, #0288d1 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 30%;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.5);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+  }
+  nav a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(100,181,246,0.2); color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+  /* CHECKLIST */
+  .checklist-bar {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 1rem 1.5rem;
+  }
+  .checklist-bar h2 { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .checklist li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; }
+  .checklist input[type=checkbox] { margin-top: 2px; accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; }
+  .checklist label { cursor: pointer; }
+  .checklist input:checked + label { text-decoration: line-through; color: var(--muted); }
+
+  /* MAIN */
+  main { padding: 1.2rem 1rem; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.2rem; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    padding-left: 0.2rem;
+  }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .big-idea-card {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 1rem;
+    border-top: 4px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .big-idea-card .icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .big-idea-card h3 { font-size: 0.9rem; font-weight: 800; color: var(--navy); margin-bottom: 0.3rem; }
+  .big-idea-card p { font-size: 0.82rem; color: #444; line-height: 1.5; }
+
+  /* TILES GRID */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .tile {
+    border-radius: 10px;
+    padding: 0.9rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .tile h3 { font-size: 0.85rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .tile ul { list-style: none; padding: 0; }
+  .tile ul li { font-size: 0.8rem; line-height: 1.5; padding-left: 1rem; position: relative; }
+  .tile ul li::before { content: '→'; position: absolute; left: 0; font-size: 0.75rem; }
+  .tile.red { background: var(--red2); border-left: 4px solid var(--red); }
+  .tile.red h3 { color: var(--red); }
+  .tile.orange { background: var(--orange2); border-left: 4px solid var(--orange); }
+  .tile.orange h3 { color: var(--orange); }
+  .tile.blue { background: var(--blue2); border-left: 4px solid #1565c0; }
+  .tile.blue h3 { color: #1565c0; }
+  .tile.green { background: var(--green2); border-left: 4px solid var(--green); }
+  .tile.green h3 { color: var(--green); }
+  .tile.purple { background: var(--purple2); border-left: 4px solid var(--purple); }
+  .tile.purple h3 { color: var(--purple); }
+
+  /* STATEMENT BOX */
+  .statement {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .statement strong { color: var(--accent); }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: var(--yellow2);
+    border-left: 4px solid var(--yellow);
+    border-radius: 0 10px 10px 0;
+    padding: 0.9rem 1rem;
+    font-size: 0.83rem;
+  }
+  .exam-tip .tip-label { font-weight: 800; color: var(--orange); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+
+  /* WARNING */
+  .warning {
+    background: var(--red2);
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    font-size: 0.83rem;
+  }
+  .warning .warn-label { font-weight: 800; color: var(--red); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+
+  /* COMPARE */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .compare-col {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 0.9rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .compare-col h3 { font-size: 0.88rem; font-weight: 800; margin-bottom: 0.5rem; padding-bottom: 0.4rem; border-bottom: 2px solid; }
+  .compare-col.xray h3 { color: #1565c0; border-color: #1565c0; }
+  .compare-col.gamma h3 { color: var(--purple); border-color: var(--purple); }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col ul li { font-size: 0.8rem; line-height: 1.6; padding-left: 1rem; position: relative; }
+  .compare-col ul li::before { content: '•'; position: absolute; left: 0; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; background: var(--paper); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); font-size: 0.82rem; }
+  .data-table th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.78rem; font-weight: 700; }
+  .data-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: var(--blue2); }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .kw {
+    background: var(--navy);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+  }
+  .kw-def {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    width: 100%;
+  }
+  .kw-def strong { color: var(--navy); }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy), #1565c0);
+    color: white;
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(13,43,69,0.3);
+  }
+  .quiz-cta p { font-size: 0.85rem; opacity: 0.85; margin-bottom: 0.8rem; }
+  .quiz-cta a {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+
+  /* MARK AS READ */
+  .mark-read-bar {
+    text-align: center;
+    padding: 1rem;
+  }
+  #markReadBtn {
+    background: var(--green);
+    color: white;
+    border: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 0.65rem 1.6rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #markReadBtn:hover { background: #1b5e20; }
+  #markReadBtn.done { background: var(--muted); cursor: default; }
+
+  @media (max-width: 500px) {
+    .big-idea-grid, .tiles, .compare { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">P12 · Electromagnetic Waves</div>
+  <div class="badge">⚛️ GCSE Physics</div>
+  <h1>P12.4 Ultraviolet Waves, X-rays &amp; Gamma Rays</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">Ionising radiation</span>
+    <span class="hero-tag">UV waves</span>
+    <span class="hero-tag">X-rays</span>
+    <span class="hero-tag">Gamma rays</span>
+    <span class="hero-tag">Safety</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">|</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">|</span>
+  <a href="#big-ideas">Big Ideas</a>
+  <span class="sep">·</span>
+  <a href="#waves">Waves</a>
+  <span class="sep">·</span>
+  <a href="#uses">Uses</a>
+  <span class="sep">·</span>
+  <a href="#safety">Safety</a>
+  <span class="sep">·</span>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<!-- CHECKLIST -->
+<div class="checklist-bar">
+  <h2>Learning objectives</h2>
+  <ul class="checklist">
+    <li><input type="checkbox" id="c1"><label for="c1">Describe the differences between ultraviolet waves and visible light</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2">State what X-rays and gamma rays are used for</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3">Explain what ionising radiation is</label></li>
+    <li><input type="checkbox" id="c4"><label for="c4">Explain why UV waves, X-rays and gamma rays are dangerous</label></li>
+  </ul>
+</div>
+
+<main>
+
+  <!-- BIG IDEAS -->
+  <section id="big-ideas">
+    <div class="section-title">Big Ideas</div>
+    <div class="big-idea-grid">
+      <div class="big-idea-card">
+        <div class="icon">☀️</div>
+        <h3>Ultraviolet (UV)</h3>
+        <p>Lies between visible light and X-rays. Shorter wavelength than visible light → carries more energy. Causes sunburn, skin cancer, and blindness.</p>
+      </div>
+      <div class="big-idea-card">
+        <div class="icon">🔬</div>
+        <h3>X-rays</h3>
+        <p>Produced when fast-moving electrons are stopped. Pass through soft tissue but are absorbed by dense materials like bone and lead.</p>
+      </div>
+      <div class="big-idea-card">
+        <div class="icon">☢️</div>
+        <h3>Gamma rays</h3>
+        <p>Produced by radioactive substances (unstable nuclei). Shorter wavelength than X-rays → penetrate more. Used to kill bacteria and cancer cells.</p>
+      </div>
+      <div class="big-idea-card">
+        <div class="icon">⚡</div>
+        <h3>Ionising radiation</h3>
+        <p>X-rays and gamma rays knock electrons out of atoms → atoms become charged ions. High doses kill cells; low doses cause gene mutations and cancer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <div class="statement">
+    All three — <strong>UV, X-rays, and gamma rays</strong> — are part of the electromagnetic spectrum and travel at the speed of light. They differ in <strong>wavelength, energy, and source</strong>. The shorter the wavelength, the higher the energy and the more <strong>penetrating</strong> the radiation.
+  </div>
+
+  <!-- WAVES COMPARISON -->
+  <section id="waves">
+    <div class="section-title">UV vs X-rays vs Gamma — Side by Side</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Ultraviolet (UV)</th>
+          <th>X-rays</th>
+          <th>Gamma rays</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Position in spectrum</strong></td>
+          <td>Between visible light and X-rays</td>
+          <td>Between UV and gamma rays</td>
+          <td>Shortest wavelength end</td>
+        </tr>
+        <tr>
+          <td><strong>Source</strong></td>
+          <td>Sun, UV lamps, some chemicals</td>
+          <td>Electrons stopped at high speed (X-ray tube)</td>
+          <td>Radioactive substances (unstable nuclei)</td>
+        </tr>
+        <tr>
+          <td><strong>Wavelength</strong></td>
+          <td>Shorter than visible light</td>
+          <td>Shorter than UV</td>
+          <td>Shorter than X-rays</td>
+        </tr>
+        <tr>
+          <td><strong>Energy</strong></td>
+          <td>More than visible light</td>
+          <td>More than UV</td>
+          <td>More than X-rays</td>
+        </tr>
+        <tr>
+          <td><strong>Penetration</strong></td>
+          <td>Skin surface only</td>
+          <td>Soft tissue; blocked by dense bone/lead</td>
+          <td>Greater than X-rays; still blocked by thick lead</td>
+        </tr>
+        <tr>
+          <td><strong>Ionising?</strong></td>
+          <td>Weakly (UV-C)</td>
+          <td>Yes</td>
+          <td>Yes (strongly)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- USES -->
+  <section id="uses">
+    <div class="section-title">Uses</div>
+    <div class="tiles">
+      <div class="tile blue">
+        <h3>🔦 UV – Uses</h3>
+        <ul>
+          <li>Security marker pens (fluoresce under UV)</li>
+          <li>Detecting forgeries and valuable objects</li>
+          <li>Detecting fingerprints</li>
+          <li>Sterilisation (UV-C kills bacteria)</li>
+        </ul>
+      </div>
+      <div class="tile blue">
+        <h3>🩻 X-rays – Uses</h3>
+        <ul>
+          <li>X-ray images of bones and broken limbs</li>
+          <li>Detecting internal cracks in metal objects</li>
+          <li>Airport security scanners</li>
+          <li>Medical imaging</li>
+        </ul>
+      </div>
+      <div class="tile green">
+        <h3>☢️ Gamma – Killing bacteria</h3>
+        <ul>
+          <li>~20% of food spoiled by bacteria worldwide</li>
+          <li>Gamma rays kill 99% of disease-carrying organisms</li>
+          <li>Kills <em>Salmonella</em> and <em>Clostridium</em></li>
+          <li>Sterilises surgical instruments in sealed packaging</li>
+        </ul>
+      </div>
+      <div class="tile purple">
+        <h3>🏥 Gamma – Cancer treatment</h3>
+        <ul>
+          <li>Cobalt-60 source used in radiotherapy</li>
+          <li>Narrow beam aimed at tumour from different directions</li>
+          <li>Kills cancerous cells without harming surrounding tissue</li>
+          <li>Source kept in thick lead container for safety</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAM TIP -->
+  <div class="exam-tip">
+    <div class="tip-label">📝 Exam Tip</div>
+    X-rays and gamma rays have <strong>similar properties</strong> (both ionising, both short wavelength) but differ in their <strong>source</strong>: X-rays come from fast electrons being stopped; gamma rays come from radioactive nuclei. Examiners love asking you to explain the difference — always mention the source!
+  </div>
+
+  <!-- X-RAY vs GAMMA COMPARE -->
+  <section>
+    <div class="section-title">X-rays vs Gamma rays — Key Differences</div>
+    <div class="compare">
+      <div class="compare-col xray">
+        <h3>🩻 X-rays</h3>
+        <ul>
+          <li>Produced by electrons moving at high speed being stopped</li>
+          <li>X-ray tubes used to produce them</li>
+          <li>Longer wavelength than gamma rays</li>
+          <li>Less penetrating than gamma rays</li>
+          <li>Blocked by thick lead or dense bone</li>
+        </ul>
+      </div>
+      <div class="compare-col gamma">
+        <h3>☢️ Gamma rays</h3>
+        <ul>
+          <li>Produced by radioactive substances (unstable nuclei)</li>
+          <li>Nuclear process — nucleus releases energy</li>
+          <li>Shorter wavelength than X-rays</li>
+          <li>More penetrating than X-rays</li>
+          <li>Still blocked by thick lead plates</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section id="safety">
+    <div class="section-title">Safety &amp; Ionising Radiation</div>
+    <div class="tiles">
+      <div class="tile orange">
+        <h3>⚠️ What is ionisation?</h3>
+        <ul>
+          <li>X-rays/gamma rays knock electrons out of atoms</li>
+          <li>Atoms become charged (ions)</li>
+          <li>This is called ionising radiation</li>
+          <li>UV can also cause weak ionisation</li>
+        </ul>
+      </div>
+      <div class="tile red">
+        <h3>💀 Dangers of ionisation</h3>
+        <ul>
+          <li>High doses → kill living cells</li>
+          <li>Low doses → damage DNA → gene mutations → cancer</li>
+          <li>UV → sunburn, skin cancer, blindness</li>
+          <li>X-ray/gamma → cell death or cancerous growth</li>
+        </ul>
+      </div>
+      <div class="tile green">
+        <h3>🛡️ UV safety</h3>
+        <ul>
+          <li>Use sun cream outdoors to block UV</li>
+          <li>Wear UV-protective goggles with sunbeds</li>
+          <li>Don't exceed recommended sunbed time</li>
+          <li>UV lamps should point downward</li>
+        </ul>
+      </div>
+      <div class="tile blue">
+        <h3>🏷️ Film badge dosimeter</h3>
+        <ul>
+          <li>Worn by people working with ionising radiation</li>
+          <li>Measures how much radiation the wearer has received</li>
+          <li>If over-exposed → must stop working with equipment</li>
+          <li>Has a plastic case (not metal) to allow radiation through</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WARNING -->
+  <div class="warning">
+    <div class="warn-label">⚠️ Common mistake</div>
+    Don't confuse <strong>X-rays blocking by bone</strong> with gamma rays — gamma rays are <em>more</em> penetrating and are not blocked by bone. Both require <strong>thick lead</strong> to stop them, but gamma rays need even more shielding than X-rays.
+  </div>
+
+  <!-- KEYWORDS -->
+  <section id="keywords">
+    <div class="section-title">Key Words</div>
+    <div style="display:flex; flex-direction:column; gap:0.5rem;">
+      <div class="kw-def"><strong>Ultraviolet (UV)</strong> — Electromagnetic waves with wavelengths shorter than visible light but longer than X-rays. Lie just beyond violet in the spectrum.</div>
+      <div class="kw-def"><strong>Ionising radiation</strong> — Radiation that carries enough energy to knock electrons out of atoms, turning them into charged ions. X-rays and gamma rays are examples.</div>
+      <div class="kw-def"><strong>Ionisation</strong> — The process of knocking electrons out of atoms so they become charged. Can damage or kill living cells.</div>
+      <div class="kw-def"><strong>Gamma rays</strong> — High-energy electromagnetic waves produced by radioactive substances (unstable nuclei releasing energy). Shorter wavelength than X-rays.</div>
+      <div class="kw-def"><strong>X-rays</strong> — Electromagnetic waves produced when high-speed electrons are stopped. Used in medicine and to detect flaws in metals.</div>
+      <div class="kw-def"><strong>Film badge (dosimeter)</strong> — A badge worn by radiation workers to monitor their total exposure to ionising radiation.</div>
+      <div class="kw-def"><strong>Cobalt-60</strong> — A radioactive isotope used as a gamma ray source in cancer radiotherapy.</div>
+    </div>
+  </section>
+
+  <!-- KEYWORDS PILLS -->
+  <div>
+    <div class="section-title">Quick-look keywords</div>
+    <div class="keywords">
+      <span class="kw">UV waves</span>
+      <span class="kw">X-rays</span>
+      <span class="kw">Gamma rays</span>
+      <span class="kw">Ionisation</span>
+      <span class="kw">Ionising radiation</span>
+      <span class="kw">Lead shielding</span>
+      <span class="kw">Cobalt-60</span>
+      <span class="kw">Film badge</span>
+      <span class="kw">Radioactive nuclei</span>
+      <span class="kw">Radiotherapy</span>
+      <span class="kw">Sterilisation</span>
+      <span class="kw">Wavelength</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <p>Ready to test yourself on P12.4?</p>
+    <a href="physics-p12-4-quickcheck.html">⚡ Take the Quick Check Quiz →</a>
+  </div>
+
+  <!-- MARK AS READ -->
+  <div class="mark-read-bar">
+    <button id="markReadBtn" onclick="markRead()">✅ Mark as read</button>
+  </div>
+
+</main>
+
+<script>
+  const KEY = 'physics-p12-4-read';
+  function markRead() {
+    localStorage.setItem(KEY, 'true');
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '✅ Already read!';
+    btn.classList.add('done');
+    btn.disabled = true;
+  }
+  window.addEventListener('load', () => {
+    if (localStorage.getItem(KEY) === 'true') {
+      const btn = document.getElementById('markReadBtn');
+      btn.textContent = '✅ Already read!';
+      btn.classList.add('done');
+      btn.disabled = true;
+    }
+  });
+</script>
+
+</body>
+</html>

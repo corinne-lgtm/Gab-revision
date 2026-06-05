@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.3 Communications — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #29b6f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a9a;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --orange: #ff7043;
+    --orange2: #fff3e0;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --purple: #7c4dff;
+    --purple2: #ede7f6;
+    --teal: #00acc1;
+    --teal2: #e0f7fa;
+    --line: #c9dff0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 60%, #0288d1 100%);
+    color: white;
+    padding: 36px 32px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.5);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .hero .kicker {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 18px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--accent);
+    overflow-x: auto;
+  }
+  nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 12px 16px;
+    white-space: nowrap;
+    transition: color .2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* CONTENT */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* CHECKLIST */
+  .checklist-box {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 20px 24px;
+    border: 1px solid var(--line);
+  }
+  .checklist-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .checklist li input[type=checkbox] {
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .checklist li.done span { text-decoration: line-through; color: var(--muted); }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .big-idea {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .big-idea::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .big-idea .icon { font-size: 24px; margin-bottom: 8px; }
+  .big-idea .label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .big-idea .desc { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+
+  /* TILES */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .tile {
+    border-radius: 12px;
+    padding: 16px 18px;
+    border-left: 4px solid transparent;
+  }
+  .tile.red   { background: var(--red2);    border-color: var(--red);    }
+  .tile.orange{ background: var(--orange2); border-color: var(--orange); }
+  .tile.green { background: var(--green2);  border-color: var(--green);  }
+  .tile.purple{ background: var(--purple2); border-color: var(--purple); }
+  .tile.teal  { background: var(--teal2);   border-color: var(--teal);   }
+  .tile h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .tile.red h4   { color: var(--red); }
+  .tile.orange h4{ color: var(--orange); }
+  .tile.green h4 { color: var(--green); }
+  .tile.purple h4{ color: var(--purple); }
+  .tile.teal h4  { color: var(--teal); }
+  .tile p { font-size: 13px; line-height: 1.5; }
+
+  /* STATEMENT BOX */
+  .statement {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-left: 5px solid var(--accent2);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .statement strong { color: var(--navy); }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: #fffde7;
+    border-left: 5px solid #fdd835;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .exam-tip .tip-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: #f57f17;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  /* WARNING */
+  .warning {
+    background: #ffebee;
+    border-left: 5px solid var(--red);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 13.5px;
+  }
+  .warning .warn-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  /* FLOW ARROWS */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 20px 20px;
+    border: 1px solid var(--line);
+  }
+  .flow-step {
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 110px;
+  }
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--accent);
+    padding: 0 6px;
+  }
+
+  /* COMPARE 2-COL */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .compare-col {
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .compare-col .col-head {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 16px;
+    color: white;
+  }
+  .compare-col.left .col-head  { background: #1565c0; }
+  .compare-col.right .col-head { background: #00838f; }
+  .compare-col ul {
+    list-style: none;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .compare-col ul li {
+    font-size: 13px;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .compare-col ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
+
+  /* TABLE */
+  .freq-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--paper);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .freq-table thead { background: var(--navy); color: white; }
+  .freq-table th { padding: 12px 14px; font-family: 'Syne', sans-serif; font-size: 12px; text-align: left; letter-spacing: .05em; }
+  .freq-table td { padding: 10px 14px; border-bottom: 1px solid var(--line); line-height: 1.4; }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:nth-child(even) td { background: #f0f7ff; }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .formula-box .formula {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .formula-box .formula-note { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; }
+  .kw {
+    background: var(--navy);
+    color: var(--accent);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .kw:hover { background: #1565c0; }
+
+  /* MARK AS READ */
+  .mark-read-bar {
+    position: sticky;
+    bottom: 0;
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    border-top: 2px solid var(--accent);
+    z-index: 100;
+  }
+  .mark-read-btn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .mark-read-btn:hover { background: #90caf9; transform: translateY(-1px); }
+  .mark-read-btn:active { transform: translateY(0); }
+  .mark-read-status { color: rgba(255,255,255,0.65); font-size: 13px; }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, #1565c0, #0288d1);
+    border-radius: 12px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: white;
+  }
+  .quiz-cta .cta-text { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+  .quiz-cta .cta-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .quiz-cta a {
+    background: white;
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity .2s;
+  }
+  .quiz-cta a:hover { opacity: .85; }
+
+  @media(max-width:600px){
+    .hero h1 { font-size: 1.6rem; }
+    .compare { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; align-items: flex-start; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">⚛️ Physics · Topic P12</div>
+  <h1>P12.3 Communications</h1>
+  <p class="kicker">Electromagnetic waves · Radio · Microwaves · Optical fibres</p>
+  <div class="hero-tags">
+    <span class="hero-tag">📡 Radio waves</span>
+    <span class="hero-tag">📺 Satellite TV</span>
+    <span class="hero-tag">📱 Mobile phones</span>
+    <span class="hero-tag">🌊 Carrier waves</span>
+    <span class="hero-tag">💡 Optical fibres</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#big-ideas">Big Ideas</a>
+  <a href="#radio">Radio</a>
+  <a href="#carrier">Carrier Waves</a>
+  <a href="#optical">Optical Fibres</a>
+  <a href="#formula">Formula</a>
+  <a href="#exam">Exam Tips</a>
+</nav>
+
+<div class="content">
+
+  <!-- CHECKLIST -->
+  <div class="checklist-box">
+    <h3>Learning objectives checklist</h3>
+    <ul class="checklist" id="checklist">
+      <li><input type="checkbox"> <span>Explain why radio waves of different frequencies are used for different purposes</span></li>
+      <li><input type="checkbox"> <span>State which waves are used for satellite TV</span></li>
+      <li><input type="checkbox"> <span>Evaluate whether or not mobile phones are safe to use</span></li>
+      <li><input type="checkbox"> <span>Explain what carrier waves are and how they work</span></li>
+      <li><input type="checkbox"> <span>Describe how optical fibres are used in communications</span></li>
+    </ul>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div id="big-ideas">
+    <p class="section-label">The big ideas</p>
+    <div class="big-idea-grid">
+      <div class="big-idea">
+        <div class="icon">📡</div>
+        <div class="label">Radio waves</div>
+        <div class="desc">Different wavelengths carry different amounts of info over different ranges</div>
+      </div>
+      <div class="big-idea">
+        <div class="icon">🛰️</div>
+        <div class="label">Microwaves</div>
+        <div class="desc">Used for satellites — spread out less and travel between Earth and space</div>
+      </div>
+      <div class="big-idea">
+        <div class="icon">🌊</div>
+        <div class="label">Carrier waves</div>
+        <div class="desc">Waves that carry audio signals by varying their amplitude or frequency</div>
+      </div>
+      <div class="big-idea">
+        <div class="icon">💡</div>
+        <div class="label">Optical fibres</div>
+        <div class="desc">Thin glass fibres using total internal reflection to send light signals</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RADIO WAVELENGTHS TABLE -->
+  <div id="radio">
+    <p class="section-label">Radio wavelengths — who uses what?</p>
+    <table class="freq-table">
+      <thead>
+        <tr>
+          <th>Wavelength</th>
+          <th>Used by</th>
+          <th>Why?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&lt; 1 m (microwaves)</td>
+          <td>Satellite phone, satellite TV links</td>
+          <td>Travel between satellites and Earth; spread out less than radio waves</td>
+        </tr>
+        <tr>
+          <td>&lt; ~1 m (short radio)</td>
+          <td>TV masts (terrestrial TV)</td>
+          <td>Carry more info; range limited to local area around transmitter</td>
+        </tr>
+        <tr>
+          <td>~1 m to 100 m</td>
+          <td>Local radio stations &amp; emergency services</td>
+          <td>Range limited to area around transmitter — good for local coverage</td>
+        </tr>
+        <tr>
+          <td>&gt; 100 m (long radio)</td>
+          <td>National &amp; international radio</td>
+          <td>Much longer range than shorter-wavelength waves</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- WAVELENGTH EFFECT TILES -->
+  <div>
+    <p class="section-label">How wavelength affects wave behaviour</p>
+    <div class="tiles">
+      <div class="tile red">
+        <h4>📶 Information capacity</h4>
+        <p>Shorter wavelength → more information carried per wave</p>
+      </div>
+      <div class="tile orange">
+        <h4>📏 Range</h4>
+        <p>Shorter wavelength → shorter range (more absorption by atmosphere)</p>
+      </div>
+      <div class="tile green">
+        <h4>🔊 Spreading</h4>
+        <p>Shorter wavelength → spreads out less → signal stays stronger</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARRIER WAVES FLOW -->
+  <div id="carrier">
+    <p class="section-label">How radio transmission works — step by step</p>
+    <div class="flow">
+      <div class="flow-step">🎙️ Microphone<br><small>sound → audio signal</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">📻 Oscillator<br><small>produces carrier wave (AC)</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">📡 Transmitter<br><small>modulates carrier with audio</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">📡 Transmitter aerial<br><small>emits radio waves</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">📡 Receiver aerial<br><small>absorbs waves → AC current</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🔊 Receiver<br><small>separates audio → loudspeaker</small></div>
+    </div>
+  </div>
+
+  <!-- STATEMENT: carrier waves -->
+  <div class="statement">
+    <strong>Key idea:</strong> A carrier wave is an electromagnetic wave used to carry audio information. The audio signal <em>modulates</em> the carrier wave by varying its <strong>amplitude</strong> (AM) or <strong>frequency</strong> (FM). The receiver separates the audio signal from the carrier and sends it to the loudspeaker — which produces sound waves matching the original microphone input.
+  </div>
+
+  <!-- OPTICAL FIBRES -->
+  <div id="optical">
+    <p class="section-label">Optical fibres vs radio waves</p>
+    <div class="compare">
+      <div class="compare-col left">
+        <div class="col-head">📡 Radio / Microwaves</div>
+        <ul>
+          <li>Signals travel through air</li>
+          <li>Can be intercepted</li>
+          <li>Spread out over distance</li>
+          <li>Longer wavelength → less info</li>
+        </ul>
+      </div>
+      <div class="compare-col right">
+        <div class="col-head">💡 Optical Fibres</div>
+        <ul>
+          <li>Light / infrared stays inside fibre</li>
+          <li>More secure — signal can't escape</li>
+          <li>Carry much more information</li>
+          <li>Light has very short wavelength → more pulses</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOTAL INTERNAL REFLECTION -->
+  <div class="tiles">
+    <div class="tile teal">
+      <h4>🔬 What are optical fibres?</h4>
+      <p>Very thin glass fibres. Light (or infrared) enters the fibre and is <strong>totally internally reflected</strong> along its length — it cannot escape through the glass surface.</p>
+    </div>
+    <div class="tile purple">
+      <h4>🔁 Why can't light escape?</h4>
+      <p>When light hits the glass-air boundary at a large angle, it reflects back inside rather than refracting out. This is called <strong>total internal reflection</strong>.</p>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div id="formula">
+    <p class="section-label">Key formula</p>
+    <div class="formula-box">
+      <div class="formula">v = f × λ</div>
+      <div class="formula-note">
+        <strong>v</strong> = wave speed (m/s) — for EM waves in air: 3 × 10⁸ m/s<br>
+        <strong>f</strong> = frequency (Hz)<br>
+        <strong>λ</strong> = wavelength (m)<br><br>
+        Rearrange: <strong>λ = v / f</strong> &nbsp;|&nbsp; <strong>f = v / λ</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE PHONES -->
+  <div>
+    <p class="section-label">Mobile phones and safety</p>
+    <div class="statement">
+      Mobile phones send radio signals to the nearest phone mast. If the phone is close to the brain, <strong>electromagnetic radiation might affect brain tissue</strong>. Children may be more at risk because they have thinner skulls. A UK government report (2000) recommended limiting children's mobile phone use. <strong>More research is still needed</strong> — there is no definitive conclusion.
+    </div>
+  </div>
+
+  <!-- EXAM TIP -->
+  <div id="exam">
+    <p class="section-label">Exam tips</p>
+    <div class="exam-tip">
+      <div class="tip-label">💡 Exam Tip 1</div>
+      For a question about <em>why microwaves are used for satellite TV</em> (not radio waves), say: microwaves <strong>can travel through the atmosphere</strong> between the satellite and Earth, AND they <strong>spread out less</strong> so the signal doesn't weaken as much.
+    </div>
+  </div>
+  <div class="exam-tip">
+    <div class="tip-label">💡 Exam Tip 2</div>
+    For optical fibre security: the signal <strong>stays inside the fibre</strong> and cannot be picked up outside — unlike radio waves which travel through open air and can be intercepted.
+  </div>
+  <div class="exam-tip">
+    <div class="tip-label">💡 Exam Tip 3</div>
+    When calculating wavelength: always use <strong>v = 3 × 10⁸ m/s</strong> for EM waves in air. Convert MHz to Hz first (× 10⁶).
+  </div>
+
+  <!-- WARNING -->
+  <div class="warning">
+    <div class="warn-label">⚠️ Common mistake</div>
+    Don't confuse <em>carrier waves</em> with the <em>audio signal</em>. The audio signal <strong>modulates</strong> the carrier — it rides on top of it. The carrier itself is what actually travels through the air as a radio wave.
+  </div>
+
+  <!-- KEYWORDS -->
+  <div>
+    <p class="section-label">Key vocabulary</p>
+    <div class="keywords">
+      <span class="kw">carrier wave</span>
+      <span class="kw">modulate</span>
+      <span class="kw">amplitude</span>
+      <span class="kw">frequency</span>
+      <span class="kw">wavelength</span>
+      <span class="kw">oscillator</span>
+      <span class="kw">transmitter aerial</span>
+      <span class="kw">receiver aerial</span>
+      <span class="kw">total internal reflection</span>
+      <span class="kw">optical fibre</span>
+      <span class="kw">infrared</span>
+      <span class="kw">microwave</span>
+      <span class="kw">electromagnetic spectrum</span>
+      <span class="kw">alternating current</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <div>
+      <div class="cta-text">Ready to test yourself?</div>
+      <div class="cta-sub">Try the P12.3 quick check quiz — 20 questions</div>
+    </div>
+    <a href="physics-p12-3-quickcheck.html">Take the quiz →</a>
+  </div>
+
+</div>
+
+<!-- MARK AS READ -->
+<div class="mark-read-bar">
+  <span class="mark-read-status" id="readStatus"></span>
+  <button class="mark-read-btn" id="markReadBtn" onclick="toggleRead()">✓ Mark as read</button>
+</div>
+
+<script>
+  // Checklist
+  document.querySelectorAll('#checklist li').forEach(li => {
+    li.addEventListener('click', () => {
+      li.classList.toggle('done');
+    });
+  });
+
+  // Mark as read
+  const KEY = 'physics-p12-3-read';
+  function updateReadUI() {
+    const ts = localStorage.getItem(KEY);
+    if (ts) {
+      const d = new Date(parseInt(ts));
+      document.getElementById('readStatus').textContent = '✅ Read on ' + d.toLocaleDateString('en-GB');
+      document.getElementById('markReadBtn').textContent = '↩ Mark as unread';
+    } else {
+      document.getElementById('readStatus').textContent = '';
+      document.getElementById('markReadBtn').textContent = '✓ Mark as read';
+    }
+  }
+  function toggleRead() {
+    if (localStorage.getItem(KEY)) {
+      localStorage.removeItem(KEY);
+    } else {
+      localStorage.setItem(KEY, Date.now().toString());
+    }
+    updateReadUI();
+  }
+  updateReadUI();
+</script>
+</body>
+</html>

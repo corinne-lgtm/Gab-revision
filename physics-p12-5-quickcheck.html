@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.5 Quick Check — X-rays in Medicine</title>
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #1a2a3a;
+    --muted: #5a7a8a;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --line: #cde3f5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1e6fa0 100%);
+    color: white;
+    padding: 1.8rem 1.5rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .hero h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    padding: 0.7rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--accent);
+  }
+  .score-stat {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .score-stat span {
+    color: var(--accent);
+    font-size: 16px;
+  }
+  .progress-wrap {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(100,181,246,0.3);
+  }
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* MAIN */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  /* Q BLOCK */
+  .q-block {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+    border-left: 4px solid var(--line);
+    transition: border-color 0.3s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong { border-color: var(--red); }
+
+  .q-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .q-text {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.45rem; }
+  .opt-btn {
+    background: #f4faff;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--ink);
+  }
+  .opt-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #dff0fc;
+  }
+  .opt-btn .letter {
+    background: var(--navy);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .opt-btn.selected { border-color: var(--accent); background: #dff0fc; }
+  .opt-btn.correct-ans { border-color: var(--green); background: var(--green2); color: var(--green); font-weight: 700; }
+  .opt-btn.correct-ans .letter { background: var(--green); }
+  .opt-btn.wrong-ans { border-color: var(--red); background: var(--red2); color: var(--red); }
+  .opt-btn.wrong-ans .letter { background: var(--red); }
+  .opt-btn:disabled { cursor: default; }
+
+  /* TF OPTIONS */
+  .tf-options { display: flex; gap: 0.6rem; }
+  .tf-btn {
+    flex: 1;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: #f4faff;
+    color: var(--ink);
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #dff0fc; }
+  .tf-btn.selected { border-color: var(--accent); background: #dff0fc; }
+  .tf-btn.correct-ans { border-color: var(--green); background: var(--green2); color: var(--green); }
+  .tf-btn.wrong-ans { border-color: var(--red); background: var(--red2); color: var(--red); }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+  .feedback.correct { background: var(--green2); color: var(--green); display: block; }
+  .feedback.wrong { background: var(--red2); color: var(--red); display: block; }
+  .feedback strong { display: block; margin-bottom: 0.2rem; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 20px rgba(13,43,69,0.12);
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3rem; margin-bottom: 0.5rem; }
+  .result-score { font-size: 2.2rem; font-weight: 800; color: var(--navy); margin-bottom: 0.3rem; }
+  .result-label { font-size: 1rem; font-weight: 700; color: var(--muted); margin-bottom: 0.8rem; }
+  .result-msg { font-size: 0.9rem; color: var(--ink); margin-bottom: 1.2rem; line-height: 1.5; }
+  .result-mum {
+    background: linear-gradient(135deg, var(--navy), #1a4a6e);
+    color: white;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+  .reset-btn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reset-btn:hover { background: #42a5f5; }
+
+  .section-title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.5rem 0 0.8rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">⚛️ Physics · P12.5</div>
+  <div class="badge">Quick Check</div>
+  <h1>X-rays in Medicine</h1>
+</div>
+
+<div class="score-bar">
+  <div class="score-stat">Score: <span id="scoreDisplay">0</span>/20</div>
+  <div class="score-stat">Answered: <span id="answeredDisplay">0</span>/20</div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-p12-5-revision.html">📖 P12.5 Revision</a>
+</nav>
+
+<main>
+
+  <div class="section-title">Part 1 — Multiple Choice (10 questions)</div>
+
+  <!-- Q1 MCQ -->
+  <div class="q-block" id="q1">
+    <div class="q-num">Question 1 of 20</div>
+    <div class="q-text">What type of electromagnetic radiation are X-rays?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(1,'A','C')"><span class="letter">A</span> Radio waves with short wavelength</button>
+      <button class="opt-btn" onclick="answerMCQ(1,'B','C')"><span class="letter">B</span> Visible light at high energy</button>
+      <button class="opt-btn" onclick="answerMCQ(1,'C','C')"><span class="letter">C</span> Electromagnetic waves at the short-wavelength end of the spectrum</button>
+      <button class="opt-btn" onclick="answerMCQ(1,'D','C')"><span class="letter">D</span> Gamma rays produced by bones</button>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- Q2 MCQ -->
+  <div class="q-block" id="q2">
+    <div class="q-num">Question 2 of 20</div>
+    <div class="q-text">How are X-rays produced in an X-ray tube?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(2,'A','B')"><span class="letter">A</span> By shining light through a crystal</button>
+      <button class="opt-btn" onclick="answerMCQ(2,'B','B')"><span class="letter">B</span> When fast-moving electrons hit a metal target</button>
+      <button class="opt-btn" onclick="answerMCQ(2,'C','B')"><span class="letter">C</span> By heating a metal plate with a laser</button>
+      <button class="opt-btn" onclick="answerMCQ(2,'D','B')"><span class="letter">D</span> When gamma rays are reflected off a mirror</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- Q3 MCQ -->
+  <div class="q-block" id="q3">
+    <div class="q-num">Question 3 of 20</div>
+    <div class="q-text">On a radiograph (X-ray image), bones appear lighter than soft tissue because they:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(3,'A','B')"><span class="letter">A</span> Emit more X-rays than soft tissue</button>
+      <button class="opt-btn" onclick="answerMCQ(3,'B','B')"><span class="letter">B</span> Absorb more X-rays, so fewer reach the film — making those areas lighter</button>
+      <button class="opt-btn" onclick="answerMCQ(3,'C','B')"><span class="letter">C</span> Reflect X-rays back towards the tube</button>
+      <button class="opt-btn" onclick="answerMCQ(3,'D','B')"><span class="letter">D</span> Allow more X-rays to pass through, exposing the film more</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- Q4 MCQ -->
+  <div class="q-block" id="q4">
+    <div class="q-num">Question 4 of 20</div>
+    <div class="q-text">What is a contrast medium used for in X-ray imaging?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(4,'A','C')"><span class="letter">A</span> To protect the patient from radiation</button>
+      <button class="opt-btn" onclick="answerMCQ(4,'B','C')"><span class="letter">B</span> To make the X-ray tube produce stronger X-rays</button>
+      <button class="opt-btn" onclick="answerMCQ(4,'C','C')"><span class="letter">C</span> To absorb X-rays easily so internal surfaces of soft organs can be seen on the radiograph</button>
+      <button class="opt-btn" onclick="answerMCQ(4,'D','C')"><span class="letter">D</span> To develop the photographic film more quickly</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- Q5 MCQ -->
+  <div class="q-block" id="q5">
+    <div class="q-num">Question 5 of 20</div>
+    <div class="q-text">Why are lead plates placed between the X-ray tube and the patient during imaging?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(5,'A','D')"><span class="letter">A</span> To reflect X-rays towards the area being imaged</button>
+      <button class="opt-btn" onclick="answerMCQ(5,'B','D')"><span class="letter">B</span> To increase the energy of the X-rays</button>
+      <button class="opt-btn" onclick="answerMCQ(5,'C','D')"><span class="letter">C</span> To make the X-ray image sharper</button>
+      <button class="opt-btn" onclick="answerMCQ(5,'D','D')"><span class="letter">D</span> To stop X-rays reaching parts of the body not under investigation</button>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <!-- Q6 MCQ -->
+  <div class="q-block" id="q6">
+    <div class="q-num">Question 6 of 20</div>
+    <div class="q-text">In a CCD (charge-coupled device) flat-panel detector, X-rays are first converted into:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(6,'A','B')"><span class="letter">A</span> Sound waves</button>
+      <button class="opt-btn" onclick="answerMCQ(6,'B','B')"><span class="letter">B</span> Light</button>
+      <button class="opt-btn" onclick="answerMCQ(6,'C','B')"><span class="letter">C</span> Heat</button>
+      <button class="opt-btn" onclick="answerMCQ(6,'D','B')"><span class="letter">D</span> Radio waves</button>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <!-- Q7 MCQ -->
+  <div class="q-block" id="q7">
+    <div class="q-num">Question 7 of 20</div>
+    <div class="q-text">What are the units used to measure radiation dose?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(7,'A','C')"><span class="letter">A</span> Joules (J) or kilojoules (kJ)</button>
+      <button class="opt-btn" onclick="answerMCQ(7,'B','C')"><span class="letter">B</span> Becquerels (Bq) or kilobecquerels (kBq)</button>
+      <button class="opt-btn" onclick="answerMCQ(7,'C','C')"><span class="letter">C</span> Sieverts (Sv) or millisieverts (mSv)</button>
+      <button class="opt-btn" onclick="answerMCQ(7,'D','C')"><span class="letter">D</span> Hertz (Hz) or kilohertz (kHz)</button>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <!-- Q8 MCQ -->
+  <div class="q-block" id="q8">
+    <div class="q-num">Question 8 of 20</div>
+    <div class="q-text">Compared to X-rays, alpha radiation inside the body causes:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(8,'A','C')"><span class="letter">A</span> Half the damage for the same exposure time</button>
+      <button class="opt-btn" onclick="answerMCQ(8,'B','C')"><span class="letter">B</span> The same damage as X-rays</button>
+      <button class="opt-btn" onclick="answerMCQ(8,'C','C')"><span class="letter">C</span> Ten times more damage for the same exposure time</button>
+      <button class="opt-btn" onclick="answerMCQ(8,'D','C')"><span class="letter">D</span> No damage because it cannot penetrate tissue</button>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <!-- Q9 MCQ -->
+  <div class="q-block" id="q9">
+    <div class="q-num">Question 9 of 20</div>
+    <div class="q-text">How do X-rays used for therapy differ from X-rays used for imaging?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(9,'A','B')"><span class="letter">A</span> Therapy X-rays have a longer wavelength and lower energy</button>
+      <button class="opt-btn" onclick="answerMCQ(9,'B','B')"><span class="letter">B</span> Therapy X-rays have a shorter wavelength and carry more energy</button>
+      <button class="opt-btn" onclick="answerMCQ(9,'C','B')"><span class="letter">C</span> Therapy X-rays are a different type of electromagnetic radiation</button>
+      <button class="opt-btn" onclick="answerMCQ(9,'D','B')"><span class="letter">D</span> Therapy X-rays travel at a different speed</button>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <!-- Q10 MCQ -->
+  <div class="q-block" id="q10">
+    <div class="q-num">Question 10 of 20</div>
+    <div class="q-text">In X-ray therapy, thick plates are placed between the X-ray tube and the body. What is their purpose?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMCQ(10,'A','C')"><span class="letter">A</span> To increase the energy of X-rays directed at the tumour</button>
+      <button class="opt-btn" onclick="answerMCQ(10,'B','C')"><span class="letter">B</span> To create a photographic image of the tumour</button>
+      <button class="opt-btn" onclick="answerMCQ(10,'C','C')"><span class="letter">C</span> To stop X-rays reaching healthy tissue, while a gap directs the beam at the tumour</button>
+      <button class="opt-btn" onclick="answerMCQ(10,'D','C')"><span class="letter">D</span> To focus the X-rays into a laser-like beam</button>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+  <div class="section-title">Part 2 — True or False (10 questions)</div>
+
+  <!-- Q11 TF -->
+  <div class="q-block" id="q11">
+    <div class="q-num">Question 11 of 20</div>
+    <div class="q-text">X-rays pass through soft tissue but are absorbed by bones and teeth.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(11,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(11,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb11"></div>
+  </div>
+
+  <!-- Q12 TF -->
+  <div class="q-block" id="q12">
+    <div class="q-num">Question 12 of 20</div>
+    <div class="q-text">There is a known safe limit below which ionising radiation does not damage living cells.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(12,'true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(12,'false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+  </div>
+
+  <!-- Q13 TF -->
+  <div class="q-block" id="q13">
+    <div class="q-num">Question 13 of 20</div>
+    <div class="q-text">A hole or cavity in a tooth shows up as a dark area on the bright (light) image of the tooth in an X-ray.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(13,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(13,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb13"></div>
+  </div>
+
+  <!-- Q14 TF -->
+  <div class="q-block" id="q14">
+    <div class="q-num">Question 14 of 20</div>
+    <div class="q-text">Radiation dose depends only on the type of radiation used.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(14,'true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(14,'false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb14"></div>
+  </div>
+
+  <!-- Q15 TF -->
+  <div class="q-block" id="q15">
+    <div class="q-num">Question 15 of 20</div>
+    <div class="q-text">Workers who use ionising radiation must wear a film badge to monitor how much radiation they receive.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(15,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(15,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb15"></div>
+  </div>
+
+  <!-- Q16 TF -->
+  <div class="q-block" id="q16">
+    <div class="q-num">Question 16 of 20</div>
+    <div class="q-text">X-rays used for imaging can also be used for cancer therapy because they carry enough energy to destroy tumours.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(16,'true','false')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(16,'false','false')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+  </div>
+
+  <!-- Q17 TF -->
+  <div class="q-block" id="q17">
+    <div class="q-num">Question 17 of 20</div>
+    <div class="q-text">Radon gas seeping from deep underground is a source of background radiation.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(17,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(17,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb17"></div>
+  </div>
+
+  <!-- Q18 TF -->
+  <div class="q-block" id="q18">
+    <div class="q-num">Question 18 of 20</div>
+    <div class="q-text">High doses of ionising radiation can kill living cells.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(18,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(18,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb18"></div>
+  </div>
+
+  <!-- Q19 TF -->
+  <div class="q-block" id="q19">
+    <div class="q-num">Question 19 of 20</div>
+    <div class="q-text">In a CCD detector, sensors convert light into electronic signals that are sent to a computer to produce a digital X-ray image.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(19,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(19,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb19"></div>
+  </div>
+
+  <!-- Q20 TF -->
+  <div class="q-block" id="q20">
+    <div class="q-num">Question 20 of 20</div>
+    <div class="q-text">The wavelengths of X-rays are about the same size as the diameter of an atom.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(20,'true','true')">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(20,'false','true')">❌ False</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-label" id="resultLabel"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+  </div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p12-5-quiz-score';
+let score = 0;
+let answered = 0;
+const total = 20;
+
+const feedbackData = {
+  1: { correct: 'Correct! X-rays are electromagnetic waves at the short-wavelength end of the EM spectrum, with wavelengths about the size of an atom diameter.', wrong: 'Not quite. X-rays are electromagnetic waves at the short-wavelength end of the spectrum — not radio waves or visible light.' },
+  2: { correct: 'Correct! X-rays are produced when fast-moving electrons strike a metal target inside the X-ray tube.', wrong: 'Incorrect. X-rays are made when fast-moving electrons hit a metal target inside an X-ray tube.' },
+  3: { correct: 'Correct! Bones absorb X-rays, so fewer reach the film — those areas appear lighter (less exposed).', wrong: 'Not quite. Bones absorb X-rays, so fewer reach the film — making those areas appear lighter, not darker.' },
+  4: { correct: 'Correct! A contrast medium (e.g. barium) absorbs X-rays, making soft organ surfaces visible on the radiograph.', wrong: 'Incorrect. A contrast medium absorbs X-rays easily so internal surfaces of soft organs like the stomach can be seen on the image.' },
+  5: { correct: 'Correct! Lead plates are good X-ray absorbers — they protect parts of the body not under investigation.', wrong: 'Incorrect. Lead plates stop X-rays from reaching parts of the body that are not being examined.' },
+  6: { correct: 'Correct! In a CCD, X-rays are first converted to light, then into electronic signals sent to a computer.', wrong: 'Not quite. X-rays are converted to light first, which then creates electronic signals in the CCD sensors.' },
+  7: { correct: 'Correct! Radiation dose is measured in sieverts (Sv) or millisieverts (mSv). 1 Sv = 1000 mSv.', wrong: 'Incorrect. Radiation dose is measured in sieverts (Sv) or millisieverts (mSv).' },
+  8: { correct: 'Correct! Alpha radiation inside the body causes 10 times more damage than X-rays for the same exposure time.', wrong: 'Incorrect. Alpha radiation inside the body causes 10× more damage than X-rays for the same length of time.' },
+  9: { correct: 'Correct! Therapy X-rays have a shorter wavelength (higher frequency) and carry much more energy than imaging X-rays.', wrong: 'Incorrect. Therapy X-rays are shorter in wavelength and carry more energy than imaging X-rays.' },
+  10: { correct: 'Correct! Thick plates block X-rays from reaching healthy tissue; a gap between the plates directs the beam at the tumour.', wrong: 'Not quite. The thick plates stop X-rays reaching healthy body tissue, while a gap between them lets X-rays reach the tumour.' },
+  11: { correct: 'Correct! Soft tissue allows X-rays through (appears dark), while bones and teeth absorb them (appear light).', wrong: 'Incorrect. X-rays DO pass through soft tissue but are absorbed by bones and teeth — this is why bones show up lighter.' },
+  12: { correct: 'Correct — that\'s TRUE! Wait, no — this is FALSE. There is NO evidence of a safe limit. Even low doses can cause gene mutation.', wrong: 'Correct! There is no evidence of a safe limit — even low doses of ionising radiation can cause gene mutation and cancerous growth.' },
+  13: { correct: 'Correct! A cavity absorbs fewer X-rays than solid tooth, so more X-rays reach the film — appearing as a dark area within the bright tooth image.', wrong: 'Incorrect. A cavity (hole) lets more X-rays through, so it appears darker within the lighter image of the tooth.' },
+  14: { correct: 'This is FALSE. Radiation dose depends on THREE factors: type of radiation, time of exposure, AND energy per second absorbed.', wrong: 'Correct! Radiation dose depends on three factors: the type of radiation, how long the body is exposed, and the energy per second absorbed — not just the type.' },
+  15: { correct: 'Correct! Film badges monitor the total radiation dose received by workers who use ionising radiation.', wrong: 'Incorrect. Workers who use ionising radiation must wear a film badge to track how much radiation they have received.' },
+  16: { correct: 'This is FALSE. Imaging X-rays are low energy and cannot destroy tumours. Therapy X-rays are shorter wavelength and much higher energy.', wrong: 'Correct! Imaging X-rays do NOT have enough energy to destroy tumours. Therapy needs higher-energy, shorter-wavelength X-rays.' },
+  17: { correct: 'Correct! Radon gas seeping from deep underground is a natural source of background radiation that everyone is exposed to.', wrong: 'Incorrect. Radon gas from underground is indeed a source of background radiation.' },
+  18: { correct: 'Correct! High doses of ionising radiation kill living cells — this is also why it can be used to destroy tumours.', wrong: 'Incorrect. High doses of ionising radiation do kill living cells.' },
+  19: { correct: 'Correct! CCD sensors convert light → electronic signals → computer → digital X-ray image.', wrong: 'Incorrect. That is exactly how a CCD detector works: X-rays → light → electronic signals → computer → digital image.' },
+  20: { correct: 'Correct! The wavelengths of X-rays are approximately the same as the diameter of an atom.', wrong: 'Incorrect. X-ray wavelengths are indeed about the same size as the diameter of an atom.' },
+};
+
+function answerMCQ(qNum, chosen, correct) {
+  const block = document.getElementById('q' + qNum);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+  const btns = block.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const isCorrect = chosen === correct;
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  btns.forEach(b => {
+    const letter = b.querySelector('.letter').textContent;
+    if (letter === correct) b.classList.add('correct-ans');
+    else if (letter === chosen && !isCorrect) b.classList.add('wrong-ans');
+  });
+
+  showFeedback(qNum, isCorrect);
+  updateScore(isCorrect);
+}
+
+function answerTF(qNum, chosen, correct) {
+  const block = document.getElementById('q' + qNum);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+  const btns = block.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const isCorrect = chosen === correct;
+  block.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  btns.forEach(b => {
+    const val = b.textContent.includes('True') ? 'true' : 'false';
+    if (val === correct) b.classList.add('correct-ans');
+    else if (val === chosen && !isCorrect) b.classList.add('wrong-ans');
+  });
+
+  showFeedback(qNum, isCorrect);
+  updateScore(isCorrect);
+}
+
+function showFeedback(qNum, isCorrect) {
+  const fb = document.getElementById('fb' + qNum);
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  const data = feedbackData[qNum];
+  fb.innerHTML = '<strong>' + (isCorrect ? '✅ Well done!' : '❌ Not quite') + '</strong>' + (isCorrect ? data.correct : data.wrong);
+}
+
+function updateScore(isCorrect) {
+  if (isCorrect) score++;
+  answered++;
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('answeredDisplay').textContent = answered;
+  document.getElementById('progressBar').style.width = (answered / total * 100) + '%';
+
+  if (answered === total) {
+    localStorage.setItem(SCORE_KEY, score);
+    setTimeout(showResult, 600);
+  }
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  let emoji, label, msg;
+  if (score >= 18) {
+    emoji = '🏆'; label = 'Outstanding!';
+    msg = 'Excellent work — you really know your X-rays! You\'ve mastered imaging, therapy, radiation dose and the CCD detector.';
+  } else if (score >= 14) {
+    emoji = '🎉'; label = 'Great work!';
+    msg = 'Solid performance! Check back over any questions you got wrong, especially the imaging vs therapy comparison.';
+  } else if (score >= 10) {
+    emoji = '📚'; label = 'Good effort!';
+    msg = 'You\'re getting there — go back over the revision sheet, especially radiation dose and how X-ray therapy works.';
+  } else {
+    emoji = '💪'; label = 'Keep going!';
+    msg = 'Don\'t worry — go back to the revision notes and focus on the key differences between imaging and therapy X-rays.';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = score + '/20';
+  document.getElementById('resultLabel').textContent = label;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMum').textContent = '📋 Show this to mum — ' + score + '/20';
+  box.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  document.getElementById('scoreDisplay').textContent = 0;
+  document.getElementById('answeredDisplay').textContent = 0;
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('resultBox').classList.remove('show');
+
+  for (let i = 1; i <= 20; i++) {
+    const block = document.getElementById('q' + i);
+    block.classList.remove('correct', 'wrong');
+    block.querySelectorAll('button').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('correct-ans', 'wrong-ans', 'selected');
+    });
+    const fb = document.getElementById('fb' + i);
+    fb.className = 'feedback';
+    fb.innerHTML = '';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

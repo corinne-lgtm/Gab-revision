@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.3 Communications — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b5e;
+    --muted: #5a7a9a;
+    --line: #c9dff0;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #ff7043;
+    --orange2: #fff3e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    padding-bottom: 60px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 60%, #0288d1 100%);
+    color: white;
+    padding: 32px 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.25);
+    border: 1px solid rgba(100,181,246,0.5);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .hero .kicker { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 20px;
+    display: flex;
+    border-bottom: 2px solid var(--accent);
+    overflow-x: auto;
+  }
+  nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 11px 14px;
+    white-space: nowrap;
+    transition: color .2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .score-stat { color: white; font-size: 13px; }
+  .score-stat span { color: var(--accent); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; }
+  .progress-bar-wrap {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 20px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+  .score-label { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+  /* CONTENT */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Q-BLOCK */
+  .q-block {
+    background: var(--paper);
+    border-radius: 14px;
+    border: 2px solid var(--line);
+    padding: 22px 22px 16px;
+    transition: border-color .2s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong   { border-color: var(--red); }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .q-num {
+    background: var(--navy);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .q-type {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 11px 16px;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .opt-btn:hover:not(:disabled) { background: #ddeef9; border-color: var(--accent); }
+  .opt-btn.selected { background: #ddeef9; border-color: var(--accent); }
+  .opt-btn.correct-ans { background: var(--green2); border-color: var(--green); color: #1b5e20; font-weight: 500; }
+  .opt-btn.wrong-ans   { background: var(--red2);   border-color: var(--red);   color: #b71c1c; }
+  .opt-btn:disabled { cursor: default; }
+
+  /* TF OPTIONS */
+  .tf-options { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    color: var(--ink);
+  }
+  .tf-btn:hover:not(:disabled) { background: #ddeef9; border-color: var(--accent); }
+  .tf-btn.selected { background: #ddeef9; border-color: var(--accent); }
+  .tf-btn.correct-ans { background: var(--green2); border-color: var(--green); color: #1b5e20; }
+  .tf-btn.wrong-ans   { background: var(--red2);   border-color: var(--red);   color: #b71c1c; }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: #1b5e20; border-left: 4px solid var(--green); }
+  .feedback.wrong   { background: var(--red2);   color: #b71c1c; border-left: 4px solid var(--red); }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--paper);
+    border-radius: 16px;
+    border: 2px solid var(--line);
+    padding: 32px 28px;
+    text-align: center;
+    display: none;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .result-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .result-score {
+    font-size: 2.4rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .result-msg { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+  .result-show-mum {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+  }
+  .reset-btn {
+    display: block;
+    margin: 0 auto;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .reset-btn:hover { border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">⚛️ Physics · P12.3</div>
+  <h1>Quick Check Quiz</h1>
+  <p class="kicker">Communications · 20 questions · MCQ + True/False</p>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-p12-3-revision.html">📖 P12.3 Revision</a>
+</nav>
+
+<div class="score-bar">
+  <div class="score-stat">Score <span id="scoreVal">0</span></div>
+  <div class="score-stat">Answered <span id="answeredVal">0</span>/20</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <div class="score-label" id="scoreLabel">Get started!</div>
+</div>
+
+<div class="content" id="quizContent">
+
+  <!-- Q1 MCQ -->
+  <div class="q-block" id="q1">
+    <div class="q-meta"><span class="q-num">Q1</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">Which type of electromagnetic wave is used to carry signals between satellites and the ground for satellite TV?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q1','A')">A &nbsp; Long radio waves</button>
+      <button class="opt-btn" onclick="mcq(this,'q1','B')">B &nbsp; Microwaves</button>
+      <button class="opt-btn" onclick="mcq(this,'q1','C')">C &nbsp; Visible light</button>
+      <button class="opt-btn" onclick="mcq(this,'q1','D')">D &nbsp; Infrared</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 MCQ -->
+  <div class="q-block" id="q2">
+    <div class="q-meta"><span class="q-num">Q2</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">Why do shorter-wavelength radio waves carry more information than longer-wavelength radio waves?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q2','A')">A &nbsp; They travel faster</button>
+      <button class="opt-btn" onclick="mcq(this,'q2','B')">B &nbsp; They have a higher frequency, so more pulses of information can be sent per second</button>
+      <button class="opt-btn" onclick="mcq(this,'q2','C')">C &nbsp; They are produced by more powerful transmitters</button>
+      <button class="opt-btn" onclick="mcq(this,'q2','D')">D &nbsp; They spread out more</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 MCQ -->
+  <div class="q-block" id="q3">
+    <div class="q-meta"><span class="q-num">Q3</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">Radio waves with wavelengths greater than 100 m are used by national radio stations because they have…</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q3','A')">A &nbsp; A much shorter range than shorter-wavelength waves</button>
+      <button class="opt-btn" onclick="mcq(this,'q3','B')">B &nbsp; A much longer range than shorter-wavelength waves</button>
+      <button class="opt-btn" onclick="mcq(this,'q3','C')">C &nbsp; Higher frequency</button>
+      <button class="opt-btn" onclick="mcq(this,'q3','D')">D &nbsp; Greater ability to carry information</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 MCQ -->
+  <div class="q-block" id="q4">
+    <div class="q-meta"><span class="q-num">Q4</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">What is the name of the wave used to carry an audio signal in radio communications?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q4','A')">A &nbsp; Sound wave</button>
+      <button class="opt-btn" onclick="mcq(this,'q4','B')">B &nbsp; Carrier wave</button>
+      <button class="opt-btn" onclick="mcq(this,'q4','C')">C &nbsp; Seismic wave</button>
+      <button class="opt-btn" onclick="mcq(this,'q4','D')">D &nbsp; Standing wave</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 MCQ -->
+  <div class="q-block" id="q5">
+    <div class="q-meta"><span class="q-num">Q5</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">A local radio station broadcasts at 105 MHz. What is the wavelength of these radio waves? (Speed of EM waves = 3 × 10⁸ m/s)</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q5','A')">A &nbsp; 0.35 m</button>
+      <button class="opt-btn" onclick="mcq(this,'q5','B')">B &nbsp; 2.86 m</button>
+      <button class="opt-btn" onclick="mcq(this,'q5','C')">C &nbsp; 28.6 m</button>
+      <button class="opt-btn" onclick="mcq(this,'q5','D')">D &nbsp; 3150 m</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 MCQ -->
+  <div class="q-block" id="q6">
+    <div class="q-meta"><span class="q-num">Q6</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">In a radio station, a microphone converts sound waves into…</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q6','A')">A &nbsp; A direct current</button>
+      <button class="opt-btn" onclick="mcq(this,'q6','B')">B &nbsp; An alternating current (audio signal)</button>
+      <button class="opt-btn" onclick="mcq(this,'q6','C')">C &nbsp; Radio waves directly</button>
+      <button class="opt-btn" onclick="mcq(this,'q6','D')">D &nbsp; Infrared radiation</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 MCQ -->
+  <div class="q-block" id="q7">
+    <div class="q-meta"><span class="q-num">Q7</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">Why are optical fibres described as more secure than radio wave communications?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q7','A')">A &nbsp; They are made of metal and block interference</button>
+      <button class="opt-btn" onclick="mcq(this,'q7','B')">B &nbsp; The signal stays inside the fibre and cannot be intercepted from outside</button>
+      <button class="opt-btn" onclick="mcq(this,'q7','C')">C &nbsp; They travel faster than radio waves</button>
+      <button class="opt-btn" onclick="mcq(this,'q7','D')">D &nbsp; They use a lower frequency</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 MCQ -->
+  <div class="q-block" id="q8">
+    <div class="q-meta"><span class="q-num">Q8</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">Why can optical fibres carry much more information than radio waves?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q8','A')">A &nbsp; Light travels faster than radio waves</button>
+      <button class="opt-btn" onclick="mcq(this,'q8','B')">B &nbsp; Light has a much shorter wavelength, so more pulses of information can be sent per second</button>
+      <button class="opt-btn" onclick="mcq(this,'q8','C')">C &nbsp; Optical fibres are thicker</button>
+      <button class="opt-btn" onclick="mcq(this,'q8','D')">D &nbsp; Light does not get absorbed</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 MCQ -->
+  <div class="q-block" id="q9">
+    <div class="q-meta"><span class="q-num">Q9</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">What process keeps light inside an optical fibre?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q9','A')">A &nbsp; Diffraction</button>
+      <button class="opt-btn" onclick="mcq(this,'q9','B')">B &nbsp; Refraction at the surface</button>
+      <button class="opt-btn" onclick="mcq(this,'q9','C')">C &nbsp; Total internal reflection</button>
+      <button class="opt-btn" onclick="mcq(this,'q9','D')">D &nbsp; Absorption by the glass</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 MCQ -->
+  <div class="q-block" id="q10">
+    <div class="q-meta"><span class="q-num">Q10</span><span class="q-type">Multiple choice</span></div>
+    <div class="q-text">Why might children be more at risk from mobile phone radiation than adults?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="mcq(this,'q10','A')">A &nbsp; Children use phones for longer</button>
+      <button class="opt-btn" onclick="mcq(this,'q10','B')">B &nbsp; Children have thinner skulls, so radiation may penetrate more easily to the brain</button>
+      <button class="opt-btn" onclick="mcq(this,'q10','C')">C &nbsp; Children hold phones closer to their ears</button>
+      <button class="opt-btn" onclick="mcq(this,'q10','D')">D &nbsp; Children's phones emit stronger signals</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- TF QUESTIONS Q11–Q20 -->
+
+  <!-- Q11 TF -->
+  <div class="q-block" id="q11">
+    <div class="q-meta"><span class="q-num">Q11</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Microwaves are used for satellite TV because they can travel between satellites in space and the ground, and they spread out less than radio waves.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q11','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q11','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 TF -->
+  <div class="q-block" id="q12">
+    <div class="q-meta"><span class="q-num">Q12</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Longer-wavelength radio waves carry more information per second than shorter-wavelength radio waves.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q12','false')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q12','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 TF -->
+  <div class="q-block" id="q13">
+    <div class="q-meta"><span class="q-num">Q13</span><span class="q-type">True / False</span></div>
+    <div class="q-text">An oscillator supplies an alternating current (carrier wave) to the transmitter.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q13','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q13','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 TF -->
+  <div class="q-block" id="q14">
+    <div class="q-meta"><span class="q-num">Q14</span><span class="q-type">True / False</span></div>
+    <div class="q-text">When radio waves are absorbed by a receiver aerial, they produce a direct current (DC) in the aerial.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q14','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q14','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 TF -->
+  <div class="q-block" id="q15">
+    <div class="q-meta"><span class="q-num">Q15</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Optical fibres are very thin glass fibres that transmit signals using light or infrared radiation.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q15','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q15','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 TF -->
+  <div class="q-block" id="q16">
+    <div class="q-meta"><span class="q-num">Q16</span><span class="q-type">True / False</span></div>
+    <div class="q-text">It has been conclusively proven that mobile phone use causes brain damage in adults.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q16','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q16','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 TF -->
+  <div class="q-block" id="q17">
+    <div class="q-meta"><span class="q-num">Q17</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Radio waves with wavelengths of about 1 m to 100 m are used by local radio stations because their range is limited to the area around the transmitter.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q17','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q17','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 TF -->
+  <div class="q-block" id="q18">
+    <div class="q-meta"><span class="q-num">Q18</span><span class="q-type">True / False</span></div>
+    <div class="q-text">The frequency of the oscillations induced in the receiver aerial is the same as the frequency of the incoming radio waves.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q18','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q18','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 TF -->
+  <div class="q-block" id="q19">
+    <div class="q-meta"><span class="q-num">Q19</span><span class="q-type">True / False</span></div>
+    <div class="q-text">A carrier wave carries information by having its amplitude or frequency varied (modulated) by the audio signal.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q19','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q19','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 TF -->
+  <div class="q-block" id="q20">
+    <div class="q-meta"><span class="q-num">Q20</span><span class="q-type">True / False</span></div>
+    <div class="q-text">Optical fibres are less secure than radio wave communications because the signals can escape from the fibre into the surrounding air.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="tf(this,'q20','true')">✓ True</button>
+      <button class="tf-btn" onclick="tf(this,'q20','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-show-mum" id="resultMum"></div>
+    <br><br>
+    <button class="reset-btn" onclick="resetQuiz()">↩ Try again</button>
+  </div>
+
+</div>
+
+<script>
+const SCORE_KEY = 'physics-p12-3-quiz-score';
+
+const answers = {
+  q1:  { correct: 'B', feedback: '✅ Correct! Microwaves are used for satellite TV — they can travel between Earth and space and spread out less.' },
+  q2:  { correct: 'B', feedback: '✅ Correct! Higher frequency = more oscillations per second = more information per second.' },
+  q3:  { correct: 'B', feedback: '✅ Correct! Longer wavelength → longer range, so national/international stations use them.' },
+  q4:  { correct: 'B', feedback: '✅ Correct! A carrier wave carries the audio signal by being modulated.' },
+  q5:  { correct: 'B', feedback: '✅ Correct! λ = v/f = (3×10⁸) ÷ (105×10⁶) = 2.86 m.' },
+  q6:  { correct: 'B', feedback: '✅ Correct! The microphone converts sound into an alternating current (the audio signal).' },
+  q7:  { correct: 'B', feedback: '✅ Correct! The signal stays inside the fibre and cannot be intercepted from outside.' },
+  q8:  { correct: 'B', feedback: '✅ Correct! Light has a very short wavelength → very high frequency → more pulses of information per second.' },
+  q9:  { correct: 'C', feedback: '✅ Correct! Total internal reflection keeps the light bouncing inside the fibre.' },
+  q10: { correct: 'B', feedback: '✅ Correct! Children have thinner skulls, so radiation may penetrate more easily to the brain.' },
+  q11: { correct: 'true',  feedback: '✅ Correct! Microwaves travel to/from satellites and spread out less — both reasons make them ideal.' },
+  q12: { correct: 'false', feedback: '✅ Correct! It is FALSE — shorter wavelength waves carry MORE information, not longer ones.' },
+  q13: { correct: 'true',  feedback: '✅ Correct! The oscillator produces the alternating carrier wave supplied to the transmitter.' },
+  q14: { correct: 'false', feedback: '✅ Correct! It is FALSE — radio waves induce an ALTERNATING current (AC), not DC, in the receiver aerial.' },
+  q15: { correct: 'true',  feedback: '✅ Correct! Optical fibres are thin glass fibres that carry light or infrared signals.' },
+  q16: { correct: 'false', feedback: '✅ Correct! It is FALSE — there is no conclusive proof; more research is still needed.' },
+  q17: { correct: 'true',  feedback: '✅ Correct! The limited range of these wavelengths is useful for local coverage.' },
+  q18: { correct: 'true',  feedback: '✅ Correct! The receiver oscillations match the incoming radio wave frequency exactly.' },
+  q19: { correct: 'true',  feedback: '✅ Correct! Modulation = varying amplitude (AM) or frequency (FM) to carry the audio signal.' },
+  q20: { correct: 'false', feedback: '✅ Correct! It is FALSE — optical fibres are MORE secure because signals stay inside via total internal reflection.' },
+};
+
+const wrongFeedback = {
+  q1:  '❌ Incorrect. Microwaves are used — they travel between Earth and space and spread out less than radio waves.',
+  q2:  '❌ Incorrect. Shorter wavelength = higher frequency = more pulses of info per second.',
+  q3:  '❌ Incorrect. Longer wavelength waves have a much longer range — useful for national stations.',
+  q4:  '❌ Incorrect. It is called a carrier wave — it carries the audio signal by being modulated.',
+  q5:  '❌ Incorrect. λ = v/f = (3×10⁸) ÷ (105×10⁶) = 2.86 m. Remember to convert MHz to Hz.',
+  q6:  '❌ Incorrect. The microphone produces an alternating current (audio signal), not radio waves directly.',
+  q7:  '❌ Incorrect. Optical fibres are secure because the signal stays inside — it cannot escape to be intercepted.',
+  q8:  '❌ Incorrect. Light has a very short wavelength → very high frequency → more information per second.',
+  q9:  '❌ Incorrect. Total internal reflection keeps light bouncing along the inside of the fibre.',
+  q10: '❌ Incorrect. Children have thinner skulls, so the radiation may penetrate more easily to the brain.',
+  q11: '❌ Incorrect. This is TRUE — microwaves travel through the atmosphere and spread out less.',
+  q12: '❌ Incorrect. This is FALSE — shorter wavelength waves carry MORE information per second.',
+  q13: '❌ Incorrect. This is TRUE — the oscillator produces the AC carrier wave for the transmitter.',
+  q14: '❌ Incorrect. This is FALSE — the receiver aerial produces an ALTERNATING current (AC), not DC.',
+  q15: '❌ Incorrect. This is TRUE — optical fibres are thin glass fibres using light or infrared.',
+  q16: '❌ Incorrect. This is FALSE — there is no conclusive proof; more research is needed.',
+  q17: '❌ Incorrect. This is TRUE — limited range makes 1–100 m waves suitable for local stations.',
+  q18: '❌ Incorrect. This is TRUE — the receiver oscillations have the same frequency as the incoming wave.',
+  q19: '❌ Incorrect. This is TRUE — modulation varies amplitude or frequency to carry the audio signal.',
+  q20: '❌ Incorrect. This is FALSE — optical fibres are MORE secure; signals cannot escape the fibre.',
+};
+
+let score = 0;
+let answered = 0;
+const total = 20;
+
+function mcq(btn, qid, chosen) {
+  const block = document.getElementById(qid);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+  const correct = answers[qid].correct;
+  const btns = block.querySelectorAll('.opt-btn');
+  btns.forEach(b => {
+    b.disabled = true;
+    const letter = b.textContent.trim()[0];
+    if (letter === correct) b.classList.add('correct-ans');
+  });
+  const fb = document.getElementById('fb-' + qid);
+  fb.classList.add('show');
+  if (chosen === correct) {
+    btn.classList.add('correct-ans');
+    block.classList.add('correct');
+    fb.classList.add('correct');
+    fb.textContent = answers[qid].feedback;
+    score++;
+  } else {
+    btn.classList.add('wrong-ans');
+    block.classList.add('wrong');
+    fb.classList.add('wrong');
+    fb.textContent = wrongFeedback[qid];
+  }
+  answered++;
+  updateBar();
+  if (answered === total) showResult();
+}
+
+function tf(btn, qid, chosen) {
+  const block = document.getElementById(qid);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+  const correct = answers[qid].correct;
+  const btns = block.querySelectorAll('.tf-btn');
+  btns.forEach(b => {
+    b.disabled = true;
+    // mark the correct button green
+    const val = b.textContent.includes('True') ? 'true' : 'false';
+    if (val === correct) b.classList.add('correct-ans');
+  });
+  const fb = document.getElementById('fb-' + qid);
+  fb.classList.add('show');
+  if (chosen === correct) {
+    btn.classList.add('correct-ans');
+    block.classList.add('correct');
+    fb.classList.add('correct');
+    fb.textContent = answers[qid].feedback;
+    score++;
+  } else {
+    btn.classList.add('wrong-ans');
+    block.classList.add('wrong');
+    fb.classList.add('wrong');
+    fb.textContent = wrongFeedback[qid];
+  }
+  answered++;
+  updateBar();
+  if (answered === total) showResult();
+}
+
+function updateBar() {
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('answeredVal').textContent = answered;
+  document.getElementById('progressFill').style.width = (answered / total * 100) + '%';
+  const pct = Math.round(score / total * 100);
+  document.getElementById('scoreLabel').textContent = answered === total ? 'Done! ' + pct + '%' : answered + ' of ' + total + ' answered';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  document.getElementById('resultScore').textContent = score + ' / 20';
+  let emoji, title, msg;
+  if (score >= 18) {
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'Brilliant work — you really know your P12.3 content. Keep it up!';
+  } else if (score >= 14) {
+    emoji = '🎉'; title = 'Great job!';
+    msg = 'Solid understanding! Go back over any questions you got wrong.';
+  } else if (score >= 10) {
+    emoji = '📚'; title = 'Getting there!';
+    msg = 'Good effort. Re-read the revision sheet and try again.';
+  } else {
+    emoji = '💪'; title = 'Keep practising!';
+    msg = 'Don\'t worry — go back to the revision notes and have another go.';
+  }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMum').textContent = '📋 Show this to mum — ' + score + '/20';
+  localStorage.setItem(SCORE_KEY, JSON.stringify({ score, date: Date.now() }));
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  updateBar();
+  for (let i = 1; i <= 20; i++) {
+    const block = document.getElementById('q' + i);
+    block.classList.remove('correct', 'wrong');
+    block.querySelectorAll('button').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('correct-ans', 'wrong-ans', 'selected');
+    });
+    const fb = document.getElementById('fb-q' + i);
+    fb.classList.remove('show', 'correct', 'wrong');
+    fb.textContent = '';
+  }
+  document.getElementById('resultBox').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Fix Q12 TF buttons (both said 'false' in onclick — correcting via JS)
+document.querySelectorAll('#q12 .tf-btn').forEach((btn, i) => {
+  const val = i === 0 ? 'true' : 'false';
+  btn.onclick = () => tf(btn, 'q12', val);
+});
+</script>
+</body>
+</html>

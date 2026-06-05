@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P13.2 Quick Check — Magnetic Fields of Electric Currents</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #1a1a2e;
+    --muted: #5a6a7a;
+    --line: #dce8f2;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #ef6c00;
+    --orange2: #fff3e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 65%, #0d47a1 100%);
+    color: white;
+    padding: 32px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .kicker {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.7); }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 16px;
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 2px solid var(--accent);
+  }
+  nav a {
+    color: #b0c4d8;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 14px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: white; border-bottom-color: var(--accent); }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(100,181,246,0.2);
+  }
+  .score-pill {
+    background: rgba(100,181,246,0.15);
+    border: 1px solid rgba(100,181,246,0.35);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .score-pill span { color: var(--accent); }
+  .progress-wrap {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    height: 7px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* MAIN */
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 80px; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--navy);
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin: 28px 0 14px;
+  }
+
+  /* QUESTION BLOCK */
+  .q-block {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 18px 18px 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(13,43,93,0.07);
+    border: 1.5px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong { border-color: var(--red); }
+
+  .q-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 7px; }
+  .opt-btn {
+    background: #f0f6fc;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s;
+    line-height: 1.4;
+  }
+  .opt-btn:hover:not(:disabled) { background: #dbeeff; border-color: var(--accent); }
+  .opt-btn:disabled { cursor: default; }
+  .opt-btn.selected-correct { background: var(--green2); border-color: var(--green); color: var(--green); font-weight: 600; }
+  .opt-btn.selected-wrong { background: var(--red2); border-color: var(--red); color: var(--red); font-weight: 600; }
+  .opt-btn.reveal-correct { background: var(--green2); border-color: var(--green); color: var(--green); font-weight: 600; }
+
+  /* TF OPTIONS */
+  .tf-options { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: #f0f6fc;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-transform: uppercase;
+  }
+  .tf-btn:hover:not(:disabled) { background: #dbeeff; border-color: var(--accent); }
+  .tf-btn:disabled { cursor: default; }
+  .tf-btn.selected-correct { background: var(--green2); border-color: var(--green); color: var(--green); }
+  .tf-btn.selected-wrong { background: var(--red2); border-color: var(--red); color: var(--red); }
+  .tf-btn.reveal-correct { background: var(--green2); border-color: var(--green); color: var(--green); }
+
+  /* FEEDBACK */
+  .feedback {
+    display: none;
+    margin-top: 10px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .feedback.correct { background: var(--green2); color: #1b4d1e; display: block; }
+  .feedback.wrong { background: var(--red2); color: #7a0000; display: block; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    margin-top: 28px;
+    box-shadow: 0 4px 20px rgba(13,43,93,0.12);
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3rem; margin-bottom: 10px; }
+  .result-box h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .result-score {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin: 10px 0 4px;
+  }
+  .result-mum {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .result-msg { font-size: 14px; color: var(--ink); margin-bottom: 22px; line-height: 1.5; }
+
+  .reset-btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reset-btn:hover { background: #1565c0; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.4rem; }
+    .score-bar { flex-wrap: wrap; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">P13 Electromagnetism · GCSE Physics</div>
+  <div class="badge">⚛️ Quick Check</div>
+  <h1>P13.2 Magnetic Fields<br>of Electric Currents</h1>
+  <p>20 questions · 10 MCQ + 10 True / False</p>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-p13-2-revision.html">📖 Revision</a>
+</nav>
+
+<div class="score-bar">
+  <div class="score-pill">Score <span id="scoreDisplay">0</span>/20</div>
+  <div class="score-pill">Answered <span id="answeredDisplay">0</span>/20</div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- MCQ -->
+  <div class="section-label">Part 1 — Multiple Choice</div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-num">Question 1 of 20</div>
+    <div class="q-text">What shape are the magnetic field lines around a long straight current-carrying wire?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(1,'A','B')">A. Parallel straight lines</button>
+      <button class="opt-btn" onclick="answer(1,'B','B')">B. Concentric circles centred on the wire</button>
+      <button class="opt-btn" onclick="answer(1,'C','B')">C. Spirals moving along the wire</button>
+      <button class="opt-btn" onclick="answer(1,'D','B')">D. Loops like a bar magnet</button>
+    </div>
+    <div class="feedback" id="fb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-num">Question 2 of 20</div>
+    <div class="q-text">The plane of the concentric field lines around a straight wire is:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(2,'A','C')">A. Parallel to the wire</button>
+      <button class="opt-btn" onclick="answer(2,'B','C')">B. At 45° to the wire</button>
+      <button class="opt-btn" onclick="answer(2,'C','C')">C. Perpendicular to the wire</button>
+      <button class="opt-btn" onclick="answer(2,'D','C')">D. Along the direction of current flow</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-num">Question 3 of 20</div>
+    <div class="q-text">What happens to the magnetic field around a wire when the current is reversed?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(3,'A','B')">A. The field disappears</button>
+      <button class="opt-btn" onclick="answer(3,'B','B')">B. The field direction reverses</button>
+      <button class="opt-btn" onclick="answer(3,'C','B')">C. The field becomes stronger</button>
+      <button class="opt-btn" onclick="answer(3,'D','B')">D. The field shape changes from circles to loops</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-num">Question 4 of 20</div>
+    <div class="q-text">What is the corkscrew rule used for?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(4,'A','A')">A. To find the direction of the magnetic field around a current-carrying wire</button>
+      <button class="opt-btn" onclick="answer(4,'B','A')">B. To calculate the strength of the magnetic field</button>
+      <button class="opt-btn" onclick="answer(4,'C','A')">C. To find the resistance of a solenoid</button>
+      <button class="opt-btn" onclick="answer(4,'D','A')">D. To determine the polarity of a battery</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-num">Question 5 of 20</div>
+    <div class="q-text">As you move further from a current-carrying wire, what happens to the magnetic field strength?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(5,'A','C')">A. It stays the same</button>
+      <button class="opt-btn" onclick="answer(5,'B','C')">B. It increases</button>
+      <button class="opt-btn" onclick="answer(5,'C','C')">C. It decreases</button>
+      <button class="opt-btn" onclick="answer(5,'D','C')">D. It reverses direction</button>
+    </div>
+    <div class="feedback" id="fb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-num">Question 6 of 20</div>
+    <div class="q-text">What describes the magnetic field <em>inside</em> a solenoid carrying a current?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(6,'A','D')">A. Weak and in random directions</button>
+      <button class="opt-btn" onclick="answer(6,'B','D')">B. Circular and centred on the axis</button>
+      <button class="opt-btn" onclick="answer(6,'C','D')">C. Strong but non-uniform</button>
+      <button class="opt-btn" onclick="answer(6,'D','D')">D. Strong, uniform, and parallel to the axis</button>
+    </div>
+    <div class="feedback" id="fb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-num">Question 7 of 20</div>
+    <div class="q-text">The magnetic field outside a solenoid resembles:</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(7,'A','B')">A. Concentric circles</button>
+      <button class="opt-btn" onclick="answer(7,'B','B')">B. The field of a bar magnet</button>
+      <button class="opt-btn" onclick="answer(7,'C','B')">C. A uniform field</button>
+      <button class="opt-btn" onclick="answer(7,'D','B')">D. Parallel lines along the axis</button>
+    </div>
+    <div class="feedback" id="fb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-num">Question 8 of 20</div>
+    <div class="q-text">An electromagnet is a solenoid wound around an iron core. Why is iron used rather than steel for the core?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(8,'A','C')">A. Iron is cheaper than steel</button>
+      <button class="opt-btn" onclick="answer(8,'B','C')">B. Iron is a better conductor of electricity</button>
+      <button class="opt-btn" onclick="answer(8,'C','C')">C. Iron loses its magnetism easily when the current is switched off</button>
+      <button class="opt-btn" onclick="answer(8,'D','C')">D. Iron has a higher melting point than steel</button>
+    </div>
+    <div class="feedback" id="fb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-num">Question 9 of 20</div>
+    <div class="q-text">What is a uniform magnetic field?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(9,'A','B')">A. A field that only exists inside a solenoid</button>
+      <button class="opt-btn" onclick="answer(9,'B','B')">B. A field in which the field lines are parallel and equally spaced</button>
+      <button class="opt-btn" onclick="answer(9,'C','B')">C. A field that does not change with time</button>
+      <button class="opt-btn" onclick="answer(9,'D','B')">D. A field produced by a single straight wire</button>
+    </div>
+    <div class="feedback" id="fb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-num">Question 10 of 20</div>
+    <div class="q-text">Which of the following would NOT increase the strength of an electromagnet?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer(10,'A','D')">A. Increasing the current through the wire</button>
+      <button class="opt-btn" onclick="answer(10,'B','D')">B. Increasing the number of coils</button>
+      <button class="opt-btn" onclick="answer(10,'C','D')">C. Adding a soft iron core</button>
+      <button class="opt-btn" onclick="answer(10,'D','D')">D. Replacing the iron core with a steel core</button>
+    </div>
+    <div class="feedback" id="fb10"></div>
+  </div>
+
+  <!-- TF -->
+  <div class="section-label">Part 2 — True or False</div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-num">Question 11 of 20</div>
+    <div class="q-text">The magnetic field lines around a straight current-carrying wire are always at right angles to the wire.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(11,'true','true')">TRUE</button>
+      <button class="tf-btn" onclick="answer(11,'false','true')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-num">Question 12 of 20</div>
+    <div class="q-text">Increasing the current in a wire makes the surrounding magnetic field weaker.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(12,'true','false')">TRUE</button>
+      <button class="tf-btn" onclick="answer(12,'false','false')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-num">Question 13 of 20</div>
+    <div class="q-text">A solenoid is a long coil of insulated wire.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(13,'true','true')">TRUE</button>
+      <button class="tf-btn" onclick="answer(13,'false','true')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-num">Question 14 of 20</div>
+    <div class="q-text">The field lines inside a solenoid are complete loops that pass back through the outside.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(14,'true','false')">TRUE</button>
+      <button class="tf-btn" onclick="answer(14,'false','false')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-num">Question 15 of 20</div>
+    <div class="q-text">Reversing the current in a solenoid reverses the direction of its magnetic field.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(15,'true','true')">TRUE</button>
+      <button class="tf-btn" onclick="answer(15,'false','true')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-num">Question 16 of 20</div>
+    <div class="q-text">An electromagnet made with a steel core would be better than one with an iron core, because steel keeps its magnetism longer.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(16,'true','false')">TRUE</button>
+      <button class="tf-btn" onclick="answer(16,'false','false')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-num">Question 17 of 20</div>
+    <div class="q-text">When the current through an electromagnet is switched off, the iron core loses most of its magnetism.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(17,'true','true')">TRUE</button>
+      <button class="tf-btn" onclick="answer(17,'false','true')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-num">Question 18 of 20</div>
+    <div class="q-text">A plotting compass placed near a current-carrying wire points towards magnetic north regardless of the wire's field.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(18,'true','false')">TRUE</button>
+      <button class="tf-btn" onclick="answer(18,'false','false')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-num">Question 19 of 20</div>
+    <div class="q-text">The end of a solenoid where the current flows anticlockwise (when viewed face-on) is the North pole.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(19,'true','true')">TRUE</button>
+      <button class="tf-btn" onclick="answer(19,'false','true')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-num">Question 20 of 20</div>
+    <div class="q-text">The iron core in an electromagnet is magnetised by the magnetic field produced by the current in the wire.</div>
+    <div class="tf-options">
+      <button class="tf-btn" onclick="answer(20,'true','true')">TRUE</button>
+      <button class="tf-btn" onclick="answer(20,'false','true')">FALSE</button>
+    </div>
+    <div class="feedback" id="fb20"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <h2 id="resultTitle"></h2>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+  </div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p13-2-quiz-score';
+
+const feedbackText = {
+  1: { correct: '✅ Correct! The field lines form concentric circles in a plane perpendicular to the wire.', wrong: '❌ The field lines are concentric circles centred on the wire.' },
+  2: { correct: '✅ Correct! The plane of the circles is perpendicular (at 90°) to the wire.', wrong: '❌ The circles lie in a plane that is perpendicular to the wire.' },
+  3: { correct: '✅ Correct! Reversing the current reverses the direction of the magnetic field.', wrong: '❌ Reversing the current reverses the field direction — the compass would point the other way.' },
+  4: { correct: '✅ Correct! The corkscrew rule gives the direction of the field for a given current direction.', wrong: '❌ The corkscrew rule is used to find the direction of the magnetic field around a wire.' },
+  5: { correct: '✅ Correct! The field weakens with distance — the circles spread further apart.', wrong: '❌ The field decreases as you move further from the wire.' },
+  6: { correct: '✅ Correct! Inside a solenoid the field is strong, uniform, and parallel to the axis — like a bar magnet.', wrong: '❌ Inside a solenoid the field is strong, uniform, and parallel to the axis.' },
+  7: { correct: '✅ Correct! Outside, the field curves around from one end to the other — just like a bar magnet.', wrong: '❌ The field outside a solenoid is like that of a bar magnet, with field lines looping from one end to the other.' },
+  8: { correct: '✅ Correct! Iron is a soft magnetic material — it loses its magnetism easily when the current stops.', wrong: '❌ Iron is used because it loses magnetism easily when switched off. Steel would stay magnetised permanently.' },
+  9: { correct: '✅ Correct! A uniform field has parallel, equally-spaced field lines — found inside a solenoid.', wrong: '❌ A uniform field is one where the field lines are parallel and equally spaced.' },
+  10: { correct: '✅ Correct! Steel retains its magnetism (it becomes a permanent magnet) — it does not help the electromagnet switch off cleanly.', wrong: '❌ Replacing iron with steel would be a problem: steel stays magnetised, so the "electromagnet" couldn\'t be switched off properly.' },
+  11: { correct: '✅ Correct! The circles lie in a plane perpendicular (at right angles) to the wire.', wrong: '❌ True — the field lines are circles in a plane perpendicular to the wire.' },
+  12: { correct: '✅ Correct! Increasing the current actually makes the field stronger, not weaker.', wrong: '❌ False — increasing the current makes the magnetic field stronger everywhere.' },
+  13: { correct: '✅ Correct! A solenoid is a long coil of insulated wire.', wrong: '❌ True — a solenoid is defined as a long coil of insulated wire.' },
+  14: { correct: '✅ Correct! The internal field lines are parallel and straight. It is the external field lines that are complete loops.', wrong: '❌ False — the field lines inside are parallel to the axis. The field lines outside are the complete loops.' },
+  15: { correct: '✅ Correct! Reversing the current in a solenoid swaps the N and S poles — the field reverses.', wrong: '❌ True — reversing the current reverses the direction of the field and swaps the poles.' },
+  16: { correct: '✅ Correct! A steel core is actually worse for an electromagnet — it stays magnetised and can\'t be switched off.', wrong: '❌ False — steel is bad for an electromagnet because it stays magnetised. Iron is better because it loses magnetism easily.' },
+  17: { correct: '✅ Correct! Iron is a soft magnetic material and loses most of its magnetism when the current is off.', wrong: '❌ True — the iron core loses most of its magnetism when the current is switched off.' },
+  18: { correct: '✅ Correct! Near a wire the plotting compass aligns with the wire\'s field, not geographic north.', wrong: '❌ False — a compass near a current-carrying wire is deflected by the wire\'s magnetic field.' },
+  19: { correct: '✅ Correct! Anticlockwise current (viewed face-on) = North pole at that end.', wrong: '❌ True — the anticlockwise end is the North pole (use the N-anticlockwise rule).' },
+  20: { correct: '✅ Correct! The wire\'s field magnetises the iron core, which multiplies the overall field strength.', wrong: '❌ True — the wire\'s magnetic field magnetises the iron core, making the electromagnet much stronger.' },
+};
+
+let score = 0;
+let answered = 0;
+const total = 20;
+
+function answer(qNum, chosen, correct) {
+  const block = document.getElementById('q' + qNum);
+  if (block.classList.contains('correct') || block.classList.contains('wrong')) return;
+
+  const isCorrect = chosen === correct;
+  const fb = document.getElementById('fb' + qNum);
+  const btns = block.querySelectorAll('.opt-btn, .tf-btn');
+
+  btns.forEach(btn => {
+    btn.disabled = true;
+    const val = btn.onclick.toString().match(/answer\(\d+,'([^']+)'/)?.[1];
+    if (val === correct) btn.classList.add('reveal-correct');
+  });
+
+  const clickedBtn = [...btns].find(b => {
+    const val = b.onclick.toString().match(/answer\(\d+,'([^']+)'/)?.[1];
+    return val === chosen;
+  });
+
+  if (isCorrect) {
+    clickedBtn?.classList.add('selected-correct');
+    block.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = feedbackText[qNum].correct;
+    score++;
+  } else {
+    clickedBtn?.classList.add('selected-wrong');
+    block.classList.add('wrong');
+    fb.className = 'feedback wrong';
+    fb.textContent = feedbackText[qNum].wrong;
+  }
+
+  answered++;
+  updateBar();
+
+  if (answered === total) {
+    setTimeout(showResult, 600);
+  }
+}
+
+function updateBar() {
+  document.getElementById('scoreDisplay').textContent = score;
+  document.getElementById('answeredDisplay').textContent = answered;
+  document.getElementById('progressBar').style.width = (answered / total * 100) + '%';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  document.getElementById('resultScore').textContent = score + '/20';
+  document.getElementById('resultMum').textContent = 'Show this to mum — ' + score + '/20';
+
+  let emoji, title, msg;
+  if (score >= 18) {
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'You have an excellent understanding of magnetic fields and electric currents. Top marks!';
+  } else if (score >= 14) {
+    emoji = '🎉'; title = 'Great work!';
+    msg = 'Really solid knowledge here. Review any questions you missed and you\'ll be exam-ready.';
+  } else if (score >= 10) {
+    emoji = '📚'; title = 'Getting there!';
+    msg = 'You\'ve got the basics. Go back to the revision page to strengthen the areas you missed.';
+  } else {
+    emoji = '💪'; title = 'Keep going!';
+    msg = 'This topic needs more practice. Revisit the revision notes and try again — you can do it!';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+
+  try { localStorage.setItem(SCORE_KEY, score + '/20'); } catch(e) {}
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  updateBar();
+
+  for (let i = 1; i <= 20; i++) {
+    const block = document.getElementById('q' + i);
+    block.classList.remove('correct', 'wrong');
+    block.querySelectorAll('.opt-btn, .tf-btn').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+    });
+    const fb = document.getElementById('fb' + i);
+    fb.className = 'feedback';
+    fb.textContent = '';
+  }
+
+  document.getElementById('resultBox').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

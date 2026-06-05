@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P13.2 Magnetic Fields of Electric Currents</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #f06292;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #1a1a2e;
+    --muted: #5a6a7a;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --red: #e53935;
+    --red2: #ffebee;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7b1fa2;
+    --purple2: #f3e5f5;
+    --line: #dce8f2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 60%, #0d47a1 100%);
+    color: white;
+    padding: 36px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .kicker {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .hero-tag {
+    background: rgba(100,181,246,0.2);
+    border: 1px solid rgba(100,181,246,0.4);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 16px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-bottom: 2px solid var(--accent);
+  }
+  nav a {
+    color: #b0c4d8;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 14px;
+    white-space: nowrap;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  nav a:hover { color: white; border-bottom-color: var(--accent); }
+
+  /* MAIN */
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  /* CHECKLIST */
+  .checklist-box {
+    background: var(--paper);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+  }
+  .checklist-box h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
+  .checklist li input[type=checkbox] {
+    margin-top: 2px; accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0;
+  }
+  .checklist li label { cursor: pointer; line-height: 1.4; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--navy);
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin: 28px 0 14px;
+  }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .big-idea-card {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+    border-top: 3px solid var(--accent);
+  }
+  .big-idea-card .icon { font-size: 1.6rem; margin-bottom: 8px; }
+  .big-idea-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .big-idea-card p { font-size: 13px; color: var(--muted); line-height: 1.45; }
+
+  /* TILES */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .tile {
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .tile strong { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 700; }
+  .tile.red { background: var(--red2); border-left: 3px solid var(--red); color: #7a0000; }
+  .tile.red strong { color: var(--red); }
+  .tile.blue { background: #e3f2fd; border-left: 3px solid #1976d2; color: #0d2b5e; }
+  .tile.blue strong { color: #1565c0; }
+  .tile.green { background: var(--green2); border-left: 3px solid var(--green); color: #1b4d1e; }
+  .tile.green strong { color: var(--green); }
+  .tile.orange { background: var(--orange2); border-left: 3px solid var(--orange); color: #5a2d00; }
+  .tile.orange strong { color: var(--orange); }
+  .tile.purple { background: var(--purple2); border-left: 3px solid var(--purple); color: #3a0050; }
+  .tile.purple strong { color: var(--purple); }
+
+  /* STATEMENT / EXAM TIP / WARNING */
+  .statement {
+    background: #e3f2fd;
+    border: 1.5px solid #90caf9;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .statement strong { color: #1565c0; }
+
+  .exam-tip {
+    background: #fffde7;
+    border-left: 4px solid #fdd835;
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+  }
+  .exam-tip::before { content: '⭐ EXAM TIP — '; font-weight: 700; color: #f57f17; }
+
+  .warning {
+    background: var(--red2);
+    border-left: 4px solid var(--red);
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+    color: #7a0000;
+  }
+  .warning::before { content: '⚠️ DON\'T CONFUSE — '; font-weight: 700; }
+
+  /* COMPARE */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .compare-col {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+  }
+  .compare-col h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--line);
+  }
+  .compare-col.left h4 { color: #1565c0; border-bottom-color: #90caf9; }
+  .compare-col.right h4 { color: var(--purple); border-bottom-color: #ce93d8; }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .compare-col li { font-size: 13px; padding-left: 14px; position: relative; line-height: 1.4; }
+  .compare-col li::before { content: '•'; position: absolute; left: 0; }
+  .compare-col.left li::before { color: #1565c0; }
+  .compare-col.right li::before { color: var(--purple); }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .keyword {
+    background: var(--navy);
+    color: white;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: default;
+    transition: background 0.2s;
+  }
+  .keyword:hover { background: #1565c0; }
+
+  /* SVG DIAGRAM */
+  .diagram-box {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+    text-align: center;
+  }
+  .diagram-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .diagram-box svg { max-width: 100%; }
+
+  /* MARK AS READ */
+  .mark-read-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--navy);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid var(--accent);
+    z-index: 100;
+  }
+  .mark-read-btn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 24px;
+    padding: 10px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .mark-read-btn:hover { background: #42a5f5; transform: scale(1.03); }
+  .mark-read-btn.done { background: var(--green); color: white; }
+
+  body { padding-bottom: 70px; }
+
+  @media (max-width: 560px) {
+    .compare { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">P13 Electromagnetism · GCSE Physics</div>
+  <div class="badge">⚛️ P13.2</div>
+  <h1>Magnetic Fields of<br>Electric Currents</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">Straight Wire</span>
+    <span class="hero-tag">Solenoid</span>
+    <span class="hero-tag">Electromagnet</span>
+    <span class="hero-tag">Corkscrew Rule</span>
+    <span class="hero-tag">Field Patterns</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#objectives">Objectives</a>
+  <a href="#wire">Straight Wire</a>
+  <a href="#solenoid">Solenoid</a>
+  <a href="#electromagnet">Electromagnet</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<main>
+
+  <!-- CHECKLIST -->
+  <section id="objectives">
+    <div class="checklist-box">
+      <h2>📋 Learning Objectives</h2>
+      <ul class="checklist">
+        <li><input type="checkbox" id="lo1"><label for="lo1">Describe the pattern of the magnetic field around a straight wire carrying a current, and in and around a solenoid</label></li>
+        <li><input type="checkbox" id="lo2"><label for="lo2">Explain how the strength and direction of the field varies with position and with the current</label></li>
+        <li><input type="checkbox" id="lo3"><label for="lo3">State what a uniform magnetic field is</label></li>
+        <li><input type="checkbox" id="lo4"><label for="lo4">Describe what an electromagnet is and how it works</label></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BIG IDEAS -->
+  <div class="section-title" id="wire">⚡ The Big Ideas</div>
+  <div class="big-idea-grid">
+    <div class="big-idea-card">
+      <div class="icon">🔄</div>
+      <h3>Concentric Circles</h3>
+      <p>A current-carrying wire creates a magnetic field in concentric circles centred on the wire, in a plane perpendicular to it.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">🔩</div>
+      <h3>Corkscrew Rule</h3>
+      <p>The direction of the field matches the rotation of a corkscrew moving in the direction of the current.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">🌀</div>
+      <h3>Solenoid</h3>
+      <p>A long coil of wire. The field inside is strong, uniform, and parallel — just like a bar magnet's field.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">🔌</div>
+      <h3>Electromagnet</h3>
+      <p>A solenoid with an iron core. The iron is magnetised by the wire's field and multiplies its strength.</p>
+    </div>
+  </div>
+
+  <!-- FIELD AROUND A WIRE diagram -->
+  <div class="section-title">Field Around a Straight Wire</div>
+
+  <div class="diagram-box">
+    <h3>Field Pattern — Cross-section View</h3>
+    <svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" style="max-height:180px;">
+      <!-- concentric circles -->
+      <circle cx="180" cy="90" r="70" fill="none" stroke="#64b5f6" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <circle cx="180" cy="90" r="50" fill="none" stroke="#64b5f6" stroke-width="1.8" stroke-dasharray="5,3"/>
+      <circle cx="180" cy="90" r="32" fill="none" stroke="#64b5f6" stroke-width="2" stroke-dasharray="4,3"/>
+      <circle cx="180" cy="90" r="16" fill="none" stroke="#64b5f6" stroke-width="2.2"/>
+      <!-- wire cross-section (current coming toward viewer) -->
+      <circle cx="180" cy="90" r="9" fill="#0d2b45" stroke="#64b5f6" stroke-width="2"/>
+      <circle cx="180" cy="90" r="3" fill="#64b5f6"/>
+      <!-- arrows on largest circle -->
+      <path d="M180 20 L175 32 L185 32 Z" fill="#64b5f6"/>
+      <path d="M180 160 L175 148 L185 148 Z" fill="#64b5f6"/>
+      <path d="M250 90 L238 85 L238 95 Z" fill="#64b5f6"/>
+      <path d="M110 90 L122 85 L122 95 Z" fill="#64b5f6"/>
+      <!-- labels -->
+      <text x="195" y="87" font-size="9" fill="#64b5f6" font-family="Barlow,sans-serif" font-weight="700">⊙ current</text>
+      <text x="195" y="97" font-size="9" fill="#64b5f6" font-family="Barlow,sans-serif">toward you</text>
+      <text x="50" y="30" font-size="10" fill="#5a6a7a" font-family="Barlow,sans-serif">Weaker</text>
+      <text x="255" y="60" font-size="10" fill="#1565c0" font-family="Barlow,sans-serif">Stronger</text>
+    </svg>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">Field lines are circles. Circles closest to the wire = strongest field. Reversing current reverses direction.</p>
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile blue">
+      <strong>Direction</strong>
+      Use the corkscrew rule: point thumb in direction of current → fingers curl in direction of field.
+    </div>
+    <div class="tile red">
+      <strong>Reversing the current</strong>
+      The plotting compass reverses direction — the magnetic field lines reverse.
+    </div>
+    <div class="tile green">
+      <strong>Distance from wire</strong>
+      The further from the wire, the weaker the field — the circles spread out.
+    </div>
+    <div class="tile orange">
+      <strong>Increasing current</strong>
+      The magnetic field becomes stronger everywhere around the wire.
+    </div>
+  </div>
+
+  <!-- SOLENOID -->
+  <div class="section-title" id="solenoid">🌀 Solenoids</div>
+
+  <div class="statement">
+    A <strong>solenoid</strong> is a long coil of insulated wire. It is used whenever a strong magnetic field needs to be produced. The field is produced <strong>in and around</strong> the solenoid when a current flows.
+  </div>
+
+  <div class="diagram-box">
+    <h3>Solenoid Field Pattern</h3>
+    <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg" style="max-height:160px;">
+      <!-- solenoid body -->
+      <rect x="80" y="60" width="220" height="40" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+      <!-- coil lines -->
+      <line x1="100" y1="60" x2="100" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="120" y1="60" x2="120" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="140" y1="60" x2="140" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="160" y1="60" x2="160" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="180" y1="60" x2="180" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="200" y1="60" x2="200" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="220" y1="60" x2="220" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="240" y1="60" x2="240" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <line x1="260" y1="60" x2="260" y2="100" stroke="#1565c0" stroke-width="1.5"/>
+      <!-- internal field lines (parallel) -->
+      <line x1="84" y1="75" x2="296" y2="75" stroke="#e53935" stroke-width="1.8"/>
+      <line x1="84" y1="80" x2="296" y2="80" stroke="#e53935" stroke-width="1.8"/>
+      <line x1="84" y1="85" x2="296" y2="85" stroke="#e53935" stroke-width="1.8"/>
+      <!-- arrows on internal lines -->
+      <polygon points="290,72 296,75 290,78" fill="#e53935"/>
+      <polygon points="290,77 296,80 290,83" fill="#e53935"/>
+      <polygon points="290,82 296,85 290,88" fill="#e53935"/>
+      <!-- external field lines -->
+      <path d="M80 80 Q40 40 20 80 Q40 120 80 80" fill="none" stroke="#64b5f6" stroke-width="1.5"/>
+      <path d="M300 80 Q340 40 360 80 Q340 120 300 80" fill="none" stroke="#64b5f6" stroke-width="1.5"/>
+      <!-- N S labels -->
+      <text x="60" y="83" font-size="14" fill="#e53935" font-family="Barlow Condensed,sans-serif" font-weight="800">S</text>
+      <text x="306" y="83" font-size="14" fill="#e53935" font-family="Barlow Condensed,sans-serif" font-weight="800">N</text>
+      <!-- labels -->
+      <text x="150" y="50" font-size="10" fill="#1565c0" font-family="Barlow,sans-serif" font-weight="600">Inside: parallel, uniform</text>
+      <text x="20" y="130" font-size="10" fill="#5a6a7a" font-family="Barlow,sans-serif">Outside: like a bar magnet</text>
+    </svg>
+  </div>
+
+  <div class="compare">
+    <div class="compare-col left">
+      <h4>🔵 Inside the Solenoid</h4>
+      <ul>
+        <li>Field lines are <strong>parallel</strong> to the axis</li>
+        <li>All in the <strong>same direction</strong></li>
+        <li>Field is <strong>strong and uniform</strong></li>
+        <li>A uniform field = field lines are parallel</li>
+      </ul>
+    </div>
+    <div class="compare-col right">
+      <h4>🟣 Outside the Solenoid</h4>
+      <ul>
+        <li>Field lines bend around from end to end</li>
+        <li>Like the field of a <strong>bar magnet</strong></li>
+        <li>Each line is a <strong>complete loop</strong></li>
+        <li>Passes back through the inside of the solenoid</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile blue">
+      <strong>Increasing current →</strong>
+      The solenoid's magnetic field becomes stronger.
+    </div>
+    <div class="tile red">
+      <strong>Reversing current →</strong>
+      The field direction reverses — N and S poles swap.
+    </div>
+    <div class="tile purple">
+      <strong>Finding polarity</strong>
+      Look at the end: current flows anticlockwise = N pole; clockwise = S pole.
+    </div>
+  </div>
+
+  <!-- ELECTROMAGNETS -->
+  <div class="section-title" id="electromagnet">🔌 Electromagnets</div>
+
+  <div class="statement">
+    An <strong>electromagnet</strong> is a solenoid in which the insulated wire is wrapped around an <strong>iron bar (the core)</strong>. When a current passes through the wire, a magnetic field forms — this magnetises the iron bar, making the overall field much stronger. When the current is <strong>switched off</strong>, the iron bar loses most of its magnetism.
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile green">
+      <strong>Why iron, not steel?</strong>
+      Iron is a <em>soft</em> magnetic material — it gains and loses magnetism easily. Steel retains its magnetism (it becomes a permanent magnet).
+    </div>
+    <div class="tile orange">
+      <strong>How to make it stronger</strong>
+      Increase the current, increase the number of coils, or use a soft iron core.
+    </div>
+    <div class="tile blue">
+      <strong>What the iron core does</strong>
+      The wire's field magnetises the iron, which then adds its own field — the combined effect is much stronger.
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    In exam questions about electromagnets, always explain <em>two</em> things: (1) the current in the wire creates a field, and (2) that field magnetises the iron core — this is why the electromagnet is so much stronger than a plain solenoid.
+  </div>
+
+  <div class="warning">
+    The iron core is NOT a permanent magnet. It only acts as a magnet while the current is on. Steel would stay magnetised — which is why iron is used for electromagnets and steel for permanent magnets.
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="section-title" id="keywords">🔑 Key Words</div>
+  <div class="keywords">
+    <span class="keyword">Magnetic field</span>
+    <span class="keyword">Field lines</span>
+    <span class="keyword">Concentric circles</span>
+    <span class="keyword">Corkscrew rule</span>
+    <span class="keyword">Solenoid</span>
+    <span class="keyword">Uniform field</span>
+    <span class="keyword">Electromagnet</span>
+    <span class="keyword">Iron core</span>
+    <span class="keyword">Soft magnetic material</span>
+    <span class="keyword">Polarity</span>
+    <span class="keyword">N pole / S pole</span>
+    <span class="keyword">Plotting compass</span>
+  </div>
+
+  <div class="exam-tip">
+    A <strong>uniform magnetic field</strong> = the field lines are parallel and equally spaced. This is found INSIDE a solenoid. You may be asked to describe what makes it uniform.
+  </div>
+
+</main>
+
+<!-- MARK AS READ -->
+<div class="mark-read-bar">
+  <button class="mark-read-btn" id="markReadBtn" onclick="toggleRead()">✅ Mark as Read</button>
+</div>
+
+<script>
+  const KEY = 'physics-p13-2-read';
+  function toggleRead() {
+    const btn = document.getElementById('markReadBtn');
+    const done = localStorage.getItem(KEY) === 'true';
+    if (done) {
+      localStorage.removeItem(KEY);
+      btn.textContent = '✅ Mark as Read';
+      btn.classList.remove('done');
+    } else {
+      localStorage.setItem(KEY, 'true');
+      btn.textContent = '🏆 Completed!';
+      btn.classList.add('done');
+    }
+  }
+  // On load
+  if (localStorage.getItem(KEY) === 'true') {
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '🏆 Completed!';
+    btn.classList.add('done');
+  }
+</script>
+</body>
+</html>

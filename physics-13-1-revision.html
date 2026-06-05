@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>13.1 Magnetic Fields — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#0d2b45;
+  --accent:#64b5f6;
+  --accent2:#ef5350;
+  --accent3:#66bb6a;
+  --accent4:#ffa726;
+  --accent5:#ab47bc;
+  --bg:#e8f4fd;
+  --paper:#ffffff;
+  --ink:#0d2b45;
+  --muted:#5a7a95;
+  --line:#c5dff0;
+  --red:#ef5350; --red2:#fde8e8;
+  --green:#43a047; --green2:#e8f5e9;
+  --orange:#fb8c00; --orange2:#fff3e0;
+  --blue:#1e88e5; --blue2:#e3f2fd;
+  --purple:#8e24aa; --purple2:#f3e5f5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1a4a6e 60%,#1e6fa8 100%);color:#fff;padding:36px 24px 28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;background:rgba(100,181,246,.13);pointer-events:none}
+.hero::after{content:'⚡';position:absolute;bottom:18px;right:28px;font-size:72px;opacity:.08}
+.badge{display:inline-block;background:var(--accent);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,6vw,46px);font-weight:800;line-height:1.05;letter-spacing:-.01em}
+.hero h1 span{color:var(--accent)}
+.kicker{font-size:13px;color:rgba(255,255,255,.65);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hero-tags span{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.18)}
+
+/* NAV */
+nav{background:var(--navy);display:flex;flex-wrap:wrap;gap:4px;padding:10px 16px;position:sticky;top:0;z-index:100;border-bottom:2px solid var(--accent)}
+nav a{color:rgba(255,255,255,.75);font-size:12px;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:14px;transition:.2s}
+nav a:hover{background:rgba(100,181,246,.2);color:#fff}
+
+/* MARK AS READ */
+.mar-wrap{padding:14px 20px;background:var(--paper);border-bottom:1px solid var(--line);text-align:right}
+.mar-btn{background:var(--navy);color:#fff;border:none;border-radius:20px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;padding:8px 20px;cursor:pointer;transition:.2s}
+.mar-btn.done{background:var(--green);color:#fff}
+.mar-btn:hover{opacity:.9}
+
+/* LAYOUT */
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+section{margin-bottom:28px}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.03em;color:var(--navy);margin-bottom:14px;text-transform:uppercase}
+
+/* BIG IDEA GRID */
+.big-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.big-card{background:var(--navy);color:#fff;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.big-card .icon{font-size:26px}
+.big-card .label{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.big-card .desc{font-size:13px;color:rgba(255,255,255,.75);line-height:1.45}
+
+/* TILES */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.tile{border-radius:10px;padding:14px;font-size:13.5px;line-height:1.5}
+.tile strong{display:block;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;margin-bottom:4px;text-transform:uppercase}
+.tile.red{background:var(--red2);border-left:4px solid var(--red);color:#6b1111}
+.tile.red strong{color:var(--red)}
+.tile.orange{background:var(--orange2);border-left:4px solid var(--orange);color:#5a3000}
+.tile.orange strong{color:var(--orange)}
+.tile.blue{background:var(--blue2);border-left:4px solid var(--blue);color:#0d2654}
+.tile.blue strong{color:var(--blue)}
+.tile.green{background:var(--green2);border-left:4px solid var(--green);color:#1a3d1a}
+.tile.green strong{color:var(--green)}
+.tile.purple{background:var(--purple2);border-left:4px solid var(--purple);color:#3d0a4f}
+.tile.purple strong{color:var(--purple)}
+
+/* STATEMENT BOX */
+.statement{background:var(--accent);color:var(--navy);border-radius:12px;padding:18px 20px;font-size:15.5px;font-weight:600;line-height:1.5;text-align:center}
+.statement em{font-style:normal;font-weight:800;font-size:17px}
+
+/* EXAM TIP */
+.exam-tip{background:var(--orange2);border:2px solid var(--orange);border-radius:10px;padding:14px 16px;font-size:13.5px}
+.exam-tip .tip-head{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--orange);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+
+/* WARNING */
+.warning{background:var(--red2);border:2px solid var(--red);border-radius:10px;padding:14px 16px;font-size:13.5px}
+.warning .warn-head{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--red);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+
+/* COMPARE */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmp-col{background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:14px}
+.cmp-col h4{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.cmp-col.a h4{color:var(--red)}
+.cmp-col.b h4{color:var(--blue)}
+.cmp-col ul{list-style:none;padding:0}
+.cmp-col ul li{font-size:13px;padding:4px 0;border-bottom:1px solid var(--line);line-height:1.45}
+.cmp-col ul li:last-child{border:none}
+
+/* KEYWORDS */
+.keywords{display:flex;flex-wrap:wrap;gap:8px}
+.kw{background:var(--navy);color:var(--accent);font-size:12.5px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:.03em}
+
+/* TABLE */
+.neat-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.neat-table th{background:var(--navy);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.04em;padding:8px 12px;text-align:left}
+.neat-table td{padding:8px 12px;border-bottom:1px solid var(--line);background:var(--paper)}
+.neat-table tr:nth-child(even) td{background:#f0f8ff}
+
+/* FLOW ARROWS */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:14px;background:var(--paper);border:1.5px solid var(--line);border-radius:10px}
+.flow-step{background:var(--navy);color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;text-align:center;line-height:1.3}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:900}
+
+/* QUIZ CTA */
+.quiz-cta{background:linear-gradient(135deg,var(--navy),#1a4a6e);color:#fff;border-radius:14px;padding:20px 22px;text-align:center;margin-top:10px}
+.quiz-cta p{font-size:14px;opacity:.8;margin-bottom:12px}
+.quiz-cta a{background:var(--accent);color:var(--navy);font-weight:800;font-size:14px;padding:10px 28px;border-radius:24px;text-decoration:none;display:inline-block;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.08em}
+
+@media(max-width:520px){
+  .compare{grid-template-columns:1fr}
+  .big-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Physics · Chapter 13.1</div>
+  <h1>Magnetic <span>Fields</span></h1>
+  <p class="kicker">P13 Electromagnetism &nbsp;·&nbsp; GCSE Revision</p>
+  <div class="hero-tags">
+    <span>🧲 Poles &amp; Forces</span>
+    <span>📐 Field Lines</span>
+    <span>⚡ Induced Magnetism</span>
+    <span>🔩 Magnetic Materials</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#big-ideas">Big Ideas</a>
+  <a href="#materials">Materials</a>
+  <a href="#field-lines">Field Lines</a>
+  <a href="#induced">Induced</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<!-- MARK AS READ -->
+<div class="mar-wrap">
+  <button class="mar-btn" id="marBtn" onclick="toggleRead()">Mark as read ✓</button>
+</div>
+
+<main>
+
+  <!-- BIG IDEAS -->
+  <section id="big-ideas">
+    <h2>Big Ideas</h2>
+    <div class="big-grid">
+      <div class="big-card">
+        <div class="icon">🧲</div>
+        <div class="label">Poles &amp; Forces</div>
+        <div class="desc">Every magnet has a north (N) and south (S) pole. Like poles repel; unlike poles attract.</div>
+      </div>
+      <div class="big-card">
+        <div class="icon">📐</div>
+        <div class="label">Magnetic Field</div>
+        <div class="desc">The region around a magnet where magnetic materials feel a force. Shown by field lines from N to S.</div>
+      </div>
+      <div class="big-card">
+        <div class="icon">⚡</div>
+        <div class="label">Induced Magnetism</div>
+        <div class="desc">Placing an unmagnetised iron object in a magnetic field temporarily makes it a magnet.</div>
+      </div>
+      <div class="big-card">
+        <div class="icon">🔩</div>
+        <div class="label">Steel vs Iron</div>
+        <div class="desc">Steel keeps its magnetism (permanent magnets). Iron loses it easily — used for induced/temporary magnets.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY STATEMENT -->
+  <section>
+    <div class="statement">
+      <em>Like poles repel. Unlike poles attract.</em><br>
+      The force is always <em>attractive</em> between a bar magnet and an unmagnetised magnetic material.
+    </div>
+  </section>
+
+  <!-- MAGNETIC MATERIALS -->
+  <section id="materials">
+    <h2>Magnetic Materials</h2>
+    <div class="tiles">
+      <div class="tile blue">
+        <strong>Iron &amp; Steel</strong>
+        Iron, steel, cobalt and nickel are all magnetic materials — they can be magnetised.
+      </div>
+      <div class="tile green">
+        <strong>Permanent Magnets</strong>
+        Made of steel because steel does <em>not</em> lose its magnetism easily once magnetised.
+      </div>
+      <div class="tile orange">
+        <strong>Temporary Magnets</strong>
+        Iron is used because it loses its magnetism easily — good for electromagnets and induced magnetism.
+      </div>
+      <div class="tile purple">
+        <strong>Non-magnetic</strong>
+        Most materials (e.g. plastic, wood, copper, aluminium) cannot be magnetised at all.
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE: IRON vs STEEL -->
+  <section>
+    <h2>Iron vs Steel</h2>
+    <div class="compare">
+      <div class="cmp-col a">
+        <h4>Iron</h4>
+        <ul>
+          <li>Loses magnetism easily</li>
+          <li>Used for induced / temporary magnetism</li>
+          <li>Good for electromagnets</li>
+        </ul>
+      </div>
+      <div class="cmp-col b">
+        <h4>Steel</h4>
+        <ul>
+          <li>Keeps magnetism once magnetised</li>
+          <li>Used to make permanent magnets</li>
+          <li>Harder to demagnetise</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIELD LINES -->
+  <section id="field-lines">
+    <h2>Magnetic Field Lines</h2>
+    <div class="tiles">
+      <div class="tile blue">
+        <strong>Direction</strong>
+        Field lines always go from the N-pole to the S-pole outside the magnet.
+      </div>
+      <div class="tile red">
+        <strong>Concentration</strong>
+        Lines closest together = strongest field. The field is strongest at the poles.
+      </div>
+      <div class="tile green">
+        <strong>Never Cross</strong>
+        Magnetic field lines never cross each other.
+      </div>
+      <div class="tile orange">
+        <strong>Plotting Compass</strong>
+        Aligns along the field line, pointing away from N-pole and towards S-pole of the magnet.
+      </div>
+    </div>
+
+    <!-- HOW TO PLOT A FIELD -->
+    <div style="margin-top:14px">
+      <h2>How to Plot a Magnetic Field</h2>
+      <div class="flow">
+        <div class="flow-step">Mark a dot<br>near the N-pole</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Place compass<br>tail over dot</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Mark dot at<br>tip of needle</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Move compass<br>to new dot</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Repeat until<br>reaching S-pole</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Join dots &amp;<br>add arrow (N→S)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUCED MAGNETISM -->
+  <section id="induced">
+    <h2>Induced Magnetism</h2>
+    <div class="tiles">
+      <div class="tile blue">
+        <strong>What it is</strong>
+        An unmagnetised magnetic material placed in a magnetic field becomes a magnet itself.
+      </div>
+      <div class="tile green">
+        <strong>Polarity rule</strong>
+        The nearest pole of the induced magnet is always <em>opposite</em> to the pole of the bar magnet — so it is always attracted.
+      </div>
+      <div class="tile orange">
+        <strong>Always attractive</strong>
+        The force between a bar magnet and an unmagnetised material is <em>always attraction</em>, whichever end of the bar magnet is closest.
+      </div>
+      <div class="tile purple">
+        <strong>Example</strong>
+        An iron rod placed in line with a bar magnet becomes a magnet with opposite polarity at its nearest end.
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAM TIP -->
+  <section>
+    <div class="exam-tip">
+      <div class="tip-head">⭐ Exam Tip</div>
+      If you see two magnets and they attract, they could be unlike poles <em>or</em> one could be unmagnetised. If they repel, they <em>must</em> both be magnets with like poles — an unmagnetised material never repels.
+    </div>
+  </section>
+
+  <!-- WARNING -->
+  <section>
+    <div class="warning">
+      <div class="warn-head">⚠ Common Mistake</div>
+      Students often say "the field is strongest in the middle of the magnet" — wrong! The field is strongest at the poles, where the field lines are most concentrated.
+    </div>
+  </section>
+
+  <!-- SUMMARY TABLE -->
+  <section>
+    <h2>Quick Reference</h2>
+    <table class="neat-table">
+      <tr><th>Concept</th><th>Key Fact</th></tr>
+      <tr><td>Like poles</td><td>Repel each other</td></tr>
+      <tr><td>Unlike poles</td><td>Attract each other</td></tr>
+      <tr><td>Field line direction</td><td>N-pole → S-pole (outside the magnet)</td></tr>
+      <tr><td>Strongest field</td><td>At the poles (lines closest together)</td></tr>
+      <tr><td>Plotting compass</td><td>Points in direction of field (away from N-pole)</td></tr>
+      <tr><td>Induced magnetism</td><td>Nearest pole is always opposite → always attracted</td></tr>
+      <tr><td>Permanent magnet material</td><td>Steel (doesn't lose magnetism)</td></tr>
+      <tr><td>Temporary magnet material</td><td>Iron (loses magnetism easily)</td></tr>
+    </table>
+  </section>
+
+  <!-- KEYWORDS -->
+  <section id="keywords">
+    <h2>Key Terms</h2>
+    <div class="keywords">
+      <span class="kw">Magnetic field</span>
+      <span class="kw">N-pole</span>
+      <span class="kw">S-pole</span>
+      <span class="kw">Field lines</span>
+      <span class="kw">Lines of force</span>
+      <span class="kw">Plotting compass</span>
+      <span class="kw">Induced magnetism</span>
+      <span class="kw">Magnetic material</span>
+      <span class="kw">Permanent magnet</span>
+      <span class="kw">Demagnetise</span>
+      <span class="kw">Attract</span>
+      <span class="kw">Repel</span>
+      <span class="kw">Cobalt</span>
+      <span class="kw">Nickel</span>
+    </div>
+  </section>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <p>Ready to test yourself?</p>
+    <a href="physics-13-1-quickcheck.html">Take the Quick Check Quiz →</a>
+  </div>
+
+</main>
+
+<script>
+function toggleRead(){
+  const btn=document.getElementById('marBtn');
+  const key='physics-13-1-read';
+  const done=localStorage.getItem(key)==='1';
+  if(done){localStorage.removeItem(key);btn.textContent='Mark as read ✓';btn.classList.remove('done')}
+  else{localStorage.setItem(key,'1');btn.textContent='✅ Read!';btn.classList.add('done')}
+}
+(function(){
+  if(localStorage.getItem('physics-13-1-read')==='1'){
+    const btn=document.getElementById('marBtn');
+    btn.textContent='✅ Read!';btn.classList.add('done');
+  }
+})();
+</script>
+</body>
+</html>

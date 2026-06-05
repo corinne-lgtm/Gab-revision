@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P9.3 Quick Check — More about Velocity–Time Graphs</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b5e;
+    --muted: #5a7a94;
+    --line: #c9dff0;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #26a69a;
+    --green2: #e0f2f1;
+    --orange: #ffa726;
+    --orange2: #fff3e0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    min-height: 42px;
+    border-bottom: 1px solid rgba(100,181,246,0.15);
+  }
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 10px;
+    border-radius: 4px;
+    transition: color 0.15s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: white; }
+  nav .sep { color: rgba(255,255,255,0.3); font-size: 11px; padding: 0 2px; }
+  nav .current { color: rgba(255,255,255,0.45); font-size: 12px; padding: 10px 6px; white-space: nowrap; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(140deg, #0d2b5e 0%, #1a4a8a 55%, #0d4f6e 100%);
+    color: white;
+    padding: 28px 24px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 20px,
+      rgba(100,181,246,0.05) 20px, rgba(100,181,246,0.05) 21px
+    );
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 34px;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: rgba(0,0,0,0.25);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .score-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: white;
+    min-width: 44px;
+  }
+  .score-num span { color: var(--accent); }
+  .progress-wrap { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .progress-track {
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), #90caf9);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 28px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 0 2px;
+  }
+
+  /* Q CARD */
+  .q-card {
+    background: var(--paper);
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    padding: 20px 22px;
+    transition: border-color 0.2s;
+  }
+  .q-card.answered { border-color: transparent; }
+  .q-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); background: #deeefb; }
+  .opt-btn:disabled { cursor: default; }
+  .opt-letter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    background: var(--line);
+    color: var(--navy);
+    width: 24px; height: 24px;
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .opt-btn.correct { background: var(--green2); border-color: var(--green); color: #1a4d40; }
+  .opt-btn.correct .opt-letter { background: var(--green); color: white; }
+  .opt-btn.wrong { background: var(--red2); border-color: var(--red); color: #7f0000; }
+  .opt-btn.wrong .opt-letter { background: var(--red); color: white; }
+
+  /* TF BUTTONS */
+  .tf-wrap { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #deeefb; }
+  .tf-btn:disabled { cursor: default; }
+  .tf-btn.correct { background: var(--green2); border-color: var(--green); color: #1a4d40; }
+  .tf-btn.wrong   { background: var(--red2);   border-color: var(--red);   color: #7f0000; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: #1a4d40; border-left: 4px solid var(--green); }
+  .feedback.wrong   { background: var(--red2);   color: #7f0000; border-left: 4px solid var(--red); }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 16px;
+    border: 2px solid var(--line);
+    padding: 36px 28px;
+    text-align: center;
+    margin-top: 12px;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 52px; margin-bottom: 10px; }
+  .result-score {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .result-score span { color: var(--accent); }
+  .result-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .result-msg {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .mum-msg {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #6d3200;
+    margin-bottom: 20px;
+  }
+  .reset-btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reset-btn:hover { background: #1a4a8a; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">›</span>
+  <a href="physics-p9-3-revision.html">📖 Revision</a>
+  <span class="sep">›</span>
+  <span class="current">P9.3 Quick Check</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="badge">⚡ Quick Check · P9.3</div>
+    <h1>More about <span>Velocity–Time</span> Graphs</h1>
+    <p class="hero-sub">20 questions · Gradient · Area · Braking · Unit conversion</p>
+  </div>
+  <div class="score-bar">
+    <div class="score-num" id="scoreDisplay">0<span>/20</span></div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <div class="section-label">Part 1 — Multiple Choice</div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="mc-0">
+    <div class="q-num">Question 1 of 20</div>
+    <div class="q-text">What does the gradient of a velocity–time graph represent?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(0,'A')"><span class="opt-letter">A</span>Speed</button>
+      <button class="opt-btn" onclick="answerMC(0,'B')"><span class="opt-letter">B</span>Distance</button>
+      <button class="opt-btn" onclick="answerMC(0,'C')"><span class="opt-letter">C</span>Acceleration</button>
+      <button class="opt-btn" onclick="answerMC(0,'D')"><span class="opt-letter">D</span>Displacement</button>
+    </div>
+    <div class="feedback" id="mc-fb-0"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="mc-1">
+    <div class="q-num">Question 2 of 20</div>
+    <div class="q-text">A horizontal line on a velocity–time graph means the object is…</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(1,'A')"><span class="opt-letter">A</span>Accelerating</button>
+      <button class="opt-btn" onclick="answerMC(1,'B')"><span class="opt-letter">B</span>Decelerating</button>
+      <button class="opt-btn" onclick="answerMC(1,'C')"><span class="opt-letter">C</span>Stationary</button>
+      <button class="opt-btn" onclick="answerMC(1,'D')"><span class="opt-letter">D</span>Moving at constant velocity</button>
+    </div>
+    <div class="feedback" id="mc-fb-1"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="mc-2">
+    <div class="q-num">Question 3 of 20</div>
+    <div class="q-text">A car accelerates from 0 m/s to 30 m/s in 6 seconds. What is its acceleration?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(2,'A')"><span class="opt-letter">A</span>5 m/s²</button>
+      <button class="opt-btn" onclick="answerMC(2,'B')"><span class="opt-letter">B</span>180 m/s²</button>
+      <button class="opt-btn" onclick="answerMC(2,'C')"><span class="opt-letter">C</span>0.2 m/s²</button>
+      <button class="opt-btn" onclick="answerMC(2,'D')"><span class="opt-letter">D</span>36 m/s²</button>
+    </div>
+    <div class="feedback" id="mc-fb-2"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="mc-3">
+    <div class="q-num">Question 4 of 20</div>
+    <div class="q-text">What does the area under a velocity–time graph represent?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(3,'A')"><span class="opt-letter">A</span>Acceleration</button>
+      <button class="opt-btn" onclick="answerMC(3,'B')"><span class="opt-letter">B</span>Distance travelled</button>
+      <button class="opt-btn" onclick="answerMC(3,'C')"><span class="opt-letter">C</span>Speed</button>
+      <button class="opt-btn" onclick="answerMC(3,'D')"><span class="opt-letter">D</span>Time</button>
+    </div>
+    <div class="feedback" id="mc-fb-3"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="mc-4">
+    <div class="q-num">Question 5 of 20</div>
+    <div class="q-text">An object travels at 12 m/s for 5 seconds. What is the area under the v–t graph (a rectangle)?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(4,'A')"><span class="opt-letter">A</span>2.4 m</button>
+      <button class="opt-btn" onclick="answerMC(4,'B')"><span class="opt-letter">B</span>17 m</button>
+      <button class="opt-btn" onclick="answerMC(4,'C')"><span class="opt-letter">C</span>60 m</button>
+      <button class="opt-btn" onclick="answerMC(4,'D')"><span class="opt-letter">D</span>30 m</button>
+    </div>
+    <div class="feedback" id="mc-fb-4"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="mc-5">
+    <div class="q-num">Question 6 of 20</div>
+    <div class="q-text">A car brakes from 20 m/s to 0 m/s in 4 seconds. What shape does this form on a v–t graph, and what is the distance travelled during braking?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(5,'A')"><span class="opt-letter">A</span>Rectangle — 80 m</button>
+      <button class="opt-btn" onclick="answerMC(5,'B')"><span class="opt-letter">B</span>Triangle — 40 m</button>
+      <button class="opt-btn" onclick="answerMC(5,'C')"><span class="opt-letter">C</span>Triangle — 80 m</button>
+      <button class="opt-btn" onclick="answerMC(5,'D')"><span class="opt-letter">D</span>Rectangle — 40 m</button>
+    </div>
+    <div class="feedback" id="mc-fb-5"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="mc-6">
+    <div class="q-num">Question 7 of 20</div>
+    <div class="q-text">Convert 72 km/h into m/s.</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(6,'A')"><span class="opt-letter">A</span>7.2 m/s</button>
+      <button class="opt-btn" onclick="answerMC(6,'B')"><span class="opt-letter">B</span>259 200 m/s</button>
+      <button class="opt-btn" onclick="answerMC(6,'C')"><span class="opt-letter">C</span>20 m/s</button>
+      <button class="opt-btn" onclick="answerMC(6,'D')"><span class="opt-letter">D</span>0.02 m/s</button>
+    </div>
+    <div class="feedback" id="mc-fb-6"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="mc-7">
+    <div class="q-num">Question 8 of 20</div>
+    <div class="q-text">In the acceleration experiment, what device records the changing velocity of the trolley over time?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(7,'A')"><span class="opt-letter">A</span>Voltmeter</button>
+      <button class="opt-btn" onclick="answerMC(7,'B')"><span class="opt-letter">B</span>Motion sensor connected to a computer</button>
+      <button class="opt-btn" onclick="answerMC(7,'C')"><span class="opt-letter">C</span>Stopwatch and ruler</button>
+      <button class="opt-btn" onclick="answerMC(7,'D')"><span class="opt-letter">D</span>Ticker timer only</button>
+    </div>
+    <div class="feedback" id="mc-fb-7"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="mc-8">
+    <div class="q-num">Question 9 of 20</div>
+    <div class="q-text">A v–t graph has a steeper upward slope than another. What does this tell you?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(8,'A')"><span class="opt-letter">A</span>The object is moving faster</button>
+      <button class="opt-btn" onclick="answerMC(8,'B')"><span class="opt-letter">B</span>The object has a greater acceleration</button>
+      <button class="opt-btn" onclick="answerMC(8,'C')"><span class="opt-letter">C</span>The object has travelled further</button>
+      <button class="opt-btn" onclick="answerMC(8,'D')"><span class="opt-letter">D</span>The object is decelerating</button>
+    </div>
+    <div class="feedback" id="mc-fb-8"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="mc-9">
+    <div class="q-num">Question 10 of 20</div>
+    <div class="q-text">A car travels at constant velocity for 10 s, then decelerates to rest in 5 s. Its velocity throughout was 20 m/s. What is the total distance travelled?</div>
+    <div class="options">
+      <button class="opt-btn" onclick="answerMC(9,'A')"><span class="opt-letter">A</span>200 m</button>
+      <button class="opt-btn" onclick="answerMC(9,'B')"><span class="opt-letter">B</span>300 m</button>
+      <button class="opt-btn" onclick="answerMC(9,'C')"><span class="opt-letter">C</span>250 m</button>
+      <button class="opt-btn" onclick="answerMC(9,'D')"><span class="opt-letter">D</span>150 m</button>
+    </div>
+    <div class="feedback" id="mc-fb-9"></div>
+  </div>
+
+  <div class="section-label">Part 2 — True or False</div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="tf-0">
+    <div class="q-num">Question 11 of 20</div>
+    <div class="q-text">A negative gradient on a velocity–time graph means the object is decelerating.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(0,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(0,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-0"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="tf-1">
+    <div class="q-num">Question 12 of 20</div>
+    <div class="q-text">The area under a velocity–time graph is always a rectangle.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(1,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(1,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-1"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="tf-2">
+    <div class="q-num">Question 13 of 20</div>
+    <div class="q-text">To convert km/h to m/s, you divide by 3.6.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(2,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(2,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-2"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="tf-3">
+    <div class="q-num">Question 14 of 20</div>
+    <div class="q-text">A straight line going upward on a v–t graph means the object has a constant velocity.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(3,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(3,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-3"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="tf-4">
+    <div class="q-num">Question 15 of 20</div>
+    <div class="q-text">When calculating the distance during braking (an object slows from a velocity to rest), the area is a triangle, calculated as ½ × base × height.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(4,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(4,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-4"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="tf-5">
+    <div class="q-num">Question 16 of 20</div>
+    <div class="q-text">A velocity–time graph with a steeper gradient always means the object is moving faster.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(5,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(5,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-5"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="tf-6">
+    <div class="q-num">Question 17 of 20</div>
+    <div class="q-text">In the acceleration experiment, the independent variable is the steepness of the runway.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(6,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(6,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-6"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="tf-7">
+    <div class="q-num">Question 18 of 20</div>
+    <div class="q-text">Acceleration is calculated as: a = (v − u) ÷ t, where v is final velocity and u is initial velocity.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(7,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(7,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-7"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="tf-8">
+    <div class="q-num">Question 19 of 20</div>
+    <div class="q-text">A horizontal line at v = 0 on a velocity–time graph means the object is stationary.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(8,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(8,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-8"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="tf-9">
+    <div class="q-num">Question 20 of 20</div>
+    <div class="q-text">Displacement and distance are always the same value.</div>
+    <div class="tf-wrap">
+      <button class="tf-btn" onclick="answerTF(9,true)">TRUE</button>
+      <button class="tf-btn" onclick="answerTF(9,false)">FALSE</button>
+    </div>
+    <div class="feedback" id="tf-fb-9"></div>
+  </div>
+
+  <!-- RESULT BOX -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="mum-msg" id="mumMsg"></div>
+    <button class="reset-btn" onclick="resetQuiz()">Try Again ↺</button>
+  </div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p9-3-score';
+const TOTAL = 20;
+let score = 0;
+let answered = 0;
+
+// ── MCQ DATA ──
+const mcq = [
+  { correct: 'C', feedback: 'Gradient = Δvelocity ÷ Δtime = acceleration (m/s²).' },
+  { correct: 'D', feedback: 'Horizontal line → velocity not changing → zero acceleration → constant velocity.' },
+  { correct: 'A', feedback: 'a = (30 − 0) ÷ 6 = 5 m/s².' },
+  { correct: 'B', feedback: 'Area under a v–t graph = distance (or displacement) travelled.' },
+  { correct: 'C', feedback: 'Rectangle area = base × height = 5 × 12 = 60 m.' },
+  { correct: 'B', feedback: 'Braking = triangle. d = ½ × 4 × 20 = 40 m.' },
+  { correct: 'C', feedback: '72 ÷ 3.6 = 20 m/s. Always divide km/h by 3.6.' },
+  { correct: 'B', feedback: 'A motion sensor linked to a computer records velocity vs time directly, producing the v–t graph.' },
+  { correct: 'B', feedback: 'A steeper slope means a greater gradient = greater acceleration, not necessarily a higher speed.' },
+  { correct: 'C', feedback: 'Rectangle: 20 × 10 = 200 m. Triangle: ½ × 5 × 20 = 50 m. Total = 250 m.' },
+];
+
+// ── TF DATA ──
+const tfs = [
+  { correct: true,  feedback: 'Correct. Negative gradient means velocity is decreasing — that is deceleration.' },
+  { correct: false, feedback: 'Not always. The area can be a triangle (during acceleration/deceleration) or a trapezium.' },
+  { correct: true,  feedback: 'Correct. Divide by 3.6. E.g. 72 km/h ÷ 3.6 = 20 m/s.' },
+  { correct: false, feedback: 'False. A straight line going upward means constant acceleration (velocity is increasing at a steady rate).' },
+  { correct: true,  feedback: 'Correct. ½ × base × height — don\'t forget the ½ for triangle areas!' },
+  { correct: false, feedback: 'False. A steeper gradient means a greater acceleration, not necessarily a higher speed. The height of the line tells you the speed.' },
+  { correct: true,  feedback: 'Correct. The independent variable is what you deliberately change — here, the angle/steepness of the runway.' },
+  { correct: true,  feedback: 'Correct. a = (v − u) ÷ t is the standard equation for acceleration.' },
+  { correct: true,  feedback: 'Correct. v = 0 and staying at 0 means no movement — the object is stationary.' },
+  { correct: false, feedback: 'False. Displacement is distance in a specific direction (a vector). They are only equal if motion is in a straight line with no change in direction.' },
+];
+
+// ── ANSWER MCQ ──
+function answerMC(qIndex, chosen) {
+  const card = document.getElementById('mc-' + qIndex);
+  const btns = card.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const correct = mcq[qIndex].correct;
+  const letters = ['A','B','C','D'];
+  const correctIdx = letters.indexOf(correct);
+  const chosenIdx  = letters.indexOf(chosen);
+
+  btns[correctIdx].classList.add('correct');
+  const fb = document.getElementById('mc-fb-' + qIndex);
+  if (chosen === correct) {
+    score++;
+    fb.textContent = '✓ Correct! ' + mcq[qIndex].feedback;
+    fb.className = 'feedback show correct';
+  } else {
+    btns[chosenIdx].classList.add('wrong');
+    fb.textContent = '✗ Not quite. ' + mcq[qIndex].feedback;
+    fb.className = 'feedback show wrong';
+  }
+  card.classList.add('answered');
+  answered++;
+  updateProgress();
+  if (answered === TOTAL) showResult();
+}
+
+// ── ANSWER TF ──
+function answerTF(qIndex, chosen) {
+  const card = document.getElementById('tf-' + qIndex);
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const correct = tfs[qIndex].correct;
+  const correctIdx = correct ? 0 : 1;
+  const chosenIdx  = chosen  ? 0 : 1;
+
+  btns[correctIdx].classList.add('correct');
+  const fb = document.getElementById('tf-fb-' + qIndex);
+  if (chosen === correct) {
+    score++;
+    fb.textContent = '✓ Correct! ' + tfs[qIndex].feedback;
+    fb.className = 'feedback show correct';
+  } else {
+    btns[chosenIdx].classList.add('wrong');
+    fb.textContent = '✗ Not quite. ' + tfs[qIndex].feedback;
+    fb.className = 'feedback show wrong';
+  }
+  card.classList.add('answered');
+  answered++;
+  updateProgress();
+  if (answered === TOTAL) showResult();
+}
+
+// ── PROGRESS ──
+function updateProgress() {
+  const pct = Math.round((answered / TOTAL) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = answered + ' / ' + TOTAL + ' answered';
+  document.getElementById('scoreDisplay').innerHTML = score + '<span>/' + TOTAL + '</span>';
+}
+
+// ── RESULT ──
+function showResult() {
+  localStorage.setItem(SCORE_KEY, score + '/20');
+
+  const box = document.getElementById('resultBox');
+  document.getElementById('resultScore').innerHTML = score + '<span>/20</span>';
+
+  let emoji, title, msg;
+  if (score >= 18) {
+    emoji = '🏆'; title = 'Outstanding!';
+    msg = 'You\'ve really nailed velocity–time graphs. Excellent work!';
+  } else if (score >= 14) {
+    emoji = '🎉'; title = 'Great effort!';
+    msg = 'Solid understanding — review the questions you missed and you\'ll be perfect.';
+  } else if (score >= 10) {
+    emoji = '📚'; title = 'Keep going!';
+    msg = 'You\'re getting there. Go back over the revision notes on gradients and area, then try again.';
+  } else {
+    emoji = '💪'; title = 'Have another go!';
+    msg = 'Re-read the P9.3 revision page carefully, especially the formulas and graph shapes.';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('mumMsg').textContent = '👩 Show this to mum — ' + score + '/20';
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ── RESET ──
+function resetQuiz() {
+  score = 0; answered = 0;
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressLabel').textContent = '0 / 20 answered';
+  document.getElementById('scoreDisplay').innerHTML = '0<span>/20</span>';
+  document.getElementById('resultBox').classList.remove('show');
+
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.disabled = false;
+    b.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.tf-btn').forEach(b => {
+    b.disabled = false;
+    b.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.feedback').forEach(f => {
+    f.className = 'feedback';
+    f.textContent = '';
+  });
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

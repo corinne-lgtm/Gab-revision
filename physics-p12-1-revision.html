@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.1 The Electromagnetic Spectrum — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --line: #c8dff0;
+    --red: #e53935;
+    --red2: #ffebee;
+    --orange: #ef6c00;
+    --orange2: #fff3e0;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --blue: #1565c0;
+    --blue2: #e3f2fd;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --yellow: #f9a825;
+    --yellow2: #fffde7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1e6a9e 100%);
+    color: white;
+    padding: 28px 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 30%;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #cde8fb;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--navy);
+    padding: 0 16px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 14px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .nav a:hover { color: white; border-color: var(--accent); }
+
+  /* ── MARK AS READ ── */
+  .mark-bar {
+    background: var(--paper);
+    border-bottom: 2px solid var(--line);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .mark-bar span { font-size: 13px; font-weight: 600; color: var(--muted); }
+  #markBtn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 7px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  #markBtn:hover { background: #42a5f5; transform: scale(1.03); }
+  #markBtn.done { background: var(--green); color: white; }
+
+  /* ── CHECKLIST ── */
+  .checklist-section {
+    background: var(--paper);
+    margin: 16px 16px 0;
+    border-radius: 12px;
+    padding: 16px;
+    border: 2px solid var(--line);
+  }
+  .checklist-section h2 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .obj-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .obj-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: background .15s;
+    user-select: none;
+  }
+  .obj-item:hover { background: #d4ecfa; }
+  .obj-item input[type=checkbox] { display: none; }
+  .obj-tick {
+    width: 20px; height: 20px; min-width: 20px;
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: background .15s;
+  }
+  .obj-item.checked .obj-tick { background: var(--green); border-color: var(--green); color: white; }
+  .obj-text { font-size: 13px; font-weight: 600; }
+  .obj-item.checked .obj-text { text-decoration: line-through; color: var(--muted); }
+
+  .progress-bar-wrap {
+    margin-top: 12px;
+    background: var(--line);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #1976d2);
+    border-radius: 10px;
+    transition: width .4s ease;
+  }
+  .progress-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 5px;
+    text-align: right;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .panel {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 16px;
+    border: 2px solid var(--line);
+  }
+  .panel h2 {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel h2 .icon {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: var(--accent);
+    color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* big idea grid */
+  .big-idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .big-idea-card {
+    padding: 12px;
+    border-radius: 10px;
+    border-left: 4px solid;
+  }
+  .big-idea-card.red { background: var(--red2); border-color: var(--red); }
+  .big-idea-card.orange { background: var(--orange2); border-color: var(--orange); }
+  .big-idea-card.blue { background: var(--blue2); border-color: var(--blue); }
+  .big-idea-card.purple { background: var(--purple2); border-color: var(--purple); }
+  .big-idea-card .card-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .big-idea-card.red .card-title { color: var(--red); }
+  .big-idea-card.orange .card-title { color: var(--orange); }
+  .big-idea-card.blue .card-title { color: var(--blue); }
+  .big-idea-card.purple .card-title { color: var(--purple); }
+  .big-idea-card p { font-size: 12px; font-weight: 600; color: var(--ink); }
+
+  /* formula highlight */
+  .formula-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .formula-box .formula-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .formula-main {
+    font-family: 'Fira Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .formula-words { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .formula-rearranged {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .formula-rearranged .mini {
+    font-family: 'Fira Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+  }
+  .formula-rearranged .mini span { display: block; font-size: 10px; color: rgba(255,255,255,0.5); font-family: 'Nunito', sans-serif; margin-top: 2px; }
+
+  /* statement box */
+  .statement-box {
+    background: var(--blue2);
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .statement-box p { font-size: 13px; font-weight: 600; color: var(--blue); }
+  .statement-box strong { color: var(--navy); }
+
+  /* exam tip */
+  .exam-tip {
+    background: var(--yellow2);
+    border: 2px solid var(--yellow);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .exam-tip .tip-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 6px;
+  }
+  .exam-tip p { font-size: 13px; font-weight: 600; color: #5d4037; }
+
+  /* warning box */
+  .warning-box {
+    background: var(--red2);
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .warning-box .warn-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .warning-box p { font-size: 13px; font-weight: 600; color: #b71c1c; }
+
+  /* compare 2-col */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .compare-col { background: var(--bg); border-radius: 10px; padding: 12px; }
+  .compare-col h3 { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .compare-col li {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: var(--paper);
+    border-left: 3px solid var(--accent);
+  }
+
+  /* spectrum order */
+  .spectrum-bar {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .spectrum-segments {
+    display: flex;
+    height: 32px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .seg {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .seg-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 0 2px;
+  }
+
+  /* units table */
+  .units-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .units-table th {
+    background: var(--navy);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    text-align: left;
+  }
+  .units-table td { padding: 8px 10px; border-bottom: 1px solid var(--line); font-weight: 600; }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table tr:nth-child(even) td { background: var(--bg); }
+  .units-table code {
+    font-family: 'Fira Mono', monospace;
+    font-size: 12px;
+    background: var(--blue2);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--blue);
+  }
+
+  /* keywords */
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; }
+  .kw-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: default;
+  }
+  .kw-pill.blue { background: var(--blue2); color: var(--blue); border: 1.5px solid #90caf9; }
+  .kw-pill.purple { background: var(--purple2); color: var(--purple); border: 1.5px solid #ce93d8; }
+  .kw-pill.green { background: var(--green2); color: var(--green); border: 1.5px solid #a5d6a7; }
+  .kw-pill.orange { background: var(--orange2); color: var(--orange); border: 1.5px solid #ffcc80; }
+  .kw-pill.red { background: var(--red2); color: var(--red); border: 1.5px solid #ef9a9a; }
+
+  /* interactive canvas */
+  .canvas-wrap {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 16px;
+    color: white;
+  }
+  .canvas-wrap h3 { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .slider-row label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.7); min-width: 80px; }
+  .slider-row input[type=range] {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+  .slider-val {
+    font-family: 'Fira Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    min-width: 90px;
+    text-align: right;
+  }
+  .calc-result {
+    background: rgba(100,181,246,0.12);
+    border: 1px solid rgba(100,181,246,0.3);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .calc-result .res-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .calc-result .res-val { font-family: 'Fira Mono', monospace; font-size: 20px; color: white; font-weight: 500; }
+  .region-tag {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* quiz CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy), #1a4a6e);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+  .quiz-cta p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+  .quiz-cta a {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 14px;
+    padding: 10px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background .2s, transform .1s;
+  }
+  .quiz-cta a:hover { background: #42a5f5; transform: scale(1.03); }
+
+  @media (max-width: 480px) {
+    .big-idea-grid { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · Topic P12</div>
+  <div class="hero-badge">📡 GCSE Revision</div>
+  <h1>The Electromagnetic Spectrum</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">Wave Speed Equation</span>
+    <span class="hero-tag">EM Spectrum Order</span>
+    <span class="hero-tag">Frequency & Wavelength</span>
+    <span class="hero-tag">Energy of Waves</span>
+    <span class="hero-tag">Photons</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#objectives">Objectives</a>
+  <a href="#bigideas">Big Ideas</a>
+  <a href="#formula">Formula</a>
+  <a href="#spectrum">Spectrum</a>
+  <a href="#compare">Compare</a>
+  <a href="#units">Units</a>
+  <a href="#calculator">Calculator</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<!-- MARK AS READ BAR -->
+<div class="mark-bar">
+  <span>Track your progress</span>
+  <button id="markBtn" onclick="markRead()">✓ Mark as read</button>
+</div>
+
+<!-- LEARNING OBJECTIVES CHECKLIST -->
+<section class="checklist-section" id="objectives">
+  <h2>📋 Learning Objectives</h2>
+  <ul class="obj-list" id="objList">
+    <li class="obj-item" onclick="toggleObj(this,'obj1')" data-key="obj1">
+      <div class="obj-tick">✓</div>
+      <span class="obj-text">Describe the parts of the electromagnetic spectrum</span>
+    </li>
+    <li class="obj-item" onclick="toggleObj(this,'obj2')" data-key="obj2">
+      <div class="obj-tick">✓</div>
+      <span class="obj-text">State the range of wavelengths the human eye can detect</span>
+    </li>
+    <li class="obj-item" onclick="toggleObj(this,'obj3')" data-key="obj3">
+      <div class="obj-tick">✓</div>
+      <span class="obj-text">Explain how energy is transferred by electromagnetic waves</span>
+    </li>
+    <li class="obj-item" onclick="toggleObj(this,'obj4')" data-key="obj4">
+      <div class="obj-tick">✓</div>
+      <span class="obj-text">Calculate the frequency or wavelength using v = fλ</span>
+    </li>
+  </ul>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progFill" style="width:0%"></div>
+  </div>
+  <p class="progress-label" id="progLabel">0 / 4 complete</p>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- BIG IDEAS -->
+  <div class="panel" id="bigideas">
+    <h2><span class="icon">💡</span>Big Ideas</h2>
+    <div class="big-idea-grid">
+      <div class="big-idea-card red">
+        <div class="card-title">Same Speed</div>
+        <p>All EM waves travel at 3.0 × 10⁸ m/s in a vacuum — the speed of light.</p>
+      </div>
+      <div class="big-idea-card orange">
+        <div class="card-title">Transverse Waves</div>
+        <p>EM waves are transverse — electric and magnetic disturbances that transfer energy.</p>
+      </div>
+      <div class="big-idea-card blue">
+        <div class="card-title">No Matter Needed</div>
+        <p>EM waves do not transfer matter — only energy, from a source to an absorber.</p>
+      </div>
+      <div class="big-idea-card purple">
+        <div class="card-title">Energy ∝ Frequency</div>
+        <p>Higher frequency = shorter wavelength = more energy per photon (gamma rays most energetic).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div id="formula">
+    <div class="section-label">Core Equation</div>
+    <div class="formula-box">
+      <div class="formula-label">Wave Speed Equation</div>
+      <div class="formula-main">v = f × λ</div>
+      <div class="formula-words">wave speed (m/s) = frequency (Hz) × wavelength (m)</div>
+      <div class="formula-rearranged">
+        <div class="mini">f = v ÷ λ<span>to find frequency</span></div>
+        <div class="mini">λ = v ÷ f<span>to find wavelength</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATEMENT BOX -->
+  <div class="statement-box">
+    <p>All electromagnetic waves travel at <strong>3.0 × 10⁸ m/s</strong> through a vacuum. The speed stays the same — so as <strong>frequency increases, wavelength decreases</strong> proportionally.</p>
+  </div>
+
+  <!-- SPECTRUM ORDER -->
+  <div class="panel" id="spectrum">
+    <h2><span class="icon">🌈</span>Spectrum Order</h2>
+    <div class="section-label">Decreasing wavelength → Increasing frequency & energy</div>
+    <div class="spectrum-segments">
+      <div class="seg" style="background:#8B0000;">Radio</div>
+      <div class="seg" style="background:#4a1a8c;">Micro</div>
+      <div class="seg" style="background:#b22222;">IR</div>
+      <div class="seg" style="background:linear-gradient(90deg,#ff0000,#ff7700,#ffff00,#00aa00,#0000ff,#4b0082,#8b00ff);">Visible</div>
+      <div class="seg" style="background:#4b0082;">UV</div>
+      <div class="seg" style="background:#1a1a4e;">X-ray</div>
+      <div class="seg" style="background:#0a0a2e;">γ-rays</div>
+    </div>
+    <div class="seg-labels">
+      <span>Longest λ · Lowest f · Lowest E</span>
+      <span>Shortest λ · Highest f · Highest E →</span>
+    </div>
+
+    <div style="margin-top:14px; display:flex; flex-direction:column; gap:6px;">
+      <div style="background:var(--blue2);border-radius:8px;padding:10px 12px;font-size:12px;font-weight:600;color:var(--blue);">
+        📻 <strong>Radio waves:</strong> wavelengths up to 10 km (10⁴ m) — longest
+      </div>
+      <div style="background:var(--purple2);border-radius:8px;padding:10px 12px;font-size:12px;font-weight:600;color:var(--purple);">
+        👁 <strong>Visible light:</strong> just below 400 nm to above 700 nm — only part humans can see
+      </div>
+      <div style="background:var(--red2);border-radius:8px;padding:10px 12px;font-size:12px;font-weight:600;color:var(--red);">
+        ☢ <strong>Gamma / X-rays:</strong> as short as 10⁻¹² m — shortest wavelength, highest energy
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM TIP -->
+  <div class="exam-tip">
+    <div class="tip-label">⭐ Exam Tip</div>
+    <p>Use standard form for large values in calculations. For example, 300 000 000 m/s is written as 3.0 × 10⁸ m/s and 900 000 000 Hz as 9.0 × 10⁸ Hz. Your calculator should have an EXP or ×10ˣ button.</p>
+  </div>
+
+  <!-- COMPARE -->
+  <div class="panel" id="compare">
+    <h2><span class="icon">⚖️</span>Compare: Radio vs Gamma</h2>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <h3>📻 Radio Waves</h3>
+        <ul>
+          <li>Longest wavelength</li>
+          <li>Lowest frequency</li>
+          <li>Lowest energy</li>
+          <li>Wavelength up to 10⁴ m</li>
+          <li>Used in communications</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <h3>☢️ Gamma Rays</h3>
+        <ul>
+          <li>Shortest wavelength</li>
+          <li>Highest frequency</li>
+          <li>Highest energy per photon</li>
+          <li>Wavelength ~10⁻¹² m</li>
+          <li>Emitted by nuclei</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNITS TABLE -->
+  <div class="panel" id="units">
+    <h2><span class="icon">📐</span>Units & Quantities</h2>
+    <table class="units-table">
+      <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Notes</th></tr>
+      <tr><td>Wave speed</td><td><code>v</code></td><td>m/s</td><td>3.0 × 10⁸ m/s for all EM waves in vacuum</td></tr>
+      <tr><td>Frequency</td><td><code>f</code></td><td>Hz (hertz)</td><td>Waves per second; 1 Hz = 1 s⁻¹</td></tr>
+      <tr><td>Wavelength</td><td><code>λ</code></td><td>m (metres)</td><td>Distance between wave peaks</td></tr>
+      <tr><td>Energy</td><td><code>E</code></td><td>J (joule)</td><td>Proportional to frequency</td></tr>
+    </table>
+  </div>
+
+  <!-- INTERACTIVE CALCULATOR -->
+  <div class="canvas-wrap" id="calculator">
+    <h3>🧮 Interactive Wave Calculator</h3>
+    <div class="slider-row">
+      <label>Frequency</label>
+      <input type="range" id="freqSlider" min="1" max="100" value="10" oninput="calcWave()">
+      <span class="slider-val" id="freqVal">–</span>
+    </div>
+    <div class="calc-result">
+      <div class="res-label">Calculated Wavelength</div>
+      <div class="res-val" id="waveResult">–</div>
+      <div class="region-tag" id="regionTag">–</div>
+    </div>
+    <p style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:10px;text-align:center;">v = 3.0 × 10⁸ m/s · λ = v ÷ f</p>
+  </div>
+
+  <!-- WARNING -->
+  <div class="warning-box">
+    <div class="warn-label">⚠️ Don't Confuse</div>
+    <p>The <strong>boundaries of the spectrum are not fixed</strong> — different parts blend into each other and the exact dividing lines are approximate. Never write exact boundary values as if they are precise in an exam.</p>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="panel" id="keywords">
+    <h2><span class="icon">🔑</span>Keywords</h2>
+    <div class="keywords">
+      <span class="kw-pill blue">Electromagnetic spectrum</span>
+      <span class="kw-pill blue">Wave speed (v)</span>
+      <span class="kw-pill blue">Frequency (f)</span>
+      <span class="kw-pill blue">Wavelength (λ)</span>
+      <span class="kw-pill purple">Photon</span>
+      <span class="kw-pill purple">Transverse wave</span>
+      <span class="kw-pill green">Radio waves</span>
+      <span class="kw-pill green">Microwaves</span>
+      <span class="kw-pill green">Infrared</span>
+      <span class="kw-pill green">Visible light</span>
+      <span class="kw-pill orange">Ultraviolet</span>
+      <span class="kw-pill orange">X-rays</span>
+      <span class="kw-pill red">Gamma rays</span>
+      <span class="kw-pill red">Ionising radiation</span>
+      <span class="kw-pill blue">Standard form</span>
+      <span class="kw-pill purple">Absorber</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <p>Ready to test yourself on P12.1?</p>
+    <a href="physics-p12-1-quickcheck.html">Take the Quick Check Quiz →</a>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+  // ── Mark as read ──
+  const READ_KEY = 'physics-p12-1-read';
+  function markRead() {
+    const btn = document.getElementById('markBtn');
+    const isDone = localStorage.getItem(READ_KEY) === 'true';
+    if (!isDone) {
+      localStorage.setItem(READ_KEY, 'true');
+      btn.textContent = '✓ Marked as read!';
+      btn.classList.add('done');
+    } else {
+      localStorage.removeItem(READ_KEY);
+      btn.textContent = '✓ Mark as read';
+      btn.classList.remove('done');
+    }
+  }
+  if (localStorage.getItem(READ_KEY) === 'true') {
+    const btn = document.getElementById('markBtn');
+    btn.textContent = '✓ Marked as read!';
+    btn.classList.add('done');
+  }
+
+  // ── Objectives checklist ──
+  const OBJS = ['obj1','obj2','obj3','obj4'];
+  function toggleObj(el, key) {
+    const done = localStorage.getItem(key) === 'true';
+    if (!done) { localStorage.setItem(key, 'true'); el.classList.add('checked'); }
+    else { localStorage.removeItem(key); el.classList.remove('checked'); }
+    updateProgress();
+  }
+  function updateProgress() {
+    const count = OBJS.filter(k => localStorage.getItem(k) === 'true').length;
+    document.getElementById('progFill').style.width = (count / OBJS.length * 100) + '%';
+    document.getElementById('progLabel').textContent = count + ' / ' + OBJS.length + ' complete';
+  }
+  // Restore state
+  document.querySelectorAll('.obj-item').forEach(el => {
+    const key = el.dataset.key;
+    if (localStorage.getItem(key) === 'true') el.classList.add('checked');
+  });
+  updateProgress();
+
+  // ── Interactive calculator ──
+  const freqs = [
+    { max: 3e5, label: 'Radio waves' },
+    { max: 3e10, label: 'Microwaves' },
+    { max: 4e14, label: 'Infrared' },
+    { max: 7.5e14, label: 'Visible light' },
+    { max: 3e16, label: 'Ultraviolet' },
+    { max: 3e19, label: 'X-rays' },
+    { max: Infinity, label: 'Gamma rays' }
+  ];
+  function getRegion(f) {
+    return freqs.find(r => f < r.max)?.label || 'Gamma rays';
+  }
+  function calcWave() {
+    const slider = document.getElementById('freqSlider');
+    const v = slider.value; // 1–100 representing ×10^8 Hz range
+    const freqHz = Math.pow(10, (v / 100) * 14 + 5); // maps 1→10^5 to 100→10^19
+    const waveM = 3e8 / freqHz;
+
+    function fmt(n) {
+      if (n >= 1) return n.toFixed(2) + ' m';
+      if (n >= 0.001) return (n * 100).toFixed(3) + ' cm';
+      if (n >= 1e-6) return (n * 1e9).toFixed(3) + ' nm';
+      return n.toExponential(2) + ' m';
+    }
+    function fmtF(n) {
+      if (n >= 1e18) return (n / 1e18).toFixed(1) + ' × 10¹⁸ Hz';
+      if (n >= 1e15) return (n / 1e15).toFixed(1) + ' × 10¹⁵ Hz';
+      if (n >= 1e12) return (n / 1e12).toFixed(1) + ' × 10¹² Hz';
+      if (n >= 1e9) return (n / 1e9).toFixed(1) + ' × 10⁹ Hz';
+      if (n >= 1e6) return (n / 1e6).toFixed(1) + ' × 10⁶ Hz';
+      return n.toExponential(1) + ' Hz';
+    }
+
+    document.getElementById('freqVal').textContent = fmtF(freqHz);
+    document.getElementById('waveResult').textContent = 'λ = ' + waveM.toExponential(2) + ' m';
+    document.getElementById('regionTag').textContent = getRegion(freqHz);
+  }
+  calcWave();
+</script>
+</body>
+</html>

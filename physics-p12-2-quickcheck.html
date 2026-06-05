@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.2 Quick Check – Light, Infrared, Microwaves & Radio Waves</title>
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --line: #cde4f5;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 65%, #1565c0 100%);
+    color: #fff; padding: 2rem 1.5rem 1.5rem; position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-40px; right:-40px; width:200px; height:200px; border-radius:50%; background:rgba(100,181,246,0.15); }
+  .kicker { font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:0.3rem; }
+  .badge { display:inline-block; background:var(--accent); color:var(--navy); font-size:0.68rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; padding:0.2rem 0.65rem; border-radius:20px; margin-bottom:0.5rem; }
+  .hero h1 { font-size:clamp(1.2rem,4vw,1.7rem); font-weight:800; line-height:1.2; margin-bottom:0.5rem; }
+  .hero p { font-size:0.82rem; color:rgba(255,255,255,0.75); }
+
+  /* NAV */
+  nav { background:var(--navy); padding:0.55rem 1rem; display:flex; flex-wrap:wrap; gap:0.4rem; }
+  nav a { color:var(--accent); text-decoration:none; font-size:0.76rem; font-weight:600; padding:0.28rem 0.65rem; border-radius:6px; border:1px solid rgba(100,181,246,0.3); transition:background 0.2s; }
+  nav a:hover { background:rgba(100,181,246,0.15); }
+
+  /* SCORE BAR */
+  .score-bar {
+    background:var(--navy); color:#fff; display:flex; align-items:center; gap:1rem;
+    padding:0.75rem 1.2rem; flex-wrap:wrap;
+  }
+  .score-stat { display:flex; flex-direction:column; align-items:center; }
+  .score-stat .val { font-size:1.4rem; font-weight:800; color:var(--accent); line-height:1; }
+  .score-stat .lbl { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.6); }
+  .progress-wrap { flex:1; min-width:120px; }
+  .progress-track { background:rgba(255,255,255,0.15); border-radius:20px; height:8px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:20px; transition:width 0.4s ease; width:0%; }
+  .progress-label { font-size:0.65rem; color:rgba(255,255,255,0.6); margin-top:0.2rem; text-align:right; }
+
+  /* QUESTIONS */
+  .questions { padding:1rem 1rem 0.5rem; display:flex; flex-direction:column; gap:1.1rem; }
+
+  .q-block {
+    background:var(--paper); border-radius:12px; padding:1.1rem 1.2rem;
+    border-left:4px solid var(--line); transition:border-color 0.3s;
+  }
+  .q-block.correct { border-left-color:var(--green); }
+  .q-block.wrong   { border-left-color:var(--red); }
+
+  .q-num { font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); margin-bottom:0.35rem; }
+  .q-text { font-size:0.88rem; font-weight:600; color:var(--ink); margin-bottom:0.8rem; line-height:1.45; }
+
+  /* MCQ */
+  .options { display:flex; flex-direction:column; gap:0.45rem; }
+  .opt-btn {
+    background:var(--bg); border:1.5px solid var(--line); border-radius:8px;
+    padding:0.55rem 0.9rem; font-size:0.83rem; text-align:left; cursor:pointer;
+    transition:background 0.15s, border-color 0.15s; color:var(--ink); font-family:inherit;
+  }
+  .opt-btn:hover:not(:disabled) { background:#d0eaf8; border-color:var(--accent); }
+  .opt-btn.selected { background:#d0eaf8; border-color:var(--accent); font-weight:600; }
+  .opt-btn.correct-ans { background:var(--green2); border-color:var(--green); color:var(--green); font-weight:700; }
+  .opt-btn.wrong-ans   { background:var(--red2); border-color:var(--red); color:var(--red); font-weight:700; }
+  .opt-btn:disabled { cursor:default; }
+
+  /* TRUE/FALSE */
+  .tf-wrap { display:flex; gap:0.6rem; }
+  .tf-btn {
+    flex:1; padding:0.6rem; border-radius:8px; border:1.5px solid var(--line);
+    font-size:0.88rem; font-weight:700; cursor:pointer; font-family:inherit;
+    background:var(--bg); color:var(--ink); transition:background 0.15s, border-color 0.15s;
+  }
+  .tf-btn:hover:not(:disabled) { background:#d0eaf8; border-color:var(--accent); }
+  .tf-btn.selected { background:#d0eaf8; border-color:var(--accent); }
+  .tf-btn.correct-ans { background:var(--green2); border-color:var(--green); color:var(--green); }
+  .tf-btn.wrong-ans   { background:var(--red2); border-color:var(--red); color:var(--red); }
+  .tf-btn:disabled { cursor:default; }
+
+  /* FEEDBACK */
+  .feedback { margin-top:0.65rem; font-size:0.8rem; border-radius:7px; padding:0.55rem 0.8rem; display:none; line-height:1.45; }
+  .feedback.show { display:block; }
+  .feedback.ok  { background:var(--green2); color:#2e7d32; }
+  .feedback.bad { background:var(--red2);   color:#c62828; }
+
+  /* RESULT BOX */
+  .result-box {
+    display:none; margin:1rem; background:var(--navy); color:#fff;
+    border-radius:14px; padding:2rem 1.5rem; text-align:center;
+  }
+  .result-box.show { display:block; }
+  .result-emoji { font-size:3rem; margin-bottom:0.5rem; }
+  .result-score { font-size:2.2rem; font-weight:800; color:var(--accent); }
+  .result-msg { font-size:1rem; font-weight:700; margin:0.4rem 0 0.2rem; }
+  .result-sub { font-size:0.82rem; color:rgba(255,255,255,0.7); margin-bottom:1.2rem; }
+  .mum-msg { background:rgba(100,181,246,0.15); border:1px solid rgba(100,181,246,0.4); border-radius:10px; padding:0.8rem 1rem; font-size:0.88rem; color:var(--accent); font-weight:700; margin-bottom:1.2rem; }
+  .reset-btn {
+    background:var(--accent); color:var(--navy); border:none; border-radius:10px;
+    padding:0.8rem 2rem; font-size:0.88rem; font-weight:800; cursor:pointer;
+    text-transform:uppercase; letter-spacing:0.1em; font-family:inherit;
+  }
+  .reset-btn:hover { background:#42a5f5; }
+
+  /* SUBMIT */
+  .submit-wrap { padding:1rem 1rem 0.5rem; }
+  .submit-btn {
+    width:100%; padding:0.9rem; background:var(--accent); color:var(--navy);
+    border:none; border-radius:10px; font-size:0.9rem; font-weight:800;
+    cursor:pointer; text-transform:uppercase; letter-spacing:0.1em; font-family:inherit;
+    transition:background 0.2s;
+  }
+  .submit-btn:hover { background:#42a5f5; }
+  .submit-btn:disabled { background:#b0bec5; cursor:default; }
+
+  .spacer { height:1.5rem; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · P12 Electromagnetic Waves</div>
+  <div class="badge">Quick Check</div>
+  <h1>P12.2 — Light, Infrared, Microwaves &amp; Radio Waves</h1>
+  <p>20 questions · Answer all before submitting</p>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-p12-2-revision.html">📖 Revision</a>
+</nav>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <div class="score-stat">
+    <span class="val" id="scoreVal">0</span>
+    <span class="lbl">Score</span>
+  </div>
+  <div class="score-stat">
+    <span class="val" id="answeredVal">0</span>
+    <span class="lbl">Answered</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 20</div>
+  </div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="questions" id="questions"></div>
+
+<!-- SUBMIT -->
+<div class="submit-wrap">
+  <button class="submit-btn" id="submitBtn" onclick="submitQuiz()" disabled>Submit answers</button>
+</div>
+
+<!-- RESULT BOX -->
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-sub" id="resultSub"></div>
+  <div class="mum-msg" id="mumMsg"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try again</button>
+</div>
+
+<div class="spacer"></div>
+
+<script>
+const SCORE_KEY = 'physics-p12-2-quiz-score';
+
+const questions = [
+  // --- 10 MCQ ---
+  {
+    type: 'mcq',
+    text: 'White light contains which of the following?',
+    options: ['Only red and blue light', 'All colours of the visible spectrum', 'Only ultraviolet and infrared', 'A single wavelength of light'],
+    answer: 'B'
+  },
+  {
+    type: 'mcq',
+    text: 'Which device splits white light into the colours of the spectrum?',
+    options: ['A lens', 'A prism', 'A mirror', 'A microwave antenna'],
+    answer: 'B'
+  },
+  {
+    type: 'mcq',
+    text: 'In the visible spectrum, which colour has the longest wavelength?',
+    options: ['Violet', 'Green', 'Blue', 'Red'],
+    answer: 'D'
+  },
+  {
+    type: 'mcq',
+    text: 'Why do optical fibres use infrared radiation instead of visible light?',
+    options: ['Infrared travels faster than visible light', 'Infrared is absorbed less by glass fibres', 'Infrared has a shorter wavelength', 'Infrared is cheaper to produce'],
+    answer: 'B'
+  },
+  {
+    type: 'mcq',
+    text: 'What happens to water molecules in food when microwaves pass through it?',
+    options: ['They reflect the microwaves', 'They transmit the microwaves without absorbing them', 'They absorb the microwaves and heat up', 'They convert microwaves to infrared radiation'],
+    answer: 'C'
+  },
+  {
+    type: 'mcq',
+    text: 'Calculate the wavelength of microwaves with a frequency of 2400 MHz. (Speed of EM waves = 3 × 10⁸ m/s)',
+    options: ['0.0125 m', '0.125 m', '1.25 m', '12.5 m'],
+    answer: 'B'
+  },
+  {
+    type: 'mcq',
+    text: 'Which of the following is a use of radio waves?',
+    options: ['Heating food in a microwave oven', 'Carrying signals in optical fibres', 'Bluetooth communication between devices', 'Detecting hot spots in the body'],
+    answer: 'C'
+  },
+  {
+    type: 'mcq',
+    text: 'What is the approximate frequency range of radio waves?',
+    options: ['300 000 Hz to 3000 million Hz', '3 Hz to 300 Hz', '3000 GHz to 30 000 GHz', '1 nm to 10 nm'],
+    answer: 'A'
+  },
+  {
+    type: 'mcq',
+    text: 'Why is infrared radiation hazardous to humans?',
+    options: ['It penetrates the body and heats internal organs', 'It can cause skin burns', 'It destroys DNA in cells', 'It causes radiation sickness'],
+    answer: 'B'
+  },
+  {
+    type: 'mcq',
+    text: 'In a digital camera, where is the image of the scene formed?',
+    options: ['On a light-sensitive film', 'On a sensor made of millions of pixels', 'On a prism inside the camera', 'On the camera lens itself'],
+    answer: 'B'
+  },
+
+  // --- 10 True/False ---
+  {
+    type: 'tf',
+    text: 'All objects emit infrared radiation, regardless of their temperature.',
+    answer: 'true'
+  },
+  {
+    type: 'tf',
+    text: 'Microwaves have a longer wavelength than radio waves.',
+    answer: 'false'
+  },
+  {
+    type: 'tf',
+    text: 'Microwaves can pass through the atmosphere and reach satellites.',
+    answer: 'true'
+  },
+  {
+    type: 'tf',
+    text: 'In a microwave oven, the oven itself heats up because it absorbs microwaves.',
+    answer: 'false'
+  },
+  {
+    type: 'tf',
+    text: 'The visible spectrum covers only a very small part of the full electromagnetic spectrum.',
+    answer: 'true'
+  },
+  {
+    type: 'tf',
+    text: 'Infrared radiation can be used to detect hot spots on the body surface in medicine.',
+    answer: 'true'
+  },
+  {
+    type: 'tf',
+    text: 'Radio waves and microwaves are hazardous because they cause skin burns on the surface of the body.',
+    answer: 'false'
+  },
+  {
+    type: 'tf',
+    text: 'Bluetooth-enabled devices use radio waves to communicate up to about 10 metres without cables.',
+    answer: 'true'
+  },
+  {
+    type: 'tf',
+    text: 'In a film camera, the image is stored electronically on a memory card.',
+    answer: 'false'
+  },
+  {
+    type: 'tf',
+    text: 'The hotter an object is, the more infrared radiation it emits.',
+    answer: 'true'
+  }
+];
+
+const feedback = [
+  // MCQ feedback
+  'Correct! White light contains all colours of the visible spectrum — that\'s why a prism can split it.',
+  'Correct! A prism refracts different wavelengths by different amounts, separating the colours.',
+  'Correct! Wavelength increases from violet to red across the visible spectrum.',
+  'Correct! Infrared is absorbed less than visible light in glass fibres, so signals travel further.',
+  'Correct! Water molecules absorb microwaves, converting the energy into heat — cooking the food.',
+  'Correct! λ = v ÷ f = 3 × 10⁸ ÷ 2.4 × 10⁹ = 0.125 m.',
+  'Correct! Bluetooth uses radio waves at near-microwave frequencies to connect devices wirelessly.',
+  'Correct! Radio waves range from 300 000 Hz up to 3000 million Hz (where microwave frequencies begin).',
+  'Correct! Infrared is absorbed by the skin surface and can cause burns to skin cells.',
+  'Correct! In a digital camera, light hits a sensor made of millions of light-sensitive pixels.',
+  // TF feedback
+  'Correct! All objects emit infrared — hotter objects emit more.',
+  'Correct — this is FALSE. Microwaves have a shorter wavelength than radio waves.',
+  'Correct! Microwaves can pass through the atmosphere, which is why they carry satellite TV signals.',
+  'Correct — this is FALSE. The oven does NOT absorb microwaves; it contains no water molecules, so it stays cool.',
+  'Correct! Visible light is only a tiny slice of the full EM spectrum.',
+  'Correct! Infrared cameras detect hot spots — hot areas can indicate unhealthy tissue.',
+  'Correct — this is FALSE. Microwaves and radio waves penetrate the body and heat it internally, not burn the surface.',
+  'Correct! Bluetooth uses radio waves to communicate wirelessly over short distances (~10 m).',
+  'Correct — this is FALSE. In a film camera, the image is captured on light-sensitive film and developed later. Electronic storage is for digital cameras.',
+  'Correct! The hotter the object, the more infrared radiation it emits.'
+];
+
+const wrongFeedback = [
+  'Not quite. White light contains ALL colours of the visible spectrum — that\'s why a prism can split it into a rainbow.',
+  'Not quite. A prism splits white light by refracting each colour (wavelength) by a different amount.',
+  'Not quite. Red has the longest wavelength in the visible spectrum; violet has the shortest.',
+  'Not quite. Infrared is used in optical fibres because it is absorbed LESS than visible light in glass.',
+  'Not quite. Water molecules ABSORB the microwaves — that\'s what heats the food.',
+  'Not quite. λ = v ÷ f = 3 × 10⁸ ÷ 2.4 × 10⁹ = 0.125 m. Remember to convert MHz to Hz first!',
+  'Not quite. Bluetooth uses radio waves — not optical fibres or microwaves used for ovens.',
+  'Not quite. Radio waves range from 300 000 Hz up to 3000 million Hz (where microwaves begin).',
+  'Not quite. Infrared causes SURFACE skin burns. Microwaves/radio waves heat the body internally.',
+  'Not quite. Digital cameras use a pixel sensor. Film is used in traditional film cameras.',
+  'Not quite — this is TRUE. All objects emit infrared, no matter how cool they are.',
+  'Not quite — this is FALSE. Microwaves have a SHORTER wavelength than radio waves.',
+  'Not quite — this is TRUE. Microwaves can pass through the atmosphere to reach satellites.',
+  'Not quite — this is FALSE. The oven stays cool because it has no water molecules to absorb the microwaves.',
+  'Not quite — this is TRUE. Visible light is only a tiny part of the EM spectrum.',
+  'Not quite — this is TRUE. Infrared cameras are used in medicine to find hot spots on the body.',
+  'Not quite — this is FALSE. They penetrate and INTERNALLY heat the body, not cause surface burns.',
+  'Not quite — this is TRUE. Bluetooth communicates wirelessly up to ~10 metres using radio waves.',
+  'Not quite — this is FALSE. Film cameras use light-sensitive film, not electronic memory cards.',
+  'Not quite — this is TRUE. Hotter objects emit more infrared radiation.'
+];
+
+let userAnswers = new Array(20).fill(null);
+let submitted = false;
+
+function buildQuiz() {
+  const container = document.getElementById('questions');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = `q${i}`;
+
+    const num = document.createElement('div');
+    num.className = 'q-num';
+    num.textContent = `Question ${i + 1} of 20 · ${q.type === 'mcq' ? 'Multiple Choice' : 'True or False'}`;
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.text;
+
+    block.appendChild(num);
+    block.appendChild(text);
+
+    if (q.type === 'mcq') {
+      const opts = document.createElement('div');
+      opts.className = 'options';
+      ['A','B','C','D'].forEach((letter, j) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.id = `q${i}-opt${letter}`;
+        btn.textContent = `${letter}. ${q.options[j]}`;
+        btn.onclick = () => selectMCQ(i, letter);
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      const wrap = document.createElement('div');
+      wrap.className = 'tf-wrap';
+      ['true','false'].forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.id = `q${i}-${val}`;
+        btn.textContent = val === 'true' ? '✅ True' : '❌ False';
+        btn.onclick = () => selectTF(i, val);
+        wrap.appendChild(btn);
+      });
+      block.appendChild(wrap);
+    }
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = `fb${i}`;
+    block.appendChild(fb);
+
+    container.appendChild(block);
+  });
+}
+
+function selectMCQ(qIndex, letter) {
+  if (submitted) return;
+  userAnswers[qIndex] = letter;
+  ['A','B','C','D'].forEach(l => {
+    const btn = document.getElementById(`q${qIndex}-opt${l}`);
+    btn.classList.toggle('selected', l === letter);
+  });
+  updateProgress();
+}
+
+function selectTF(qIndex, val) {
+  if (submitted) return;
+  userAnswers[qIndex] = val;
+  ['true','false'].forEach(v => {
+    const btn = document.getElementById(`q${qIndex}-${v}`);
+    btn.classList.toggle('selected', v === val);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  document.getElementById('answeredVal').textContent = answered;
+  document.getElementById('progressFill').style.width = (answered / 20 * 100) + '%';
+  document.getElementById('progressLabel').textContent = `${answered} / 20`;
+  document.getElementById('submitBtn').disabled = answered < 20;
+}
+
+function submitQuiz() {
+  submitted = true;
+  document.getElementById('submitBtn').disabled = true;
+  let score = 0;
+
+  questions.forEach((q, i) => {
+    const userAns = userAnswers[i];
+    const correct = q.answer === userAns;
+    if (correct) score++;
+
+    const block = document.getElementById(`q${i}`);
+    block.classList.add(correct ? 'correct' : 'wrong');
+
+    const fbEl = document.getElementById(`fb${i}`);
+    fbEl.textContent = correct ? '✅ ' + feedback[i] : '❌ ' + wrongFeedback[i];
+    fbEl.className = 'feedback show ' + (correct ? 'ok' : 'bad');
+
+    // Highlight answers
+    if (q.type === 'mcq') {
+      ['A','B','C','D'].forEach(l => {
+        const btn = document.getElementById(`q${i}-opt${l}`);
+        btn.disabled = true;
+        if (l === q.answer) btn.classList.add('correct-ans');
+        else if (l === userAns && !correct) btn.classList.add('wrong-ans');
+        btn.classList.remove('selected');
+      });
+    } else {
+      ['true','false'].forEach(v => {
+        const btn = document.getElementById(`q${i}-${v}`);
+        btn.disabled = true;
+        if (v === q.answer) btn.classList.add('correct-ans');
+        else if (v === userAns && !correct) btn.classList.add('wrong-ans');
+        btn.classList.remove('selected');
+      });
+    }
+  });
+
+  document.getElementById('scoreVal').textContent = score;
+  localStorage.setItem(SCORE_KEY, score);
+  showResult(score);
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showResult(score) {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+
+  let emoji, msg, sub;
+  if (score >= 18) {
+    emoji = '🏆'; msg = 'Outstanding!'; sub = 'You\'ve totally nailed P12.2.';
+  } else if (score >= 14) {
+    emoji = '🎉'; msg = 'Great work!'; sub = 'A few gaps to revisit — nearly there!';
+  } else if (score >= 10) {
+    emoji = '📚'; msg = 'Getting there!'; sub = 'Go back over the revision notes and try again.';
+  } else {
+    emoji = '💪'; msg = 'Keep going!'; sub = 'Read through the fiche again — you\'ll get it!';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = `${score} / 20`;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultSub').textContent = sub;
+  document.getElementById('mumMsg').textContent = `Show this to mum — ${score}/20 ⭐`;
+
+  // Scroll result into view
+  setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function resetQuiz() {
+  submitted = false;
+  userAnswers = new Array(20).fill(null);
+  document.getElementById('resultBox').classList.remove('show');
+  document.getElementById('scoreVal').textContent = '0';
+  document.getElementById('answeredVal').textContent = '0';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressLabel').textContent = '0 / 20';
+  document.getElementById('submitBtn').disabled = true;
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

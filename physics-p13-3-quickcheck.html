@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P13.3 Quick-Check Quiz — The Motor Effect</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --navy2: #112f4e;
+    --accent: #64b5f6;
+    --accent2: #90caf9;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d1b2a;
+    --muted: #5a7a96;
+    --red: #c62828;
+    --red2: #ffcdd2;
+    --green: #2e7d32;
+    --green2: #c8e6c9;
+    --orange: #e65100;
+    --orange2: #ffe0b2;
+    --line: #c5dff0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a72 60%, #1e6fa0 100%);
+    padding: 36px 36px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.1);
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(100,181,246,0.2);
+    border: 1px solid rgba(100,181,246,0.4);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 13.5px; }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--navy2);
+    border-bottom: 2px solid var(--accent);
+    padding: 0 36px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-bar a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 11px 16px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-bar a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--navy);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .score-pill {
+    background: rgba(100,181,246,0.15);
+    border: 1px solid rgba(100,181,246,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+  }
+  .score-pill strong { color: #fff; }
+  .progress-wrap {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 18px 60px;
+  }
+
+  /* Q BLOCK */
+  .q-block {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .q-block.answered { border-color: var(--line); }
+
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s;
+    width: 100%;
+  }
+  .opt-btn:hover:not(:disabled) {
+    background: #d4eaf7;
+    border-color: var(--accent);
+  }
+  .opt-btn:disabled { cursor: default; }
+  .opt-letter {
+    min-width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--line);
+    color: var(--navy);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .opt-btn.correct { background: var(--green2); border-color: var(--green); }
+  .opt-btn.correct .opt-letter { background: var(--green); color: #fff; }
+  .opt-btn.wrong { background: var(--red2); border-color: var(--red); }
+  .opt-btn.wrong .opt-letter { background: var(--red); color: #fff; }
+
+  /* TRUE/FALSE */
+  .tf-wrap { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .tf-btn:hover:not(:disabled) { background: #d4eaf7; border-color: var(--accent); }
+  .tf-btn:disabled { cursor: default; }
+  .tf-btn.correct { background: var(--green2); border-color: var(--green); color: var(--green); }
+  .tf-btn.wrong { background: var(--red2); border-color: var(--red); color: var(--red); }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: none;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: var(--green); border-left: 3px solid var(--green); }
+  .feedback.wrong { background: var(--red2); color: var(--red); border-left: 3px solid var(--red); }
+  .feedback strong { display: block; margin-bottom: 2px; }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .result-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .result-msg {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .result-mum {
+    background: var(--navy);
+    color: var(--accent2);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .reset-btn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 11px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reset-btn:hover { background: var(--accent2); }
+
+  @media (max-width: 500px) {
+    .hero h1 { font-size: 1.7rem; }
+    .score-bar { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">⚛️ Physics · P13.3 · Quick-Check</div>
+    <h1>The <span>Motor Effect</span></h1>
+    <p class="hero-sub">20 questions · MCQ + True/False · Instant feedback</p>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-p13-3-revision.html">📖 Revision Notes</a>
+</nav>
+
+<div class="score-bar">
+  <div class="score-pill">Score: <strong id="scoreDisp">0</strong>/20</div>
+  <div class="score-pill">Answered: <strong id="answDisp">0</strong>/20</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progBar"></div></div>
+</div>
+
+<main id="quizMain">
+  <!-- Questions injected by JS -->
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resEmoji"></div>
+    <div class="result-score" id="resScore"></div>
+    <div class="result-msg" id="resMsg"></div>
+    <div class="result-mum" id="resMum"></div><br>
+    <button class="reset-btn" onclick="resetQuiz()">Try again 🔄</button>
+  </div>
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p13-3-quiz-score';
+
+const questions = [
+  // MCQ (10)
+  {
+    type:'mcq', num:1,
+    q:'What is the motor effect?',
+    opts:['A magnet attracting iron filings','A force acting on a current-carrying wire in a magnetic field','An electric current produced by a moving magnet','A wire becoming magnetised when current flows'],
+    ans:'B',
+    fb:'The motor effect is the force that acts on a current-carrying conductor when it is placed in a magnetic field.'
+  },
+  {
+    type:'mcq', num:2,
+    q:'Which rule is used to determine the direction of the force on a current-carrying conductor in a magnetic field?',
+    opts:["Newton's third law","Fleming's right-hand rule","Fleming's left-hand rule","The corkscrew rule"],
+    ans:'C',
+    fb:"Fleming's left-hand rule: First finger = Field, seCond finger = Current, thuMb = Movement (force)."
+  },
+  {
+    type:'mcq', num:3,
+    q:'In Fleming\'s left-hand rule, which finger represents the direction of the magnetic field?',
+    opts:['Thumb','Index finger (first finger)','Middle finger (second finger)','Ring finger'],
+    ans:'B',
+    fb:'The First finger points in the direction of the magnetic Field. Remember: F for First, F for Field.'
+  },
+  {
+    type:'mcq', num:4,
+    q:'A wire carries a current of 3 A, has a length of 0.05 m in a magnetic field of flux density 0.4 T. What is the force on the wire?',
+    opts:['0.006 N','0.06 N','0.6 N','6 N'],
+    ans:'B',
+    fb:'F = BIl = 0.4 × 3 × 0.05 = 0.06 N. Always check units — length must be in metres.'
+  },
+  {
+    type:'mcq', num:5,
+    q:'What are the units of magnetic flux density?',
+    opts:['Ampere (A)','Newton (N)','Tesla (T)','Metre (m)'],
+    ans:'C',
+    fb:'Magnetic flux density B is measured in tesla (T). The symbol B is used in the formula F = BIl.'
+  },
+  {
+    type:'mcq', num:6,
+    q:'A wire is parallel to the magnetic field lines. What is the force on the wire?',
+    opts:['Maximum','Double the usual force','Zero','Equal to BIl'],
+    ans:'C',
+    fb:'The force is zero when the wire is parallel to the field. It is greatest when the wire is perpendicular to the field.'
+  },
+  {
+    type:'mcq', num:7,
+    q:'What is the function of the split-ring commutator in an electric motor?',
+    opts:['To increase the magnetic field strength','To reverse the current direction every half-turn so the coil keeps spinning','To reduce friction in the coil','To measure the current in the circuit'],
+    ans:'B',
+    fb:'The split-ring commutator reverses the current around the coil every half-turn, ensuring the coil is always pushed in the same direction and continues to rotate.'
+  },
+  {
+    type:'mcq', num:8,
+    q:'Why are graphite brushes used in an electric motor?',
+    opts:['They are magnetic, increasing the field','They are good electrical conductors and very slippery (low friction)','They reverse the current automatically','They increase the voltage in the motor'],
+    ans:'B',
+    fb:'Graphite conducts electricity and is very slippery, so it maintains electrical contact with the commutator while causing very little friction.'
+  },
+  {
+    type:'mcq', num:9,
+    q:'How can you reverse the direction of rotation of a simple electric motor?',
+    opts:['Increase the current','Use a stronger magnet','Reverse the battery connections (reverse the current)','Add more turns to the coil'],
+    ans:'C',
+    fb:'Reversing the current (by reversing the battery) reverses the direction of the force, so the motor spins the other way.'
+  },
+  {
+    type:'mcq', num:10,
+    q:'A conductor of length 25 mm carries a current of 4 A in a magnetic field. The force on the conductor is 0.030 N. What is the magnetic flux density?',
+    opts:['0.075 T','0.30 T','3.0 T','0.0030 T'],
+    ans:'B',
+    fb:'Rearrange F = BIl → B = F ÷ (I × l). Convert: 25 mm = 0.025 m. B = 0.030 ÷ (4 × 0.025) = 0.030 ÷ 0.10 = 0.30 T.'
+  },
+  // TRUE/FALSE (10)
+  {
+    type:'tf', num:11,
+    q:'The force on a current-carrying wire in a magnetic field is greatest when the wire is perpendicular to the field.',
+    ans:'true',
+    fb:'Correct! The force is maximum when current and field are at 90° to each other, and zero when they are parallel.'
+  },
+  {
+    type:'tf', num:12,
+    q:'Increasing the length of the conductor in the magnetic field decreases the force on it.',
+    ans:'false',
+    fb:'False. From F = BIl, increasing the length l increases the force F (they are directly proportional).'
+  },
+  {
+    type:'tf', num:13,
+    q:'If both the current direction and the magnetic field direction are reversed, the direction of the force stays the same.',
+    ans:'true',
+    fb:'Correct! Reversing both the current and the field cancels out — the force direction is unchanged.'
+  },
+  {
+    type:'tf', num:14,
+    q:'Magnetic flux density is measured in amperes.',
+    ans:'false',
+    fb:'False. Magnetic flux density B is measured in tesla (T), not amperes. Amperes measure current (I).'
+  },
+  {
+    type:'tf', num:15,
+    q:'In a simple electric motor, without the split-ring commutator, the coil would oscillate back and forth rather than spin continuously.',
+    ans:'true',
+    fb:'Correct! Without the commutator reversing the current each half-turn, the coil would be pushed one way then stopped — it would not rotate continuously.'
+  },
+  {
+    type:'tf', num:16,
+    q:'You use your right hand to apply Fleming\'s motor rule.',
+    ans:'false',
+    fb:'False! You MUST use your LEFT hand for the motor effect. The right-hand rule is used for generators (the dynamo rule).'
+  },
+  {
+    type:'tf', num:17,
+    q:'In the formula F = BIl, the letter "l" stands for the total length of the wire in the circuit.',
+    ans:'false',
+    fb:'False. "l" is the length of the conductor that is inside (within) the magnetic field, not the total wire length.'
+  },
+  {
+    type:'tf', num:18,
+    q:'The speed of a simple electric motor can be increased by increasing the current.',
+    ans:'true',
+    fb:'Correct! A larger current → greater force on the coil → faster rotation.'
+  },
+  {
+    type:'tf', num:19,
+    q:'The force on a wire in a magnetic field is zero when the wire is perpendicular to the field lines.',
+    ans:'false',
+    fb:'False. The force is ZERO when the wire is parallel to the field, and MAXIMUM when the wire is perpendicular to the field.'
+  },
+  {
+    type:'tf', num:20,
+    q:'In a simple electric motor, the two sides of the rectangular coil experience forces in opposite directions, which causes the coil to rotate.',
+    ans:'true',
+    fb:'Correct! The motor effect creates a force on each side of the coil, but in opposite directions (by Fleming\'s left-hand rule), producing a turning effect (torque).'
+  }
+];
+
+let score = 0;
+let answered = 0;
+
+function buildQuiz() {
+  const main = document.getElementById('quizMain');
+  const resultBox = document.getElementById('resultBox');
+
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'qblock-' + i;
+
+    let inner = `<div class="q-num">Question ${q.num} of 20 &nbsp;·&nbsp; ${q.type === 'mcq' ? 'Multiple Choice' : 'True / False'}</div>`;
+    inner += `<div class="q-text">${q.q}</div>`;
+
+    if (q.type === 'mcq') {
+      const letters = ['A','B','C','D'];
+      inner += `<div class="options">`;
+      q.opts.forEach((opt, j) => {
+        inner += `<button class="opt-btn" id="opt-${i}-${j}" onclick="answerMCQ(${i}, ${j})">
+          <span class="opt-letter">${letters[j]}</span>${opt}
+        </button>`;
+      });
+      inner += `</div>`;
+    } else {
+      inner += `<div class="tf-wrap">
+        <button class="tf-btn" id="tf-${i}-true" onclick="answerTF(${i}, 'true')">✓ True</button>
+        <button class="tf-btn" id="tf-${i}-false" onclick="answerTF(${i}, 'false')">✗ False</button>
+      </div>`;
+    }
+
+    inner += `<div class="feedback" id="fb-${i}"></div>`;
+    block.innerHTML = inner;
+    main.insertBefore(block, resultBox);
+  });
+}
+
+function answerMCQ(qi, optIdx) {
+  const q = questions[qi];
+  const letters = ['A','B','C','D'];
+  const chosen = letters[optIdx];
+  const correct = chosen === q.ans;
+
+  // Disable all buttons
+  q.opts.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (letters[j] === q.ans) btn.classList.add('correct');
+    else if (j === optIdx && !correct) btn.classList.add('wrong');
+  });
+
+  showFeedback(qi, correct, q.fb);
+  updateScore(correct);
+}
+
+function answerTF(qi, chosen) {
+  const q = questions[qi];
+  const correct = chosen === q.ans;
+
+  ['true','false'].forEach(val => {
+    const btn = document.getElementById(`tf-${qi}-${val}`);
+    btn.disabled = true;
+    if (val === q.ans) btn.classList.add('correct');
+    else if (val === chosen && !correct) btn.classList.add('wrong');
+  });
+
+  showFeedback(qi, correct, q.fb);
+  updateScore(correct);
+}
+
+function showFeedback(qi, correct, msg) {
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+  fb.innerHTML = `<strong>${correct ? '✅ Correct!' : '❌ Incorrect'}</strong>${msg}`;
+}
+
+function updateScore(correct) {
+  if (correct) score++;
+  answered++;
+  document.getElementById('scoreDisp').textContent = score;
+  document.getElementById('answDisp').textContent = answered;
+  document.getElementById('progBar').style.width = (answered / 20 * 100) + '%';
+  localStorage.setItem(SCORE_KEY, score + '/' + answered);
+  if (answered === 20) showResult();
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  let emoji, msg;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! You have mastered the motor effect. Full marks are within reach!'; }
+  else if (score >= 14) { emoji = '🎉'; msg = 'Great work! A solid understanding — review the questions you missed and you\'ll be exam-ready.'; }
+  else if (score >= 10) { emoji = '📚'; msg = 'Good effort! Go back over the revision notes, especially F = BIl and Fleming\'s left-hand rule, then try again.'; }
+  else { emoji = '💪'; msg = 'Keep going! Re-read the revision notes carefully, then have another go — you\'ve got this.'; }
+
+  document.getElementById('resEmoji').textContent = emoji;
+  document.getElementById('resScore').textContent = score + ' / 20';
+  document.getElementById('resMsg').textContent = msg;
+  document.getElementById('resMum').textContent = `Show this to mum — ${score}/20`;
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  document.getElementById('scoreDisp').textContent = '0';
+  document.getElementById('answDisp').textContent = '0';
+  document.getElementById('progBar').style.width = '0%';
+  document.getElementById('resultBox').classList.remove('show');
+
+  questions.forEach((q, i) => {
+    const block = document.getElementById('qblock-' + i);
+    if (q.type === 'mcq') {
+      q.opts.forEach((_, j) => {
+        const btn = document.getElementById(`opt-${i}-${j}`);
+        btn.disabled = false;
+        btn.classList.remove('correct','wrong');
+      });
+    } else {
+      ['true','false'].forEach(val => {
+        const btn = document.getElementById(`tf-${i}-${val}`);
+        btn.disabled = false;
+        btn.classList.remove('correct','wrong');
+      });
+    }
+    const fb = document.getElementById(`fb-${i}`);
+    fb.className = 'feedback';
+    fb.innerHTML = '';
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

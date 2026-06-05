@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.4 Quick Check – UV, X-rays & Gamma Rays</title>
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #1a1a2e;
+    --muted: #5a7a9a;
+    --red: #c62828;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --line: #c5ddf0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 65%, #0288d1 100%);
+    color: white;
+    padding: 1.8rem 1.4rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(100,181,246,0.22);
+    border: 1px solid rgba(100,181,246,0.45);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 0.7rem;
+  }
+  .hero h1 { font-size: 1.45rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.5rem; }
+  .hero p { font-size: 0.82rem; opacity: 0.8; }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0.55rem 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+  }
+  nav a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(100,181,246,0.2); color: var(--accent); }
+  nav .sep { color: rgba(255,255,255,0.3); font-size: 0.78rem; }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .score-pill {
+    background: var(--navy);
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    min-width: 90px;
+    text-align: center;
+  }
+  .answered-pill {
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .progress-wrap {
+    flex: 1;
+    min-width: 120px;
+    background: var(--line);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #1565c0);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* QUESTIONS */
+  main { padding: 1rem; max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.1rem;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+    border-left: 4px solid var(--line);
+    transition: border-color 0.3s;
+  }
+  .q-block.answered-correct { border-left-color: var(--green); }
+  .q-block.answered-wrong { border-left-color: var(--red); }
+
+  .q-num {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .q-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  /* MCQ OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.4rem; }
+  .opt-btn {
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); background: #ddeeff; }
+  .opt-btn .opt-label {
+    background: var(--navy);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 800;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .opt-btn.correct { background: var(--green2); border-color: var(--green); }
+  .opt-btn.correct .opt-label { background: var(--green); }
+  .opt-btn.wrong { background: var(--red2); border-color: var(--red); }
+  .opt-btn.wrong .opt-label { background: var(--red); }
+  .opt-btn:disabled { cursor: default; }
+
+  /* TF OPTIONS */
+  .tf-options { display: flex; gap: 0.5rem; }
+  .tf-btn {
+    flex: 1;
+    padding: 0.6rem;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--bg);
+    color: var(--ink);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #ddeeff; }
+  .tf-btn.correct { background: var(--green2); border-color: var(--green); color: var(--green); }
+  .tf-btn.wrong { background: var(--red2); border-color: var(--red); color: var(--red); }
+  .tf-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 0.65rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: var(--green); border-left: 3px solid var(--green); }
+  .feedback.wrong { background: var(--red2); color: var(--red); border-left: 3px solid var(--red); }
+
+  /* RESULT BOX */
+  .result-box {
+    display: none;
+    background: var(--paper);
+    border-radius: 14px;
+    padding: 1.8rem 1.4rem;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3rem; margin-bottom: 0.5rem; }
+  .result-score { font-size: 2.2rem; font-weight: 900; color: var(--navy); margin-bottom: 0.3rem; }
+  .result-msg { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
+  .result-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
+  .result-show { font-size: 0.88rem; font-weight: 800; color: var(--navy); background: var(--accent); padding: 0.5rem 1.2rem; border-radius: 999px; display: inline-block; margin-bottom: 1rem; }
+
+  .reset-btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 0.65rem 1.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reset-btn:hover { background: #1565c0; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.2rem; }
+    .tf-options { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">P12 · Electromagnetic Waves</div>
+  <div class="badge">⚛️ GCSE Physics</div>
+  <h1>P12.4 Quick Check ⚡</h1>
+  <p>UV waves, X-rays &amp; Gamma Rays — 20 questions</p>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">|</span>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <span class="sep">|</span>
+  <a href="physics-p12-4-revision.html">📖 P12.4 Revision</a>
+</nav>
+
+<div class="score-bar">
+  <div class="score-pill" id="scoreDisplay">Score: 0</div>
+  <div class="answered-pill" id="answeredDisplay">0 / 20 answered</div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<main id="quizMain">
+
+<!-- Q1 MCQ -->
+<div class="q-block" id="q1">
+  <div class="q-num">Question 1 of 20 · Multiple Choice</div>
+  <div class="q-text">Where does ultraviolet (UV) radiation sit in the electromagnetic spectrum?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(1,'A','C')"><span class="opt-label">A</span> Between radio waves and microwaves</button>
+    <button class="opt-btn" onclick="mcq(1,'B','C')"><span class="opt-label">B</span> Between infrared and visible light</button>
+    <button class="opt-btn" onclick="mcq(1,'C','C')"><span class="opt-label">C</span> Between visible light and X-rays</button>
+    <button class="opt-btn" onclick="mcq(1,'D','C')"><span class="opt-label">D</span> Between X-rays and gamma rays</button>
+  </div>
+  <div class="feedback" id="fb1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="q-block" id="q2">
+  <div class="q-num">Question 2 of 20 · Multiple Choice</div>
+  <div class="q-text">How are X-rays produced?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(2,'A','B')"><span class="opt-label">A</span> By radioactive substances releasing nuclear energy</button>
+    <button class="opt-btn" onclick="mcq(2,'B','B')"><span class="opt-label">B</span> When high-speed electrons are stopped</button>
+    <button class="opt-btn" onclick="mcq(2,'C','B')"><span class="opt-label">C</span> By heating a metal to very high temperatures</button>
+    <button class="opt-btn" onclick="mcq(2,'D','B')"><span class="opt-label">D</span> By electrons absorbing ultraviolet light</button>
+  </div>
+  <div class="feedback" id="fb2"></div>
+</div>
+
+<!-- Q3 MCQ -->
+<div class="q-block" id="q3">
+  <div class="q-num">Question 3 of 20 · Multiple Choice</div>
+  <div class="q-text">What is the source of gamma rays?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(3,'A','D')"><span class="opt-label">A</span> Fast-moving electrons being decelerated</button>
+    <button class="opt-btn" onclick="mcq(3,'B','D')"><span class="opt-label">B</span> Extremely hot objects</button>
+    <button class="opt-btn" onclick="mcq(3,'C','D')"><span class="opt-label">C</span> Electrical circuits oscillating at high frequency</button>
+    <button class="opt-btn" onclick="mcq(3,'D','D')"><span class="opt-label">D</span> Unstable radioactive nuclei releasing energy</button>
+  </div>
+  <div class="feedback" id="fb3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="q-block" id="q4">
+  <div class="q-num">Question 4 of 20 · Multiple Choice</div>
+  <div class="q-text">What does ionising radiation do to atoms?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(4,'A','B')"><span class="opt-label">A</span> Adds protons to the nucleus</button>
+    <button class="opt-btn" onclick="mcq(4,'B','B')"><span class="opt-label">B</span> Knocks electrons out of atoms, making them charged</button>
+    <button class="opt-btn" onclick="mcq(4,'C','B')"><span class="opt-label">C</span> Splits the nucleus into two smaller nuclei</button>
+    <button class="opt-btn" onclick="mcq(4,'D','B')"><span class="opt-label">D</span> Adds neutrons to the nucleus</button>
+  </div>
+  <div class="feedback" id="fb4"></div>
+</div>
+
+<!-- Q5 MCQ -->
+<div class="q-block" id="q5">
+  <div class="q-num">Question 5 of 20 · Multiple Choice</div>
+  <div class="q-text">Which material is MOST effective at absorbing X-rays and gamma rays?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(5,'A','C')"><span class="opt-label">A</span> Plastic</button>
+    <button class="opt-btn" onclick="mcq(5,'B','C')"><span class="opt-label">B</span> Aluminium</button>
+    <button class="opt-btn" onclick="mcq(5,'C','C')"><span class="opt-label">C</span> Lead</button>
+    <button class="opt-btn" onclick="mcq(5,'D','C')"><span class="opt-label">D</span> Glass</button>
+  </div>
+  <div class="feedback" id="fb5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="q-block" id="q6">
+  <div class="q-num">Question 6 of 20 · Multiple Choice</div>
+  <div class="q-text">Which radioactive isotope is used in gamma-ray cancer treatment (radiotherapy)?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(6,'A','B')"><span class="opt-label">A</span> Uranium-235</button>
+    <button class="opt-btn" onclick="mcq(6,'B','B')"><span class="opt-label">B</span> Cobalt-60</button>
+    <button class="opt-btn" onclick="mcq(6,'C','B')"><span class="opt-label">C</span> Carbon-14</button>
+    <button class="opt-btn" onclick="mcq(6,'D','B')"><span class="opt-label">D</span> Iodine-131</button>
+  </div>
+  <div class="feedback" id="fb6"></div>
+</div>
+
+<!-- Q7 MCQ -->
+<div class="q-block" id="q7">
+  <div class="q-num">Question 7 of 20 · Multiple Choice</div>
+  <div class="q-text">Why is it safer for surgical instruments to be sealed in plastic wrappers when exposed to gamma rays for sterilisation, rather than sterilised after packaging?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(7,'A','C')"><span class="opt-label">A</span> Plastic reflects gamma rays onto the instruments more effectively</button>
+    <button class="opt-btn" onclick="mcq(7,'B','C')"><span class="opt-label">B</span> Gamma rays heat the plastic which kills bacteria by conduction</button>
+    <button class="opt-btn" onclick="mcq(7,'C','C')"><span class="opt-label">C</span> Gamma rays pass through the plastic wrapper to sterilise the instruments inside, preventing re-contamination when opened</button>
+    <button class="opt-btn" onclick="mcq(7,'D','C')"><span class="opt-label">D</span> Plastic absorbs bacteria before the gamma rays are applied</button>
+  </div>
+  <div class="feedback" id="fb7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="q-block" id="q8">
+  <div class="q-num">Question 8 of 20 · Multiple Choice</div>
+  <div class="q-text">In the electromagnetic spectrum, which type of radiation has the SHORTEST wavelength?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(8,'A','D')"><span class="opt-label">A</span> Ultraviolet</button>
+    <button class="opt-btn" onclick="mcq(8,'B','D')"><span class="opt-label">B</span> Visible light</button>
+    <button class="opt-btn" onclick="mcq(8,'C','D')"><span class="opt-label">C</span> X-rays</button>
+    <button class="opt-btn" onclick="mcq(8,'D','D')"><span class="opt-label">D</span> Gamma rays</button>
+  </div>
+  <div class="feedback" id="fb8"></div>
+</div>
+
+<!-- Q9 MCQ -->
+<div class="q-block" id="q9">
+  <div class="q-num">Question 9 of 20 · Multiple Choice</div>
+  <div class="q-text">What is the purpose of a film badge worn by radiation workers?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(9,'A','B')"><span class="opt-label">A</span> To protect the wearer from ionising radiation</button>
+    <button class="opt-btn" onclick="mcq(9,'B','B')"><span class="opt-label">B</span> To monitor how much ionising radiation the wearer has received</button>
+    <button class="opt-btn" onclick="mcq(9,'C','B')"><span class="opt-label">C</span> To warn others when radiation levels are high</button>
+    <button class="opt-btn" onclick="mcq(9,'D','B')"><span class="opt-label">D</span> To absorb excess radiation from the environment</button>
+  </div>
+  <div class="feedback" id="fb9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="q-block" id="q10">
+  <div class="q-num">Question 10 of 20 · Multiple Choice</div>
+  <div class="q-text">Why are low doses of X-rays or gamma rays particularly dangerous even if they don't immediately kill cells?</div>
+  <div class="options">
+    <button class="opt-btn" onclick="mcq(10,'A','C')"><span class="opt-label">A</span> They cause immediate radiation burns to the skin</button>
+    <button class="opt-btn" onclick="mcq(10,'B','C')"><span class="opt-label">B</span> They permanently destroy the nervous system</button>
+    <button class="opt-btn" onclick="mcq(10,'C','C')"><span class="opt-label">C</span> They can cause gene mutations that lead to cancerous growth</button>
+    <button class="opt-btn" onclick="mcq(10,'D','C')"><span class="opt-label">D</span> They block signals between nerve cells</button>
+  </div>
+  <div class="feedback" id="fb10"></div>
+</div>
+
+<!-- Q11 TF -->
+<div class="q-block" id="q11">
+  <div class="q-num">Question 11 of 20 · True or False</div>
+  <div class="q-text">Ultraviolet waves have a LONGER wavelength than visible light.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(11,'true','false')">✅ True</button>
+    <button class="tf-btn" onclick="tf(11,'false','false')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb11"></div>
+</div>
+
+<!-- Q12 TF -->
+<div class="q-block" id="q12">
+  <div class="q-num">Question 12 of 20 · True or False</div>
+  <div class="q-text">Gamma rays can penetrate substances more than X-rays because they have shorter wavelengths.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(12,'true','true')">✅ True</button>
+    <button class="tf-btn" onclick="tf(12,'false','true')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb12"></div>
+</div>
+
+<!-- Q13 TF -->
+<div class="q-block" id="q13">
+  <div class="q-num">Question 13 of 20 · True or False</div>
+  <div class="q-text">X-rays and gamma rays are produced in exactly the same way.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(13,'true','false')">✅ True</button>
+    <button class="tf-btn" onclick="tf(13,'false','false')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb13"></div>
+</div>
+
+<!-- Q14 TF -->
+<div class="q-block" id="q14">
+  <div class="q-num">Question 14 of 20 · True or False</div>
+  <div class="q-text">Exposing food to gamma rays kills disease-carrying organisms and helps reduce food spoilage.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(14,'true','true')">✅ True</button>
+    <button class="tf-btn" onclick="tf(14,'false','true')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb14"></div>
+</div>
+
+<!-- Q15 TF -->
+<div class="q-block" id="q15">
+  <div class="q-num">Question 15 of 20 · True or False</div>
+  <div class="q-text">A film badge used to monitor radiation exposure must have a metal case so it can absorb the radiation.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(15,'true','false')">✅ True</button>
+    <button class="tf-btn" onclick="tf(15,'false','false')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb15"></div>
+</div>
+
+<!-- Q16 TF -->
+<div class="q-block" id="q16">
+  <div class="q-num">Question 16 of 20 · True or False</div>
+  <div class="q-text">UV waves carry more energy than visible light waves.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(16,'true','true')">✅ True</button>
+    <button class="tf-btn" onclick="tf(16,'false','true')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb16"></div>
+</div>
+
+<!-- Q17 TF -->
+<div class="q-block" id="q17">
+  <div class="q-num">Question 17 of 20 · True or False</div>
+  <div class="q-text">In radiotherapy, the gamma ray beam is directed at a tumour from a single fixed direction to maximise the dose to that spot.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(17,'true','false')">✅ True</button>
+    <button class="tf-btn" onclick="tf(17,'false','false')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb17"></div>
+</div>
+
+<!-- Q18 TF -->
+<div class="q-block" id="q18">
+  <div class="q-num">Question 18 of 20 · True or False</div>
+  <div class="q-text">Both X-rays and gamma rays are examples of ionising radiation.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(18,'true','true')">✅ True</button>
+    <button class="tf-btn" onclick="tf(18,'false','true')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb18"></div>
+</div>
+
+<!-- Q19 TF -->
+<div class="q-block" id="q19">
+  <div class="q-num">Question 19 of 20 · True or False</div>
+  <div class="q-text">UV waves can cause blindness if they reach the eyes directly.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(19,'true','true')">✅ True</button>
+    <button class="tf-btn" onclick="tf(19,'false','true')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb19"></div>
+</div>
+
+<!-- Q20 TF -->
+<div class="q-block" id="q20">
+  <div class="q-num">Question 20 of 20 · True or False</div>
+  <div class="q-text">X-rays are mainly used to detect cracks in bones and metal objects because denser materials absorb more X-rays.</div>
+  <div class="tf-options">
+    <button class="tf-btn" onclick="tf(20,'true','true')">✅ True</button>
+    <button class="tf-btn" onclick="tf(20,'false','true')">❌ False</button>
+  </div>
+  <div class="feedback" id="fb20"></div>
+</div>
+
+<!-- RESULT BOX -->
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-sub" id="resultSub"></div>
+  <div class="result-show" id="resultShow"></div>
+  <br>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+</main>
+
+<script>
+const SCORE_KEY = 'physics-p12-4-quiz-score';
+const FEEDBACK = {
+  1: { correct: '✅ Correct! UV is just beyond violet in the visible spectrum, between visible light and X-rays.', wrong: '❌ UV sits between visible light and X-rays in the electromagnetic spectrum.' },
+  2: { correct: '✅ Correct! X-rays are produced in X-ray tubes when high-speed electrons are suddenly decelerated.', wrong: '❌ X-rays are produced when fast-moving electrons are stopped — that\'s the key difference from gamma rays.' },
+  3: { correct: '✅ Correct! Gamma rays come from unstable radioactive nuclei releasing energy — a nuclear process.', wrong: '❌ Gamma rays are produced by radioactive substances when unstable nuclei release energy.' },
+  4: { correct: '✅ Correct! Ionising radiation knocks electrons out of atoms, leaving them as charged ions.', wrong: '❌ Ionisation means knocking electrons OUT of atoms, making them positively charged ions.' },
+  5: { correct: '✅ Correct! Lead is very dense, making it the best material for shielding against X-rays and gamma rays.', wrong: '❌ Lead is the best absorber — it\'s very dense, so X-rays and gamma rays can\'t pass through thick lead.' },
+  6: { correct: '✅ Correct! Cobalt-60 is the radioactive source used in radiotherapy to kill cancer cells.', wrong: '❌ Cobalt-60 is the radioactive isotope used as the gamma ray source in cancer radiotherapy.' },
+  7: { correct: '✅ Correct! Gamma rays pass straight through the sealed plastic, sterilising everything inside — the sealed wrap keeps them sterile afterwards.', wrong: '❌ Gamma rays pass through plastic, so instruments can be sterilised inside sealed packaging — keeping them sterile until opened.' },
+  8: { correct: '✅ Correct! Gamma rays have the shortest wavelength (and highest energy) in the electromagnetic spectrum.', wrong: '❌ Gamma rays have the shortest wavelength of all — shorter than X-rays, UV, or any other EM wave.' },
+  9: { correct: '✅ Correct! A film badge monitors the total dose of ionising radiation the wearer has received.', wrong: '❌ Film badges monitor (measure) the radiation dose received — they don\'t protect against it.' },
+  10: { correct: '✅ Correct! Low doses cause DNA damage and gene mutations, which can trigger cancerous growth over time.', wrong: '❌ Low doses cause gene mutations in DNA, which can lead to cancer — even without immediately killing cells.' },
+  11: { correct: '✅ Correct! UV has SHORTER wavelengths than visible light — that\'s why it carries more energy.', wrong: '❌ UV has SHORTER wavelengths than visible light, not longer. Shorter wavelength = higher energy.' },
+  12: { correct: '✅ Correct! Shorter wavelength = higher energy = greater penetrating power. Gamma rays penetrate more than X-rays.', wrong: '❌ This is true — shorter wavelength means higher energy, and gamma rays penetrate further than X-rays.' },
+  13: { correct: '✅ Correct — they are NOT produced the same way. X-rays come from electrons being stopped; gamma rays come from radioactive nuclei.', wrong: '❌ They are NOT produced the same way. X-rays use electrons; gamma rays come from radioactive nuclei. Same EM spectrum, different origins.' },
+  14: { correct: '✅ Correct! Gamma rays kill ~99% of disease-carrying organisms, reducing the ~20% of food lost to bacterial spoilage.', wrong: '❌ This is true — gamma irradiation kills disease organisms including Salmonella and Clostridium, reducing food spoilage.' },
+  15: { correct: '✅ Correct — it must have a PLASTIC (not metal) case! Metal would block the radiation before it reaches the film.', wrong: '❌ The badge needs a PLASTIC case — metal would absorb the radiation and give a false (too low) reading.' },
+  16: { correct: '✅ Correct! UV has a shorter wavelength than visible light, so it carries more energy per photon.', wrong: '❌ True — UV waves have shorter wavelengths than visible light, meaning they carry more energy.' },
+  17: { correct: '✅ Correct — the beam comes from DIFFERENT directions! This concentrates the dose at the tumour while reducing damage to surrounding tissue.', wrong: '❌ The beam is aimed from DIFFERENT directions, not one fixed point. This focuses the maximum dose on the tumour while protecting surrounding tissue.' },
+  18: { correct: '✅ Correct! Both X-rays and gamma rays carry enough energy to ionise atoms — they are both ionising radiation.', wrong: '❌ Both are ionising — they both knock electrons from atoms. That\'s one of their key shared properties.' },
+  19: { correct: '✅ Correct! UV waves can damage the cornea and lens of the eye, causing blindness — goggles must be worn with UV lamps.', wrong: '❌ True — UV can cause blindness. That\'s why you must wear special goggles when using sunbeds or UV lamps.' },
+  20: { correct: '✅ Correct! Denser materials (bone, metal) absorb more X-rays and show up white on X-ray images — cracks appear as dark lines.', wrong: '❌ True — X-rays are absorbed more by dense materials. Cracks let more X-rays through, showing up as dark areas on the image.' }
+};
+
+let score = 0;
+let answered = 0;
+
+function updateBar() {
+  document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+  document.getElementById('answeredDisplay').textContent = answered + ' / 20 answered';
+  document.getElementById('progressFill').style.width = (answered / 20 * 100) + '%';
+  if (answered === 20) showResult();
+}
+
+function mcq(qn, chosen, correct) {
+  if (document.getElementById('q' + qn).classList.contains('answered-correct') ||
+      document.getElementById('q' + qn).classList.contains('answered-wrong')) return;
+  const block = document.getElementById('q' + qn);
+  const btns = block.querySelectorAll('.opt-btn');
+  const fb = document.getElementById('fb' + qn);
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = chosen === correct;
+  btns.forEach(b => {
+    const lbl = b.querySelector('.opt-label').textContent;
+    if (lbl === correct) b.classList.add('correct');
+    else if (lbl === chosen && !isCorrect) b.classList.add('wrong');
+  });
+  fb.textContent = isCorrect ? FEEDBACK[qn].correct : FEEDBACK[qn].wrong;
+  fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  block.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  if (isCorrect) score++;
+  answered++;
+  updateBar();
+}
+
+function tf(qn, chosen, correct) {
+  if (document.getElementById('q' + qn).classList.contains('answered-correct') ||
+      document.getElementById('q' + qn).classList.contains('answered-wrong')) return;
+  const block = document.getElementById('q' + qn);
+  const btns = block.querySelectorAll('.tf-btn');
+  const fb = document.getElementById('fb' + qn);
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = chosen === correct;
+  btns.forEach(b => {
+    const val = b.textContent.includes('True') ? 'true' : 'false';
+    if (val === correct) b.classList.add('correct');
+    else if (val === chosen && !isCorrect) b.classList.add('wrong');
+  });
+  fb.textContent = isCorrect ? FEEDBACK[qn].correct : FEEDBACK[qn].wrong;
+  fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  block.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  if (isCorrect) score++;
+  answered++;
+  updateBar();
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  document.getElementById('resultScore').textContent = score + ' / 20';
+  let emoji, msg, sub;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! Top marks!'; sub = 'You\'ve mastered P12.4.'; }
+  else if (score >= 14) { emoji = '🎉'; msg = 'Great work!'; sub = 'Really solid understanding of UV, X-rays and gamma rays.'; }
+  else if (score >= 10) { emoji = '📚'; msg = 'Good effort!'; sub = 'Review the topics you missed and try again.'; }
+  else { emoji = '💪'; msg = 'Keep going!'; sub = 'Go back to the revision sheet and have another go.'; }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultSub').textContent = sub;
+  document.getElementById('resultShow').textContent = '📋 Show this to mum — ' + score + '/20';
+  localStorage.setItem(SCORE_KEY, score);
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  updateBar();
+  document.getElementById('resultBox').classList.remove('show');
+  for (let i = 1; i <= 20; i++) {
+    const block = document.getElementById('q' + i);
+    block.classList.remove('answered-correct','answered-wrong');
+    block.querySelectorAll('button').forEach(b => { b.disabled = false; b.className = b.className.replace(/\b(correct|wrong)\b/g,'').trim(); });
+    const fb = document.getElementById('fb' + i);
+    fb.className = 'feedback';
+    fb.textContent = '';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

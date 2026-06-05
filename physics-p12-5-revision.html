@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.5 X-rays in Medicine — Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #1a2a3a;
+    --muted: #5a7a8a;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --blue: #1565c0;
+    --blue2: #e3f2fd;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --yellow: #f9a825;
+    --yellow2: #fffde7;
+    --line: #cde3f5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1e6fa0 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 30%;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 0.8rem;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.8rem;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--accent);
+  }
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* MAIN */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  /* MARK AS READ */
+  .mark-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding: 0.7rem;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .mark-btn:hover { background: #1a4a6e; }
+  .mark-btn.done { background: var(--green); }
+
+  /* SECTION ANCHOR */
+  .section-anchor { scroll-margin-top: 1rem; }
+
+  /* PANEL STYLES */
+  .panel {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+    border-left: 4px solid var(--accent);
+  }
+  .panel h2 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* BIG IDEA GRID */
+  .big-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .big-card {
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(13,43,69,0.07);
+    border-top: 4px solid var(--accent);
+    text-align: center;
+  }
+  .big-card .icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .big-card h3 { font-size: 0.82rem; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem; }
+  .big-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.4; }
+
+  /* STATEMENT BOX */
+  .statement {
+    background: var(--blue2);
+    border-left: 5px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+  }
+  .statement strong { color: var(--blue); }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: var(--yellow2);
+    border-left: 5px solid var(--yellow);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+  }
+  .exam-tip .label { font-weight: 800; color: var(--yellow); font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+
+  /* WARNING */
+  .warning {
+    background: var(--red2);
+    border-left: 5px solid var(--red);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+  }
+  .warning .label { font-weight: 800; color: var(--red); font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+
+  /* TILE GRID */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .tile {
+    border-radius: 10px;
+    padding: 0.9rem;
+    font-size: 0.83rem;
+    line-height: 1.4;
+  }
+  .tile h4 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem; }
+  .tile.red { background: var(--red2); border-top: 3px solid var(--red); }
+  .tile.red h4 { color: var(--red); }
+  .tile.orange { background: var(--orange2); border-top: 3px solid var(--orange); }
+  .tile.orange h4 { color: var(--orange); }
+  .tile.blue { background: var(--blue2); border-top: 3px solid var(--blue); }
+  .tile.blue h4 { color: var(--blue); }
+  .tile.green { background: var(--green2); border-top: 3px solid var(--green); }
+  .tile.green h4 { color: var(--green); }
+  .tile.purple { background: var(--purple2); border-top: 3px solid var(--purple); }
+  .tile.purple h4 { color: var(--purple); }
+
+  /* COMPARE */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .compare-col {
+    border-radius: 10px;
+    padding: 1rem;
+    background: var(--paper);
+    box-shadow: 0 1px 6px rgba(13,43,69,0.07);
+  }
+  .compare-col h4 { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 2px solid; }
+  .compare-col.imaging h4 { color: var(--blue); border-color: var(--blue); }
+  .compare-col.therapy h4 { color: var(--red); border-color: var(--red); }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col ul li { font-size: 0.83rem; padding: 0.25rem 0; padding-left: 1rem; position: relative; line-height: 1.4; }
+  .compare-col ul li::before { content: '•'; position: absolute; left: 0; }
+  .compare-col.imaging ul li::before { color: var(--blue); }
+  .compare-col.therapy ul li::before { color: var(--red); }
+
+  /* KEYWORDS */
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .kw-pill {
+    background: var(--navy);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* TABLE */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+    margin-bottom: 1.2rem;
+    background: var(--paper);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(13,43,69,0.07);
+  }
+  .info-table th {
+    background: var(--navy);
+    color: white;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .info-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .info-table tr:last-child td { border-bottom: none; }
+  .info-table tr:nth-child(even) td { background: #f4faff; }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy), #1a4a6e);
+    color: white;
+    border-radius: 12px;
+    padding: 1.2rem 1.2rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.15s;
+  }
+  .quiz-cta:hover { transform: translateY(-2px); }
+  .quiz-cta h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .quiz-cta p { font-size: 0.83rem; color: rgba(255,255,255,0.75); }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; margin-bottom: 1.2rem; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { margin-top: 3px; accent-color: var(--navy); flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">⚛️ Physics · P12 Electromagnetic Waves</div>
+  <div class="badge">P12.5</div>
+  <h1>X-rays in Medicine</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">X-ray imaging</span>
+    <span class="hero-tag">Radiation dose</span>
+    <span class="hero-tag">X-ray therapy</span>
+    <span class="hero-tag">Ionising radiation</span>
+    <span class="hero-tag">CCD detector</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#big-ideas">Big Ideas</a>
+  <a href="#how-xrays-work">How X-rays Work</a>
+  <a href="#radiation-dose">Radiation Dose</a>
+  <a href="#therapy">X-ray Therapy</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<main>
+
+  <button class="mark-btn" id="markBtn" onclick="toggleRead()">📖 Mark as read</button>
+
+  <!-- LEARNING OBJECTIVES CHECKLIST -->
+  <div class="panel" id="big-ideas">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="checklist">
+      <li><input type="checkbox"> I know what X-rays are used for in hospitals</li>
+      <li><input type="checkbox"> I can explain why X-rays are dangerous</li>
+      <li><input type="checkbox"> I can describe what absorbs X-rays as they pass through the body</li>
+      <li><input type="checkbox"> I understand what radiation dose means and what it depends on</li>
+      <li><input type="checkbox"> I can compare X-rays used for imaging vs therapy</li>
+    </ul>
+  </div>
+
+  <!-- BIG IDEAS GRID -->
+  <div class="big-grid">
+    <div class="big-card">
+      <div class="icon">🦴</div>
+      <h3>Imaging</h3>
+      <p>X-rays pass through soft tissue but are absorbed by bones, teeth and metal — creating a shadow image.</p>
+    </div>
+    <div class="big-card">
+      <div class="icon">🎯</div>
+      <h3>Therapy</h3>
+      <p>High-energy X-rays are used to destroy cancerous tumours deep inside the body.</p>
+    </div>
+    <div class="big-card">
+      <div class="icon">☢️</div>
+      <h3>Ionising</h3>
+      <p>X-rays are ionising radiation — they can damage living cells and cause gene mutation.</p>
+    </div>
+    <div class="big-card">
+      <div class="icon">📊</div>
+      <h3>Radiation Dose</h3>
+      <p>Measured in sieverts (Sv). Depends on radiation type, exposure time, and energy absorbed per second.</p>
+    </div>
+  </div>
+
+  <!-- HOW X-RAYS WORK FOR IMAGING -->
+  <div class="panel" id="how-xrays-work">
+    <h2>📷 How X-ray Imaging Works</h2>
+  </div>
+
+  <div class="statement">
+    X-rays from the tube pass through the patient's body. A <strong>lightproof cassette with a photographic film</strong> (or a <strong>flat-panel detector</strong>) is placed on the other side of the patient.
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile blue">
+      <h4>Soft Tissue</h4>
+      X-rays pass through — appear <strong>dark</strong> on film. Organs, muscles, fat.
+    </div>
+    <div class="tile red">
+      <h4>Bones & Teeth</h4>
+      X-rays are absorbed — appear <strong>lighter/bright</strong> on film. Also metal objects.
+    </div>
+    <div class="tile orange">
+      <h4>Contrast Medium</h4>
+      A substance that absorbs X-rays easily (e.g. barium) — used to image soft organs like the stomach.
+    </div>
+    <div class="tile purple">
+      <h4>Lead Plates</h4>
+      Block X-rays reaching other parts of the body. Lead is a good absorber of X-rays.
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>📱 Charge-Coupled Device (CCD)</h2>
+  </div>
+  <div class="statement">
+    A <strong>flat-panel detector</strong> contains a CCD — sensors that convert X-rays into <strong>light</strong>, then into <strong>electronic signals</strong> sent to a computer to display a digital X-ray image.
+  </div>
+
+  <!-- RADIATION DOSE -->
+  <div class="panel" id="radiation-dose">
+    <h2>☢️ Radiation Dose</h2>
+  </div>
+
+  <table class="info-table">
+    <thead>
+      <tr><th>Factor</th><th>Explanation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Type of radiation</strong></td><td>Alpha causes 10× more damage than X-rays for the same exposure time</td></tr>
+      <tr><td><strong>Time of exposure</strong></td><td>Longer exposure = greater dose</td></tr>
+      <tr><td><strong>Energy per second absorbed</strong></td><td>More energy absorbed = greater dose</td></tr>
+    </tbody>
+  </table>
+
+  <div class="statement">
+    <strong>Units:</strong> Sieverts (Sv) or millisieverts (mSv). 1 Sv = 1000 mSv. <em>You do not need to remember the unit of radiation dose.</em>
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile red">
+      <h4>High Doses</h4>
+      Kill living cells.
+    </div>
+    <div class="tile orange">
+      <h4>Low Doses</h4>
+      Can cause gene mutation and cancerous growth. <strong>No safe limit exists.</strong>
+    </div>
+    <div class="tile blue">
+      <h4>Background Radiation</h4>
+      Everyone is exposed: cosmic radiation from space, radon gas from underground.
+    </div>
+    <div class="tile green">
+      <h4>Film Badge</h4>
+      Workers who use ionising radiation must wear a film badge to monitor their exposure.
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <span class="label">📝 Exam Tip</span>
+    Medical X-rays account for about 13% of the average 2 mSv/year radiation dose from ionising radiation. Average medical X-ray dose = ~0.26 mSv per year.
+  </div>
+
+  <!-- X-RAY THERAPY -->
+  <div class="panel" id="therapy">
+    <h2>🎯 X-ray Therapy</h2>
+  </div>
+
+  <div class="compare">
+    <div class="compare-col imaging">
+      <h4>📷 Imaging X-rays</h4>
+      <ul>
+        <li>Lower energy</li>
+        <li>Absorbed by bones & teeth</li>
+        <li>Pass through soft tissue</li>
+        <li>Cannot destroy tumours</li>
+        <li>Longer wavelength</li>
+      </ul>
+    </div>
+    <div class="compare-col therapy">
+      <h4>🎯 Therapy X-rays</h4>
+      <ul>
+        <li>Higher energy</li>
+        <li>Carry enough energy to destroy tumours</li>
+        <li>Shorter wavelength</li>
+        <li>Thick plates stop X-rays reaching healthy tissue</li>
+        <li>Gap between plates directs beam at tumour</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warning">
+    <span class="label">⚠️ Common Mistake</span>
+    X-rays used for <strong>imaging cannot be used for therapy</strong> — they are low energy and do not carry enough energy to destroy cancerous tumours. Therapy X-rays are shorter in wavelength (higher frequency = higher energy).
+  </div>
+
+  <!-- KEY POINTS -->
+  <div class="panel">
+    <h2>✅ Key Points Summary</h2>
+    <ul class="checklist">
+      <li><input type="checkbox"> X-rays are used to make images of internal body parts</li>
+      <li><input type="checkbox"> X-rays are also used to destroy tumours at or near the body surface</li>
+      <li><input type="checkbox"> X-rays are ionising radiation — they damage living cells as they pass through</li>
+      <li><input type="checkbox"> X-rays are absorbed more by bones and teeth than by soft tissues</li>
+      <li><input type="checkbox"> Radiation dose depends on: type of radiation, time of exposure, energy absorbed per second</li>
+      <li><input type="checkbox"> Therapy X-rays are shorter wavelength (higher energy) than imaging X-rays</li>
+    </ul>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div id="keywords">
+    <div class="panel"><h2>🔑 Key Terms</h2></div>
+    <div class="keywords">
+      <span class="kw-pill">X-ray</span>
+      <span class="kw-pill">Electromagnetic spectrum</span>
+      <span class="kw-pill">Radiograph</span>
+      <span class="kw-pill">Contrast medium</span>
+      <span class="kw-pill">CCD (charge-coupled device)</span>
+      <span class="kw-pill">Ionising radiation</span>
+      <span class="kw-pill">Radiation dose</span>
+      <span class="kw-pill">Sievert (Sv)</span>
+      <span class="kw-pill">Millisievert (mSv)</span>
+      <span class="kw-pill">Alpha radiation</span>
+      <span class="kw-pill">Background radiation</span>
+      <span class="kw-pill">Film badge</span>
+      <span class="kw-pill">X-ray therapy</span>
+      <span class="kw-pill">Tumour</span>
+      <span class="kw-pill">Lead plate</span>
+      <span class="kw-pill">Flat-panel detector</span>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <a class="quiz-cta" href="physics-p12-5-quickcheck.html">
+    <h3>⚡ Ready to test yourself?</h3>
+    <p>Take the P12.5 Quick Check quiz → 20 questions</p>
+  </a>
+
+</main>
+
+<script>
+  const KEY = 'physics-p12-5-read';
+  const btn = document.getElementById('markBtn');
+
+  function toggleRead() {
+    const done = localStorage.getItem(KEY) === 'true';
+    if (done) {
+      localStorage.removeItem(KEY);
+      btn.textContent = '📖 Mark as read';
+      btn.classList.remove('done');
+    } else {
+      localStorage.setItem(KEY, 'true');
+      btn.textContent = '✅ Marked as read!';
+      btn.classList.add('done');
+    }
+  }
+
+  // On load
+  if (localStorage.getItem(KEY) === 'true') {
+    btn.textContent = '✅ Marked as read!';
+    btn.classList.add('done');
+  }
+</script>
+</body>
+</html>

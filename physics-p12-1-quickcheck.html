@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.1 Electromagnetic Spectrum — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --line: #c8dff0;
+    --red: #e53935;
+    --red2: #ffebee;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --orange: #ef6c00;
+    --orange2: #fff3e0;
+    --yellow: #f9a825;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1e6a9e 100%);
+    color: white;
+    padding: 28px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -30px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 40%;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 900; line-height: 1.2; margin-bottom: 6px; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--navy);
+    padding: 0 16px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 14px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .nav a:hover { color: white; border-color: var(--accent); }
+
+  /* ── SCORE BAR ── */
+  .score-bar {
+    background: var(--paper);
+    border-bottom: 2px solid var(--line);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .score-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 48px;
+  }
+  .score-stat .val {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .score-stat .lbl {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .score-divider { width: 1px; height: 32px; background: var(--line); }
+  .score-progress-wrap {
+    flex: 1;
+    background: var(--line);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .score-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #1976d2);
+    border-radius: 10px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  /* ── QUESTIONS ── */
+  .questions { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .section-divider span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .q-block {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 14px;
+    border: 2px solid var(--line);
+    transition: border-color .2s;
+  }
+  .q-block.correct { border-color: var(--green); }
+  .q-block.wrong { border-color: var(--red); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .q-num {
+    background: var(--navy);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 26px; height: 26px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .q-text { font-size: 14px; font-weight: 700; color: var(--ink); }
+
+  /* MCQ options */
+  .options { display: flex; flex-direction: column; gap: 7px; }
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 9px;
+    padding: 9px 12px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: background .15s, border-color .15s, transform .1s;
+    width: 100%;
+  }
+  .opt-btn:hover:not(:disabled) { background: #d4ecfa; border-color: var(--accent); transform: translateX(2px); }
+  .opt-btn:disabled { cursor: default; }
+  .opt-letter {
+    background: var(--navy);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    width: 22px; height: 22px;
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background .15s;
+  }
+  .opt-btn.selected .opt-letter { background: var(--accent); color: var(--navy); }
+  .opt-btn.correct-ans { background: var(--green2); border-color: var(--green); }
+  .opt-btn.correct-ans .opt-letter { background: var(--green); }
+  .opt-btn.wrong-ans { background: var(--red2); border-color: var(--red); }
+  .opt-btn.wrong-ans .opt-letter { background: var(--red); }
+
+  /* TF */
+  .tf-row { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: 9px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .1s;
+    color: var(--ink);
+  }
+  .tf-btn:hover:not(:disabled) { background: #d4ecfa; border-color: var(--accent); transform: scale(1.02); }
+  .tf-btn:disabled { cursor: default; }
+  .tf-btn.selected { background: var(--accent); border-color: #1976d2; color: var(--navy); }
+  .tf-btn.correct-ans { background: var(--green2); border-color: var(--green); color: var(--green); }
+  .tf-btn.wrong-ans { background: var(--red2); border-color: var(--red); color: var(--red); }
+
+  /* Feedback */
+  .feedback {
+    display: none;
+    margin-top: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: var(--green); border-left: 3px solid var(--green); }
+  .feedback.wrong { background: var(--red2); color: var(--red); border-left: 3px solid var(--red); }
+
+  /* ── RESULT BOX ── */
+  .result-box {
+    display: none;
+    margin: 0 16px 24px;
+    background: var(--navy);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-align: center;
+    color: white;
+  }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 48px; margin-bottom: 10px; }
+  .result-score {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    font-family: 'Fira Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .result-msg { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+  .result-mum {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  #resetBtn {
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 11px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    margin-top: 6px;
+  }
+  #resetBtn:hover { background: #42a5f5; transform: scale(1.04); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · Topic P12.1</div>
+  <div class="hero-badge">⚡ Quick Check</div>
+  <h1>Electromagnetic Spectrum</h1>
+  <p>20 questions · 10 multiple choice + 10 true or false</p>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-p12-1-revision.html">📖 Revision</a>
+  <a href="#mcq">MCQ</a>
+  <a href="#tf">True / False</a>
+  <a href="#result">Result</a>
+</nav>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <div class="score-stat">
+    <div class="val" id="scoreVal">0</div>
+    <div class="lbl">Score</div>
+  </div>
+  <div class="score-divider"></div>
+  <div class="score-stat">
+    <div class="val" id="answeredVal">0</div>
+    <div class="lbl">Answered</div>
+  </div>
+  <div class="score-divider"></div>
+  <div class="score-progress-wrap">
+    <div class="score-progress-fill" id="progressFill"></div>
+  </div>
+  <div style="font-size:12px;font-weight:800;color:var(--muted);min-width:36px;text-align:right;" id="progressTxt">0/20</div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="questions" id="mcq">
+
+  <div class="section-divider"><span>Multiple Choice — 10 Questions</span></div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-text">What is the speed of all electromagnetic waves in a vacuum?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q1','A','C')"><span class="opt-letter">A</span>3.0 × 10⁶ m/s</button>
+      <button class="opt-btn" onclick="answer('q1','B','C')"><span class="opt-letter">B</span>3.0 × 10⁵ m/s</button>
+      <button class="opt-btn" onclick="answer('q1','C','C')"><span class="opt-letter">C</span>3.0 × 10⁸ m/s</button>
+      <button class="opt-btn" onclick="answer('q1','D','C')"><span class="opt-letter">D</span>3.0 × 10¹⁰ m/s</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-text">Which part of the electromagnetic spectrum has the longest wavelength?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q2','A','D')"><span class="opt-letter">A</span>Gamma rays</button>
+      <button class="opt-btn" onclick="answer('q2','B','D')"><span class="opt-letter">B</span>X-rays</button>
+      <button class="opt-btn" onclick="answer('q2','C','D')"><span class="opt-letter">C</span>Infrared</button>
+      <button class="opt-btn" onclick="answer('q2','D','D')"><span class="opt-letter">D</span>Radio waves</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-text">A wave has a frequency of 6.0 × 10⁸ Hz. Using v = 3.0 × 10⁸ m/s, what is its wavelength?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q3','A','B')"><span class="opt-letter">A</span>2.0 m</button>
+      <button class="opt-btn" onclick="answer('q3','B','B')"><span class="opt-letter">B</span>0.50 m</button>
+      <button class="opt-btn" onclick="answer('q3','C','B')"><span class="opt-letter">C</span>0.33 m</button>
+      <button class="opt-btn" onclick="answer('q3','D','B')"><span class="opt-letter">D</span>5.0 m</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-text">Which part of the EM spectrum lies between infrared and ultraviolet?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q4','A','C')"><span class="opt-letter">A</span>Microwaves</button>
+      <button class="opt-btn" onclick="answer('q4','B','C')"><span class="opt-letter">B</span>Radio waves</button>
+      <button class="opt-btn" onclick="answer('q4','C','C')"><span class="opt-letter">C</span>Visible light</button>
+      <button class="opt-btn" onclick="answer('q4','D','C')"><span class="opt-letter">D</span>X-rays</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-text">A microwave has a wavelength of 0.030 m. What is its frequency? (v = 3.0 × 10⁸ m/s)</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q5','A','A')"><span class="opt-letter">A</span>1.0 × 10¹⁰ Hz</button>
+      <button class="opt-btn" onclick="answer('q5','B','A')"><span class="opt-letter">B</span>1.0 × 10⁷ Hz</button>
+      <button class="opt-btn" onclick="answer('q5','C','A')"><span class="opt-letter">C</span>9.0 × 10⁹ Hz</button>
+      <button class="opt-btn" onclick="answer('q5','D','A')"><span class="opt-letter">D</span>3.0 × 10¹⁰ Hz</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-text">Which of the following correctly describes how the EM spectrum is ordered from lowest to highest frequency?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q6','A','B')"><span class="opt-letter">A</span>Gamma → X-ray → UV → Visible → IR → Microwave → Radio</button>
+      <button class="opt-btn" onclick="answer('q6','B','B')"><span class="opt-letter">B</span>Radio → Microwave → IR → Visible → UV → X-ray → Gamma</button>
+      <button class="opt-btn" onclick="answer('q6','C','B')"><span class="opt-letter">C</span>Radio → IR → Microwave → Visible → UV → X-ray → Gamma</button>
+      <button class="opt-btn" onclick="answer('q6','D','B')"><span class="opt-letter">D</span>Visible → UV → IR → Microwave → Radio → X-ray → Gamma</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-text">What range of wavelengths can the human eye detect?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q7','A','C')"><span class="opt-letter">A</span>Below 400 nm only</button>
+      <button class="opt-btn" onclick="answer('q7','B','C')"><span class="opt-letter">B</span>400 nm to 1000 nm</button>
+      <button class="opt-btn" onclick="answer('q7','C','C')"><span class="opt-letter">C</span>Just below 400 nm to above 700 nm</button>
+      <button class="opt-btn" onclick="answer('q7','D','C')"><span class="opt-letter">D</span>700 nm to 1000 nm</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-text">What do electromagnetic waves transfer from a source to an absorber?</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q8','A','C')"><span class="opt-letter">A</span>Matter</button>
+      <button class="opt-btn" onclick="answer('q8','B','C')"><span class="opt-letter">B</span>Mass</button>
+      <button class="opt-btn" onclick="answer('q8','C','C')"><span class="opt-letter">C</span>Energy</button>
+      <button class="opt-btn" onclick="answer('q8','D','C')"><span class="opt-letter">D</span>Electric charge</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-text">A radio wave has a frequency of 600 × 10⁶ Hz. What is its wavelength? (v = 3.0 × 10⁸ m/s)</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q9','A','B')"><span class="opt-letter">A</span>2.0 m</button>
+      <button class="opt-btn" onclick="answer('q9','B','B')"><span class="opt-letter">B</span>0.50 m</button>
+      <button class="opt-btn" onclick="answer('q9','C','B')"><span class="opt-letter">C</span>5.0 m</button>
+      <button class="opt-btn" onclick="answer('q9','D','B')"><span class="opt-letter">D</span>0.20 m</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-text">When an atom or nucleus emits electromagnetic radiation, it emits a packet of waves called a:</div>
+    </div>
+    <div class="options">
+      <button class="opt-btn" onclick="answer('q10','A','B')"><span class="opt-letter">A</span>Neutron</button>
+      <button class="opt-btn" onclick="answer('q10','B','B')"><span class="opt-letter">B</span>Photon</button>
+      <button class="opt-btn" onclick="answer('q10','C','B')"><span class="opt-letter">C</span>Electron</button>
+      <button class="opt-btn" onclick="answer('q10','D','B')"><span class="opt-letter">D</span>Proton</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- TRUE / FALSE -->
+  <div class="section-divider" id="tf"><span>True or False — 10 Questions</span></div>
+
+  <!-- Q11 -->
+  <div class="q-block" id="q11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-text">All electromagnetic waves travel at the same speed in a vacuum.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q11','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q11','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block" id="q12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-text">Gamma rays have a longer wavelength than radio waves.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q12','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q12','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block" id="q13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-text">Electromagnetic waves transfer matter from a source to an absorber.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q13','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q13','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block" id="q14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-text">Higher frequency electromagnetic waves carry more energy per photon.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q14','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q14','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block" id="q15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-text">X-rays have a shorter wavelength than ultraviolet radiation.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q15','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q15','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block" id="q16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-text">The boundaries between different parts of the electromagnetic spectrum are precisely defined.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q16','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q16','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block" id="q17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-text">Microwaves have a higher frequency than infrared radiation.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q17','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q17','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block" id="q18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-text">The wave speed equation is v = f × λ, where λ is the wavelength in metres.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q18','true','true')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q18','false','true')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block" id="q19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-text">A distant star emitting visible light and gamma rays simultaneously — the gamma rays will reach Earth first because they have more energy.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q19','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q19','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block" id="q20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-text">Infrared radiation can be used to heat food in a microwave oven.</div>
+    </div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF('q20','true','false')">✓ True</button>
+      <button class="tf-btn" onclick="answerTF('q20','false','false')">✗ False</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+</div><!-- /questions -->
+
+<!-- RESULT BOX -->
+<div class="result-box" id="result">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-mum" id="resultMum"></div>
+  <button id="resetBtn" onclick="resetQuiz()">Try Again</button>
+</div>
+
+<script>
+  const SCORE_KEY = 'physics-p12-1-quiz-score';
+  let score = 0;
+  let answered = 0;
+  const total = 20;
+
+  const feedback = {
+    'q1':  { correct: 'Correct! All EM waves travel at 3.0 × 10⁸ m/s in a vacuum.', wrong: 'Not quite. All EM waves travel at 3.0 × 10⁸ m/s (300 million m/s) in a vacuum.' },
+    'q2':  { correct: 'Correct! Radio waves have the longest wavelengths — up to 10 km.', wrong: 'Not quite. Radio waves have the longest wavelengths (up to 10⁴ m).' },
+    'q3':  { correct: 'Correct! λ = v ÷ f = 3.0 × 10⁸ ÷ 6.0 × 10⁸ = 0.50 m.', wrong: 'Not quite. λ = v ÷ f = 3.0 × 10⁸ ÷ 6.0 × 10⁸ = 0.50 m.' },
+    'q4':  { correct: 'Correct! Visible light sits between infrared and ultraviolet.', wrong: 'Not quite. Visible light (400–700 nm) sits between infrared and ultraviolet.' },
+    'q5':  { correct: 'Correct! f = v ÷ λ = 3.0 × 10⁸ ÷ 0.030 = 1.0 × 10¹⁰ Hz.', wrong: 'Not quite. f = v ÷ λ = 3.0 × 10⁸ ÷ 0.030 = 1.0 × 10¹⁰ Hz.' },
+    'q6':  { correct: 'Correct! From lowest to highest frequency: Radio → Microwave → IR → Visible → UV → X-ray → Gamma.', wrong: 'Not quite. The correct order is: Radio → Microwave → IR → Visible → UV → X-ray → Gamma.' },
+    'q7':  { correct: 'Correct! Visible light ranges from just below 400 nm to above 700 nm.', wrong: 'Not quite. Visible light is just below 400 nm to above 700 nm.' },
+    'q8':  { correct: 'Correct! EM waves transfer energy — not matter — from source to absorber.', wrong: 'Not quite. EM waves transfer energy, not matter.' },
+    'q9':  { correct: 'Correct! λ = 3.0 × 10⁸ ÷ 6.0 × 10⁸ = 0.50 m.', wrong: 'Not quite. λ = v ÷ f = 3.0 × 10⁸ ÷ 6.0 × 10⁸ = 0.50 m. (600 MHz = 6.0 × 10⁸ Hz)' },
+    'q10': { correct: 'Correct! A photon is a packet of electromagnetic waves emitted by an atom or nucleus.', wrong: 'Not quite. The answer is a photon — a packet of EM wave energy.' },
+    'q11': { correct: 'Correct! All EM waves travel at 3.0 × 10⁸ m/s in a vacuum — regardless of type.', wrong: 'Actually, this is true. All EM waves travel at 3.0 × 10⁸ m/s in a vacuum.' },
+    'q12': { correct: 'Actually, this is false. Gamma rays have the shortest wavelengths; radio waves have the longest.', wrong: 'Correct! Gamma rays have the shortest wavelengths, not the longest.' },
+    'q13': { correct: 'Actually, this is false. EM waves transfer energy, not matter.', wrong: 'Correct! EM waves transfer energy only — no matter is transferred.' },
+    'q14': { correct: 'Correct! The energy of a photon is proportional to its frequency.', wrong: 'Actually, this is true. Higher frequency = more energy per photon (e.g. gamma rays are most energetic).' },
+    'q15': { correct: 'Correct! X-rays have a shorter wavelength than UV radiation (higher frequency, more energy).', wrong: 'Actually, this is true. X-rays have shorter wavelengths than UV — they are more energetic.' },
+    'q16': { correct: 'Actually, this is false. The boundaries are approximate — the spectrum is continuous.', wrong: 'Correct! The boundaries are not precise — the spectrum is continuous and the divisions are approximate.' },
+    'q17': { correct: 'Actually, this is false. Microwaves have a lower frequency than infrared (longer wavelength).', wrong: 'Correct! Microwaves have lower frequency than infrared — they sit between radio waves and IR.' },
+    'q18': { correct: 'Correct! v = f × λ where v is in m/s, f in Hz, and λ in metres.', wrong: 'Actually, this is true. The wave speed equation is v = f × λ.' },
+    'q19': { correct: 'Actually, this is false. All EM waves travel at the same speed — both arrive at the same time.', wrong: 'Correct! All EM waves travel at the same speed, so both would arrive at the same time.' },
+    'q20': { correct: 'Actually, this is false. Microwave ovens use microwaves, not infrared radiation.', wrong: 'Correct! Microwave ovens use microwaves (not infrared) to transfer energy to the food.' },
+  };
+
+  function updateScoreBar() {
+    document.getElementById('scoreVal').textContent = score;
+    document.getElementById('answeredVal').textContent = answered;
+    document.getElementById('progressFill').style.width = (answered / total * 100) + '%';
+    document.getElementById('progressTxt').textContent = answered + '/' + total;
+  }
+
+  function showFeedback(qid, isCorrect) {
+    const fb = document.getElementById('fb-' + qid);
+    fb.textContent = isCorrect ? '✓ ' + feedback[qid].correct : '✗ ' + feedback[qid].wrong;
+    fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  }
+
+  function disableQuestion(qid, type) {
+    const block = document.getElementById(qid);
+    block.querySelectorAll(type === 'mcq' ? '.opt-btn' : '.tf-btn').forEach(b => b.disabled = true);
+  }
+
+  function answer(qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.dataset.answered) return;
+    block.dataset.answered = '1';
+    answered++;
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+    block.classList.add(isCorrect ? 'correct' : 'wrong');
+    // Style buttons
+    block.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.disabled = true;
+      const letter = btn.querySelector('.opt-letter').textContent;
+      if (letter === correct) btn.classList.add('correct-ans');
+      else if (letter === chosen && !isCorrect) btn.classList.add('wrong-ans');
+    });
+    showFeedback(qid, isCorrect);
+    updateScoreBar();
+    if (answered === total) setTimeout(showResult, 500);
+  }
+
+  function answerTF(qid, chosen, correct) {
+    const block = document.getElementById(qid);
+    if (block.dataset.answered) return;
+    block.dataset.answered = '1';
+    answered++;
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+    block.classList.add(isCorrect ? 'correct' : 'wrong');
+    block.querySelectorAll('.tf-btn').forEach(btn => {
+      btn.disabled = true;
+      const val = btn.textContent.includes('True') ? 'true' : 'false';
+      if (val === correct) btn.classList.add('correct-ans');
+      else if (val === chosen && !isCorrect) btn.classList.add('wrong-ans');
+    });
+    showFeedback(qid, isCorrect);
+    updateScoreBar();
+    if (answered === total) setTimeout(showResult, 500);
+  }
+
+  function showResult() {
+    const box = document.getElementById('result');
+    box.classList.add('show');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('resultScore').textContent = score + ' / 20';
+    let emoji, msg;
+    if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! You really know your electromagnetic spectrum.'; }
+    else if (score >= 14) { emoji = '🎉'; msg = 'Great work! A solid understanding of P12.1.'; }
+    else if (score >= 10) { emoji = '📚'; msg = 'Not bad — review the spectrum order and wave equation.'; }
+    else { emoji = '💪'; msg = 'Keep going! Revisit the revision page and try again.'; }
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultMsg').textContent = msg;
+    document.getElementById('resultMum').textContent = 'Show this to mum — ' + score + '/20';
+    localStorage.setItem(SCORE_KEY, score);
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetQuiz() {
+    score = 0; answered = 0;
+    updateScoreBar();
+    document.getElementById('result').classList.remove('show');
+    document.querySelectorAll('.q-block').forEach(b => {
+      b.removeAttribute('data-answered');
+      b.className = 'q-block';
+      b.querySelectorAll('.opt-btn, .tf-btn').forEach(btn => {
+        btn.disabled = false;
+        btn.className = btn.classList.contains('tf-btn') ? 'tf-btn' : 'opt-btn';
+      });
+      const fb = b.querySelector('.feedback');
+      if (fb) { fb.className = 'feedback'; fb.textContent = ''; }
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateScoreBar();
+</script>
+</body>
+</html>

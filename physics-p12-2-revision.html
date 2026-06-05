@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12.2 – Light, Infrared, Microwaves & Radio Waves</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --accent2: #29b6f6;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d2b45;
+    --muted: #5a7a96;
+    --red: #ef5350;
+    --red2: #ffebee;
+    --green: #43a047;
+    --green2: #e8f5e9;
+    --orange: #fb8c00;
+    --orange2: #fff3e0;
+    --purple: #7c4dff;
+    --purple2: #ede7f6;
+    --line: #cde4f5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a6e 60%, #1565c0 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 30%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .hero h1 { font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 800; line-height: 1.2; margin-bottom: 0.8rem; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 20px; margin-bottom: 0.8rem; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+  .hero-tag { background: rgba(255,255,255,0.12); color: #fff; font-size: 0.72rem; padding: 0.2rem 0.65rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0.6rem 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 6px; border: 1px solid rgba(100,181,246,0.3); transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+
+  /* CHECKLIST */
+  .checklist-box { background: var(--paper); border-left: 4px solid var(--accent); border-radius: 10px; padding: 1.2rem 1.4rem; margin: 1.2rem 1rem; }
+  .checklist-box h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.8rem; }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .checklist li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.88rem; }
+  .checklist input[type=checkbox] { margin-top: 0.2rem; accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* CONTENT AREA */
+  .content { padding: 0 1rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .big-idea { background: var(--navy); color: #fff; border-radius: 10px; padding: 1rem; text-align: center; }
+  .big-idea .icon { font-size: 1.8rem; margin-bottom: 0.4rem; display: block; }
+  .big-idea h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--accent); }
+  .big-idea p { font-size: 0.78rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
+
+  /* SECTION HEADER */
+  .section-h { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-top: 0.4rem; margin-bottom: 0.4rem; }
+
+  /* FORMULA BOX */
+  .formula-box { background: var(--navy); color: #fff; border-radius: 10px; padding: 1.2rem 1.4rem; text-align: center; }
+  .formula-box .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 0.5rem; }
+  .formula { font-size: 1.5rem; font-weight: 800; font-family: 'Courier New', monospace; color: #fff; margin-bottom: 0.5rem; }
+  .formula-legend { font-size: 0.78rem; color: rgba(255,255,255,0.7); }
+  .formula-legend span { color: var(--accent); font-weight: 700; }
+
+  /* TILES (coloured panels) */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .tile { border-radius: 10px; padding: 1rem 1.1rem; }
+  .tile h4 { font-size: 0.82rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .tile p, .tile li { font-size: 0.8rem; line-height: 1.45; }
+  .tile ul { padding-left: 1rem; }
+  .tile-red { background: var(--red2); border-top: 3px solid var(--red); }
+  .tile-red h4 { color: var(--red); }
+  .tile-orange { background: var(--orange2); border-top: 3px solid var(--orange); }
+  .tile-orange h4 { color: var(--orange); }
+  .tile-blue { background: #e3f2fd; border-top: 3px solid var(--accent2); }
+  .tile-blue h4 { color: #0277bd; }
+  .tile-green { background: var(--green2); border-top: 3px solid var(--green); }
+  .tile-green h4 { color: var(--green); }
+  .tile-purple { background: var(--purple2); border-top: 3px solid var(--purple); }
+  .tile-purple h4 { color: var(--purple); }
+
+  /* STATEMENT BOX */
+  .statement { background: #e3f2fd; border-left: 4px solid var(--accent2); border-radius: 10px; padding: 1rem 1.2rem; font-size: 0.85rem; }
+  .statement strong { color: var(--navy); }
+
+  /* EXAM TIP */
+  .exam-tip { background: #fffde7; border-left: 4px solid #f9a825; border-radius: 10px; padding: 1rem 1.2rem; }
+  .exam-tip .tip-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #f9a825; margin-bottom: 0.3rem; }
+  .exam-tip p { font-size: 0.82rem; line-height: 1.5; }
+
+  /* WARNING */
+  .warning { background: #fce4ec; border-left: 4px solid #e91e63; border-radius: 10px; padding: 1rem 1.2rem; }
+  .warning .warn-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #c2185b; margin-bottom: 0.3rem; }
+  .warning p { font-size: 0.82rem; line-height: 1.5; }
+
+  /* COMPARE 2-col */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .compare-col { background: var(--paper); border-radius: 10px; padding: 0.9rem 1rem; border-top: 3px solid var(--accent); }
+  .compare-col h4 { font-size: 0.82rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
+  .compare-col ul { padding-left: 1.1rem; font-size: 0.79rem; line-height: 1.5; color: var(--ink); }
+
+  /* SPECTRUM BAR */
+  .spectrum-wrap { border-radius: 10px; overflow: hidden; background: var(--paper); padding: 1rem; }
+  .spectrum-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 0.6rem; }
+  .spec-seg { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.06em; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+  .spec-labels { display: flex; }
+  .spec-label { flex: 1; text-align: center; font-size: 0.6rem; color: var(--muted); }
+  .spec-arrow { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted); margin-top: 0.3rem; font-style: italic; }
+
+  /* KEYWORDS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .kw { background: var(--navy); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 20px; }
+
+  /* TABLE */
+  .rev-table { width: 100%; border-collapse: collapse; background: var(--paper); border-radius: 10px; overflow: hidden; font-size: 0.8rem; }
+  .rev-table th { background: var(--navy); color: var(--accent); padding: 0.55rem 0.8rem; text-align: left; font-size: 0.75rem; }
+  .rev-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .rev-table tr:last-child td { border-bottom: none; }
+  .rev-table tr:nth-child(even) td { background: #f0f8ff; }
+
+  /* MARK READ */
+  .mark-read-wrap { padding: 0 1rem 1rem; }
+  .mark-read-btn { width: 100%; padding: 0.9rem; background: var(--accent); color: var(--navy); font-size: 0.9rem; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; transition: background 0.2s; }
+  .mark-read-btn:hover { background: var(--accent2); }
+  .mark-read-btn.done { background: var(--green); color: #fff; }
+
+  /* QUIZ CTA */
+  .quiz-cta { margin: 0 1rem 1rem; background: linear-gradient(135deg, var(--navy), #1565c0); border-radius: 10px; padding: 1.2rem; text-align: center; color: #fff; text-decoration: none; display: block; }
+  .quiz-cta h4 { font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .quiz-cta p { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+
+  /* PANEL WRAPPER */
+  .panel { background: var(--paper); border-radius: 10px; padding: 1.1rem 1.2rem; }
+  .panel h3 { font-size: 0.95rem; font-weight: 800; color: var(--navy); margin-bottom: 0.7rem; border-bottom: 2px solid var(--line); padding-bottom: 0.4rem; }
+  .panel ul { padding-left: 1.2rem; font-size: 0.82rem; line-height: 1.6; }
+  .panel p { font-size: 0.82rem; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Physics · P12 Electromagnetic Waves</div>
+  <div class="badge">P12.2</div>
+  <h1>Light, Infrared, Microwaves &amp; Radio Waves</h1>
+  <div class="hero-tags">
+    <span class="hero-tag">🌈 White light</span>
+    <span class="hero-tag">🌡️ Infrared</span>
+    <span class="hero-tag">📡 Microwaves</span>
+    <span class="hero-tag">📻 Radio waves</span>
+    <span class="hero-tag">⚠️ Hazards</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#spectrum">🌈 Spectrum</a>
+  <a href="#types">📡 Wave types</a>
+  <a href="#hazards">⚠️ Hazards</a>
+  <a href="#keywords">🔑 Keywords</a>
+</nav>
+
+<!-- CHECKLIST -->
+<div class="checklist-box">
+  <h3>Learning Objectives — tick as you go</h3>
+  <ul class="checklist">
+    <li><input type="checkbox"> I can describe the nature of white light and the visible spectrum.</li>
+    <li><input type="checkbox"> I can explain what infrared radiation is and name devices that use it.</li>
+    <li><input type="checkbox"> I can describe the uses and properties of microwaves.</li>
+    <li><input type="checkbox"> I can describe the uses and properties of radio waves.</li>
+    <li><input type="checkbox"> I can explain why these types of EM radiation are hazardous.</li>
+    <li><input type="checkbox"> I can use the wave equation v = fλ to calculate wavelength.</li>
+  </ul>
+</div>
+
+<div class="content">
+
+  <!-- BIG IDEAS -->
+  <p class="section-h" id="spectrum">The Big Picture</p>
+  <div class="big-idea-grid">
+    <div class="big-idea">
+      <span class="icon">🌈</span>
+      <h4>White Light</h4>
+      <p>Contains ALL colours of the visible spectrum — from violet to red.</p>
+    </div>
+    <div class="big-idea">
+      <span class="icon">🌡️</span>
+      <h4>Infrared</h4>
+      <p>ALL objects emit it. Hotter = more emitted. Used in remotes, optical fibres, cameras.</p>
+    </div>
+    <div class="big-idea">
+      <span class="icon">📡</span>
+      <h4>Microwaves</h4>
+      <p>Shorter λ than radio waves. Used for satellite TV, mobile phones, microwave ovens.</p>
+    </div>
+    <div class="big-idea">
+      <span class="icon">📻</span>
+      <h4>Radio Waves</h4>
+      <p>300 000 Hz → 3000 MHz. Used for radio, TV, Bluetooth, mobile phones.</p>
+    </div>
+  </div>
+
+  <!-- SPECTRUM BAR -->
+  <div class="spectrum-wrap">
+    <p class="section-h" style="margin-bottom:0.5rem">The Electromagnetic Spectrum</p>
+    <div class="spectrum-bar">
+      <div class="spec-seg" style="background:#6a0dad; flex:1.2">γ-ray</div>
+      <div class="spec-seg" style="background:#9c27b0">X-ray</div>
+      <div class="spec-seg" style="background:#3f51b5">UV</div>
+      <div class="spec-seg" style="background:linear-gradient(to right,#8b00ff,#4169e1,#00ff00,#ffff00,#ff7f00,#ff0000); flex:1.5">Visible</div>
+      <div class="spec-seg" style="background:#b71c1c">IR</div>
+      <div class="spec-seg" style="background:#880000">μwave</div>
+      <div class="spec-seg" style="background:#4a148c; flex:1.2">Radio</div>
+    </div>
+    <div class="spec-arrow">
+      <span>← shorter wavelength · higher frequency · more energy</span>
+      <span>longer wavelength · lower frequency · less energy →</span>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin-top:0.5rem;">⭐ Visible light covers only a <strong>very small</strong> part of the EM spectrum.</p>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="formula-box">
+    <div class="label">Wave Equation — must know!</div>
+    <div class="formula">v = f × λ</div>
+    <div class="formula-legend">
+      <span>v</span> = wave speed (m/s) &nbsp;·&nbsp; <span>f</span> = frequency (Hz) &nbsp;·&nbsp; <span>λ</span> = wavelength (m)
+    </div>
+    <div style="margin-top:0.6rem;font-size:0.8rem;color:rgba(255,255,255,0.7);">Speed of EM waves in air = 300 000 km/s = 3 × 10⁸ m/s</div>
+  </div>
+
+  <!-- EXAM TIP: worked example -->
+  <div class="exam-tip">
+    <div class="tip-label">📐 Worked Example</div>
+    <p>Calculate the wavelength of microwaves of frequency <strong>2400 MHz</strong>.<br>
+    f = 2400 MHz = 2 400 000 000 Hz = 2.4 × 10⁹ Hz<br>
+    λ = v ÷ f = 3 × 10⁸ ÷ 2.4 × 10⁹ = <strong>0.125 m</strong></p>
+  </div>
+
+  <!-- TYPES OF WAVES -->
+  <p class="section-h" id="types">Wave Types in Detail</p>
+
+  <!-- WHITE LIGHT -->
+  <div class="panel">
+    <h3>🌈 White Light &amp; Visible Spectrum</h3>
+    <ul>
+      <li>White light = all colours of the visible spectrum mixed together.</li>
+      <li>Wavelength <strong>increases</strong> from violet → red.</li>
+      <li>A <strong>prism</strong> splits white light into its spectrum (dispersion).</li>
+      <li>You see the spectrum in a <strong>rainbow</strong>.</li>
+      <li>Shades and colours of light affect photographs.</li>
+    </ul>
+    <div style="margin-top:0.8rem;">
+      <p style="font-size:0.8rem;font-weight:700;margin-bottom:0.3rem;">Cameras:</p>
+      <ul>
+        <li><strong>Film camera</strong>: light focused onto light-sensitive film → developed to make image.</li>
+        <li><strong>Digital camera / phone</strong>: light focused onto a sensor with millions of pixels (light-sensitive cells) → stored electronically.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- INFRARED -->
+  <div class="panel">
+    <h3>🌡️ Infrared Radiation</h3>
+    <ul>
+      <li>All objects emit infrared radiation.</li>
+      <li>The <strong>hotter</strong> the object, the <strong>more</strong> infrared it emits.</li>
+      <li>Absorbed by skin — can <strong>damage, burn, or kill</strong> skin cells.</li>
+    </ul>
+    <div style="margin-top:0.8rem;">
+      <p style="font-size:0.8rem;font-weight:700;margin-bottom:0.3rem;">Devices that use infrared:</p>
+    </div>
+    <div class="tiles" style="margin-top:0.4rem;">
+      <div class="tile tile-orange">
+        <h4>Optical Fibres</h4>
+        <p>Use IR instead of visible light. IR is absorbed less by glass fibres → signals travel further.</p>
+      </div>
+      <div class="tile tile-blue">
+        <h4>Remote Controls</h4>
+        <p>Transmit signals as infrared pulses when you press a button.</p>
+      </div>
+      <div class="tile tile-green">
+        <h4>IR Scanners (Medicine)</h4>
+        <p>Detect hot spots on the body — hot areas can mean unhealthy tissue.</p>
+      </div>
+      <div class="tile tile-purple">
+        <h4>Night-Vision Cameras</h4>
+        <p>Detect IR emitted by people/animals in the dark.</p>
+      </div>
+    </div>
+    <div style="margin-top:0.8rem;font-size:0.8rem;">
+      <strong>IR heats quickly:</strong> electric heaters, halogen hobs (designed to emit much more IR than ordinary hobs).
+    </div>
+  </div>
+
+  <!-- MICROWAVES -->
+  <div class="panel">
+    <h3>📡 Microwaves</h3>
+    <ul>
+      <li>Shorter wavelength than radio waves.</li>
+      <li>Can pass through the atmosphere → reach satellites.</li>
+      <li>Used for: satellite TV, mobile phone signals, communications.</li>
+    </ul>
+    <div class="statement" style="margin-top:0.8rem;">
+      <strong>Microwave oven:</strong> Microwaves penetrate food and are absorbed by <strong>water molecules</strong>, heating the food. The oven itself does NOT absorb microwaves (no water molecules in it) — it doesn't heat up.
+    </div>
+  </div>
+
+  <!-- RADIO WAVES -->
+  <div class="panel">
+    <h3>📻 Radio Waves</h3>
+    <ul>
+      <li>Frequencies: 300 000 Hz → 3000 million Hz.</li>
+      <li>Used for: radio, TV, mobile phone signals.</li>
+      <li>Can replace cables to connect computers to printers/mice.</li>
+      <li><strong>Bluetooth</strong>: communicates up to ~10 metres without cables.</li>
+    </ul>
+  </div>
+
+  <!-- COMPARE -->
+  <p class="section-h">Microwaves vs Radio Waves</p>
+  <div class="compare">
+    <div class="compare-col">
+      <h4>📡 Microwaves</h4>
+      <ul>
+        <li>Shorter wavelength</li>
+        <li>Higher frequency</li>
+        <li>Pass through atmosphere</li>
+        <li>Satellite TV &amp; phones</li>
+        <li>Ovens (water absorption)</li>
+      </ul>
+    </div>
+    <div class="compare-col">
+      <h4>📻 Radio Waves</h4>
+      <ul>
+        <li>Longer wavelength</li>
+        <li>Lower frequency</li>
+        <li>Radio &amp; TV broadcasting</li>
+        <li>Bluetooth / wireless</li>
+        <li>Mobile phones (near-microwave)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HAZARDS -->
+  <p class="section-h" id="hazards">Hazards</p>
+  <div class="tiles">
+    <div class="tile tile-red">
+      <h4>⚠️ Infrared Hazard</h4>
+      <p>Can cause <strong>skin burns</strong>. Damages, burns, or kills skin cells.</p>
+    </div>
+    <div class="tile tile-orange">
+      <h4>⚠️ Microwave &amp; Radio Hazard</h4>
+      <p>Penetrate the body and <strong>heat internal parts</strong> of the body.</p>
+    </div>
+  </div>
+  <div class="warning">
+    <div class="warn-label">⚠️ Key Distinction</div>
+    <p>Infrared → surface burns. Microwaves &amp; radio waves → internal heating (they penetrate the body). Different types of EM radiation are hazardous in <strong>different ways</strong>.</p>
+  </div>
+
+  <!-- TABLE -->
+  <p class="section-h">Summary Table</p>
+  <table class="rev-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Key property</th>
+        <th>Uses</th>
+        <th>Hazard</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>White light</strong></td>
+        <td>All visible colours</td>
+        <td>Photography, cameras</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Infrared</strong></td>
+        <td>Emitted by all objects; hotter = more</td>
+        <td>Remotes, optical fibres, ovens, cameras</td>
+        <td>Skin burns</td>
+      </tr>
+      <tr>
+        <td><strong>Microwaves</strong></td>
+        <td>Shorter λ than radio; pass atmosphere</td>
+        <td>Satellite TV, phones, microwave ovens</td>
+        <td>Internal heating</td>
+      </tr>
+      <tr>
+        <td><strong>Radio waves</strong></td>
+        <td>Longest λ in this section</td>
+        <td>Radio, TV, Bluetooth, wireless</td>
+        <td>Internal heating</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAM TIPS -->
+  <p class="section-h">Exam Tips</p>
+  <div class="exam-tip">
+    <div class="tip-label">✏️ Exam Tip 1</div>
+    <p>When asked about microwave ovens, explain that water molecules in the food absorb the microwaves — not the oven itself. This is why the food heats up but the oven stays cool.</p>
+  </div>
+  <div class="exam-tip">
+    <div class="tip-label">✏️ Exam Tip 2</div>
+    <p>Remember: microwaves and radio waves are <em>hazardous because they penetrate the body and heat it internally</em>. Infrared is hazardous because it causes surface skin burns. Don't mix these up!</p>
+  </div>
+  <div class="exam-tip">
+    <div class="tip-label">✏️ Exam Tip 3</div>
+    <p>For wavelength calculations, always convert MHz to Hz first (× 10⁶), then use λ = v ÷ f with v = 3 × 10⁸ m/s. Show every step for full marks.</p>
+  </div>
+
+  <!-- KEYWORDS -->
+  <p class="section-h" id="keywords">Key Words</p>
+  <div class="keywords">
+    <span class="kw">white light</span>
+    <span class="kw">visible spectrum</span>
+    <span class="kw">prism</span>
+    <span class="kw">infrared radiation</span>
+    <span class="kw">optical fibre</span>
+    <span class="kw">infrared scanner</span>
+    <span class="kw">microwaves</span>
+    <span class="kw">water molecules</span>
+    <span class="kw">satellite TV</span>
+    <span class="kw">radio waves</span>
+    <span class="kw">Bluetooth</span>
+    <span class="kw">wavelength</span>
+    <span class="kw">frequency</span>
+    <span class="kw">electromagnetic spectrum</span>
+    <span class="kw">v = fλ</span>
+  </div>
+
+</div><!-- /content -->
+
+<!-- QUIZ CTA -->
+<a href="physics-p12-2-quickcheck.html" class="quiz-cta">
+  <h4>⚛️ Ready to test yourself?</h4>
+  <p>Take the P12.2 Quick Check quiz →</p>
+</a>
+
+<!-- MARK AS READ -->
+<div class="mark-read-wrap">
+  <button class="mark-read-btn" id="markReadBtn" onclick="markRead()">✅ Mark as read</button>
+</div>
+
+<script>
+  const KEY = 'physics-p12-2-read';
+  const btn = document.getElementById('markReadBtn');
+  if (localStorage.getItem(KEY)) {
+    btn.textContent = '✅ Already marked as read';
+    btn.classList.add('done');
+  }
+  function markRead() {
+    localStorage.setItem(KEY, 'true');
+    btn.textContent = '✅ Marked as read!';
+    btn.classList.add('done');
+  }
+</script>
+</body>
+</html>

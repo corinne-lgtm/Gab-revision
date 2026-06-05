@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>13.1 Magnetic Fields — Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#0d2b5e;
+  --accent:#64b5f6;
+  --bg:#e8f4fd;
+  --paper:#ffffff;
+  --ink:#0d2b45;
+  --muted:#5a7a95;
+  --line:#c5dff0;
+  --red:#e53935; --red2:#fde8e8;
+  --green:#43a047; --green2:#e8f5e9;
+  --orange:#fb8c00; --orange2:#fff3e0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;min-height:100vh}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#1a4a6e 60%,#1565c0 100%);color:#fff;padding:32px 20px 24px;position:relative;overflow:hidden}
+.hero::before{content:'🧲';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:80px;opacity:.1}
+.badge{display:inline-block;background:var(--accent);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,6vw,42px);font-weight:900;line-height:1.05}
+.hero h1 span{color:var(--accent)}
+.kicker{font-size:12px;color:rgba(255,255,255,.6);margin-top:5px;text-transform:uppercase;letter-spacing:.05em}
+
+/* NAV */
+nav{background:var(--navy);display:flex;flex-wrap:wrap;gap:4px;padding:10px 14px;position:sticky;top:0;z-index:100;border-bottom:2px solid var(--accent)}
+nav a{color:rgba(255,255,255,.75);font-size:12px;font-weight:600;text-decoration:none;padding:4px 10px;border-radius:14px;transition:.2s}
+nav a:hover{background:rgba(100,181,246,.2);color:#fff}
+
+/* SCORE BAR */
+.score-bar{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:42px;z-index:99}
+.score-info{font-size:13px;color:var(--muted);font-weight:600}
+.score-info span{color:var(--navy);font-weight:800}
+.progress-wrap{flex:1;min-width:120px;background:var(--line);border-radius:10px;height:8px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:10px;transition:width .4s ease;width:0%}
+
+/* MAIN */
+main{max-width:700px;margin:0 auto;padding:20px 14px 60px}
+
+/* Q BLOCK */
+.q-block{background:var(--paper);border-radius:12px;border:1.5px solid var(--line);margin-bottom:14px;overflow:hidden;transition:.3s}
+.q-head{padding:14px 16px;display:flex;gap:10px;align-items:flex-start}
+.q-num{background:var(--navy);color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;min-width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.q-text{font-size:14.5px;font-weight:600;line-height:1.5}
+
+/* MCQ OPTIONS */
+.options{padding:0 14px 14px 54px;display:flex;flex-direction:column;gap:6px}
+.opt{background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;font-size:13.5px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:10px;text-align:left}
+.opt:hover:not(.disabled){border-color:var(--accent);background:#deeefa}
+.opt .opt-letter{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--navy);min-width:18px}
+.opt.correct{background:var(--green2);border-color:var(--green);color:#1a3d1a}
+.opt.correct .opt-letter{color:var(--green)}
+.opt.wrong{background:var(--red2);border-color:var(--red);color:#5a1111}
+.opt.wrong .opt-letter{color:var(--red)}
+.opt.disabled{cursor:default}
+
+/* TF */
+.tf-wrap{padding:0 14px 14px 54px;display:flex;gap:8px}
+.tf-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;transition:.2s}
+.tf-btn:hover:not(.disabled){border-color:var(--accent);background:#deeefa}
+.tf-btn.correct{background:var(--green2);border-color:var(--green);color:var(--green)}
+.tf-btn.wrong{background:var(--red2);border-color:var(--red);color:var(--red)}
+.tf-btn.disabled{cursor:default}
+
+/* FEEDBACK */
+.feedback{margin:0 14px 12px 54px;font-size:13px;padding:8px 12px;border-radius:8px;display:none;line-height:1.5}
+.feedback.correct{background:var(--green2);color:#1a3d1a;border-left:3px solid var(--green);display:block}
+.feedback.wrong{background:var(--red2);color:#5a1111;border-left:3px solid var(--red);display:block}
+
+/* RESULT BOX */
+.result-box{background:var(--paper);border-radius:14px;border:2px solid var(--line);padding:28px 24px;text-align:center;display:none;margin-top:10px}
+.result-box.show{display:block}
+.result-emoji{font-size:56px;margin-bottom:8px}
+.result-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--navy);text-transform:uppercase;letter-spacing:.03em}
+.result-score{font-size:18px;font-weight:700;color:var(--muted);margin:4px 0 12px}
+.result-msg{font-size:15px;color:var(--ink);margin-bottom:20px;line-height:1.6}
+.mum{background:var(--navy);color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:.05em;padding:10px 22px;border-radius:24px;display:inline-block;margin-bottom:18px;text-transform:uppercase}
+.reset-btn{background:var(--accent);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.07em;border:none;border-radius:24px;padding:11px 30px;cursor:pointer;transition:.2s}
+.reset-btn:hover{background:#42a5f5}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Physics · 13.1 Quick Check</div>
+  <h1>Magnetic <span>Fields</span></h1>
+  <p class="kicker">20 questions · GCSE · P13 Electromagnetism</p>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-13-1-revision.html">📖 Revision Notes</a>
+</nav>
+
+<div class="score-bar">
+  <div class="score-info">Score: <span id="scoreVal">0</span>/20</div>
+  <div class="score-info">Answered: <span id="answeredVal">0</span>/20</div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<main id="quizMain"></main>
+
+<script>
+const SCORE_KEY = 'physics-13-1-quiz-score';
+
+const questions = [
+  // MCQ (10)
+  {type:'mcq', q:'What is the rule for magnetic poles?', opts:['Like poles attract, unlike poles repel','Like poles repel, unlike poles attract','All poles attract each other','Poles have no effect on each other'], ans:'B',
+   fb:'Like poles repel; unlike poles attract. This is the fundamental rule of magnetism.'},
+
+  {type:'mcq', q:'In which direction do magnetic field lines run outside a bar magnet?', opts:['From S-pole to N-pole','From N-pole to S-pole','Randomly in all directions','They form closed loops inside the magnet only'], ans:'B',
+   fb:'Field lines run from the N-pole to the S-pole outside the magnet.'},
+
+  {type:'mcq', q:'Where is the magnetic field strongest around a bar magnet?', opts:['At the centre of the magnet','Evenly spread throughout the field','At the poles, where field lines are closest together','Halfway between the poles'], ans:'C',
+   fb:'The field is strongest at the poles — this is where the field lines are most concentrated.'},
+
+  {type:'mcq', q:'Why are permanent magnets made from steel rather than iron?', opts:['Steel is cheaper than iron','Steel does not lose its magnetism easily','Iron is too heavy','Steel is a better conductor of electricity'], ans:'B',
+   fb:'Steel retains its magnetism once magnetised. Iron loses its magnetism easily.'},
+
+  {type:'mcq', q:'Which of these materials can be magnetised?', opts:['Copper','Aluminium','Cobalt','Plastic'], ans:'C',
+   fb:'Cobalt (along with iron, steel and nickel) is a magnetic material that can be magnetised.'},
+
+  {type:'mcq', q:'A plotting compass is placed in a magnetic field. Which direction does its N-pole point?', opts:['Towards the N-pole of the nearby magnet','Away from the N-pole of the nearby magnet (along the field line)','Upward, toward the geographic north pole','Perpendicular to the field lines'], ans:'B',
+   fb:'The compass aligns along the field line, pointing away from the N-pole of the magnet (i.e. in the direction of the field).'},
+
+  {type:'mcq', q:'An unmagnetised iron rod is placed near the N-pole of a bar magnet. What is the polarity of the iron rod\'s nearest end?', opts:['N-pole','S-pole','It has no poles — it stays unmagnetised','It depends on the strength of the magnet'], ans:'B',
+   fb:'Induced magnetism always produces an opposite pole at the nearest end — so it is attracted. Here, S-pole forms nearest the magnet\'s N-pole.'},
+
+  {type:'mcq', q:'What force does induced magnetism always produce between a bar magnet and an unmagnetised magnetic material?', opts:['Repulsion','Attraction','No force','It depends on which pole is used'], ans:'B',
+   fb:'The force is always attractive — whichever pole of the bar magnet is nearest, the induced pole is always opposite.'},
+
+  {type:'mcq', q:'When plotting a magnetic field, what should you do after placing the compass tail over a dot and marking the tip?', opts:['Draw a straight line between the two dots','Move the compass so its tail is over the new dot and repeat','Start again from the N-pole','Flip the compass around'], ans:'B',
+   fb:'You move the compass so its tail is over the new dot, then mark a new dot at the tip — repeating until you reach the S-pole.'},
+
+  {type:'mcq', q:'Two bar magnets are brought close together and they repel. What does this tell you?', opts:['One magnet must be unmagnetised','Both magnets have like poles facing each other','Both magnets have unlike poles facing each other','One magnet must be made of iron'], ans:'B',
+   fb:'Repulsion only occurs between like poles (N-N or S-S). An unmagnetised material can never repel — it is always attracted.'},
+
+  // TRUE/FALSE (10)
+  {type:'tf', q:'Magnetic field lines can cross each other if the field is strong enough.', ans:'false',
+   fb:'Magnetic field lines NEVER cross each other. Crossing lines would imply two field directions at one point, which is impossible.'},
+
+  {type:'tf', q:'Iron is used to make permanent magnets because it holds its magnetism well.', ans:'false',
+   fb:'Steel is used for permanent magnets. Iron loses its magnetism easily — it is used for temporary/induced magnetism.'},
+
+  {type:'tf', q:'A magnetic compass needle is a tiny magnet with one end always pointing north.', ans:'true',
+   fb:'Correct! The compass needle is a small magnet — its N-pole always points towards Earth\'s magnetic south pole (near the geographic north pole).'},
+
+  {type:'tf', q:'The force between a bar magnet and an unmagnetised iron rod can be repulsive.', ans:'false',
+   fb:'The force is always attractive. Induced magnetism always creates an opposite pole at the nearest end, so the force is always attraction.'},
+
+  {type:'tf', q:'The magnetic field is weaker further away from the magnet.', ans:'true',
+   fb:'Correct! The greater the distance from the magnet, the weaker the field — field lines spread out and become less concentrated.'},
+
+  {type:'tf', q:'Aluminium can be permanently magnetised just like steel.', ans:'false',
+   fb:'Aluminium is not a magnetic material and cannot be magnetised. Only iron, steel, cobalt and nickel are magnetic materials.'},
+
+  {type:'tf', q:'The field lines of a bar magnet run from the N-pole to the S-pole outside the magnet.', ans:'true',
+   fb:'Correct! This is the definition of the direction of field lines — always N to S outside the magnet.'},
+
+  {type:'tf', q:'When a plotting compass is placed near a magnet, it aligns perpendicular to the field lines.', ans:'false',
+   fb:'The compass aligns along (parallel to) the field lines, not perpendicular to them.'},
+
+  {type:'tf', q:'Like poles repel and unlike poles attract.', ans:'true',
+   fb:'Correct! This is the fundamental rule of magnetism.'},
+
+  {type:'tf', q:'The magnetic field of a bar magnet is uniform (the same strength everywhere).', ans:'false',
+   fb:'The field is NOT uniform — it is strongest at the poles and weaker further away or towards the centre between the poles.'},
+];
+
+let score=0, answered=0;
+
+function render(){
+  const main=document.getElementById('quizMain');
+  main.innerHTML='';
+  questions.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.className='q-block';
+    div.id='q'+i;
+    let inner=`<div class="q-head"><div class="q-num">${i+1}</div><div class="q-text">${q.q}</div></div>`;
+    if(q.type==='mcq'){
+      inner+=`<div class="options">`;
+      ['A','B','C','D'].forEach((l,j)=>{
+        inner+=`<button class="opt" onclick="answerMCQ(${i},'${l}')" id="opt-${i}-${l}"><span class="opt-letter">${l}</span>${q.opts[j]}</button>`;
+      });
+      inner+=`</div>`;
+    } else {
+      inner+=`<div class="tf-wrap">
+        <button class="tf-btn" onclick="answerTF(${i},'true')" id="tf-${i}-true">True</button>
+        <button class="tf-btn" onclick="answerTF(${i},'false')" id="tf-${i}-false">False</button>
+      </div>`;
+    }
+    inner+=`<div class="feedback" id="fb-${i}"></div>`;
+    div.innerHTML=inner;
+    main.appendChild(div);
+  });
+  // result box
+  const rb=document.createElement('div');
+  rb.className='result-box';rb.id='resultBox';
+  rb.innerHTML=`<div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="mum" id="resultMum"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <button class="reset-btn" onclick="resetQuiz()">Try Again</button>`;
+  main.appendChild(rb);
+}
+
+function updateBar(){
+  document.getElementById('scoreVal').textContent=score;
+  document.getElementById('answeredVal').textContent=answered;
+  document.getElementById('progressFill').style.width=(answered/20*100)+'%';
+}
+
+function answerMCQ(i,chosen){
+  const q=questions[i];
+  if(document.getElementById('opt-'+i+'-A').classList.contains('disabled')) return;
+  ['A','B','C','D'].forEach(l=>{
+    const btn=document.getElementById('opt-'+i+'-'+l);
+    btn.classList.add('disabled');
+    if(l===q.ans) btn.classList.add('correct');
+    else if(l===chosen) btn.classList.add('wrong');
+  });
+  const correct=chosen===q.ans;
+  showFeedback(i,correct,q.fb);
+  if(correct) score++;
+  answered++;
+  updateBar();
+  saveScore();
+  if(answered===20) showResult();
+}
+
+function answerTF(i,chosen){
+  const q=questions[i];
+  if(document.getElementById('tf-'+i+'-true').classList.contains('disabled')) return;
+  ['true','false'].forEach(v=>{
+    const btn=document.getElementById('tf-'+i+'-'+v);
+    btn.classList.add('disabled');
+    if(v===q.ans) btn.classList.add('correct');
+    else if(v===chosen) btn.classList.add('wrong');
+  });
+  const correct=chosen===q.ans;
+  showFeedback(i,correct,q.fb);
+  if(correct) score++;
+  answered++;
+  updateBar();
+  saveScore();
+  if(answered===20) showResult();
+}
+
+function showFeedback(i,correct,msg){
+  const fb=document.getElementById('fb-'+i);
+  fb.className='feedback '+(correct?'correct':'wrong');
+  fb.textContent=(correct?'✓ Correct! ':'✗ Not quite. ')+msg;
+}
+
+function showResult(){
+  const rb=document.getElementById('resultBox');
+  rb.classList.add('show');
+  rb.scrollIntoView({behavior:'smooth',block:'center'});
+  let emoji,title,msg;
+  if(score>=18){emoji='🏆';title='Outstanding!';msg='Incredible work — you\'ve mastered magnetic fields!'}
+  else if(score>=14){emoji='🎉';title='Great Job!';msg='Really solid understanding of the topic. A quick review of any missed questions and you\'re there!'}
+  else if(score>=10){emoji='📚';title='Keep Going!';msg='A decent start — go back over the revision notes and try again.'}
+  else{emoji='💪';title='Keep Practising!';msg='Don\'t worry — re-read the revision sheet carefully and have another go.'}
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').textContent=score+'/20';
+  document.getElementById('resultMum').textContent='Show this to mum — '+score+'/20';
+  document.getElementById('resultMsg').textContent=msg;
+}
+
+function saveScore(){
+  localStorage.setItem(SCORE_KEY, JSON.stringify({score,answered}));
+}
+
+function resetQuiz(){
+  score=0;answered=0;
+  localStorage.removeItem(SCORE_KEY);
+  updateBar();
+  render();
+}
+
+render();
+updateBar();
+</script>
+</body>
+</html>

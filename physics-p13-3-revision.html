@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P13.3 The Motor Effect — Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --navy2: #112f4e;
+    --accent: #64b5f6;
+    --accent2: #90caf9;
+    --bg: #e8f4fd;
+    --paper: #ffffff;
+    --ink: #0d1b2a;
+    --muted: #5a7a96;
+    --red: #e53935;
+    --red2: #ffcdd2;
+    --green: #2e7d32;
+    --green2: #c8e6c9;
+    --orange: #e65100;
+    --orange2: #ffe0b2;
+    --purple: #6a1b9a;
+    --purple2: #e1bee7;
+    --yellow: #f9a825;
+    --yellow2: #fff9c4;
+    --line: #c5dff0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a72 60%, #1e6fa0 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 20%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(100,181,246,0.08);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 36px 32px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(100,181,246,0.2);
+    border: 1px solid rgba(100,181,246,0.4);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-kicker {
+    color: rgba(255,255,255,0.68);
+    font-size: 14px;
+    max-width: 520px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--navy2);
+    border-bottom: 2px solid var(--accent);
+    padding: 0 36px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-bar a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 11px 16px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-bar a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* MAIN */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* MARK AS READ */
+  .mark-read-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 28px;
+  }
+  .mark-read-bar span { font-size: 13px; color: var(--muted); }
+  .mark-btn {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .mark-btn:hover { background: #1a4a72; }
+  .mark-btn.done { background: var(--green); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 32px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .big-idea-card {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 16px;
+    color: #fff;
+  }
+  .big-idea-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .big-idea-card .label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .big-idea-card p { font-size: 13px; color: rgba(255,255,255,0.82); line-height: 1.5; }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: var(--paper);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .formula-main {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--navy);
+    letter-spacing: 0.04em;
+  }
+  .formula-parts {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .formula-part {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .formula-part strong { color: var(--ink); font-weight: 600; }
+
+  /* STATEMENT BOX */
+  .statement-box {
+    background: var(--yellow2);
+    border-left: 4px solid var(--yellow);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+  }
+  .statement-box .label {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--orange);
+    margin-bottom: 4px;
+  }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: var(--green2);
+    border-left: 4px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+  }
+  .exam-tip .label {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  /* WARNING */
+  .warning-box {
+    background: var(--red2);
+    border-left: 4px solid var(--red);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+  }
+  .warning-box .label {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  /* TILE GRID */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .tile {
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 13.5px;
+  }
+  .tile .tile-head {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 6px;
+  }
+  .tile.red { background: var(--red2); }
+  .tile.red .tile-head { color: var(--red); }
+  .tile.orange { background: var(--orange2); }
+  .tile.orange .tile-head { color: var(--orange); }
+  .tile.blue { background: #e3f2fd; }
+  .tile.blue .tile-head { color: #1565c0; }
+  .tile.green { background: var(--green2); }
+  .tile.green .tile-head { color: var(--green); }
+  .tile.purple { background: var(--purple2); }
+  .tile.purple .tile-head { color: var(--purple); }
+
+  /* COMPARE 2-COL */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .compare-col { padding: 16px; background: var(--paper); }
+  .compare-col:first-child { border-right: 1.5px solid var(--line); }
+  .compare-col .col-head {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  .compare-col.left .col-head { color: #1565c0; }
+  .compare-col.right .col-head { color: var(--red); }
+  .compare-col ul { padding-left: 16px; font-size: 13.5px; }
+  .compare-col ul li { margin-bottom: 5px; }
+
+  /* KEYWORDS */
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .kw {
+    background: var(--navy);
+    color: var(--accent2);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12.5px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+  }
+
+  /* UNITS TABLE */
+  .units-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+    background: var(--paper);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .units-table th {
+    background: var(--navy);
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .units-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .units-table tr:last-child td { border-bottom: none; }
+  .units-table tr:nth-child(even) td { background: var(--bg); }
+  .units-table code {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    background: rgba(100,181,246,0.12);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #1565c0;
+  }
+
+  /* QUIZ CTA */
+  .quiz-cta {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a72 100%);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 36px;
+  }
+  .quiz-cta-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .quiz-cta-text p { font-size: 13px; color: rgba(255,255,255,0.65); }
+  .quiz-cta a {
+    background: var(--accent);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .quiz-cta a:hover { background: var(--accent2); }
+
+  /* WORKED EG */
+  .worked-eg {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+  }
+  .worked-eg .we-head {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1565c0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .worked-eg .step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-num {
+    min-width: 22px;
+    height: 22px;
+    background: var(--navy);
+    color: var(--accent);
+    border-radius: 50%;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .step-text { font-size: 13.5px; }
+  .step-text code {
+    font-family: 'DM Mono', monospace;
+    background: rgba(100,181,246,0.12);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #1565c0;
+    font-size: 13px;
+  }
+
+  @media (max-width: 580px) {
+    .hero h1 { font-size: 1.9rem; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 1.5px solid var(--line); }
+    .formula-main { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">⚛️ Physics · Higher Tier · P13</div>
+    <h1>P13.3 <span>The Motor Effect</span></h1>
+    <p class="hero-kicker">Electromagnetism — forces on current-carrying conductors, Fleming's left-hand rule, magnetic flux density, and the electric motor.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">F = BIl</span>
+      <span class="hero-tag">Fleming's Left-Hand Rule</span>
+      <span class="hero-tag">Motor Effect</span>
+      <span class="hero-tag">Magnetic Flux Density (T)</span>
+      <span class="hero-tag">Split-Ring Commutator</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#big-ideas">Big Ideas</a>
+  <a href="#formula">Formula</a>
+  <a href="#flhr">Fleming's Rule</a>
+  <a href="#motor">Electric Motor</a>
+  <a href="#worked">Worked Example</a>
+  <a href="#keywords">Keywords</a>
+</nav>
+
+<main>
+
+  <!-- MARK AS READ -->
+  <div class="mark-read-bar">
+    <span>📖 Track your revision progress</span>
+    <button class="mark-btn" id="markBtn" onclick="toggleRead()">Mark as read ✓</button>
+  </div>
+
+  <!-- BIG IDEAS -->
+  <div class="section-title" id="big-ideas">💡 Big Ideas</div>
+  <div class="big-idea-grid">
+    <div class="big-idea-card">
+      <div class="icon">⚡</div>
+      <div class="label">Motor Effect</div>
+      <p>A current-carrying wire in a magnetic field experiences a force — this is the motor effect.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">🧲</div>
+      <div class="label">Direction of Force</div>
+      <p>Use Fleming's left-hand rule to find the direction of the force on the conductor.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">📐</div>
+      <div class="label">Flux Density</div>
+      <p>Magnetic flux density B (measured in tesla, T) is a measure of the strength of a magnetic field.</p>
+    </div>
+    <div class="big-idea-card">
+      <div class="icon">🔄</div>
+      <div class="label">Electric Motor</div>
+      <p>A coil in a magnetic field rotates continuously thanks to the motor effect and a split-ring commutator.</p>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="section-title" id="formula">📐 The Key Formula</div>
+  <div class="formula-box">
+    <div class="formula-main">F = B I l</div>
+    <div class="formula-parts">
+      <div class="formula-part"><strong>F</strong> — Force (newtons, N)</div>
+      <div class="formula-part"><strong>B</strong> — Magnetic flux density (tesla, T)</div>
+      <div class="formula-part"><strong>I</strong> — Current (amperes, A)</div>
+      <div class="formula-part"><strong>l</strong> — Length of conductor in field (metres, m)</div>
+    </div>
+  </div>
+
+  <div class="statement-box">
+    <div class="label">📌 Key Condition</div>
+    This formula applies when the wire is <strong>perpendicular</strong> to the magnetic field. If the wire is parallel to the field, the force is <strong>zero</strong>.
+  </div>
+
+  <!-- UNITS TABLE -->
+  <table class="units-table">
+    <thead>
+      <tr>
+        <th>Quantity</th>
+        <th>Symbol</th>
+        <th>Unit</th>
+        <th>Unit Symbol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Force</td><td><code>F</code></td><td>Newton</td><td><code>N</code></td></tr>
+      <tr><td>Magnetic flux density</td><td><code>B</code></td><td>Tesla</td><td><code>T</code></td></tr>
+      <tr><td>Current</td><td><code>I</code></td><td>Ampere</td><td><code>A</code></td></tr>
+      <tr><td>Length of conductor</td><td><code>l</code></td><td>Metre</td><td><code>m</code></td></tr>
+    </tbody>
+  </table>
+
+  <!-- FLEMING'S RULE -->
+  <div class="section-title" id="flhr">✋ Fleming's Left-Hand Rule</div>
+
+  <div class="statement-box">
+    <div class="label">📌 How to use it</div>
+    Hold your left hand with your <strong>First finger</strong> pointing in the direction of the magnetic Field, your <strong>seCond finger</strong> pointing in the direction of the Current — your <strong>thuMb</strong> then points in the direction of the Movement (force).
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile blue">
+      <div class="tile-head">☝️ First finger</div>
+      Points in the direction of the magnetic <strong>F</strong>ield.
+    </div>
+    <div class="tile orange">
+      <div class="tile-head">✌️ seCond finger</div>
+      Points in the direction of the <strong>C</strong>urrent.
+    </div>
+    <div class="tile green">
+      <div class="tile-head">👍 thuMb</div>
+      Points in the direction of the <strong>M</strong>ovement (force).
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <div class="label">✅ Exam tip</div>
+    You <strong>must</strong> use your <em>left</em> hand — the right-hand rule is for generators (P13.4). Getting the wrong hand is a very common mistake in the exam.
+  </div>
+
+  <!-- FACTORS AFFECTING FORCE -->
+  <div class="section-title">⬆️ Increasing / Reversing the Force</div>
+
+  <div class="compare-grid">
+    <div class="compare-col left">
+      <div class="col-head">🔼 Increase the force by…</div>
+      <ul>
+        <li>Increasing the <strong>current</strong></li>
+        <li>Using a stronger magnet (higher <strong>B</strong>)</li>
+        <li>Increasing the <strong>length</strong> of the conductor in the field</li>
+      </ul>
+    </div>
+    <div class="compare-col right">
+      <div class="col-head">🔁 Reverse the force by…</div>
+      <ul>
+        <li>Reversing the direction of the <strong>current</strong></li>
+        <li>Reversing the direction of the <strong>magnetic field</strong></li>
+        <li>(Doing both → force stays the same direction)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <div class="label">⚠️ Watch out</div>
+    The force is <strong>greatest</strong> when the wire is perpendicular to the field, and <strong>zero</strong> when the wire is parallel to the field. This often appears as a 3-mark question.
+  </div>
+
+  <!-- ELECTRIC MOTOR -->
+  <div class="section-title" id="motor">🔄 The Electric Motor</div>
+
+  <div class="big-idea-card" style="border-radius:10px;margin-bottom:12px;">
+    <div class="icon">🔄</div>
+    <div class="label">How it works</div>
+    <p>A rectangular coil of wire sits inside a magnetic field. When current flows, the motor effect creates a force on each side of the coil — but the forces are in opposite directions on opposite sides, causing the coil to <strong>rotate</strong>.</p>
+  </div>
+
+  <div class="tile-grid">
+    <div class="tile purple">
+      <div class="tile-head">🔌 Split-ring commutator</div>
+      A metal ring split in two, fixed to the coil. It reverses the current direction every half-turn so the coil keeps spinning the same way.
+    </div>
+    <div class="tile blue">
+      <div class="tile-head">🖊️ Graphite brushes</div>
+      Press against the commutator to keep electrical contact as the coil spins. Graphite is used because it is a good conductor and very slippery — low friction.
+    </div>
+    <div class="tile orange">
+      <div class="tile-head">⚡ Control speed</div>
+      Increase the current → stronger force → faster rotation.
+    </div>
+    <div class="tile red">
+      <div class="tile-head">🔁 Reverse direction</div>
+      Reverse the battery connections (reverse the current) → motor spins in the opposite direction.
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <div class="label">✅ Exam tip</div>
+    In a 3-mark "explain continuous rotation" question, always mention: (1) force on each side due to motor effect, (2) forces in opposite directions causing rotation, (3) split-ring commutator reverses current every half-turn so rotation continues.
+  </div>
+
+  <!-- WORKED EXAMPLE -->
+  <div class="section-title" id="worked">🧮 Worked Example</div>
+  <div class="worked-eg">
+    <div class="we-head">📋 Exam-style question</div>
+    <p style="margin-bottom:12px;">A straight wire is placed in a magnetic field. The magnetic flux density is <code>0.032 T</code>, the length of the conductor in the field is <code>40 mm</code>, and the current is <code>2.2 A</code>. Calculate the force on the conductor.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Convert units: <code>40 mm = 0.040 m</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Write the formula: <code>F = B × I × l</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Substitute: <code>F = 0.032 × 2.2 × 0.040</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Calculate: <code>F = 0.0028 N</code> <strong>→ Answer: 0.0028 N</strong></div>
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <div class="label">✅ Exam tip</div>
+    Always convert <strong>mm → m</strong> before substituting into F = BIl. Forgetting this conversion loses marks.
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="section-title" id="keywords">🔑 Keywords</div>
+  <div class="keywords">
+    <span class="kw">motor effect</span>
+    <span class="kw">magnetic flux density</span>
+    <span class="kw">tesla (T)</span>
+    <span class="kw">F = BIl</span>
+    <span class="kw">Fleming's left-hand rule</span>
+    <span class="kw">split-ring commutator</span>
+    <span class="kw">graphite brushes</span>
+    <span class="kw">armature coil</span>
+    <span class="kw">current direction</span>
+    <span class="kw">perpendicular</span>
+    <span class="kw">parallel</span>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <div class="quiz-cta-text">
+      <h3>Ready to test yourself?</h3>
+      <p>Take the P13.3 quick-check quiz — 20 questions, instant feedback.</p>
+    </div>
+    <a href="physics-p13-3-quickcheck.html">Start Quiz →</a>
+  </div>
+
+</main>
+
+<script>
+  const READ_KEY = 'physics-p13-3-read';
+  const btn = document.getElementById('markBtn');
+
+  function toggleRead() {
+    const isRead = localStorage.getItem(READ_KEY) === '1';
+    if (!isRead) {
+      localStorage.setItem(READ_KEY, '1');
+      btn.textContent = '✅ Read!';
+      btn.classList.add('done');
+    } else {
+      localStorage.removeItem(READ_KEY);
+      btn.textContent = 'Mark as read ✓';
+      btn.classList.remove('done');
+    }
+  }
+
+  // On load, restore state
+  if (localStorage.getItem(READ_KEY) === '1') {
+    btn.textContent = '✅ Read!';
+    btn.classList.add('done');
+  }
+</script>
+</body>
+</html>
