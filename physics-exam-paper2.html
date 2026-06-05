@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics Practice Exam — Paper 2 (P11–P13)</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2b5e;
+  --navy2: #1a3f7a;
+  --accent: #64b5f6;
+  --accent2: #90caf9;
+  --bg: #e8f4fd;
+  --paper: #ffffff;
+  --ink: #0d1b2a;
+  --muted: #5a7a96;
+  --yellow: #fff8e1;
+  --yellow-border: #f9a825;
+  --green: #2e7d32; --green2: #e8f5e9;
+  --line: #c5dff0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.7; }
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #1a3f7a 60%, #1e6fa0 100%); padding: 36px 36px 28px; position: relative; overflow: hidden; }
+.hero::before { content:''; position:absolute; top:-60px; right:-60px; width:280px; height:280px; border-radius:50%; background:rgba(100,181,246,0.1); }
+.hero-inner { position:relative; z-index:1; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(100,181,246,0.2); border:1px solid rgba(100,181,246,0.4); border-radius:20px; padding:4px 14px; font-size:12px; color:var(--accent2); font-weight:600; letter-spacing:.05em; margin-bottom:12px; }
+.hero h1 { font-family:'Syne',sans-serif; font-size:clamp(1.6rem,5vw,2.4rem); color:#fff; margin-bottom:6px; }
+.hero-sub { color:rgba(255,255,255,0.75); font-size:14px; }
+.nav { background:var(--navy); padding:10px 24px; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.nav a { color:var(--accent2); text-decoration:none; font-size:13px; font-weight:600; padding:4px 12px; border-radius:16px; background:rgba(100,181,246,0.1); transition:.2s; }
+.nav a:hover { background:rgba(100,181,246,0.25); }
+.nav a.active { background:var(--accent); color:var(--navy); }
+.timer-bar { background:var(--navy); padding:12px 24px; display:flex; align-items:center; gap:16px; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.25); }
+.timer-display { font-family:'DM Mono',monospace; font-size:1.5rem; color:var(--accent); font-weight:700; background:rgba(100,181,246,0.1); padding:4px 16px; border-radius:8px; min-width:90px; text-align:center; }
+.timer-btn { padding:6px 16px; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.t-start { background:var(--accent); color:var(--navy); }
+.t-pause { background:#fff3; color:#fff; }
+.t-reset { background:#fff2; color:#fff; }
+.timer-info { color:rgba(255,255,255,0.6); font-size:13px; margin-left:auto; }
+main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+.section-title { background:var(--navy); color:#fff; font-family:'Syne',sans-serif; font-size:1.05rem; padding:14px 22px; border-radius:12px; margin:36px 0 20px; display:flex; justify-content:space-between; align-items:center; }
+.section-marks { background:var(--accent); color:var(--navy); border-radius:20px; padding:3px 12px; font-size:12px; font-weight:800; }
+.q-card { background:var(--paper); border-radius:14px; padding:24px 26px; margin-bottom:22px; box-shadow:0 1px 6px rgba(13,43,94,0.08); }
+.q-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+.q-label { font-family:'Syne',sans-serif; font-size:1rem; color:var(--navy); font-weight:800; }
+.q-marks { font-size:12px; font-weight:700; color:var(--muted); background:var(--bg); padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.q-text { margin-bottom:14px; }
+.q-text p { margin-bottom:8px; }
+.q-text b { color:var(--navy); }
+.data-table { width:100%; border-collapse:collapse; margin:14px 0; font-size:14px; }
+.data-table th { background:var(--navy); color:#fff; padding:10px 14px; text-align:center; }
+.data-table td { padding:9px 14px; border:1px solid var(--line); text-align:center; }
+.data-table tr:nth-child(even) td { background:#f4f9ff; }
+.tip-box { background:var(--yellow); border-left:4px solid var(--yellow-border); border-radius:8px; padding:14px 16px; margin:14px 0; font-size:13.5px; }
+.tip-box strong { color:#795548; display:block; margin-bottom:4px; font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+.formula-box { background:#e3f2fd; border:1.5px solid var(--accent); border-radius:8px; padding:10px 16px; margin:10px 0; font-family:'DM Mono',monospace; font-size:14px; color:var(--navy); display:inline-block; }
+.answer-lines { margin-top:14px; }
+.ms-toggle { margin-top:16px; background:var(--navy2); color:#fff; border:none; border-radius:8px; padding:10px 18px; cursor:pointer; font-size:13px; font-weight:700; display:flex; align-items:center; gap:8px; font-family:'DM Sans',sans-serif; width:100%; }
+.ms-toggle:hover { background:var(--navy); }
+.ms-content { display:none; margin-top:10px; background:var(--green2); border-radius:8px; padding:16px; font-size:14px; line-height:1.7; border-left:4px solid var(--green); }
+.ms-content.open { display:block; }
+.ms-content ul { padding-left:20px; }
+.ms-content li { margin-bottom:6px; }
+.ms-content .mark { font-weight:700; color:var(--green); }
+.level-box { background:#e8f5e9; border:2px solid var(--green); border-radius:10px; padding:16px; margin:14px 0; font-size:13.5px; }
+.level-box strong { color:var(--green); display:block; margin-bottom:8px; }
+.level-box .level { margin-bottom:6px; padding:8px 12px; border-radius:6px; font-size:13px; }
+.l-high { background:#c8e6c9; }
+.l-mid { background:#fff8e1; }
+.l-low { background:#ffebee; }
+.reveal-all-btn { display:block; margin:36px auto 20px; padding:14px 36px; background:var(--navy); color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.reveal-all-btn:hover { background:var(--navy2); }
+.grade-box { background:var(--paper); border-radius:16px; padding:28px 28px; text-align:center; margin-top:40px; box-shadow:0 2px 16px rgba(13,43,94,0.1); border:3px solid var(--accent); }
+.grade-box h3 { font-family:'Syne',sans-serif; font-size:1.3rem; color:var(--navy); margin-bottom:16px; }
+.grade-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin:16px 0; }
+.grade-pill { padding:12px; border-radius:10px; font-weight:700; font-size:14px; }
+.g9 { background:#e8f5e9; color:#1b5e20; }
+.g78 { background:#e3f2fd; color:#0d47a1; }
+.g56 { background:#fff8e1; color:#e65100; }
+.g34 { background:#fce4ec; color:#b71c1c; }
+.mum-msg { font-weight:700; font-size:16px; color:var(--navy); margin-top:16px; }
+
+.answer-area {
+  width:100%; margin-top:14px;
+  border:1.5px solid var(--line); border-radius:8px;
+  padding:12px; font-family:'DM Sans',sans-serif; font-size:14px;
+  line-height:1.7; color:var(--ink); background:#fafcff;
+  resize:vertical; min-height:90px; display:block;
+}
+.answer-area:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(100,181,246,0.15); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">⚛️ AQA GCSE Physics · Paper 2</div>
+    <h1>Practice Exam Paper 2</h1>
+    <p class="hero-sub">P11 Wave Properties · P12 Electromagnetic Waves · P13 Electromagnetism · 70 marks · 75 minutes</p>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="physics-quickcheck-all.html">🎯 Mega Quiz</a>
+  <a href="physics-exam-paper1.html">📄 Paper 1</a>
+  <a href="physics-exam-paper2.html" class="active">📄 Paper 2</a>
+</nav>
+
+<div class="timer-bar">
+  <div class="timer-display" id="timerDisplay">75:00</div>
+  <button class="timer-btn t-start" onclick="startTimer()">▶ Start</button>
+  <button class="timer-btn t-pause" onclick="pauseTimer()">⏸ Pause</button>
+  <button class="timer-btn t-reset" onclick="resetTimer()">↺ Reset</button>
+  <div class="timer-info">70 marks · ~1 min per mark</div>
+</div>
+
+<main>
+
+<!-- SECTION A -->
+<div class="section-title">Section A — Short Answer Questions <span class="section-marks">28 marks</span></div>
+
+<!-- Q1 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 1 — Wave Properties</div>
+    <div class="q-marks">4 marks</div>
+  </div>
+  <div class="q-text">
+    <p><b>(a)</b> Describe <b>two</b> features of a transverse wave that distinguish it from a longitudinal wave. <b>[2 marks]</b></p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — "Describe two features"</strong>
+    For each feature, name it AND briefly explain it. Don't just write one word. Compare directly: "In a transverse wave, particles oscillate perpendicular to the direction of energy transfer, whereas in a longitudinal wave they oscillate parallel." Give a specific example of each type.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <div class="q-text" style="margin-top:14px">
+    <p><b>(b)</b> Describe <b>two</b> features of all electromagnetic waves. <b>[2 marks]</b></p>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>(a)</b> Any two from:</p>
+    <ul>
+      <li>Particles oscillate perpendicular to the direction of wave travel/energy transfer <span class="mark">✓</span></li>
+      <li>Examples include light, water waves, seismic S-waves <span class="mark">✓</span></li>
+      <li>Can be polarised (longitudinal waves cannot be polarised) <span class="mark">✓</span></li>
+      <li>In longitudinal waves, particles oscillate parallel to direction of travel (making them different) <span class="mark">✓</span></li>
+    </ul>
+    <p style="margin-top:10px"><b>(b)</b> Any two from:</p>
+    <ul>
+      <li>All travel at 3 × 10⁸ m/s in a vacuum / speed of light <span class="mark">✓</span></li>
+      <li>All are transverse waves <span class="mark">✓</span></li>
+      <li>All can travel through a vacuum / do not need a medium <span class="mark">✓</span></li>
+      <li>All transfer energy <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 2 — Wave Speed Required Practical (Data Analysis)</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>A student uses a ripple tank to investigate wave speed. They measure the frequency and wavelength of waves and record the following data.</p>
+    <table class="data-table">
+      <tr><th>Frequency (Hz)</th><th>Wavelength (cm)</th><th>Wavelength (m)</th><th>Wave speed (m/s)</th></tr>
+      <tr><td>5</td><td>6.0</td><td>0.060</td><td></td></tr>
+      <tr><td>10</td><td>3.0</td><td>0.030</td><td></td></tr>
+      <tr><td>15</td><td>2.0</td><td>0.020</td><td></td></tr>
+      <tr><td>20</td><td>1.5</td><td>0.015</td><td></td></tr>
+    </table>
+    <p><b>(a)</b> Complete the wave speed column for all four rows and state what you conclude. <b>[3 marks]</b></p>
+    <div class="formula-box">v = f × λ</div>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Data Analysis Questions</strong>
+    Complete the table first showing full calculation for at least one row. Then look for a pattern. State your conclusion clearly: "The wave speed is constant/the same for all frequencies" is the key conclusion here. Relate this to the physics: changing frequency changes wavelength inversely, keeping speed constant.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <div class="q-text" style="margin-top:14px">
+    <p><b>(b)</b> The student says frequency and wavelength are "inversely proportional." Explain what this means and how the data supports it. <b>[3 marks]</b></p>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>(a)</b></p>
+    <ul>
+      <li>v = 5 × 0.060 = 0.30 m/s; v = 10 × 0.030 = 0.30 m/s; etc. (all 0.30 m/s) <span class="mark">✓</span></li>
+      <li>All wave speeds are 0.30 m/s <span class="mark">✓</span></li>
+      <li>Conclusion: wave speed is constant regardless of frequency <span class="mark">✓</span></li>
+    </ul>
+    <p style="margin-top:10px"><b>(b)</b></p>
+    <ul>
+      <li>"Inversely proportional" means as one quantity doubles, the other halves <span class="mark">✓</span></li>
+      <li>Evidence: when frequency doubled from 5 to 10 Hz, wavelength halved from 6 cm to 3 cm <span class="mark">✓</span></li>
+      <li>This is because wave speed = f × λ is constant, so f × λ = constant → f ∝ 1/λ <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 3 — Refraction</div>
+    <div class="q-marks">4 marks</div>
+  </div>
+  <div class="q-text">
+    <p>A light ray passes from air into glass at an angle of incidence of 50°. The angle of refraction is 31°.</p>
+    <p><b>(a)</b> Explain why the light ray changes direction when it enters the glass. <b>[2 marks]</b></p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Refraction Explain Questions</strong>
+    Two key points: (1) the wave changes speed when crossing the boundary, (2) this change in speed causes a change in direction (bending). Direction: air → denser medium = slows down = bends TOWARDS normal. Always measure angles from the normal, not the surface.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <div class="q-text" style="margin-top:14px">
+    <p><b>(b)</b> State what happens to the frequency and wavelength of the light as it enters the glass. <b>[2 marks]</b></p>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>(a)</b></p>
+    <ul>
+      <li>Light slows down when it enters glass (denser medium) <span class="mark">✓</span></li>
+      <li>The change in speed causes the wave to change direction / bend towards the normal <span class="mark">✓</span></li>
+    </ul>
+    <p style="margin-top:10px"><b>(b)</b></p>
+    <ul>
+      <li>Frequency: stays the same / does not change <span class="mark">✓</span></li>
+      <li>Wavelength: decreases (because v = fλ, and v decreases while f stays constant) <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 4 — EM Spectrum and Uses</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>A radio station broadcasts at a frequency of 100 MHz (1 × 10⁸ Hz). Speed of light = 3 × 10⁸ m/s.</p>
+    <p><b>(a)</b> Calculate the wavelength of these radio waves. <b>[2 marks]</b></p>
+    <div class="formula-box">v = fλ → λ = v ÷ f</div>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — EM Wave Calculations</strong>
+    All EM waves travel at 3 × 10⁸ m/s in a vacuum. Rearrange v = fλ for whatever you need. Standard form is essential: 100 MHz = 1 × 10⁸ Hz. Show formula, substitute in standard form, calculate. Include units (metres for wavelength).
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <div class="q-text" style="margin-top:14px">
+    <p><b>(b)</b> Give one use of each of the following types of EM radiation and state one potential danger: (i) UV, (ii) X-rays, (iii) gamma rays. <b>[4 marks — any 4 correct points]</b></p>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>(a)</b></p>
+    <ul>
+      <li>λ = v ÷ f = (3 × 10⁸) ÷ (1 × 10⁸) <span class="mark">✓</span></li>
+      <li>λ = 3 m <span class="mark">✓</span></li>
+    </ul>
+    <p style="margin-top:10px"><b>(b)</b> Award any 4:</p>
+    <ul>
+      <li>UV: use = sterilisation, security marking, fluorescent lights <span class="mark">✓</span>; danger = skin cancer, eye damage, sunburn <span class="mark">✓</span></li>
+      <li>X-rays: use = medical imaging (bone fractures), airport security <span class="mark">✓</span>; danger = ionising → can damage DNA, cause cancer <span class="mark">✓</span></li>
+      <li>Gamma: use = sterilising medical equipment, cancer radiotherapy, food irradiation <span class="mark">✓</span>; danger = highly ionising → cell damage, cancer, mutations <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 5 — The Motor Effect</div>
+    <div class="q-marks">4 marks</div>
+  </div>
+  <div class="q-text">
+    <p><b>(a)</b> Describe what is meant by the motor effect and state the equation for the force on a current-carrying conductor. <b>[2 marks]</b></p>
+    <div class="formula-box">F = BIl</div>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Motor Effect Questions</strong>
+    Motor effect: a current-carrying conductor in a magnetic field experiences a force. Use Fleming's Left-Hand Rule: thuMb = Motion (force), First finger = Field (B), seCond finger = Current (I). For the equation F = BIl: B in tesla, I in amps, l in metres, F in newtons.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <div class="q-text" style="margin-top:14px">
+    <p><b>(b)</b> A wire of length 0.3 m carries a current of 4 A. The magnetic flux density is 0.05 T. Calculate the force on the wire. <b>[2 marks]</b></p>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>(a)</b></p>
+    <ul>
+      <li>A current-carrying conductor placed in a magnetic field experiences a force <span class="mark">✓</span></li>
+      <li>F = BIl (force = magnetic flux density × current × length) <span class="mark">✓</span></li>
+    </ul>
+    <p style="margin-top:10px"><b>(b)</b></p>
+    <ul>
+      <li>F = BIl = 0.05 × 4 × 0.3 <span class="mark">✓</span></li>
+      <li>F = 0.06 N <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q6 — Transformers -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 6 — Transformers and National Grid</div>
+    <div class="q-marks">4 marks</div>
+  </div>
+  <div class="q-text">
+    <p>A transformer has 500 primary turns and 50 secondary turns. The primary voltage is 230 V.</p>
+    <p><b>(a)</b> Calculate the secondary voltage and state whether this is a step-up or step-down transformer. <b>[3 marks]</b></p>
+    <div class="formula-box">Vp/Vs = np/ns</div>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Transformer Questions</strong>
+    Cross-multiply: Vp × ns = Vs × np → rearrange for the unknown. Step-up: more secondary turns → higher secondary voltage. Step-down: fewer secondary turns → lower secondary voltage. Ideal transformer: Vp × Ip = Vs × Is (power in = power out).
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <div class="q-text" style="margin-top:14px">
+    <p><b>(b)</b> Explain why step-up transformers are used when electricity enters the National Grid. <b>[1 mark]</b></p>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>(a)</b></p>
+    <ul>
+      <li>Vs = Vp × (ns/np) = 230 × (50/500) <span class="mark">✓</span></li>
+      <li>Vs = 230 × 0.1 = 23 V <span class="mark">✓</span></li>
+      <li>This is a step-DOWN transformer (secondary voltage lower than primary) <span class="mark">✓</span></li>
+    </ul>
+    <p style="margin-top:10px"><b>(b)</b> Step-up transformers increase voltage → reduce current → less energy wasted as heat in cables (P = I²R) <span class="mark">✓</span></p>
+  </div>
+</div>
+
+<!-- SECTION B -->
+<div class="section-title">Section B — 8-Mark Level-of-Response Questions <span class="section-marks">16 marks</span></div>
+
+<!-- Q7 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 7 — Electromagnetic Induction (8 marks)</div>
+    <div class="q-marks">8 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Describe and explain how an alternating current (AC) generator works. In your answer, include the role of electromagnetic induction, how the output varies with time, and how the output can be increased.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — 8-Mark Level-of-Response Questions</strong>
+    These are marked in levels (not per point). For Level 3 (7–8 marks): detailed, coherent, accurate explanation covering ALL aspects. Structure: (1) setup, (2) how it produces EMF, (3) how it produces AC, (4) how to increase output. Use technical terms: EMF, flux, induced current, slip rings, armature. Write at least 6–8 sentences.
+  </div>
+  <div class="level-box">
+    <strong>Level Descriptors:</strong>
+    <div class="level l-high">Level 3 (7–8): Detailed and coherent — describes setup clearly, explains induction, explains AC generation, and gives ways to increase output with scientific justification.</div>
+    <div class="level l-mid">Level 2 (4–6): Describes how the generator produces an EMF and gives some detail about AC output, but may miss some steps or lack full explanation.</div>
+    <div class="level l-low">Level 1 (1–3): Basic statement that a rotating coil produces electricity, or mentions magnets/coils but without linking to induction.</div>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>Indicative content (must cover to reach Level 3):</b></p>
+    <ul>
+      <li><b>Setup:</b> A coil of wire is placed between the poles of a magnet (or a magnet rotates inside a coil) <span class="mark">✓</span></li>
+      <li><b>Induction:</b> When the coil rotates, the magnetic flux through the coil changes <span class="mark">✓</span></li>
+      <li>This changing flux induces an EMF (electromagnetic induction / Faraday's law) <span class="mark">✓</span></li>
+      <li>The induced EMF drives a current in the circuit <span class="mark">✓</span></li>
+      <li><b>AC production:</b> As the coil rotates, the direction of the induced EMF reverses every half turn <span class="mark">✓</span></li>
+      <li>This produces an alternating current (AC) — current reverses direction regularly <span class="mark">✓</span></li>
+      <li>Slip rings and brushes allow the current to flow to the external circuit while the coil rotates <span class="mark">✓</span></li>
+      <li>The output on an oscilloscope shows a sinusoidal (wave) pattern <span class="mark">✓</span></li>
+      <li><b>Increasing output:</b> Use a stronger magnet / more turns of wire / rotate faster / use a larger coil — all increase the rate of change of flux, increasing the induced EMF <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 8 — Evaluate: Risks and Benefits of EM Radiation (8 marks)</div>
+    <div class="q-marks">8 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Evaluate the risks and benefits of using X-rays in medicine and the use of mobile phones (which emit microwaves) in everyday life. In your answer, consider the evidence for and against their use and reach a conclusion.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — "Evaluate" Questions</strong>
+    "Evaluate" means: consider evidence FOR and AGAINST, weigh them up, and reach a justified conclusion. Structure: (1) Benefits with evidence. (2) Risks with evidence. (3) Factors that affect risk (e.g. dose, frequency). (4) Your conclusion — is the benefit worth the risk? Use qualifiers like "the evidence suggests", "on balance". This is a Level of Response question.
+  </div>
+  <div class="level-box">
+    <strong>Level Descriptors:</strong>
+    <div class="level l-high">Level 3 (7–8): Balanced evaluation — clear benefits and risks for both X-rays and microwaves, evidence cited, factors affecting risk discussed, coherent conclusion reached.</div>
+    <div class="level l-mid">Level 2 (4–6): Benefits and risks given for at least one type of radiation, some evidence, partial conclusion.</div>
+    <div class="level l-low">Level 1 (1–3): States some uses or dangers without evaluating or reaching a conclusion.</div>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>Indicative content for Level 3:</b></p>
+    <ul>
+      <li><b>X-ray benefits:</b> essential for diagnosing bone fractures, detecting tumours, dental checks; alternative to invasive surgery; CT scans give 3D images <span class="mark">✓</span></li>
+      <li><b>X-ray risks:</b> ionising radiation — can cause DNA mutations and cancer; high dose can damage cells; workers are exposed regularly → precautions needed (lead aprons, limited exposure) <span class="mark">✓</span></li>
+      <li><b>Risk factors:</b> risk depends on dose — a chest X-ray gives very low dose; equivalent to a few days of background radiation <span class="mark">✓</span></li>
+      <li><b>Microwave (mobile) benefits:</b> essential communication tool; 4G/5G enables emergency services; improves quality of life <span class="mark">✓</span></li>
+      <li><b>Microwave risks:</b> microwaves are NON-ionising — cannot cause mutations directly; some studies suggest heating effect at high intensity; current evidence does not conclusively prove harm from normal phone use <span class="mark">✓</span></li>
+      <li><b>Conclusion:</b> On balance, X-ray use in medicine is justified because benefits (life-saving diagnosis) outweigh small risk when doses are controlled. Mobile phone risk remains uncertain but current evidence suggests low risk at typical usage levels — precautionary approach reasonable <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION C -->
+<div class="section-title">Section C — Extended Response (7 × 6 marks) <span class="section-marks">42 marks</span> (includes 2 × 8-mark evaluate)</div>
+
+<!-- Q9 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 9 — Wave Behaviour: Diffraction</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Explain what diffraction is and describe how the degree of diffraction depends on wavelength and gap size. Include in your answer why radio waves can diffract around buildings but light cannot.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Diffraction Explanation Questions</strong>
+    Define diffraction first (spreading of waves at a gap/edge). State the rule: diffraction is greatest when wavelength ≈ gap size. Compare: radio waves (λ = metres) can diffract around buildings (metres wide); visible light (λ ≈ 500 nm) cannot diffract around buildings because λ &lt;&lt; gap. Use examples to support each point.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <ul>
+      <li>Diffraction: the spreading out of waves when they pass through a gap or around an obstacle <span class="mark">✓</span></li>
+      <li>Greatest diffraction when wavelength is approximately equal to the gap size <span class="mark">✓</span></li>
+      <li>If gap is much larger than wavelength, very little diffraction occurs <span class="mark">✓</span></li>
+      <li>Radio waves have wavelengths of metres to kilometres <span class="mark">✓</span></li>
+      <li>This is comparable to the size of buildings/gaps in cities → radio waves diffract around them <span class="mark">✓</span></li>
+      <li>Visible light has wavelength ~400–700 nm (nanometres) — much smaller than buildings → no significant diffraction → cannot bend around buildings <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 10 — Ultrasound and Sonar</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>A ship uses ultrasound sonar to measure the depth of the ocean. A pulse is sent down and returns after 0.24 s. The speed of sound in seawater is 1500 m/s.</p>
+    <p>Calculate the depth of the ocean. Explain why ultrasound is used instead of audible sound and why light cannot be used instead.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Sonar Calculations</strong>
+    Remember: the pulse travels DOWN and UP, so total distance = 2 × depth. Time = 0.24 s for the full journey. Use d = v × t, then divide by 2. Common error: forgetting to halve. For the explanation: ultrasound has short wavelength (high frequency) → less diffraction → sharper images. Light is absorbed by water. Ultrasound reflects off boundaries between materials.
+  </div>
+  <div class="formula-box">d = v × t &nbsp;|&nbsp; depth = total distance ÷ 2</div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <ul>
+      <li>Total distance = v × t = 1500 × 0.24 = 360 m <span class="mark">✓</span></li>
+      <li>Depth = 360 ÷ 2 = 180 m (pulse travels to bottom and back) <span class="mark">✓</span></li>
+      <li>Ultrasound used because: ultrasound reflects well off boundaries (seabed) / it can penetrate water well <span class="mark">✓</span></li>
+      <li>Ultrasound is above 20,000 Hz → shorter wavelength → less diffraction → more precise readings <span class="mark">✓</span></li>
+      <li>Light cannot be used: light is absorbed rapidly by seawater and does not penetrate to significant depths <span class="mark">✓</span></li>
+      <li>Audible sound would work but gives less precise readings due to longer wavelength / more diffraction <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 11 — The EM Spectrum and Communication</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Compare the use of radio waves and microwaves in communication, including the role of the atmosphere in each case. Explain one advantage and one disadvantage of each.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Compare Questions</strong>
+    "Compare" means say how they are similar AND different. Use words like "whereas", "on the other hand", "unlike". Give examples. Structure: radio wave properties → advantages → disadvantages → microwave properties → advantages → disadvantages. Bring in the atmosphere: radio waves reflect off ionosphere, microwaves pass through.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p>Award any 6:</p>
+    <ul>
+      <li>Radio waves: long wavelengths (cm to km) → can diffract around hills/buildings <span class="mark">✓</span></li>
+      <li>Radio waves reflect off the ionosphere → can travel long distances around Earth (advantage) <span class="mark">✓</span></li>
+      <li>Radio waves cannot pass through the ionosphere to reach satellites (limitation) <span class="mark">✓</span></li>
+      <li>Microwaves: shorter wavelength → less diffraction → need line of sight <span class="mark">✓</span></li>
+      <li>Microwaves pass through the atmosphere/ionosphere → used for satellite communication (advantage) <span class="mark">✓</span></li>
+      <li>Microwaves can be absorbed by water vapour → can be disrupted by rain (disadvantage) <span class="mark">✓</span></li>
+      <li>Both travel at 3 × 10⁸ m/s in vacuum and are EM transverse waves <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 12 — Electromagnetic Induction and Lenz's Law</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>A bar magnet is pushed into a coil connected to a galvanometer. Describe what happens and explain how the size and direction of the induced current can be changed. Use scientific terms in your answer.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Induction Description Questions</strong>
+    Cover: (1) What you observe (galvanometer deflects). (2) Why (changing B-field induces EMF → current). (3) Factors affecting SIZE of EMF. (4) Factors affecting DIRECTION of current (Lenz's law: induced current opposes the change). Direction reversed by: reversing magnet, reversing poles, pulling magnet out.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <ul>
+      <li>As the magnet moves into the coil, the magnetic flux through the coil increases <span class="mark">✓</span></li>
+      <li>This changing flux induces an EMF (electromotive force) in the coil <span class="mark">✓</span></li>
+      <li>The induced EMF drives a current — galvanometer deflects <span class="mark">✓</span></li>
+      <li>Size increased by: moving magnet faster, using a stronger magnet, using more turns of wire <span class="mark">✓</span></li>
+      <li>Direction reversed by: pulling the magnet out instead, or reversing the poles (N→S) of the magnet <span class="mark">✓</span></li>
+      <li>The induced current always acts to oppose the change that caused it (Lenz's law) <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q13 — 8-mark evaluate -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 13 — Evaluate: The National Grid (8 marks)</div>
+    <div class="q-marks">8 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Evaluate the design of the National Grid, including the use of step-up and step-down transformers and the use of high voltages for transmission. Consider the advantages of the current system and any limitations or alternatives.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — 8-Mark Evaluate (National Grid)</strong>
+    Structure: (1) Purpose of step-up transformers at power stations. (2) Why high voltage reduces energy loss (use P = I²R). (3) Role of step-down transformers at homes. (4) Limitations: cost of infrastructure, dangers of high voltage, electromagnetic interference. (5) Alternatives: superconducting cables, local generation. Conclusion: overall verdict on the system's effectiveness.
+  </div>
+  <div class="level-box">
+    <strong>Level Descriptors:</strong>
+    <div class="level l-high">Level 3 (7–8): Full evaluation — explains how the system works using physics (P = I²R), gives advantages of high-voltage transmission, discusses limitations, and reaches a justified conclusion.</div>
+    <div class="level l-mid">Level 2 (4–6): Explains high voltage reduces energy loss and describes role of transformers, but limited discussion of limitations or alternatives.</div>
+    <div class="level l-low">Level 1 (1–3): Basic statement that transformers change voltage or that high voltage reduces current.</div>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>Indicative content for Level 3:</b></p>
+    <ul>
+      <li>Step-up transformers increase voltage from ~25,000 V to ~400,000 V when electricity leaves power stations <span class="mark">✓</span></li>
+      <li>High voltage means lower current for same power (P = IV) <span class="mark">✓</span></li>
+      <li>Less current means less energy wasted as heat in cables (P = I²R — power loss ∝ I²) <span class="mark">✓</span></li>
+      <li>Step-down transformers reduce voltage to 230 V for homes — safe for domestic use <span class="mark">✓</span></li>
+      <li>Advantage: very efficient over long distances; without high voltage, enormous energy losses would occur <span class="mark">✓</span></li>
+      <li>Limitation: very high voltages are dangerous — require extensive insulation and safety precautions <span class="mark">✓</span></li>
+      <li>Limitation: infrastructure is expensive to build and maintain; pylons affect landscapes <span class="mark">✓</span></li>
+      <li>Alternative: superconducting cables would have zero resistance → no heat loss, but very expensive to cool <span class="mark">✓</span></li>
+      <li>Alternative: local/distributed generation (solar, wind near homes) would reduce need for long-distance transmission <span class="mark">✓</span></li>
+      <li>Conclusion: the National Grid is a well-designed and effective system — high-voltage transmission greatly reduces energy losses; improvements possible but current system is justified given scale and efficiency <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 14 — Seismic Waves and the Earth's Structure</div>
+    <div class="q-marks">6 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Explain how seismic P-waves and S-waves are used to provide evidence for the Earth's internal structure. Include the properties of each type of wave and what their behaviour tells us about the Earth's interior.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Seismic Wave Questions</strong>
+    P-waves: longitudinal, can travel through solids AND liquids. S-waves: transverse, can ONLY travel through solids. Key evidence: S-waves don't reach the other side of Earth → outer core must be liquid. P-waves refract at boundaries → Earth has layers of different density. This links to the structure: inner core (solid), outer core (liquid), mantle, crust.
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <ul>
+      <li>P-waves are longitudinal; S-waves are transverse <span class="mark">✓</span></li>
+      <li>P-waves can travel through solids AND liquids <span class="mark">✓</span></li>
+      <li>S-waves can only travel through solids — cannot pass through liquids <span class="mark">✓</span></li>
+      <li>S-waves are detected on one side of Earth but NOT on the opposite side (shadow zone) <span class="mark">✓</span></li>
+      <li>This tells us the outer core is LIQUID — S-waves cannot pass through it <span class="mark">✓</span></li>
+      <li>P-waves refract (change direction) as they pass through layers of different density, providing evidence for the layered internal structure of the Earth <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q15 — 8-mark evaluate -->
+<div class="q-card">
+  <div class="q-header">
+    <div class="q-label">Question 15 — Evaluate: Benefits and Risks of Ionising Radiation in Medicine (8 marks)</div>
+    <div class="q-marks">8 marks</div>
+  </div>
+  <div class="q-text">
+    <p>Evaluate the use of ionising radiation (including X-rays and gamma rays) in medicine. Consider the benefits to patients, the risks to patients and healthcare workers, and the precautions taken to reduce risk. Reach a justified conclusion.</p>
+  </div>
+  <div class="tip-box">
+    <strong>💡 How to Answer — Medical Radiation Evaluate Questions</strong>
+    This is a balanced evaluation. Benefits: diagnosis, cancer treatment (radiotherapy), sterilising equipment. Risks: ionising radiation causes DNA damage, mutations, cancer. Precautions: lead aprons, limiting exposure time, keeping distance, using minimum effective dose. Conclusion: benefits usually outweigh risks when precautions are followed — back this up with evidence.
+  </div>
+  <div class="level-box">
+    <strong>Level Descriptors:</strong>
+    <div class="level l-high">Level 3 (7–8): Comprehensive — specific benefits and risks given with explanations, precautions discussed with scientific reasoning, balanced conclusion reached with justification.</div>
+    <div class="level l-mid">Level 2 (4–6): Benefits and risks listed with some detail, some precautions, limited conclusion.</div>
+    <div class="level l-low">Level 1 (1–3): States that radiation can cause cancer or is used in medicine, without development.</div>
+  </div>
+  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
+  <div class="ms-content">
+    <p><b>Indicative content for Level 3:</b></p>
+    <ul>
+      <li><b>X-ray benefits:</b> can image internal structures (bones, lungs, tumours) non-invasively; essential for fracture diagnosis <span class="mark">✓</span></li>
+      <li><b>Gamma ray benefits:</b> used in radiotherapy to destroy cancer cells; can be targeted using rotating beam to minimise damage to surrounding tissue <span class="mark">✓</span></li>
+      <li><b>Gamma ray benefits:</b> sterilise medical equipment (kill bacteria) — essential for safe surgery <span class="mark">✓</span></li>
+      <li><b>Risks to patients:</b> ionising radiation can damage DNA → mutations → risk of cancer developing later <span class="mark">✓</span></li>
+      <li><b>Risks to workers:</b> healthcare professionals receive repeated small doses over career — cumulative dose can be significant <span class="mark">✓</span></li>
+      <li><b>Precautions:</b> lead aprons absorb X-rays, protecting areas not being imaged; minimum effective dose used <span class="mark">✓</span></li>
+      <li><b>Precautions:</b> workers leave room during imaging; dosimeters worn to monitor exposure; exposure time minimised <span class="mark">✓</span></li>
+      <li><b>Conclusion:</b> The benefits of ionising radiation in medicine generally outweigh the risks when precautions are correctly applied — cancer treatment and diagnosis save many more lives than the small cancer risk from exposure; risk-benefit analysis is always made before treatment <span class="mark">✓</span></li>
+    </ul>
+  </div>
+</div>
+
+<button class="reveal-all-btn" onclick="revealAll()">📋 Reveal All Mark Schemes</button>
+
+<div class="grade-box">
+  <h3>Grade Boundaries — Paper 2</h3>
+  <div class="grade-grid">
+    <div class="grade-pill g9">Grade 9<br>63–70</div>
+    <div class="grade-pill g78">Grade 7–8<br>52–62</div>
+    <div class="grade-pill g56">Grade 5–6<br>38–51</div>
+    <div class="grade-pill g34">Grade 3–4<br>22–37</div>
+  </div>
+  <p class="mum-msg">Show this to mum once you've self-marked! 🏆</p>
+</div>
+
+</main>
+
+<script>
+let seconds=75*60,running=false,interval=null;
+function fmt(s){const m=Math.floor(s/60);const sec=s%60;return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');}
+function updateDisplay(){document.getElementById('timerDisplay').textContent=fmt(seconds);}
+function startTimer(){if(running)return;running=true;interval=setInterval(()=>{if(seconds>0){seconds--;updateDisplay();}else{clearInterval(interval);running=false;document.getElementById('timerDisplay').textContent='TIME UP';document.getElementById('timerDisplay').style.color='#f44336';}},1000);}
+function pauseTimer(){clearInterval(interval);running=false;}
+function resetTimer(){clearInterval(interval);running=false;seconds=75*60;updateDisplay();document.getElementById('timerDisplay').style.color='';}
+function toggleMS(btn){const c=btn.nextElementSibling;c.classList.toggle('open');btn.querySelector('span').textContent=c.classList.contains('open')?'▲':'▼';}
+function revealAll(){document.querySelectorAll('.ms-content').forEach(c=>c.classList.add('open'));document.querySelectorAll('.ms-toggle span').forEach(s=>s.textContent='▲');}
+</script>
+</body>
+</html>

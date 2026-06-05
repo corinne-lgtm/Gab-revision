@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology · All Chapters Quick Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0d2b45;--accent:#64b5f6;--bg:#e8f4fd;--paper:#fff;--ink:#1a1a2e;
+  --muted:#5a6a7a;--line:#dce8f2;--red:#e53935;--red2:#ffebee;
+  --green:#2e7d32;--green2:#e8f5e9;--orange:#ef6c00;--orange2:#fff3e0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;min-height:100vh;}
+.hero{background:linear-gradient(135deg,#0d3320 0%,#1b5e20 55%,#2e7d32 100%);color:white;padding:32px 20px 24px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(100,200,100,0.1);}
+.kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a5d6a7;margin-bottom:6px;}
+.badge{display:inline-block;background:#a5d6a7;color:#0d3320;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:900;line-height:1.1;margin-bottom:6px;}
+.hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+nav{background:#0d3320;padding:0 16px;display:flex;overflow-x:auto;border-bottom:2px solid #a5d6a7;}
+nav a{color:#a5d6a7;text-decoration:none;font-size:12px;font-weight:600;padding:10px 14px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s;}
+nav a:hover{color:white;border-bottom-color:#a5d6a7;}
+.score-bar{background:#0d3320;color:white;padding:10px 20px;display:flex;align-items:center;gap:16px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(165,214,167,.2);}
+.score-pill{background:rgba(165,214,167,.15);border:1px solid rgba(165,214,167,.35);border-radius:20px;padding:3px 12px;white-space:nowrap;}
+.score-pill span{color:#a5d6a7;}
+.progress-wrap{flex:1;background:rgba(255,255,255,.1);border-radius:10px;height:7px;overflow:hidden;min-width:60px;}
+.progress-bar{height:100%;background:#a5d6a7;border-radius:10px;transition:width .4s ease;width:0%;}
+main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#0d3320;border-left:4px solid #a5d6a7;padding-left:10px;margin:28px 0 14px;}
+.q-block{background:var(--paper);border-radius:12px;padding:18px 18px 14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(13,51,32,.07);border:1.5px solid transparent;transition:border-color .3s;}
+.q-block.correct{border-color:var(--green);}
+.q-block.wrong{border-color:var(--red);}
+.q-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;color:var(--ink);margin-bottom:11px;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt-btn{background:#f0f8f1;border:1.5px solid var(--line);border-radius:8px;padding:8px 13px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s;line-height:1.4;}
+.opt-btn:hover:not(:disabled){background:#d0efd4;border-color:#81c784;}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green);font-weight:600;}
+.opt-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:var(--red);font-weight:600;}
+.opt-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green);font-weight:600;}
+.tf-options{display:flex;gap:10px;}
+.tf-btn{flex:1;padding:9px;border-radius:8px;border:1.5px solid var(--line);background:#f0f8f1;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:1px;cursor:pointer;transition:background .15s,border-color .15s;text-transform:uppercase;}
+.tf-btn:hover:not(:disabled){background:#d0efd4;border-color:#81c784;}
+.tf-btn:disabled{cursor:default;}
+.tf-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green);}
+.tf-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:var(--red);}
+.tf-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green);}
+.feedback{display:none;margin-top:9px;padding:8px 12px;border-radius:7px;font-size:13px;line-height:1.45;}
+.feedback.correct{background:var(--green2);color:#1b4d1e;display:block;}
+.feedback.wrong{background:var(--red2);color:#7a0000;display:block;}
+.result-box{display:none;background:var(--paper);border-radius:16px;padding:32px 24px;text-align:center;margin-top:28px;box-shadow:0 4px 20px rgba(13,51,32,.12);}
+.result-box.show{display:block;}
+.result-emoji{font-size:3rem;margin-bottom:10px;}
+.result-box h2{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#0d3320;margin-bottom:8px;}
+.result-score{font-family:'Barlow Condensed',sans-serif;font-size:3.2rem;font-weight:900;color:#2e7d32;line-height:1;margin:10px 0 4px;}
+.result-mum{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.result-msg{font-size:14px;color:var(--ink);margin-bottom:22px;line-height:1.5;}
+.reset-btn{background:#0d3320;color:white;border:none;border-radius:24px;padding:12px 32px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;cursor:pointer;}
+.reset-btn:hover{background:#1b5e20;}
+@media(max-width:480px){.hero h1{font-size:1.4rem;}.score-bar{flex-wrap:wrap;gap:8px;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kicker">AQA GCSE Biology · B1–B9 · Mega Quiz</div>
+  <div class="badge">🧬 All Chapters</div>
+  <h1>Biology Quick Check</h1>
+  <p>60 questions · 30 MCQ + 30 True/False · Every topic B1–B9</p>
+</div>
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="biology-index.html">🧬 Biology</a>
+  <a href="biology-exam-paper1.html">📄 Paper 1</a>
+  <a href="biology-exam-paper2.html">📄 Paper 2</a>
+</nav>
+<div class="score-bar">
+  <div class="score-pill">Score <span id="scoreDisplay">0</span>/60</div>
+  <div class="score-pill">Answered <span id="answeredDisplay">0</span>/60</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+<main>
+
+<div class="section-label">Part 1 — Multiple Choice · 30 Questions</div>
+
+<!-- B1 Cells -->
+<div class="q-block" id="q1"><div class="q-num">Q1 · B1 Cells</div>
+<div class="q-text">Which organelle controls what enters and leaves the cell?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(1,'A','B')">A. Cell wall</button>
+<button class="opt-btn" onclick="ans(1,'B','B')">B. Cell membrane</button>
+<button class="opt-btn" onclick="ans(1,'C','B')">C. Nucleus</button>
+<button class="opt-btn" onclick="ans(1,'D','B')">D. Vacuole</button>
+</div><div class="feedback" id="fb1"></div></div>
+
+<div class="q-block" id="q2"><div class="q-num">Q2 · B1 Cells</div>
+<div class="q-text">What is the function of the ribosome?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(2,'A','C')">A. To produce energy through respiration</button>
+<button class="opt-btn" onclick="ans(2,'B','C')">B. To control the cell's activities</button>
+<button class="opt-btn" onclick="ans(2,'C','C')">C. To synthesise (make) proteins</button>
+<button class="opt-btn" onclick="ans(2,'D','C')">D. To carry out photosynthesis</button>
+</div><div class="feedback" id="fb2"></div></div>
+
+<div class="q-block" id="q3"><div class="q-num">Q3 · B1 Cells</div>
+<div class="q-text">A student looks at a cell under a microscope. The image is 2 mm wide and the magnification is ×400. What is the actual size of the cell?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(3,'A','B')">A. 0.002 mm</button>
+<button class="opt-btn" onclick="ans(3,'B','B')">B. 0.005 mm</button>
+<button class="opt-btn" onclick="ans(3,'C','B')">C. 0.8 mm</button>
+<button class="opt-btn" onclick="ans(3,'D','B')">D. 800 mm</button>
+</div><div class="feedback" id="fb3"></div></div>
+
+<div class="q-block" id="q4"><div class="q-num">Q4 · B1 Diffusion &amp; Osmosis</div>
+<div class="q-text">Osmosis is the movement of water molecules from a region of…</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(4,'A','A')">A. Higher water potential to lower water potential, through a partially permeable membrane</button>
+<button class="opt-btn" onclick="ans(4,'B','A')">B. Lower water potential to higher water potential, through a partially permeable membrane</button>
+<button class="opt-btn" onclick="ans(4,'C','A')">C. Higher solute concentration to lower solute concentration</button>
+<button class="opt-btn" onclick="ans(4,'D','A')">D. Higher pressure to lower pressure, through any membrane</button>
+</div><div class="feedback" id="fb4"></div></div>
+
+<div class="q-block" id="q5"><div class="q-num">Q5 · B1 Active Transport</div>
+<div class="q-text">Why does active transport require energy but diffusion does not?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(5,'A','C')">A. Active transport moves substances through a membrane; diffusion does not</button>
+<button class="opt-btn" onclick="ans(5,'B','C')">B. Active transport only moves water; diffusion moves all molecules</button>
+<button class="opt-btn" onclick="ans(5,'C','C')">C. Active transport moves substances against their concentration gradient; diffusion moves them down the gradient</button>
+<button class="opt-btn" onclick="ans(5,'D','C')">D. Diffusion requires carrier proteins; active transport does not</button>
+</div><div class="feedback" id="fb5"></div></div>
+
+<!-- B2 Cell division -->
+<div class="q-block" id="q6"><div class="q-num">Q6 · B2 Cell Division</div>
+<div class="q-text">How many chromosomes does a normal human body cell contain?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(6,'A','C')">A. 23</button>
+<button class="opt-btn" onclick="ans(6,'B','C')">B. 26</button>
+<button class="opt-btn" onclick="ans(6,'C','C')">C. 46</button>
+<button class="opt-btn" onclick="ans(6,'D','C')">D. 92</button>
+</div><div class="feedback" id="fb6"></div></div>
+
+<div class="q-block" id="q7"><div class="q-num">Q7 · B2 Stem Cells</div>
+<div class="q-text">What is meant by a "totipotent" stem cell?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(7,'A','B')">A. A stem cell that can only form blood cells</button>
+<button class="opt-btn" onclick="ans(7,'B','B')">B. A stem cell that can differentiate into any type of cell, including placental cells</button>
+<button class="opt-btn" onclick="ans(7,'C','B')">C. A stem cell taken from adult bone marrow</button>
+<button class="opt-btn" onclick="ans(7,'D','B')">D. A stem cell that has already begun to specialise</button>
+</div><div class="feedback" id="fb7"></div></div>
+
+<!-- B3 Digestion -->
+<div class="q-block" id="q8"><div class="q-num">Q8 · B3 Enzymes</div>
+<div class="q-text">What happens to an enzyme above its optimum temperature?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(8,'A','D')">A. It works faster</button>
+<button class="opt-btn" onclick="ans(8,'B','D')">B. It becomes permanently frozen</button>
+<button class="opt-btn" onclick="ans(8,'C','D')">C. It duplicates itself</button>
+<button class="opt-btn" onclick="ans(8,'D','D')">D. Its active site changes shape and it becomes denatured</button>
+</div><div class="feedback" id="fb8"></div></div>
+
+<div class="q-block" id="q9"><div class="q-num">Q9 · B3 Digestion</div>
+<div class="q-text">Where in the body is bile produced?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(9,'A','B')">A. Pancreas</button>
+<button class="opt-btn" onclick="ans(9,'B','B')">B. Liver</button>
+<button class="opt-btn" onclick="ans(9,'C','B')">C. Small intestine</button>
+<button class="opt-btn" onclick="ans(9,'D','B')">D. Stomach</button>
+</div><div class="feedback" id="fb9"></div></div>
+
+<!-- B4 Circulation -->
+<div class="q-block" id="q10"><div class="q-num">Q10 · B4 Blood</div>
+<div class="q-text">Which component of blood carries oxygen around the body?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(10,'A','C')">A. White blood cells</button>
+<button class="opt-btn" onclick="ans(10,'B','C')">B. Platelets</button>
+<button class="opt-btn" onclick="ans(10,'C','C')">C. Red blood cells</button>
+<button class="opt-btn" onclick="ans(10,'D','C')">D. Plasma</button>
+</div><div class="feedback" id="fb10"></div></div>
+
+<div class="q-block" id="q11"><div class="q-num">Q11 · B4 Heart</div>
+<div class="q-text">Which side of the heart pumps deoxygenated blood to the lungs?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(11,'A','B')">A. Left side</button>
+<button class="opt-btn" onclick="ans(11,'B','B')">B. Right side</button>
+<button class="opt-btn" onclick="ans(11,'C','B')">C. Both sides equally</button>
+<button class="opt-btn" onclick="ans(11,'D','B')">D. Neither — the lungs pump their own blood</button>
+</div><div class="feedback" id="fb11"></div></div>
+
+<div class="q-block" id="q12"><div class="q-num">Q12 · B4 Blood Vessels</div>
+<div class="q-text">Which blood vessel has valves to prevent backflow of blood?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(12,'A','C')">A. Arteries</button>
+<button class="opt-btn" onclick="ans(12,'B','C')">B. Capillaries</button>
+<button class="opt-btn" onclick="ans(12,'C','C')">C. Veins</button>
+<button class="opt-btn" onclick="ans(12,'D','C')">D. Arterioles</button>
+</div><div class="feedback" id="fb12"></div></div>
+
+<!-- B5 Disease -->
+<div class="q-block" id="q13"><div class="q-num">Q13 · B5 Pathogens</div>
+<div class="q-text">Which type of pathogen can be treated with antibiotics?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(13,'A','B')">A. Viruses</button>
+<button class="opt-btn" onclick="ans(13,'B','B')">B. Bacteria</button>
+<button class="opt-btn" onclick="ans(13,'C','B')">C. Fungi</button>
+<button class="opt-btn" onclick="ans(13,'D','B')">D. Protists</button>
+</div><div class="feedback" id="fb13"></div></div>
+
+<div class="q-block" id="q14"><div class="q-num">Q14 · B5 Defence</div>
+<div class="q-text">How do lymphocytes (B cells) defend the body against pathogens?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(14,'A','C')">A. They engulf and digest pathogens directly</button>
+<button class="opt-btn" onclick="ans(14,'B','C')">B. They release histamine to cause inflammation</button>
+<button class="opt-btn" onclick="ans(14,'C','C')">C. They produce specific antibodies that bind to the pathogen's antigens</button>
+<button class="opt-btn" onclick="ans(14,'D','C')">D. They form a physical barrier in the blood vessels</button>
+</div><div class="feedback" id="fb14"></div></div>
+
+<!-- B6 Drugs -->
+<div class="q-block" id="q15"><div class="q-num">Q15 · B6 Drug Development</div>
+<div class="q-text">What is the correct order for drug trials?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(15,'A','B')">A. Human volunteers → Cell/tissue testing → Animal testing → Large clinical trials</button>
+<button class="opt-btn" onclick="ans(15,'B','B')">B. Cell/tissue testing → Animal testing → Small human trials → Large clinical trials</button>
+<button class="opt-btn" onclick="ans(15,'C','B')">C. Animal testing → Cell/tissue testing → Clinical trials → Computer modelling</button>
+<button class="opt-btn" onclick="ans(15,'D','B')">D. Large clinical trials → Small human trials → Animal testing → Cell testing</button>
+</div><div class="feedback" id="fb15"></div></div>
+
+<div class="q-block" id="q16"><div class="q-num">Q16 · B6 Vaccination</div>
+<div class="q-text">What is "herd immunity"?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(16,'A','D')">A. When all animals in a herd are vaccinated against a disease</button>
+<button class="opt-btn" onclick="ans(16,'B','D')">B. When the immune system becomes immune to all diseases simultaneously</button>
+<button class="opt-btn" onclick="ans(16,'C','D')">C. When a vaccine is given to cattle to prevent spread to humans</button>
+<button class="opt-btn" onclick="ans(16,'D','D')">D. When enough people are immune that the pathogen cannot spread easily, protecting unvaccinated individuals</button>
+</div><div class="feedback" id="fb16"></div></div>
+
+<!-- B7 Non-communicable -->
+<div class="q-block" id="q17"><div class="q-num">Q17 · B7 Cancer</div>
+<div class="q-text">What causes a tumour to form?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(17,'A','C')">A. A viral infection of the nucleus</button>
+<button class="opt-btn" onclick="ans(17,'B','C')">B. The immune system attacking healthy cells</button>
+<button class="opt-btn" onclick="ans(17,'C','C')">C. Uncontrolled cell division due to changes in genes that regulate the cell cycle</button>
+<button class="opt-btn" onclick="ans(17,'D','C')">D. The cell membrane becoming too permeable</button>
+</div><div class="feedback" id="fb17"></div></div>
+
+<div class="q-block" id="q18"><div class="q-num">Q17 · B7 Lifestyle Disease</div>
+<div class="q-text">Which of these is a modifiable risk factor for cardiovascular disease?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(18,'A','B')">A. Age</button>
+<button class="opt-btn" onclick="ans(18,'B','B')">B. Smoking</button>
+<button class="opt-btn" onclick="ans(18,'C','B')">C. Family history (genetics)</button>
+<button class="opt-btn" onclick="ans(18,'D','B')">D. Sex (male/female)</button>
+</div><div class="feedback" id="fb18"></div></div>
+
+<!-- B8 Photosynthesis -->
+<div class="q-block" id="q19"><div class="q-num">Q19 · B8 Photosynthesis</div>
+<div class="q-text">What is the word equation for photosynthesis?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(19,'A','C')">A. Glucose + oxygen → carbon dioxide + water + energy</button>
+<button class="opt-btn" onclick="ans(19,'B','C')">B. Carbon dioxide + water → glucose + oxygen (no light needed)</button>
+<button class="opt-btn" onclick="ans(19,'C','C')">C. Carbon dioxide + water → glucose + oxygen (using light energy)</button>
+<button class="opt-btn" onclick="ans(19,'D','C')">D. Glucose + water → oxygen + carbon dioxide + ATP</button>
+</div><div class="feedback" id="fb19"></div></div>
+
+<div class="q-block" id="q20"><div class="q-num">Q20 · B8 Rate of Photosynthesis</div>
+<div class="q-text">A plant is given more carbon dioxide but the rate of photosynthesis does not increase. What is the most likely explanation?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(20,'A','D')">A. The plant has run out of chlorophyll</button>
+<button class="opt-btn" onclick="ans(20,'B','D')">B. The temperature is too low</button>
+<button class="opt-btn" onclick="ans(20,'C','D')">C. The plant has too much glucose already</button>
+<button class="opt-btn" onclick="ans(20,'D','D')">D. Another factor (light or temperature) is limiting the rate</button>
+</div><div class="feedback" id="fb20"></div></div>
+
+<!-- B9 Respiration -->
+<div class="q-block" id="q21"><div class="q-num">Q21 · B9 Respiration</div>
+<div class="q-text">Where in the cell does aerobic respiration mainly take place?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(21,'A','C')">A. Nucleus</button>
+<button class="opt-btn" onclick="ans(21,'B','C')">B. Ribosome</button>
+<button class="opt-btn" onclick="ans(21,'C','C')">C. Mitochondria</button>
+<button class="opt-btn" onclick="ans(21,'D','C')">D. Cell membrane</button>
+</div><div class="feedback" id="fb21"></div></div>
+
+<div class="q-block" id="q22"><div class="q-num">Q22 · B9 Anaerobic Respiration</div>
+<div class="q-text">What is the product of anaerobic respiration in human muscle cells (during vigorous exercise)?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(22,'A','B')">A. Ethanol and carbon dioxide</button>
+<button class="opt-btn" onclick="ans(22,'B','B')">B. Lactic acid</button>
+<button class="opt-btn" onclick="ans(22,'C','B')">C. Glucose and water</button>
+<button class="opt-btn" onclick="ans(22,'D','B')">D. Carbon dioxide and water</button>
+</div><div class="feedback" id="fb22"></div></div>
+
+<div class="q-block" id="q23"><div class="q-num">Q23 · B4 Plants</div>
+<div class="q-text">Which vessels transport water and mineral ions from the roots to the leaves in plants?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(23,'A','B')">A. Phloem vessels</button>
+<button class="opt-btn" onclick="ans(23,'B','B')">B. Xylem vessels</button>
+<button class="opt-btn" onclick="ans(23,'C','B')">C. Stomata</button>
+<button class="opt-btn" onclick="ans(23,'D','B')">D. Guard cells</button>
+</div><div class="feedback" id="fb23"></div></div>
+
+<div class="q-block" id="q24"><div class="q-num">Q24 · B5 Viral Disease</div>
+<div class="q-text">Which of the following is caused by a virus?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(24,'A','C')">A. Salmonella food poisoning</button>
+<button class="opt-btn" onclick="ans(24,'B','C')">B. Rose black spot</button>
+<button class="opt-btn" onclick="ans(24,'C','C')">C. Measles</button>
+<button class="opt-btn" onclick="ans(24,'D','C')">D. Malaria</button>
+</div><div class="feedback" id="fb24"></div></div>
+
+<div class="q-block" id="q25"><div class="q-num">Q25 · B3 Enzymes</div>
+<div class="q-text">The "lock and key" model describes how enzymes work. What is the "key" in this analogy?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(25,'A','B')">A. The active site of the enzyme</button>
+<button class="opt-btn" onclick="ans(25,'B','B')">B. The substrate molecule that fits into the enzyme's active site</button>
+<button class="opt-btn" onclick="ans(25,'C','B')">C. The product that is released after the reaction</button>
+<button class="opt-btn" onclick="ans(25,'D','B')">D. The enzyme inhibitor</button>
+</div><div class="feedback" id="fb25"></div></div>
+
+<div class="q-block" id="q26"><div class="q-num">Q26 · B8 Glucose Use</div>
+<div class="q-text">Plants convert glucose into cellulose. What is cellulose used for?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(26,'A','C')">A. Energy storage in the roots</button>
+<button class="opt-btn" onclick="ans(26,'B','C')">B. Producing chlorophyll in the leaves</button>
+<button class="opt-btn" onclick="ans(26,'C','C')">C. Making cell walls to strengthen and support the plant</button>
+<button class="opt-btn" onclick="ans(26,'D','C')">D. Transporting water through the xylem</button>
+</div><div class="feedback" id="fb26"></div></div>
+
+<div class="q-block" id="q27"><div class="q-num">Q27 · B2 Differentiation</div>
+<div class="q-text">At what stage of development do human cells largely lose the ability to differentiate?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(27,'A','C')">A. At the moment of fertilisation</button>
+<button class="opt-btn" onclick="ans(27,'B','C')">B. After birth</button>
+<button class="opt-btn" onclick="ans(27,'C','C')">C. At an early stage of development (early embryo)</button>
+<button class="opt-btn" onclick="ans(27,'D','C')">D. At puberty</button>
+</div><div class="feedback" id="fb27"></div></div>
+
+<div class="q-block" id="q28"><div class="q-num">Q28 · B9 Oxygen Debt</div>
+<div class="q-text">What is "oxygen debt" and how is it repaid?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(28,'A','B')">A. Extra oxygen stored in the muscles during rest, used during exercise</button>
+<button class="opt-btn" onclick="ans(28,'B','B')">B. The extra oxygen needed after exercise to break down the lactic acid that built up during anaerobic respiration</button>
+<button class="opt-btn" onclick="ans(28,'C','B')">C. Oxygen borrowed from the blood by the liver during digestion</button>
+<button class="opt-btn" onclick="ans(28,'D','B')">D. The deficit of oxygen caused by breathing too slowly during sleep</button>
+</div><div class="feedback" id="fb28"></div></div>
+
+<div class="q-block" id="q29"><div class="q-num">Q29 · B4 Transpiration</div>
+<div class="q-text">Which condition would most increase the rate of transpiration in a plant?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(29,'A','D')">A. High humidity</button>
+<button class="opt-btn" onclick="ans(29,'B','D')">B. Low temperature</button>
+<button class="opt-btn" onclick="ans(29,'C','D')">C. Darkness</button>
+<button class="opt-btn" onclick="ans(29,'D','D')">D. High temperature and wind</button>
+</div><div class="feedback" id="fb29"></div></div>
+
+<div class="q-block" id="q30"><div class="q-num">Q30 · B7 Alcohol</div>
+<div class="q-text">Long-term excessive alcohol consumption primarily damages which organ?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(30,'A','C')">A. Kidneys</button>
+<button class="opt-btn" onclick="ans(30,'B','C')">B. Lungs</button>
+<button class="opt-btn" onclick="ans(30,'C','C')">C. Liver</button>
+<button class="opt-btn" onclick="ans(30,'D','C')">D. Heart</button>
+</div><div class="feedback" id="fb30"></div></div>
+
+<div class="section-label">Part 2 — True or False · 30 Questions</div>
+
+<!-- TF 31-60 -->
+<div class="q-block" id="q31"><div class="q-num">Q31 · B1</div>
+<div class="q-text">Plant cells have a cell wall, a permanent vacuole, and chloroplasts — animal cells have none of these.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(31,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(31,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb31"></div></div>
+
+<div class="q-block" id="q32"><div class="q-num">Q32 · B1</div>
+<div class="q-text">Prokaryotic cells (such as bacteria) have a nucleus enclosed in a membrane.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(32,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(32,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb32"></div></div>
+
+<div class="q-block" id="q33"><div class="q-num">Q33 · B1</div>
+<div class="q-text">Diffusion is a passive process — it does not require energy from the cell.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(33,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(33,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb33"></div></div>
+
+<div class="q-block" id="q34"><div class="q-num">Q34 · B1</div>
+<div class="q-text">A cell placed in a very concentrated (hypertonic) solution will gain water by osmosis and swell.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(34,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(34,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb34"></div></div>
+
+<div class="q-block" id="q35"><div class="q-num">Q35 · B2</div>
+<div class="q-text">Mitosis produces two genetically identical daughter cells, each with the same number of chromosomes as the parent cell.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(35,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(35,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb35"></div></div>
+
+<div class="q-block" id="q36"><div class="q-num">Q36 · B2</div>
+<div class="q-text">Adult stem cells are more versatile than embryonic stem cells because they can form any type of cell in the body.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(36,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(36,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb36"></div></div>
+
+<div class="q-block" id="q37"><div class="q-num">Q37 · B3</div>
+<div class="q-text">Amylase breaks down starch into sugars and is produced in the salivary glands, pancreas, and small intestine.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(37,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(37,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb37"></div></div>
+
+<div class="q-block" id="q38"><div class="q-num">Q38 · B3</div>
+<div class="q-text">Bile is an enzyme that chemically digests fats in the small intestine.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(38,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(38,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb38"></div></div>
+
+<div class="q-block" id="q39"><div class="q-num">Q39 · B4</div>
+<div class="q-text">Red blood cells have no nucleus in order to carry more haemoglobin and therefore more oxygen.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(39,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(39,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb39"></div></div>
+
+<div class="q-block" id="q40"><div class="q-num">Q40 · B4</div>
+<div class="q-text">Arteries carry blood away from the heart; veins carry blood towards the heart.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(40,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(40,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb40"></div></div>
+
+<div class="q-block" id="q41"><div class="q-num">Q41 · B4</div>
+<div class="q-text">The pulmonary artery carries oxygenated blood from the heart to the lungs.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(41,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(41,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb41"></div></div>
+
+<div class="q-block" id="q42"><div class="q-num">Q42 · B4</div>
+<div class="q-text">Phloem vessels transport dissolved sugars (such as sucrose) from the leaves to the rest of the plant.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(42,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(42,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb42"></div></div>
+
+<div class="q-block" id="q43"><div class="q-num">Q43 · B5</div>
+<div class="q-text">Viruses reproduce inside living cells by hijacking the cell's machinery to make copies of themselves.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(43,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(43,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb43"></div></div>
+
+<div class="q-block" id="q44"><div class="q-num">Q44 · B5</div>
+<div class="q-text">Malaria is caused by a bacterium spread by mosquitoes.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(44,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(44,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb44"></div></div>
+
+<div class="q-block" id="q45"><div class="q-num">Q45 · B5</div>
+<div class="q-text">Phagocytes engulf and digest pathogens in a process called phagocytosis.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(45,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(45,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb45"></div></div>
+
+<div class="q-block" id="q46"><div class="q-num">Q46 · B6</div>
+<div class="q-text">A placebo in a drug trial is a dummy treatment given to the control group to eliminate the placebo effect.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(46,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(46,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb46"></div></div>
+
+<div class="q-block" id="q47"><div class="q-num">Q47 · B6</div>
+<div class="q-text">Antibiotics are effective against both bacterial and viral infections.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(47,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(47,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb47"></div></div>
+
+<div class="q-block" id="q48"><div class="q-num">Q48 · B7</div>
+<div class="q-text">A benign tumour spreads to other parts of the body through the bloodstream.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(48,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(48,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb48"></div></div>
+
+<div class="q-block" id="q49"><div class="q-num">Q49 · B7</div>
+<div class="q-text">Smoking is a risk factor for both lung cancer and cardiovascular disease.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(49,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(49,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb49"></div></div>
+
+<div class="q-block" id="q50"><div class="q-num">Q50 · B8</div>
+<div class="q-text">Photosynthesis takes place in the chloroplasts, which contain the green pigment chlorophyll.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(50,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(50,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb50"></div></div>
+
+<div class="q-block" id="q51"><div class="q-num">Q51 · B8</div>
+<div class="q-text">Increasing the concentration of CO₂ will always increase the rate of photosynthesis, regardless of other conditions.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(51,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(51,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb51"></div></div>
+
+<div class="q-block" id="q52"><div class="q-num">Q52 · B8</div>
+<div class="q-text">Plants store excess glucose as starch, which is insoluble and does not affect osmosis.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(52,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(52,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb52"></div></div>
+
+<div class="q-block" id="q53"><div class="q-num">Q53 · B9</div>
+<div class="q-text">Aerobic respiration produces more ATP (energy) per glucose molecule than anaerobic respiration.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(53,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(53,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb53"></div></div>
+
+<div class="q-block" id="q54"><div class="q-num">Q54 · B9</div>
+<div class="q-text">During exercise, heart rate and breathing rate both increase to supply more oxygen and glucose to the muscles.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(54,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(54,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb54"></div></div>
+
+<div class="q-block" id="q55"><div class="q-num">Q55 · B9</div>
+<div class="q-text">In yeast, anaerobic respiration produces lactic acid.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(55,'true','false')">TRUE</button><button class="tf-btn" onclick="ans(55,'false','false')">FALSE</button></div>
+<div class="feedback" id="fb55"></div></div>
+
+<div class="q-block" id="q56"><div class="q-num">Q56 · B1</div>
+<div class="q-text">The surface area to volume ratio decreases as a cell gets larger, making exchange of substances less efficient.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(56,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(56,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb56"></div></div>
+
+<div class="q-block" id="q57"><div class="q-num">Q57 · B4</div>
+<div class="q-text">Stomata on leaves open to allow gas exchange (CO₂ in, O₂ out) but this also causes water to be lost by evaporation.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(57,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(57,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb57"></div></div>
+
+<div class="q-block" id="q58"><div class="q-num">Q58 · B6</div>
+<div class="q-text">Vaccination works by introducing a dead or weakened form of a pathogen so the immune system produces antibodies and memory cells without causing the disease.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(58,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(58,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb58"></div></div>
+
+<div class="q-block" id="q59"><div class="q-num">Q59 · B3</div>
+<div class="q-text">The stomach produces protease enzymes and hydrochloric acid. The acid kills bacteria and provides an optimum pH for the protease.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(59,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(59,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb59"></div></div>
+
+<div class="q-block" id="q60"><div class="q-num">Q60 · B9</div>
+<div class="q-text">The liver converts lactic acid back to glucose after exercise — this is how oxygen debt is repaid.</div>
+<div class="tf-options"><button class="tf-btn" onclick="ans(60,'true','true')">TRUE</button><button class="tf-btn" onclick="ans(60,'false','true')">FALSE</button></div>
+<div class="feedback" id="fb60"></div></div>
+
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <h2 id="resultTitle"></h2>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-mum" id="resultMum"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+</main>
+
+<script>
+const SCORE_KEY='bio-all-quiz-score';
+const fb={
+1:{c:'✅ Correct! The cell membrane controls what enters and leaves — it is selectively permeable.',w:'❌ The cell membrane controls what enters and leaves the cell.'},
+2:{c:'✅ Correct! Ribosomes are the site of protein synthesis in the cell.',w:'❌ Ribosomes synthesise (make) proteins.'},
+3:{c:'✅ Correct! Actual size = image size ÷ magnification = 2 ÷ 400 = 0.005 mm.',w:'❌ Use: actual size = image size ÷ magnification = 2 ÷ 400 = 0.005 mm.'},
+4:{c:'✅ Correct! Osmosis is water moving from high to low water potential through a partially permeable membrane.',w:'❌ Osmosis moves water from HIGH to LOW water potential through a partially permeable membrane.'},
+5:{c:'✅ Correct! Active transport moves substances against their concentration gradient — uphill — which requires energy (ATP).',w:'❌ Active transport moves substances AGAINST their concentration gradient, which requires energy. Diffusion goes DOWN the gradient — no energy needed.'},
+6:{c:'✅ Correct! Human body cells have 46 chromosomes (23 pairs).',w:'❌ Human body cells contain 46 chromosomes — 23 pairs.'},
+7:{c:'✅ Correct! Totipotent cells can form ANY cell type including placenta — they are found in the very early embryo.',w:'❌ Totipotent cells can form any cell type including extra-embryonic tissue like the placenta.'},
+8:{c:'✅ Correct! Above the optimum temperature the enzyme denatures — the active site changes shape permanently.',w:'❌ Above optimum temperature the enzyme DENATURES — its active site changes shape and it can no longer work.'},
+9:{c:'✅ Correct! Bile is produced in the liver, stored in the gall bladder, and released into the small intestine.',w:'❌ Bile is produced in the LIVER (stored in the gall bladder).'},
+10:{c:'✅ Correct! Red blood cells contain haemoglobin which binds to oxygen and carries it around the body.',w:'❌ Red blood cells carry oxygen using the protein haemoglobin.'},
+11:{c:'✅ Correct! The right side pumps deoxygenated blood to the lungs (pulmonary circulation).',w:'❌ The RIGHT side of the heart pumps deoxygenated blood to the lungs.'},
+12:{c:'✅ Correct! Veins have valves to prevent backflow because blood pressure in veins is low.',w:'❌ VEINS have valves — blood pressure in veins is low so valves prevent backflow.'},
+13:{c:'✅ Correct! Antibiotics kill bacteria. They have no effect on viruses.',w:'❌ Antibiotics only work against BACTERIA, not viruses.'},
+14:{c:'✅ Correct! Lymphocytes (B cells) produce specific antibodies that match the antigens on a pathogen.',w:'❌ Lymphocytes produce specific ANTIBODIES that bind to the pathogen\'s antigens.'},
+15:{c:'✅ Correct! Drugs must be tested on cells/tissues, then animals, then small human trials, then large clinical trials.',w:'❌ The correct order: cells/tissues → animals → small human trials → large clinical trials.'},
+16:{c:'✅ Correct! Herd immunity protects vulnerable unvaccinated people because the pathogen cannot spread when most of the population is immune.',w:'❌ Herd immunity is when enough of a population is immune that the pathogen cannot spread easily — protecting even unvaccinated individuals.'},
+17:{c:'✅ Correct! Tumours form when genes controlling the cell cycle are damaged, causing uncontrolled cell division.',w:'❌ Tumours are caused by uncontrolled cell division due to mutations in genes that regulate the cell cycle.'},
+18:{c:'✅ Correct! Smoking is a modifiable (changeable) risk factor. Age, genetics, and sex cannot be changed.',w:'❌ Smoking is MODIFIABLE — you can stop. Age, genetics, and sex are non-modifiable.'},
+19:{c:'✅ Correct! Carbon dioxide + water → glucose + oxygen, using light energy (in chloroplasts).',w:'❌ Photosynthesis: carbon dioxide + water → glucose + oxygen (requires light energy).'},
+20:{c:'✅ Correct! When one factor is at maximum, another factor becomes the limiting factor — increasing CO₂ alone won\'t help.',w:'❌ Another limiting factor (light intensity or temperature) is preventing the rate from increasing.'},
+21:{c:'✅ Correct! Aerobic respiration mainly occurs in the mitochondria.',w:'❌ Aerobic respiration takes place in the MITOCHONDRIA.'},
+22:{c:'✅ Correct! In humans, anaerobic respiration produces lactic acid (not ethanol — that\'s yeast/plants).',w:'❌ In human muscles, anaerobic respiration produces LACTIC ACID. Ethanol + CO₂ is produced by yeast.'},
+23:{c:'✅ Correct! Xylem vessels carry water and mineral ions upwards from roots to leaves.',w:'❌ XYLEM carries water and minerals. Phloem carries dissolved sugars.'},
+24:{c:'✅ Correct! Measles is caused by the measles virus. Salmonella is bacterial, rose black spot is fungal, malaria is a protist.',w:'❌ Measles is caused by a virus. Malaria = protist; Salmonella = bacteria; Rose black spot = fungus.'},
+25:{c:'✅ Correct! The substrate (key) fits into the enzyme\'s active site (lock) — a specific fit.',w:'❌ The substrate is the "key" — it fits into the enzyme\'s active site (the "lock").'},
+26:{c:'✅ Correct! Plants make cellulose from glucose to build strong cell walls.',w:'❌ Cellulose is used to make cell walls, providing structural support.'},
+27:{c:'✅ Correct! Human cells mostly lose the ability to differentiate in the early embryo. Some adult stem cells remain in bone marrow etc.',w:'❌ Cells mainly lose the ability to differentiate at an EARLY EMBRYO stage.'},
+28:{c:'✅ Correct! Oxygen debt = the extra O₂ needed after exercise to oxidise the lactic acid produced by anaerobic respiration.',w:'❌ Oxygen debt is the extra oxygen needed AFTER exercise to break down lactic acid from anaerobic respiration.'},
+29:{c:'✅ Correct! High temperature increases evaporation; wind removes water vapour from around the leaf, maintaining the concentration gradient.',w:'❌ High temperature and wind both increase transpiration rate.'},
+30:{c:'✅ Correct! The liver metabolises alcohol — long-term excessive drinking causes cirrhosis (scarring of the liver).',w:'❌ Excessive alcohol primarily damages the LIVER (cirrhosis).'},
+31:{c:'✅ Correct! Plant cells have all three; animal cells have none of them.',w:'❌ True — plant cells have cell wall, vacuole, and chloroplasts; animal cells do not.'},
+32:{c:'✅ Correct! Prokaryotes (bacteria) have NO membrane-bound nucleus — their DNA floats free in the cytoplasm.',w:'❌ FALSE — prokaryotes have NO membrane-bound nucleus. Their DNA is in the cytoplasm.'},
+33:{c:'✅ Correct! Diffusion is passive — substances move down their concentration gradient with no energy input.',w:'❌ True — diffusion is passive and requires no energy.'},
+34:{c:'✅ Correct! In a hypertonic (concentrated) solution, the cell LOSES water by osmosis and may shrink/crenate.',w:'❌ FALSE — in a concentrated solution the cell LOSES water and shrinks. It gains water in a dilute solution.'},
+35:{c:'✅ Correct! Mitosis produces 2 genetically identical cells, each with 46 chromosomes (in humans).',w:'❌ True — mitosis produces 2 identical daughter cells with the same chromosome number as the parent.'},
+36:{c:'✅ Correct! It is the OTHER way round: embryonic stem cells are MORE versatile (pluripotent/totipotent). Adult stem cells are more limited.',w:'❌ FALSE — EMBRYONIC stem cells are more versatile. Adult stem cells can only form a limited range of cell types.'},
+37:{c:'✅ Correct! Amylase is produced in the salivary glands, pancreas, and small intestine.',w:'❌ True — amylase breaks down starch and is produced in the salivary glands, pancreas, and small intestine.'},
+38:{c:'✅ Correct! Bile is NOT an enzyme — it is an alkaline liquid that emulsifies fats (breaks them into droplets).',w:'❌ FALSE — bile is not an enzyme. It emulsifies fats, increasing surface area for lipase enzymes to work on.'},
+39:{c:'✅ Correct! No nucleus = more room for haemoglobin = more oxygen carried.',w:'❌ True — red blood cells have no nucleus so they can carry more haemoglobin.'},
+40:{c:'✅ Correct! A = away (arteries), V = veins = towards (heart). Classic memory trick!',w:'❌ True — arteries carry blood AWAY from the heart; veins carry blood TOWARDS the heart.'},
+41:{c:'✅ Correct! The pulmonary artery carries DEOXYGENATED blood from the right side of the heart to the lungs.',w:'❌ FALSE — the pulmonary artery carries DEOXYGENATED blood TO the lungs. The pulmonary VEIN returns oxygenated blood.'},
+42:{c:'✅ Correct! Phloem translocates dissolved sugars from the leaves (source) to the rest of the plant.',w:'❌ True — phloem carries sugars like sucrose from leaves to growing/storage areas.'},
+43:{c:'✅ Correct! Viruses cannot reproduce independently — they need a host cell\'s machinery.',w:'❌ True — viruses hijack host cells to replicate themselves.'},
+44:{c:'✅ Correct! Malaria is caused by a PROTIST (Plasmodium), not a bacterium. It is spread by the Anopheles mosquito.',w:'❌ FALSE — malaria is caused by a PROTIST called Plasmodium, spread by mosquitoes.'},
+45:{c:'✅ Correct! Phagocytes engulf pathogens and digest them using enzymes — this is phagocytosis.',w:'❌ True — phagocytes engulf and digest pathogens by phagocytosis.'},
+46:{c:'✅ Correct! A placebo looks identical to the real treatment but has no active ingredient — it controls for the placebo effect.',w:'❌ True — a placebo is a dummy treatment used in the control group to eliminate bias.'},
+47:{c:'✅ Correct! Antibiotics are useless against viruses. They only kill bacteria.',w:'❌ FALSE — antibiotics are only effective against BACTERIA, not viruses.'},
+48:{c:'✅ Correct! A benign tumour does NOT spread. It stays in one place. It is MALIGNANT tumours that invade other tissues.',w:'❌ FALSE — BENIGN tumours do not spread. Malignant (cancerous) tumours can spread via the blood or lymph.'},
+49:{c:'✅ Correct! Smoking is a major risk factor for both diseases.',w:'❌ True — smoking damages the lungs and also causes cardiovascular disease.'},
+50:{c:'✅ Correct! Chloroplasts contain chlorophyll and are the site of photosynthesis.',w:'❌ True — photosynthesis occurs in chloroplasts, which contain chlorophyll.'},
+51:{c:'✅ Correct! CO₂ is a limiting factor, but so are light and temperature — if another factor is limiting, more CO₂ won\'t help.',w:'❌ FALSE — CO₂ is one of several limiting factors. If light or temperature is limiting, adding more CO₂ has no effect.'},
+52:{c:'✅ Correct! Starch is insoluble so it doesn\'t affect water potential — ideal for long-term storage.',w:'❌ True — starch is insoluble, making it suitable for storage without osmotic effects.'},
+53:{c:'✅ Correct! Aerobic respiration produces ~38 ATP per glucose; anaerobic produces only 2 ATP.',w:'❌ True — aerobic respiration is far more efficient at producing ATP than anaerobic.'},
+54:{c:'✅ Correct! Both increase to deliver more oxygen and glucose to muscles and remove CO₂ faster.',w:'❌ True — heart rate and breathing rate both increase during exercise to meet increased demand.'},
+55:{c:'✅ Correct! YEAST produces ethanol and CO₂ in anaerobic respiration (used in brewing/baking). HUMANS produce lactic acid.',w:'❌ FALSE — yeast produces ETHANOL and CO₂. Lactic acid is produced by human muscle cells.'},
+56:{c:'✅ Correct! As cells grow larger, volume increases faster than surface area, making exchange less efficient.',w:'❌ True — larger cells have a lower SA:Vol ratio, making diffusion less efficient.'},
+57:{c:'✅ Correct! Stomata allow gas exchange but water vapour also escapes — this is transpiration.',w:'❌ True — open stomata allow CO₂ in and O₂ out, but water is also lost by evaporation (transpiration).'},
+58:{c:'✅ Correct! Vaccines stimulate an immune response without causing the full disease, leaving memory cells for rapid future responses.',w:'❌ True — vaccines work by introducing antigens to trigger antibody production and create memory cells.'},
+59:{c:'✅ Correct! The stomach\'s HCl kills bacteria and gives optimum acidic pH (~2) for pepsin (protease).',w:'❌ True — the stomach produces protease (pepsin) and HCl, which kills bacteria and provides the optimum pH.'},
+60:{c:'✅ Correct! After exercise, the liver uses oxygen to convert lactic acid back into glucose — this is how oxygen debt is repaid.',w:'❌ True — the liver oxidises lactic acid back to glucose using the extra oxygen taken in after exercise.'}
+};
+let score=0,answered=0;const total=60;
+function ans(q,chosen,correct){
+  const block=document.getElementById('q'+q);
+  if(block.classList.contains('correct')||block.classList.contains('wrong'))return;
+  const isOk=chosen===correct;
+  const feedEl=document.getElementById('fb'+q);
+  block.querySelectorAll('.opt-btn,.tf-btn').forEach(b=>{
+    b.disabled=true;
+    const m=b.getAttribute('onclick').match(/ans\(\d+,'([^']+)'/);
+    if(m&&m[1]===correct)b.classList.add('reveal-correct');
+  });
+  const clicked=[...block.querySelectorAll('.opt-btn,.tf-btn')].find(b=>{
+    const m=b.getAttribute('onclick').match(/ans\(\d+,'([^']+)'/);return m&&m[1]===chosen;
+  });
+  if(isOk){clicked?.classList.add('selected-correct');block.classList.add('correct');feedEl.className='feedback correct';feedEl.textContent=fb[q].c;score++;}
+  else{clicked?.classList.add('selected-wrong');block.classList.add('wrong');feedEl.className='feedback wrong';feedEl.textContent=fb[q].w;}
+  answered++;updateBar();
+  if(answered===total)setTimeout(showResult,600);
+}
+function updateBar(){
+  document.getElementById('scoreDisplay').textContent=score;
+  document.getElementById('answeredDisplay').textContent=answered;
+  document.getElementById('progressBar').style.width=(answered/total*100)+'%';
+}
+function showResult(){
+  const box=document.getElementById('resultBox');box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('resultScore').textContent=score+'/60';
+  document.getElementById('resultMum').textContent='Show this to mum — '+score+'/60';
+  let emoji,title,msg;
+  if(score>=54){emoji='🏆';title='Outstanding!';msg='Exceptional Biology knowledge across all topics B1–B9. You\'re exam-ready!';}
+  else if(score>=42){emoji='🎉';title='Great work!';msg='Really solid across the board. Go back over any missed questions and you\'ll be in great shape.';}
+  else if(score>=30){emoji='📚';title='Getting there!';msg='Good foundation — review the chapters where you lost marks and try again.';}
+  else{emoji='💪';title='Keep going!';msg='Biology needs more practice. Work through each revision page and try again.';}
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultMsg').textContent=msg;
+  try{localStorage.setItem(SCORE_KEY,score+'/60');}catch(e){}
+}
+function resetQuiz(){
+  score=0;answered=0;updateBar();
+  for(let i=1;i<=60;i++){
+    const b=document.getElementById('q'+i);
+    b.classList.remove('correct','wrong');
+    b.querySelectorAll('.opt-btn,.tf-btn').forEach(x=>{x.disabled=false;x.classList.remove('selected-correct','selected-wrong','reveal-correct');});
+    const f=document.getElementById('fb'+i);f.className='feedback';f.textContent='';
+  }
+  document.getElementById('resultBox').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
