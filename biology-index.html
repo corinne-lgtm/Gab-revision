@@ -47,6 +47,10 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#7ab648;font-weigh
 .badge-read{display:inline-block;background:#d4edda;color:#1a4d22;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;margin-left:4px}
 .badge-score{display:inline-block;background:#fde8cc;color:#7a3a0a;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;margin-left:4px}
 .btn-qc{background:#c8e040;color:#1a2e1a}
+.tools-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.tool-pill{background:white;border:2px solid #c8dfc8;border-radius:50px;padding:10px 20px;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:900;color:#1a2e1a;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s,transform .15s;box-shadow:0 2px 8px rgba(58,125,68,.08)}
+.tool-pill:hover{background:#e8f5d8;border-color:#3a7d44;transform:translateY(-2px)}
+.tool-meta{font-weight:700;color:#5a7a5a;font-size:11px}
 </style>
 </head>
 <body>
@@ -56,6 +60,12 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#7ab648;font-weigh
     <div class="logo">🧬 Biology<br><span>AQA GCSE</span></div>
     <div class="subtitle">Choose a topic to revise</div>
   </header>
+
+  <div class="tools-row">
+    <a href="biology-quickcheck-all.html" class="tool-pill">⚡ All chapters quiz</a>
+    <a href="biology-exam-paper1.html" class="tool-pill">📄 Paper 1 <span class="tool-meta">B1–B5 · 50 marks</span></a>
+    <a href="biology-exam-paper2.html" class="tool-pill">📄 Paper 2 <span class="tool-meta">B6–B9 · 50 marks</span></a>
+  </div>
 
   <!-- SECTION 1 -->
   <div class="section-block">
@@ -204,8 +214,12 @@ footer{text-align:center;margin-top:60px;font-size:13px;color:#7ab648;font-weigh
       rBadge.className='badge-read';rBadge.textContent='✅ Read';
     }
     if(sBadge){
-      var sc=localStorage.getItem('biology-'+ch+'-score');
-      if(sc!==null){sBadge.className='badge-score';sBadge.textContent='⚡ '+sc+'/20';}
+      var raw=localStorage.getItem('biology-'+ch+'-score');
+      if(raw!==null){
+        var sc=raw;
+        try{var p=JSON.parse(raw);if(p.score!==undefined)sc=p.score;}catch(e){}
+        sBadge.className='badge-score';sBadge.textContent='⚡ '+sc+'/20';
+      }
     }
   });
 })();

@@ -788,19 +788,31 @@
 </div>
 
 <script>
+  // ── Quiz score badges ──
   document.querySelectorAll('.btn-quiz[data-key]').forEach(btn => {
     const key = btn.getAttribute('data-key');
-    const val = localStorage.getItem(key);
-    if (val) {
+    const raw = localStorage.getItem(key);
+    if (raw) {
       const badge = document.getElementById('score-' + key);
-      if (badge) { badge.textContent = val + ' ✓'; badge.style.display = 'inline-flex'; }
+      if (badge) {
+        let display = raw;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.score !== undefined) display = parsed.score;
+        } catch(e) { /* raw is already a plain number string */ }
+        badge.textContent = display + ' ✓';
+        badge.style.display = 'inline-flex';
+      }
     }
-    // Show read badge
-    const readKey = key.replace('-score', '-read');
-    const readVal = localStorage.getItem(readKey);
-    if (readVal) {
-      const rbadge = document.getElementById('read-' + readKey);
-      if (rbadge) rbadge.style.display = 'inline-block';
+  });
+
+  // ── Read badges — scan all read-badge spans by their id ──
+  document.querySelectorAll('.read-badge[id]').forEach(rbadge => {
+    // id format: "read-physics-p8-2-read"
+    // localStorage key: "physics-p8-2-read"
+    const lsKey = rbadge.id.replace(/^read-/, '');
+    if (localStorage.getItem(lsKey)) {
+      rbadge.style.display = 'inline-block';
     }
   });
 </script>
