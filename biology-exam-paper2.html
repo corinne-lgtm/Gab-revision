@@ -46,30 +46,14 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
 .tip-box li{margin-bottom:3px;}
 .tip-box .structure{margin-top:8px;background:rgba(255,255,255,.6);border-radius:6px;padding:8px 10px;font-size:12.5px;font-style:italic;}
 
-.ai-feedback-btn{
-  display:none;width:calc(100% - 36px);margin:0 18px 8px;
-  background:linear-gradient(135deg,#1b5e20,#388e3c);color:white;
-  border:none;border-radius:8px;padding:11px 16px;
-  font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;
-  letter-spacing:.5px;text-transform:uppercase;cursor:pointer;
-  display:none;align-items:center;gap:8px;justify-content:center;
-  transition:opacity .2s;
-}
-.ai-feedback-btn:hover{opacity:.88;}
-.ai-feedback-btn.visible{display:flex;}
-.ai-feedback-btn:disabled{opacity:.6;cursor:wait;}
-.ai-result{
-  display:none;margin:0 18px 14px;border-radius:10px;
-  border:2px solid #a5d6a7;background:#f0f8f1;
-  padding:14px 16px;font-size:13.5px;line-height:1.6;
-}
-.ai-result.show{display:block;}
-.ai-result .ai-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:900;
-  color:#1b5e20;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;
-  display:flex;align-items:center;gap:6px;
-}
-.ai-result p{margin:4px 0;}
+
+
+
+
+
+
+
+
 
 .ms-toggle{width:100%;background:none;border:none;border-top:1px solid var(--line);padding:11px 18px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;color:var(--green);cursor:pointer;letter-spacing:.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
 .ms-toggle:hover{background:var(--green2);}
@@ -86,6 +70,30 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
 .reveal-all-btn:hover{background:#1b5e20;}
 .grade-box{background:var(--paper);border-radius:12px;padding:18px;text-align:center;box-shadow:0 2px 8px rgba(13,51,32,.07);font-size:13px;color:var(--muted);line-height:1.7;}
 .grade-box strong{color:var(--navy);}
+</style>
+
+<style id="print-css">
+@media print {
+  nav, .meta-bar .timer-pill, .timer-btns, .ms-toggle, .ms-content,
+  .tip-box, .reveal-all-btn, .grade-box, #download-btn { display:none !important; }
+  body { background:white !important; font-size:13px; }
+  .q-card { box-shadow:none !important; border:1px solid #ccc !important; page-break-inside:avoid; margin-bottom:12px !important; }
+  textarea { border:1px solid #999 !important; background:white !important; min-height:60px; }
+  .hero { background: #1b5e20 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .section-heading { background:#1b5e20 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+
+<style>
+#download-btn {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg,#1b5e20,#388e3c);
+  color:white; border:none; border-radius:10px;
+  font-family:'Barlow Condensed',sans-serif; font-size:1.1rem;
+  font-weight:800; letter-spacing:1px; text-transform:uppercase;
+  cursor:pointer; margin:24px 0 12px;
+}
+#download-btn:hover { background:#1b5e20; }
 </style>
 </head>
 <body>
@@ -132,8 +140,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <p>Feature + explanation of HOW it helps photosynthesis happen faster. Think about: light absorption, CO₂ entry, chlorophyll location, surface area, stomata.</p>
   </div>
   <textarea class="answer-box" id="ta1" rows="4" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn1" onclick="getAIFeedback(1)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult1"><div class="ai-label">🤖 AI Feedback</div><div id="aitext1"></div></div>
+<div id="aitext1"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 4 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>Any two (1 mark adaptation + 1 mark explanation):</h4>
@@ -166,8 +173,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <p>Describe what happens at each section of the graph (use data values). Then explain <em>why</em> using the concept of limiting factors. The flat section is key — what is limiting the rate when more light doesn't help?</p>
   </div>
   <textarea class="answer-box" id="ta2" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn2" onclick="getAIFeedback(2)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult2"><div class="ai-label">🤖 AI Feedback</div><div id="aitext2"></div></div>
+<div id="aitext2"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 6 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>Describe (up to 3):</h4>
@@ -205,8 +211,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     </ul>
   </div>
   <textarea class="answer-box" id="ta3" rows="6" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn3" onclick="getAIFeedback(3)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult3"><div class="ai-label">🤖 AI Feedback</div><div id="aitext3"></div></div>
+<div id="aitext3"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 8 marks (Level of Response) <span>▼</span></button>
   <div class="ms-content">
     <table class="level-table">
@@ -245,8 +250,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <p>Two parts: (1) explain benign vs malignant clearly — the key difference is whether it spreads (metastasis). (2) Give two risk factors with a brief explanation of how/why each increases cancer risk.</p>
   </div>
   <textarea class="answer-box" id="ta4" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn4" onclick="getAIFeedback(4)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult4"><div class="ai-label">🤖 AI Feedback</div><div id="aitext4"></div></div>
+<div id="aitext4"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 6 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>Benign vs Malignant (up to 3):</h4>
@@ -285,8 +289,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:14px 0 6px;">5a. Explain the role of the liver in the body's response to exercise and how it relates to respiration. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Focus on lactic acid → glucose (gluconeogenesis), oxygen debt, and also glycogen storage/release. Link each point to respiration clearly.</p></div>
   <textarea class="answer-box" id="ta5" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn5" onclick="getAIFeedback(5)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult5"><div class="ai-label">🤖 AI Feedback</div><div id="aitext5"></div></div>
+<div id="aitext5"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5a <span>▼</span></button>
   <div class="ms-content"><ul>
     <li>During intense exercise, anaerobic respiration produces lactic acid in the muscles ✓</li>
@@ -300,8 +303,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">5b. Describe how scientists use greenhouse conditions to maximise crop yield, linking your answer to the factors that affect photosynthesis. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>For each factor (light, CO₂, temperature), explain how it affects photosynthesis AND how a greenhouse controls it. Mention the economic balance too — adding CO₂ or heating costs money.</p></div>
   <textarea class="answer-box" id="ta6" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn6" onclick="getAIFeedback(6)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult6"><div class="ai-label">🤖 AI Feedback</div><div id="aitext6"></div></div>
+<div id="aitext6"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5b <span>▼</span></button>
   <div class="ms-content"><ul>
     <li><strong>CO₂:</strong> pumping CO₂ into greenhouses increases its concentration → removes CO₂ as limiting factor → higher rate of photosynthesis → more glucose for growth ✓</li>
@@ -315,8 +317,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">5c. Explain how malnutrition and an unbalanced diet can lead to non-communicable diseases. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Give specific examples — too much saturated fat → CVD, too much sugar → obesity/type 2 diabetes, too little vitamin C → scurvy. For each, explain the biological mechanism, not just the association.</p></div>
   <textarea class="answer-box" id="ta7" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn7" onclick="getAIFeedback(7)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult7"><div class="ai-label">🤖 AI Feedback</div><div id="aitext7"></div></div>
+<div id="aitext7"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5c <span>▼</span></button>
   <div class="ms-content"><ul>
     <li>Too much saturated fat → raises LDL cholesterol → atherosclerosis → cardiovascular disease ✓</li>
@@ -330,8 +331,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">5d. A student carries out an experiment to investigate the effect of light intensity on the rate of photosynthesis using pondweed. Describe a suitable method and explain how you would ensure the results are valid. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Required practical style. Method: lamp distance, count bubbles/measure O₂, controlled variables. Validity: control variables (CO₂, temperature, same piece of pondweed, same time interval). This is a classic question — be specific about what you measure and what you control.</p></div>
   <textarea class="answer-box" id="ta8" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn8" onclick="getAIFeedback(8)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult8"><div class="ai-label">🤖 AI Feedback</div><div id="aitext8"></div></div>
+<div id="aitext8"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5d <span>▼</span></button>
   <div class="ms-content">
     <h4>Method (any 3):</h4>
@@ -355,8 +355,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">5e. Explain how plants use glucose produced in photosynthesis. Give at least four different uses. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Name the use AND explain why the plant needs to do it. Don't just list: "converted to starch for storage because starch is insoluble and does not affect osmosis." Aim for 4 uses with brief explanations each.</p></div>
   <textarea class="answer-box" id="ta9" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn9" onclick="getAIFeedback(9)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult9"><div class="ai-label">🤖 AI Feedback</div><div id="aitext9"></div></div>
+<div id="aitext9"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5e <span>▼</span></button>
   <div class="ms-content"><ul>
     <li><strong>Respiration</strong> — glucose is broken down to release energy (ATP) for cellular processes ✓</li>
@@ -375,8 +374,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <li>Conclusion: must weigh which is the MAIN cause overall</li></ul>
   </div>
   <textarea class="answer-box" id="ta10" rows="8" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn10" onclick="getAIFeedback(10)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult10"><div class="ai-label">🤖 AI Feedback</div><div id="aitext10"></div></div>
+<div id="aitext10"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5f — 8 marks Level of Response <span>▼</span></button>
   <div class="ms-content">
     <table class="level-table">
@@ -409,8 +407,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <p>Three parts: (1) what it is — cells become resistant to insulin; blood glucose stays high. (2) Causes — obesity, poor diet, genetics. (3) Treatments/lifestyle — diet, exercise, medication, weight loss. For full marks, explain the biology behind each treatment, not just name it.</p>
   </div>
   <textarea class="answer-box" id="ta11" rows="8" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn11" onclick="getAIFeedback(11)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult11"><div class="ai-label">🤖 AI Feedback</div><div id="aitext11"></div></div>
+<div id="aitext11"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 5g — 8 marks Level of Response <span>▼</span></button>
   <div class="ms-content">
     <table class="level-table">
@@ -451,6 +448,8 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <strong>Show this to mum once you've self-marked! 🏆</strong>
 </div>
 
+
+<button id="download-btn" onclick="downloadPDF()">📥 Download My Answers as PDF</button>
 </main>
 
 <script>
@@ -591,6 +590,21 @@ Please give feedback on Gabriel's answer.`
     btn.textContent = '🤖 Get AI Feedback';
     btn.disabled = false;
   }
+}
+
+function downloadPDF() {
+  // Collect all answers to check if any are filled
+  const textareas = document.querySelectorAll('textarea.answer-box');
+  let hasContent = false;
+  textareas.forEach(ta => { if(ta.value.trim().length > 0) hasContent = true; });
+  if(!hasContent) {
+    alert('Please write at least one answer before downloading!');
+    return;
+  }
+  // Close all mark schemes before printing
+  document.querySelectorAll('.ms-content.open').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.ms-toggle span').forEach(s => s.textContent = '▼');
+  window.print();
 }
 </script>
 </body>

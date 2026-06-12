@@ -46,30 +46,14 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
 .tip-box li{margin-bottom:3px;}
 .tip-box .structure{margin-top:8px;background:rgba(255,255,255,.6);border-radius:6px;padding:8px 10px;font-size:12.5px;font-style:italic;}
 
-.ai-feedback-btn{
-  display:none;width:calc(100% - 36px);margin:0 18px 8px;
-  background:linear-gradient(135deg,#1b5e20,#388e3c);color:white;
-  border:none;border-radius:8px;padding:11px 16px;
-  font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;
-  letter-spacing:.5px;text-transform:uppercase;cursor:pointer;
-  display:none;align-items:center;gap:8px;justify-content:center;
-  transition:opacity .2s;
-}
-.ai-feedback-btn:hover{opacity:.88;}
-.ai-feedback-btn.visible{display:flex;}
-.ai-feedback-btn:disabled{opacity:.6;cursor:wait;}
-.ai-result{
-  display:none;margin:0 18px 14px;border-radius:10px;
-  border:2px solid #a5d6a7;background:#f0f8f1;
-  padding:14px 16px;font-size:13.5px;line-height:1.6;
-}
-.ai-result.show{display:block;}
-.ai-result .ai-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:900;
-  color:#1b5e20;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;
-  display:flex;align-items:center;gap:6px;
-}
-.ai-result p{margin:4px 0;}
+
+
+
+
+
+
+
+
 
 .ms-toggle{width:100%;background:none;border:none;border-top:1px solid var(--line);padding:11px 18px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:800;color:var(--green);cursor:pointer;letter-spacing:.5px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
 .ms-toggle:hover{background:var(--green2);}
@@ -87,6 +71,30 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
 .grade-box{background:var(--paper);border-radius:12px;padding:18px;text-align:center;box-shadow:0 2px 8px rgba(13,51,32,.07);font-size:13px;color:var(--muted);line-height:1.7;}
 .grade-box strong{color:var(--navy);}
 @media(max-width:500px){.meta-bar{gap:10px;}.timer-btns{margin-left:0;}}
+</style>
+
+<style id="print-css">
+@media print {
+  nav, .meta-bar .timer-pill, .timer-btns, .ms-toggle, .ms-content,
+  .tip-box, .reveal-all-btn, .grade-box, #download-btn { display:none !important; }
+  body { background:white !important; font-size:13px; }
+  .q-card { box-shadow:none !important; border:1px solid #ccc !important; page-break-inside:avoid; margin-bottom:12px !important; }
+  textarea { border:1px solid #999 !important; background:white !important; min-height:60px; }
+  .hero { background: #1b5e20 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .section-heading { background:#1b5e20 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+
+<style>
+#download-btn {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg,#1b5e20,#388e3c);
+  color:white; border:none; border-radius:10px;
+  font-family:'Barlow Condensed',sans-serif; font-size:1.1rem;
+  font-weight:800; letter-spacing:1px; text-transform:uppercase;
+  cursor:pointer; margin:24px 0 12px;
+}
+#download-btn:hover { background:#1b5e20; }
 </style>
 </head>
 <body>
@@ -139,8 +147,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <div class="structure"><strong>Structure:</strong> "One adaptation is [feature]. This means that [how it helps carry oxygen]."</div>
   </div>
   <textarea class="answer-box" id="ta1" rows="4" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn1" onclick="getAIFeedback(1)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult1"><div class="ai-label">🤖 AI Feedback</div><div id="aitext1"></div></div>
+<div id="aitext1"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 4 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>Any two of the following (1 mark feature + 1 mark explanation):</h4>
@@ -168,8 +175,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <p>Give two separate features of mitosis (e.g. what it produces, chromosome number). For the importance, make sure you link it to <em>growth</em> or <em>repair</em> specifically.</p>
   </div>
   <textarea class="answer-box" id="ta2" rows="4" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn2" onclick="getAIFeedback(2)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult2"><div class="ai-label">🤖 AI Feedback</div><div id="aitext2"></div></div>
+<div id="aitext2"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 4 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>Features (any two, 1 mark each):</h4>
@@ -219,8 +225,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <div class="structure">Describe: "From 10°C to 37°C, the rate increases from 5 to 30 units. At 37°C the rate is highest (optimum). Above 37°C the rate decreases…"</div>
   </div>
   <textarea class="answer-box" id="ta3" rows="6" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn3" onclick="getAIFeedback(3)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult3"><div class="ai-label">🤖 AI Feedback</div><div id="aitext3"></div></div>
+<div id="aitext3"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 6 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>Describe (up to 3 marks):</h4>
@@ -262,8 +267,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     </ul>
   </div>
   <textarea class="answer-box" id="ta4" rows="6" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn4" onclick="getAIFeedback(4)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult4"><div class="ai-label">🤖 AI Feedback</div><div id="aitext4"></div></div>
+<div id="aitext4"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 6 marks <span>▼</span></button>
   <div class="ms-content">
     <h4>First infection (up to 4 marks):</h4>
@@ -302,8 +306,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     </ul>
   </div>
   <textarea class="answer-box" id="ta5" rows="7" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn5" onclick="getAIFeedback(5)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult5"><div class="ai-label">🤖 AI Feedback</div><div id="aitext5"></div></div>
+<div id="aitext5"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme — 8 marks (Level of Response) <span>▼</span></button>
   <div class="ms-content">
     <table class="level-table">
@@ -344,8 +347,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
     <p>Think about: surface area, thin walls, capillary network, lacteal, microvilli. For each feature, say <em>how</em> it increases absorption — don't just list them.</p>
   </div>
   <textarea class="answer-box" id="ta6" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn6" onclick="getAIFeedback(6)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult6"><div class="ai-label">🤖 AI Feedback</div><div id="aitext6"></div></div>
+<div id="aitext6"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6a <span>▼</span></button>
   <div class="ms-content">
     <ul>
@@ -362,8 +364,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">6b. A patient has a blocked coronary artery. Explain what causes coronary heart disease and describe two treatments available. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Cause: fatty deposits → narrowing → reduced blood flow → heart muscle starved of oxygen. Treatments: stents, statins (or bypass surgery). Explain how each works — not just the name.</p></div>
   <textarea class="answer-box" id="ta7" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn7" onclick="getAIFeedback(7)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult7"><div class="ai-label">🤖 AI Feedback</div><div id="aitext7"></div></div>
+<div id="aitext7"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6b <span>▼</span></button>
   <div class="ms-content">
     <h4>Cause (up to 2 marks):</h4>
@@ -384,8 +385,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">6c. Describe the differences between active transport and diffusion. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>A comparison question — use a structured approach. For each difference, state what happens in diffusion AND what happens in active transport. Cover: energy, direction, concentration gradient, carrier proteins.</p></div>
   <textarea class="answer-box" id="ta8" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn8" onclick="getAIFeedback(8)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult8"><div class="ai-label">🤖 AI Feedback</div><div id="aitext8"></div></div>
+<div id="aitext8"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6c <span>▼</span></button>
   <div class="ms-content">
     <ul>
@@ -402,8 +402,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">6d. Explain the ethical issues surrounding the use of embryonic stem cells in medicine. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Present <em>both sides</em> — arguments for AND against. The marker wants to see you engage with the ethics, not just state facts. Use phrases like "Some people argue… however, others believe…"</p></div>
   <textarea class="answer-box" id="ta9" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn9" onclick="getAIFeedback(9)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult9"><div class="ai-label">🤖 AI Feedback</div><div id="aitext9"></div></div>
+<div id="aitext9"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6d <span>▼</span></button>
   <div class="ms-content">
     <h4>Arguments FOR use (any 3):</h4>
@@ -426,8 +425,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">6e. Explain how vaccination prevents the spread of a communicable disease through a population. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>Cover: how a vaccine works (antigens → antibodies → memory cells), AND how vaccinating many people creates herd immunity. Include the idea that unvaccinated people are also protected.</p></div>
   <textarea class="answer-box" id="ta10" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn10" onclick="getAIFeedback(10)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult10"><div class="ai-label">🤖 AI Feedback</div><div id="aitext10"></div></div>
+<div id="aitext10"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6e <span>▼</span></button>
   <div class="ms-content">
     <ul>
@@ -444,8 +442,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">6f. A scientist is investigating osmosis in potato cells. Describe a method she could use and state what results she would expect. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>This is a <em>required practical</em> style question. Describe the actual method step-by-step: cut cylinders, measure mass, place in different concentrations, record mass change. Then predict results using osmosis theory.</p></div>
   <textarea class="answer-box" id="ta11" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn11" onclick="getAIFeedback(11)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult11"><div class="ai-label">🤖 AI Feedback</div><div id="aitext11"></div></div>
+<div id="aitext11"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6f <span>▼</span></button>
   <div class="ms-content">
     <h4>Method (any 4):</h4>
@@ -468,8 +465,7 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <p style="font-weight:700;font-size:14px;margin:18px 0 6px;">6g. Evaluate the use of statins in reducing the risk of cardiovascular disease. Include both benefits and risks in your answer. <span style="color:var(--green);font-size:12px;">[6 marks]</span></p>
   <div class="tip-box"><p>"Evaluate" means give a balanced answer AND a conclusion. Present benefits, then risks/limitations, then state your overall view. Don't just list — weigh the evidence.</p></div>
   <textarea class="answer-box" id="ta12" rows="5" placeholder="✏️ Write your answer here…" style="width:calc(100% - 36px);margin:0 18px 18px;resize:vertical;font-family:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--line);border-radius:8px;background:#fafffe;color:var(--ink);box-sizing:border-box;display:block;"></textarea>
-<button class="ai-feedback-btn" id="aibtn12" onclick="getAIFeedback(12)" disabled>🤖 Get AI Feedback</button>
-<div class="ai-result" id="airesult12"><div class="ai-label">🤖 AI Feedback</div><div id="aitext12"></div></div>
+<div id="aitext12"></div></div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Mark Scheme 6g <span>▼</span></button>
   <div class="ms-content">
     <h4>Benefits (any 3):</h4>
@@ -501,6 +497,8 @@ main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
   <strong>Show this to mum once you've self-marked! 🏆</strong>
 </div>
 
+
+<button id="download-btn" onclick="downloadPDF()">📥 Download My Answers as PDF</button>
 </main>
 
 <script>
@@ -641,6 +639,21 @@ Please give feedback on Gabriel's answer.`
     btn.textContent = '🤖 Get AI Feedback';
     btn.disabled = false;
   }
+}
+
+function downloadPDF() {
+  // Collect all answers to check if any are filled
+  const textareas = document.querySelectorAll('textarea.answer-box');
+  let hasContent = false;
+  textareas.forEach(ta => { if(ta.value.trim().length > 0) hasContent = true; });
+  if(!hasContent) {
+    alert('Please write at least one answer before downloading!');
+    return;
+  }
+  // Close all mark schemes before printing
+  document.querySelectorAll('.ms-content.open').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.ms-toggle span').forEach(s => s.textContent = '▼');
+  window.print();
 }
 </script>
 </body>
