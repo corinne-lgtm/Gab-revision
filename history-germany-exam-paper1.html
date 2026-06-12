@@ -112,6 +112,30 @@ body{min-height:100vh;font-family:'Nunito',sans-serif;color:var(--ink);
   .timer-display{font-size:20px}
 }
 </style>
+
+<style id="print-css">
+@media print {
+  nav, .meta-bar, .timer-row, .tip-box, .how-to-box, .submit-section,
+  .mark-scheme, .results-panel, #download-btn,
+  button, .timer-btns { display:none !important; }
+  body { background:white !important; font-size:13px; }
+  .q-card, .question-card { box-shadow:none !important; border:1px solid #ccc !important; page-break-inside:avoid; margin-bottom:14px !important; }
+  textarea { border:1px solid #999 !important; background:white !important; }
+  .hero, .paper-hero { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+
+<style>
+#download-btn {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg,#7c382f,#d94b42);
+  color:white; border:none; border-radius:14px;
+  font-family:'Nunito',sans-serif; font-size:1rem;
+  font-weight:900; cursor:pointer; margin:16px 0;
+  box-shadow:0 4px 16px rgba(217,75,66,.25);
+}
+#download-btn:hover { transform:translateY(-2px); }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -339,7 +363,8 @@ body{min-height:100vh;font-family:'Nunito',sans-serif;color:var(--ink);
 <div class="submit-section">
   <h3>Finished your exam?</h3>
   <p>Click below to reveal the mark schemes for all five questions. Make sure you've written your full answers first!</p>
-  <button class="btn-submit" onclick="submitExam()">📋 Reveal all mark schemes</button>
+  <button id="download-btn" onclick="downloadPDF()">📥 Download My Answers as PDF</button>
+<button class="btn-submit" onclick="submitExam()">📋 Reveal all mark schemes</button>
   <div class="results-panel" id="resultsPanel">
     <div class="res-emoji">📚</div>
     <div class="res-msg">Mark schemes revealed!</div>
@@ -403,6 +428,19 @@ function submitExam() {
   document.getElementById('resultsPanel').classList.add('show');
   pauseTimer();
   document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function downloadPDF() {
+  const textareas = document.querySelectorAll('textarea.answer-area');
+  let hasContent = false;
+  textareas.forEach(ta => { if(ta.value.trim().length > 0) hasContent = true; });
+  if(!hasContent) {
+    alert('Please write at least one answer before downloading!');
+    return;
+  }
+  // Hide mark schemes
+  document.querySelectorAll('.mark-scheme').forEach(ms => ms.classList.remove('show'));
+  window.print();
 }
 </script>
 </body>

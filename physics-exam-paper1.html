@@ -123,6 +123,30 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
 }
 .answer-area:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(100,181,246,0.15); }
 </style>
+
+<style id="print-css">
+@media print {
+  nav, .meta-bar .timer-display, .timer-btns, .ms-toggle, .ms-content,
+  .tip-box, .how-to-box, .reveal-all-btn, #download-btn { display:none !important; }
+  body { background:white !important; font-size:13px; }
+  .q-card { box-shadow:none !important; border:1px solid #ccc !important; page-break-inside:avoid; margin-bottom:12px !important; }
+  textarea { border:1px solid #999 !important; background:white !important; min-height:60px; }
+  .hero { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .section-label, .section-title { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+
+<style>
+#download-btn {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg,#0d2b5e,#1565c0);
+  color:white; border:none; border-radius:10px;
+  font-family:'DM Sans',sans-serif; font-size:1rem;
+  font-weight:700; cursor:pointer; margin:24px 0 12px;
+  letter-spacing:.5px;
+}
+#download-btn:hover { opacity:.9; }
+</style>
 </head>
 <body>
 
@@ -169,11 +193,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — "Describe two features"</strong>
     State each feature clearly as a separate point. For forces questions, think: direction of resultant force, which force is larger, and what this means for motion. Use words like "greater than", "resultant", "downward direction".
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta1" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> Describe <b>two</b> features of the forces acting on the skydiver at terminal velocity. <b>[2 marks]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta2" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b> Any two from:</p>
@@ -217,11 +241,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Calculation Questions</strong>
     Always: (1) Write the formula. (2) Substitute values with units. (3) Calculate the answer. (4) State the unit. Check: did you convert cm to m? If F = ke, then k = F/e. The unit of spring constant is N/m.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta3" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> The student says the spring stopped obeying Hooke's Law between 8 N and 10 N. Explain how the data supports this and what this tells us about the spring. <b>[3 marks]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta4" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -255,16 +279,16 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Graph Calculations</strong>
     For acceleration: gradient = (change in velocity) ÷ (change in time). For distance: area under the graph (use triangles and rectangles). Always show your working with units. A horizontal line = zero acceleration.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta5" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> Calculate the total distance travelled. <b>[3 marks]</b></p>
     <div class="formula-box">Distance = area under v–t graph</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta6" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(c)</b> State the deceleration during the final 4 seconds. <b>[1 mark]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta7" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -297,16 +321,16 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Required Practical "Explain" Questions</strong>
     Mention: (1) what is the independent variable (what you change), (2) what is the dependent variable (what you measure), (3) what variables must be controlled (kept the same). For force/acceleration practicals: control mass, compensate for friction.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta8" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> The trolley has a mass of 0.8 kg. The student applies a force of 2.4 N. Calculate the expected acceleration. <b>[2 marks]</b></p>
     <div class="formula-box">F = ma &nbsp;→&nbsp; a = F ÷ m</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta9" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(c)</b> The student finds the actual acceleration is lower than calculated. Suggest one reason for this. <b>[1 mark]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta10" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b> Any three from:</p>
@@ -345,16 +369,16 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Stopping Distance Questions</strong>
     Stopping distance = thinking distance + braking distance. Thinking distance = speed × reaction time. For braking distance, use v² = u² + 2as (with v = 0). Common mistake: confusing thinking distance with braking distance. List factors affecting each separately.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta11" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> Calculate the braking distance. <b>[3 marks]</b></p>
     <div class="formula-box">v² = u² + 2as &nbsp;(v = 0 when stopped)</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta12" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(c)</b> State one factor that would increase the braking distance (not initial speed). <b>[1 mark]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta13" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -388,7 +412,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — 6-Mark Explain Questions</strong>
     Structure: (1) State the law/principle. (2) Apply it to the specific situation with numbers. (3) Calculate the answer. (4) Interpret the result. Use: "Before the collision...", "The total momentum is conserved, therefore...", "After the collision...". Show all working for calculation marks.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta14" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -417,7 +441,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Identify: (1) energy input (work done by pushing force), (2) energy lost to friction (thermal/heat), (3) net work done = resultant force × distance. Common mistake: using pushing force alone without subtracting friction. Net work done = increase in kinetic energy.
   </div>
   <div class="formula-box">W = Fd &nbsp;|&nbsp; Net force = applied force − friction</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta15" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -445,7 +469,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Link: change in momentum (impulse) = force × time. Both devices INCREASE the time of impact → REDUCE force. Use equation F = Δp/Δt. Address each safety feature separately. Examiners like to see cause → mechanism → effect.
   </div>
   <div class="formula-box">F = Δp ÷ Δt &nbsp;(Force = change in momentum ÷ time)</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta16" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p>Award marks for any 6 of:</p>
@@ -477,7 +501,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Draw a free-body diagram mentally. Weight acts down (W = mg). Normal reaction (N) acts up. Resultant force = N − W (upward positive). Use F = ma for resultant. Common error: forgetting to add weight and resultant; remember N = W + ma for upward acceleration.
   </div>
   <div class="formula-box">W = mg &nbsp;|&nbsp; F = ma &nbsp;|&nbsp; N − W = ma</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta17" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -509,7 +533,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Principle of moments: sum of clockwise moments = sum of anticlockwise moments (for equilibrium). Moment = F × d (perpendicular distance from pivot). Always state the principle first, then substitute. Units: N m (newton-metres).
   </div>
   <div class="formula-box">Moment = F × d &nbsp;|&nbsp; Clockwise moments = Anticlockwise moments</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta18" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -538,7 +562,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Explain what resolving means (splitting into perpendicular components). Horizontal = v × cos θ, Vertical = v × sin θ. Draw a right-angled triangle. Common mistake: swapping sin and cos — remember horizontal uses cos (adjacent side).
   </div>
   <div class="formula-box">Horizontal: vₓ = v cos θ &nbsp;|&nbsp; Vertical: vᵧ = v sin θ</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta19" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -567,7 +591,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     List what you know: u (initial velocity), v (final velocity), a (acceleration), s (displacement), t (time). Choose the equation that uses the three known quantities. For falling objects: u = 0, a = g = 10 m/s². Always show: identify, formula, substitute, calculate, units.
   </div>
   <div class="formula-box">s = ut + ½at² &nbsp;|&nbsp; v² = u² + 2as &nbsp;|&nbsp; v = u + at</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta20" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>Time:</b></p>
@@ -598,7 +622,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Extended Narrative Questions</strong>
     Structure your answer in clear stages: (1) Initial fall — weight &gt; drag, accelerating. (2) Increasing drag — as speed increases. (3) First terminal velocity — weight = drag. (4) Parachute opens — drag &gt; weight, decelerating. (5) New lower terminal velocity. Use correct scientific language at each stage.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta21" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p>Award any 6 from:</p>
@@ -630,7 +654,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     GPE = mgh (joules). KE = ½mv². If no energy lost to friction: GPE lost = KE gained. Then rearrange KE formula to find v. Always state what transfers to what. Units: joules (J) for energy, m/s for velocity.
   </div>
   <div class="formula-box">GPE = mgh &nbsp;|&nbsp; KE = ½mv² &nbsp;|&nbsp; GPE lost = KE gained</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta22" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -659,7 +683,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     EPE = ½ke². Set EPE = KE = ½mv² and solve for v. State assumptions: no energy lost to friction/heat/sound, all EPE converts to KE. This question always requires stating and justifying assumptions.
   </div>
   <div class="formula-box">EPE = ½ke² &nbsp;|&nbsp; KE = ½mv² &nbsp;|&nbsp; EPE = KE (if no losses)</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta23" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -688,7 +712,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Step 1: Find the resultant force (Thrust − Weight). Step 2: Use F = ma to find acceleration. Step 3: Explain what changes as fuel burns: mass decreases → same F, smaller m → greater a (F = ma, so a = F/m). Examiners expect you to link the physics principle to the changing variables.
   </div>
   <div class="formula-box">Resultant F = Thrust − Weight &nbsp;|&nbsp; a = F ÷ m</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta24" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -703,6 +727,8 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
 </div>
 
 <button class="reveal-all-btn" onclick="revealAll()">📋 Reveal All Mark Schemes</button>
+<button id="download-btn" onclick="downloadPDF()">📥 Download My Answers as PDF</button>
+
 
 <div class="grade-box">
   <h3>Grade Boundaries — Paper 1</h3>
@@ -726,6 +752,19 @@ function pauseTimer(){clearInterval(interval);running=false;}
 function resetTimer(){clearInterval(interval);running=false;seconds=75*60;updateDisplay();document.getElementById('timerDisplay').style.color='';}
 function toggleMS(btn){const c=btn.nextElementSibling;c.classList.toggle('open');btn.querySelector('span').textContent=c.classList.contains('open')?'▲':'▼';}
 function revealAll(){document.querySelectorAll('.ms-content').forEach(c=>c.classList.add('open'));document.querySelectorAll('.ms-toggle span').forEach(s=>s.textContent='▲');}
+
+function downloadPDF() {
+  const textareas = document.querySelectorAll('textarea.answer-area');
+  let hasContent = false;
+  textareas.forEach(ta => { if(ta.value.trim().length > 0) hasContent = true; });
+  if(!hasContent) {
+    alert('Please write at least one answer before downloading!');
+    return;
+  }
+  document.querySelectorAll('.ms-content.open').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.ms-toggle span').forEach(s => s.textContent = '▼');
+  window.print();
+}
 </script>
 </body>
 </html>

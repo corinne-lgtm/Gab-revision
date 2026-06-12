@@ -91,6 +91,30 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
 }
 .answer-area:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(100,181,246,0.15); }
 </style>
+
+<style id="print-css">
+@media print {
+  nav, .meta-bar .timer-display, .timer-btns, .ms-toggle, .ms-content,
+  .tip-box, .how-to-box, .reveal-all-btn, #download-btn { display:none !important; }
+  body { background:white !important; font-size:13px; }
+  .q-card { box-shadow:none !important; border:1px solid #ccc !important; page-break-inside:avoid; margin-bottom:12px !important; }
+  textarea { border:1px solid #999 !important; background:white !important; min-height:60px; }
+  .hero { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .section-label, .section-title { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+
+<style>
+#download-btn {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg,#0d2b5e,#1565c0);
+  color:white; border:none; border-radius:10px;
+  font-family:'DM Sans',sans-serif; font-size:1rem;
+  font-weight:700; cursor:pointer; margin:24px 0 12px;
+  letter-spacing:.5px;
+}
+#download-btn:hover { opacity:.9; }
+</style>
 </head>
 <body>
 
@@ -136,11 +160,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — "Describe two features"</strong>
     For each feature, name it AND briefly explain it. Don't just write one word. Compare directly: "In a transverse wave, particles oscillate perpendicular to the direction of energy transfer, whereas in a longitudinal wave they oscillate parallel." Give a specific example of each type.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta1" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> Describe <b>two</b> features of all electromagnetic waves. <b>[2 marks]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta2" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b> Any two from:</p>
@@ -182,11 +206,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Data Analysis Questions</strong>
     Complete the table first showing full calculation for at least one row. Then look for a pattern. State your conclusion clearly: "The wave speed is constant/the same for all frequencies" is the key conclusion here. Relate this to the physics: changing frequency changes wavelength inversely, keeping speed constant.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta3" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> The student says frequency and wavelength are "inversely proportional." Explain what this means and how the data supports it. <b>[3 marks]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta4" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -218,11 +242,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Refraction Explain Questions</strong>
     Two key points: (1) the wave changes speed when crossing the boundary, (2) this change in speed causes a change in direction (bending). Direction: air → denser medium = slows down = bends TOWARDS normal. Always measure angles from the normal, not the surface.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta5" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> State what happens to the frequency and wavelength of the light as it enters the glass. <b>[2 marks]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta6" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -253,11 +277,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — EM Wave Calculations</strong>
     All EM waves travel at 3 × 10⁸ m/s in a vacuum. Rearrange v = fλ for whatever you need. Standard form is essential: 100 MHz = 1 × 10⁸ Hz. Show formula, substitute in standard form, calculate. Include units (metres for wavelength).
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta7" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> Give one use of each of the following types of EM radiation and state one potential danger: (i) UV, (ii) X-rays, (iii) gamma rays. <b>[4 marks — any 4 correct points]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta8" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -288,11 +312,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Motor Effect Questions</strong>
     Motor effect: a current-carrying conductor in a magnetic field experiences a force. Use Fleming's Left-Hand Rule: thuMb = Motion (force), First finger = Field (B), seCond finger = Current (I). For the equation F = BIl: B in tesla, I in amps, l in metres, F in newtons.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta9" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> A wire of length 0.3 m carries a current of 4 A. The magnetic flux density is 0.05 T. Calculate the force on the wire. <b>[2 marks]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta10" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -323,11 +347,11 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Transformer Questions</strong>
     Cross-multiply: Vp × ns = Vs × np → rearrange for the unknown. Step-up: more secondary turns → higher secondary voltage. Step-down: fewer secondary turns → lower secondary voltage. Ideal transformer: Vp × Ip = Vs × Is (power in = power out).
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta11" class="answer-area" placeholder="Write your answer here..."></textarea>
   <div class="q-text" style="margin-top:14px">
     <p><b>(b)</b> Explain why step-up transformers are used when electricity enters the National Grid. <b>[1 mark]</b></p>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta12" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>(a)</b></p>
@@ -362,7 +386,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <div class="level l-mid">Level 2 (4–6): Describes how the generator produces an EMF and gives some detail about AC output, but may miss some steps or lack full explanation.</div>
     <div class="level l-low">Level 1 (1–3): Basic statement that a rotating coil produces electricity, or mentions magnets/coils but without linking to induction.</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta13" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>Indicative content (must cover to reach Level 3):</b></p>
@@ -399,7 +423,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <div class="level l-mid">Level 2 (4–6): Benefits and risks given for at least one type of radiation, some evidence, partial conclusion.</div>
     <div class="level l-low">Level 1 (1–3): States some uses or dangers without evaluating or reaching a conclusion.</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta14" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>Indicative content for Level 3:</b></p>
@@ -430,7 +454,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Diffraction Explanation Questions</strong>
     Define diffraction first (spreading of waves at a gap/edge). State the rule: diffraction is greatest when wavelength ≈ gap size. Compare: radio waves (λ = metres) can diffract around buildings (metres wide); visible light (λ ≈ 500 nm) cannot diffract around buildings because λ &lt;&lt; gap. Use examples to support each point.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta15" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -459,7 +483,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     Remember: the pulse travels DOWN and UP, so total distance = 2 × depth. Time = 0.24 s for the full journey. Use d = v × t, then divide by 2. Common error: forgetting to halve. For the explanation: ultrasound has short wavelength (high frequency) → less diffraction → sharper images. Light is absorbed by water. Ultrasound reflects off boundaries between materials.
   </div>
   <div class="formula-box">d = v × t &nbsp;|&nbsp; depth = total distance ÷ 2</div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta16" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -486,7 +510,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Compare Questions</strong>
     "Compare" means say how they are similar AND different. Use words like "whereas", "on the other hand", "unlike". Give examples. Structure: radio wave properties → advantages → disadvantages → microwave properties → advantages → disadvantages. Bring in the atmosphere: radio waves reflect off ionosphere, microwaves pass through.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta17" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p>Award any 6:</p>
@@ -515,7 +539,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Induction Description Questions</strong>
     Cover: (1) What you observe (galvanometer deflects). (2) Why (changing B-field induces EMF → current). (3) Factors affecting SIZE of EMF. (4) Factors affecting DIRECTION of current (Lenz's law: induced current opposes the change). Direction reversed by: reversing magnet, reversing poles, pulling magnet out.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta18" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -548,7 +572,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <div class="level l-mid">Level 2 (4–6): Explains high voltage reduces energy loss and describes role of transformers, but limited discussion of limitations or alternatives.</div>
     <div class="level l-low">Level 1 (1–3): Basic statement that transformers change voltage or that high voltage reduces current.</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta19" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>Indicative content for Level 3:</b></p>
@@ -580,7 +604,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <strong>💡 How to Answer — Seismic Wave Questions</strong>
     P-waves: longitudinal, can travel through solids AND liquids. S-waves: transverse, can ONLY travel through solids. Key evidence: S-waves don't reach the other side of Earth → outer core must be liquid. P-waves refract at boundaries → Earth has layers of different density. This links to the structure: inner core (solid), outer core (liquid), mantle, crust.
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta20" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <ul>
@@ -613,7 +637,7 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
     <div class="level l-mid">Level 2 (4–6): Benefits and risks listed with some detail, some precautions, limited conclusion.</div>
     <div class="level l-low">Level 1 (1–3): States that radiation can cause cancer or is used in medicine, without development.</div>
   </div>
-  <textarea class="answer-area" placeholder="Write your answer here..."></textarea>
+  <textarea id="ta21" class="answer-area" placeholder="Write your answer here..."></textarea>
   <button class="ms-toggle" onclick="toggleMS(this)"><span>▼</span> Mark Scheme</button>
   <div class="ms-content">
     <p><b>Indicative content for Level 3:</b></p>
@@ -631,6 +655,8 @@ main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
 </div>
 
 <button class="reveal-all-btn" onclick="revealAll()">📋 Reveal All Mark Schemes</button>
+<button id="download-btn" onclick="downloadPDF()">📥 Download My Answers as PDF</button>
+
 
 <div class="grade-box">
   <h3>Grade Boundaries — Paper 2</h3>
@@ -654,6 +680,19 @@ function pauseTimer(){clearInterval(interval);running=false;}
 function resetTimer(){clearInterval(interval);running=false;seconds=75*60;updateDisplay();document.getElementById('timerDisplay').style.color='';}
 function toggleMS(btn){const c=btn.nextElementSibling;c.classList.toggle('open');btn.querySelector('span').textContent=c.classList.contains('open')?'▲':'▼';}
 function revealAll(){document.querySelectorAll('.ms-content').forEach(c=>c.classList.add('open'));document.querySelectorAll('.ms-toggle span').forEach(s=>s.textContent='▲');}
+
+function downloadPDF() {
+  const textareas = document.querySelectorAll('textarea.answer-area');
+  let hasContent = false;
+  textareas.forEach(ta => { if(ta.value.trim().length > 0) hasContent = true; });
+  if(!hasContent) {
+    alert('Please write at least one answer before downloading!');
+    return;
+  }
+  document.querySelectorAll('.ms-content.open').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.ms-toggle span').forEach(s => s.textContent = '▼');
+  window.print();
+}
 </script>
 </body>
 </html>
