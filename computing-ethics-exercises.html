@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computing — Ethics Exam Practice | Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0.75rem 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s; }
+  nav a:hover { opacity: 0.75; }
+  nav a.current { color: #fff; }
+
+  /* TIMER BAR */
+  .timer-bar { position: sticky; top: 0; z-index: 100; background: var(--navy); color: #fff; display: flex; align-items: center; gap: 1.25rem; padding: 0.6rem 1.5rem; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .timer-display { font-size: 1.3rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; min-width: 4.5rem; }
+  .timer-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+  .timer-bar button { border: 2px solid var(--accent); background: transparent; color: var(--accent); border-radius: 6px; padding: 0.3rem 0.9rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .timer-bar button:hover { background: var(--accent); color: var(--navy); }
+  .timer-status { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-left: auto; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: #fff; padding: 2.5rem 2rem 2rem; text-align: center; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .badge { display: inline-block; background: rgba(100,181,246,0.2); border: 1px solid var(--accent); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 0.75rem; }
+  .hero h1 { font-size: clamp(1.4rem,3.5vw,2rem); font-weight: 800; margin-bottom: 1rem; }
+  .hero-meta { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .hero-meta div { text-align: center; }
+  .hero-meta .big { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .hero-meta .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+  .instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 1rem 1.25rem; text-align: left; max-width: 600px; margin: 0 auto; font-size: 0.88rem; }
+  .instructions li { margin-left: 1.2rem; margin-bottom: 0.3rem; }
+
+  /* MAIN */
+  main { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* QUESTION BLOCK */
+  .q-block { background: #fff; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .q-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.9rem; flex-wrap: wrap; gap: 0.5rem; }
+  .q-num { font-weight: 800; font-size: 1rem; color: var(--navy); }
+  .marks { background: var(--navy); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.75rem; color: #1a1a2e; }
+  .q-text strong { color: var(--navy); }
+
+  /* PARTS */
+  .part { margin-bottom: 1.25rem; padding-left: 0.5rem; }
+  .part-label { font-size: 0.82rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+
+  /* TEXTAREA */
+  textarea { width: 100%; border: 2px solid #d0dde8; border-radius: 8px; padding: 0.65rem 0.85rem; font-family: inherit; font-size: 0.88rem; color: #1a1a2e; resize: vertical; min-height: 80px; background: #f9fbfd; transition: border-color 0.2s; }
+  textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .ta-hint { font-size: 0.75rem; color: #888; margin-bottom: 0.3rem; }
+
+  /* TRACE TABLE */
+  .trace-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+  .trace-table th { background: var(--navy); color: #fff; padding: 0.5rem 0.7rem; text-align: center; font-size: 0.82rem; }
+  .trace-table td { border: 1px solid #ccd8e4; padding: 0; }
+  .trace-table td textarea { min-height: 36px; border: none; border-radius: 0; background: #f4f8fc; resize: none; text-align: center; font-size: 0.85rem; padding: 0.3rem; }
+  .trace-table td textarea:focus { background: #fff; outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  /* MARK SCHEME */
+  .ms-toggle { background: transparent; border: 2px solid var(--navy); color: var(--navy); border-radius: 6px; padding: 0.35rem 0.9rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; margin-top: 0.75rem; transition: all 0.15s; }
+  .ms-toggle:hover { background: var(--navy); color: #fff; }
+  .ms-box { display: none; background: #fff8e1; border-left: 4px solid #f57f17; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 0.75rem; font-size: 0.85rem; }
+  .ms-box.show { display: block; }
+  .ms-box h4 { color: #4e342e; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; }
+  .ms-box ul { padding-left: 1.2rem; }
+  .ms-box li { margin-bottom: 0.3rem; color: #4e342e; }
+  .ms-box p { color: #4e342e; }
+  .award { font-weight: 700; color: #e65100; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="computing-index.html">💻 Computing</a>
+  <a href="computing-ethics-revision.html">⚖️ Ethics &amp; Law</a>
+  <a href="computing-ethics-quickcheck.html">🧠 Quickcheck</a>
+  <a class="current" href="computing-ethics-exercises.html">📝 Practice Paper</a>
+</nav>
+
+<!-- STICKY TIMER -->
+<div class="timer-bar">
+  <div>
+    <div class="timer-label">Time elapsed</div>
+    <div class="timer-display" id="timer-display">00:00</div>
+  </div>
+  <button onclick="startTimer()">▶ Start</button>
+  <button onclick="resetTimer()">⏹ Reset</button>
+  <div class="timer-status" id="timer-status">Suggested time: 50 minutes</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="kicker">AQA GCSE Computer Science · Section 8</p>
+  <div class="badge">Exam Practice Paper</div>
+  <h1>Ethical, Legal &amp; Environmental Issues</h1>
+  <div class="hero-meta">
+    <div><div class="big">50</div><div class="lbl">Total marks</div></div>
+    <div><div class="big">~50</div><div class="lbl">Minutes</div></div>
+    <div><div class="big">8</div><div class="lbl">Questions</div></div>
+  </div>
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ul>
+      <li>Answer all questions in the spaces provided.</li>
+      <li>Marks for each question are shown in brackets.</li>
+      <li>Reveal the mark scheme only after attempting each question.</li>
+      <li>Write in full sentences where the question requires explanation.</li>
+    </ul>
+  </div>
+</div>
+
+<main>
+
+  <!-- Q1 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 1</span>
+      <span class="marks">[4 marks]</span>
+    </div>
+    <p class="q-text">State <strong>two</strong> offences created by the <strong>Computer Misuse Act 1990</strong> and give one example of each.</p>
+    <div class="part">
+      <div class="part-label">Offence 1</div>
+      <div class="ta-hint">State the offence and an example (2 lines recommended)</div>
+      <textarea rows="3" placeholder="Offence: ...&#10;Example: ..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Offence 2</div>
+      <div class="ta-hint">State the offence and an example (2 lines recommended)</div>
+      <textarea rows="3" placeholder="Offence: ...&#10;Example: ..."></textarea>
+    </div>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q1 [4 marks]</h4>
+      <ul>
+        <li><span class="award">[1]</span> Unauthorised access to computer material (S.1) — e.g. guessing a password to read someone else's emails</li>
+        <li><span class="award">[1]</span> Unauthorised access with intent to commit further offences (S.2) — e.g. hacking a bank system to steal funds</li>
+        <li><span class="award">[1]</span> Unauthorised modification of computer material (S.3) — e.g. installing ransomware / deleting files</li>
+        <li>Award <span class="award">[1]</span> per offence named correctly (max 2), plus <span class="award">[1]</span> per valid example (max 2). Total max = 4.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 2</span>
+      <span class="marks">[6 marks]</span>
+    </div>
+    <p class="q-text">Describe <strong>three</strong> of the seven principles of the UK GDPR. For each principle, state its name and explain what it requires of an organisation.</p>
+    <div class="part">
+      <div class="part-label">Principle 1</div>
+      <textarea rows="3" placeholder="Principle name: ...&#10;What it requires: ..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Principle 2</div>
+      <textarea rows="3" placeholder="Principle name: ...&#10;What it requires: ..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Principle 3</div>
+      <textarea rows="3" placeholder="Principle name: ...&#10;What it requires: ..."></textarea>
+    </div>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q2 [6 marks]</h4>
+      <p>Award <span class="award">[1]</span> for correct name + <span class="award">[1]</span> for correct explanation, per principle. Max 6 marks (any 3 from below):</p>
+      <ul>
+        <li><strong>Lawful, fair &amp; transparent</strong> — data must be collected legally, fairly, and subjects must be informed.</li>
+        <li><strong>Purpose limitation</strong> — data may only be used for the specific purpose stated when collected.</li>
+        <li><strong>Data minimisation</strong> — only collect the minimum data necessary for the purpose.</li>
+        <li><strong>Accuracy</strong> — data must be kept accurate and up to date; inaccurate data must be corrected or deleted.</li>
+        <li><strong>Storage limitation</strong> — data should not be kept longer than necessary for the stated purpose.</li>
+        <li><strong>Integrity &amp; confidentiality</strong> — data must be kept secure against loss, destruction or unauthorised access.</li>
+        <li><strong>Accountability</strong> — organisations must be able to demonstrate compliance with all other principles.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 3</span>
+      <span class="marks">[4 marks]</span>
+    </div>
+    <p class="q-text">A student finds an image on a website and uses it in a school project without checking the licence. Explain why this might be a problem and describe what the student should have done instead.</p>
+    <div class="ta-hint">Aim for ~4 developed points or 2 well-explained points.</div>
+    <textarea rows="6" placeholder="Your answer..."></textarea>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q3 [4 marks]</h4>
+      <ul>
+        <li><span class="award">[1]</span> Images found online are usually protected by copyright automatically.</li>
+        <li><span class="award">[1]</span> Using a copyrighted image without permission or a licence may constitute copyright infringement.</li>
+        <li><span class="award">[1]</span> The student should have checked the licence (e.g. looked for a Creative Commons licence).</li>
+        <li><span class="award">[1]</span> Alternatively: used images from public domain sources / asked the creator's permission / credited the author if the licence required it (CC-BY).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q4 — TRACE TABLE -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 4</span>
+      <span class="marks">[6 marks]</span>
+    </div>
+    <p class="q-text">A system checks whether a user's requested username is valid. The rules are:</p>
+    <ul style="margin:0.5rem 0 0.75rem 1.5rem;font-size:0.9rem;">
+      <li>Length must be between 6 and 12 characters (inclusive)</li>
+      <li>Must not contain the word "admin" (case-insensitive)</li>
+    </ul>
+    <p class="q-text">Trace through the pseudocode below for the three test inputs given and complete the trace table.</p>
+    <pre style="background:#0d1b2a;color:#e0e0e0;border-radius:8px;padding:1rem 1.25rem;font-size:0.82rem;margin-bottom:0.75rem;overflow-x:auto;">
+<span style="color:#64b5f6">FUNCTION</span> <span style="color:#fff176">isValid</span>(username)
+    length ← <span style="color:#64b5f6">LEN</span>(username)
+    <span style="color:#64b5f6">IF</span> length &lt; 6 <span style="color:#64b5f6">OR</span> length &gt; 12 <span style="color:#64b5f6">THEN</span>
+        <span style="color:#64b5f6">RETURN</span> <span style="color:#a5d6a7">FALSE</span>
+    <span style="color:#64b5f6">ENDIF</span>
+    <span style="color:#64b5f6">IF</span> <span style="color:#64b5f6">LOWER</span>(username) <span style="color:#64b5f6">CONTAINS</span> <span style="color:#a5d6a7">"admin"</span> <span style="color:#64b5f6">THEN</span>
+        <span style="color:#64b5f6">RETURN</span> <span style="color:#a5d6a7">FALSE</span>
+    <span style="color:#64b5f6">ENDIF</span>
+    <span style="color:#64b5f6">RETURN</span> <span style="color:#a5d6a7">TRUE</span>
+<span style="color:#64b5f6">ENDFUNCTION</span></pre>
+
+    <p class="ta-hint">Complete the table — type your answers in each cell.</p>
+    <table class="trace-table">
+      <thead>
+        <tr>
+          <th>username</th>
+          <th>length</th>
+          <th>length &lt; 6?</th>
+          <th>length &gt; 12?</th>
+          <th>Contains "admin"?</th>
+          <th>Return value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><textarea readonly style="background:#e8f4fd;font-weight:700;">gab2024</textarea></td>
+          <td><textarea placeholder="..."></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="..."></textarea></td>
+        </tr>
+        <tr>
+          <td><textarea readonly style="background:#e8f4fd;font-weight:700;">hi</textarea></td>
+          <td><textarea placeholder="..."></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="..."></textarea></td>
+        </tr>
+        <tr>
+          <td><textarea readonly style="background:#e8f4fd;font-weight:700;">superadmin99</textarea></td>
+          <td><textarea placeholder="..."></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="T/F"></textarea></td>
+          <td><textarea placeholder="..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q4 [6 marks]</h4>
+      <p>Award <span class="award">[2]</span> per correctly completed row (all 5 cells correct for that row).</p>
+      <table style="font-size:0.82rem;border-collapse:collapse;width:100%;margin-top:0.5rem;">
+        <tr style="background:#f57f17;color:#fff;">
+          <th style="padding:0.3rem 0.5rem;">username</th><th style="padding:0.3rem 0.5rem;">length</th><th style="padding:0.3rem 0.5rem;">&lt;6?</th><th style="padding:0.3rem 0.5rem;">&gt;12?</th><th style="padding:0.3rem 0.5rem;">Contains admin?</th><th style="padding:0.3rem 0.5rem;">Return</th>
+        </tr>
+        <tr style="background:#fff8e1;">
+          <td style="padding:0.3rem 0.5rem;">gab2024</td><td style="padding:0.3rem 0.5rem;">7</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;font-weight:700;">TRUE</td>
+        </tr>
+        <tr style="background:#fff8e1;">
+          <td style="padding:0.3rem 0.5rem;">hi</td><td style="padding:0.3rem 0.5rem;">2</td><td style="padding:0.3rem 0.5rem;">True</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;font-weight:700;">FALSE</td>
+        </tr>
+        <tr style="background:#fff8e1;">
+          <td style="padding:0.3rem 0.5rem;">superadmin99</td><td style="padding:0.3rem 0.5rem;">12</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;">False</td><td style="padding:0.3rem 0.5rem;">True</td><td style="padding:0.3rem 0.5rem;font-weight:700;">FALSE</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 5</span>
+      <span class="marks">[6 marks]</span>
+    </div>
+    <p class="q-text">Describe <strong>three</strong> environmental impacts of computing technology. For each impact, state whether it occurs during manufacture, use or disposal of equipment.</p>
+    <div class="part">
+      <div class="part-label">Impact 1</div>
+      <textarea rows="3" placeholder="Stage: ...&#10;Impact: ..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Impact 2</div>
+      <textarea rows="3" placeholder="Stage: ...&#10;Impact: ..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Impact 3</div>
+      <textarea rows="3" placeholder="Stage: ...&#10;Impact: ..."></textarea>
+    </div>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q5 [6 marks]</h4>
+      <p>Award <span class="award">[1]</span> for correct stage + <span class="award">[1]</span> for developed impact. Max 6 (any 3 from below):</p>
+      <ul>
+        <li><strong>Manufacture:</strong> Mining rare earth metals causes land destruction and can involve poor working conditions / toxic chemical use in semiconductor fab</li>
+        <li><strong>Manufacture:</strong> High energy and water use in chip fabrication contributes to carbon emissions and water scarcity</li>
+        <li><strong>Use:</strong> Data centres consume ~1–2% of global electricity, much of it from fossil fuels</li>
+        <li><strong>Use:</strong> Cooling systems for data centres require enormous amounts of water</li>
+        <li><strong>Disposal:</strong> E-waste contains toxic materials (lead, mercury, cadmium) that leach into soil/groundwater if improperly disposed of</li>
+        <li><strong>Disposal:</strong> Only ~20% of e-waste is formally recycled; the rest goes to landfill or is illegally shipped to developing countries</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 6</span>
+      <span class="marks">[6 marks]</span>
+    </div>
+    <p class="q-text">Compare the impact of the <strong>digital divide</strong> in a high-income country (such as the UK) with its impact in a low-income country. Discuss <strong>two</strong> differences in the causes or consequences.</p>
+    <div class="part">
+      <div class="part-label">Difference 1</div>
+      <textarea rows="4" placeholder="In a high-income country...&#10;In a low-income country..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Difference 2</div>
+      <textarea rows="4" placeholder="In a high-income country...&#10;In a low-income country..."></textarea>
+    </div>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q6 [6 marks]</h4>
+      <p>Award up to <span class="award">[3]</span> per difference: <span class="award">[1]</span> valid point for high-income, <span class="award">[1]</span> valid contrasting point for low-income, <span class="award">[1]</span> for development/consequence.</p>
+      <ul>
+        <li><strong>Infrastructure:</strong> In high-income countries, gaps tend to be rural (final-mile broadband); in low-income countries, large areas may have no fixed broadband infrastructure at all, though mobile leapfrogging is common.</li>
+        <li><strong>Cost:</strong> In high-income countries, cost is a barrier for low-income households but devices exist; in low-income countries, a smartphone may cost several months' wages.</li>
+        <li><strong>Consequences:</strong> In UK, divide affects access to employment/banking/education; in low-income countries, divide can mean exclusion from e-government services, medical information, and global economic participation.</li>
+        <li><strong>Literacy:</strong> In high-income countries, digital literacy is taught in schools; in low-income countries, fewer trained teachers and devices mean fewer opportunities to develop skills.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q7 — EXTENDED WRITING -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 7</span>
+      <span class="marks">[8 marks]</span>
+    </div>
+    <p class="q-text">Discuss the ethical implications of using <strong>artificial intelligence</strong> in criminal justice (for example, to predict the likelihood that someone will reoffend). In your answer, consider both potential benefits and risks.</p>
+    <div class="ta-hint">This is an extended response question. Aim for a balanced argument of ~150–200 words covering multiple perspectives.</div>
+    <textarea rows="12" placeholder="Your extended answer..."></textarea>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q7 [8 marks]</h4>
+      <p style="margin-bottom:0.5rem;">Use the following levels:</p>
+      <ul>
+        <li><span class="award">[7–8]</span> Balanced, well-structured answer covering multiple specific ethical issues on both sides; uses correct terminology (algorithmic bias, explainability, accountability, fairness); reaches a justified conclusion.</li>
+        <li><span class="award">[5–6]</span> Discusses both benefits and risks with some development; at least one side explored in depth; mostly accurate terminology.</li>
+        <li><span class="award">[3–4]</span> Some relevant points on at least one side; limited development; may be one-sided.</li>
+        <li><span class="award">[1–2]</span> One or two basic points with little development.</li>
+      </ul>
+      <p style="margin-top:0.5rem;"><strong>Indicative content:</strong></p>
+      <ul>
+        <li><strong>Benefits:</strong> Faster processing of data; may reduce human bias in some cases; consistency; cost-effective for large volumes.</li>
+        <li><strong>Risks:</strong> Algorithmic bias (training data reflects historical inequalities — may unfairly flag certain demographic groups); black box problem (decisions hard to challenge); privacy implications of data used; reduced human accountability; risk of self-fulfilling prophecy; erosion of presumption of innocence.</li>
+        <li><strong>Ethical frameworks:</strong> Fairness / non-maleficence / accountability / right to appeal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Question 8</span>
+      <span class="marks">[10 marks]</span>
+    </div>
+    <p class="q-text">A tech company is planning to launch a new fitness app that collects users' heart rate, location and sleep data continuously. The data will be stored on cloud servers and may be shared with insurance companies.</p>
+    <div class="part">
+      <div class="part-label">Part (a) — Identify two potential privacy concerns raised by this app. [2 marks]</div>
+      <textarea rows="4" placeholder="Concern 1:&#10;Concern 2:"></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Part (b) — Explain how the Data Protection Act 2018 / UK GDPR would apply to this scenario. Refer to at least two GDPR principles. [4 marks]</div>
+      <textarea rows="6" placeholder="Your answer..."></textarea>
+    </div>
+    <div class="part">
+      <div class="part-label">Part (c) — Discuss whether the sharing of users' data with insurance companies is ethical. Give a balanced argument. [4 marks]</div>
+      <textarea rows="7" placeholder="Your answer..."></textarea>
+    </div>
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+    <div class="ms-box">
+      <h4>Mark Scheme — Q8 [10 marks]</h4>
+      <p><strong>(a) [2 marks]</strong> — <span class="award">[1]</span> per valid concern:</p>
+      <ul>
+        <li>Sensitive health/biometric data could be breached, leading to identity theft or discrimination</li>
+        <li>Continuous location tracking could enable stalking or physical surveillance</li>
+        <li>Users may not understand or consent to their data being shared with third parties</li>
+        <li>Data used by insurers could lead to higher premiums or denial of cover</li>
+      </ul>
+      <p style="margin-top:0.6rem;"><strong>(b) [4 marks]</strong> — <span class="award">[1]</span> per GDPR principle identified, <span class="award">[1]</span> per developed application:</p>
+      <ul>
+        <li><strong>Purpose limitation:</strong> Sharing with insurers may go beyond the fitness purpose stated when data was collected — this would breach purpose limitation</li>
+        <li><strong>Data minimisation:</strong> Continuous collection of all metrics may be excessive if a subset would serve the stated purpose</li>
+        <li><strong>Lawful &amp; transparent:</strong> Users must be clearly informed of data sharing; sharing with insurers requires explicit consent given it's sensitive health data</li>
+        <li><strong>Integrity &amp; confidentiality:</strong> Cloud storage must be secured against breaches</li>
+      </ul>
+      <p style="margin-top:0.6rem;"><strong>(c) [4 marks]</strong> — Levels:</p>
+      <ul>
+        <li><span class="award">[3–4]</span> Balanced argument with developed points on both sides and reasoned conclusion</li>
+        <li><span class="award">[1–2]</span> One-sided or undeveloped points</li>
+      </ul>
+      <p>Indicative points: FOR — users can opt in; insurers can price more fairly; may incentivise healthy behaviour. AGAINST — power imbalance; users may not understand implications; vulnerable groups harmed; mission creep beyond fitness tracking.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // TIMER
+  let seconds = 0;
+  let interval = null;
+  let running = false;
+
+  function pad(n) { return n.toString().padStart(2,'0'); }
+  function updateDisplay() {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    document.getElementById('timer-display').textContent = pad(m) + ':' + pad(s);
+    const sug = 50 * 60;
+    if (seconds > sug) {
+      document.getElementById('timer-display').style.color = '#ff7043';
+      document.getElementById('timer-status').textContent = '⚠️ Over suggested time';
+    }
+  }
+
+  function startTimer() {
+    if (running) return;
+    running = true;
+    document.getElementById('timer-status').textContent = '▶ Timer running…';
+    interval = setInterval(() => { seconds++; updateDisplay(); }, 1000);
+  }
+
+  function resetTimer() {
+    clearInterval(interval);
+    running = false;
+    seconds = 0;
+    document.getElementById('timer-display').textContent = '00:00';
+    document.getElementById('timer-display').style.color = 'var(--accent)';
+    document.getElementById('timer-status').textContent = 'Suggested time: 50 minutes';
+  }
+
+  // MARK SCHEME TOGGLES
+  function toggleMS(btn) {
+    const box = btn.nextElementSibling;
+    const isOpen = box.classList.contains('show');
+    box.classList.toggle('show', !isOpen);
+    btn.textContent = isOpen ? '📋 Reveal Mark Scheme' : '🙈 Hide Mark Scheme';
+  }
+</script>
+</body>
+</html>

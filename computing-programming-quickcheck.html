@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programming Quick Check – Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --white: #ffffff;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --yellow: #f9a825;
+    --red: #c62828;
+    --red2: #ffebee;
+    --orange: #e65100;
+    --border: #b3d4f0;
+    --correct: #2e7d32;
+    --wrong: #c62828;
+    --missed: #e65100;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  nav { background: var(--navy); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav .sep { color: rgba(100,181,246,0.4); font-size: 0.8rem; }
+  nav .current { color: rgba(255,255,255,0.6); font-size: 0.82rem; padding: 4px 10px; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%); color: white; padding: 36px 24px 28px; text-align: center; }
+  .hero .kicker { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 8px; }
+  .hero p { color: rgba(255,255,255,0.78); font-size: 0.92rem; margin-bottom: 16px; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-weight: 700; font-size: 0.78rem; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; margin-bottom: 14px; }
+
+  /* PROGRESS */
+  .progress-wrap { background: rgba(255,255,255,0.18); border-radius: 999px; height: 8px; margin-top: 14px; overflow: hidden; max-width: 500px; margin: 14px auto 0; }
+  .progress-bar { height: 100%; background: var(--accent); border-radius: 999px; width: 0%; transition: width 0.4s ease; }
+  .progress-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 6px; }
+
+  /* WRAP */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 40px; }
+
+  /* LEGEND */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8rem; color: #555; margin-bottom: 20px; }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+  /* SECTION LABEL */
+  .section-label { font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; color: #666; margin: 24px 0 10px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+
+  /* QUESTION CARD */
+  .q-card { background: white; border: 2px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; }
+  .q-num { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 5px; }
+  .q-text { font-size: 0.97rem; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+  .q-code { background: #0d1b2a; color: #e8f4fd; font-family: 'Courier New', monospace; font-size: 0.82rem; padding: 10px 14px; border-radius: 7px; margin-bottom: 12px; line-height: 1.6; }
+
+  /* OPTIONS */
+  .options { display: grid; gap: 7px; }
+  .opt { display: block; width: 100%; text-align: left; background: var(--bg); border: 2px solid var(--border); border-radius: 9px; padding: 10px 14px; font-size: 0.91rem; font-family: 'Segoe UI', sans-serif; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .opt:hover:not(:disabled) { border-color: var(--accent); background: #d0e8f9; }
+  .opt.correct { background: var(--green2); border-color: var(--correct); color: var(--green); font-weight: 700; }
+  .opt.wrong { background: var(--red2); border-color: var(--wrong); color: var(--red); }
+  .opt.missed { background: #fff3e0; border-color: var(--missed); color: var(--missed); font-weight: 700; }
+
+  /* TRUE/FALSE */
+  .tf-opts { display: flex; gap: 10px; }
+  .tf-btn { flex: 1; padding: 11px; border: 2px solid var(--border); border-radius: 9px; background: var(--bg); font-size: 0.95rem; font-weight: 700; cursor: pointer; font-family: 'Segoe UI', sans-serif; transition: border-color 0.15s, background 0.15s; }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #d0e8f9; }
+  .tf-btn.correct { background: var(--green2); border-color: var(--correct); color: var(--green); }
+  .tf-btn.wrong { background: var(--red2); border-color: var(--wrong); color: var(--red); }
+
+  /* FEEDBACK */
+  .feedback { display: none; margin-top: 10px; font-size: 0.87rem; padding: 9px 13px; border-radius: 8px; line-height: 1.5; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green2); color: #1b4f1e; }
+  .feedback.wrong { background: var(--red2); color: #7f1515; }
+
+  /* RESULT */
+  .result-box { display: none; background: linear-gradient(135deg, var(--navy), #1a4a7a); color: white; border-radius: 18px; padding: 36px 28px; text-align: center; margin-top: 28px; box-shadow: 0 12px 32px rgba(0,0,0,0.18); }
+  .result-box.show { display: block; animation: fadeUp 0.5s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .result-emoji { font-size: 56px; margin-bottom: 10px; }
+  .result-score { font-size: 50px; font-weight: 900; color: var(--accent); letter-spacing: -2px; }
+  .result-msg { font-size: 1.2rem; font-weight: 800; margin: 8px 0 4px; }
+  .result-sub { font-size: 0.9rem; color: rgba(255,255,255,0.75); margin-bottom: 16px; }
+  .result-mum { display: inline-block; background: var(--yellow); color: var(--navy); font-weight: 800; font-size: 0.95rem; border-radius: 999px; padding: 9px 22px; margin-bottom: 14px; }
+  .retry-btn { background: white; color: var(--navy); border: none; border-radius: 999px; padding: 10px 24px; font-weight: 800; font-size: 0.9rem; cursor: pointer; font-family: 'Segoe UI', sans-serif; margin-top: 6px; }
+  .retry-btn:hover { background: var(--accent); }
+
+  @media(max-width:580px) { .tf-opts { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span class="sep">›</span>
+  <a href="computing-programming-revision.html">📖 Revision</a>
+  <span class="sep">›</span>
+  <span class="current">Quick Check</span>
+</nav>
+
+<section class="hero">
+  <div class="kicker">AQA GCSE Computer Science</div>
+  <h1>💻 Programming — Quick Check</h1>
+  <span class="badge">Section 2</span>
+  <p>20 questions · Answer each one to see instant feedback.</p>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+</section>
+
+<div class="wrap">
+  <div class="legend">
+    <span><span class="dot" style="background:#2e7d32"></span> Correct</span>
+    <span><span class="dot" style="background:#c62828"></span> Wrong choice</span>
+    <span><span class="dot" style="background:#e65100"></span> Correct answer (you missed it)</span>
+  </div>
+
+  <div class="section-label">Part 1 — Multiple Choice (10 questions)</div>
+  <div id="mcSection"></div>
+
+  <div class="section-label">Part 2 — True or False (10 questions)</div>
+  <div id="tfSection"></div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <div class="result-mum" id="resultMum"></div><br>
+    <button class="retry-btn" onclick="resetQuiz()">🔄 Try again</button>
+  </div>
+</div>
+
+<script>
+const SCORE_KEY = 'computing-programming-score';
+let answered = 0, score = 0;
+const total = 20;
+
+const mcQuestions = [
+  {
+    q: "Which data type would you use to store the value 3.14?",
+    opts: ["INTEGER", "REAL", "BOOLEAN", "STRING"],
+    correct: 1,
+    feedback: "REAL is used for decimal (floating-point) numbers. INTEGER only holds whole numbers."
+  },
+  {
+    q: "What is the output of: SUBSTRING(\"Computing\", 1, 4)?",
+    opts: ["Comp", "ompu", "Comp", "ting"],
+    correct: 0,
+    code: null,
+    feedback: "AQA SUBSTRING uses 1-based indexing. Starting at position 1, taking 4 characters from \"Computing\" gives \"Comp\"."
+  },
+  {
+    q: "Which loop is guaranteed to execute its body at least once?",
+    opts: ["FOR loop", "WHILE loop", "DO…UNTIL loop", "None of the above"],
+    correct: 2,
+    feedback: "A DO…UNTIL loop checks its condition AFTER executing the body, so it always runs at least once."
+  },
+  {
+    q: "An array called scores is declared as ARRAY scores[5]. What is the index of the LAST element?",
+    opts: ["5", "4", "1", "0"],
+    correct: 1,
+    feedback: "AQA arrays are zero-indexed. An array of size 5 has indices 0, 1, 2, 3, 4 — so the last index is 4."
+  },
+  {
+    q: "What does a FUNCTION return compared to a PROCEDURE?",
+    opts: ["A function returns nothing; a procedure returns a value", "A function returns a value; a procedure returns nothing", "Both return values", "Neither returns a value"],
+    correct: 1,
+    feedback: "A FUNCTION uses RETURN to send a value back to the caller. A PROCEDURE performs actions but returns nothing."
+  },
+  {
+    q: "What does LEN(\"Hello World\") return?",
+    opts: ["10", "11", "5", "9"],
+    correct: 1,
+    feedback: "\"Hello World\" has 11 characters including the space. LEN() counts all characters."
+  },
+  {
+    q: "Which of the following correctly casts a string to an integer in AQA pseudocode?",
+    opts: ["STRING(42)", "INT(\"42\")", "CAST(\"42\", int)", "CONVERT(\"42\")"],
+    correct: 1,
+    feedback: "INT() converts a string to an integer. STR() converts an integer to a string."
+  },
+  {
+    q: "A variable declared inside a subroutine is called a:",
+    opts: ["global variable", "parameter", "local variable", "constant"],
+    correct: 2,
+    feedback: "A local variable only exists within the subroutine where it is declared. It cannot be accessed from outside."
+  },
+  {
+    q: "Which pseudocode correctly reads lines from a file until the end?",
+    opts: [
+      "WHILE NOT endOfFile(\"f.txt\") — readLine(\"f.txt\") — END WHILE",
+      "FOR EACH line IN \"f.txt\" — END FOR",
+      "REPEAT readLine UNTIL fileEmpty",
+      "DO readLine WHILE file.open"
+    ],
+    correct: 0,
+    feedback: "The AQA pattern is: open → WHILE NOT endOfFile() → readLine() → END WHILE → close."
+  },
+  {
+    q: "What is the purpose of using subroutines in a program?",
+    opts: [
+      "To make the program run faster always",
+      "To increase the number of variables",
+      "To allow code to be reused and problems to be decomposed",
+      "To prevent the use of loops"
+    ],
+    correct: 2,
+    feedback: "Subroutines support decomposition (breaking problems down), reuse, easier testing, and improved readability."
+  }
+];
+
+const tfQuestions = [
+  {
+    q: "A WHILE loop will always execute its body at least once.",
+    correct: false,
+    feedback: "FALSE. A WHILE loop checks the condition BEFORE each iteration. If it's false from the start, the body never runs. A DO…UNTIL loop always runs at least once."
+  },
+  {
+    q: "In AQA pseudocode, array indexing starts at 0.",
+    correct: true,
+    feedback: "TRUE. Arrays in AQA pseudocode are zero-indexed — the first element is at index 0."
+  },
+  {
+    q: "A BOOLEAN variable can store the value 0 or 1.",
+    correct: false,
+    feedback: "FALSE. In AQA pseudocode, BOOLEAN stores TRUE or FALSE (not 0 and 1). Some programming languages use 0/1 but AQA uses TRUE/FALSE keywords."
+  },
+  {
+    q: "A function must use the RETURN keyword to send a value back.",
+    correct: true,
+    feedback: "TRUE. A function uses RETURN to pass a value back to wherever it was called from."
+  },
+  {
+    q: "Global variables are generally preferred over local variables in good programming practice.",
+    correct: false,
+    feedback: "FALSE. Local variables are preferred because they reduce the risk of accidental changes and make programs easier to debug and maintain."
+  },
+  {
+    q: "UPPER(\"hello\") returns \"HELLO\".",
+    correct: true,
+    feedback: "TRUE. The UPPER() function converts all characters in a string to uppercase."
+  },
+  {
+    q: "An array in AQA pseudocode can store values of different data types.",
+    correct: false,
+    feedback: "FALSE. An array stores multiple values of the SAME data type. To store different types, you would use separate variables."
+  },
+  {
+    q: "You must always close a file after opening it in pseudocode.",
+    correct: true,
+    feedback: "TRUE. Failing to close a file can cause data loss or corruption. Always open → read/write → close."
+  },
+  {
+    q: "A procedure can receive parameters but cannot return a value.",
+    correct: true,
+    feedback: "TRUE. A PROCEDURE can take parameters (inputs) but does not use RETURN to send a value back. That is the role of a FUNCTION."
+  },
+  {
+    q: "The FOR loop is best used when you do not know in advance how many times the loop should repeat.",
+    correct: false,
+    feedback: "FALSE. A FOR loop is used when you know exactly how many iterations are needed. WHILE or DO…UNTIL loops are better when the number of iterations depends on a condition."
+  }
+];
+
+function buildMC() {
+  const sec = document.getElementById('mcSection');
+  mcQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `mc-${i}`;
+    let html = `<div class="q-num">Question ${i+1}</div><div class="q-text">${q.q}</div>`;
+    if (q.code) html += `<div class="q-code">${q.code}</div>`;
+    html += `<div class="options">`;
+    q.opts.forEach((o, j) => {
+      html += `<button class="opt" onclick="answerMC(${i}, ${j})">${o}</button>`;
+    });
+    html += `</div><div class="feedback" id="mc-fb-${i}"></div>`;
+    card.innerHTML = html;
+    sec.appendChild(card);
+  });
+}
+
+function buildTF() {
+  const sec = document.getElementById('tfSection');
+  tfQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `tf-${i}`;
+    card.innerHTML = `
+      <div class="q-num">Question ${i+11}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="tf-opts">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">✓ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">✗ False</button>
+      </div>
+      <div class="feedback" id="tf-fb-${i}"></div>`;
+    sec.appendChild(card);
+  });
+}
+
+function answerMC(qi, chosen) {
+  const card = document.getElementById(`mc-${qi}`);
+  const btns = card.querySelectorAll('.opt');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`mc-fb-${qi}`);
+  if (chosen === mcQuestions[qi].correct) {
+    btns[chosen].classList.add('correct');
+    score++;
+    fb.textContent = '✓ Correct! ' + mcQuestions[qi].feedback;
+    fb.className = 'feedback show correct';
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[mcQuestions[qi].correct].classList.add('missed');
+    fb.textContent = '✗ Not quite. ' + mcQuestions[qi].feedback;
+    fb.className = 'feedback show wrong';
+  }
+  answered++; updateProgress();
+  if (answered === total) showResult();
+}
+
+function answerTF(qi, chosen) {
+  const card = document.getElementById(`tf-${qi}`);
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = tfQuestions[qi].correct;
+  const fb = document.getElementById(`tf-fb-${qi}`);
+  const correctIdx = correct ? 0 : 1;
+  const chosenIdx = chosen ? 0 : 1;
+  btns[correctIdx].classList.add('correct');
+  if (chosen === correct) {
+    score++;
+    fb.textContent = '✓ Correct! ' + tfQuestions[qi].feedback;
+    fb.className = 'feedback show correct';
+  } else {
+    btns[chosenIdx].classList.add('wrong');
+    fb.textContent = '✗ Not quite. ' + tfQuestions[qi].feedback;
+    fb.className = 'feedback show wrong';
+  }
+  answered++; updateProgress();
+  if (answered === total) showResult();
+}
+
+function updateProgress() {
+  const pct = (answered / total) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${answered} / ${total} answered`;
+}
+
+function showResult() {
+  localStorage.setItem(SCORE_KEY, score);
+  const box = document.getElementById('resultBox');
+  document.getElementById('resultScore').textContent = `${score} / ${total}`;
+  let emoji, msg, sub;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding!'; sub = 'You really know your programming inside out.'; }
+  else if (score >= 14) { emoji = '🎉'; msg = 'Great work!'; sub = 'Solid score — check the questions you missed.'; }
+  else if (score >= 10) { emoji = '📚'; msg = 'Good effort!'; sub = 'Go back over the revision page, then try again.'; }
+  else { emoji = '💪'; msg = 'Keep going!'; sub = 'Read through the notes carefully and have another go.'; }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultSub').textContent = sub;
+  document.getElementById('resultMum').textContent = `Show this to mum — ${score}/20 ${emoji}`;
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  answered = 0; score = 0;
+  document.getElementById('mcSection').innerHTML = '';
+  document.getElementById('tfSection').innerHTML = '';
+  document.getElementById('resultBox').classList.remove('show');
+  updateProgress(); buildMC(); buildTF();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildMC(); buildTF();
+</script>
+</body>
+</html>

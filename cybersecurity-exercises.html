@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security Exercises – Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --white: #fff;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --red: #c62828;
+    --red-bg: #fdecea;
+    --yellow: #f9a825;
+    --border: #b3d4f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+    color: white; padding: 40px 24px 28px; text-align: center;
+  }
+  .hero .kicker { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .hero p { font-size: 0.9rem; opacity: 0.85; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-weight: 700; font-size: 0.78rem; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; margin-top: 12px; }
+
+  nav { background: var(--navy); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav span { color: #556; font-size: 0.8rem; }
+
+  .content { max-width: 860px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  .exercise-block {
+    background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .exercise-block h2 { color: var(--navy); font-size: 1.1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+  .exercise-block .subtitle { font-size: 0.83rem; color: #666; margin-bottom: 16px; }
+
+  /* ---- EXERCISE 1: MATCH THE ATTACK ---- */
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width:560px) { .match-grid { grid-template-columns: 1fr; } }
+  .match-col h3 { font-size: 0.8rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; text-align: center; }
+  .match-term {
+    background: var(--navy); color: white; padding: 10px 14px; border-radius: 8px;
+    font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; cursor: pointer;
+    border: 2px solid transparent; transition: all 0.2s; user-select: none;
+  }
+  .match-term.selected { border-color: var(--accent); background: #1a4a7a; }
+  .match-term.matched { background: var(--green); cursor: default; }
+  .match-term.wrong-flash { background: var(--red); }
+  .match-def {
+    background: var(--bg); border: 2px solid var(--border); padding: 10px 14px; border-radius: 8px;
+    font-size: 0.83rem; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .match-def.selected { border-color: var(--accent); background: #d0eaff; }
+  .match-def.matched { border-color: var(--green); background: var(--green-bg); cursor: default; color: var(--green); }
+  .match-def.wrong-flash { border-color: var(--red); background: var(--red-bg); }
+
+  /* ---- EXERCISE 2: SORT THE MALWARE ---- */
+  .drag-bank {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;
+    min-height: 48px; padding: 12px; background: var(--bg); border: 2px dashed var(--border); border-radius: 10px;
+  }
+  .drag-item {
+    background: var(--navy); color: white; padding: 8px 14px; border-radius: 20px;
+    font-size: 0.83rem; font-weight: 600; cursor: grab; user-select: none;
+    transition: opacity 0.2s;
+  }
+  .drag-item:active { cursor: grabbing; opacity: 0.7; }
+  .drop-zones { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width:560px) { .drop-zones { grid-template-columns: 1fr; } }
+  .drop-zone {
+    border: 2px dashed var(--border); border-radius: 10px; padding: 12px;
+    min-height: 80px; background: var(--bg); transition: background 0.2s;
+  }
+  .drop-zone.drag-over { background: #d0eaff; border-color: var(--accent); }
+  .drop-zone h4 { font-size: 0.8rem; font-weight: 700; color: var(--navy); text-transform: uppercase; margin-bottom: 8px; }
+  .drop-zone.correct-zone { border-color: var(--green); background: var(--green-bg); }
+  .drop-zone.wrong-zone { border-color: var(--red); background: var(--red-bg); }
+
+  /* ---- EXERCISE 3: FILL IN THE BLANKS ---- */
+  .blank-sentence { font-size: 0.92rem; line-height: 2.2; margin-bottom: 8px; }
+  .blank {
+    display: inline-block; border-bottom: 2px solid var(--navy); min-width: 120px;
+    padding: 2px 6px; font-weight: 600; color: var(--navy); text-align: center;
+    cursor: pointer; border-radius: 4px; transition: background 0.2s;
+    background: var(--bg);
+  }
+  .blank:hover { background: #d0eaff; }
+  .blank.filled-correct { border-color: var(--green); background: var(--green-bg); color: var(--green); }
+  .blank.filled-wrong { border-color: var(--red); background: var(--red-bg); color: var(--red); }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .word-chip {
+    background: var(--accent); color: var(--navy); padding: 6px 14px; border-radius: 20px;
+    font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; user-select: none;
+  }
+  .word-chip.used { opacity: 0.3; pointer-events: none; }
+  .word-chip.selected { background: var(--navy); color: white; }
+
+  /* ---- EXERCISE 4: SCENARIO QUIZ ---- */
+  .scenario { background: var(--bg); border-left: 4px solid var(--accent); padding: 14px 16px; border-radius: 0 8px 8px 0; margin-bottom: 14px; font-size: 0.88rem; line-height: 1.6; }
+  .scenario strong { color: var(--navy); }
+  .sc-options { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .sc-btn {
+    text-align: left; padding: 10px 14px; border-radius: 8px; border: 2px solid #dde;
+    background: white; font-size: 0.85rem; cursor: pointer; font-family: inherit; transition: all 0.15s;
+  }
+  .sc-btn:hover:not(:disabled) { border-color: var(--accent); background: #d0eaff; }
+  .sc-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+  .sc-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+
+  /* BUTTONS */
+  .check-btn {
+    display: inline-block; margin-top: 16px; padding: 10px 24px;
+    background: var(--navy); color: white; border: none; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .check-btn:hover { background: #1a4a7a; }
+  .reset-btn {
+    display: inline-block; margin-top: 8px; margin-left: 10px; padding: 10px 24px;
+    background: #dde; color: var(--navy); border: none; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .result-msg { margin-top: 12px; font-size: 0.88rem; font-weight: 600; padding: 8px 12px; border-radius: 6px; display: none; }
+  .result-msg.show { display: block; }
+  .result-msg.ok { background: var(--green-bg); color: var(--green); }
+  .result-msg.bad { background: var(--red-bg); color: var(--red); }
+
+  /* SECTION DIVIDER */
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE Computer Science</div>
+  <h1>🎮 Cyber Security Exercises</h1>
+  <p>Interactive activities to practise and reinforce your knowledge</p>
+  <span class="badge">Section 6</span>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span>›</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span>›</span>
+  <a href="cybersecurity-revision.html">📖 Revision</a>
+  <span>›</span>
+  <a href="cybersecurity-quickcheck.html">✅ Quiz</a>
+</nav>
+
+<div class="content">
+
+  <div class="section-label">Exercise 1 — Match the Attack</div>
+  <div class="exercise-block">
+    <h2>🎯 Match the Attack to Its Definition</h2>
+    <p class="subtitle">Click a term on the left, then click its matching definition on the right.</p>
+    <div class="match-grid">
+      <div class="match-col">
+        <h3>Attack Type</h3>
+        <div id="terms-col"></div>
+      </div>
+      <div class="match-col">
+        <h3>Definition</h3>
+        <div id="defs-col"></div>
+      </div>
+    </div>
+    <div class="result-msg" id="match-result"></div>
+  </div>
+
+  <div class="section-label">Exercise 2 — Sort the Malware</div>
+  <div class="exercise-block">
+    <h2>🦠 Drag Each Malware to the Correct Category</h2>
+    <p class="subtitle">Drag each item from the bank into the correct description box below.</p>
+    <div class="drag-bank" id="drag-bank"></div>
+    <div class="drop-zones" id="drop-zones"></div>
+    <br>
+    <button class="check-btn" onclick="checkDrag()">Check Answers</button>
+    <button class="reset-btn" onclick="resetDrag()">Reset</button>
+    <div class="result-msg" id="drag-result"></div>
+  </div>
+
+  <div class="section-label">Exercise 3 — Fill in the Blanks</div>
+  <div class="exercise-block">
+    <h2>✏️ Complete the Sentences</h2>
+    <p class="subtitle">Click a word from the bank below, then click a blank to fill it in.</p>
+    <div class="word-bank" id="word-bank"></div>
+    <div id="blanks-sentences"></div>
+    <br>
+    <button class="check-btn" onclick="checkBlanks()">Check Answers</button>
+    <button class="reset-btn" onclick="resetBlanks()">Reset</button>
+    <div class="result-msg" id="blanks-result"></div>
+  </div>
+
+  <div class="section-label">Exercise 4 — Real Life Scenarios</div>
+  <div class="exercise-block">
+    <h2>🕵️ What Type of Attack Is This?</h2>
+    <p class="subtitle">Read each scenario and identify the type of cyber attack or threat.</p>
+    <div id="scenarios"></div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// EXERCISE 1: MATCH THE ATTACK
+// ============================================================
+const matchPairs = [
+  { term: 'Phishing', def: 'A fake email or text pretending to be from a trusted organisation to steal login details.' },
+  { term: 'Pharming', def: 'Redirecting users to a fraudulent website that looks identical to the real one.' },
+  { term: 'Shoulder Surfing', def: 'Physically watching someone type their PIN or password in a public place.' },
+  { term: 'Blagging', def: 'Making up a false scenario to trick a victim into revealing confidential information.' },
+  { term: 'Worm', def: 'Malware that spreads automatically through networks without any user interaction.' },
+  { term: 'Trojan', def: 'Malware disguised as legitimate software that creates a backdoor on the victim\'s computer.' },
+];
+
+let selectedTerm = null;
+let selectedDef = null;
+let matchCount = 0;
+
+function buildMatch() {
+  const terms = [...matchPairs].sort(() => Math.random() - 0.5);
+  const defs = [...matchPairs].sort(() => Math.random() - 0.5);
+  const termsCol = document.getElementById('terms-col');
+  const defsCol = document.getElementById('defs-col');
+  termsCol.innerHTML = ''; defsCol.innerHTML = '';
+
+  terms.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'match-term';
+    el.textContent = p.term;
+    el.dataset.term = p.term;
+    el.onclick = () => selectTerm(el);
+    termsCol.appendChild(el);
+  });
+
+  defs.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'match-def';
+    el.textContent = p.def;
+    el.dataset.term = p.term;
+    el.onclick = () => selectDef(el);
+    defsCol.appendChild(el);
+  });
+}
+
+function selectTerm(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('.match-term').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTerm = el;
+  tryMatch();
+}
+
+function selectDef(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('.match-def').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedDef = el;
+  tryMatch();
+}
+
+function tryMatch() {
+  if (!selectedTerm || !selectedDef) return;
+  if (selectedTerm.dataset.term === selectedDef.dataset.term) {
+    selectedTerm.classList.add('matched'); selectedTerm.classList.remove('selected');
+    selectedDef.classList.add('matched'); selectedDef.classList.remove('selected');
+    matchCount++;
+    if (matchCount === matchPairs.length) {
+      const r = document.getElementById('match-result');
+      r.textContent = '🏆 Perfect! You matched all 6 correctly!';
+      r.className = 'result-msg show ok';
+    }
+  } else {
+    selectedTerm.classList.add('wrong-flash'); selectedDef.classList.add('wrong-flash');
+    setTimeout(() => {
+      selectedTerm.classList.remove('wrong-flash', 'selected');
+      selectedDef.classList.remove('wrong-flash', 'selected');
+    }, 600);
+  }
+  selectedTerm = null; selectedDef = null;
+}
+
+// ============================================================
+// EXERCISE 2: SORT THE MALWARE (DRAG & DROP)
+// ============================================================
+const dragItems = [
+  { label: 'Virus', zone: 'needs-user' },
+  { label: 'Worm', zone: 'no-user' },
+  { label: 'Trojan', zone: 'disguised' },
+  { label: 'Spyware', zone: 'records' },
+  { label: 'Adware', zone: 'popups' },
+];
+
+const dropZoneData = [
+  { id: 'needs-user', title: '👆 Needs user to activate it', items: [] },
+  { id: 'no-user', title: '🤖 Spreads with NO user action', items: [] },
+  { id: 'disguised', title: '🎭 Disguises itself as safe software', items: [] },
+  { id: 'records', title: '🕵️ Records keystrokes / activity', items: [] },
+  { id: 'popups', title: '📢 Installs unwanted ads / popups', items: [] },
+];
+
+let draggedEl = null;
+
+function buildDrag() {
+  const bank = document.getElementById('drag-bank');
+  const zones = document.getElementById('drop-zones');
+  bank.innerHTML = ''; zones.innerHTML = '';
+
+  const shuffled = [...dragItems].sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const el = createDragItem(item.label);
+    bank.appendChild(el);
+  });
+
+  dropZoneData.forEach(z => {
+    const zone = document.createElement('div');
+    zone.className = 'drop-zone';
+    zone.id = 'zone-' + z.id;
+    zone.innerHTML = `<h4>${z.title}</h4>`;
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      if (draggedEl) zone.appendChild(draggedEl);
+    });
+    zones.appendChild(zone);
+  });
+}
+
+function createDragItem(label) {
+  const el = document.createElement('div');
+  el.className = 'drag-item';
+  el.textContent = label;
+  el.draggable = true;
+  el.dataset.label = label;
+  el.addEventListener('dragstart', () => { draggedEl = el; });
+  el.addEventListener('dragend', () => { draggedEl = null; });
+
+  // Touch support
+  let touchStartX, touchStartY;
+  el.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    draggedEl = el;
+  }, {passive: true});
+  el.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    el.style.position = 'fixed';
+    el.style.left = (touch.clientX - 40) + 'px';
+    el.style.top = (touch.clientY - 20) + 'px';
+    el.style.zIndex = 1000;
+    el.style.opacity = 0.8;
+  }, {passive: false});
+  el.addEventListener('touchend', e => {
+    el.style.position = '';
+    el.style.left = '';
+    el.style.top = '';
+    el.style.zIndex = '';
+    el.style.opacity = '';
+    const touch = e.changedTouches[0];
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    const zone = target?.closest('.drop-zone');
+    if (zone) zone.appendChild(el);
+    draggedEl = null;
+  });
+
+  return el;
+}
+
+function checkDrag() {
+  let correct = 0;
+  const correctMap = {};
+  dragItems.forEach(i => correctMap[i.label] = i.zone);
+
+  dropZoneData.forEach(z => {
+    const zone = document.getElementById('zone-' + z.id);
+    const items = zone.querySelectorAll('.drag-item');
+    let zoneOk = items.length > 0;
+    items.forEach(item => {
+      if (correctMap[item.dataset.label] !== z.id) zoneOk = false;
+    });
+    zone.classList.remove('correct-zone', 'wrong-zone');
+    if (items.length > 0) {
+      zone.classList.add(zoneOk ? 'correct-zone' : 'wrong-zone');
+      if (zoneOk) correct++;
+    }
+  });
+
+  const r = document.getElementById('drag-result');
+  r.className = 'result-msg show ' + (correct === 5 ? 'ok' : 'bad');
+  r.textContent = correct === 5
+    ? '🏆 Perfect! All 5 placed correctly!'
+    : `${correct}/5 correct — check the highlighted zones and try again.`;
+}
+
+function resetDrag() {
+  document.getElementById('drag-result').className = 'result-msg';
+  buildDrag();
+}
+
+// ============================================================
+// EXERCISE 3: FILL IN THE BLANKS
+// ============================================================
+const blankSentences = [
+  { template: ['A ', '{worm}', ' spreads automatically through a network without needing any user action.'], answer: { worm: 'worm' } },
+  { template: ['', '{Phishing}', ' is a type of attack where criminals send fake emails pretending to be from a trusted organisation.'], answer: { Phishing: 'Phishing' } },
+  { template: ['', '{Pharming}', ' redirects users to a fraudulent website that looks like the real one.'], answer: { Pharming: 'Pharming' } },
+  { template: ['', '{Penetration}', ' testing is used to identify vulnerabilities in a system before attackers do.'], answer: { Penetration: 'Penetration' } },
+  { template: ['Anti-virus software must be regularly ', '{updated}', ' to detect new viruses.'], answer: { updated: 'updated' } },
+  { template: ['', '{Biometric}', ' measures such as fingerprints cannot be guessed or forgotten.'], answer: { Biometric: 'Biometric' } },
+  { template: ['A ', '{Trojan}', ' disguises itself as legitimate software to gain backdoor access to a computer.'], answer: { Trojan: 'Trojan' } },
+  { template: ['', '{Two-factor}', ' authentication requires a second form of verification in addition to a password.'], answer: { 'Two-factor': 'Two-factor' } },
+];
+
+const wordBank = ['worm', 'Phishing', 'Pharming', 'Penetration', 'updated', 'Biometric', 'Trojan', 'Two-factor'];
+let selectedWord = null;
+let blanksState = {};
+
+function buildBlanks() {
+  blanksState = {};
+  selectedWord = null;
+  document.getElementById('blanks-result').className = 'result-msg';
+
+  const wbEl = document.getElementById('word-bank');
+  wbEl.innerHTML = '';
+  wordBank.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.dataset.word = w;
+    chip.onclick = () => {
+      if (chip.classList.contains('used')) return;
+      document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedWord = w;
+    };
+    wbEl.appendChild(chip);
+  });
+
+  const sentEl = document.getElementById('blanks-sentences');
+  sentEl.innerHTML = '';
+  blankSentences.forEach((s, si) => {
+    const p = document.createElement('p');
+    p.className = 'blank-sentence';
+    p.style.marginBottom = '12px';
+    s.template.forEach((part, pi) => {
+      if (part.startsWith('{') && part.endsWith('}')) {
+        const key = part.slice(1, -1);
+        const span = document.createElement('span');
+        span.className = 'blank';
+        span.dataset.si = si;
+        span.dataset.key = key;
+        span.textContent = '________';
+        span.onclick = () => {
+          if (!selectedWord) return;
+          span.textContent = selectedWord;
+          blanksState[`${si}-${key}`] = selectedWord;
+          const usedChip = document.querySelector(`.word-chip[data-word="${selectedWord}"]`);
+          if (usedChip) { usedChip.classList.add('used'); usedChip.classList.remove('selected'); }
+          selectedWord = null;
+        };
+        p.appendChild(span);
+      } else {
+        p.appendChild(document.createTextNode(part));
+      }
+    });
+    sentEl.appendChild(p);
+  });
+}
+
+function checkBlanks() {
+  let correct = 0;
+  blankSentences.forEach((s, si) => {
+    s.template.forEach(part => {
+      if (part.startsWith('{') && part.endsWith('}')) {
+        const key = part.slice(1, -1);
+        const stateKey = `${si}-${key}`;
+        const span = document.querySelector(`.blank[data-si="${si}"][data-key="${key}"]`);
+        if (!span) return;
+        const filled = blanksState[stateKey];
+        const isCorrect = filled && filled.toLowerCase() === s.answer[key].toLowerCase();
+        span.classList.remove('filled-correct', 'filled-wrong');
+        if (filled) span.classList.add(isCorrect ? 'filled-correct' : 'filled-wrong');
+        if (isCorrect) correct++;
+      }
+    });
+  });
+  const r = document.getElementById('blanks-result');
+  r.className = 'result-msg show ' + (correct === blankSentences.length ? 'ok' : 'bad');
+  r.textContent = correct === blankSentences.length
+    ? `🏆 Perfect! All ${blankSentences.length} correct!`
+    : `${correct}/${blankSentences.length} correct — check the red highlights.`;
+}
+
+function resetBlanks() { buildBlanks(); }
+
+// ============================================================
+// EXERCISE 4: SCENARIOS
+// ============================================================
+const scenarios = [
+  {
+    text: 'Mia receives an email claiming to be from her bank. It says her account has been suspended and asks her to click a link and enter her password. The website looks exactly like her bank\'s real website.',
+    options: ['Phishing', 'Pharming', 'Shoulder Surfing', 'Blagging'],
+    answer: 'Pharming',
+    explanation: 'Although the initial contact could be phishing, being redirected to a fake website that looks real is pharming. If the question focuses on the fake website — it\'s pharming.'
+  },
+  {
+    text: 'Tom is withdrawing money from an ATM. A stranger stands very close behind him and watches as he types his PIN number.',
+    options: ['Phishing', 'Blagging', 'Shoulder Surfing', 'Pharming'],
+    answer: 'Shoulder Surfing',
+    explanation: 'Shoulder surfing = physically watching someone enter their PIN or password in a public place.'
+  },
+  {
+    text: 'A hacker calls a company\'s IT helpdesk pretending to be a new employee. They make up a story about being locked out on their first day and persuade the helpdesk to reset their password.',
+    options: ['Phishing', 'Blagging (Pretexting)', 'Worm', 'Pharming'],
+    answer: 'Blagging (Pretexting)',
+    explanation: 'Blagging = creating a fake scenario to manipulate someone into giving you information or access.'
+  },
+  {
+    text: 'Sarah\'s computer starts behaving strangely. An IT technician discovers software that has been secretly recording her keystrokes and sending her passwords to an unknown server.',
+    options: ['Adware', 'Worm', 'Spyware', 'Trojan'],
+    answer: 'Spyware',
+    explanation: 'Spyware records activity and keystrokes and sends this data back to the attacker.'
+  },
+  {
+    text: 'A school\'s network becomes infected with malicious code that spread from one computer to another overnight without anyone clicking anything or opening any files.',
+    options: ['Virus', 'Worm', 'Trojan', 'Adware'],
+    answer: 'Worm',
+    explanation: 'Worms spread automatically through networks without any user interaction — key difference from a virus.'
+  },
+];
+
+function buildScenarios() {
+  const container = document.getElementById('scenarios');
+  container.innerHTML = '';
+  scenarios.forEach((sc, i) => {
+    const wrapper = document.createElement('div');
+    wrapper.style.marginBottom = '20px';
+
+    const label = document.createElement('div');
+    label.style.cssText = 'font-size:0.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;';
+    label.textContent = `Scenario ${i + 1}`;
+    wrapper.appendChild(label);
+
+    const box = document.createElement('div');
+    box.className = 'scenario';
+    box.textContent = sc.text;
+    wrapper.appendChild(box);
+
+    const opts = document.createElement('div');
+    opts.className = 'sc-options';
+    sc.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'sc-btn';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        opts.querySelectorAll('.sc-btn').forEach(b => b.disabled = true);
+        const correct = opt === sc.answer;
+        btn.classList.add(correct ? 'correct' : 'wrong');
+        if (!correct) {
+          opts.querySelectorAll('.sc-btn').forEach(b => {
+            if (b.textContent === sc.answer) b.classList.add('correct');
+          });
+        }
+        const fb = document.createElement('div');
+        fb.className = 'result-msg show ' + (correct ? 'ok' : 'bad');
+        fb.textContent = (correct ? '✅ ' : '❌ ') + sc.explanation;
+        wrapper.appendChild(fb);
+      };
+      opts.appendChild(btn);
+    });
+    wrapper.appendChild(opts);
+    container.appendChild(wrapper);
+  });
+}
+
+// INIT
+buildMatch();
+buildDrag();
+buildBlanks();
+buildScenarios();
+</script>
+</body>
+</html>

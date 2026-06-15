@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computing — Ethical, Legal & Environmental Issues | Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --yellow: #f57f17;
+    --yellow-bg: #fff8e1;
+    --red: #c62828;
+    --red-bg: #ffebee;
+    --orange: #e65100;
+    --orange-bg: #fff3e0;
+    --purple: #6a1b9a;
+    --purple-bg: #f3e5f5;
+    --teal: #00695c;
+    --teal-bg: #e0f2f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0.75rem 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s; }
+  nav a:hover { opacity: 0.75; }
+  nav a.current { color: #fff; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: #fff; padding: 3rem 2rem 2.5rem; text-align: center; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .badge { display: inline-block; background: rgba(100,181,246,0.2); border: 1px solid var(--accent); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 1rem; }
+  .hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: 0.75rem; }
+  .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+  .hero-tags span { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 999px; }
+
+  /* MAIN */
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h2 { color: var(--navy); font-size: 1.3rem; margin: 2.5rem 0 1rem; border-left: 4px solid var(--accent); padding-left: 0.75rem; }
+  h3 { color: var(--navy); font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+
+  /* CHECKLIST */
+  .checklist { background: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; }
+  .checklist h2 { margin-top: 0; border: none; padding: 0; font-size: 1.1rem; }
+  .check-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid #f0f4f8; cursor: pointer; }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--navy); cursor: pointer; flex-shrink: 0; }
+  .check-item label { cursor: pointer; font-size: 0.9rem; }
+  .check-item.done label { text-decoration: line-through; color: #999; }
+
+  /* CARDS */
+  .card { background: #fff; border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+
+  /* HIGHLIGHT STRIPS */
+  .strip { border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+  .strip.green  { background: var(--green-bg);  border-left: 4px solid var(--green);  color: #1b5e20; }
+  .strip.yellow { background: var(--yellow-bg); border-left: 4px solid var(--yellow); color: #4e342e; }
+  .strip.red    { background: var(--red-bg);    border-left: 4px solid var(--red);    color: #7f0000; }
+  .strip.orange { background: var(--orange-bg); border-left: 4px solid var(--orange); color: #4e1800; }
+  .strip.purple { background: var(--purple-bg); border-left: 4px solid var(--purple); color: #310041; }
+  .strip.teal   { background: var(--teal-bg);   border-left: 4px solid var(--teal);   color: #004d40; }
+  .strip strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+
+  /* CODE */
+  pre { background: #0d1b2a; color: #e0e0e0; border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.85rem; overflow-x: auto; margin: 1rem 0; line-height: 1.7; }
+  .kw { color: #64b5f6; } .str { color: #a5d6a7; } .cm { color: #78909c; } .fn { color: #fff176; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 0.88rem; }
+  th { background: var(--navy); color: #fff; padding: 0.6rem 0.9rem; text-align: left; }
+  td { padding: 0.55rem 0.9rem; border-bottom: 1px solid #e8f0f8; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f4f8fc; }
+
+  /* GRIDS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
+  @media(max-width:600px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+  .grid-card { background: #fff; border-radius: 8px; padding: 1rem 1.1rem; border-top: 3px solid var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .grid-card h4 { font-size: 0.9rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .grid-card p, .grid-card li { font-size: 0.85rem; color: #444; }
+  .grid-card ul { padding-left: 1.1rem; }
+
+  /* KEYWORDS */
+  .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0; }
+  .pill { background: var(--navy); color: #fff; font-size: 0.78rem; font-weight: 600; padding: 0.25rem 0.65rem; border-radius: 999px; }
+  .pill.accent { background: var(--accent); color: var(--navy); }
+
+  /* INTERACTIVE — SCENARIO SORTER */
+  .sorter { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .sorter h3 { margin-top: 0; margin-bottom: 1rem; }
+  .scenario-card { background: #f4f8fc; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 0.88rem; }
+  .scenario-card p { margin-bottom: 0.5rem; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .btn-row button { font-size: 0.78rem; padding: 0.3rem 0.75rem; border: 2px solid var(--navy); background: transparent; color: var(--navy); border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.15s; }
+  .btn-row button:hover { background: var(--navy); color: #fff; }
+  .btn-row button.correct-pick { background: var(--green); color: #fff; border-color: var(--green); }
+  .btn-row button.wrong-pick { background: var(--red-bg); color: var(--red); border-color: var(--red); }
+  .feedback-msg { font-size: 0.82rem; margin-top: 0.4rem; min-height: 1.2em; }
+
+  /* CTA + MARK AS READ */
+  .cta-section { text-align: center; margin: 3rem 0 1rem; }
+  .btn-main { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 0.85rem 2rem; font-size: 1rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .btn-main:hover { background: #1a4a7a; }
+  .btn-read { background: transparent; border: 2px solid var(--navy); color: var(--navy); border-radius: 8px; padding: 0.6rem 1.4rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
+  .btn-read:hover { background: var(--navy); color: #fff; }
+  .read-confirm { display: none; background: var(--green-bg); color: var(--green); border-radius: 8px; padding: 0.75rem 1.25rem; margin-top: 1rem; font-weight: 600; font-size: 0.9rem; }
+  .read-confirm.show { display: block; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="computing-index.html">💻 Computing</a>
+  <a class="current" href="computing-ethics-revision.html">⚖️ Ethics &amp; Law</a>
+</nav>
+
+<div class="hero">
+  <p class="kicker">AQA GCSE Computer Science · Section 8</p>
+  <div class="badge">Revision Notes</div>
+  <h1>Ethical, Legal &amp; Environmental Issues</h1>
+  <div class="hero-tags">
+    <span>Privacy</span><span>Copyright</span><span>Cybercrime law</span>
+    <span>AI ethics</span><span>Environmental impact</span><span>Digital divide</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- CHECKLIST -->
+  <div class="checklist">
+    <h2>✅ Learning Checklist</h2>
+    <div id="checklist-wrap">
+      <div class="check-item" data-i="0"><input type="checkbox" id="c0"><label for="c0">Explain the ethical issues raised by computing technology</label></div>
+      <div class="check-item" data-i="1"><input type="checkbox" id="c1"><label for="c1">Describe the main privacy concerns related to data collection</label></div>
+      <div class="check-item" data-i="2"><input type="checkbox" id="c2"><label for="c2">Know the key provisions of the Computer Misuse Act 1990</label></div>
+      <div class="check-item" data-i="3"><input type="checkbox" id="c3"><label for="c3">Know the key provisions of the Data Protection Act 2018 / GDPR</label></div>
+      <div class="check-item" data-i="4"><input type="checkbox" id="c4"><label for="c4">Understand copyright law and Creative Commons licensing</label></div>
+      <div class="check-item" data-i="5"><input type="checkbox" id="c5"><label for="c5">Describe environmental impacts of computing (manufacture, use, disposal)</label></div>
+      <div class="check-item" data-i="6"><input type="checkbox" id="c6"><label for="c6">Explain the digital divide and its causes</label></div>
+      <div class="check-item" data-i="7"><input type="checkbox" id="c7"><label for="c7">Discuss the ethical implications of artificial intelligence</label></div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: ETHICAL ISSUES -->
+  <h2>1. Ethical Issues in Computing</h2>
+  <div class="card">
+    <p><strong>Ethics</strong> is about what is morally right or wrong. In computing, ethical questions arise because technology can be used in ways that harm people even if they are not strictly illegal.</p>
+  </div>
+  <div class="three-col">
+    <div class="grid-card">
+      <h4>👁️ Surveillance</h4>
+      <p>CCTV, cookies, social media tracking and smart devices collect data on people's behaviour, often without meaningful consent.</p>
+    </div>
+    <div class="grid-card">
+      <h4>⚖️ Bias in algorithms</h4>
+      <p>Machine learning trained on biased data can discriminate in hiring, credit scoring or facial recognition — especially against minority groups.</p>
+    </div>
+    <div class="grid-card">
+      <h4>📰 Misinformation</h4>
+      <p>Social media algorithms amplify viral content regardless of accuracy, spreading fake news at scale.</p>
+    </div>
+  </div>
+  <div class="strip yellow">
+    <strong>⚡ Exam tip</strong>
+    When asked about ethical issues, always give a <em>balanced</em> argument — state the concern AND a counter-point or benefit. AQA rewards nuance.
+  </div>
+
+  <!-- SECTION 2: PRIVACY -->
+  <h2>2. Privacy &amp; Data Collection</h2>
+  <div class="card">
+    <p>Every interaction with technology generates data. Companies collect it to improve services and sell targeted advertising, but this creates serious privacy risks.</p>
+  </div>
+  <div class="two-col">
+    <div class="strip green">
+      <strong>✅ Benefits of data collection</strong>
+      Personalised recommendations · Fraud detection · Medical research · Improved public services
+    </div>
+    <div class="strip red">
+      <strong>⚠️ Risks of data collection</strong>
+      Identity theft · Mass surveillance · Data breaches · Lack of informed consent · Profile manipulation
+    </div>
+  </div>
+  <div class="pills">
+    <span class="pill">cookies</span><span class="pill">data broker</span><span class="pill">informed consent</span>
+    <span class="pill">metadata</span><span class="pill">tracking pixel</span><span class="pill">anonymisation</span>
+  </div>
+
+  <!-- SECTION 3: COMPUTER MISUSE ACT -->
+  <h2>3. Computer Misuse Act 1990</h2>
+  <div class="card">
+    <p>The <strong>Computer Misuse Act 1990 (CMA)</strong> was the UK's first law specifically targeting cybercrime. It creates three main offences:</p>
+  </div>
+  <table>
+    <thead><tr><th>Section</th><th>Offence</th><th>Example</th><th>Max sentence</th></tr></thead>
+    <tbody>
+      <tr><td><strong>S.1</strong></td><td>Unauthorised access to computer material</td><td>Guessing someone's password to read their emails</td><td>2 years</td></tr>
+      <tr><td><strong>S.2</strong></td><td>Unauthorised access with intent to commit further offences</td><td>Hacking a bank's system to steal money</td><td>5 years</td></tr>
+      <tr><td><strong>S.3</strong></td><td>Unauthorised modification of computer material</td><td>Installing ransomware; deleting files</td><td>10 years</td></tr>
+    </tbody>
+  </table>
+  <div class="strip orange">
+    <strong>🔑 Key point</strong>
+    "Unauthorised" is the crucial word. Penetration testers have permission — they are not breaking the law. White-hat hackers who act outside their permission slip into illegality.
+  </div>
+
+  <!-- SECTION 4: DATA PROTECTION -->
+  <h2>4. Data Protection Act 2018 / UK GDPR</h2>
+  <div class="card">
+    <p>The <strong>Data Protection Act 2018</strong> implements the EU's GDPR into UK law. It governs how organisations collect, store and use <em>personal data</em>.</p>
+  </div>
+  <div class="strip purple">
+    <strong>📋 The 7 principles of UK GDPR — memorise these!</strong>
+    Lawful, fair &amp; transparent · Purpose limitation · Data minimisation · Accuracy · Storage limitation · Integrity &amp; confidentiality · Accountability
+  </div>
+
+  <h3>Individual rights under GDPR</h3>
+  <div class="two-col">
+    <div class="grid-card">
+      <h4>Rights you have as a data subject</h4>
+      <ul>
+        <li>Right to be informed</li>
+        <li>Right of access (Subject Access Request)</li>
+        <li>Right to rectification</li>
+        <li>Right to erasure ("right to be forgotten")</li>
+        <li>Right to restrict processing</li>
+        <li>Right to data portability</li>
+      </ul>
+    </div>
+    <div class="grid-card">
+      <h4>Obligations on organisations</h4>
+      <ul>
+        <li>Only collect data needed for stated purpose</li>
+        <li>Keep data secure and up-to-date</li>
+        <li>Appoint a Data Protection Officer (DPO) if processing at scale</li>
+        <li>Report breaches to ICO within 72 hours</li>
+        <li>Obtain valid consent before processing</li>
+      </ul>
+    </div>
+  </div>
+  <div class="strip teal">
+    <strong>🏛️ Regulator</strong>
+    The <strong>ICO (Information Commissioner's Office)</strong> enforces the DPA. It can fine organisations up to £17.5 million or 4% of global annual turnover for serious breaches.
+  </div>
+
+  <!-- SECTION 5: COPYRIGHT -->
+  <h2>5. Copyright &amp; Intellectual Property</h2>
+  <div class="card">
+    <p><strong>Copyright</strong> is an automatic legal right that protects original creative works (code, images, music, text) from being copied or distributed without the creator's permission.</p>
+  </div>
+  <table>
+    <thead><tr><th>Licence type</th><th>What you can do</th></tr></thead>
+    <tbody>
+      <tr><td>All rights reserved (commercial)</td><td>Must pay / seek explicit permission</td></tr>
+      <tr><td>Creative Commons (CC-BY)</td><td>Use freely but must credit the author</td></tr>
+      <tr><td>CC-BY-SA</td><td>Use and adapt, but share-alike (same licence)</td></tr>
+      <tr><td>CC-BY-NC</td><td>Use freely for non-commercial purposes only</td></tr>
+      <tr><td>Open source (MIT / GPL)</td><td>Use, modify, redistribute — check licence terms</td></tr>
+      <tr><td>Public domain</td><td>No restrictions — copyright has expired</td></tr>
+    </tbody>
+  </table>
+  <div class="strip red">
+    <strong>⚠️ Common mistake</strong>
+    "Free to use" does not mean "copyright free." Images found via Google Images are usually copyrighted. Always check the licence.
+  </div>
+
+  <!-- SECTION 6: ENVIRONMENTAL -->
+  <h2>6. Environmental Impact of Computing</h2>
+  <div class="three-col">
+    <div class="grid-card">
+      <h4>🏭 Manufacture</h4>
+      <ul>
+        <li>Rare earth metals mined in harmful conditions</li>
+        <li>High energy &amp; water use in semiconductor fabrication</li>
+        <li>Long supply chains with large carbon footprint</li>
+      </ul>
+    </div>
+    <div class="grid-card">
+      <h4>⚡ Use</h4>
+      <ul>
+        <li>Data centres use ~1–2% of global electricity</li>
+        <li>Cooling systems require huge amounts of water</li>
+        <li>Cryptocurrency mining is extremely energy-intensive</li>
+        <li>Streaming video is the biggest internet traffic source</li>
+      </ul>
+    </div>
+    <div class="grid-card">
+      <h4>🗑️ Disposal (e-waste)</h4>
+      <ul>
+        <li>50 million tonnes of e-waste per year globally</li>
+        <li>Toxic chemicals (lead, mercury) leach into soil</li>
+        <li>Only ~20% is formally recycled</li>
+        <li>WEEE Directive regulates disposal in UK</li>
+      </ul>
+    </div>
+  </div>
+  <div class="strip green">
+    <strong>♻️ Reducing impact</strong>
+    Extending device lifespan · Renewable energy for data centres · Right to repair legislation · Responsible recycling · Efficient algorithm design (green computing)
+  </div>
+
+  <!-- SECTION 7: DIGITAL DIVIDE -->
+  <h2>7. The Digital Divide</h2>
+  <div class="card">
+    <p>The <strong>digital divide</strong> refers to the gap between those who have effective access to digital technology and those who do not. It exists at local, national and global levels.</p>
+  </div>
+  <div class="two-col">
+    <div class="strip yellow">
+      <strong>🌍 Global causes</strong>
+      Lack of infrastructure · Cost of devices and data · Censorship and government control · Limited electricity supply · Language barriers
+    </div>
+    <div class="strip purple">
+      <strong>🏠 Local (UK) causes</strong>
+      Rural broadband gaps · Low income · Age (elderly less likely to be online) · Disability · Digital literacy skills
+    </div>
+  </div>
+
+  <!-- SECTION 8: AI ETHICS -->
+  <h2>8. AI &amp; Emerging Technology Ethics</h2>
+  <div class="card">
+    <p>Artificial intelligence raises new ethical questions that existing laws struggle to address fully.</p>
+  </div>
+  <table>
+    <thead><tr><th>Issue</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Autonomous weapons</strong></td><td>Who is responsible if an AI-controlled weapon kills a civilian?</td></tr>
+      <tr><td><strong>Job displacement</strong></td><td>Automation could make millions of jobs obsolete; benefits may not be evenly shared</td></tr>
+      <tr><td><strong>Deepfakes</strong></td><td>AI-generated fake video/audio can spread misinformation or harass individuals</td></tr>
+      <tr><td><strong>Algorithmic bias</strong></td><td>Facial recognition less accurate on darker skin tones due to biased training data</td></tr>
+      <tr><td><strong>Explainability</strong></td><td>Complex neural networks are "black boxes" — hard to explain why a decision was made</td></tr>
+    </tbody>
+  </table>
+  <div class="pills">
+    <span class="pill accent">black box</span><span class="pill accent">explainability</span><span class="pill accent">autonomous system</span>
+    <span class="pill accent">deepfake</span><span class="pill accent">algorithmic fairness</span><span class="pill accent">accountability</span>
+  </div>
+
+  <!-- INTERACTIVE: SCENARIO SORTER -->
+  <h2>🎮 Interactive: Is It Ethical, Legal, Both or Neither?</h2>
+  <div class="sorter">
+    <h3>Classify each scenario</h3>
+    <p style="font-size:0.85rem;color:#555;margin-bottom:1rem;">Click the label you think best describes the scenario below. Green = correct, red = wrong.</p>
+    <div id="scenarios"></div>
+  </div>
+
+  <!-- KEYWORD REFERENCE -->
+  <h2>Key Vocabulary</h2>
+  <div class="pills" style="margin-top:0.5rem">
+    <span class="pill">ethics</span><span class="pill">privacy</span><span class="pill">data protection</span>
+    <span class="pill">GDPR</span><span class="pill">ICO</span><span class="pill">Computer Misuse Act</span>
+    <span class="pill">copyright</span><span class="pill">open source</span><span class="pill">e-waste</span>
+    <span class="pill">digital divide</span><span class="pill">green computing</span><span class="pill">AI bias</span>
+    <span class="pill">deepfake</span><span class="pill">data minimisation</span><span class="pill">right to be forgotten</span>
+    <span class="pill">WEEE Directive</span>
+  </div>
+
+  <!-- MARK AS READ + CTA -->
+  <div class="cta-section">
+    <button class="btn-read" onclick="markRead()">✅ Mark as Read</button>
+    <div class="read-confirm" id="read-confirm">🎉 Section marked as complete — Show this to mum!</div>
+    <br>
+    <a class="btn-main" href="computing-ethics-quickcheck.html" style="margin-top:1.5rem;">🧠 Take the Quickcheck Quiz →</a>
+  </div>
+
+</main>
+
+<script>
+  const STEM = 'computing-ethics';
+
+  // CHECKLIST
+  const items = document.querySelectorAll('.check-item');
+  items.forEach(item => {
+    const i = item.dataset.i;
+    const cb = item.querySelector('input');
+    if (localStorage.getItem(`check-${STEM}-${i}`) === 'true') {
+      cb.checked = true; item.classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      localStorage.setItem(`check-${STEM}-${i}`, cb.checked);
+      item.classList.toggle('done', cb.checked);
+    });
+  });
+
+  // MARK AS READ
+  if (localStorage.getItem(`${STEM}-read`) === 'true') {
+    document.getElementById('read-confirm').classList.add('show');
+  }
+  function markRead() {
+    localStorage.setItem(`${STEM}-read`, 'true');
+    document.getElementById('read-confirm').classList.add('show');
+  }
+
+  // SCENARIO SORTER
+  const scenarios = [
+    { text: "A company sells your email address to advertisers without telling you.", answer: "Unethical & Illegal", options: ["Ethical & Legal","Unethical but Legal","Unethical & Illegal","Ethical but Illegal"], feedback: "This breaches GDPR (unlawful processing) and is also ethically wrong — you haven't consented." },
+    { text: "A developer publishes code under a CC-BY licence so anyone can use it if they credit her.", answer: "Ethical & Legal", options: ["Ethical & Legal","Unethical but Legal","Unethical & Illegal","Ethical but Illegal"], feedback: "Creative Commons licences are legal. Sharing work openly is widely considered ethical." },
+    { text: "You access your friend's social media account using a password they told you last year, without asking again.", answer: "Unethical & Illegal", options: ["Ethical & Legal","Unethical but Legal","Unethical & Illegal","Ethical but Illegal"], feedback: "Unauthorised access is a Computer Misuse Act S.1 offence — and a breach of privacy." },
+    { text: "A school refuses to buy tablets because it can't afford disposal costs for old ones.", answer: "Ethical & Legal", options: ["Ethical & Legal","Unethical but Legal","Unethical & Illegal","Ethical but Illegal"], feedback: "Considering e-waste is ethically responsible. There's nothing illegal about this decision." },
+    { text: "A recruitment AI trained on historical data rejects all female applicants for engineering roles.", answer: "Unethical but Legal", options: ["Ethical & Legal","Unethical but Legal","Unethical & Illegal","Ethical but Illegal"], feedback: "Algorithmic bias is an ethical problem. Currently most jurisdictions lack specific AI discrimination laws, though employment law may apply indirectly." },
+  ];
+
+  const wrap = document.getElementById('scenarios');
+  scenarios.forEach((s, idx) => {
+    const el = document.createElement('div');
+    el.className = 'scenario-card';
+    el.innerHTML = `<p><strong>Scenario ${idx+1}:</strong> ${s.text}</p>
+      <div class="btn-row">${s.options.map(o => `<button onclick="pick(this,'${o}','${s.answer}',${idx})">${o}</button>`).join('')}</div>
+      <p class="feedback-msg" id="fb${idx}"></p>`;
+    wrap.appendChild(el);
+  });
+
+  function pick(btn, choice, answer, idx) {
+    const btns = btn.parentElement.querySelectorAll('button');
+    btns.forEach(b => { b.className = ''; });
+    const fb = document.getElementById('fb' + idx);
+    if (choice === answer) {
+      btn.className = 'correct-pick';
+      fb.textContent = '✅ Correct! ' + scenarios[idx].feedback;
+      fb.style.color = '#2e7d32';
+    } else {
+      btn.className = 'wrong-pick';
+      btns.forEach(b => { if (b.textContent === answer) b.className = 'correct-pick'; });
+      fb.textContent = '❌ Not quite. ' + scenarios[idx].feedback;
+      fb.style.color = '#c62828';
+    }
+  }
+</script>
+</body>
+</html>

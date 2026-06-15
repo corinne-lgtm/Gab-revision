@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Representation — Quickcheck Quiz</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  nav { background: var(--navy); padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; position: sticky; top: 0; z-index: 100; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; padding: 4px 10px; border-radius: 4px; transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav .sep { color: rgba(255,255,255,0.3); }
+
+  .hero { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: white; padding: 40px 24px 32px; text-align: center; }
+  .kicker { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-size: 0.75rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; text-transform: uppercase; }
+  .hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 20px; }
+  .score-bar { max-width: 500px; margin: 0 auto; }
+  .score-nums { display: flex; justify-content: space-between; font-size: 0.85rem; color: #cfe8fc; margin-bottom: 6px; }
+  .progress-track { background: rgba(255,255,255,0.2); border-radius: 10px; height: 10px; overflow: hidden; }
+  .progress-fill { background: var(--accent); height: 100%; border-radius: 10px; width: 0%; transition: width 0.4s ease; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+  .section-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--navy); margin: 32px 0 14px; padding: 6px 0; border-bottom: 2px solid var(--accent); }
+
+  .question-card { background: white; border-radius: 12px; padding: 22px 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .q-num { background: var(--navy); color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+  .q-text { font-size: 0.97rem; line-height: 1.5; font-weight: 500; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn { text-align: left; padding: 10px 16px; border-radius: 8px; border: 2px solid #dde8f5; background: #f8fbff; font-size: 0.9rem; cursor: pointer; transition: all 0.15s; font-family: 'Segoe UI', sans-serif; }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); background: #e8f4fd; }
+  .opt-btn.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; font-weight: 600; }
+  .opt-btn.wrong { background: #ffebee; border-color: #c62828; color: #b71c1c; }
+  .opt-btn.missed { background: #fff3e0; border-color: #e65100; color: #bf360c; }
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; display: none; }
+  .feedback.correct { background: #e8f5e9; color: #1b5e20; border-left: 4px solid #2e7d32; }
+  .feedback.wrong   { background: #ffebee; color: #b71c1c; border-left: 4px solid #c62828; }
+
+  /* T/F */
+  .tf-row { display: flex; gap: 12px; }
+  .tf-btn { flex: 1; padding: 12px; border-radius: 8px; border: 2px solid #dde8f5; background: #f8fbff; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: 'Segoe UI', sans-serif; }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #e8f4fd; }
+  .tf-btn.correct { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
+  .tf-btn.wrong { background: #ffebee; border-color: #c62828; color: #b71c1c; }
+  .tf-btn.missed { background: #fff3e0; border-color: #e65100; color: #bf360c; }
+
+  /* RESULT */
+  .result-box { background: linear-gradient(135deg, #0d2b45, #1a4a7a); color: white; border-radius: 16px; padding: 36px 28px; text-align: center; margin-top: 32px; display: none; }
+  .result-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .result-score { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
+  .result-msg { font-size: 1.2rem; margin: 10px 0; }
+  .result-mum { font-size: 0.95rem; color: #cfe8fc; margin-bottom: 24px; }
+  .reset-btn { background: var(--accent); color: var(--navy); border: none; padding: 12px 30px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .reset-btn:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">|</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span class="sep">|</span>
+  <a href="computing-data-representation-revision.html">📖 Data Representation</a>
+  <span class="sep">|</span>
+  <a href="computing-data-representation-quickcheck.html">✅ Quickcheck</a>
+</nav>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE Computer Science · Section 3</div>
+  <div class="badge">Quickcheck Quiz</div>
+  <h1>Data Representation</h1>
+  <div class="score-bar">
+    <div class="score-nums">
+      <span>Score: <strong id="scoreDisp">0</strong> / 20</span>
+      <span>Answered: <strong id="answDisp">0</strong> / 20</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<main>
+  <div class="section-label">📝 Part 1 — Multiple Choice (Questions 1–10)</div>
+  <div id="mcqArea"></div>
+  <div class="section-label">✅ Part 2 — True or False (Questions 11–20)</div>
+  <div id="tfArea"></div>
+  <div class="result-box" id="resultBox">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="result-mum" id="resultMum"></div>
+    <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+  </div>
+</main>
+
+<script>
+const SCORE_KEY = 'computing-data-rep-score';
+
+const mcqs = [
+  {
+    q: "What is the denary (decimal) value of the binary number 01101101?",
+    opts: ["A. 77","B. 109","C. 101","D. 125"],
+    answer: "B",
+    fb: "01101101 = 64+32+8+4+1 = 109."
+  },
+  {
+    q: "How many bits are in one byte?",
+    opts: ["A. 4","B. 16","C. 8","D. 2"],
+    answer: "C",
+    fb: "One byte = 8 bits. A nibble is 4 bits."
+  },
+  {
+    q: "Which hexadecimal value is equivalent to the binary number 11001010?",
+    opts: ["A. CA","B. AC","C. C0","D. 9A"],
+    answer: "A",
+    fb: "1100 = C (12), 1010 = A (10). So the answer is CA."
+  },
+  {
+    q: "What is the result of the binary addition 00110011 + 00001111?",
+    opts: ["A. 00111100","B. 01000010","C. 01000110","D. 00111111"],
+    answer: "B",
+    fb: "00110011 (51) + 00001111 (15) = 01000010 (66)."
+  },
+  {
+    q: "Which of the following is NOT a use of hexadecimal?",
+    opts: ["A. Memory addresses","B. HTML colour codes","C. MAC addresses","D. Two's complement subtraction"],
+    answer: "D",
+    fb: "Two's complement is purely a binary technique. Hex is used for memory addresses, colours, and MAC addresses."
+  },
+  {
+    q: "A 24-bit colour depth image means each pixel is stored using:",
+    opts: ["A. 24 pixels","B. 3 bytes","C. 24 bytes","D. 3 bits"],
+    answer: "B",
+    fb: "24 bits ÷ 8 = 3 bytes per pixel (one byte each for Red, Green, Blue)."
+  },
+  {
+    q: "What does ASCII stand for?",
+    opts: [
+      "A. American Standard Code for Information Interchange",
+      "B. Advanced Standard Computing Interface Index",
+      "C. Allocated System Character Input Index",
+      "D. American Software Code for Internet Interface"
+    ],
+    answer: "A",
+    fb: "ASCII = American Standard Code for Information Interchange. It uses 7 bits for 128 characters."
+  },
+  {
+    q: "An audio file is recorded at 44,100 Hz sample rate, 16-bit depth, in stereo (2 channels) for 60 seconds. What is the uncompressed file size in bits?",
+    opts: ["A. 84,672,000","B. 44,100","C. 84,672,000,000","D. 84,672,000 bits"],
+    answer: "D",
+    fb: "44,100 × 16 × 2 × 60 = 84,672,000 bits."
+  },
+  {
+    q: "Which compression method allows the original data to be perfectly recovered?",
+    opts: ["A. Lossy","B. JPEG","C. MP3","D. Lossless"],
+    answer: "D",
+    fb: "Lossless compression (e.g. PNG, ZIP) discards no data. The original can be perfectly reconstructed."
+  },
+  {
+    q: "What is the two's complement representation of −10 in 8 bits?",
+    opts: ["A. 11110101","B. 11110110","C. 10001010","D. 01110110"],
+    answer: "B",
+    fb: "+10 = 00001010. Flip → 11110101. Add 1 → 11110110 = −10."
+  }
+];
+
+const tfs = [
+  { q: "The maximum denary value that can be stored in 8 bits is 255.", answer: true, fb: "2⁸ − 1 = 255. Correct." },
+  { q: "Run-length encoding is a type of lossy compression.", answer: false, fb: "RLE is lossless — no data is discarded. The original can be fully recovered." },
+  { q: "Unicode can represent more characters than ASCII.", answer: true, fb: "Unicode covers 140,000+ characters; ASCII only covers 128." },
+  { q: "Increasing the colour depth of an image reduces its file size.", answer: false, fb: "More bits per pixel = larger file size. Colour depth and file size increase together." },
+  { q: "Overflow occurs when the result of a binary calculation is too large to fit in the available bits.", answer: true, fb: "Correct. In 8-bit, adding 200 + 100 overflows as the result (300) > 255." },
+  { q: "In two's complement, the most significant bit (MSB) being 1 indicates a negative number.", answer: true, fb: "The MSB is the sign bit in two's complement: 0 = positive, 1 = negative." },
+  { q: "MP3 is an example of lossless audio compression.", answer: false, fb: "MP3 is lossy — it permanently discards audio data deemed inaudible. FLAC is lossless." },
+  { q: "A higher sample rate always results in a larger audio file size.", answer: true, fb: "More samples per second = more data = larger file. Quality and file size increase together." },
+  { q: "The letter 'A' has a higher ASCII value than the letter 'a'.", answer: false, fb: "A = 65, a = 97. Lowercase letters have higher ASCII values than uppercase." },
+  { q: "Hexadecimal is more compact than binary for representing the same values.", answer: true, fb: "One hex digit replaces 4 binary digits. 11111111 in binary = FF in hex — much more readable." }
+];
+
+let answered = 0;
+let score = 0;
+let total = mcqs.length + tfs.length;
+
+function buildMCQ() {
+  const area = document.getElementById('mcqArea');
+  mcqs.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'q' + i;
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${i+1}</div>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="options" id="opts${i}">
+        ${q.opts.map((o,j) => `<button class="opt-btn" onclick="answerMCQ(${i},'${String.fromCharCode(65+j)}')">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb${i}"></div>`;
+    area.appendChild(card);
+  });
+}
+
+function answerMCQ(qi, chosen) {
+  const q = mcqs[qi];
+  const optsDiv = document.getElementById('opts' + qi);
+  const btns = optsDiv.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = chosen === q.answer;
+  btns.forEach((b, j) => {
+    const letter = String.fromCharCode(65+j);
+    if (letter === q.answer) b.classList.add('correct');
+    else if (letter === chosen && !correct) b.classList.add('wrong');
+  });
+  if (correct) score++;
+  showFeedback('fb' + qi, correct, q.fb);
+  answered++;
+  updateProgress();
+}
+
+function buildTF() {
+  const area = document.getElementById('tfArea');
+  tfs.forEach((q, i) => {
+    const qi = i + 10;
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'q' + qi;
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${qi+1}</div>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="tf-row">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">✅ True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">❌ False</button>
+      </div>
+      <div class="feedback" id="fbtf${i}"></div>`;
+    area.appendChild(card);
+  });
+}
+
+function answerTF(ti, chosen) {
+  const q = tfs[ti];
+  const card = document.getElementById('q' + (ti + 10));
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = chosen === q.answer;
+  btns.forEach(b => {
+    const isTrue = b.textContent.includes('True');
+    if ((isTrue && q.answer) || (!isTrue && !q.answer)) b.classList.add('correct');
+    else if ((isTrue && chosen) || (!isTrue && !chosen)) b.classList.add(correct ? 'correct' : 'wrong');
+    else b.classList.add('missed');
+  });
+  if (correct) score++;
+  showFeedback('fbtf' + ti, correct, q.fb);
+  answered++;
+  updateProgress();
+}
+
+function showFeedback(id, correct, text) {
+  const fb = document.getElementById(id);
+  fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+  fb.textContent = (correct ? '✅ ' : '❌ ') + text;
+  fb.style.display = 'block';
+}
+
+function updateProgress() {
+  const pct = (answered / total * 100).toFixed(0);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('scoreDisp').textContent = score;
+  document.getElementById('answDisp').textContent = answered;
+  if (answered === total) showResult();
+}
+
+function showResult() {
+  localStorage.setItem(SCORE_KEY, score);
+  const box = document.getElementById('resultBox');
+  box.style.display = 'block';
+  const emoji = score >= 18 ? '🏆' : score >= 14 ? '🎉' : score >= 10 ? '📚' : '💪';
+  const msg = score >= 18 ? 'Outstanding! Top marks!' : score >= 14 ? 'Great work — well above average!' : score >= 10 ? 'Good effort — keep revising!' : 'Keep going — you\'ve got this!';
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = score + ' / 20';
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultMum').textContent = 'Show this to mum — ' + score + '/20 ' + emoji;
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  answered = 0; score = 0;
+  document.getElementById('mcqArea').innerHTML = '';
+  document.getElementById('tfArea').innerHTML = '';
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('scoreDisp').textContent = '0';
+  document.getElementById('answDisp').textContent = '0';
+  buildMCQ(); buildTF();
+}
+
+buildMCQ();
+buildTF();
+</script>
+</body>
+</html>

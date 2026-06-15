@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programming – Revision | Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --white: #ffffff;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --yellow: #f9a825;
+    --yellow2: #fff8e1;
+    --red: #c62828;
+    --red2: #ffebee;
+    --orange: #e65100;
+    --orange2: #fff3e0;
+    --purple: #6a1b9a;
+    --purple2: #f3e5f5;
+    --teal: #00695c;
+    --teal2: #e0f2f1;
+    --card-bg: #ffffff;
+    --border: #b3d4f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav .sep { color: rgba(100,181,246,0.4); font-size: 0.8rem; }
+  nav .current { color: rgba(255,255,255,0.6); font-size: 0.82rem; padding: 4px 10px; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%); color: white; padding: 48px 24px 36px; text-align: center; }
+  .hero .kicker { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+  .hero p { color: rgba(255,255,255,0.8); font-size: 1rem; max-width: 560px; margin: 0 auto 18px; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-weight: 700; font-size: 0.8rem; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; }
+  .hero-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .hero-tags span { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 0.8rem; padding: 5px 12px; border-radius: 20px; }
+
+  /* MARK AS READ */
+  .mar-wrap { text-align: center; padding: 20px; }
+  .mar-btn { background: var(--accent); color: var(--navy); border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s; }
+  .mar-btn:hover { opacity: 0.85; }
+  .mar-btn.done { background: var(--green); color: white; }
+  .mar-confirm { display: none; color: var(--green); font-weight: 600; font-size: 0.9rem; margin-top: 8px; }
+  .mar-confirm.show { display: block; }
+
+  /* CHECKLIST */
+  .checklist-section { background: white; margin: 0 auto 20px; max-width: 900px; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .checklist-section h2 { color: var(--navy); font-size: 1.1rem; margin-bottom: 16px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+  .checklist { list-style: none; display: grid; gap: 8px; }
+  .checklist li { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; background: var(--bg); cursor: pointer; user-select: none; transition: background 0.2s; font-size: 0.95rem; }
+  .checklist li:hover { background: #d0e8f9; }
+  .checklist li.done { background: #e8f5e9; text-decoration: line-through; color: #555; }
+  .checklist li .tick { width: 20px; height: 20px; border: 2px solid var(--accent); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+  .checklist li.done .tick { background: var(--green); border-color: var(--green); color: white; }
+
+  /* MAIN CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 0 16px 40px; }
+
+  /* SECTION HEADERS */
+  .section-head { display: flex; align-items: center; gap: 10px; margin: 32px 0 14px; }
+  .section-head .icon { font-size: 1.4rem; }
+  .section-head h2 { font-size: 1.2rem; font-weight: 800; color: var(--navy); }
+  .section-head .tag { background: var(--navy); color: var(--accent); font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* CARDS */
+  .card { background: white; border-radius: 12px; padding: 22px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid var(--accent); }
+  .card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .card p, .card li { font-size: 0.93rem; line-height: 1.6; }
+  .card ul { padding-left: 18px; }
+  .card ul li { margin-bottom: 4px; }
+
+  /* HIGHLIGHT STRIPS */
+  .strip { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 0.92rem; line-height: 1.55; }
+  .strip.green { background: var(--green2); border-left: 4px solid var(--green); }
+  .strip.yellow { background: var(--yellow2); border-left: 4px solid var(--yellow); }
+  .strip.red { background: var(--red2); border-left: 4px solid var(--red); }
+  .strip.orange { background: var(--orange2); border-left: 4px solid var(--orange); }
+  .strip.purple { background: var(--purple2); border-left: 4px solid var(--purple); }
+  .strip.teal { background: var(--teal2); border-left: 4px solid var(--teal); }
+  .strip strong { display: block; margin-bottom: 4px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+  .strip.green strong { color: var(--green); }
+  .strip.yellow strong { color: #7a5c00; }
+  .strip.red strong { color: var(--red); }
+  .strip.orange strong { color: var(--orange); }
+  .strip.purple strong { color: var(--purple); }
+  .strip.teal strong { color: var(--teal); }
+
+  /* CODE BLOCKS */
+  .code-block { background: #0d1b2a; color: #e8f4fd; border-radius: 10px; padding: 16px 18px; font-family: 'Courier New', monospace; font-size: 0.88rem; line-height: 1.7; margin: 10px 0; overflow-x: auto; }
+  .code-block .kw { color: #64b5f6; font-weight: 700; }
+  .code-block .str { color: #a5d6a7; }
+  .code-block .cmt { color: #78909c; font-style: italic; }
+  .code-block .num { color: #ffcc80; }
+  .code-block .fn { color: #ce93d8; }
+
+  /* DATA TYPES TABLE */
+  .dt-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 10px; }
+  .dt-table th { background: var(--navy); color: var(--accent); padding: 10px 12px; text-align: left; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; }
+  .dt-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+  .dt-table tr:nth-child(even) td { background: var(--bg); }
+  .dt-table .type-pill { display: inline-block; background: var(--navy); color: var(--accent); font-size: 0.78rem; padding: 2px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-weight: 700; }
+
+  /* GRID */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  /* KEYWORD PILLS */
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .kw-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-size: 0.85rem; border: 1.5px solid; }
+  .kw-pill.blue { background: #e3f2fd; border-color: #90caf9; color: #0d47a1; }
+  .kw-pill.green { background: var(--green2); border-color: #a5d6a7; color: #1b5e20; }
+  .kw-pill.purple { background: var(--purple2); border-color: #ce93d8; color: #4a148c; }
+  .kw-pill.orange { background: var(--orange2); border-color: #ffcc80; color: #bf360c; }
+  .kw-pill.teal { background: var(--teal2); border-color: #80cbc4; color: #004d40; }
+  .kw-pill.red { background: var(--red2); border-color: #ef9a9a; color: #b71c1c; }
+  .kw-pill strong { font-family: 'Courier New', monospace; font-size: 0.9rem; }
+
+  /* INTERACTIVE TRACE TABLE */
+  .trace-wrap { background: white; border-radius: 12px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 14px; }
+  .trace-wrap h3 { color: var(--navy); font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+  .trace-table { width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.88rem; }
+  .trace-table th { background: var(--navy); color: var(--accent); padding: 8px 12px; text-align: center; }
+  .trace-table td { padding: 8px 12px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
+  .trace-table td.active { background: #fff8e1; }
+  .trace-table td.revealed { background: #e8f5e9; color: var(--green); font-weight: 700; }
+  .trace-hint { font-size: 0.82rem; color: #666; margin-top: 8px; }
+  .reveal-btn { background: var(--accent); color: var(--navy); border: none; padding: 8px 18px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-top: 12px; }
+
+  /* QUIZ CTA */
+  .quiz-cta { background: linear-gradient(135deg, var(--navy), #1a4a7a); border-radius: 14px; padding: 28px; text-align: center; margin-top: 32px; color: white; }
+  .quiz-cta h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+  .quiz-cta p { color: rgba(255,255,255,0.75); font-size: 0.93rem; margin-bottom: 18px; }
+  .quiz-btn { display: inline-block; background: var(--accent); color: var(--navy); text-decoration: none; font-weight: 800; font-size: 0.95rem; padding: 12px 30px; border-radius: 8px; transition: opacity 0.2s; }
+  .quiz-btn:hover { opacity: 0.85; }
+
+  @media(max-width:620px) {
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span class="sep">›</span>
+  <span class="current">Section 2: Programming</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">AQA GCSE Computer Science</div>
+  <h1>💻 Programming</h1>
+  <p>Variables, data types, selection, iteration, arrays, string handling, subroutines and file handling.</p>
+  <span class="badge">Section 2</span>
+  <div class="hero-tags">
+    <span>📦 Variables &amp; Data Types</span>
+    <span>🔀 Selection &amp; Iteration</span>
+    <span>📋 Arrays</span>
+    <span>🔡 Strings</span>
+    <span>🔧 Subroutines</span>
+    <span>📂 File Handling</span>
+  </div>
+</section>
+
+<!-- MARK AS READ -->
+<div class="mar-wrap">
+  <button class="mar-btn" id="marBtn" onclick="toggleRead()">✅ Mark as read</button>
+  <div class="mar-confirm" id="marConfirm">🎉 Great work! Show this to mum — you've covered Section 2!</div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="checklist-section">
+  <h2>📋 Learning Objectives</h2>
+  <ul class="checklist" id="checklist">
+    <li onclick="toggleCheck(0)" id="chk0"><span class="tick" id="tick0"></span> I can name the main data types and give examples of each</li>
+    <li onclick="toggleCheck(1)" id="chk1"><span class="tick" id="tick1"></span> I can write IF / ELSE IF / ELSE selection statements in pseudocode</li>
+    <li onclick="toggleCheck(2)" id="chk2"><span class="tick" id="tick2"></span> I can write FOR, WHILE and DO…UNTIL loops and explain when to use each</li>
+    <li onclick="toggleCheck(3)" id="chk3"><span class="tick" id="tick3"></span> I can declare and use a 1D array in pseudocode</li>
+    <li onclick="toggleCheck(4)" id="chk4"><span class="tick" id="tick4"></span> I can use string operations: length, substring, concatenation, upper/lower</li>
+    <li onclick="toggleCheck(5)" id="chk5"><span class="tick" id="tick5"></span> I can write and call a procedure and a function (with parameters and return values)</li>
+    <li onclick="toggleCheck(6)" id="chk6"><span class="tick" id="tick6"></span> I can explain local vs global variables and why local scope is preferred</li>
+    <li onclick="toggleCheck(7)" id="chk7"><span class="tick" id="tick7"></span> I can read from and write to a text file in pseudocode</li>
+  </ul>
+</div>
+
+<div class="content">
+
+  <!-- SECTION 1: DATA TYPES & VARIABLES -->
+  <div class="section-head" id="datatypes">
+    <span class="icon">📦</span>
+    <h2>Data Types &amp; Variables</h2>
+    <span class="tag">2.1</span>
+  </div>
+
+  <table class="dt-table">
+    <tr>
+      <th>Data Type</th>
+      <th>What it stores</th>
+      <th>Example value</th>
+      <th>AQA Pseudocode keyword</th>
+    </tr>
+    <tr><td><span class="type-pill">INTEGER</span></td><td>Whole numbers</td><td>42, −7, 0</td><td><code>x ← 42</code></td></tr>
+    <tr><td><span class="type-pill">REAL</span></td><td>Decimal numbers</td><td>3.14, −0.5</td><td><code>pi ← 3.14</code></td></tr>
+    <tr><td><span class="type-pill">BOOLEAN</span></td><td>True or False only</td><td>TRUE, FALSE</td><td><code>found ← FALSE</code></td></tr>
+    <tr><td><span class="type-pill">CHARACTER</span></td><td>A single character</td><td>'A', '3', '!'</td><td><code>grade ← 'A'</code></td></tr>
+    <tr><td><span class="type-pill">STRING</span></td><td>Sequence of characters</td><td>"Hello", "123"</td><td><code>name ← "Gabriel"</code></td></tr>
+  </table>
+
+  <div class="strip yellow" style="margin-top:12px">
+    <strong>⚠️ Exam Tip — Casting</strong>
+    You can convert between types: <code>INT("42")</code> converts a string to integer, <code>STR(42)</code> converts an integer to string. "123" + 1 causes an error — you must cast first.
+  </div>
+
+  <!-- SECTION 2: SELECTION -->
+  <div class="section-head" id="selection">
+    <span class="icon">🔀</span>
+    <h2>Selection (IF / SWITCH)</h2>
+    <span class="tag">2.2</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="code-block">
+<span class="kw">IF</span> score &gt;= 70 <span class="kw">THEN</span>
+  OUTPUT <span class="str">"Pass"</span>
+<span class="kw">ELSE IF</span> score &gt;= 50 <span class="kw">THEN</span>
+  OUTPUT <span class="str">"Merit"</span>
+<span class="kw">ELSE</span>
+  OUTPUT <span class="str">"Fail"</span>
+<span class="kw">END IF</span>
+      </div>
+    </div>
+    <div>
+      <div class="code-block">
+<span class="kw">SWITCH</span> day:
+  <span class="kw">CASE</span> <span class="str">"Mon"</span>:
+    OUTPUT <span class="str">"Monday"</span>
+  <span class="kw">CASE</span> <span class="str">"Tue"</span>:
+    OUTPUT <span class="str">"Tuesday"</span>
+  <span class="kw">DEFAULT</span>:
+    OUTPUT <span class="str">"Other day"</span>
+<span class="kw">END SWITCH</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip green">
+    <strong>✅ Key Point</strong>
+    Use <strong>IF/ELSE IF</strong> when conditions are ranges or complex expressions. Use <strong>SWITCH/CASE</strong> when comparing one variable against a list of specific values — it's cleaner.
+  </div>
+
+  <!-- SECTION 3: ITERATION -->
+  <div class="section-head" id="iteration">
+    <span class="icon">🔁</span>
+    <h2>Iteration (Loops)</h2>
+    <span class="tag">2.3</span>
+  </div>
+
+  <div class="three-col">
+    <div class="card">
+      <h3>FOR loop</h3>
+      <p>Use when you know <strong>exactly how many times</strong> to repeat.</p>
+      <div class="code-block" style="margin-top:10px">
+<span class="kw">FOR</span> i ← <span class="num">1</span> TO <span class="num">5</span>
+  OUTPUT i
+<span class="kw">NEXT</span> i
+      </div>
+    </div>
+    <div class="card">
+      <h3>WHILE loop</h3>
+      <p>Checks condition <strong>before</strong> each iteration. May run 0 times.</p>
+      <div class="code-block" style="margin-top:10px">
+<span class="kw">WHILE</span> x &lt; <span class="num">10</span>
+  x ← x + <span class="num">1</span>
+<span class="kw">END WHILE</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>DO…UNTIL loop</h3>
+      <p>Checks condition <strong>after</strong> each iteration. Always runs <strong>at least once</strong>.</p>
+      <div class="code-block" style="margin-top:10px">
+<span class="kw">DO</span>
+  x ← x + <span class="num">1</span>
+<span class="kw">UNTIL</span> x = <span class="num">10</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip red">
+    <strong>❗ Common Mistake</strong>
+    WHILE vs DO…UNTIL: if the condition is false from the start, a WHILE loop runs <strong>zero times</strong> but a DO…UNTIL loop always runs <strong>at least once</strong>. Examiners love testing this!
+  </div>
+
+  <!-- INTERACTIVE TRACE TABLE -->
+  <div class="trace-wrap" id="trace">
+    <h3>🔍 Interactive Trace Table — Click cells to reveal values</h3>
+    <p style="font-size:0.88rem;color:#555;margin-bottom:14px">Trace this loop: <code>x ← 1 &nbsp;|&nbsp; WHILE x &lt; 4 &nbsp;|&nbsp; x ← x * 2 &nbsp;|&nbsp; END WHILE</code> — What is x after each iteration?</p>
+    <table class="trace-table">
+      <tr>
+        <th>Iteration</th>
+        <th>x (start of loop)</th>
+        <th>Condition x &lt; 4?</th>
+        <th>x (after x ← x * 2)</th>
+      </tr>
+      <tr>
+        <td>Before loop</td>
+        <td class="trace-cell" data-val="1">?</td>
+        <td class="trace-cell" data-val="TRUE (1&lt;4)">?</td>
+        <td class="trace-cell" data-val="2">?</td>
+      </tr>
+      <tr>
+        <td>Iteration 1</td>
+        <td class="trace-cell" data-val="2">?</td>
+        <td class="trace-cell" data-val="TRUE (2&lt;4)">?</td>
+        <td class="trace-cell" data-val="4">?</td>
+      </tr>
+      <tr>
+        <td>Iteration 2</td>
+        <td class="trace-cell" data-val="4">?</td>
+        <td class="trace-cell" data-val="FALSE (4=4, loop ends)">?</td>
+        <td class="trace-cell" data-val="(loop ends)">?</td>
+      </tr>
+    </table>
+    <p class="trace-hint">💡 Click any cell to reveal its value, or click the button to reveal all.</p>
+    <button class="reveal-btn" onclick="revealAll()">Reveal all</button>
+  </div>
+
+  <!-- SECTION 4: ARRAYS -->
+  <div class="section-head" id="arrays">
+    <span class="icon">📋</span>
+    <h2>Arrays</h2>
+    <span class="tag">2.4</span>
+  </div>
+
+  <div class="card">
+    <h3>Declaring and using a 1D array</h3>
+    <div class="code-block">
+<span class="cmt"># Declare an array of 5 integers (index 0 to 4)</span>
+<span class="kw">ARRAY</span> scores[<span class="num">5</span>]
+
+<span class="cmt"># Assign values</span>
+scores[<span class="num">0</span>] ← <span class="num">87</span>
+scores[<span class="num">1</span>] ← <span class="num">65</span>
+scores[<span class="num">2</span>] ← <span class="num">91</span>
+
+<span class="cmt"># Loop through the array</span>
+<span class="kw">FOR</span> i ← <span class="num">0</span> TO <span class="num">4</span>
+  OUTPUT scores[i]
+<span class="kw">NEXT</span> i
+    </div>
+  </div>
+
+  <div class="strip purple">
+    <strong>💡 Key Facts about Arrays</strong>
+    Arrays store multiple values of the <strong>same data type</strong> under one name. In AQA pseudocode, arrays are <strong>zero-indexed</strong> (first element is index 0). Arrays have a <strong>fixed size</strong> — you cannot add extra elements once declared.
+  </div>
+
+  <!-- SECTION 5: STRINGS -->
+  <div class="section-head" id="strings">
+    <span class="icon">🔡</span>
+    <h2>String Manipulation</h2>
+    <span class="tag">2.5</span>
+  </div>
+
+  <table class="dt-table">
+    <tr>
+      <th>Operation</th>
+      <th>AQA Pseudocode</th>
+      <th>Example</th>
+      <th>Result</th>
+    </tr>
+    <tr><td>Length</td><td><code>LEN(str)</code></td><td><code>LEN("Hello")</code></td><td>5</td></tr>
+    <tr><td>Substring</td><td><code>SUBSTRING(str, start, length)</code></td><td><code>SUBSTRING("Hello", 1, 3)</code></td><td>"ell"</td></tr>
+    <tr><td>Concatenation</td><td><code>str1 + str2</code></td><td><code>"Hi" + " Gab"</code></td><td>"Hi Gab"</td></tr>
+    <tr><td>Upper case</td><td><code>UPPER(str)</code></td><td><code>UPPER("hello")</code></td><td>"HELLO"</td></tr>
+    <tr><td>Lower case</td><td><code>LOWER(str)</code></td><td><code>LOWER("HELLO")</code></td><td>"hello"</td></tr>
+    <tr><td>To char code</td><td><code>ASC(char)</code></td><td><code>ASC("A")</code></td><td>65</td></tr>
+    <tr><td>From char code</td><td><code>CHR(code)</code></td><td><code>CHR(65)</code></td><td>"A"</td></tr>
+  </table>
+
+  <div class="strip orange" style="margin-top:12px">
+    <strong>⚠️ Exam Tip — SUBSTRING indexing</strong>
+    In AQA pseudocode, <code>SUBSTRING("Hello", 1, 3)</code> starts at index 1 and takes 3 characters → "ell". Always double-check: is the start index 0 or 1? AQA uses <strong>1-based</strong> indexing for SUBSTRING.
+  </div>
+
+  <!-- SECTION 6: SUBROUTINES -->
+  <div class="section-head" id="subroutines">
+    <span class="icon">🔧</span>
+    <h2>Subroutines — Procedures &amp; Functions</h2>
+    <span class="tag">2.6</span>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Procedure — does something, returns nothing</h3>
+      <div class="code-block">
+<span class="kw">PROCEDURE</span> <span class="fn">greet</span>(name)
+  OUTPUT <span class="str">"Hello, "</span> + name
+<span class="kw">END PROCEDURE</span>
+
+<span class="cmt"># Call it:</span>
+<span class="fn">greet</span>(<span class="str">"Gabriel"</span>)
+      </div>
+    </div>
+    <div class="card">
+      <h3>Function — does something, returns a value</h3>
+      <div class="code-block">
+<span class="kw">FUNCTION</span> <span class="fn">square</span>(n)
+  <span class="kw">RETURN</span> n * n
+<span class="kw">END FUNCTION</span>
+
+<span class="cmt"># Call it:</span>
+result ← <span class="fn">square</span>(<span class="num">5</span>)
+OUTPUT result  <span class="cmt"># 25</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip teal">
+    <strong>🔑 Local vs Global Variables</strong>
+    A <strong>local variable</strong> is declared inside a subroutine — it only exists while that subroutine runs and cannot be accessed elsewhere. A <strong>global variable</strong> is declared outside all subroutines and can be accessed anywhere. Local scope is preferred because it avoids accidental changes to variables from other parts of the program.
+  </div>
+
+  <div class="strip green">
+    <strong>✅ Why use subroutines?</strong>
+    <strong>Decomposition</strong> — break big problems into smaller parts. <strong>Reuse</strong> — write once, call many times. <strong>Easier testing</strong> — test each subroutine independently. <strong>Readability</strong> — code is easier to understand.
+  </div>
+
+  <!-- SECTION 7: FILE HANDLING -->
+  <div class="section-head" id="files">
+    <span class="icon">📂</span>
+    <h2>File Handling</h2>
+    <span class="tag">2.7</span>
+  </div>
+
+  <div class="card">
+    <h3>Reading and writing files in AQA pseudocode</h3>
+    <div class="code-block">
+<span class="cmt"># WRITING to a file</span>
+<span class="fn">open</span>(<span class="str">"scores.txt"</span>, <span class="str">"write"</span>)
+<span class="fn">writeLine</span>(<span class="str">"scores.txt"</span>, <span class="str">"95"</span>)
+<span class="fn">close</span>(<span class="str">"scores.txt"</span>)
+
+<span class="cmt"># READING from a file</span>
+<span class="fn">open</span>(<span class="str">"scores.txt"</span>, <span class="str">"read"</span>)
+<span class="kw">WHILE</span> <span class="kw">NOT</span> <span class="fn">endOfFile</span>(<span class="str">"scores.txt"</span>)
+  line ← <span class="fn">readLine</span>(<span class="str">"scores.txt"</span>)
+  OUTPUT line
+<span class="kw">END WHILE</span>
+<span class="fn">close</span>(<span class="str">"scores.txt"</span>)
+    </div>
+  </div>
+
+  <div class="strip yellow">
+    <strong>⚠️ Always close your file!</strong>
+    Forgetting <code>close()</code> can cause data loss or file corruption. Examiners will mark you down if you omit it. Always open → read/write → close.
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="section-head">
+    <span class="icon">🔑</span>
+    <h2>Key Terms</h2>
+  </div>
+
+  <div class="keywords">
+    <span class="kw-pill blue"><strong>variable</strong> — named storage location</span>
+    <span class="kw-pill blue"><strong>constant</strong> — value that never changes</span>
+    <span class="kw-pill green"><strong>integer</strong> — whole number</span>
+    <span class="kw-pill green"><strong>real</strong> — decimal number</span>
+    <span class="kw-pill green"><strong>boolean</strong> — TRUE or FALSE</span>
+    <span class="kw-pill purple"><strong>iteration</strong> — repeating a block of code</span>
+    <span class="kw-pill purple"><strong>selection</strong> — choosing a path based on condition</span>
+    <span class="kw-pill orange"><strong>array</strong> — fixed-size list of same-type values</span>
+    <span class="kw-pill orange"><strong>index</strong> — position in an array (starts at 0)</span>
+    <span class="kw-pill teal"><strong>procedure</strong> — subroutine that returns nothing</span>
+    <span class="kw-pill teal"><strong>function</strong> — subroutine that returns a value</span>
+    <span class="kw-pill red"><strong>local variable</strong> — only exists inside its subroutine</span>
+    <span class="kw-pill red"><strong>global variable</strong> — accessible anywhere in the program</span>
+    <span class="kw-pill blue"><strong>parameter</strong> — value passed into a subroutine</span>
+    <span class="kw-pill green"><strong>return value</strong> — value sent back by a function</span>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h2>Ready to test yourself?</h2>
+    <p>20 quick questions covering everything in Section 2 — data types, loops, arrays, strings and subroutines.</p>
+    <a href="computing-programming-quickcheck.html" class="quiz-btn">Start the Quiz →</a>
+  </div>
+
+</div><!-- end .content -->
+
+<script>
+const STEM = 'computing-programming-revision';
+
+// Mark as read
+function toggleRead() {
+  const current = localStorage.getItem(STEM + '-read') === 'true';
+  const newVal = !current;
+  localStorage.setItem(STEM + '-read', newVal);
+  document.getElementById('marBtn').textContent = newVal ? '✅ Marked as read!' : '✅ Mark as read';
+  document.getElementById('marBtn').classList.toggle('done', newVal);
+  document.getElementById('marConfirm').classList.toggle('show', newVal);
+}
+
+// Checklist
+function toggleCheck(i) {
+  const key = 'check-' + STEM + '-' + i;
+  const current = localStorage.getItem(key) === 'true';
+  localStorage.setItem(key, !current);
+  renderChecklist();
+}
+function renderChecklist() {
+  for (let i = 0; i < 8; i++) {
+    const done = localStorage.getItem('check-' + STEM + '-' + i) === 'true';
+    document.getElementById('chk' + i).classList.toggle('done', done);
+    document.getElementById('tick' + i).textContent = done ? '✓' : '';
+  }
+}
+
+// Trace table
+document.querySelectorAll('.trace-cell').forEach(cell => {
+  cell.addEventListener('click', () => {
+    cell.textContent = cell.dataset.val;
+    cell.classList.add('revealed');
+  });
+});
+function revealAll() {
+  document.querySelectorAll('.trace-cell').forEach(cell => {
+    cell.textContent = cell.dataset.val;
+    cell.classList.add('revealed');
+  });
+}
+
+// Init
+if (localStorage.getItem(STEM + '-read') === 'true') {
+  document.getElementById('marBtn').textContent = '✅ Marked as read!';
+  document.getElementById('marBtn').classList.add('done');
+  document.getElementById('marConfirm').classList.add('show');
+}
+renderChecklist();
+</script>
+</body>
+</html>

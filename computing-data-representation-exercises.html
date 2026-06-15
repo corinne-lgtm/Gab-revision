@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Representation — Practice Paper</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; padding: 4px 10px; border-radius: 4px; transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav .sep { color: rgba(255,255,255,0.3); }
+
+  /* STICKY TIMER */
+  .timer-bar { position: sticky; top: 0; z-index: 99; background: var(--navy); color: white; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 3px solid var(--accent); }
+  .timer-display { font-size: 1.4rem; font-weight: 700; font-family: 'Courier New', monospace; color: var(--accent); }
+  .timer-label { font-size: 0.8rem; color: #cfe8fc; }
+  .timer-controls { display: flex; gap: 8px; }
+  .timer-btn { background: var(--accent); color: var(--navy); border: none; padding: 7px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+  .timer-btn.reset { background: rgba(255,255,255,0.15); color: white; }
+  .timer-btn:hover { opacity: 0.85; }
+  .timer-bar.warning .timer-display { color: #ffab40; }
+  .timer-bar.danger .timer-display { color: #ef5350; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: white; padding: 40px 24px; }
+  .kicker { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-size: 0.75rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; text-transform: uppercase; }
+  .hero h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 16px; }
+  .hero-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
+  .meta-item { text-align: center; }
+  .meta-val { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+  .meta-label { font-size: 0.75rem; color: #cfe8fc; text-transform: uppercase; letter-spacing: 0.08em; }
+  .instructions { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 16px 20px; font-size: 0.9rem; line-height: 1.7; color: #cfe8fc; max-width: 700px; }
+  .instructions strong { color: white; }
+
+  /* MAIN */
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* QUESTION */
+  .question { background: white; border-radius: 12px; padding: 26px 28px; margin-bottom: 28px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .q-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; border-bottom: 2px solid var(--bg); padding-bottom: 14px; }
+  .q-num-badge { background: var(--navy); color: white; padding: 5px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+  .q-marks { background: var(--accent); color: var(--navy); padding: 5px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; margin-left: auto; }
+  .q-stem { font-size: 0.97rem; line-height: 1.6; font-weight: 500; }
+  .q-stem p { margin-bottom: 10px; }
+  .q-stem p:last-child { margin-bottom: 0; }
+  .sub-q { margin: 14px 0; }
+  .sub-q .sub-label { font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+
+  /* TEXTAREAS */
+  textarea { width: 100%; border: 2px solid #dde8f5; border-radius: 8px; padding: 10px 14px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem; resize: vertical; min-height: 80px; color: #1a1a2e; line-height: 1.6; transition: border-color 0.2s; }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  textarea.narrow { min-height: 48px; }
+  textarea.code-area { font-family: 'Courier New', monospace; font-size: 0.88rem; min-height: 120px; background: #f8fbff; }
+
+  /* TRACE TABLE */
+  .trace-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.88rem; }
+  .trace-table th { background: var(--navy); color: white; padding: 9px 12px; text-align: center; border: 1px solid #bbd4f5; }
+  .trace-table td { border: 1px solid #bbd4f5; padding: 2px; vertical-align: middle; }
+  .trace-table td textarea { border: none; border-radius: 0; padding: 8px 10px; min-height: 40px; font-family: 'Courier New', monospace; font-size: 0.85rem; text-align: center; resize: none; }
+  .trace-table td textarea:focus { background: #e8f4fd; }
+  .trace-table .given { background: #f0f7ff; font-family: 'Courier New', monospace; padding: 9px 12px; text-align: center; font-weight: 600; }
+
+  /* MARK SCHEME */
+  .ms-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; background: none; border: 2px solid var(--navy); color: var(--navy); padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+  .ms-toggle:hover { background: var(--navy); color: white; }
+  .mark-scheme { display: none; margin-top: 14px; background: #f0f7ff; border-left: 5px solid var(--accent); border-radius: 0 8px 8px 0; padding: 16px 18px; font-size: 0.9rem; line-height: 1.8; }
+  .mark-scheme.open { display: block; }
+  .mark-scheme h4 { color: var(--navy); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .mark-scheme ul { padding-left: 18px; }
+  .mark-scheme li { margin-bottom: 4px; }
+  .mark-point { display: flex; gap: 8px; margin-bottom: 6px; }
+  .tick { color: #2e7d32; font-weight: 700; }
+
+  /* TOTAL BAR */
+  .total-bar { background: white; border-radius: 12px; padding: 20px 24px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 32px; }
+  .total-bar .big { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .total-bar .sub { color: #555; font-size: 0.9rem; }
+
+  code { font-family: 'Courier New', monospace; background: #e8f4fd; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+
+  .hint { background: #fffde7; border-left: 4px solid #f9a825; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #5d4000; margin: 10px 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">|</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span class="sep">|</span>
+  <a href="computing-data-representation-revision.html">📖 Data Representation</a>
+  <span class="sep">|</span>
+  <a href="computing-data-representation-quickcheck.html">✅ Quickcheck</a>
+  <span class="sep">|</span>
+  <a href="computing-data-representation-exercises.html">📝 Practice Paper</a>
+</nav>
+
+<!-- STICKY TIMER -->
+<div class="timer-bar" id="timerBar">
+  <div>
+    <div class="timer-label">⏱ Suggested time: 50 minutes</div>
+    <div class="timer-display" id="timerDisplay">50:00</div>
+  </div>
+  <div class="timer-controls">
+    <button class="timer-btn" id="startBtn" onclick="startTimer()">▶ Start</button>
+    <button class="timer-btn reset" onclick="resetTimer()">↺ Reset</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE Computer Science · Section 3</div>
+  <div class="badge">Practice Paper</div>
+  <h1>Data Representation</h1>
+  <div class="hero-meta">
+    <div class="meta-item"><div class="meta-val">50</div><div class="meta-label">Total Marks</div></div>
+    <div class="meta-item"><div class="meta-val">50 min</div><div class="meta-label">Suggested Time</div></div>
+    <div class="meta-item"><div class="meta-val">8</div><div class="meta-label">Questions</div></div>
+  </div>
+  <div class="instructions">
+    <strong>Instructions:</strong> Answer all questions in the spaces provided. Use the resizable text boxes for longer answers. Show all working in calculations — method marks may be awarded. Reveal the mark scheme only after you have attempted each question.
+  </div>
+</div>
+
+<main>
+
+  <!-- Q1 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 1</span>
+      <span class="q-stem">Number system conversions</span>
+      <span class="q-marks">8 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) Convert the denary number <strong>185</strong> to binary. Show your working. [2 marks]</div>
+      <textarea class="narrow" placeholder="Working and answer..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) Convert the binary number <strong>10110110</strong> to denary. [1 mark]</div>
+      <textarea class="narrow" placeholder="Answer..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(c) Convert the binary number <strong>11010011</strong> to hexadecimal. Show your working. [2 marks]</div>
+      <textarea class="narrow" placeholder="Split into nibbles, then convert..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(d) Convert the hexadecimal value <strong>A7</strong> to denary. Show your working. [2 marks]</div>
+      <textarea class="narrow" placeholder="Working and answer..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(e) State one reason why hexadecimal is often used instead of binary by programmers. [1 mark]</div>
+      <textarea class="narrow" placeholder="Your answer..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 1</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> 185 in binary = <code>10111001</code>. Award 1 mark for correct method (repeated division or place values shown), 1 mark for correct answer.</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> 10110110 = 128+32+16+4+2 = <strong>182</strong>. [1 mark]</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(c)</strong> 1101 = D, 0011 = 3 → <strong>D3</strong>. Award 1 mark for correctly splitting into nibbles, 1 mark for correct hex answer.</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(d)</strong> A = 10, 7 = 7. (10 × 16) + 7 = 160 + 7 = <strong>167</strong>. Award 1 mark for method, 1 mark for answer.</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(e)</strong> Any one of: hexadecimal is more compact / easier to read than long binary strings; one hex digit represents 4 bits clearly; used in memory addresses and colour codes. [1 mark]</span></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 2</span>
+      <span class="q-stem">Binary addition and overflow</span>
+      <span class="q-marks">6 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) Perform the following binary addition and give the result in binary. Show all carries. [2 marks]<br><br><code>01001110 + 00110101</code></div>
+      <textarea class="code-area" placeholder="Show working with carries..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) Check your answer by converting both original numbers to denary and adding them. [2 marks]</div>
+      <textarea class="narrow" placeholder="Denary check..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(c) Explain what is meant by an <strong>overflow error</strong> in binary arithmetic. Give an example. [2 marks]</div>
+      <textarea placeholder="Explain overflow with an example..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 2</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> 01001110 (78) + 00110101 (53) = <code>10000011</code> (131). Award 1 mark for correct working showing carries, 1 mark for correct 8-bit answer.</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> 01001110 = 78, 00110101 = 53, 78 + 53 = 131. Matches <code>10000011</code> ✓ [1 mark method, 1 mark for correct totals matching].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(c)</strong> Overflow occurs when the result of a calculation is too large to be stored in the available number of bits [1 mark]. Example: in 8-bit arithmetic, 200 + 100 = 300, which exceeds the maximum value of 255, causing the result to be incorrectly truncated [1 mark].</span></div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 3</span>
+      <span class="q-stem">Two's complement</span>
+      <span class="q-marks">6 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) Describe the steps used to represent a negative number using two's complement. [3 marks]</div>
+      <textarea placeholder="Step by step description..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) Using two's complement, represent <strong>−75</strong> as an 8-bit binary number. Show all working. [3 marks]</div>
+      <textarea class="code-area" placeholder="+75 in binary, flip bits, add 1..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 3</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> Step 1: Write the positive version of the number in binary [1 mark]. Step 2: Flip all the bits (invert, one's complement) [1 mark]. Step 3: Add 1 to the result [1 mark].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> +75 = <code>01001011</code> [1 mark] → flip → <code>10110100</code> [1 mark] → add 1 → <code>10110101</code> = −75 [1 mark].</span></div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 4</span>
+      <span class="q-stem">Character encoding</span>
+      <span class="q-marks">6 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) The ASCII code for the letter <strong>'M'</strong> is 77. What is the ASCII code for the letter <strong>'m'</strong>? Explain how you know. [2 marks]</div>
+      <textarea class="narrow" placeholder="Code for 'm' and explanation..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) Describe <strong>two</strong> differences between ASCII and Unicode. [4 marks]</div>
+      <textarea placeholder="Difference 1...&#10;&#10;Difference 2..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 4</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> 'm' = 109 [1 mark]. Lowercase letters always have an ASCII value 32 higher than their uppercase counterpart (77 + 32 = 109) [1 mark].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> Award 2 marks per difference (1 for the point, 1 for development):<br>
+        • ASCII uses 7 bits (128 characters) whereas Unicode uses more bits (e.g. UTF-8 up to 4 bytes) and can represent 140,000+ characters [2 marks].<br>
+        • ASCII only supports the Latin/English alphabet, while Unicode supports virtually every writing system and language in the world including non-Latin scripts and emoji [2 marks].<br>
+        • Unicode files are typically larger because more bits are used per character, whereas ASCII files are more compact [2 marks]. (Accept any two, 2 marks each.)</span></div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 5</span>
+      <span class="q-stem">Image file sizes</span>
+      <span class="q-marks">7 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) State the formula used to calculate the file size of a bitmap image. [1 mark]</div>
+      <textarea class="narrow" placeholder="Formula..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) Calculate the file size in <strong>kilobytes (KB)</strong> of a bitmap image that is <strong>800 × 600 pixels</strong> with a colour depth of <strong>24 bits</strong>. Show all working. [3 marks]</div>
+      <textarea class="code-area" placeholder="Step-by-step calculation..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(c) A graphic designer reduces the colour depth of the image from 24 bits to 8 bits. Describe <strong>two effects</strong> this will have on the image. [2 marks]</div>
+      <textarea placeholder="Effect 1...&#10;&#10;Effect 2..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(d) State what is meant by the <strong>resolution</strong> of a digital image. [1 mark]</div>
+      <textarea class="narrow" placeholder="Definition..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 5</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> File size = width × height × colour depth [1 mark].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> 800 × 600 × 24 = 11,520,000 bits [1 mark] ÷ 8 = 1,440,000 bytes [1 mark] ÷ 1024 = <strong>1406.25 KB</strong> (accept 1,440,000 bytes or 1406 KB) [1 mark].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(c)</strong> The file size will decrease (8 bits vs 24 bits means a ⅓-sized file) [1 mark]; the image will have fewer colours available (256 colours vs 16.7 million), potentially looking less realistic or banded [1 mark].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(d)</strong> Resolution is the total number of pixels in an image, typically expressed as width × height (e.g. 800 × 600) [1 mark].</span></div>
+    </div>
+  </div>
+
+  <!-- Q6 — TRACE TABLE -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 6</span>
+      <span class="q-stem">Binary trace and conversion</span>
+      <span class="q-marks">5 marks</span>
+    </div>
+
+    <p style="font-size:0.95rem; margin-bottom:14px; line-height:1.6;">The table below shows a step-by-step algorithm for converting denary 46 to binary using repeated division. Complete the missing cells.</p>
+    <div class="hint">💡 Hint: Divide the number by 2 each step and record the remainder. Read the remainders from bottom to top to get the binary answer.</div>
+
+    <table class="trace-table">
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Value</th>
+          <th>÷ 2</th>
+          <th>Remainder</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="given">1</td>
+          <td class="given">46</td>
+          <td class="given">23</td>
+          <td><textarea placeholder=""></textarea></td>
+        </tr>
+        <tr>
+          <td class="given">2</td>
+          <td class="given">23</td>
+          <td><textarea placeholder=""></textarea></td>
+          <td class="given">1</td>
+        </tr>
+        <tr>
+          <td class="given">3</td>
+          <td class="given">11</td>
+          <td><textarea placeholder=""></textarea></td>
+          <td class="given">1</td>
+        </tr>
+        <tr>
+          <td class="given">4</td>
+          <td class="given">5</td>
+          <td><textarea placeholder=""></textarea></td>
+          <td class="given">1</td>
+        </tr>
+        <tr>
+          <td class="given">5</td>
+          <td class="given">2</td>
+          <td class="given">1</td>
+          <td><textarea placeholder=""></textarea></td>
+        </tr>
+        <tr>
+          <td class="given">6</td>
+          <td class="given">1</td>
+          <td class="given">0</td>
+          <td class="given">1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sub-q" style="margin-top:14px;">
+      <div class="sub-label">Write the final 8-bit binary representation of 46 (reading remainders bottom to top, with leading zeros). [1 mark]</div>
+      <textarea class="narrow" placeholder="Binary answer..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 6</h4>
+      <div class="mark-point"><span class="tick">✓</span><span>Step 1 remainder: <strong>0</strong>; Step 2 quotient: <strong>11</strong>; Step 3 quotient: <strong>5</strong>; Step 4 quotient: <strong>2</strong>; Step 5 remainder: <strong>0</strong>. Award 1 mark per two correct cells (max 4 marks from table).</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span>Final binary answer: <code>00101110</code> [1 mark]. Reading remainders bottom to top: 1, 0, 1, 1, 1, 0 → pad to 8 bits → 00101110.</span></div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 7</span>
+      <span class="q-stem">Sound and file sizes</span>
+      <span class="q-marks">5 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) Explain what is meant by the <strong>sample rate</strong> when digitising sound. [2 marks]</div>
+      <textarea placeholder="Your explanation..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) A mono audio recording has a sample rate of <strong>22,050 Hz</strong>, a bit depth of <strong>16 bits</strong>, and a duration of <strong>2 minutes</strong>. Calculate the file size in <strong>MB</strong>. Show all working. [3 marks]</div>
+      <textarea class="code-area" placeholder="Step-by-step calculation..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 7</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> The sample rate is the number of times per second that the amplitude of the sound wave is measured and recorded [1 mark]. A higher sample rate captures more detail and produces better quality audio, but results in a larger file [1 mark].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> Duration = 2 × 60 = 120 seconds. File size = 22,050 × 16 × 120 × 1 = 42,336,000 bits [1 mark] ÷ 8 = 5,292,000 bytes [1 mark] ÷ 1,048,576 ≈ <strong>5.05 MB</strong> (accept 5,292,000 B or 5168 KB) [1 mark].</span></div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="question">
+    <div class="q-head">
+      <span class="q-num-badge">Question 8</span>
+      <span class="q-stem">Compression</span>
+      <span class="q-marks">7 marks</span>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(a) Describe the difference between <strong>lossy</strong> and <strong>lossless</strong> compression. [4 marks]</div>
+      <textarea placeholder="Lossy:&#10;&#10;Lossless:"></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(b) The following data represents a row of pixels in a simple black and white image. Each letter represents a pixel colour (W = white, B = black):<br><br>
+        <code style="letter-spacing:0.05em;">WWWWWWBBWWWWBBBBBWWWW</code><br><br>
+        Apply <strong>run-length encoding (RLE)</strong> to compress this row. Show the compressed output. [2 marks]</div>
+      <textarea class="narrow" placeholder="RLE output..."></textarea>
+    </div>
+
+    <div class="sub-q">
+      <div class="sub-label">(c) Suggest one type of file where lossy compression would <strong>not</strong> be appropriate. Explain your answer. [1 mark]</div>
+      <textarea class="narrow" placeholder="File type and reason..."></textarea>
+    </div>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">📋 Show Mark Scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Question 8</h4>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(a)</strong> Lossy compression permanently removes data from the file [1 mark]. The original data cannot be recovered [1 mark]. Lossless compression reduces file size without losing any data [1 mark]. The original file can be perfectly reconstructed [1 mark]. (Example for each: lossy = JPEG, MP3; lossless = PNG, ZIP.)</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(b)</strong> <code>6W 2B 4W 5B 4W</code> [2 marks — award 1 mark if mostly correct with minor error].</span></div>
+      <div class="mark-point"><span class="tick">✓</span><span><strong>(c)</strong> Text files / program source code / medical images / legal documents — any one [½ mark]. Because lossy compression could alter or corrupt the data, making text unreadable, code unable to run, or a medical image inaccurate, which could have serious consequences [½ mark].</span></div>
+    </div>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total-bar">
+    <div class="big">/ 50</div>
+    <div class="sub">Total marks available — complete all 8 questions</div>
+  </div>
+
+</main>
+
+<script>
+  let timerInterval = null;
+  let totalSeconds = 50 * 60;
+  let running = false;
+
+  function startTimer() {
+    if (running) {
+      clearInterval(timerInterval);
+      running = false;
+      document.getElementById('startBtn').textContent = '▶ Start';
+    } else {
+      running = true;
+      document.getElementById('startBtn').textContent = '⏸ Pause';
+      timerInterval = setInterval(() => {
+        if (totalSeconds <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('timerDisplay').textContent = 'TIME UP!';
+          document.getElementById('timerBar').classList.add('danger');
+          return;
+        }
+        totalSeconds--;
+        updateDisplay();
+      }, 1000);
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    running = false;
+    totalSeconds = 50 * 60;
+    document.getElementById('startBtn').textContent = '▶ Start';
+    document.getElementById('timerBar').className = 'timer-bar';
+    updateDisplay();
+  }
+
+  function updateDisplay() {
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    const bar = document.getElementById('timerBar');
+    if (totalSeconds <= 300) { bar.className = 'timer-bar danger'; }
+    else if (totalSeconds <= 600) { bar.className = 'timer-bar warning'; }
+    else { bar.className = 'timer-bar'; }
+  }
+
+  function toggleMS(btn) {
+    const ms = btn.nextElementSibling;
+    const open = ms.classList.toggle('open');
+    btn.textContent = open ? '🔼 Hide Mark Scheme' : '📋 Show Mark Scheme';
+  }
+</script>
+</body>
+</html>

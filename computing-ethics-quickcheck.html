@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computing — Ethics Quickcheck Quiz | Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; line-height: 1.6; }
+
+  nav { background: var(--navy); padding: 0.75rem 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s; }
+  nav a:hover { opacity: 0.75; }
+  nav a.current { color: #fff; }
+
+  .hero { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: #fff; padding: 2.5rem 2rem 2rem; text-align: center; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .badge { display: inline-block; background: rgba(100,181,246,0.2); border: 1px solid var(--accent); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 0.75rem; }
+  .hero h1 { font-size: clamp(1.4rem,3.5vw,2rem); font-weight: 800; margin-bottom: 1rem; }
+
+  /* SCORE BAR */
+  .score-bar { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; justify-content: center; }
+  .score-bar span { font-size: 0.9rem; color: rgba(255,255,255,0.85); }
+  .score-bar strong { color: #fff; }
+  .progress-track { flex: 1; min-width: 150px; background: rgba(255,255,255,0.15); border-radius: 999px; height: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s ease; width: 0%; }
+
+  main { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* QUESTION */
+  .q-card { background: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.4rem; }
+  .q-text { font-weight: 600; font-size: 0.97rem; margin-bottom: 0.9rem; color: var(--navy); }
+
+  /* MCQ */
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .opt-btn { text-align: left; background: #f4f8fc; border: 2px solid #d0dde8; border-radius: 8px; padding: 0.6rem 0.9rem; font-size: 0.88rem; cursor: pointer; transition: all 0.15s; color: #1a1a2e; }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); background: #e8f4fd; }
+  .opt-btn.correct  { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; font-weight: 600; }
+  .opt-btn.wrong    { background: #ffebee; border-color: #c62828; color: #7f0000; }
+  .opt-btn.missed   { background: #fff3e0; border-color: #e65100; color: #4e1800; }
+  .opt-btn:disabled { cursor: default; }
+
+  /* T/F */
+  .tf-row { display: flex; gap: 0.75rem; }
+  .tf-btn { flex: 1; padding: 0.65rem; border-radius: 8px; border: 2px solid #d0dde8; background: #f4f8fc; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #e8f4fd; }
+  .tf-btn.correct  { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; }
+  .tf-btn.wrong    { background: #ffebee; border-color: #c62828; color: #7f0000; }
+  .tf-btn.missed   { background: #fff3e0; border-color: #e65100; color: #4e1800; }
+  .tf-btn:disabled { cursor: default; }
+
+  .feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.75rem; border-radius: 6px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: #e8f5e9; color: #1b5e20; }
+  .feedback.wrong-fb   { background: #ffebee; color: #7f0000; }
+
+  /* RESULT BOX */
+  #result-box { display: none; background: #fff; border-radius: 16px; padding: 2rem; text-align: center; margin: 2rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  #result-box.show { display: block; }
+  #result-emoji { font-size: 3rem; margin-bottom: 0.5rem; }
+  #result-score { font-size: 2rem; font-weight: 800; color: var(--navy); }
+  #result-msg   { font-size: 1rem; color: #555; margin-top: 0.4rem; }
+  #result-show  { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-top: 0.75rem; }
+
+  /* RESET */
+  .reset-btn { display: block; margin: 1.5rem auto 0; background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 0.7rem 2rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+  .reset-btn:hover { background: #1a4a7a; }
+  .section-head { font-weight: 700; color: var(--navy); margin: 2rem 0 0.75rem; font-size: 1.05rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="computing-index.html">💻 Computing</a>
+  <a href="computing-ethics-revision.html">⚖️ Ethics &amp; Law</a>
+  <a class="current" href="computing-ethics-quickcheck.html">🧠 Quickcheck</a>
+</nav>
+
+<div class="hero">
+  <p class="kicker">AQA GCSE Computer Science · Section 8</p>
+  <div class="badge">Quickcheck Quiz — 20 Questions</div>
+  <h1>Ethics, Legal &amp; Environmental Issues</h1>
+  <div class="score-bar">
+    <span>Score: <strong id="score-display">0</strong></span>
+    <span>Answered: <strong id="answered-display">0</strong>/20</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+</div>
+
+<main>
+  <p class="section-head">Part A — Multiple Choice (Questions 1–10)</p>
+  <div id="mcq-wrap"></div>
+  <p class="section-head">Part B — True or False (Questions 11–20)</p>
+  <div id="tf-wrap"></div>
+
+  <div id="result-box">
+    <div id="result-emoji"></div>
+    <div id="result-score"></div>
+    <div id="result-msg"></div>
+    <div id="result-show"></div>
+  </div>
+
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Reset Quiz</button>
+</main>
+
+<script>
+const SCORE_KEY = 'computing-ethics-score';
+
+const mcqs = [
+  { q: "Which Act of Parliament makes it illegal to access a computer system without authorisation?", opts: ["Data Protection Act 2018","Computer Misuse Act 1990","Copyright Act 1988","Freedom of Information Act 2000"], answer: "B", fb: "The Computer Misuse Act 1990 creates three offences of unauthorised computer access and modification." },
+  { q: "A company collects more personal data than it needs for its stated purpose. Which GDPR principle does this violate?", opts: ["Accuracy","Data minimisation","Storage limitation","Integrity & confidentiality"], answer: "B", fb: "Data minimisation means only collecting data that is necessary for the specified purpose." },
+  { q: "Which body enforces the Data Protection Act in the UK?", opts: ["GCHQ","Ofcom","ICO (Information Commissioner's Office)","Trading Standards"], answer: "C", fb: "The ICO is the independent regulator for data protection law in the UK." },
+  { q: "A developer releases code under an MIT licence. What does this mean?", opts: ["It cannot be used commercially","It can be used, modified and distributed freely","It requires payment for commercial use","Only the original author can modify it"], answer: "B", fb: "MIT is a permissive open-source licence allowing almost any use, including commercial." },
+  { q: "Which of the following best describes the 'digital divide'?", opts: ["The gap in processing speeds between different computers","The difference in internet speeds between urban and rural areas only","The inequality in access to and use of digital technology","The technical difference between analogue and digital signals"], answer: "C", fb: "The digital divide refers to the broader gap in access, skills and outcomes from technology between different groups." },
+  { q: "Under the Computer Misuse Act, which section covers installing ransomware on a victim's computer?", opts: ["Section 1","Section 2","Section 3","Section 4"], answer: "C", fb: "Section 3 covers unauthorised modification of computer material, which includes malware installation." },
+  { q: "What is 'e-waste'?", opts: ["Electronic data that has been deleted","Spam emails","Discarded electrical and electronic equipment","Energy wasted by inefficient hardware"], answer: "C", fb: "E-waste (electronic waste) is discarded devices such as old phones, computers and televisions." },
+  { q: "Which Creative Commons licence allows use and redistribution but requires any derivative works to use the same licence?", opts: ["CC-BY","CC-BY-NC","CC-BY-SA","CC-BY-ND"], answer: "C", fb: "CC-BY-SA is the ShareAlike licence — derivatives must be released under the same terms." },
+  { q: "An AI facial recognition system is found to be less accurate on darker skin tones. This is an example of:", opts: ["A hardware fault","Algorithmic bias","A copyright issue","Poor data minimisation"], answer: "B", fb: "Algorithmic bias occurs when a system produces unfair outcomes due to biased training data." },
+  { q: "What is a 'Subject Access Request' (SAR)?", opts: ["A request to delete all data held about you","A court order to access someone else's data","An individual's right to obtain a copy of their own personal data held by an organisation","A request made by police under the Investigatory Powers Act"], answer: "C", fb: "Under GDPR, a SAR is an individual's right to access personal data that an organisation holds about them." },
+];
+
+const tfs = [
+  { q: "The Computer Misuse Act only applies to hacking carried out for financial gain.", answer: false, fb: "Incorrect. The CMA applies to any unauthorised access, regardless of motive or financial gain." },
+  { q: "Under GDPR, organisations must report a data breach to the ICO within 72 hours.", answer: true, fb: "Correct. Notifiable breaches (those risking rights and freedoms) must be reported within 72 hours." },
+  { q: "Ethically wrong behaviour is always illegal.", answer: false, fb: "False. Something can be legal but still unethical (e.g. selling user data in some jurisdictions). The two concepts are separate." },
+  { q: "Data centres account for a significant portion of global electricity consumption.", answer: true, fb: "True. Data centres use approximately 1–2% of global electricity, and this is growing." },
+  { q: "A Creative Commons 'CC-BY-NC' licence allows you to use a work in a commercial product as long as you credit the creator.", answer: false, fb: "False. NC stands for Non-Commercial — the work cannot be used in commercial contexts." },
+  { q: "The right to be forgotten allows individuals to request deletion of their personal data under certain circumstances.", answer: true, fb: "True. Article 17 of the GDPR grants the right to erasure in specific circumstances (e.g. data no longer needed for its original purpose)." },
+  { q: "E-waste is the fastest-growing category of household waste in the world.", answer: true, fb: "True. The UN estimates ~50 million tonnes of e-waste is generated annually and the figure is rising rapidly." },
+  { q: "Open source software can never be used in commercial products.", answer: false, fb: "False. Many open-source licences (e.g. MIT, Apache) explicitly permit commercial use." },
+  { q: "Using someone's photo from the internet without permission is always legal if you don't make money from it.", answer: false, fb: "False. Copyright does not depend on whether you profit. Using copyrighted work without permission or a licence is infringement regardless." },
+  { q: "Penetration testers who have written authorisation from an organisation are not committing an offence under the Computer Misuse Act.", answer: true, fb: "True. 'Authorisation' is the key concept in the CMA. Pen testers with explicit permission are acting legally." },
+];
+
+let score = 0;
+let answered = 0;
+const answered_arr = new Array(20).fill(false);
+
+function updateBar() {
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('answered-display').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / 20 * 100) + '%';
+  if (answered === 20) showResult();
+}
+
+function showResult() {
+  const rb = document.getElementById('result-box');
+  rb.classList.add('show');
+  const emoji = score >= 18 ? '🏆' : score >= 14 ? '🎉' : score >= 10 ? '📚' : '💪';
+  const msg = score >= 18 ? 'Outstanding! You really know this topic.' : score >= 14 ? 'Great work — keep it up!' : score >= 10 ? 'Good effort — review any red answers above.' : 'Keep revising — you\'ve got this!';
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-score').textContent = score + ' / 20';
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-show').textContent = 'Show this to mum — ' + score + '/20';
+  localStorage.setItem(SCORE_KEY, score);
+  rb.scrollIntoView({ behavior: 'smooth' });
+}
+
+// BUILD MCQs
+const mcqWrap = document.getElementById('mcq-wrap');
+mcqs.forEach((q, i) => {
+  const letters = ['A','B','C','D'];
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.innerHTML = `<div class="q-label">Question ${i+1} · Multiple Choice</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">${q.opts.map((o,j) => `<button class="opt-btn" onclick="answerMCQ(${i},this,'${letters[j]}','${q.answer}')">${letters[j]}. ${o}</button>`).join('')}</div>
+    <div class="feedback" id="fb${i}">${q.fb}</div>`;
+  mcqWrap.appendChild(card);
+});
+
+function answerMCQ(i, btn, chosen, correct) {
+  if (answered_arr[i]) return;
+  answered_arr[i] = true;
+  answered++;
+  const card = btn.closest('.q-card');
+  const btns = card.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('fb' + i);
+  fb.classList.add('show');
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.classList.add('correct-fb');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    // highlight missed correct
+    btns.forEach(b => { if (b.textContent.startsWith(correct)) b.classList.add('missed'); });
+    fb.classList.add('wrong-fb');
+  }
+  updateBar();
+}
+
+// BUILD T/F
+const tfWrap = document.getElementById('tf-wrap');
+tfs.forEach((q, i) => {
+  const qi = i + 10;
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.innerHTML = `<div class="q-label">Question ${qi+1} · True or False</div>
+    <div class="q-text">${q.q}</div>
+    <div class="tf-row">
+      <button class="tf-btn" onclick="answerTF(${i},this,true,${q.answer})">✅ True</button>
+      <button class="tf-btn" onclick="answerTF(${i},this,false,${q.answer})">❌ False</button>
+    </div>
+    <div class="feedback" id="tffb${i}">${q.fb}</div>`;
+  tfWrap.appendChild(card);
+});
+
+function answerTF(i, btn, chosen, correct) {
+  const qi = i + 10;
+  if (answered_arr[qi]) return;
+  answered_arr[qi] = true;
+  answered++;
+  const card = btn.closest('.q-card');
+  const btns = card.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('tffb' + i);
+  fb.classList.add('show');
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.classList.add('correct-fb');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => {
+      const isTrue = b.textContent.includes('True');
+      if (isTrue === correct) b.classList.add('missed');
+    });
+    fb.classList.add('wrong-fb');
+  }
+  updateBar();
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  answered_arr.fill(false);
+  updateBar();
+  document.querySelectorAll('.opt-btn,.tf-btn').forEach(b => {
+    b.disabled = false;
+    b.className = b.className.includes('opt-btn') ? 'opt-btn' : 'tf-btn';
+  });
+  document.querySelectorAll('.feedback').forEach(f => {
+    f.classList.remove('show','correct-fb','wrong-fb');
+  });
+  document.getElementById('result-box').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

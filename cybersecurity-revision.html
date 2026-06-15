@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security Revision – Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --white: #ffffff;
+    --green: #2e7d32;
+    --yellow: #f9a825;
+    --red: #c62828;
+    --card-bg: #ffffff;
+    --border: #b3d4f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+    color: white; padding: 48px 24px 36px; text-align: center;
+  }
+  .hero .kicker {
+    font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+  .hero p { font-size: 1rem; opacity: 0.85; max-width: 560px; margin: 0 auto 20px; }
+  .badge {
+    display: inline-block; background: var(--accent); color: var(--navy);
+    font-weight: 700; font-size: 0.8rem; padding: 4px 14px; border-radius: 20px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .hero-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .hero-tags span {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    color: white; font-size: 0.78rem; padding: 4px 12px; border-radius: 20px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap;
+    align-items: center;
+  }
+  nav a {
+    color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px; transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav span { color: #556; font-size: 0.8rem; }
+
+  /* PROGRESS */
+  .progress-bar-wrap { background: white; padding: 14px 24px; border-bottom: 1px solid var(--border); }
+  .progress-label { font-size: 0.8rem; color: #555; margin-bottom: 6px; }
+  .progress-bar { height: 8px; background: #dde; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.4s; }
+
+  /* CHECKLIST */
+  .checklist-section { background: white; margin: 20px auto; max-width: 900px; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .checklist-section h2 { color: var(--navy); font-size: 1.1rem; margin-bottom: 16px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+  .checklist { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media(max-width:600px) { .checklist { grid-template-columns: 1fr; } }
+  .checklist li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; cursor: pointer; padding: 6px 8px; border-radius: 6px; transition: background 0.2s; }
+  .checklist li:hover { background: var(--bg); }
+  .checklist li input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  .checklist li.done { text-decoration: line-through; color: #aaa; }
+
+  /* CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 0 16px 40px; }
+
+  /* PANELS */
+  .panel { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .panel h2 { color: var(--navy); font-size: 1.2rem; margin-bottom: 16px; border-left: 4px solid var(--accent); padding-left: 12px; }
+  .panel h3 { color: #1a4a7a; font-size: 1rem; margin: 16px 0 8px; }
+  .panel p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 10px; color: #333; }
+  .panel ul { padding-left: 20px; font-size: 0.9rem; line-height: 1.8; color: #333; }
+
+  /* BIG IDEA GRID */
+  .big-idea-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .big-idea-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+  .big-idea-card .icon { font-size: 2rem; margin-bottom: 6px; }
+  .big-idea-card .label { font-size: 0.78rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* KEYWORD PILLS */
+  .keyword-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .pill { background: var(--navy); color: white; font-size: 0.78rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .pill:hover { background: #1a4a7a; }
+  .pill-def { display: none; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; margin-top: 6px; color: #333; }
+
+  /* EXAM TIP */
+  .exam-tip { background: #fff8e1; border-left: 4px solid var(--yellow); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 0.88rem; }
+  .exam-tip strong { color: #7a5c00; }
+
+  /* WARNING */
+  .warning { background: #fdecea; border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 0.88rem; }
+  .warning strong { color: var(--red); }
+
+  /* COMPARE 2-COL */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  @media(max-width:550px) { .compare { grid-template-columns: 1fr; } }
+  .compare-col { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .compare-col h4 { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
+  .compare-col ul { padding-left: 16px; font-size: 0.83rem; line-height: 1.7; }
+
+  /* STATEMENT */
+  .statement { background: linear-gradient(135deg, var(--navy), #1a4a7a); color: white; border-radius: 10px; padding: 16px 20px; margin: 12px 0; font-size: 0.95rem; font-style: italic; text-align: center; }
+
+  /* MARK AS READ */
+  .mark-read-btn {
+    display: block; margin: 20px auto 0; padding: 12px 32px;
+    background: var(--navy); color: white; border: none; border-radius: 8px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
+  }
+  .mark-read-btn:hover { background: #1a4a7a; }
+  .mark-read-btn.done { background: var(--green); }
+
+  /* QUIZ CTA */
+  .quiz-cta { background: linear-gradient(135deg, #1a4a7a, var(--navy)); color: white; border-radius: 12px; padding: 28px; text-align: center; margin: 24px 0; }
+  .quiz-cta h2 { font-size: 1.3rem; margin-bottom: 8px; }
+  .quiz-cta p { opacity: 0.85; margin-bottom: 16px; font-size: 0.9rem; }
+  .quiz-cta a { background: var(--accent); color: var(--navy); padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 1rem; display: inline-block; }
+
+  /* INTERACTIVE FLIP CARD */
+  .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 12px 0; }
+  .flip-card { height: 120px; perspective: 600px; cursor: pointer; }
+  .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.5s; }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back {
+    position: absolute; width: 100%; height: 100%; border-radius: 10px;
+    backface-visibility: hidden; display: flex; align-items: center; justify-content: center;
+    padding: 10px; text-align: center; font-size: 0.82rem; font-weight: 600;
+  }
+  .flip-front { background: var(--navy); color: white; }
+  .flip-back { background: var(--accent); color: var(--navy); transform: rotateY(180deg); font-size: 0.78rem; font-weight: 400; }
+  .flip-hint { font-size: 0.75rem; color: #888; text-align: center; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">AQA GCSE Computer Science</div>
+  <h1>🔐 Cyber Security</h1>
+  <p>Protecting computer systems, networks and data from threats — and how to fight back.</p>
+  <span class="badge">Section 6</span>
+  <div class="hero-tags">
+    <span>Malware</span><span>Social Engineering</span><span>Penetration Testing</span>
+    <span>Prevention Methods</span><span>Authentication</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span>›</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span>›</span>
+  <a href="#threats">Threats</a>
+  <span>›</span>
+  <a href="#malware">Malware</a>
+  <span>›</span>
+  <a href="#social">Social Engineering</a>
+  <span>›</span>
+  <a href="#prevention">Prevention</a>
+  <span>›</span>
+  <a href="#pentest">Pen Testing</a>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-bar-wrap">
+  <div class="progress-label">Topics read: <span id="prog-count">0</span> / 5</div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div class="content">
+
+  <!-- WHAT IS CYBER SECURITY -->
+  <div class="panel" id="threats">
+    <h2>What is Cyber Security?</h2>
+    <div class="big-idea-grid">
+      <div class="big-idea-card"><div class="icon">🛡️</div><div class="label">Protect Systems</div></div>
+      <div class="big-idea-card"><div class="icon">🌐</div><div class="label">Protect Networks</div></div>
+      <div class="big-idea-card"><div class="icon">📁</div><div class="label">Protect Data</div></div>
+      <div class="big-idea-card"><div class="icon">🚫</div><div class="label">Prevent Attacks</div></div>
+    </div>
+    <div class="statement">Cyber security is concerned with the protection of computer systems, networks and data from digital attacks, damage and unauthorised access.</div>
+
+    <h3>Common Threats</h3>
+    <div class="keyword-pills">
+      <span class="pill" onclick="toggleDef('malware-def')">Malware</span>
+      <span class="pill" onclick="toggleDef('soceng-def')">Social Engineering</span>
+      <span class="pill" onclick="toggleDef('weakpass-def')">Weak Passwords</span>
+      <span class="pill" onclick="toggleDef('defpass-def')">Default Passwords</span>
+      <span class="pill" onclick="toggleDef('removable-def')">Removable Media</span>
+      <span class="pill" onclick="toggleDef('unpatched-def')">Unpatched Software</span>
+      <span class="pill" onclick="toggleDef('misconfig-def')">Misconfigured Access</span>
+    </div>
+    <div id="malware-def" class="pill-def">Software purposely developed to damage, disrupt or take control of computer systems.</div>
+    <div id="soceng-def" class="pill-def">Techniques that manipulate people into giving away confidential and personal information.</div>
+    <div id="weakpass-def" class="pill-def">Passwords using dictionary words are easy to crack using brute-force algorithms that try every word systematically.</div>
+    <div id="defpass-def" class="pill-def">Default passwords given at registration are often sent unencrypted by email — a major vulnerability if not changed.</div>
+    <div id="removable-def" class="pill-def">USB drives and other removable media can be a vector for transmitting malware to a computer.</div>
+    <div id="unpatched-def" class="pill-def">Software needs regular updates to fix security vulnerabilities. Unpatched software remains vulnerable to attack.</div>
+    <div id="misconfig-def" class="pill-def">Users should only access the files and data they need — misconfigured rights give users access they shouldn't have.</div>
+
+    <div class="exam-tip"><strong>⭐ Exam tip:</strong> When asked to "define cyber security", you need TWO points — mention protecting systems/networks AND mention threats/attacks/unauthorised access.</div>
+    <button class="mark-read-btn" onclick="markRead(this, 0)">✅ Mark as read</button>
+  </div>
+
+  <!-- MALWARE -->
+  <div class="panel" id="malware">
+    <h2>🦠 Malware Types</h2>
+    <p>Click each card to reveal the definition:</p>
+    <div class="flip-hint">👆 Click a card to flip it</div>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">💻 Virus</div>
+          <div class="flip-back">Replicates and transfers between computers. Activated by the user — e.g. via email attachments.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">🐴 Trojan</div>
+          <div class="flip-back">Pretends to be legitimate software. Allows backdoor access without the user knowing.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">🕵️ Spyware</div>
+          <div class="flip-back">Records keystrokes and activity. Sends data (e.g. passwords) back to a hacker. Can control webcam/mic.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">📢 Adware</div>
+          <div class="flip-back">Installs unwanted banners and popups. Doesn't cause direct damage but slows the computer.</div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">🐛 Worm</div>
+          <div class="flip-back">Spreads like viruses but needs NO human action. Attaches to network tools and spreads automatically.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-tip"><strong>⭐ Exam tip:</strong> The key difference between a <strong>virus</strong> and a <strong>worm</strong> is that a worm spreads automatically without user interaction.</div>
+    <div class="warning"><strong>⚠️ Don't confuse:</strong> A <strong>Trojan</strong> is NOT a virus — it doesn't replicate. It tricks you into running it by disguising itself as safe software.</div>
+    <button class="mark-read-btn" onclick="markRead(this, 1)">✅ Mark as read</button>
+  </div>
+
+  <!-- SOCIAL ENGINEERING -->
+  <div class="panel" id="social">
+    <h2>🎭 Social Engineering Attacks</h2>
+
+    <h3>Blagging (Pretexting)</h3>
+    <p>Fraudsters create a fake scenario to trick victims into revealing information they wouldn't normally share. They may use personal details from social media to seem credible.</p>
+    <p><strong>Prevention:</strong> Use biometric measures (harder to divulge); maximise privacy settings on social media.</p>
+
+    <h3>Phishing</h3>
+    <p>An email or text scam where victims are tricked into believing they're being contacted by a trusted organisation (e.g. their bank) and give away passwords or account details.</p>
+    <p><strong>Prevention:</strong> Awareness of unsolicited contacts; never give personal info; apply email filtering.</p>
+
+    <h3>Pharming</h3>
+    <p>Users are redirected to a <em>fraudulent</em> website that looks identical to the real one. For example, a fake online store asking for credit card details.</p>
+    <p><strong>Prevention:</strong> Check the URL carefully; use HTTPS for banking/e-commerce; use website filters.</p>
+
+    <h3>Shoulder Surfing</h3>
+    <p>Fraudsters physically look over your shoulder to see PINs or passwords being typed — often at ATMs or in public places.</p>
+    <p><strong>Prevention:</strong> Be aware of surroundings; cover hands when typing a PIN; position screens away from view.</p>
+
+    <div class="compare">
+      <div class="compare-col">
+        <h4>🎣 Phishing</h4>
+        <ul>
+          <li>Fake email/text</li>
+          <li>Mimics trusted org</li>
+          <li>Steals login details</li>
+          <li>Digital attack</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <h4>🌾 Pharming</h4>
+        <ul>
+          <li>Fake website</li>
+          <li>Looks real</li>
+          <li>Steals payment info</li>
+          <li>Redirects traffic</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exam-tip"><strong>⭐ Exam tip:</strong> Phishing = fake <em>message</em>. Pharming = fake <em>website</em>. Easy to mix up — remember Ph<strong>ishing</strong> = fishing for info in your <strong>inbox</strong>.</div>
+    <button class="mark-read-btn" onclick="markRead(this, 2)">✅ Mark as read</button>
+  </div>
+
+  <!-- PREVENTION METHODS -->
+  <div class="panel" id="prevention">
+    <h2>🔒 Methods to Prevent Cyber Threats</h2>
+
+    <h3>Biometric Measures</h3>
+    <p>Fingerprints, facial recognition, and iris scans verify identity. More secure than passwords as they cannot be guessed or forgotten, but require the user to be physically present.</p>
+
+    <h3>Automatic Software Updates</h3>
+    <p>Keeps antivirus, firewalls and OS up-to-date against new malware and recently discovered vulnerabilities. Better than manual updates because users may forget or delay updating.</p>
+
+    <h3>CAPTCHA</h3>
+    <p>Tests that distinguish humans from bots using images machines can't interpret. Ensures that users are human, not automated scripts.</p>
+
+    <h3>Password Systems</h3>
+    <p>Most accounts require passwords. Secure sites use <strong>two-factor authentication (2FA)</strong> — e.g. a second password or phone confirmation for large transactions.</p>
+
+    <h3>Email Confirmation</h3>
+    <p>When registering online, a confirmation link sent by email verifies that the email account is real and belongs to a human.</p>
+
+    <h3>Anti-Virus Software</h3>
+    <p>Scans intermittently to detect malware by comparing files against a database of known virus codes. Quarantines infected files. Must be regularly updated to detect new viruses.</p>
+
+    <div class="keyword-pills">
+      <span class="pill" onclick="toggleDef('biometric2')">Biometrics ✓</span>
+      <span class="pill" onclick="toggleDef('auto-update2')">Auto Updates ✓</span>
+      <span class="pill" onclick="toggleDef('captcha2')">CAPTCHA ✓</span>
+      <span class="pill" onclick="toggleDef('2fa2')">2FA ✓</span>
+      <span class="pill" onclick="toggleDef('antivirus2')">Anti-Virus ✓</span>
+    </div>
+    <div id="biometric2" class="pill-def">Fingerprint / face / iris scan — can't be guessed, can't be forgotten, must be physically present.</div>
+    <div id="auto-update2" class="pill-def">Patches security vulnerabilities automatically — users don't forget, protection is always current.</div>
+    <div id="captcha2" class="pill-def">Distinguishes humans from bots using image-based challenges machines can't solve.</div>
+    <div id="2fa2" class="pill-def">Two-Factor Authentication — requires two forms of verification (e.g. password + phone call).</div>
+    <div id="antivirus2" class="pill-def">Scans files against known virus database; quarantines threats; must be updated regularly.</div>
+
+    <div class="exam-tip"><strong>⭐ Exam tip:</strong> For "why are automatic updates better than manual?", give TWO reasons: (1) users may forget to update manually; (2) automatic updates happen immediately so protection is always current.</div>
+    <button class="mark-read-btn" onclick="markRead(this, 3)">✅ Mark as read</button>
+  </div>
+
+  <!-- PENETRATION TESTING -->
+  <div class="panel" id="pentest">
+    <h2>🔍 Penetration Testing</h2>
+    <p>Penetration testing is <strong>legitimate</strong> testing of an organisation's computer system to identify vulnerabilities that an attacker could exploit. By finding these first, they can be patched before a real attack occurs.</p>
+
+    <div class="compare">
+      <div class="compare-col">
+        <h4>⬜ White Box Testing</h4>
+        <ul>
+          <li>Tester is given info about the network</li>
+          <li>Knows: architecture, source code, IP addresses</li>
+          <li>Simulates a <strong>malicious insider</strong></li>
+          <li>More thorough — knows where to look</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <h4>⬛ Black Box Testing</h4>
+        <ul>
+          <li>Tester given very little information</li>
+          <li>Knows: almost nothing</li>
+          <li>Simulates an <strong>outside attack</strong></li>
+          <li>Realistic — mirrors real attacker's position</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="statement">The goal of penetration testing is to find vulnerabilities BEFORE attackers do — so they can be fixed.</div>
+
+    <div class="exam-tip"><strong>⭐ Exam tip:</strong> White box = insider threat simulation (knows the system). Black box = external attack simulation (knows nothing). Remember: black box = blind like a black box recorder before it's found.</div>
+    <button class="mark-read-btn" onclick="markRead(this, 4)">✅ Mark as read</button>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h2>Ready to test yourself? 🎯</h2>
+    <p>Try the Cyber Security Quickcheck — 20 questions, see how much you know!</p>
+    <a href="cybersecurity-quickcheck.html">Start the Quiz →</a>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+  const STORAGE_KEY = 'cs_cybersec_revision_read';
+  let readTopics = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+  function updateProgress() {
+    const count = readTopics.length;
+    document.getElementById('prog-count').textContent = count;
+    document.getElementById('prog-fill').style.width = (count / 5 * 100) + '%';
+  }
+
+  function markRead(btn, index) {
+    if (!readTopics.includes(index)) readTopics.push(index);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(readTopics));
+    btn.textContent = '✅ Read!';
+    btn.classList.add('done');
+    updateProgress();
+  }
+
+  function toggleDef(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // Restore read states
+  document.querySelectorAll('.mark-read-btn').forEach((btn, i) => {
+    if (readTopics.includes(i)) {
+      btn.textContent = '✅ Read!';
+      btn.classList.add('done');
+    }
+  });
+
+  // Checklist
+  const checklistItems = [
+    'Define cyber security',
+    'Name 5 cyber security threats',
+    'Explain 5 types of malware',
+    'Describe 4 social engineering attacks',
+    'Explain 5 prevention methods',
+    'Compare white box vs black box testing',
+    'Explain what penetration testing is',
+    'Know how anti-virus software works',
+    'Explain what 2FA is',
+    'Know why auto-updates are better than manual'
+  ];
+
+  const checklist = document.querySelector('.checklist');
+  if (checklist) {
+    checklistItems.forEach((item, i) => {
+      const li = document.createElement('li');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.id = 'cl' + i;
+      const stored = localStorage.getItem('cs_cl_' + i);
+      if (stored === 'true') { cb.checked = true; li.classList.add('done'); }
+      cb.addEventListener('change', () => {
+        localStorage.setItem('cs_cl_' + i, cb.checked);
+        li.classList.toggle('done', cb.checked);
+      });
+      li.appendChild(cb);
+      li.appendChild(document.createTextNode(item));
+      li.addEventListener('click', (e) => { if (e.target !== cb) { cb.click(); } });
+      checklist.appendChild(li);
+    });
+  }
+
+  updateProgress();
+</script>
+
+<!-- CHECKLIST (placed after script so items render) -->
+<div style="max-width:900px;margin:20px auto;padding:0 16px;">
+  <div class="checklist-section">
+    <h2>📋 Revision Checklist</h2>
+    <ul class="checklist"></ul>
+  </div>
+</div>
+
+</body>
+</html>

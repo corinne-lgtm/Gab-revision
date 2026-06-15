@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programming Practice Paper – Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --white: #ffffff;
+    --green: #2e7d32;
+    --green2: #e8f5e9;
+    --yellow: #f9a825;
+    --yellow2: #fff8e1;
+    --red: #c62828;
+    --border: #b3d4f0;
+    --mark-bg: #e3f2fd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  nav { background: var(--navy); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav .sep { color: rgba(100,181,246,0.4); font-size: 0.8rem; }
+  nav .current { color: rgba(255,255,255,0.6); font-size: 0.82rem; padding: 4px 10px; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%); color: white; padding: 40px 24px 30px; text-align: center; }
+  .hero .kicker { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 8px; }
+  .hero p { color: rgba(255,255,255,0.78); font-size: 0.92rem; max-width: 540px; margin: 0 auto; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-weight: 700; font-size: 0.78rem; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; margin: 10px 0 6px; }
+  .hero-meta { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 14px; font-size: 0.83rem; color: rgba(255,255,255,0.7); }
+  .hero-meta span { background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; }
+
+  /* INSTRUCTIONS */
+  .instructions { max-width: 860px; margin: 20px auto; background: var(--yellow2); border: 2px solid var(--yellow); border-radius: 12px; padding: 18px 22px; font-size: 0.9rem; line-height: 1.6; }
+  .instructions h2 { color: #7a5c00; font-size: 0.95rem; margin-bottom: 8px; }
+  .instructions ul { padding-left: 18px; }
+  .instructions ul li { margin-bottom: 4px; }
+
+  /* MAIN WRAP */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 48px; }
+
+  /* SECTION DIVIDERS */
+  .section-head { background: var(--navy); color: white; border-radius: 10px; padding: 12px 18px; margin: 28px 0 16px; display: flex; justify-content: space-between; align-items: center; }
+  .section-head h2 { font-size: 1rem; font-weight: 700; }
+  .section-marks { background: var(--accent); color: var(--navy); font-weight: 800; font-size: 0.82rem; padding: 4px 12px; border-radius: 20px; }
+
+  /* QUESTION BLOCK */
+  .q-block { background: white; border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 10px; }
+  .q-num { font-weight: 800; font-size: 1rem; color: var(--navy); flex-shrink: 0; }
+  .q-text { font-size: 0.95rem; line-height: 1.55; flex: 1; }
+  .q-marks { background: var(--mark-bg); color: var(--navy); font-weight: 700; font-size: 0.78rem; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; border: 1.5px solid var(--accent); }
+  .q-sub { font-size: 0.92rem; line-height: 1.5; margin-bottom: 10px; color: #333; }
+
+  /* CODE BLOCKS IN QUESTIONS */
+  .q-code { background: #0d1b2a; color: #e8f4fd; font-family: 'Courier New', monospace; font-size: 0.85rem; padding: 12px 16px; border-radius: 8px; margin: 10px 0; line-height: 1.7; overflow-x: auto; }
+  .q-code .kw { color: #64b5f6; font-weight: 700; }
+  .q-code .str { color: #a5d6a7; }
+  .q-code .cmt { color: #78909c; font-style: italic; }
+  .q-code .num { color: #ffcc80; }
+
+  /* ANSWER AREAS */
+  .answer-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 6px; margin-top: 10px; }
+  textarea {
+    width: 100%; border: 2px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem;
+    line-height: 1.6; color: #1a1a2e; background: #f7fbff; resize: vertical;
+    transition: border-color 0.2s;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); background: white; }
+  textarea.code-answer { font-family: 'Courier New', monospace; font-size: 0.87rem; background: #f0f7ff; }
+
+  /* TRACE TABLE */
+  .trace-table { width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.88rem; margin: 10px 0; }
+  .trace-table th { background: var(--navy); color: var(--accent); padding: 8px 12px; text-align: center; font-family: 'Segoe UI', sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; }
+  .trace-table td { border: 1.5px solid var(--border); padding: 0; height: 36px; }
+  .trace-table td textarea { border: none; border-radius: 0; background: transparent; padding: 6px 8px; min-height: 34px; resize: none; font-size: 0.85rem; }
+  .trace-table td textarea:focus { background: #fff8e1; outline: none; }
+
+  /* SHOW/HIDE MARK SCHEME */
+  .ms-toggle { background: none; border: 2px solid var(--accent); color: var(--navy); padding: 7px 16px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer; margin-top: 14px; transition: background 0.2s; }
+  .ms-toggle:hover { background: var(--accent); }
+  .mark-scheme { display: none; margin-top: 12px; background: var(--green2); border: 2px solid var(--green); border-radius: 10px; padding: 14px 16px; font-size: 0.88rem; line-height: 1.6; }
+  .mark-scheme.show { display: block; }
+  .mark-scheme h4 { color: var(--green); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .mark-scheme ul { padding-left: 16px; }
+  .mark-scheme ul li { margin-bottom: 4px; }
+  .mark-scheme .point { display: flex; gap: 8px; margin-bottom: 5px; }
+  .mark-scheme .point .tick { color: var(--green); font-weight: 800; flex-shrink: 0; }
+
+  /* TIMER */
+  .timer-bar { background: white; border-bottom: 2px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .timer-display { font-size: 1.1rem; font-weight: 800; color: var(--navy); font-family: 'Courier New', monospace; min-width: 60px; }
+  .timer-display.warn { color: var(--red); }
+  .timer-btn { background: var(--navy); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; }
+  .timer-btn:hover { background: #1a4a7a; }
+  .timer-label { font-size: 0.82rem; color: #666; }
+  .total-marks { margin-left: auto; font-size: 0.82rem; color: #555; font-weight: 600; }
+
+  @media(max-width:580px) { .q-header { flex-wrap: wrap; } }
+  @media print {
+    nav, .timer-bar, .ms-toggle, .mark-scheme, .instructions { display: none; }
+    .hero { -webkit-print-color-adjust: exact; }
+    textarea { border: 1px solid #aaa; background: white; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">›</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span class="sep">›</span>
+  <a href="computing-programming-revision.html">📖 Revision</a>
+  <span class="sep">›</span>
+  <a href="computing-programming-quickcheck.html">✅ Quiz</a>
+  <span class="sep">›</span>
+  <span class="current">Practice Paper</span>
+</nav>
+
+<!-- TIMER BAR -->
+<div class="timer-bar">
+  <span class="timer-label">⏱ Timer:</span>
+  <span class="timer-display" id="timerDisplay">45:00</span>
+  <button class="timer-btn" onclick="startTimer()">Start</button>
+  <button class="timer-btn" onclick="resetTimer()" style="background:#555">Reset</button>
+  <span class="total-marks">Total: 50 marks · Suggested time: 45 min</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kicker">AQA GCSE Computer Science — Practice Paper</div>
+  <h1>💻 Programming</h1>
+  <span class="badge">Section 2</span>
+  <p>Exam-style questions on data types, selection, iteration, arrays, strings, subroutines and file handling.</p>
+  <div class="hero-meta">
+    <span>📝 50 marks</span>
+    <span>⏱ 45 minutes</span>
+    <span>📖 AQA pseudocode</span>
+    <span>💡 Show mark schemes after attempting each question</span>
+  </div>
+</section>
+
+<!-- INSTRUCTIONS -->
+<div class="instructions">
+  <h2>📋 Instructions</h2>
+  <ul>
+    <li>Write your answers in the boxes provided. For pseudocode questions, use AQA pseudocode conventions.</li>
+    <li>The number of marks is shown in brackets for each question. A <strong>[1]</strong> answer needs one correct point.</li>
+    <li>Use the timer at the top — aim to spend about 1 minute per mark.</li>
+    <li>Reveal the mark scheme for each question <em>after</em> you have written your answer.</li>
+  </ul>
+</div>
+
+<div class="wrap">
+
+  <!-- SECTION A: SHORT ANSWER -->
+  <div class="section-head">
+    <h2>Section A — Short Answer Questions</h2>
+    <span class="section-marks">28 marks</span>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q1</span>
+      <span class="q-text">Name the data type you would use to store each of the following values. Choose from: INTEGER, REAL, BOOLEAN, STRING, CHARACTER.</span>
+      <span class="q-marks">[5 marks]</span>
+    </div>
+    <div class="q-sub">(a) The number of students in a class (e.g. 28)</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Data type..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(b) A student's average mark (e.g. 74.5)</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Data type..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(c) Whether a student has passed or failed</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Data type..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(d) A student's full name (e.g. "Gabriel Smith")</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Data type..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(e) A student's grade letter (e.g. 'A')</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Data type..."></textarea>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q1 [5 marks, 1 each]</h4>
+      <div class="point"><span class="tick">✓</span> (a) INTEGER — whole number of students</div>
+      <div class="point"><span class="tick">✓</span> (b) REAL — decimal average mark</div>
+      <div class="point"><span class="tick">✓</span> (c) BOOLEAN — only two possible values: TRUE (passed) or FALSE (failed)</div>
+      <div class="point"><span class="tick">✓</span> (d) STRING — sequence of characters</div>
+      <div class="point"><span class="tick">✓</span> (e) CHARACTER — a single character</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q2</span>
+      <span class="q-text">Explain the difference between a WHILE loop and a DO…UNTIL loop. Include reference to when the condition is checked and whether the body is guaranteed to run.</span>
+      <span class="q-marks">[4 marks]</span>
+    </div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="5" placeholder="Write your answer here..."></textarea>
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q2 [4 marks]</h4>
+      <div class="point"><span class="tick">✓</span> A WHILE loop checks the condition <strong>before</strong> each iteration [1]</div>
+      <div class="point"><span class="tick">✓</span> If the condition is FALSE at the start, the WHILE loop body never executes (runs zero times) [1]</div>
+      <div class="point"><span class="tick">✓</span> A DO…UNTIL loop checks the condition <strong>after</strong> each iteration [1]</div>
+      <div class="point"><span class="tick">✓</span> A DO…UNTIL loop always executes its body <strong>at least once</strong> [1]</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q3</span>
+      <span class="q-text">The following pseudocode uses an array. Answer the questions below.</span>
+      <span class="q-marks">[4 marks]</span>
+    </div>
+    <div class="q-code">
+<span class="kw">ARRAY</span> temps[<span class="num">4</span>]
+temps[<span class="num">0</span>] ← <span class="num">18</span>
+temps[<span class="num">1</span>] ← <span class="num">22</span>
+temps[<span class="num">2</span>] ← <span class="num">15</span>
+temps[<span class="num">3</span>] ← <span class="num">25</span>
+    </div>
+    <div class="q-sub">(a) What is the value of <code>temps[2]</code>?</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Value..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(b) How many elements does this array store?</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Number of elements..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(c) Write pseudocode to output all values in the array using a FOR loop.</div>
+    <div class="answer-label">Answer</div>
+    <textarea class="code-answer" rows="5" placeholder="Write your pseudocode here..."></textarea>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q3 [4 marks]</h4>
+      <div class="point"><span class="tick">✓</span> (a) 15 [1]</div>
+      <div class="point"><span class="tick">✓</span> (b) 4 elements [1]</div>
+      <div class="point"><span class="tick">✓</span> (c) FOR i ← 0 TO 3 [1] &nbsp;|&nbsp; OUTPUT temps[i] [1] &nbsp;|&nbsp; NEXT i</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q4</span>
+      <span class="q-text">State the output of each string operation below.</span>
+      <span class="q-marks">[4 marks]</span>
+    </div>
+    <div class="q-sub">(a) <code>LEN("Computing")</code></div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Output..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(b) <code>SUBSTRING("Computing", 1, 4)</code></div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Output..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(c) <code>UPPER("gcse")</code></div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Output..."></textarea>
+
+    <div class="q-sub" style="margin-top:10px">(d) <code>"AQA" + " " + "Computing"</code></div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="1" placeholder="Output..."></textarea>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q4 [4 marks, 1 each]</h4>
+      <div class="point"><span class="tick">✓</span> (a) 9</div>
+      <div class="point"><span class="tick">✓</span> (b) "Comp" (starts at index 1, takes 4 characters)</div>
+      <div class="point"><span class="tick">✓</span> (c) "GCSE"</div>
+      <div class="point"><span class="tick">✓</span> (d) "AQA Computing"</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q5</span>
+      <span class="q-text">Explain what is meant by a <strong>local variable</strong> and why local variables are generally preferred over global variables.</span>
+      <span class="q-marks">[3 marks]</span>
+    </div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="5" placeholder="Write your answer here..."></textarea>
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q5 [3 marks]</h4>
+      <div class="point"><span class="tick">✓</span> A local variable is declared inside a subroutine and only exists while that subroutine is executing [1]</div>
+      <div class="point"><span class="tick">✓</span> It cannot be accessed from outside the subroutine [1]</div>
+      <div class="point"><span class="tick">✓</span> Local variables are preferred because they prevent accidental changes from other parts of the program / makes programs easier to debug and maintain / reduces side effects [1]</div>
+    </div>
+  </div>
+
+  <!-- Q6 Trace Table -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q6</span>
+      <span class="q-text">Complete the trace table for the pseudocode below.</span>
+      <span class="q-marks">[8 marks]</span>
+    </div>
+    <div class="q-code">
+total ← <span class="num">0</span>
+<span class="kw">FOR</span> i ← <span class="num">1</span> TO <span class="num">4</span>
+  total ← total + i
+<span class="kw">NEXT</span> i
+OUTPUT total
+    </div>
+    <div class="answer-label">Complete the trace table</div>
+    <table class="trace-table">
+      <tr>
+        <th>i</th>
+        <th>total (before)</th>
+        <th>total ← total + i</th>
+        <th>total (after)</th>
+      </tr>
+      <tr>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+      </tr>
+      <tr>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+      </tr>
+      <tr>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+      </tr>
+      <tr>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="3" style="text-align:right;padding:6px 12px;font-size:0.85rem;font-weight:700;color:#333;font-family:'Segoe UI',sans-serif">OUTPUT total =</td>
+        <td><textarea rows="1" placeholder=""></textarea></td>
+      </tr>
+    </table>
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q6 [8 marks, 1 per cell column + output]</h4>
+      <ul>
+        <li>i=1, total before=0, total+i=0+1=1, total after=1</li>
+        <li>i=2, total before=1, total+i=1+2=3, total after=3</li>
+        <li>i=3, total before=3, total+i=3+3=6, total after=6</li>
+        <li>i=4, total before=6, total+i=6+4=10, total after=10</li>
+        <li>OUTPUT total = <strong>10</strong></li>
+      </ul>
+      <p style="margin-top:8px;font-size:0.85rem">Award 1 mark per correct row (4 marks) + 1 mark for correct OUTPUT = 10. Mark scheme: 7 marks for full trace, 1 mark for output.</p>
+    </div>
+  </div>
+
+  <!-- SECTION B -->
+  <div class="section-head">
+    <h2>Section B — Extended Answer Questions</h2>
+    <span class="section-marks">22 marks</span>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q7</span>
+      <span class="q-text">A teacher wants a program to take a student's mark (0–100) as input and output the grade: A (70+), B (55–69), C (40–54), or Fail (below 40).</span>
+      <span class="q-marks">[6 marks]</span>
+    </div>
+    <div class="q-sub">(a) Write pseudocode to input the mark and output the correct grade using IF/ELSE IF/ELSE.</div>
+    <div class="answer-label">Pseudocode</div>
+    <textarea class="code-answer" rows="14" placeholder="Write your pseudocode here..."></textarea>
+
+    <div class="q-sub" style="margin-top:14px">(b) Explain one advantage of using SWITCH/CASE instead of IF/ELSE IF for this type of problem.</div>
+    <div class="answer-label">Answer</div>
+    <textarea rows="3" placeholder="Write your answer here..."></textarea>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q7 [6 marks]</h4>
+      <p><strong>(a) [4 marks]</strong></p>
+      <div class="point"><span class="tick">✓</span> <code>mark ← USERINPUT</code> or similar input statement [1]</div>
+      <div class="point"><span class="tick">✓</span> <code>IF mark >= 70 THEN OUTPUT "A"</code> [1]</div>
+      <div class="point"><span class="tick">✓</span> <code>ELSE IF mark >= 55 THEN OUTPUT "B"</code> and <code>ELSE IF mark >= 40 THEN OUTPUT "C"</code> [1]</div>
+      <div class="point"><span class="tick">✓</span> <code>ELSE OUTPUT "Fail" END IF</code> — correct ELSE and END IF [1]</div>
+      <p style="margin-top:10px"><strong>(b) [2 marks]</strong></p>
+      <div class="point"><span class="tick">✓</span> SWITCH/CASE is cleaner/more readable when comparing one variable against a list of specific values [1]</div>
+      <div class="point"><span class="tick">✓</span> However, note that SWITCH/CASE is actually less suitable here because the conditions are ranges (>=70), not exact values — IF/ELSE IF is better for ranges [1 for recognising this]</div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q8</span>
+      <span class="q-text">A program stores the names of 5 students in an array. Write pseudocode to: (a) declare the array and store 5 names, (b) output all names using a loop, and (c) search for a specific name entered by the user and output whether it was found.</span>
+      <span class="q-marks">[8 marks]</span>
+    </div>
+    <div class="q-sub">(a) Declare array and assign 5 names [2 marks]</div>
+    <div class="answer-label">Pseudocode</div>
+    <textarea class="code-answer" rows="8" placeholder="Write your pseudocode here..."></textarea>
+
+    <div class="q-sub" style="margin-top:12px">(b) Output all names using a loop [2 marks]</div>
+    <div class="answer-label">Pseudocode</div>
+    <textarea class="code-answer" rows="5" placeholder="Write your pseudocode here..."></textarea>
+
+    <div class="q-sub" style="margin-top:12px">(c) Search for a name and output if found [4 marks]</div>
+    <div class="answer-label">Pseudocode</div>
+    <textarea class="code-answer" rows="10" placeholder="Write your pseudocode here..."></textarea>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q8 [8 marks]</h4>
+      <p><strong>(a) [2 marks]</strong></p>
+      <div class="point"><span class="tick">✓</span> <code>ARRAY names[5]</code> — correct declaration with size 5 [1]</div>
+      <div class="point"><span class="tick">✓</span> <code>names[0] ← "Alice"</code> etc. — assigning at least 5 values with correct indices 0–4 [1]</div>
+      <p style="margin-top:8px"><strong>(b) [2 marks]</strong></p>
+      <div class="point"><span class="tick">✓</span> <code>FOR i ← 0 TO 4</code> [1]</div>
+      <div class="point"><span class="tick">✓</span> <code>OUTPUT names[i]</code> and <code>NEXT i</code> [1]</div>
+      <p style="margin-top:8px"><strong>(c) [4 marks]</strong></p>
+      <div class="point"><span class="tick">✓</span> Input search name from user [1]</div>
+      <div class="point"><span class="tick">✓</span> Loop through array (FOR or WHILE) [1]</div>
+      <div class="point"><span class="tick">✓</span> Compare each element to search name (IF names[i] = search THEN…) [1]</div>
+      <div class="point"><span class="tick">✓</span> Output "Found" or "Not found" appropriately [1]</div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block">
+    <div class="q-header">
+      <span class="q-num">Q9</span>
+      <span class="q-text">Write a function called <code>countVowels</code> that takes a string as a parameter and returns the number of vowels (a, e, i, o, u) in the string. Then show how you would call the function and output the result.</span>
+      <span class="q-marks">[8 marks]</span>
+    </div>
+    <div class="answer-label">Pseudocode — Function definition</div>
+    <textarea class="code-answer" rows="16" placeholder="Write your pseudocode here..."></textarea>
+
+    <div class="answer-label" style="margin-top:10px">Pseudocode — Calling the function</div>
+    <textarea class="code-answer" rows="3" placeholder="Write how you would call the function..."></textarea>
+
+    <button class="ms-toggle" onclick="toggleMS(this)">Show mark scheme</button>
+    <div class="mark-scheme">
+      <h4>Mark Scheme — Q9 [8 marks]</h4>
+      <div class="point"><span class="tick">✓</span> <code>FUNCTION countVowels(word)</code> — correct function header with parameter [1]</div>
+      <div class="point"><span class="tick">✓</span> Initialise a counter variable (e.g. <code>count ← 0</code>) [1]</div>
+      <div class="point"><span class="tick">✓</span> Loop through each character — FOR loop using LEN() and SUBSTRING() or similar [1]</div>
+      <div class="point"><span class="tick">✓</span> Extract each character correctly (e.g. <code>SUBSTRING(word, i, 1)</code>) [1]</div>
+      <div class="point"><span class="tick">✓</span> Check if character is a vowel using IF / OR conditions [1]</div>
+      <div class="point"><span class="tick">✓</span> Increment counter when vowel found [1]</div>
+      <div class="point"><span class="tick">✓</span> <code>RETURN count</code> at end of function [1]</div>
+      <div class="point"><span class="tick">✓</span> Correct function call and output, e.g. <code>result ← countVowels("hello")</code> and <code>OUTPUT result</code> [1]</div>
+    </div>
+  </div>
+
+</div><!-- end wrap -->
+
+<script>
+function toggleMS(btn) {
+  const ms = btn.nextElementSibling;
+  const showing = ms.classList.toggle('show');
+  btn.textContent = showing ? 'Hide mark scheme' : 'Show mark scheme';
+}
+
+// Timer
+let timerInterval = null;
+let secondsLeft = 45 * 60;
+
+function updateDisplay() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const display = document.getElementById('timerDisplay');
+  display.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  display.classList.toggle('warn', secondsLeft <= 300);
+}
+
+function startTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; return; }
+  timerInterval = setInterval(() => {
+    if (secondsLeft <= 0) { clearInterval(timerInterval); return; }
+    secondsLeft--;
+    updateDisplay();
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval); timerInterval = null;
+  secondsLeft = 45 * 60;
+  updateDisplay();
+  document.getElementById('timerDisplay').classList.remove('warn');
+}
+
+updateDisplay();
+</script>
+</body>
+</html>

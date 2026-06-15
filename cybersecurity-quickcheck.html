@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security Quickcheck – Gab Revision</title>
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --red: #c62828;
+    --red-bg: #fdecea;
+    --yellow: #f9a825;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a4a7a 100%);
+    color: white; padding: 40px 24px 28px; text-align: center;
+  }
+  .hero .kicker { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .hero p { font-size: 0.9rem; opacity: 0.85; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-weight: 700; font-size: 0.78rem; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; margin-top: 12px; }
+
+  nav { background: var(--navy); padding: 10px 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav span { color: #556; font-size: 0.8rem; }
+
+  /* SCORE BAR */
+  .score-bar { background: white; padding: 14px 24px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #dde; flex-wrap: wrap; }
+  .score-stat { font-size: 0.85rem; color: #555; }
+  .score-stat strong { color: var(--navy); font-size: 1rem; }
+  .progress-wrap { flex: 1; min-width: 120px; }
+  .progress-bar { height: 8px; background: #dde; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.3s; }
+
+  /* QUESTIONS */
+  .questions { max-width: 760px; margin: 24px auto; padding: 0 16px 60px; }
+  .q-block { background: white; border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-number { font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .q-text { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 14px; line-height: 1.4; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    text-align: left; padding: 10px 16px; border-radius: 8px; border: 2px solid #dde;
+    background: var(--bg); font-size: 0.88rem; cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--accent); background: #d0eaff; }
+  .option-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 700; }
+  .option-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .option-btn.reveal { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+
+  /* TRUE/FALSE */
+  .tf-options { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1; padding: 12px; border-radius: 8px; border: 2px solid #dde;
+    background: var(--bg); font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: all 0.15s; font-family: inherit;
+  }
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #d0eaff; }
+  .tf-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+  .tf-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .tf-btn.reveal { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+
+  .feedback { margin-top: 10px; font-size: 0.83rem; padding: 8px 12px; border-radius: 6px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: var(--green-bg); color: var(--green); }
+  .feedback.bad { background: var(--red-bg); color: var(--red); }
+
+  /* RESULT BOX */
+  .result-box { background: white; border-radius: 12px; padding: 32px; text-align: center; max-width: 760px; margin: 0 auto 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); display: none; }
+  .result-box.show { display: block; }
+  .result-emoji { font-size: 3rem; margin-bottom: 12px; }
+  .result-score { font-size: 2.5rem; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+  .result-msg { font-size: 1rem; color: #555; margin-bottom: 8px; }
+  .result-show-mum { font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 20px; padding: 10px; background: var(--navy); border-radius: 8px; }
+  .reset-btn { background: var(--navy); color: white; border: none; padding: 12px 32px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+  .reset-btn:hover { background: #1a4a7a; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE Computer Science</div>
+  <h1>🔐 Cyber Security</h1>
+  <p>Quickcheck Quiz — 20 questions</p>
+  <span class="badge">Section 6</span>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span>›</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span>›</span>
+  <a href="cybersecurity-revision.html">📖 Cyber Security Revision</a>
+</nav>
+
+<div class="score-bar">
+  <div class="score-stat">Score: <strong id="score-display">0</strong></div>
+  <div class="score-stat">Answered: <strong id="answered-display">0</strong>/20</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div class="questions" id="questions-container"></div>
+<div class="result-box" id="result-box">
+  <div class="result-emoji" id="result-emoji"></div>
+  <div class="result-score" id="result-score"></div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="result-show-mum" id="result-show-mum"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+<script>
+const SCORE_KEY = 'cs_cybersec_quiz_score';
+
+const questions = [
+  // MCQ (10) — answer is letter A/B/C/D
+  {
+    type: 'mcq', answer: 'B',
+    q: 'What is the main purpose of cyber security?',
+    options: ['A) To design new computer hardware', 'B) To protect systems, networks and data from digital attacks', 'C) To speed up computer processing', 'D) To create new programming languages'],
+    feedback: 'Cyber security is concerned with protecting computer systems, networks and data.'
+  },
+  {
+    type: 'mcq', answer: 'C',
+    q: 'Which type of malware spreads automatically through a network without any user action?',
+    options: ['A) Virus', 'B) Trojan', 'C) Worm', 'D) Adware'],
+    feedback: 'Worms spread automatically by attaching to network tools — unlike viruses which need a user to activate them.'
+  },
+  {
+    type: 'mcq', answer: 'A',
+    q: 'A phishing attack is best described as:',
+    options: ['A) A fake email/message tricking users into revealing personal details', 'B) Redirecting users to a fake website', 'C) Software that records keystrokes', 'D) Pretending to be a friend on social media'],
+    feedback: 'Phishing uses fake emails or texts to trick users — e.g. pretending to be a bank.'
+  },
+  {
+    type: 'mcq', answer: 'D',
+    q: 'What is pharming?',
+    options: ['A) Sending fake emails', 'B) Installing hidden software', 'C) Watching someone type their password', 'D) Redirecting users to a fraudulent website that looks real'],
+    feedback: 'Pharming redirects you to a fake website — e.g. a fake online shop asking for card details.'
+  },
+  {
+    type: 'mcq', answer: 'B',
+    q: 'Which of these is a biometric security measure that could be used on a mobile phone?',
+    options: ['A) A strong password', 'B) Fingerprint scanner', 'C) CAPTCHA test', 'D) Security question'],
+    feedback: 'Fingerprint scanning, facial recognition and iris scans are all biometric measures.'
+  },
+  {
+    type: 'mcq', answer: 'C',
+    q: 'What is the purpose of penetration testing?',
+    options: ['A) To install antivirus software', 'B) To monitor user activity', 'C) To identify vulnerabilities in a system before attackers do', 'D) To encrypt all data on a network'],
+    feedback: 'Penetration testing legitimately tests systems to find weaknesses before they can be exploited.'
+  },
+  {
+    type: 'mcq', answer: 'A',
+    q: 'A white box penetration tester is given:',
+    options: ['A) Information about the network such as architecture and source code', 'B) No information at all', 'C) Only the IP address', 'D) Access to the physical building only'],
+    feedback: 'White box testers simulate a malicious insider — they know the system details.'
+  },
+  {
+    type: 'mcq', answer: 'D',
+    q: 'Which social engineering technique involves making up a false scenario to trick a victim?',
+    options: ['A) Pharming', 'B) Shoulder surfing', 'C) Phishing', 'D) Blagging (Pretexting)'],
+    feedback: 'Blagging/pretexting = fabricating a scenario to manipulate someone into sharing information.'
+  },
+  {
+    type: 'mcq', answer: 'B',
+    q: 'Why must anti-virus software be regularly updated?',
+    options: ['A) To make the computer run faster', 'B) To detect new viruses as they are created', 'C) To prevent shoulder surfing', 'D) To stop CAPTCHA tests failing'],
+    feedback: 'New malware is constantly created. Anti-virus must update its database to recognise new threats.'
+  },
+  {
+    type: 'mcq', answer: 'C',
+    q: 'Two-factor authentication (2FA) improves security because:',
+    options: ['A) Passwords become longer', 'B) Users log in faster', 'C) A second form of verification is required, making it harder for attackers', 'D) Biometrics replace passwords entirely'],
+    feedback: '2FA requires two forms of proof of identity — e.g. a password plus a phone confirmation.'
+  },
+  // TRUE/FALSE (10) — answer is 'true' or 'false'
+  {
+    type: 'tf', answer: 'true',
+    q: 'A Trojan disguises itself as legitimate software to gain access to a computer.',
+    feedback: 'True — Trojans pretend to be safe software to trick users into running them.'
+  },
+  {
+    type: 'tf', answer: 'false',
+    q: 'Adware is dangerous because it directly damages files and steals passwords.',
+    feedback: 'False — Adware installs unwanted popups and banners but does not directly damage files or steal passwords.'
+  },
+  {
+    type: 'tf', answer: 'true',
+    q: 'Default passwords are a security risk because they are often sent unencrypted by email.',
+    feedback: 'True — Default passwords emailed to users may be intercepted if sent without encryption.'
+  },
+  {
+    type: 'tf', answer: 'false',
+    q: 'Black box penetration testing simulates a malicious insider attack.',
+    feedback: 'False — Black box testing simulates an OUTSIDE (external) attack. White box simulates an insider.'
+  },
+  {
+    type: 'tf', answer: 'true',
+    q: 'CAPTCHA tests are designed to tell the difference between humans and automated bots.',
+    feedback: 'True — CAPTCHA uses image-based challenges that machines cannot solve but humans can.'
+  },
+  {
+    type: 'tf', answer: 'false',
+    q: 'Spyware can only record keystrokes and cannot control a computer\'s webcam or microphone.',
+    feedback: 'False — Spyware can also be used to control webcams and microphones.'
+  },
+  {
+    type: 'tf', answer: 'true',
+    q: 'Shoulder surfing can happen at ATMs and in public places where people type PINs.',
+    feedback: 'True — Fraudsters look over your shoulder to observe PINs or passwords being entered.'
+  },
+  {
+    type: 'tf', answer: 'true',
+    q: 'Automatic software updates are more secure than manual updates because users may forget to update.',
+    feedback: 'True — Automatic updates ensure protection is always current without relying on users to remember.'
+  },
+  {
+    type: 'tf', answer: 'false',
+    q: 'Removable media such as USB drives cannot transmit malware between computers.',
+    feedback: 'False — USB drives are a common vector for spreading malware between computers.'
+  },
+  {
+    type: 'tf', answer: 'true',
+    q: 'Biometric measures are more secure than passwords because they cannot be guessed or forgotten.',
+    feedback: 'True — Biometrics (fingerprints, iris scans) are unique and cannot be guessed like a password.'
+  }
+];
+
+let score = 0;
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q' + i;
+
+    const num = document.createElement('div');
+    num.className = 'q-number';
+    num.textContent = `Question ${i+1} of 20`;
+    block.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.q;
+    block.appendChild(text);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.id = 'fb' + i;
+
+    if (q.type === 'mcq') {
+      const opts = document.createElement('div');
+      opts.className = 'options';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.dataset.letter = opt[0];
+        btn.onclick = () => answerMCQ(i, btn, opts, q);
+        opts.appendChild(btn);
+      });
+      block.appendChild(opts);
+    } else {
+      const tf = document.createElement('div');
+      tf.className = 'tf-options';
+      ['True', 'False'].forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'tf-btn';
+        btn.textContent = val;
+        btn.onclick = () => answerTF(i, btn, tf, q, val.toLowerCase());
+        tf.appendChild(btn);
+      });
+      block.appendChild(tf);
+    }
+
+    block.appendChild(feedback);
+    container.appendChild(block);
+  });
+}
+
+function answerMCQ(i, btn, opts, q) {
+  const allBtns = opts.querySelectorAll('.option-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const correct = btn.dataset.letter === q.answer;
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    allBtns.forEach(b => { if (b.dataset.letter === q.answer) b.classList.add('reveal'); });
+  }
+  showFeedback(i, correct, q.feedback);
+  updateScore(correct);
+}
+
+function answerTF(i, btn, tf, q, val) {
+  const allBtns = tf.querySelectorAll('.tf-btn');
+  allBtns.forEach(b => b.disabled = true);
+  const correct = val === q.answer;
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    allBtns.forEach(b => { if (b.textContent.toLowerCase() === q.answer) b.classList.add('reveal'); });
+  }
+  showFeedback(i, correct, q.feedback);
+  updateScore(correct);
+}
+
+function showFeedback(i, correct, msg) {
+  const fb = document.getElementById('fb' + i);
+  fb.textContent = (correct ? '✅ ' : '❌ ') + msg;
+  fb.className = 'feedback show ' + (correct ? 'ok' : 'bad');
+}
+
+function updateScore(correct) {
+  if (correct) score++;
+  answered++;
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('answered-display').textContent = answered;
+  document.getElementById('prog-fill').style.width = (answered / 20 * 100) + '%';
+  if (answered === 20) showResult();
+}
+
+function showResult() {
+  localStorage.setItem(SCORE_KEY, score);
+  const box = document.getElementById('result-box');
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('result-score').textContent = score + ' / 20';
+  let emoji, msg;
+  if (score >= 18) { emoji = '🏆'; msg = 'Outstanding! You really know your cyber security!'; }
+  else if (score >= 14) { emoji = '🎉'; msg = 'Great work — just a few gaps to fill. Check the revision page!'; }
+  else if (score >= 10) { emoji = '📚'; msg = 'Good effort — revisit the sections you found tricky.'; }
+  else { emoji = '💪'; msg = 'Keep going — head back to the revision page and try again!'; }
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-show-mum').textContent = `Show this to mum — ${score}/20`;
+}
+
+function resetQuiz() {
+  score = 0; answered = 0;
+  document.getElementById('score-display').textContent = 0;
+  document.getElementById('answered-display').textContent = 0;
+  document.getElementById('prog-fill').style.width = '0%';
+  document.getElementById('result-box').classList.remove('show');
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

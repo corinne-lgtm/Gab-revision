@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Representation — GCSE Computing Revision</title>
+<style>
+  :root {
+    --navy: #0d2b45;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --yellow: #f9a825;
+    --yellow-bg: #fffde7;
+    --red: #c62828;
+    --red-bg: #ffebee;
+    --orange: #e65100;
+    --orange-bg: #fff3e0;
+    --purple: #6a1b9a;
+    --purple-bg: #f3e5f5;
+    --teal: #00695c;
+    --teal-bg: #e0f2f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; position: sticky; top: 0; z-index: 100; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; padding: 4px 10px; border-radius: 4px; transition: background 0.2s; }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+  nav .sep { color: rgba(255,255,255,0.3); }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: white; padding: 50px 24px 40px; text-align: center; }
+  .kicker { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; font-weight: 600; }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 12px; }
+  .badge { display: inline-block; background: var(--accent); color: var(--navy); font-size: 0.75rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-bottom: 18px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+  .hero-tags span { background: rgba(100,181,246,0.15); border: 1px solid rgba(100,181,246,0.4); color: #cfe8fc; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; }
+  .mark-read-btn { background: var(--accent); color: var(--navy); border: none; padding: 12px 28px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+  .mark-read-btn:hover { opacity: 0.85; }
+  .mark-read-btn.done { background: #81c784; color: #1b5e20; }
+
+  /* LAYOUT */
+  main { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; }
+  h2 { font-size: 1.4rem; color: var(--navy); margin: 40px 0 16px; border-left: 5px solid var(--accent); padding-left: 12px; }
+  h3 { font-size: 1.1rem; color: var(--navy); margin: 24px 0 10px; }
+
+  /* CHECKLIST */
+  .checklist { background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 32px; }
+  .checklist h2 { margin-top: 0; }
+  .check-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type=checkbox] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--navy); }
+  .check-item label { cursor: pointer; font-size: 0.95rem; }
+  .check-item input:checked + label { text-decoration: line-through; color: #888; }
+
+  /* CARDS */
+  .card { background: white; border-left: 5px solid var(--accent); border-radius: 0 10px 10px 0; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  /* STRIPS */
+  .strip { padding: 14px 18px; border-radius: 8px; margin-bottom: 16px; font-size: 0.95rem; }
+  .strip.green  { background: var(--green-bg);  border-left: 4px solid var(--green);  color: var(--green); }
+  .strip.yellow { background: var(--yellow-bg); border-left: 4px solid var(--yellow); color: #5d4000; }
+  .strip.red    { background: var(--red-bg);    border-left: 4px solid var(--red);    color: var(--red); }
+  .strip.orange { background: var(--orange-bg); border-left: 4px solid var(--orange); color: var(--orange); }
+  .strip.purple { background: var(--purple-bg); border-left: 4px solid var(--purple); color: var(--purple); }
+  .strip.teal   { background: var(--teal-bg);   border-left: 4px solid var(--teal);   color: var(--teal); }
+  .strip strong { display: block; margin-bottom: 4px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* CODE */
+  .code-block { background: #0d1b2a; border-radius: 8px; padding: 18px 20px; font-family: 'Courier New', monospace; font-size: 0.88rem; line-height: 1.7; margin: 16px 0; overflow-x: auto; }
+  .code-block .kw  { color: #82aaff; }
+  .code-block .cm  { color: #546e7a; font-style: italic; }
+  .code-block .num { color: #f78c6c; }
+  .code-block .str { color: #c3e88d; }
+
+  /* TABLES */
+  .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+  .data-table th { background: var(--navy); color: white; padding: 10px 14px; text-align: left; }
+  .data-table td { padding: 9px 14px; border-bottom: 1px solid #dde8f5; }
+  .data-table tr:nth-child(even) td { background: #f0f7ff; }
+
+  /* GRIDS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media(max-width:640px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+  .grid-card { background: white; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
+  .grid-card h4 { color: var(--navy); font-size: 0.95rem; margin-bottom: 8px; }
+
+  /* KEYWORD PILLS */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .pill { background: var(--navy); color: var(--accent); padding: 5px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
+
+  /* INTERACTIVE — BINARY CONVERTER */
+  .interactive-box { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 20px 0; }
+  .interactive-box h3 { margin-top: 0; }
+  .bit-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; justify-content: center; }
+  .bit-btn { width: 56px; height: 56px; border-radius: 10px; border: 2px solid var(--accent); background: white; font-size: 1.4rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .bit-btn .place { font-size: 0.6rem; color: #888; font-weight: 400; }
+  .bit-btn.on { background: var(--navy); color: white; border-color: var(--navy); }
+  .bit-btn.on .place { color: var(--accent); }
+  .binary-result { text-align: center; margin-top: 12px; }
+  .binary-result .dval { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .binary-result .hex-val { font-size: 1rem; color: #555; margin-top: 4px; }
+  .conv-controls { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; justify-content: center; }
+  .conv-btn { background: var(--accent); color: var(--navy); border: none; padding: 8px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+  .conv-btn:hover { opacity: 0.85; }
+
+  /* FORMULA BOX */
+  .formula { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); color: white; border-radius: 10px; padding: 18px 22px; margin: 16px 0; text-align: center; font-size: 1.05rem; }
+  .formula .f-label { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .formula .f-eq { font-size: 1.4rem; font-weight: 700; font-family: 'Courier New', monospace; }
+
+  /* CTA */
+  .quiz-cta { background: linear-gradient(135deg, #0d2b45 0%, #1a4a7a 100%); border-radius: 12px; padding: 30px 24px; text-align: center; margin-top: 40px; color: white; }
+  .quiz-cta h3 { font-size: 1.3rem; margin-bottom: 10px; }
+  .quiz-cta p { color: #cfe8fc; margin-bottom: 20px; }
+  .cta-btn { display: inline-block; background: var(--accent); color: var(--navy); font-weight: 700; font-size: 1rem; padding: 13px 32px; border-radius: 8px; text-decoration: none; transition: opacity 0.2s; }
+  .cta-btn:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <span class="sep">|</span>
+  <a href="computing-index.html">💻 Computing</a>
+  <span class="sep">|</span>
+  <a href="computing-data-representation-revision.html">📖 Data Representation</a>
+</nav>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE Computer Science · Section 3</div>
+  <div class="badge">Revision Notes</div>
+  <h1>Data Representation</h1>
+  <div class="hero-tags">
+    <span>Binary & Denary</span>
+    <span>Hexadecimal</span>
+    <span>Binary Arithmetic</span>
+    <span>Character Encoding</span>
+    <span>Images & Sound</span>
+    <span>Compression</span>
+  </div>
+  <button class="mark-read-btn" id="markReadBtn" onclick="markRead()">✅ Mark as Read</button>
+</div>
+
+<main>
+
+  <!-- CHECKLIST -->
+  <div class="checklist">
+    <h2>📋 Learning Checklist</h2>
+    <div class="check-item"><input type="checkbox" id="c0" onchange="saveCheck(0)"><label for="c0">Convert between binary, denary and hexadecimal</label></div>
+    <div class="check-item"><input type="checkbox" id="c1" onchange="saveCheck(1)"><label for="c1">Perform binary addition including overflow</label></div>
+    <div class="check-item"><input type="checkbox" id="c2" onchange="saveCheck(2)"><label for="c2">Understand two's complement for negative numbers</label></div>
+    <div class="check-item"><input type="checkbox" id="c3" onchange="saveCheck(3)"><label for="c3">Explain ASCII and Unicode character encoding</label></div>
+    <div class="check-item"><input type="checkbox" id="c4" onchange="saveCheck(4)"><label for="c4">Calculate image file size (pixels × colour depth)</label></div>
+    <div class="check-item"><input type="checkbox" id="c5" onchange="saveCheck(5)"><label for="c5">Understand how sound is digitised (sampling rate, bit depth)</label></div>
+    <div class="check-item"><input type="checkbox" id="c6" onchange="saveCheck(6)"><label for="c6">Compare lossy and lossless compression</label></div>
+    <div class="check-item"><input type="checkbox" id="c7" onchange="saveCheck(7)"><label for="c7">Explain run-length encoding (RLE)</label></div>
+  </div>
+
+  <!-- SECTION 1: NUMBER SYSTEMS -->
+  <h2>1 · Number Systems</h2>
+
+  <div class="card">
+    <h3>Why computers use binary</h3>
+    <p>Computers are built from transistors that are either <strong>on (1)</strong> or <strong>off (0)</strong>. This two-state nature maps perfectly to the binary number system (base 2). All other data — numbers, text, images, sound — is ultimately stored as sequences of 1s and 0s.</p>
+  </div>
+
+  <div class="strip green"><strong>💡 Key term</strong>A <strong>bit</strong> is a single binary digit (0 or 1). A <strong>byte</strong> is 8 bits. A <strong>nibble</strong> is 4 bits.</div>
+
+  <h3>Place values in binary (8-bit)</h3>
+  <table class="data-table">
+    <tr>
+      <th>Bit 7</th><th>Bit 6</th><th>Bit 5</th><th>Bit 4</th>
+      <th>Bit 3</th><th>Bit 2</th><th>Bit 1</th><th>Bit 0</th>
+    </tr>
+    <tr>
+      <td>128</td><td>64</td><td>32</td><td>16</td>
+      <td>8</td><td>4</td><td>2</td><td>1</td>
+    </tr>
+  </table>
+
+  <div class="strip yellow"><strong>⚠️ Exam tip</strong>Always write binary with leading zeros to fill 8 bits. e.g. 5 in binary is <code>00000101</code>, not just <code>101</code>.</div>
+
+  <h3>Converting denary → binary</h3>
+  <div class="card">
+    <p>Example: convert <strong>109</strong> to binary.</p>
+    <p style="margin-top:10px;">109 ÷ 2 = 54 remainder <strong>1</strong><br>
+    54 ÷ 2 = 27 remainder <strong>0</strong><br>
+    27 ÷ 2 = 13 remainder <strong>1</strong><br>
+    13 ÷ 2 = 6 remainder <strong>1</strong><br>
+    6 ÷ 2 = 3 remainder <strong>0</strong><br>
+    3 ÷ 2 = 1 remainder <strong>1</strong><br>
+    1 ÷ 2 = 0 remainder <strong>1</strong></p>
+    <p style="margin-top:10px;">Read remainders <strong>bottom to top</strong>: <code>01101101</code> → ✅ 109</p>
+  </div>
+
+  <!-- SECTION 2: HEXADECIMAL -->
+  <h2>2 · Hexadecimal</h2>
+
+  <div class="card">
+    <p>Hexadecimal (hex) is <strong>base 16</strong>. It uses digits 0–9 then letters A–F for values 10–15. One hex digit represents exactly <strong>4 bits (1 nibble)</strong>, so 2 hex digits = 1 byte. This makes it far more compact than binary for humans to read.</p>
+  </div>
+
+  <table class="data-table">
+    <tr><th>Denary</th><th>Binary</th><th>Hex</th></tr>
+    <tr><td>0</td><td>0000</td><td>0</td></tr>
+    <tr><td>9</td><td>1001</td><td>9</td></tr>
+    <tr><td>10</td><td>1010</td><td>A</td></tr>
+    <tr><td>11</td><td>1011</td><td>B</td></tr>
+    <tr><td>12</td><td>1100</td><td>C</td></tr>
+    <tr><td>13</td><td>1101</td><td>D</td></tr>
+    <tr><td>14</td><td>1110</td><td>E</td></tr>
+    <tr><td>15</td><td>1111</td><td>F</td></tr>
+    <tr><td>255</td><td>11111111</td><td>FF</td></tr>
+  </table>
+
+  <div class="strip teal"><strong>🎨 Real-world use</strong>Hex colour codes in web design: <code>#FF5733</code> means Red=FF (255), Green=57 (87), Blue=33 (51). Memory addresses and error codes also use hex.</div>
+
+  <h3>Binary ↔ Hex conversion</h3>
+  <div class="two-col">
+    <div class="grid-card">
+      <h4>Binary → Hex</h4>
+      <p style="font-size:0.9rem;">Split the binary into groups of 4 bits from the right, then convert each group.</p>
+      <p style="margin-top:8px; font-family:monospace; font-size:0.9rem;"><strong>10110111</strong><br>1011 = B &nbsp; 0111 = 7<br>Answer: <strong>B7</strong></p>
+    </div>
+    <div class="grid-card">
+      <h4>Hex → Binary</h4>
+      <p style="font-size:0.9rem;">Convert each hex digit to a 4-bit group and join them.</p>
+      <p style="margin-top:8px; font-family:monospace; font-size:0.9rem;"><strong>3E</strong><br>3 = 0011 &nbsp; E = 1110<br>Answer: <strong>00111110</strong></p>
+    </div>
+  </div>
+
+  <!-- SECTION 3: BINARY ARITHMETIC -->
+  <h2>3 · Binary Arithmetic</h2>
+
+  <h3>Binary addition rules</h3>
+  <div class="three-col">
+    <div class="grid-card" style="text-align:center;">
+      <div style="font-size:1.5rem; font-family:monospace;">0+0</div>
+      <div style="font-size:1.2rem; color:var(--green); font-weight:700;">=0</div>
+    </div>
+    <div class="grid-card" style="text-align:center;">
+      <div style="font-size:1.5rem; font-family:monospace;">1+0 or 0+1</div>
+      <div style="font-size:1.2rem; color:var(--green); font-weight:700;">=1</div>
+    </div>
+    <div class="grid-card" style="text-align:center;">
+      <div style="font-size:1.5rem; font-family:monospace;">1+1</div>
+      <div style="font-size:1.2rem; color:var(--orange); font-weight:700;">=10 (carry 1)</div>
+    </div>
+  </div>
+  <div class="grid-card" style="text-align:center; margin-top:12px;">
+    <div style="font-size:1.3rem; font-family:monospace;">1+1+1</div>
+    <div style="font-size:1.1rem; color:var(--red); font-weight:700;">=11 (write 1, carry 1)</div>
+  </div>
+
+  <div class="code-block">
+<span class="cm">  Binary addition example: 109 + 42</span>
+  <span class="num">01101101</span>   <span class="cm">→ 109</span>
++ <span class="num">00101010</span>   <span class="cm">→ 42</span>
+──────────
+  <span class="num">10010111</span>   <span class="cm">→ 151 ✓</span>
+  </div>
+
+  <div class="strip red"><strong>🚨 Overflow error</strong>Overflow occurs when the result of a binary addition is too large to fit in the available number of bits. With 8 bits, the max value is 255. Adding 200 + 100 would cause overflow.</div>
+
+  <h3>Two's complement (negative numbers)</h3>
+  <div class="card">
+    <p>To represent negative numbers, computers use <strong>two's complement</strong>:</p>
+    <ol style="margin-top:10px; padding-left:20px; line-height:2;">
+      <li>Write the positive number in binary</li>
+      <li>Flip all the bits (0→1, 1→0) — this gives the <em>one's complement</em></li>
+      <li>Add 1 to the result</li>
+    </ol>
+    <div class="code-block" style="margin-top:12px;">
+<span class="cm">Example: represent −42 in 8-bit two's complement</span>
+<span class="num">00101010</span>  <span class="cm">→ +42</span>
+<span class="num">11010101</span>  <span class="cm">→ flip all bits</span>
+<span class="num">11010110</span>  <span class="cm">→ add 1  =  −42 ✓</span>
+    </div>
+    <p style="margin-top:8px; font-size:0.9rem;">The <strong>most significant bit</strong> (leftmost) is the sign bit: 0 = positive, 1 = negative.</p>
+  </div>
+
+  <!-- SECTION 4: CHARACTER ENCODING -->
+  <h2>4 · Character Encoding</h2>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>ASCII</h3>
+      <p><strong>American Standard Code for Information Interchange.</strong> Uses <strong>7 bits</strong> → 128 characters (letters, digits, punctuation, control codes). Extended ASCII uses 8 bits → 256 characters.</p>
+      <p style="margin-top:10px; font-family:monospace; font-size:0.85rem;">A = 65 = 01000001<br>a = 97 = 01100001<br>0 = 48 = 00110000</p>
+    </div>
+    <div class="card">
+      <h3>Unicode</h3>
+      <p>ASCII only handles English. <strong>Unicode</strong> supports <em>every</em> writing system. UTF-8 (variable length, 1–4 bytes) is the most common. UTF-16 uses 2 or 4 bytes. Unicode covers over <strong>140,000</strong> characters including emoji.</p>
+      <p style="margin-top:10px; font-size:0.85rem; color:#555;">Downside: larger file sizes than ASCII.</p>
+    </div>
+  </div>
+
+  <div class="strip purple"><strong>🔑 ASCII trick</strong>Lowercase letters are always exactly 32 more than their uppercase counterparts. A=65, a=97. You can convert case by flipping bit 5.</div>
+
+  <!-- SECTION 5: IMAGES -->
+  <h2>5 · Images</h2>
+
+  <div class="card">
+    <p>A digital image is made of <strong>pixels</strong> (picture elements). Each pixel is stored as a binary value representing its colour.</p>
+    <ul style="margin-top:10px; padding-left:20px; line-height:1.8;">
+      <li><strong>Resolution</strong>: number of pixels (width × height)</li>
+      <li><strong>Colour depth</strong>: number of bits per pixel</li>
+    </ul>
+  </div>
+
+  <div class="formula">
+    <div class="f-label">Image file size formula</div>
+    <div class="f-eq">File size = width × height × colour depth</div>
+    <div style="margin-top:8px; font-size:0.85rem; color:#cfe8fc;">(answer in bits — divide by 8 for bytes)</div>
+  </div>
+
+  <div class="card">
+    <h3>Worked example</h3>
+    <p>An image is 1024 × 768 pixels with a colour depth of 24 bits (True Colour).</p>
+    <p style="margin-top:8px; font-family:monospace;">1024 × 768 × 24 = 18,874,368 bits<br>÷ 8 = 2,359,296 bytes<br>÷ 1,024 = 2,304 KB<br>÷ 1,024 = <strong>2.25 MB</strong></p>
+  </div>
+
+  <table class="data-table">
+    <tr><th>Colour depth</th><th>Colours possible</th><th>Example</th></tr>
+    <tr><td>1 bit</td><td>2</td><td>Black & white</td></tr>
+    <tr><td>4 bits</td><td>16</td><td>Early computer graphics</td></tr>
+    <tr><td>8 bits</td><td>256</td><td>GIF images</td></tr>
+    <tr><td>24 bits</td><td>16,777,216</td><td>True Colour / JPEG</td></tr>
+    <tr><td>32 bits</td><td>4,294,967,296</td><td>True Colour + transparency</td></tr>
+  </table>
+
+  <!-- SECTION 6: SOUND -->
+  <h2>6 · Sound</h2>
+
+  <div class="card">
+    <p>Sound is an <strong>analogue</strong> wave. To store it digitally, it must be <strong>sampled</strong> — its amplitude is measured at regular intervals and stored as a binary value.</p>
+    <ul style="margin-top:10px; padding-left:20px; line-height:1.9;">
+      <li><strong>Sample rate</strong>: how many samples per second (Hz / kHz). Higher = better quality.</li>
+      <li><strong>Bit depth</strong>: how many bits per sample. Higher = more accurate amplitude.</li>
+      <li>CD quality: 44,100 Hz sample rate, 16-bit depth, stereo (×2).</li>
+    </ul>
+  </div>
+
+  <div class="formula">
+    <div class="f-label">Sound file size formula</div>
+    <div class="f-eq">File size = sample rate × bit depth × duration (s) × channels</div>
+  </div>
+
+  <div class="strip orange"><strong>⚠️ Nyquist's Theorem</strong>To accurately reproduce a sound, the sample rate must be at least <strong>twice</strong> the highest frequency present. Human hearing tops out at ~20 kHz, hence CD's 44.1 kHz rate.</div>
+
+  <!-- SECTION 7: COMPRESSION -->
+  <h2>7 · Compression</h2>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Lossless compression</h3>
+      <p>The original data can be <strong>perfectly reconstructed</strong>. No data is discarded. File size reduction is limited.</p>
+      <p style="margin-top:8px;"><strong>Examples:</strong> PNG, ZIP, FLAC, GIF</p>
+      <p style="margin-top:6px; font-size:0.85rem; color:#555;">Used when accuracy is critical: text, code, medical images.</p>
+    </div>
+    <div class="card">
+      <h3>Lossy compression</h3>
+      <p>Data is <strong>permanently discarded</strong> (usually imperceptible detail). Much smaller files, but quality degrades with repeated saving.</p>
+      <p style="margin-top:8px;"><strong>Examples:</strong> JPEG, MP3, AAC, MP4</p>
+      <p style="margin-top:6px; font-size:0.85rem; color:#555;">Used for media where small quality loss is acceptable.</p>
+    </div>
+  </div>
+
+  <h3>Run-Length Encoding (RLE)</h3>
+  <div class="card">
+    <p>RLE is a simple <strong>lossless</strong> algorithm. Instead of storing repeated values, it stores the <em>value</em> and a <em>count</em>.</p>
+    <div class="code-block" style="margin-top:12px;">
+<span class="cm">Original:   WWWWWBBBWWWWWWWWBBB</span>
+<span class="cm">RLE output: 5W 3B 8W 3B</span>
+
+<span class="cm">19 characters → 8 values (saved 58%)</span>
+    </div>
+    <p style="margin-top:10px; font-size:0.9rem;">RLE works best when data contains long runs of the same value (e.g. simple images with large areas of the same colour). It performs poorly on complex or photographic images.</p>
+  </div>
+
+  <div class="strip green"><strong>✅ Lossless vs Lossy — quick comparison</strong>
+    <table class="data-table" style="margin-top:10px;">
+      <tr><th></th><th>Lossless</th><th>Lossy</th></tr>
+      <tr><td>Data lost?</td><td>No</td><td>Yes</td></tr>
+      <tr><td>File size</td><td>Moderate reduction</td><td>Large reduction</td></tr>
+      <tr><td>Quality</td><td>Perfect</td><td>Reduced</td></tr>
+      <tr><td>Use case</td><td>Text, code, medical</td><td>Music, photos, video</td></tr>
+    </table>
+  </div>
+
+  <!-- KEYWORDS -->
+  <h2>🔑 Key Vocabulary</h2>
+  <div class="pills">
+    <span class="pill">bit</span>
+    <span class="pill">byte</span>
+    <span class="pill">nibble</span>
+    <span class="pill">binary</span>
+    <span class="pill">denary</span>
+    <span class="pill">hexadecimal</span>
+    <span class="pill">overflow</span>
+    <span class="pill">two's complement</span>
+    <span class="pill">ASCII</span>
+    <span class="pill">Unicode</span>
+    <span class="pill">pixel</span>
+    <span class="pill">colour depth</span>
+    <span class="pill">resolution</span>
+    <span class="pill">sample rate</span>
+    <span class="pill">bit depth</span>
+    <span class="pill">lossy</span>
+    <span class="pill">lossless</span>
+    <span class="pill">RLE</span>
+    <span class="pill">UTF-8</span>
+    <span class="pill">sign bit</span>
+  </div>
+
+  <!-- INTERACTIVE -->
+  <h2>🔢 Interactive: Binary Builder</h2>
+  <div class="interactive-box">
+    <h3>Click the bits to build a binary number</h3>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:10px;">Each button shows its place value. Toggle bits on/off to see the denary and hex equivalents update instantly.</p>
+    <div class="bit-row" id="bitRow"></div>
+    <div class="binary-result">
+      <div style="font-size:0.85rem; color:#888; margin-bottom:4px;">Denary value</div>
+      <div class="dval" id="denomVal">0</div>
+      <div class="hex-val" id="hexVal">Hex: 0x00</div>
+      <div style="font-size:0.85rem; color:#888; margin-top:8px;">Binary: <span id="binStr" style="font-family:monospace; color:var(--navy); font-weight:700;">00000000</span></div>
+    </div>
+    <div class="conv-controls">
+      <button class="conv-btn" onclick="setAll(0)">Clear all</button>
+      <button class="conv-btn" onclick="setAll(1)">Set all (255)</button>
+      <button class="conv-btn" onclick="setRandom()">Random</button>
+    </div>
+  </div>
+
+  <!-- QUIZ CTA -->
+  <div class="quiz-cta">
+    <h3>Ready to test yourself?</h3>
+    <p>Try the Data Representation Quickcheck — 20 questions, instant feedback.</p>
+    <a href="computing-data-representation-quickcheck.html" class="cta-btn">Start Quickcheck →</a>
+  </div>
+
+</main>
+
+<script>
+  const STEM = 'computing-data-rep';
+
+  // Mark as read
+  function markRead() {
+    localStorage.setItem(STEM + '-read', 'true');
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '🌟 Show this to mum!';
+    btn.classList.add('done');
+  }
+  if (localStorage.getItem(STEM + '-read')) {
+    const btn = document.getElementById('markReadBtn');
+    btn.textContent = '🌟 Show this to mum!';
+    btn.classList.add('done');
+  }
+
+  // Checklist
+  function saveCheck(i) {
+    const cb = document.getElementById('c' + i);
+    localStorage.setItem('check-' + STEM + '-' + i, cb.checked ? '1' : '0');
+  }
+  for (let i = 0; i < 8; i++) {
+    if (localStorage.getItem('check-' + STEM + '-' + i) === '1') {
+      document.getElementById('c' + i).checked = true;
+    }
+  }
+
+  // Binary builder
+  const places = [128, 64, 32, 16, 8, 4, 2, 1];
+  const bits = [0, 0, 0, 0, 0, 0, 0, 0];
+  const bitRow = document.getElementById('bitRow');
+  places.forEach((p, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'bit-btn';
+    btn.id = 'bit' + i;
+    btn.innerHTML = '<span>0</span><span class="place">' + p + '</span>';
+    btn.onclick = () => toggleBit(i);
+    bitRow.appendChild(btn);
+  });
+  function toggleBit(i) {
+    bits[i] = bits[i] ? 0 : 1;
+    updateBits();
+  }
+  function updateBits() {
+    let val = 0;
+    bits.forEach((b, i) => {
+      const btn = document.getElementById('bit' + i);
+      btn.querySelector('span').textContent = b;
+      btn.classList.toggle('on', b === 1);
+      val += b * places[i];
+    });
+    document.getElementById('denomVal').textContent = val;
+    document.getElementById('hexVal').textContent = 'Hex: 0x' + val.toString(16).toUpperCase().padStart(2, '0');
+    document.getElementById('binStr').textContent = bits.join('');
+  }
+  function setAll(v) { bits.fill(v); updateBits(); }
+  function setRandom() { bits.forEach((_, i) => bits[i] = Math.random() > 0.5 ? 1 : 0); updateBits(); }
+  updateBits();
+</script>
+</body>
+</html>

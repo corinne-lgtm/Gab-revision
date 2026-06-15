@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computing – GCSE Revision</title>
+<style>
+  :root {
+    --navy: #0d2b5e;
+    --accent: #64b5f6;
+    --bg: #e8f4fd;
+    --card-bg: #ffffff;
+    --done-border: #64b5f6;
+    --todo-border: #b0bec5;
+    --todo-bg: #f5f5f5;
+    --todo-text: #90a4ae;
+    --green: #43a047;
+    --gold: #f9a825;
+    --red: #e53935;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 100%);
+    color: white;
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .hero .kicker {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-bottom: 22px;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-tags span {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: rgba(13,43,94,0.96);
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.82rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(100,181,246,0.3);
+    transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(100,181,246,0.15); }
+
+  /* ── OVERALL PROGRESS ── */
+  .overall-progress {
+    background: white;
+    margin: 24px auto;
+    max-width: 900px;
+    border-radius: 14px;
+    padding: 20px 28px;
+    box-shadow: 0 2px 12px rgba(13,43,94,0.08);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .overall-progress h2 {
+    font-size: 0.9rem;
+    color: var(--navy);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    min-width: 180px;
+    background: #e3eaf5;
+    border-radius: 8px;
+    height: 12px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #1976d2);
+    border-radius: 8px;
+    transition: width 0.5s;
+  }
+  .progress-stats {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .stat .lbl {
+    font-size: 0.7rem;
+    color: #78909c;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── PAPER LABEL ── */
+  .paper-label {
+    max-width: 900px;
+    margin: 0 auto 10px;
+    padding: 0 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity: 0.6;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+    gap: 18px;
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 16px;
+  }
+
+  /* ── TOPIC CARD ── */
+  .card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    border: 2px solid var(--done-border);
+    box-shadow: 0 2px 10px rgba(13,43,94,0.07);
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13,43,94,0.13); }
+  .card.todo {
+    background: var(--todo-bg);
+    border-color: var(--todo-border);
+    opacity: 0.72;
+  }
+  .card.todo:hover { transform: none; box-shadow: none; cursor: default; }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565c0 100%);
+    padding: 14px 18px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card.todo .card-header {
+    background: linear-gradient(135deg, #78909c 0%, #90a4ae 100%);
+  }
+  .section-badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 4px 9px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .card-title {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .paper-tag {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .card-body {
+    padding: 14px 18px;
+  }
+  .subtopics {
+    list-style: none;
+    margin-bottom: 12px;
+  }
+  .subtopics li {
+    font-size: 0.78rem;
+    color: #546e7a;
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .subtopics li::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .card.todo .subtopics li { color: var(--todo-text); }
+  .card.todo .subtopics li::before { background: #b0bec5; }
+
+  /* ── LINKS ROW ── */
+  .links-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-revision { background: #e3f2fd; color: #1565c0; }
+  .btn-revision:hover { background: #bbdefb; }
+  .btn-quiz { background: #e8f5e9; color: #2e7d32; }
+  .btn-quiz:hover { background: #c8e6c9; }
+  .btn-exercises { background: #fff3e0; color: #e65100; }
+  .btn-exercises:hover { background: #ffe0b2; }
+  .btn-todo {
+    background: #eceff1;
+    color: #b0bec5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── PROGRESS INDICATORS ── */
+  .progress-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .badge-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1.5px solid #81c784;
+  }
+  .badge-read.not-read {
+    background: #fafafa;
+    color: #b0bec5;
+    border-color: #e0e0e0;
+  }
+
+  .quiz-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .quiz-badge.score-high { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #81c784; }
+  .quiz-badge.score-mid  { background: #fffde7; color: #f57f17; border: 1.5px solid #ffd54f; }
+  .quiz-badge.score-low  { background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a; }
+  .quiz-badge.no-score   { background: #fafafa; color: #b0bec5; border: 1.5px solid #e0e0e0; }
+
+  .coming-soon {
+    font-size: 0.72rem;
+    color: #b0bec5;
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px;
+    color: #90a4ae;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.7rem; }
+    .grid { grid-template-columns: 1fr; }
+    .overall-progress { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE 8525 · Gab's Revision</div>
+  <h1>💻 <span>Computing</span> Science</h1>
+  <p>All 8 sections · Paper 1 & Paper 2</p>
+  <div class="hero-tags">
+    <span>🖥️ Paper 1 · Algorithms &amp; Programming</span>
+    <span>🌐 Paper 2 · Computing Concepts</span>
+    <span>8 Sections</span>
+    <span>GCSE 8525</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="computing-index.html">💻 Computing</a>
+  <a href="physics-index.html">⚛️ Physics</a>
+  <a href="#algorithms">3.1 Algorithms</a>
+  <a href="#programming">3.2 Programming</a>
+  <a href="#data-rep">3.3 Data Representation</a>
+  <a href="#systems">3.4 Computer Systems</a>
+  <a href="#networks">3.5 Networks</a>
+  <a href="#cybersecurity">3.6 Cyber Security</a>
+  <a href="#databases">3.7 Databases</a>
+  <a href="#ethics">3.8 Ethics</a>
+</nav>
+
+<!-- OVERALL PROGRESS -->
+<div class="overall-progress">
+  <h2>📊 Overall Progress</h2>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="overall-bar" style="width:0%"></div>
+  </div>
+  <div class="progress-stats">
+    <div class="stat"><div class="num" id="stat-read">0</div><div class="lbl">Read ✓</div></div>
+    <div class="stat"><div class="num" id="stat-quizzes">0</div><div class="lbl">Quizzes done</div></div>
+    <div class="stat"><div class="num" id="stat-best">—</div><div class="lbl">Best score</div></div>
+  </div>
+</div>
+
+<!-- ════════════ PAPER 1 ════════════ -->
+<div class="paper-label">📄 Paper 1 · Computational Thinking &amp; Programming Skills</div>
+<div class="grid">
+
+  <!-- 3.1 ALGORITHMS – TODO -->
+  <div class="card todo" id="algorithms">
+    <div class="card-header">
+      <div class="section-badge">3.1</div>
+      <div class="card-title">Fundamentals of Algorithms</div>
+      <div class="paper-tag">Paper 1</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Representing algorithms (pseudo-code, flowcharts)</li>
+        <li>Efficiency of algorithms</li>
+        <li>Searching algorithms (linear, binary)</li>
+        <li>Sorting algorithms (merge sort, bubble sort)</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+        <span class="btn btn-todo">✏️ Exercises</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+  <!-- 3.2 PROGRAMMING – DONE -->
+  <div class="card" id="programming">
+    <div class="card-header">
+      <div class="section-badge">3.2</div>
+      <div class="card-title">Programming</div>
+      <div class="paper-tag">Paper 1</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Data types &amp; programming concepts</li>
+        <li>Arithmetic, comparison &amp; boolean operations</li>
+        <li>String handling, arrays &amp; file I/O</li>
+        <li>Subroutines, structured programming</li>
+      </ul>
+      <div class="links-row">
+        <a href="computing-programming-revision.html" class="btn btn-revision">📖 Revision</a>
+        <a href="computing-programming-quickcheck.html" class="btn btn-quiz">✅ Quiz</a>
+        <a href="computing-programming-exercises.html" class="btn btn-exercises">✏️ Exercises</a>
+      </div>
+      <div class="progress-row" id="progress-programming"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ PAPER 2 ════════════ -->
+<div class="paper-label">📄 Paper 2 · Computing Concepts</div>
+<div class="grid">
+
+  <!-- 3.3 DATA REPRESENTATION – DONE -->
+  <div class="card" id="data-rep">
+    <div class="card-header">
+      <div class="section-badge">3.3</div>
+      <div class="card-title">Fundamentals of Data Representation</div>
+      <div class="paper-tag">Paper 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Number bases (binary, denary, hex)</li>
+        <li>Units of information (bits, bytes, KB, MB…)</li>
+        <li>Binary arithmetic &amp; two's complement</li>
+        <li>Character encoding, images, sound</li>
+        <li>Compression (lossy &amp; lossless)</li>
+      </ul>
+      <div class="links-row">
+        <a href="computing-data-representation-revision.html" class="btn btn-revision">📖 Revision</a>
+        <a href="computing-data-representation-quickcheck.html" class="btn btn-quiz">✅ Quiz</a>
+        <a href="computing-data-representation-exercises.html" class="btn btn-exercises">✏️ Exercises</a>
+      </div>
+      <div class="progress-row" id="progress-data-representation"></div>
+    </div>
+  </div>
+
+  <!-- 3.4 COMPUTER SYSTEMS – TODO -->
+  <div class="card todo" id="systems">
+    <div class="card-header">
+      <div class="section-badge">3.4</div>
+      <div class="card-title">Computer Systems</div>
+      <div class="paper-tag">Paper 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Hardware &amp; software</li>
+        <li>Boolean logic &amp; logic gates</li>
+        <li>CPU architecture &amp; the fetch-decode-execute cycle</li>
+        <li>Memory (RAM, ROM, cache, virtual memory)</li>
+        <li>Storage &amp; embedded systems</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+        <span class="btn btn-todo">✏️ Exercises</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+  <!-- 3.5 NETWORKS – TODO -->
+  <div class="card todo" id="networks">
+    <div class="card-header">
+      <div class="section-badge">3.5</div>
+      <div class="card-title">Fundamentals of Computer Networks</div>
+      <div class="paper-tag">Paper 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Network types (LAN, WAN) &amp; topologies</li>
+        <li>Wired &amp; wireless networks</li>
+        <li>Protocols (TCP/IP, HTTP, FTP, SMTP)</li>
+        <li>Network hardware (routers, switches)</li>
+        <li>The internet &amp; DNS</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+        <span class="btn btn-todo">✏️ Exercises</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+  <!-- 3.6 CYBERSECURITY – DONE -->
+  <div class="card" id="cybersecurity">
+    <div class="card-header">
+      <div class="section-badge">3.6</div>
+      <div class="card-title">Cyber Security</div>
+      <div class="paper-tag">Paper 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Cyber security threats (malware, phishing, DoS…)</li>
+        <li>Social engineering</li>
+        <li>Defensive measures &amp; firewalls</li>
+        <li>Encryption &amp; authentication</li>
+      </ul>
+      <div class="links-row">
+        <a href="cybersecurity-revision.html" class="btn btn-revision">📖 Revision</a>
+        <a href="cybersecurity-quickcheck.html" class="btn btn-quiz">✅ Quiz</a>
+        <a href="cybersecurity-exercises.html" class="btn btn-exercises">✏️ Exercises</a>
+      </div>
+      <div class="progress-row" id="progress-cybersecurity"></div>
+    </div>
+  </div>
+
+  <!-- 3.7 DATABASES/SQL – TODO -->
+  <div class="card todo" id="databases">
+    <div class="card-header">
+      <div class="section-badge">3.7</div>
+      <div class="card-title">Relational Databases &amp; SQL</div>
+      <div class="paper-tag">Paper 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Relational database concepts</li>
+        <li>Primary &amp; foreign keys</li>
+        <li>SQL queries (SELECT, WHERE, ORDER BY…)</li>
+        <li>Tables, records &amp; fields</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+        <span class="btn btn-todo">✏️ Exercises</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+  <!-- 3.8 ETHICS – DONE -->
+  <div class="card" id="ethics">
+    <div class="card-header">
+      <div class="section-badge">3.8</div>
+      <div class="card-title">Ethical, Legal &amp; Environmental Impacts</div>
+      <div class="paper-tag">Paper 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Ethical issues of digital technology</li>
+        <li>Legal issues (Computer Misuse Act, GDPR, Copyright)</li>
+        <li>Environmental impact of computing</li>
+        <li>Privacy issues</li>
+      </ul>
+      <div class="links-row">
+        <a href="computing-ethics-revision.html" class="btn btn-revision">📖 Revision</a>
+        <a href="computing-ethics-quickcheck.html" class="btn btn-quiz">✅ Quiz</a>
+        <a href="computing-ethics-exercises.html" class="btn btn-exercises">✏️ Exercises</a>
+      </div>
+      <div class="progress-row" id="progress-ethics"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  AQA GCSE Computer Science 8525 · Gab's Revision Site · 💻
+</footer>
+
+<script>
+// ── CONFIG ──
+// Maps card ID → { readKey, quizKey }
+// readKey: the localStorage key set by "Mark as read" on the revision page
+// quizKey: the localStorage key set by the quiz page to store score (X/20)
+const TOPICS = [
+  {
+    id: 'programming',
+    label: '3.2 Programming',
+    readKey: 'read_computing-programming',
+    quizKey: 'score_computing-programming-quickcheck'
+  },
+  {
+    id: 'data-representation',
+    label: '3.3 Data Representation',
+    readKey: 'read_computing-data-representation',
+    quizKey: 'score_computing-data-representation-quickcheck'
+  },
+  {
+    id: 'cybersecurity',
+    label: '3.6 Cyber Security',
+    readKey: 'read_cybersecurity',
+    quizKey: 'score_cybersecurity-quickcheck'
+  },
+  {
+    id: 'ethics',
+    label: '3.8 Ethics',
+    readKey: 'read_computing-ethics',
+    quizKey: 'score_computing-ethics-quickcheck'
+  }
+];
+
+const TOTAL_AVAILABLE = TOPICS.length; // sections with content
+
+function getScore(key) {
+  // Try exact key, then scan for keys that contain the key string
+  const direct = localStorage.getItem(key);
+  if (direct !== null) return direct;
+  // fallback: scan all keys
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.toLowerCase().includes(key.toLowerCase().replace('score_',''))) {
+      const v = localStorage.getItem(k);
+      if (v && /\d/.test(v)) return v;
+    }
+  }
+  return null;
+}
+
+function renderProgress() {
+  let readCount = 0;
+  let quizCount = 0;
+  let bestScore = -1;
+
+  TOPICS.forEach(topic => {
+    const container = document.getElementById('progress-' + topic.id);
+    if (!container) return;
+
+    // ── Read badge ──
+    const isRead = localStorage.getItem(topic.readKey) === 'true'
+                || localStorage.getItem(topic.readKey) === '1'
+                || localStorage.getItem(topic.readKey) !== null && localStorage.getItem(topic.readKey) !== 'false';
+
+    // Be more flexible: check a few variants
+    const readVal = localStorage.getItem(topic.readKey);
+    const read = readVal && readVal !== 'false' && readVal !== '0';
+
+    const readBadge = document.createElement('span');
+    readBadge.className = 'badge-read' + (read ? '' : ' not-read');
+    readBadge.innerHTML = read ? '✅ Marked as read' : '📖 Not read yet';
+    container.appendChild(readBadge);
+    if (read) readCount++;
+
+    // ── Quiz badge ──
+    const scoreRaw = getScore(topic.quizKey);
+    const quizBadge = document.createElement('span');
+
+    if (scoreRaw !== null) {
+      // Try to parse "X/20" or just a number
+      let num = null;
+      const match = String(scoreRaw).match(/(\d+)/);
+      if (match) num = parseInt(match[1], 10);
+
+      quizCount++;
+      if (num !== null && num > bestScore) bestScore = num;
+
+      let cls = 'no-score';
+      if (num !== null) {
+        if (num >= 18) cls = 'score-high';
+        else if (num >= 14) cls = 'score-mid';
+        else cls = 'score-low';
+      }
+      const emoji = num >= 18 ? '🏆' : num >= 14 ? '🎉' : num >= 10 ? '📚' : '💪';
+      quizBadge.className = 'quiz-badge ' + cls;
+      quizBadge.innerHTML = emoji + ' Quiz: ' + (num !== null ? num + '/20' : scoreRaw);
+    } else {
+      quizBadge.className = 'quiz-badge no-score';
+      quizBadge.innerHTML = '❓ Quiz not done';
+    }
+    container.appendChild(quizBadge);
+  });
+
+  // ── Overall stats ──
+  const pct = TOTAL_AVAILABLE > 0 ? Math.round((readCount / TOTAL_AVAILABLE) * 100) : 0;
+  document.getElementById('overall-bar').style.width = pct + '%';
+  document.getElementById('stat-read').textContent = readCount + '/' + TOTAL_AVAILABLE;
+  document.getElementById('stat-quizzes').textContent = quizCount + '/' + TOTAL_AVAILABLE;
+  document.getElementById('stat-best').textContent = bestScore >= 0 ? bestScore + '/20' : '—';
+}
+
+renderProgress();
+</script>
+
+</body>
+</html>
