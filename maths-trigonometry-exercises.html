@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths — Pythagoras &amp; Trigonometry Exam Practice | Gab Revision</title>
+<style>
+  :root {
+    --navy: #1f2a33;
+    --accent: #4fc3f7;
+    --bg: #eef3f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0.75rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s; }
+  nav a:hover { opacity: 0.75; }
+  nav a.current { color: #fff; }
+
+  /* TIMER BAR */
+  .timer-bar { position: sticky; top: 0; z-index: 100; background: var(--navy); color: #fff; display: flex; align-items: center; gap: 1.25rem; padding: 0.6rem 1.5rem; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .timer-display { font-size: 1.3rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; min-width: 4.5rem; }
+  .timer-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+  .timer-bar button { border: 2px solid var(--accent); background: transparent; color: var(--accent); border-radius: 6px; padding: 0.3rem 0.9rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .timer-bar button:hover { background: var(--accent); color: var(--navy); }
+  .timer-status { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-left: auto; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #1f2a33 0%, #3a4a59 100%); color: #fff; padding: 2.5rem 2rem 2rem; text-align: center; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .badge { display: inline-block; background: rgba(79,195,247,0.18); border: 1px solid var(--accent); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 0.75rem; }
+  .grade-badge { display: inline-block; background: rgba(255,193,7,0.18); border: 1px solid #ffc107; color: #ffc107; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: 999px; margin-left: 0.4rem; }
+  .hero h1 { font-size: clamp(1.4rem,3.5vw,2rem); font-weight: 800; margin-bottom: 1rem; }
+  .hero-meta { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .hero-meta div { text-align: center; }
+  .hero-meta .big { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .hero-meta .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+  .instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 1rem 1.25rem; text-align: left; max-width: 600px; margin: 0 auto; font-size: 0.88rem; }
+  .instructions li { margin-left: 1.2rem; margin-bottom: 0.3rem; }
+
+  /* MAIN */
+  main { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* TOPIC LABEL */
+  .topic-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); opacity: 0.55; margin: 1.6rem 0 0.6rem; }
+  .topic-label:first-child { margin-top: 0; }
+
+  /* QUESTION BLOCK */
+  .q-block { background: #fff; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .q-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.9rem; flex-wrap: wrap; gap: 0.5rem; }
+  .q-num { font-weight: 800; font-size: 1rem; color: var(--navy); }
+  .marks { background: var(--navy); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.75rem; color: #1a1a2e; }
+  .q-text strong { color: var(--navy); }
+
+  /* PARTS */
+  .part { margin-bottom: 1.1rem; padding-left: 0.5rem; }
+  .part-label { font-size: 0.82rem; font-weight: 700; color: #1976a3; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+
+  /* TEXTAREA */
+  textarea { width: 100%; border: 2px solid #d0dde8; border-radius: 8px; padding: 0.65rem 0.85rem; font-family: inherit; font-size: 0.88rem; color: #1a1a2e; resize: vertical; min-height: 70px; background: #f9fbfd; transition: border-color 0.2s; }
+  textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .ta-hint { font-size: 0.75rem; color: #888; margin-bottom: 0.3rem; }
+
+  table.data-table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; font-size: 0.85rem; }
+  table.data-table th { background: var(--navy); color: #fff; padding: 0.45rem 0.6rem; text-align: center; font-size: 0.8rem; }
+  table.data-table td { border: 1px solid #ccd8e4; padding: 0.4rem 0.6rem; text-align: center; background: #f9fbfd; }
+
+  /* MARK SCHEME */
+  .ms-toggle { background: transparent; border: 2px solid var(--navy); color: var(--navy); border-radius: 6px; padding: 0.35rem 0.9rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; margin-top: 0.5rem; transition: all 0.15s; }
+  .ms-toggle:hover { background: var(--navy); color: #fff; }
+  .ms-box { display: none; background: #fff8e1; border-left: 4px solid #f57f17; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 0.75rem; font-size: 0.85rem; }
+  .ms-box.show { display: block; }
+  .ms-box h4 { color: #4e342e; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; }
+  .ms-box ul { padding-left: 1.2rem; }
+  .ms-box li { margin-bottom: 0.3rem; color: #4e342e; }
+  .ms-box p { color: #4e342e; margin-bottom: 0.3rem; }
+  .award { font-weight: 700; color: #e65100; }
+
+  footer { text-align: center; padding: 1.5rem; color: #8aa0ad; font-size: 0.8rem; }
+
+  /* QUICK ANSWER CHECK */
+  .answer-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.6rem 0 0.3rem; flex-wrap: wrap; }
+  .answer-input { flex: 1; min-width: 140px; border: 2px solid #d0dde8; border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 0.9rem; font-family: inherit; background: #f9fbfd; }
+  .answer-input:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .answer-input.correct { border-color: #43a047; background: #e8f5e9; }
+  .answer-input.incorrect { border-color: #e53935; background: #ffebee; }
+  .check-btn { background: var(--navy); color: #fff; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
+  .check-btn:hover { opacity: 0.82; }
+  .answer-feedback { font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+  .answer-feedback.correct { color: #2e7d32; }
+  .answer-feedback.incorrect { color: #c62828; }
+  .explain-note { font-size: 0.78rem; color: #888; font-style: italic; margin: 0.4rem 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="maths-index.html">🧮 Maths</a>
+  <a href="maths-number-exercises.html">🔢 Number</a>
+  <a href="maths-algebra-exercises.html">➗ Algebra</a>
+  <a href="maths-graphs-exercises.html">📈 Graphs</a>
+  <a href="maths-ratio-proportion-exercises.html">⚖️ Ratio &amp; Proportion</a>
+  <a href="maths-geometry-exercises.html">📐 Geometry</a>
+  <a class="current" href="maths-trigonometry-exercises.html">📏 Trigonometry</a>
+  <a href="maths-stats-probability-exercises.html">📊 Stats &amp; Probability</a>
+</nav>
+
+<!-- STICKY TIMER -->
+<div class="timer-bar">
+  <div>
+    <div class="timer-label">Time elapsed</div>
+    <div class="timer-display" id="timer-display">00:00</div>
+  </div>
+  <button onclick="startTimer()">▶ Start</button>
+  <button onclick="resetTimer()">⏹ Reset</button>
+  <div class="timer-status" id="timer-status">Suggested time: 30 minutes</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="kicker">AQA GCSE Maths Higher · Pythagoras &amp; Trigonometry</p>
+  <div class="badge">Exam Practice Paper · Extra Practice</div>
+  <h1>Pythagoras &amp; Trigonometry — Practice Questions</h1>
+  <div class="hero-meta">
+    <div><div class="big">24</div><div class="lbl">Total marks</div></div>
+    <div><div class="big">~30</div><div class="lbl">Minutes</div></div>
+    <div><div class="big">5</div><div class="lbl">Questions</div></div>
+  </div>
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ul>
+      <li>Type your final answer in the box and click <strong>Check ✓</strong> for instant feedback.</li>
+      <li>Answer all questions, showing full working in the spaces provided.</li>
+      <li>Marks for each part are shown in brackets.</li>
+      <li>Reveal the mark scheme to see full step-by-step method marks, especially if you got it wrong.</li>
+      <li>Topics in <span class="grade-badge">grade 7+</span> are higher-tier focus areas.</li>
+    </ul>
+  </div>
+</div>
+
+<main>
+
+<div class="topic-label">Pythagoras' Theorem</div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 1</span><span class="marks">[4 marks]</span></div>
+  <div class="part">
+    <div class="part-label">(a) [2 marks]</div>
+    <div class="ta-hint">A ladder of length 6.5 m leans against a vertical wall. The foot of the ladder is 2.5 m from the base of the wall. How high up the wall does the ladder reach?</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;6&quot;, &quot;6m&quot;]"><input type="text" class="answer-input" placeholder="Height in m" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [2 marks]</div>
+    <div class="ta-hint">A ship sails 8 km due north, then 15 km due east. Find the direct distance from its starting point.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;17&quot;, &quot;17km&quot;]"><input type="text" class="answer-input" placeholder="Distance in km" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q1 [4 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) height² = 6.5² − 2.5² = 42.25 − 6.25 = 36</li>
+      <li><span class="award">[1]</span> (a) height = <strong>6 m</strong></li>
+      <li><span class="award">[1]</span> (b) distance² = 8² + 15² = 64 + 225 = 289</li>
+      <li><span class="award">[1]</span> (b) distance = <strong>17 km</strong></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="topic-label">Trigonometry for a Side</div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 2</span><span class="marks">[4 marks]</span></div>
+  <p class="q-text">In a right-angled triangle, angle A = 42° and the hypotenuse is 15 cm. Give your answers to 3 significant figures.</p>
+  <div class="part">
+    <div class="part-label">(a) [2 marks]</div>
+    <div class="ta-hint">Find the length of the side opposite angle A.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;10.0&quot;, &quot;10&quot;]"><input type="text" class="answer-input" placeholder="Opposite side (cm)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [2 marks]</div>
+    <div class="ta-hint">Find the length of the side adjacent to angle A.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;11.1&quot;]"><input type="text" class="answer-input" placeholder="Adjacent side (cm)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q2 [4 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) opposite = 15 × sin(42°)</li>
+      <li><span class="award">[1]</span> (a) = <strong>10.0 cm</strong> (3 s.f.)</li>
+      <li><span class="award">[1]</span> (b) adjacent = 15 × cos(42°)</li>
+      <li><span class="award">[1]</span> (b) = <strong>11.1 cm</strong> (3 s.f.)</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="topic-label">Trigonometry for an Angle</div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 3</span><span class="marks">[4 marks]</span></div>
+  <div class="part">
+    <div class="part-label">(a) [2 marks]</div>
+    <div class="ta-hint">A right-angled triangle has opposite side 7 cm and adjacent side 9 cm. Find angle θ between the adjacent side and the hypotenuse, to 1 decimal place.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;37.9&quot;]"><input type="text" class="answer-input" placeholder="Angle (degrees)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [2 marks]</div>
+    <div class="ta-hint">A different right-angled triangle has hypotenuse 12 cm and opposite side 5 cm. Find the angle θ, to 1 decimal place.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;24.6&quot;]"><input type="text" class="answer-input" placeholder="Angle (degrees)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q3 [4 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) tanθ = 7/9 = 0.7778</li>
+      <li><span class="award">[1]</span> (a) θ = tan⁻¹(0.7778) = <strong>37.9°</strong></li>
+      <li><span class="award">[1]</span> (b) sinθ = 5/12 = 0.4167</li>
+      <li><span class="award">[1]</span> (b) θ = sin⁻¹(0.4167) = <strong>24.6°</strong></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="topic-label">Trigonometry in 3D <span class="grade-badge">Grade 7+</span></div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 4</span><span class="marks">[6 marks]</span></div>
+  <p class="q-text">A cuboid ABCDEFGH has length 8 cm, width 6 cm and height 5 cm, where ABCD is the base and G is directly above C.</p>
+  <div class="part">
+    <div class="part-label">(a) [2 marks]</div>
+    <div class="ta-hint">Find the length of the diagonal AC of the base.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;10&quot;, &quot;10cm&quot;]"><input type="text" class="answer-input" placeholder="AC (cm)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [2 marks]</div>
+    <div class="ta-hint">Find the length of the space diagonal AG, to 3 significant figures.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;11.2&quot;]"><input type="text" class="answer-input" placeholder="AG (cm, 3sf)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(c) [2 marks]</div>
+    <div class="ta-hint">Find the angle that AG makes with the base ABCD, to 1 decimal place.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;26.6&quot;]"><input type="text" class="answer-input" placeholder="Angle (degrees)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q4 [6 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) AC² = 8² + 6² = 100</li>
+      <li><span class="award">[1]</span> (a) AC = <strong>10 cm</strong></li>
+      <li><span class="award">[1]</span> (b) AG² = AC² + 5² = 100 + 25 = 125</li>
+      <li><span class="award">[1]</span> (b) AG = √125 = <strong>11.2 cm</strong> (3 s.f.)</li>
+      <li><span class="award">[1]</span> (c) tan(angle) = height/AC = 5/10 = 0.5</li>
+      <li><span class="award">[1]</span> (c) angle = tan⁻¹(0.5) = <strong>26.6°</strong></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="topic-label">Mixed Exam-Style Problem</div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 5</span><span class="marks">[6 marks]</span></div>
+  <p class="q-text">A vertical flagpole stands on horizontal ground. From a point P on the ground, 20 m from the base of the pole, the angle of elevation to the top of the pole is 35°.</p>
+  <div class="part">
+    <div class="part-label">(a) [2 marks]</div>
+    <div class="ta-hint">Work out the height of the flagpole, to 3 significant figures.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;14.0&quot;, &quot;14&quot;]"><input type="text" class="answer-input" placeholder="Height (m, 3sf)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [2 marks]</div>
+    <div class="ta-hint">A wire runs from the top of the pole to point P. Find the length of the wire, to 3 significant figures.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;24.4&quot;]"><input type="text" class="answer-input" placeholder="Wire length (m, 3sf)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(c) [2 marks]</div>
+    <div class="ta-hint">Mary walks from P directly away from the pole until the angle of elevation is 20°. How far has she walked, to 3 significant figures?</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;18.5&quot;]"><input type="text" class="answer-input" placeholder="Distance walked (m, 3sf)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q5 [6 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) height = 20 × tan(35°)</li>
+      <li><span class="award">[1]</span> (a) = <strong>14.0 m</strong> (3 s.f.)</li>
+      <li><span class="award">[1]</span> (b) wire = 20 ÷ cos(35°), or Pythagoras with 20 and 14.0</li>
+      <li><span class="award">[1]</span> (b) = <strong>24.4 m</strong> (3 s.f.)</li>
+      <li><span class="award">[1]</span> (c) New distance from pole = 14.0 ÷ tan(20°) = 38.46 m</li>
+      <li><span class="award">[1]</span> (c) Distance walked = 38.46 − 20 = <strong>18.5 m</strong> (3 s.f.)</li>
+    </ul>
+  </div>
+</div>
+
+</main>
+
+<footer>AQA GCSE Maths · Higher Tier · Gab's Revision Site · 🧮</footer>
+
+<script>
+  // TIMER
+  let seconds = 0;
+  let interval = null;
+  let running = false;
+
+  function pad(n) { return n.toString().padStart(2,'0'); }
+  function updateDisplay() {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    document.getElementById('timer-display').textContent = pad(m) + ':' + pad(s);
+    const sug = 30 * 60;
+    if (seconds > sug) {
+      document.getElementById('timer-display').style.color = '#ff7043';
+      document.getElementById('timer-status').textContent = '⚠️ Over suggested time';
+    }
+  }
+
+  function startTimer() {
+    if (running) return;
+    running = true;
+    document.getElementById('timer-status').textContent = '▶ Timer running…';
+    interval = setInterval(() => { seconds++; updateDisplay(); }, 1000);
+  }
+
+  function resetTimer() {
+    clearInterval(interval);
+    running = false;
+    seconds = 0;
+    document.getElementById('timer-display').textContent = '00:00';
+    document.getElementById('timer-display').style.color = 'var(--accent)';
+    document.getElementById('timer-status').textContent = 'Suggested time: 30 minutes';
+  }
+
+  // MARK SCHEME TOGGLES
+  function toggleMS(btn) {
+    const box = btn.nextElementSibling;
+    const isOpen = box.classList.contains('show');
+    box.classList.toggle('show', !isOpen);
+    btn.textContent = isOpen ? '📋 Reveal Mark Scheme' : '🙈 Hide Mark Scheme';
+  }
+
+  // QUICK ANSWER CHECK
+  function normalizeAns(s) {
+    if (s === undefined || s === null) return '';
+    s = s.toString().toLowerCase();
+    s = s.replace(/^[a-zθ]\s*=\s*/, '');
+    s = s.replace(/×/g, '*').replace(/÷/g, '/').replace(/π/g, 'pi').replace(/√/g, 'sqrt').replace(/°/g, '');
+    s = s.replace(/≤/g, '<=').replace(/≥/g, '>=');
+    s = s.replace(/£/g, '').replace(/%/g, '');
+    s = s.replace(/\b(cm3|cm³|cm2|cm²|m2|m²|m3|m³|km\/h|kmh|minutes|mins|min|litres|litre|students|degrees|deg|kg|grams?)\b/g, '');
+    s = s.replace(/\s*,\s*/g, ',');
+    s = s.replace(/\s+/g, '');
+    return s.trim();
+  }
+
+  function isStrictNumber(s) {
+    return /^-?\d+(\.\d+)?$/.test(s);
+  }
+
+  function checkAnswer(btn) {
+    const wrap = btn.closest('.answer-row');
+    const input = wrap.querySelector('.answer-input');
+    let accepted = [];
+    try { accepted = JSON.parse(wrap.dataset.accepted); } catch (e) { accepted = []; }
+    const feedback = wrap.querySelector('.answer-feedback');
+    const userNorm = normalizeAns(input.value);
+    let correct = false;
+
+    if (userNorm.length === 0) {
+      feedback.textContent = '✏️ Type an answer first';
+      feedback.className = 'answer-feedback incorrect';
+      return;
+    }
+
+    for (const a of accepted) {
+      if (normalizeAns(a) === userNorm) { correct = true; break; }
+    }
+
+    if (!correct && isStrictNumber(userNorm)) {
+      const userVal = parseFloat(userNorm);
+      for (const a of accepted) {
+        const aNorm = normalizeAns(a);
+        if (isStrictNumber(aNorm)) {
+          const aVal = parseFloat(aNorm);
+          const tol = Math.max(0.05, Math.abs(aVal) * 0.01);
+          if (Math.abs(aVal - userVal) <= tol) { correct = true; break; }
+        }
+      }
+    }
+
+    feedback.textContent = correct ? '✓ Correct!' : '✗ Not quite — try again or check below';
+    feedback.className = 'answer-feedback ' + (correct ? 'correct' : 'incorrect');
+    input.classList.toggle('correct', correct);
+    input.classList.toggle('incorrect', !correct);
+  }
+</script>
+</body>
+</html>

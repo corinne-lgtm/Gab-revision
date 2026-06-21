@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths — Ratio &amp; Proportion Exam Practice | Gab Revision</title>
+<style>
+  :root {
+    --navy: #1f2a33;
+    --accent: #4fc3f7;
+    --bg: #eef3f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #1a1a2e; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0.75rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; align-items: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s; }
+  nav a:hover { opacity: 0.75; }
+  nav a.current { color: #fff; }
+
+  /* TIMER BAR */
+  .timer-bar { position: sticky; top: 0; z-index: 100; background: var(--navy); color: #fff; display: flex; align-items: center; gap: 1.25rem; padding: 0.6rem 1.5rem; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .timer-display { font-size: 1.3rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; min-width: 4.5rem; }
+  .timer-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+  .timer-bar button { border: 2px solid var(--accent); background: transparent; color: var(--accent); border-radius: 6px; padding: 0.3rem 0.9rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .timer-bar button:hover { background: var(--accent); color: var(--navy); }
+  .timer-status { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-left: auto; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #1f2a33 0%, #3a4a59 100%); color: #fff; padding: 2.5rem 2rem 2rem; text-align: center; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .badge { display: inline-block; background: rgba(79,195,247,0.18); border: 1px solid var(--accent); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 0.75rem; }
+  .grade-badge { display: inline-block; background: rgba(255,193,7,0.18); border: 1px solid #ffc107; color: #ffc107; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: 999px; margin-left: 0.4rem; }
+  .hero h1 { font-size: clamp(1.4rem,3.5vw,2rem); font-weight: 800; margin-bottom: 1rem; }
+  .hero-meta { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .hero-meta div { text-align: center; }
+  .hero-meta .big { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .hero-meta .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+  .instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 1rem 1.25rem; text-align: left; max-width: 600px; margin: 0 auto; font-size: 0.88rem; }
+  .instructions li { margin-left: 1.2rem; margin-bottom: 0.3rem; }
+
+  /* MAIN */
+  main { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* TOPIC LABEL */
+  .topic-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); opacity: 0.55; margin: 1.6rem 0 0.6rem; }
+  .topic-label:first-child { margin-top: 0; }
+
+  /* QUESTION BLOCK */
+  .q-block { background: #fff; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+  .q-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.9rem; flex-wrap: wrap; gap: 0.5rem; }
+  .q-num { font-weight: 800; font-size: 1rem; color: var(--navy); }
+  .marks { background: var(--navy); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.75rem; color: #1a1a2e; }
+  .q-text strong { color: var(--navy); }
+
+  /* PARTS */
+  .part { margin-bottom: 1.1rem; padding-left: 0.5rem; }
+  .part-label { font-size: 0.82rem; font-weight: 700; color: #1976a3; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+
+  /* TEXTAREA */
+  textarea { width: 100%; border: 2px solid #d0dde8; border-radius: 8px; padding: 0.65rem 0.85rem; font-family: inherit; font-size: 0.88rem; color: #1a1a2e; resize: vertical; min-height: 70px; background: #f9fbfd; transition: border-color 0.2s; }
+  textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .ta-hint { font-size: 0.75rem; color: #888; margin-bottom: 0.3rem; }
+
+  table.data-table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; font-size: 0.85rem; }
+  table.data-table th { background: var(--navy); color: #fff; padding: 0.45rem 0.6rem; text-align: center; font-size: 0.8rem; }
+  table.data-table td { border: 1px solid #ccd8e4; padding: 0.4rem 0.6rem; text-align: center; background: #f9fbfd; }
+
+  /* MARK SCHEME */
+  .ms-toggle { background: transparent; border: 2px solid var(--navy); color: var(--navy); border-radius: 6px; padding: 0.35rem 0.9rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; margin-top: 0.5rem; transition: all 0.15s; }
+  .ms-toggle:hover { background: var(--navy); color: #fff; }
+  .ms-box { display: none; background: #fff8e1; border-left: 4px solid #f57f17; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 0.75rem; font-size: 0.85rem; }
+  .ms-box.show { display: block; }
+  .ms-box h4 { color: #4e342e; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; }
+  .ms-box ul { padding-left: 1.2rem; }
+  .ms-box li { margin-bottom: 0.3rem; color: #4e342e; }
+  .ms-box p { color: #4e342e; margin-bottom: 0.3rem; }
+  .award { font-weight: 700; color: #e65100; }
+
+  footer { text-align: center; padding: 1.5rem; color: #8aa0ad; font-size: 0.8rem; }
+
+  /* QUICK ANSWER CHECK */
+  .answer-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.6rem 0 0.3rem; flex-wrap: wrap; }
+  .answer-input { flex: 1; min-width: 140px; border: 2px solid #d0dde8; border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 0.9rem; font-family: inherit; background: #f9fbfd; }
+  .answer-input:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .answer-input.correct { border-color: #43a047; background: #e8f5e9; }
+  .answer-input.incorrect { border-color: #e53935; background: #ffebee; }
+  .check-btn { background: var(--navy); color: #fff; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
+  .check-btn:hover { opacity: 0.82; }
+  .answer-feedback { font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+  .answer-feedback.correct { color: #2e7d32; }
+  .answer-feedback.incorrect { color: #c62828; }
+  .explain-note { font-size: 0.78rem; color: #888; font-style: italic; margin: 0.4rem 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="maths-index.html">🧮 Maths</a>
+  <a href="maths-number-exercises.html">🔢 Number</a>
+  <a href="maths-algebra-exercises.html">➗ Algebra</a>
+  <a href="maths-graphs-exercises.html">📈 Graphs</a>
+  <a class="current" href="maths-ratio-proportion-exercises.html">⚖️ Ratio &amp; Proportion</a>
+  <a href="maths-geometry-exercises.html">📐 Geometry</a>
+  <a href="maths-trigonometry-exercises.html">📏 Trigonometry</a>
+  <a href="maths-stats-probability-exercises.html">📊 Stats &amp; Probability</a>
+</nav>
+
+<!-- STICKY TIMER -->
+<div class="timer-bar">
+  <div>
+    <div class="timer-label">Time elapsed</div>
+    <div class="timer-display" id="timer-display">00:00</div>
+  </div>
+  <button onclick="startTimer()">▶ Start</button>
+  <button onclick="resetTimer()">⏹ Reset</button>
+  <div class="timer-status" id="timer-status">Suggested time: 15 minutes</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="kicker">AQA GCSE Maths Higher · Ratio, Proportion &amp; Rates of Change</p>
+  <div class="badge">Exam Practice Paper</div>
+  <h1>Ratio, Proportion &amp; Rates of Change</h1>
+  <div class="hero-meta">
+    <div><div class="big">14</div><div class="lbl">Total marks</div></div>
+    <div><div class="big">~15</div><div class="lbl">Minutes</div></div>
+    <div><div class="big">3</div><div class="lbl">Questions</div></div>
+  </div>
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ul>
+      <li>Type your final answer in the box and click <strong>Check ✓</strong> for instant feedback.</li>
+      <li>Answer all questions, showing full working in the spaces provided.</li>
+      <li>Marks for each part are shown in brackets.</li>
+      <li>Reveal the mark scheme to see full step-by-step method marks, especially if you got it wrong.</li>
+      <li>Topics in <span class="grade-badge">grade 7+</span> are higher-tier focus areas.</li>
+    </ul>
+  </div>
+</div>
+
+<main>
+
+<div class="topic-label">Ratios</div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 1</span><span class="marks">[4 marks]</span></div>
+  <p class="q-text">A sum of money is shared between A, B and C in the ratio <strong>2 : 3 : 5</strong>. B receives £18 more than A. Work out the total amount of money shared.</p>
+  <div class="part">
+    <textarea rows="4"></textarea>
+    <div class="answer-row" data-accepted="[&quot;180&quot;, &quot;\u00a3180&quot;]"><input type="text" class="answer-input" placeholder="Total amount" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q1 [4 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> Sets parts as 2k, 3k, 5k</li>
+      <li><span class="award">[1]</span> B − A = k = 18, so k = 18</li>
+      <li><span class="award">[1]</span> Total = 10k</li>
+      <li><span class="award">[1]</span> Total = 10 × 18 = <strong>£180</strong></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="topic-label">Equations of Proportionality <span class="grade-badge">Grade 7+</span></div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 2</span><span class="marks">[5 marks]</span></div>
+  <p class="q-text"><strong>y</strong> is directly proportional to <strong>x²</strong>. When x = 3, y = 45.</p>
+  <div class="part">
+    <div class="part-label">(a) [2 marks]</div>
+    <div class="ta-hint">Find an equation connecting y and x.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;y=5x^2&quot;, &quot;y=5x2&quot;]"><input type="text" class="answer-input" placeholder="e.g. y=5x^2" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [1 mark]</div>
+    <div class="ta-hint">Find y when x = 6.</div>
+    <textarea rows="2"></textarea>
+    <div class="answer-row" data-accepted="[&quot;180&quot;]"><input type="text" class="answer-input" placeholder="Value of y" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(c) [2 marks]</div>
+    <div class="ta-hint">Find the positive value of x when y = 320.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;8&quot;]"><input type="text" class="answer-input" placeholder="Value of x" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q2 [5 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) y = kx², substitutes 45 = k(3²) = 9k</li>
+      <li><span class="award">[1]</span> (a) k = 5, so <strong>y = 5x²</strong></li>
+      <li><span class="award">[1]</span> (b) y = 5 × 6² = <strong>180</strong></li>
+      <li><span class="award">[1]</span> (c) 320 = 5x² → x² = 64</li>
+      <li><span class="award">[1]</span> (c) <strong>x = 8</strong></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="topic-label">Percentages — Change &amp; Reverse</div>
+<div class="q-block">
+  <div class="q-header"><span class="q-num">Question 3</span><span class="marks">[5 marks]</span></div>
+  <div class="part">
+    <div class="part-label">(a) [3 marks]</div>
+    <div class="ta-hint">A laptop's price was reduced by 15% in a sale to £510. Work out the original price of the laptop.</div>
+    <textarea rows="4"></textarea>
+    <div class="answer-row" data-accepted="[&quot;600&quot;, &quot;\u00a3600&quot;]"><input type="text" class="answer-input" placeholder="Original price" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <div class="part">
+    <div class="part-label">(b) [2 marks]</div>
+    <div class="ta-hint">A different item costs £80 and its price increases by 12%. Work out the new price.</div>
+    <textarea rows="3"></textarea>
+    <div class="answer-row" data-accepted="[&quot;89.6&quot;, &quot;89.60&quot;, &quot;\u00a389.60&quot;]"><input type="text" class="answer-input" placeholder="New price" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+  </div>
+  <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
+  <div class="ms-box">
+    <h4>Mark Scheme — Q3 [5 marks]</h4>
+    <ul>
+      <li><span class="award">[1]</span> (a) Recognises £510 represents 85% of the original price</li>
+      <li><span class="award">[1]</span> (a) Original = 510 ÷ 0.85</li>
+      <li><span class="award">[1]</span> (a) = <strong>£600</strong></li>
+      <li><span class="award">[1]</span> (b) New price = 80 × 1.12</li>
+      <li><span class="award">[1]</span> (b) = <strong>£89.60</strong></li>
+    </ul>
+  </div>
+</div>
+
+</main>
+
+<footer>AQA GCSE Maths · Higher Tier · Gab's Revision Site · 🧮</footer>
+
+<script>
+  // TIMER
+  let seconds = 0;
+  let interval = null;
+  let running = false;
+
+  function pad(n) { return n.toString().padStart(2,'0'); }
+  function updateDisplay() {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    document.getElementById('timer-display').textContent = pad(m) + ':' + pad(s);
+    const sug = 15 * 60;
+    if (seconds > sug) {
+      document.getElementById('timer-display').style.color = '#ff7043';
+      document.getElementById('timer-status').textContent = '⚠️ Over suggested time';
+    }
+  }
+
+  function startTimer() {
+    if (running) return;
+    running = true;
+    document.getElementById('timer-status').textContent = '▶ Timer running…';
+    interval = setInterval(() => { seconds++; updateDisplay(); }, 1000);
+  }
+
+  function resetTimer() {
+    clearInterval(interval);
+    running = false;
+    seconds = 0;
+    document.getElementById('timer-display').textContent = '00:00';
+    document.getElementById('timer-display').style.color = 'var(--accent)';
+    document.getElementById('timer-status').textContent = 'Suggested time: 15 minutes';
+  }
+
+  // MARK SCHEME TOGGLES
+  function toggleMS(btn) {
+    const box = btn.nextElementSibling;
+    const isOpen = box.classList.contains('show');
+    box.classList.toggle('show', !isOpen);
+    btn.textContent = isOpen ? '📋 Reveal Mark Scheme' : '🙈 Hide Mark Scheme';
+  }
+
+  // QUICK ANSWER CHECK
+  function normalizeAns(s) {
+    if (s === undefined || s === null) return '';
+    s = s.toString().toLowerCase();
+    s = s.replace(/^[a-zθ]\s*=\s*/, '');
+    s = s.replace(/×/g, '*').replace(/÷/g, '/').replace(/π/g, 'pi').replace(/√/g, 'sqrt').replace(/°/g, '');
+    s = s.replace(/≤/g, '<=').replace(/≥/g, '>=');
+    s = s.replace(/£/g, '').replace(/%/g, '');
+    s = s.replace(/\b(cm3|cm³|cm2|cm²|m2|m²|m3|m³|km\/h|kmh|minutes|mins|min|litres|litre|students|degrees|deg|kg|grams?)\b/g, '');
+    s = s.replace(/\s*,\s*/g, ',');
+    s = s.replace(/\s+/g, '');
+    return s.trim();
+  }
+
+  function isStrictNumber(s) {
+    return /^-?\d+(\.\d+)?$/.test(s);
+  }
+
+  function checkAnswer(btn) {
+    const wrap = btn.closest('.answer-row');
+    const input = wrap.querySelector('.answer-input');
+    let accepted = [];
+    try { accepted = JSON.parse(wrap.dataset.accepted); } catch (e) { accepted = []; }
+    const feedback = wrap.querySelector('.answer-feedback');
+    const userNorm = normalizeAns(input.value);
+    let correct = false;
+
+    if (userNorm.length === 0) {
+      feedback.textContent = '✏️ Type an answer first';
+      feedback.className = 'answer-feedback incorrect';
+      return;
+    }
+
+    for (const a of accepted) {
+      if (normalizeAns(a) === userNorm) { correct = true; break; }
+    }
+
+    if (!correct && isStrictNumber(userNorm)) {
+      const userVal = parseFloat(userNorm);
+      for (const a of accepted) {
+        const aNorm = normalizeAns(a);
+        if (isStrictNumber(aNorm)) {
+          const aVal = parseFloat(aNorm);
+          const tol = Math.max(0.05, Math.abs(aVal) * 0.01);
+          if (Math.abs(aVal - userVal) <= tol) { correct = true; break; }
+        }
+      }
+    }
+
+    feedback.textContent = correct ? '✓ Correct!' : '✗ Not quite — try again or check below';
+    feedback.className = 'answer-feedback ' + (correct ? 'correct' : 'incorrect');
+    input.classList.toggle('correct', correct);
+    input.classList.toggle('incorrect', !correct);
+  }
+</script>
+</body>
+</html>

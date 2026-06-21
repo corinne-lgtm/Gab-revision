@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths – GCSE Revision</title>
+<style>
+  :root {
+    --navy: #1f2a33;
+    --accent: #4fc3f7;
+    --bg: #eef3f6;
+    --card-bg: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: #1a1a2e; min-height: 100vh; }
+
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, #3a4a59 100%); color: white; padding: 48px 24px 36px; text-align: center; }
+  .hero .kicker { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
+  .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { opacity: 0.85; font-size: 1rem; margin-bottom: 22px; }
+  .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .hero-tags span { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 5px 14px; font-size: 0.78rem; letter-spacing: 0.05em; }
+
+  nav { background: rgba(31,42,51,0.97); display: flex; gap: 8px; padding: 10px 20px; flex-wrap: wrap; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.82rem; padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(79,195,247,0.3); transition: background 0.2s; }
+  nav a:hover { background: rgba(79,195,247,0.15); }
+
+  .section-label { max-width: 900px; margin: 24px auto 10px; padding: 0 16px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); opacity: 0.6; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(390px, 1fr)); gap: 18px; max-width: 900px; margin: 0 auto 32px; padding: 0 16px; }
+
+  .card { background: var(--card-bg); border-radius: 14px; border: 2px solid var(--accent); box-shadow: 0 2px 10px rgba(31,42,51,0.07); overflow: hidden; transition: transform 0.15s, box-shadow 0.15s; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(31,42,51,0.13); }
+
+  .card-header { background: linear-gradient(135deg, var(--navy) 0%, #3a4a59 100%); padding: 14px 18px 12px; display: flex; align-items: center; gap: 12px; }
+  .strength-badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 4px 9px; font-size: 0.68rem; font-weight: 700; color: white; letter-spacing: 0.04em; white-space: nowrap; }
+  .strength-badge.weak { background: rgba(255,112,67,0.3); border-color: rgba(255,112,67,0.6); }
+  .strength-badge.strong { background: rgba(102,187,106,0.3); border-color: rgba(102,187,106,0.6); }
+  .card-title { color: white; font-size: 0.98rem; font-weight: 700; line-height: 1.2; }
+
+  .card-body { padding: 14px 18px; }
+  .subtopics { list-style: none; margin-bottom: 12px; }
+  .subtopics li { font-size: 0.78rem; color: #546e7a; padding: 2px 0; display: flex; align-items: center; gap: 6px; }
+  .subtopics li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  .meta-row { display: flex; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+  .meta-row .chip { font-size: 0.72rem; color: var(--navy); background: #eef3f6; border-radius: 6px; padding: 3px 9px; font-weight: 600; }
+
+  .btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.1s; border: none; cursor: pointer; background: #fff3e0; color: #e65100; }
+  .btn:hover { background: #ffe0b2; }
+  .btn:active { transform: scale(0.97); }
+
+  footer { text-align: center; padding: 28px; color: #90a4ae; font-size: 0.78rem; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.7rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">AQA GCSE Maths · Higher Tier · Gab's Revision</div>
+  <h1>🧮 <span>Maths</span></h1>
+  <p>Year 10 End of Year Assessment · All 7 chapters</p>
+  <div class="hero-tags">
+    <span>🔢 Number</span>
+    <span>➗ Algebra</span>
+    <span>📈 Graphs</span>
+    <span>⚖️ Ratio &amp; Proportion</span>
+    <span>📐 Geometry</span>
+    <span>📏 Trigonometry</span>
+    <span>📊 Stats &amp; Probability</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="maths-number-exercises.html">🔢 Number</a>
+  <a href="maths-algebra-exercises.html">➗ Algebra</a>
+  <a href="maths-graphs-exercises.html">📈 Graphs</a>
+  <a href="maths-ratio-proportion-exercises.html">⚖️ Ratio &amp; Proportion</a>
+  <a href="maths-geometry-exercises.html">📐 Geometry</a>
+  <a href="maths-trigonometry-exercises.html">📏 Trigonometry</a>
+  <a href="maths-stats-probability-exercises.html">📊 Stats &amp; Probability</a>
+</nav>
+
+<div class="section-label">Practice Papers · Higher Tier</div>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🔢 Number</div>
+      <div class="strength-badge">6 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Fractions, decimals &amp; estimating</li>
+        <li>Compound measures</li>
+        <li>Standard form</li>
+        <li>Rationalising the denominator</li>
+      </ul>
+      <div class="meta-row"><span class="chip">22 marks</span><span class="chip">~25 min</span></div>
+      <a href="maths-number-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">➗ Algebra</div>
+      <div class="strength-badge strong">Strong area · 8 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Indices &amp; simplifying</li>
+        <li>Quadratics — completing the square &amp; formula</li>
+        <li>Simultaneous equations (linear &amp; quadratic)</li>
+        <li>Factorising, rearranging &amp; forming equations</li>
+      </ul>
+      <div class="meta-row"><span class="chip">33 marks</span><span class="chip">~35 min</span></div>
+      <a href="maths-algebra-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📈 Graphs</div>
+      <div class="strength-badge">3 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Straight lines &amp; gradients</li>
+        <li>Graph transformations</li>
+        <li>Frequency polygons</li>
+      </ul>
+      <div class="meta-row"><span class="chip">14 marks</span><span class="chip">~15 min</span></div>
+      <a href="maths-graphs-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">⚖️ Ratio, Proportion &amp; Rates of Change</div>
+      <div class="strength-badge">3 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Ratios</li>
+        <li>Equations of proportionality</li>
+        <li>Percentages — change &amp; reverse</li>
+      </ul>
+      <div class="meta-row"><span class="chip">14 marks</span><span class="chip">~15 min</span></div>
+      <a href="maths-ratio-proportion-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📐 Geometry &amp; Measures</div>
+      <div class="strength-badge weak">Extra practice · 7 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Volume &amp; surface area, unit conversions</li>
+        <li>Volume of cones, pyramids &amp; spheres</li>
+        <li>Sectors</li>
+        <li>Angles in shapes, polygons &amp; parallel lines</li>
+      </ul>
+      <div class="meta-row"><span class="chip">33 marks</span><span class="chip">~40 min</span></div>
+      <a href="maths-geometry-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📏 Pythagoras &amp; Trigonometry</div>
+      <div class="strength-badge weak">Extra practice · 5 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Pythagoras' theorem</li>
+        <li>Trigonometry — finding sides &amp; angles</li>
+        <li>Trigonometry in 3D</li>
+        <li>Mixed exam-style problem (angles of elevation)</li>
+      </ul>
+      <div class="meta-row"><span class="chip">24 marks</span><span class="chip">~30 min</span></div>
+      <a href="maths-trigonometry-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Statistics &amp; Probability</div>
+      <div class="strength-badge weak">Extra practice · 5 questions</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Stem and leaf diagrams</li>
+        <li>Pie charts &amp; bar charts (composite/dual)</li>
+        <li>Mean, median, mode &amp; range from frequency tables</li>
+        <li>Scatter graphs &amp; correlation</li>
+      </ul>
+      <div class="meta-row"><span class="chip">27 marks</span><span class="chip">~35 min</span></div>
+      <a href="maths-stats-probability-exercises.html" class="btn">✏️ Start practice paper</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  AQA GCSE Maths · Higher Tier · Gab's Revision Site · 🧮
+</footer>
+
+</body>
+</html>
