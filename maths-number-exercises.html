@@ -159,7 +159,7 @@
   <div class="part">
     <div class="ta-hint">Show your working (convert to improper fractions first)</div>
     <textarea rows="4" placeholder="2¾ = ...&#10;1⅝ = ...&#10;2¾ ÷ 1⅝ = ..."></textarea>
-    <div class="answer-row" data-accepted="[&quot;1 9/13&quot;, &quot;1+9/13&quot;]"><input type="text" class="answer-input" placeholder="Your answer (e.g. 1 9/13)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+    <div class="answer-row" data-accepted="[&quot;1 9/13&quot;, &quot;1+9/13&quot;]"><input type="text" class="answer-input" placeholder="Your answer (mixed number)" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
   </div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
   <div class="ms-box">
@@ -251,19 +251,19 @@
     <div class="part-label">(a) [1 mark]</div>
     <div class="ta-hint">Write 0.000456 in standard form.</div>
     <textarea rows="2"></textarea>
-    <div class="answer-row" data-accepted="[&quot;4.56*10^-4&quot;, &quot;4.56x10^-4&quot;]"><input type="text" class="answer-input" placeholder="e.g. 4.56×10^-4" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+    <div class="answer-row" data-accepted="[&quot;4.56*10^-4&quot;, &quot;4.56x10^-4&quot;]"><input type="text" class="answer-input" placeholder="Standard form: a×10^n" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
   </div>
   <div class="part">
     <div class="part-label">(b) [2 marks]</div>
     <div class="ta-hint">Work out (3.2 × 10⁵) × (5 × 10⁻³). Give your answer in standard form.</div>
     <textarea rows="3"></textarea>
-    <div class="answer-row" data-accepted="[&quot;1.6*10^3&quot;, &quot;1.6x10^3&quot;, &quot;1600&quot;]"><input type="text" class="answer-input" placeholder="e.g. 1.6×10^3" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+    <div class="answer-row" data-accepted="[&quot;1.6*10^3&quot;, &quot;1.6x10^3&quot;, &quot;1600&quot;]"><input type="text" class="answer-input" placeholder="Standard form: a×10^n" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
   </div>
   <div class="part">
     <div class="part-label">(c) [1 mark]</div>
     <div class="ta-hint">Work out (9 × 10⁸) ÷ (3 × 10⁻²). Give your answer in standard form.</div>
     <textarea rows="2"></textarea>
-    <div class="answer-row" data-accepted="[&quot;3*10^10&quot;, &quot;3x10^10&quot;]"><input type="text" class="answer-input" placeholder="e.g. 3×10^10" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+    <div class="answer-row" data-accepted="[&quot;3*10^10&quot;, &quot;3x10^10&quot;]"><input type="text" class="answer-input" placeholder="Standard form: a×10^n" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
   </div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
   <div class="ms-box">
@@ -285,13 +285,13 @@
     <div class="part-label">(a) [2 marks]</div>
     <div class="ta-hint">Rationalise the denominator of 5/√3. Give your answer in the form a√3 / b, fully simplified.</div>
     <textarea rows="3"></textarea>
-    <div class="answer-row" data-accepted="[&quot;5sqrt3/3&quot;, &quot;5*sqrt(3)/3&quot;]"><input type="text" class="answer-input" placeholder="e.g. 5√3/3" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+    <div class="answer-row" data-accepted="[&quot;5sqrt3/3&quot;, &quot;5*sqrt(3)/3&quot;]"><input type="text" class="answer-input" placeholder="Form: a√3 / b" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
   </div>
   <div class="part">
     <div class="part-label">(b) [2 marks]</div>
     <div class="ta-hint">Rationalise the denominator of 4 / (3 − √2). Give your answer in the form (a + b√2) / c.</div>
     <textarea rows="3"></textarea>
-    <div class="answer-row" data-accepted="[&quot;(12+4sqrt2)/7&quot;, &quot;12+4sqrt2/7&quot;, &quot;12/7+4sqrt2/7&quot;]"><input type="text" class="answer-input" placeholder="e.g. (12+4√2)/7" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
+    <div class="answer-row" data-accepted="[&quot;(12+4sqrt2)/7&quot;, &quot;12+4sqrt2/7&quot;, &quot;12/7+4sqrt2/7&quot;]"><input type="text" class="answer-input" placeholder="Form: (a+b√2) / c" onkeypress="if(event.key==='Enter'){event.preventDefault(); this.nextElementSibling.click();}"><button class="check-btn" onclick="checkAnswer(this)">Check ✓</button><span class="answer-feedback"></span></div>
   </div>
   <button class="ms-toggle" onclick="toggleMS(this)">📋 Reveal Mark Scheme</button>
   <div class="ms-box">
