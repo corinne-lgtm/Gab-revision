@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology · Mega Quiz 2A</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0d2b45;--accent:#64b5f6;--bg:#e8f4fd;--paper:#fff;--ink:#1a1a2e;
+  --muted:#5a6a7a;--line:#dce8f2;--red:#e53935;--red2:#ffebee;
+  --green:#2e7d32;--green2:#e8f5e9;--orange:#ef6c00;--orange2:#fff3e0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;min-height:100vh;}
+.hero{background:linear-gradient(135deg,#0d3320 0%,#1b5e20 55%,#2e7d32 100%);color:white;padding:32px 20px 24px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(100,200,100,0.1);}
+.kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a5d6a7;margin-bottom:6px;}
+.badge{display:inline-block;background:#a5d6a7;color:#0d3320;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:900;line-height:1.1;margin-bottom:6px;}
+.hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+nav{background:#0d3320;padding:0 16px;display:flex;overflow-x:auto;border-bottom:2px solid #a5d6a7;}
+nav a{color:#a5d6a7;text-decoration:none;font-size:12px;font-weight:600;padding:10px 14px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s;}
+nav a:hover{color:white;border-bottom-color:#a5d6a7;}
+.score-bar{background:#0d3320;color:white;padding:10px 20px;display:flex;align-items:center;gap:16px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(165,214,167,.2);}
+.score-pill{background:rgba(165,214,167,.15);border:1px solid rgba(165,214,167,.35);border-radius:20px;padding:3px 12px;white-space:nowrap;}
+.score-pill span{color:#a5d6a7;}
+.progress-wrap{flex:1;background:rgba(255,255,255,.1);border-radius:10px;height:7px;overflow:hidden;min-width:60px;}
+.progress-bar{height:100%;background:#a5d6a7;border-radius:10px;transition:width .4s ease;width:0%;}
+main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#0d3320;border-left:4px solid #a5d6a7;padding-left:10px;margin:28px 0 14px;}
+.q-block{background:var(--paper);border-radius:12px;padding:18px 18px 14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(13,51,32,.07);border:1.5px solid transparent;transition:border-color .3s;}
+.q-block.correct{border-color:var(--green);}
+.q-block.wrong{border-color:var(--red);}
+.q-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;color:var(--ink);margin-bottom:11px;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt-btn{background:#f0f8f1;border:1.5px solid var(--line);border-radius:8px;padding:8px 13px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s;line-height:1.4;}
+.opt-btn:hover:not(:disabled){background:#d0efd4;border-color:#81c784;}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green);font-weight:600;}
+.opt-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:var(--red);font-weight:600;}
+.opt-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green);font-weight:600;}
+.tf-options{display:flex;gap:10px;}
+.tf-btn{flex:1;padding:9px;border-radius:8px;border:1.5px solid var(--line);background:#f0f8f1;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:1px;cursor:pointer;transition:background .15s,border-color .15s;text-transform:uppercase;}
+.tf-btn:hover:not(:disabled){background:#d0efd4;border-color:#81c784;}
+.tf-btn:disabled{cursor:default;}
+.tf-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green);}
+.tf-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:var(--red);}
+.tf-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green);}
+.feedback{display:none;margin-top:9px;padding:8px 12px;border-radius:7px;font-size:13px;line-height:1.45;}
+.feedback.correct{background:var(--green2);color:#1b4d1e;display:block;}
+.feedback.wrong{background:var(--red2);color:#7a0000;display:block;}
+.result-box{display:none;background:var(--paper);border-radius:16px;padding:32px 24px;text-align:center;margin-top:28px;box-shadow:0 4px 20px rgba(13,51,32,.12);}
+.result-box.show{display:block;}
+.result-emoji{font-size:3rem;margin-bottom:10px;}
+.result-box h2{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#0d3320;margin-bottom:8px;}
+.result-score{font-family:'Barlow Condensed',sans-serif;font-size:3.2rem;font-weight:900;color:#2e7d32;line-height:1;margin:10px 0 4px;}
+.result-mum{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.result-msg{font-size:14px;color:var(--ink);margin-bottom:22px;line-height:1.5;}
+.reset-btn{background:#0d3320;color:white;border:none;border-radius:24px;padding:12px 32px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;cursor:pointer;}
+.reset-btn:hover{background:#1b5e20;}
+
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kicker">AQA GCSE Biology · B1–B4 · Mega Quiz 2 — Part A</div>
+  <div class="badge">🧬 Cells, Division & Organisation</div>
+  <h1>Biology Mega Quiz 2A</h1>
+  <p>60 questions · 30 MCQ + 30 True/False · Cells, transport, cell division, digestion, animals & plants (B1–B4)</p>
+</div>
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="biology-index.html">🧬 Biology</a>
+  <a href="biology-quickcheck-disease-respiration.html">🦠 Quiz 2B</a>
+  <a href="biology-exam-paper1.html">📄 Paper 1</a>
+  <a href="biology-exam-paper2.html">📄 Paper 2</a>
+</nav>
+<div class="score-bar">
+  <div class="score-pill">Score <span id="scoreDisplay">0</span>/60</div>
+  <div class="score-pill">Answered <span id="answeredDisplay">0</span>/60</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+<main>
+
+<div class="section-label">Part 1 — Multiple Choice · 30 Questions</div>
+
+<!-- B1.1 Microscopy -->
+<div class="q-block" id="q1"><div class="q-num">Q1 · B1.1 Microscopy</div>
+<div class="q-text">What is the formula for magnification?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(1,'A','B')">A. Size of image × size of real object</button>
+<button class="opt-btn" onclick="ans(1,'B','B')">B. Size of image ÷ size of real object</button>
+<button class="opt-btn" onclick="ans(1,'C','B')">C. Size of real object ÷ size of image</button>
+<button class="opt-btn" onclick="ans(1,'D','B')">D. Magnification ÷ size of image</button>
+</div>
+<div class="feedback" id="fb1"></div></div>
+
+<!-- B1.2 Animal & plant cells -->
+<div class="q-block" id="q2"><div class="q-num">Q2 · B1.2 Animal & plant cells</div>
+<div class="q-text">Which structure is found in plant cells but NOT in animal cells?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(2,'A','C')">A. Mitochondria</button>
+<button class="opt-btn" onclick="ans(2,'B','C')">B. Ribosomes</button>
+<button class="opt-btn" onclick="ans(2,'C','C')">C. Cell wall</button>
+<button class="opt-btn" onclick="ans(2,'D','C')">D. Nucleus</button>
+</div>
+<div class="feedback" id="fb2"></div></div>
+
+<!-- B1.3 Eukaryotic & prokaryotic -->
+<div class="q-block" id="q3"><div class="q-num">Q3 · B1.3 Eukaryotic & prokaryotic</div>
+<div class="q-text">Where is the genetic material located in a prokaryotic cell?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(3,'A','B')">A. In a nucleus</button>
+<button class="opt-btn" onclick="ans(3,'B','B')">B. Free in the cytoplasm as a single DNA loop</button>
+<button class="opt-btn" onclick="ans(3,'C','B')">C. In the mitochondria</button>
+<button class="opt-btn" onclick="ans(3,'D','B')">D. In the cell wall</button>
+</div>
+<div class="feedback" id="fb3"></div></div>
+
+<!-- B1.4 Specialisation in animal cells -->
+<div class="q-block" id="q4"><div class="q-num">Q4 · B1.4 Specialisation in animal cells</div>
+<div class="q-text">Why do sperm cells contain a large number of mitochondria?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(4,'A','B')">A. To produce antibodies</button>
+<button class="opt-btn" onclick="ans(4,'B','B')">B. To release energy for the tail to move</button>
+<button class="opt-btn" onclick="ans(4,'C','B')">C. To store genetic information</button>
+<button class="opt-btn" onclick="ans(4,'D','B')">D. To break down the egg's outer layer</button>
+</div>
+<div class="feedback" id="fb4"></div></div>
+
+<!-- B1.5 Specialisation in plant cells -->
+<div class="q-block" id="q5"><div class="q-num">Q5 · B1.5 Specialisation in plant cells</div>
+<div class="q-text">Why do xylem cells form hollow tubes?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(5,'A','B')">A. To store starch</button>
+<button class="opt-btn" onclick="ans(5,'B','B')">B. Because they die and lose their contents, so water can flow easily</button>
+<button class="opt-btn" onclick="ans(5,'C','B')">C. To absorb mineral ions</button>
+<button class="opt-btn" onclick="ans(5,'D','B')">D. To carry out photosynthesis</button>
+</div>
+<div class="feedback" id="fb5"></div></div>
+
+<!-- B1.6 Diffusion -->
+<div class="q-block" id="q6"><div class="q-num">Q6 · B1.6 Diffusion</div>
+<div class="q-text">Which factor does NOT increase the rate of diffusion?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(6,'A','D')">A. Increasing temperature</button>
+<button class="opt-btn" onclick="ans(6,'B','D')">B. Increasing surface area</button>
+<button class="opt-btn" onclick="ans(6,'C','D')">C. Increasing the concentration gradient</button>
+<button class="opt-btn" onclick="ans(6,'D','D')">D. Decreasing temperature</button>
+</div>
+<div class="feedback" id="fb6"></div></div>
+
+<!-- B1.7 Osmosis -->
+<div class="q-block" id="q7"><div class="q-num">Q7 · B1.7 Osmosis</div>
+<div class="q-text">What happens to an animal cell placed in a hypertonic solution?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(7,'A','B')">A. It swells and bursts</button>
+<button class="opt-btn" onclick="ans(7,'B','B')">B. It shrivels as water leaves by osmosis</button>
+<button class="opt-btn" onclick="ans(7,'C','B')">C. Nothing changes</button>
+<button class="opt-btn" onclick="ans(7,'D','B')">D. It divides by mitosis</button>
+</div>
+<div class="feedback" id="fb7"></div></div>
+
+<!-- B1.8 Osmosis in plants -->
+<div class="q-block" id="q8"><div class="q-num">Q8 · B1.8 Osmosis in plants</div>
+<div class="q-text">What does it mean if a plant cell is 'plasmolysed'?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(8,'A','B')">A. The vacuole is swollen with water</button>
+<button class="opt-btn" onclick="ans(8,'B','B')">B. The cell membrane has pulled away from the cell wall due to severe water loss</button>
+<button class="opt-btn" onclick="ans(8,'C','B')">C. The cell is turgid</button>
+<button class="opt-btn" onclick="ans(8,'D','B')">D. The cell is dividing</button>
+</div>
+<div class="feedback" id="fb8"></div></div>
+
+<!-- B1.9 Active transport -->
+<div class="q-block" id="q9"><div class="q-num">Q9 · B1.9 Active transport</div>
+<div class="q-text">Why do root hair cells need many mitochondria?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(9,'A','A')">A. To make active transport of mineral ions possible by providing energy from respiration</button>
+<button class="opt-btn" onclick="ans(9,'B','A')">B. To produce chlorophyll</button>
+<button class="opt-btn" onclick="ans(9,'C','A')">C. To carry out photosynthesis</button>
+<button class="opt-btn" onclick="ans(9,'D','A')">D. To store water</button>
+</div>
+<div class="feedback" id="fb9"></div></div>
+
+<!-- B1.10 Exchanging materials -->
+<div class="q-block" id="q10"><div class="q-num">Q10 · B1.10 Exchanging materials</div>
+<div class="q-text">What happens to the surface area to volume ratio as an organism gets bigger?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(10,'A','B')">A. It increases</button>
+<button class="opt-btn" onclick="ans(10,'B','B')">B. It decreases</button>
+<button class="opt-btn" onclick="ans(10,'C','B')">C. It stays the same</button>
+<button class="opt-btn" onclick="ans(10,'D','B')">D. It doubles</button>
+</div>
+<div class="feedback" id="fb10"></div></div>
+
+<!-- B2.1 Cell division -->
+<div class="q-block" id="q11"><div class="q-num">Q11 · B2.1 Cell division</div>
+<div class="q-text">How many chromosomes are in a normal human body cell?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(11,'A','B')">A. 23</button>
+<button class="opt-btn" onclick="ans(11,'B','B')">B. 46</button>
+<button class="opt-btn" onclick="ans(11,'C','B')">C. 92</button>
+<button class="opt-btn" onclick="ans(11,'D','B')">D. 12</button>
+</div>
+<div class="feedback" id="fb11"></div></div>
+
+<!-- B2.2 Growth & differentiation -->
+<div class="q-block" id="q12"><div class="q-num">Q12 · B2.2 Growth & differentiation</div>
+<div class="q-text">Why is it much easier to clone plants than animals?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(12,'A','B')">A. Plant cells are bigger</button>
+<button class="opt-btn" onclick="ans(12,'B','B')">B. Plant cells can redifferentiate even after becoming specialised</button>
+<button class="opt-btn" onclick="ans(12,'C','B')">C. Animal cells have no nucleus</button>
+<button class="opt-btn" onclick="ans(12,'D','B')">D. Plants don't need genetic material</button>
+</div>
+<div class="feedback" id="fb12"></div></div>
+
+<!-- B2.3 Stem cells -->
+<div class="q-block" id="q13"><div class="q-num">Q13 · B2.3 Stem cells</div>
+<div class="q-text">What is a key difference between embryonic and adult stem cells?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(13,'A','A')">A. Embryonic stem cells can become any cell type; adult stem cells are more limited</button>
+<button class="opt-btn" onclick="ans(13,'B','A')">B. Adult stem cells can become any cell type</button>
+<button class="opt-btn" onclick="ans(13,'C','A')">C. Embryonic stem cells cannot divide</button>
+<button class="opt-btn" onclick="ans(13,'D','A')">D. Adult stem cells are only found in embryos</button>
+</div>
+<div class="feedback" id="fb13"></div></div>
+
+<!-- B2.4 Stem cell dilemmas -->
+<div class="q-block" id="q14"><div class="q-num">Q14 · B2.4 Stem cell dilemmas</div>
+<div class="q-text">What is 'therapeutic cloning'?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(14,'A','B')">A. Cloning a whole new human being</button>
+<button class="opt-btn" onclick="ans(14,'B','B')">B. Producing a cloned embryo from a patient's own cells to get matching stem cells</button>
+<button class="opt-btn" onclick="ans(14,'C','B')">C. Destroying embryos for research only</button>
+<button class="opt-btn" onclick="ans(14,'D','B')">D. Curing cancer using chemotherapy</button>
+</div>
+<div class="feedback" id="fb14"></div></div>
+
+<!-- B3.1 Tissues and organs -->
+<div class="q-block" id="q15"><div class="q-num">Q15 · B3.1 Tissues and organs</div>
+<div class="q-text">What is an organ?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(15,'A','B')">A. A single specialised cell</button>
+<button class="opt-btn" onclick="ans(15,'B','B')">B. A collection of tissues working together to perform a specific function</button>
+<button class="opt-btn" onclick="ans(15,'C','B')">C. A group of organ systems</button>
+<button class="opt-btn" onclick="ans(15,'D','B')">D. A type of cell membrane</button>
+</div>
+<div class="feedback" id="fb15"></div></div>
+
+<!-- B3.2 Human digestive system -->
+<div class="q-block" id="q16"><div class="q-num">Q16 · B3.2 Human digestive system</div>
+<div class="q-text">Which organ produces bile?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(16,'A','B')">A. Pancreas</button>
+<button class="opt-btn" onclick="ans(16,'B','B')">B. Liver</button>
+<button class="opt-btn" onclick="ans(16,'C','B')">C. Gall bladder</button>
+<button class="opt-btn" onclick="ans(16,'D','B')">D. Stomach</button>
+</div>
+<div class="feedback" id="fb16"></div></div>
+
+<!-- B3.3 Chemistry of food -->
+<div class="q-block" id="q17"><div class="q-num">Q17 · B3.3 Chemistry of food</div>
+<div class="q-text">What does the Biuret test detect?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(17,'A','C')">A. Starch</button>
+<button class="opt-btn" onclick="ans(17,'B','C')">B. Sugars</button>
+<button class="opt-btn" onclick="ans(17,'C','C')">C. Proteins</button>
+<button class="opt-btn" onclick="ans(17,'D','C')">D. Lipids</button>
+</div>
+<div class="feedback" id="fb17"></div></div>
+
+<!-- B3.4 Catalysts and enzymes -->
+<div class="q-block" id="q18"><div class="q-num">Q18 · B3.4 Catalysts and enzymes</div>
+<div class="q-text">What is the 'lock and key' theory describing?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(18,'A','B')">A. How DNA replicates</button>
+<button class="opt-btn" onclick="ans(18,'B','B')">B. How an enzyme's active site fits a specific substrate</button>
+<button class="opt-btn" onclick="ans(18,'C','B')">C. How antibodies bind antigens</button>
+<button class="opt-btn" onclick="ans(18,'D','B')">D. How bile emulsifies fat</button>
+</div>
+<div class="feedback" id="fb18"></div></div>
+
+<!-- B3.5 Factors affecting enzyme action -->
+<div class="q-block" id="q19"><div class="q-num">Q19 · B3.5 Factors affecting enzyme action</div>
+<div class="q-text">What happens to an enzyme above its optimum temperature?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(19,'A','B')">A. It works faster</button>
+<button class="opt-btn" onclick="ans(19,'B','B')">B. It denatures and stops working</button>
+<button class="opt-btn" onclick="ans(19,'C','B')">C. It becomes more specific</button>
+<button class="opt-btn" onclick="ans(19,'D','B')">D. Nothing changes</button>
+</div>
+<div class="feedback" id="fb19"></div></div>
+
+<!-- B3.6 How the digestive system works -->
+<div class="q-block" id="q20"><div class="q-num">Q20 · B3.6 How the digestive system works</div>
+<div class="q-text">Where does pepsin (a protease) work best?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(20,'A','B')">A. pH 7 in the mouth</button>
+<button class="opt-btn" onclick="ans(20,'B','B')">B. pH 2 in the stomach</button>
+<button class="opt-btn" onclick="ans(20,'C','B')">C. pH 8 in the small intestine</button>
+<button class="opt-btn" onclick="ans(20,'D','B')">D. pH 14 in the pancreas</button>
+</div>
+<div class="feedback" id="fb20"></div></div>
+
+<!-- B3.7 Making digestion efficient -->
+<div class="q-block" id="q21"><div class="q-num">Q21 · B3.7 Making digestion efficient</div>
+<div class="q-text">What is the main role of bile in digestion?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(21,'A','B')">A. Breaks down starch chemically</button>
+<button class="opt-btn" onclick="ans(21,'B','B')">B. Neutralises stomach acid and emulsifies fats</button>
+<button class="opt-btn" onclick="ans(21,'C','B')">C. Kills bacteria in food</button>
+<button class="opt-btn" onclick="ans(21,'D','B')">D. Produces protease enzymes</button>
+</div>
+<div class="feedback" id="fb21"></div></div>
+
+<!-- B4.1 The blood -->
+<div class="q-block" id="q22"><div class="q-num">Q22 · B4.1 The blood</div>
+<div class="q-text">What gives red blood cells more space to carry oxygen?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(22,'A','B')">A. Having a large nucleus</button>
+<button class="opt-btn" onclick="ans(22,'B','B')">B. Having no nucleus</button>
+<button class="opt-btn" onclick="ans(22,'C','B')">C. Having a cell wall</button>
+<button class="opt-btn" onclick="ans(22,'D','B')">D. Having chloroplasts</button>
+</div>
+<div class="feedback" id="fb22"></div></div>
+
+<!-- B4.2 The blood vessels -->
+<div class="q-block" id="q23"><div class="q-num">Q23 · B4.2 The blood vessels</div>
+<div class="q-text">Why do veins have valves?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(23,'A','B')">A. To withstand high pressure</button>
+<button class="opt-btn" onclick="ans(23,'B','B')">B. To prevent backflow of blood at low pressure</button>
+<button class="opt-btn" onclick="ans(23,'C','B')">C. To increase pulse rate</button>
+<button class="opt-btn" onclick="ans(23,'D','B')">D. To carry out gas exchange</button>
+</div>
+<div class="feedback" id="fb23"></div></div>
+
+<!-- B4.3 The heart -->
+<div class="q-block" id="q24"><div class="q-num">Q24 · B4.3 The heart</div>
+<div class="q-text">Why does the left ventricle have a thicker wall than the right ventricle?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(24,'A','A')">A. It pumps blood the whole way around the body, needing higher pressure</button>
+<button class="opt-btn" onclick="ans(24,'B','A')">B. It receives blood from the vena cava</button>
+<button class="opt-btn" onclick="ans(24,'C','A')">C. It only pumps to the lungs</button>
+<button class="opt-btn" onclick="ans(24,'D','A')">D. It contains more valves</button>
+</div>
+<div class="feedback" id="fb24"></div></div>
+
+<!-- B4.4 Helping the heart -->
+<div class="q-block" id="q25"><div class="q-num">Q25 · B4.4 Helping the heart</div>
+<div class="q-text">What is the role of the natural pacemaker in the heart?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(25,'A','B')">A. Pumps blood around the body</button>
+<button class="opt-btn" onclick="ans(25,'B','B')">B. Sends electrical signals to coordinate the heartbeat</button>
+<button class="opt-btn" onclick="ans(25,'C','B')">C. Filters the blood</button>
+<button class="opt-btn" onclick="ans(25,'D','B')">D. Produces red blood cells</button>
+</div>
+<div class="feedback" id="fb25"></div></div>
+
+<!-- B4.5 Breathing and gas exchange -->
+<div class="q-block" id="q26"><div class="q-num">Q26 · B4.5 Breathing and gas exchange</div>
+<div class="q-text">What adaptation of alveoli speeds up gas exchange?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(26,'A','B')">A. Thick walls</button>
+<button class="opt-btn" onclick="ans(26,'B','B')">B. Large surface area, thin walls and rich blood supply</button>
+<button class="opt-btn" onclick="ans(26,'C','B')">C. Low blood supply</button>
+<button class="opt-btn" onclick="ans(26,'D','B')">D. Small surface area</button>
+</div>
+<div class="feedback" id="fb26"></div></div>
+
+<!-- B4.6 Tissues and organs in plants -->
+<div class="q-block" id="q27"><div class="q-num">Q27 · B4.6 Tissues and organs in plants</div>
+<div class="q-text">Which leaf tissue is the main site of photosynthesis?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(27,'A','B')">A. Spongy mesophyll</button>
+<button class="opt-btn" onclick="ans(27,'B','B')">B. Palisade mesophyll</button>
+<button class="opt-btn" onclick="ans(27,'C','B')">C. Epidermis</button>
+<button class="opt-btn" onclick="ans(27,'D','B')">D. Xylem</button>
+</div>
+<div class="feedback" id="fb27"></div></div>
+
+<!-- B4.7 Transport systems in plants -->
+<div class="q-block" id="q28"><div class="q-num">Q28 · B4.7 Transport systems in plants</div>
+<div class="q-text">What is translocation?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(28,'A','B')">A. Movement of water up the xylem</button>
+<button class="opt-btn" onclick="ans(28,'B','B')">B. Movement of dissolved sugars through the phloem</button>
+<button class="opt-btn" onclick="ans(28,'C','B')">C. Movement of gases through stomata</button>
+<button class="opt-btn" onclick="ans(28,'D','B')">D. Movement of pollen</button>
+</div>
+<div class="feedback" id="fb28"></div></div>
+
+<!-- B4.8 Evaporation and transpiration -->
+<div class="q-block" id="q29"><div class="q-num">Q29 · B4.8 Evaporation and transpiration</div>
+<div class="q-text">What is transpiration?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(29,'A','B')">A. The uptake of water by roots</button>
+<button class="opt-btn" onclick="ans(29,'B','B')">B. The loss of water vapour from leaves through stomata</button>
+<button class="opt-btn" onclick="ans(29,'C','B')">C. The movement of sugars through phloem</button>
+<button class="opt-btn" onclick="ans(29,'D','B')">D. The opening of guard cells at night</button>
+</div>
+<div class="feedback" id="fb29"></div></div>
+
+<!-- B4.9 Factors affecting transpiration -->
+<div class="q-block" id="q30"><div class="q-num">Q30 · B4.9 Factors affecting transpiration</div>
+<div class="q-text">Which condition increases the rate of transpiration?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(30,'A','C')">A. High humidity</button>
+<button class="opt-btn" onclick="ans(30,'B','C')">B. Cold, still air</button>
+<button class="opt-btn" onclick="ans(30,'C','C')">C. Hot, dry, windy and bright conditions</button>
+<button class="opt-btn" onclick="ans(30,'D','C')">D. Darkness</button>
+</div>
+<div class="feedback" id="fb30"></div></div>
+
+<div class="section-label">Part 2 — True or False · 30 Questions</div>
+
+<!-- B1.1 Microscopy -->
+<div class="q-block" id="q31"><div class="q-num">Q31 · B1.1 Microscopy</div>
+<div class="q-text">Electron microscopes can be used to view living specimens.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(31,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(31,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb31"></div></div>
+
+<!-- B1.2 Animal & plant cells -->
+<div class="q-block" id="q32"><div class="q-num">Q32 · B1.2 Animal & plant cells</div>
+<div class="q-text">All plant cells contain chloroplasts, including root cells.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(32,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(32,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb32"></div></div>
+
+<!-- B1.3 Eukaryotic & prokaryotic -->
+<div class="q-block" id="q33"><div class="q-num">Q33 · B1.3 Eukaryotic & prokaryotic</div>
+<div class="q-text">Bacteria are prokaryotic cells with no nucleus.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(33,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(33,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb33"></div></div>
+
+<!-- B1.4 Specialisation in animal cells -->
+<div class="q-block" id="q34"><div class="q-num">Q34 · B1.4 Specialisation in animal cells</div>
+<div class="q-text">Nerve cells have a myelin sheath that speeds up transmission of impulses.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(34,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(34,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb34"></div></div>
+
+<!-- B1.5 Specialisation in plant cells -->
+<div class="q-block" id="q35"><div class="q-num">Q35 · B1.5 Specialisation in plant cells</div>
+<div class="q-text">Phloem cells are dead, hollow tubes.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(35,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(35,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb35"></div></div>
+
+<!-- B1.6 Diffusion -->
+<div class="q-block" id="q36"><div class="q-num">Q36 · B1.6 Diffusion</div>
+<div class="q-text">Diffusion requires energy input from respiration.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(36,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(36,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb36"></div></div>
+
+<!-- B1.7 Osmosis -->
+<div class="q-block" id="q37"><div class="q-num">Q37 · B1.7 Osmosis</div>
+<div class="q-text">Osmosis is the movement of water from a concentrated to a dilute solution.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(37,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(37,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb37"></div></div>
+
+<!-- B1.8 Osmosis in plants -->
+<div class="q-block" id="q38"><div class="q-num">Q38 · B1.8 Osmosis in plants</div>
+<div class="q-text">A turgid plant cell has water pressing the cytoplasm against the cell wall.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(38,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(38,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb38"></div></div>
+
+<!-- B1.9 Active transport -->
+<div class="q-block" id="q39"><div class="q-num">Q39 · B1.9 Active transport</div>
+<div class="q-text">Active transport moves substances down a concentration gradient.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(39,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(39,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb39"></div></div>
+
+<!-- B1.10 Exchanging materials -->
+<div class="q-block" id="q40"><div class="q-num">Q40 · B1.10 Exchanging materials</div>
+<div class="q-text">Large organisms need specialised exchange surfaces because simple diffusion alone isn't fast enough.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(40,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(40,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb40"></div></div>
+
+<!-- B2.1 Cell division -->
+<div class="q-block" id="q41"><div class="q-num">Q41 · B2.1 Cell division</div>
+<div class="q-text">Mitosis produces two genetically identical daughter cells.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(41,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(41,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb41"></div></div>
+
+<!-- B2.2 Growth & differentiation -->
+<div class="q-block" id="q42"><div class="q-num">Q42 · B2.2 Growth & differentiation</div>
+<div class="q-text">Most plant cells lose the ability to differentiate early in life, just like animal cells.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(42,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(42,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb42"></div></div>
+
+<!-- B2.3 Stem cells -->
+<div class="q-block" id="q43"><div class="q-num">Q43 · B2.3 Stem cells</div>
+<div class="q-text">Adult stem cells in bone marrow can produce blood cells.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(43,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(43,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb43"></div></div>
+
+<!-- B2.4 Stem cell dilemmas -->
+<div class="q-block" id="q44"><div class="q-num">Q44 · B2.4 Stem cell dilemmas</div>
+<div class="q-text">Embryonic stem cells used in research always come from aborted fetuses.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(44,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(44,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb44"></div></div>
+
+<!-- B3.1 Tissues and organs -->
+<div class="q-block" id="q45"><div class="q-num">Q45 · B3.1 Tissues and organs</div>
+<div class="q-text">The pancreas only produces digestive enzymes, not hormones.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(45,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(45,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb45"></div></div>
+
+<!-- B3.2 Human digestive system -->
+<div class="q-block" id="q46"><div class="q-num">Q46 · B3.2 Human digestive system</div>
+<div class="q-text">Most chemical digestion takes place in the duodenum (small intestine).</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(46,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(46,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb46"></div></div>
+
+<!-- B3.3 Chemistry of food -->
+<div class="q-block" id="q47"><div class="q-num">Q47 · B3.3 Chemistry of food</div>
+<div class="q-text">Iodine solution turns blue-black in the presence of starch.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(47,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(47,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb47"></div></div>
+
+<!-- B3.4 Catalysts and enzymes -->
+<div class="q-block" id="q48"><div class="q-num">Q48 · B3.4 Catalysts and enzymes</div>
+<div class="q-text">An enzyme is permanently changed or used up after catalysing a reaction.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(48,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(48,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb48"></div></div>
+
+<!-- B3.5 Factors affecting enzyme action -->
+<div class="q-block" id="q49"><div class="q-num">Q49 · B3.5 Factors affecting enzyme action</div>
+<div class="q-text">Most human enzymes work best at around 37°C.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(49,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(49,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb49"></div></div>
+
+<!-- B3.6 How the digestive system works -->
+<div class="q-block" id="q50"><div class="q-num">Q50 · B3.6 How the digestive system works</div>
+<div class="q-text">Lipase is produced by the stomach to break down fats.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(50,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(50,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb50"></div></div>
+
+<!-- B3.7 Making digestion efficient -->
+<div class="q-block" id="q51"><div class="q-num">Q51 · B3.7 Making digestion efficient</div>
+<div class="q-text">Bile is an enzyme that chemically breaks down fat.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(51,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(51,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb51"></div></div>
+
+<!-- B4.1 The blood -->
+<div class="q-block" id="q52"><div class="q-num">Q52 · B4.1 The blood</div>
+<div class="q-text">Platelets are whole cells with a nucleus.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(52,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(52,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb52"></div></div>
+
+<!-- B4.2 The blood vessels -->
+<div class="q-block" id="q53"><div class="q-num">Q53 · B4.2 The blood vessels</div>
+<div class="q-text">Arteries carry blood away from the heart.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(53,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(53,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb53"></div></div>
+
+<!-- B4.3 The heart -->
+<div class="q-block" id="q54"><div class="q-num">Q54 · B4.3 The heart</div>
+<div class="q-text">The right atrium receives oxygenated blood from the lungs.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(54,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(54,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb54"></div></div>
+
+<!-- B4.4 Helping the heart -->
+<div class="q-block" id="q55"><div class="q-num">Q55 · B4.4 Helping the heart</div>
+<div class="q-text">A biological heart valve typically lasts longer than a mechanical one.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(55,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(55,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb55"></div></div>
+
+<!-- B4.5 Breathing and gas exchange -->
+<div class="q-block" id="q56"><div class="q-num">Q56 · B4.5 Breathing and gas exchange</div>
+<div class="q-text">Exhaled air contains roughly 4% carbon dioxide.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(56,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(56,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb56"></div></div>
+
+<!-- B4.6 Tissues and organs in plants -->
+<div class="q-block" id="q57"><div class="q-num">Q57 · B4.6 Tissues and organs in plants</div>
+<div class="q-text">Meristem tissue is found at the tips of roots and shoots.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(57,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(57,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb57"></div></div>
+
+<!-- B4.7 Transport systems in plants -->
+<div class="q-block" id="q58"><div class="q-num">Q58 · B4.7 Transport systems in plants</div>
+<div class="q-text">Xylem transport requires energy from active transport.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(58,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(58,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb58"></div></div>
+
+<!-- B4.8 Evaporation and transpiration -->
+<div class="q-block" id="q59"><div class="q-num">Q59 · B4.8 Evaporation and transpiration</div>
+<div class="q-text">Guard cells control the opening and closing of stomata.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(59,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(59,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb59"></div></div>
+
+<!-- B4.9 Factors affecting transpiration -->
+<div class="q-block" id="q60"><div class="q-num">Q60 · B4.9 Factors affecting transpiration</div>
+<div class="q-text">Increasing humidity around a leaf increases the rate of transpiration.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(60,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(60,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb60"></div></div>
+
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <h2 id="resultTitle"></h2>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-mum" id="resultMum"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+</main>
+
+<script>
+const SCORE_KEY='bio-megaquiz2a-score';
+const fb={
+1:{c:'✅ Correct! Magnification = size of image ÷ size of real object.',w:'❌ Magnification = size of image ÷ size of real object. Rearrange this formula to find real size or image size.'},
+2:{c:'✅ Correct! The cell wall (made of cellulose) is found only in plant cells, giving strength and support.',w:'❌ The cell wall (cellulose) is unique to plant cells — animal cells don\'t have one.'},
+3:{c:'✅ Correct! Bacteria have no nucleus — their DNA is a single loop free in the cytoplasm.',w:'❌ Prokaryotes (bacteria) have NO nucleus — DNA is a single loop free in the cytoplasm.'},
+4:{c:'✅ Correct! Mitochondria release energy (from respiration) needed to power the tail.',w:'❌ Mitochondria release energy from respiration to power the whipping tail.'},
+5:{c:'✅ Correct! Mature xylem cells die, forming hollow lignified tubes that let water flow easily upward.',w:'❌ Xylem cells die and become hollow — this lets water flow through with no obstruction.'},
+6:{c:'✅ Correct! Lower temperature means slower particle movement — diffusion rate decreases.',w:'❌ Decreasing temperature slows particle movement, which DECREASES diffusion rate.'},
+7:{c:'✅ Correct! In a hypertonic (more concentrated) solution, water leaves the cell by osmosis and it shrivels.',w:'❌ Hypertonic = more concentrated outside, so water leaves the cell by osmosis → it shrivels.'},
+8:{c:'✅ Correct! Plasmolysis means the membrane has pulled away from the wall after severe water loss.',w:'❌ Plasmolysis = cell membrane pulls away from the cell wall after severe water loss — usually fatal.'},
+9:{c:'✅ Correct! Active transport needs energy from respiration, which takes place in the mitochondria.',w:'❌ Active transport requires energy from respiration — that\'s why cells doing lots of it have many mitochondria.'},
+10:{c:'✅ Correct! As size increases, volume grows faster than surface area, so SA:V ratio falls.',w:'❌ As organisms get bigger, SA:V ratio DECREASES — making simple diffusion less effective.'},
+11:{c:'✅ Correct! Human body cells have 46 chromosomes, arranged in 23 pairs.',w:'❌ Human body cells have 46 chromosomes (23 pairs) — sex cells have only 23.'},
+12:{c:'✅ Correct! Plant cells can revert to an unspecialised state and redifferentiate — animal cells usually can\'t.',w:'❌ Plant cells retain the ability to redifferentiate throughout life, unlike most animal cells.'},
+13:{c:'✅ Correct! Embryonic stem cells are unspecialised and can become any cell type; adult stem cells are partly differentiated already.',w:'❌ Embryonic stem cells can become ANY cell type — adult stem cells can only form certain cell types.'},
+14:{c:'✅ Correct! Therapeutic cloning produces matched stem cells from the patient\'s own cells, so they won\'t be rejected.',w:'❌ Therapeutic cloning produces an early embryo from the patient\'s own cells, giving perfectly matched stem cells.'},
+15:{c:'✅ Correct! An organ is a collection of different tissues working together for a specific function — e.g. the stomach.',w:'❌ An organ is a collection of tissues working together — e.g. the stomach has muscular, glandular and epithelial tissue.'},
+16:{c:'✅ Correct! Bile is produced by the liver, then stored in the gall bladder.',w:'❌ The LIVER produces bile. The gall bladder only stores it before release into the duodenum.'},
+17:{c:'✅ Correct! Biuret reagent turns purple in the presence of protein.',w:'❌ The Biuret test (blue → purple) detects PROTEINS. Iodine tests for starch, Benedict\'s for sugars.'},
+18:{c:'✅ Correct! The substrate (key) fits into the enzyme\'s active site (lock) — a specific, unique fit.',w:'❌ Lock and key describes how a substrate fits precisely into an enzyme\'s active site.'},
+19:{c:'✅ Correct! Above the optimum, the active site\'s shape changes — the enzyme denatures and stops working.',w:'❌ Above optimum temperature, the enzyme\'s active site changes shape — it DENATURES and stops working.'},
+20:{c:'✅ Correct! Pepsin\'s optimum pH is around 2 — the acidic conditions of the stomach.',w:'❌ Pepsin works best at pH ~2, the acidic environment of the stomach (provided by hydrochloric acid).'},
+21:{c:'✅ Correct! Bile neutralises stomach acid (giving the right pH for pancreatic enzymes) and emulsifies fats.',w:'❌ Bile has two jobs: neutralising stomach acid, and emulsifying fats into smaller droplets for lipase.'},
+22:{c:'✅ Correct! Red blood cells have no nucleus, leaving more room for haemoglobin.',w:'❌ Red blood cells have NO nucleus — this leaves more space for haemoglobin to carry oxygen.'},
+23:{c:'✅ Correct! Blood in veins is at low pressure, so valves stop it flowing backwards.',w:'❌ Veins carry blood at LOW pressure — valves prevent it flowing backwards towards the organs.'},
+24:{c:'✅ Correct! The left ventricle needs much higher pressure to pump blood all the way around the body.',w:'❌ The left ventricle pumps blood around the WHOLE body (not just to the nearby lungs), so needs a thicker, more powerful wall.'},
+25:{c:'✅ Correct! The natural pacemaker is a group of cells in the right atrium that sends signals to coordinate the heartbeat.',w:'❌ The natural pacemaker sends electrical signals through the heart to keep the beat coordinated and regular.'},
+26:{c:'✅ Correct! Millions of alveoli give a huge surface area, with thin walls and a rich blood supply for fast diffusion.',w:'❌ Alveoli are adapted with a large surface area, very thin (one-cell) walls, and a rich blood supply.'},
+27:{c:'✅ Correct! Palisade mesophyll cells are packed with chloroplasts and positioned near the top of the leaf for maximum light.',w:'❌ PALISADE mesophyll is the main site of photosynthesis — packed with chloroplasts near the top of the leaf.'},
+28:{c:'✅ Correct! Translocation is the movement of dissolved sugars (food) through the phloem, in both directions.',w:'❌ Translocation = movement of dissolved sugars through the PHLOEM. The xylem process is called the transpiration stream.'},
+29:{c:'✅ Correct! Transpiration is the loss of water vapour from leaves, mainly through open stomata.',w:'❌ Transpiration is the LOSS of water vapour from leaves through stomata, by diffusion/evaporation.'},
+30:{c:'✅ Correct! Hot, dry, windy, bright conditions all speed up evaporation and water vapour loss.',w:'❌ Transpiration is FASTEST in hot, dry, windy, bright conditions — think \'desert\' not \'rainforest floor\'.'},
+31:{c:'✅ Correct! FALSE — electron microscopes cannot view live specimens (they need a vacuum).',w:'❌ FALSE — electron microscopes CANNOT view live specimens. Only light microscopes can.'},
+32:{c:'✅ Correct! FALSE — root cells are underground with no light, so they have no chloroplasts.',w:'❌ FALSE — root cells have NO chloroplasts since they don\'t receive light underground.'},
+33:{c:'✅ Correct! TRUE — bacteria are prokaryotes; their DNA is a free loop, not in a nucleus.',w:'❌ TRUE — bacteria are prokaryotic, meaning they have no membrane-bound nucleus.'},
+34:{c:'✅ Correct! TRUE — the myelin sheath insulates the axon, speeding up electrical impulses.',w:'❌ TRUE — the myelin sheath is an insulating layer that speeds up impulse transmission.'},
+35:{c:'✅ Correct! FALSE — that describes xylem. Phloem cells are alive, kept going by companion cells.',w:'❌ FALSE — XYLEM cells are dead hollow tubes. Phloem cells are LIVING.'},
+36:{c:'✅ Correct! FALSE — diffusion is passive; it needs no energy, unlike active transport.',w:'❌ FALSE — diffusion is a PASSIVE process and needs no energy. Active transport needs energy.'},
+37:{c:'✅ Correct! FALSE — osmosis moves water from a DILUTE solution to a more CONCENTRATED one.',w:'❌ FALSE — it\'s the opposite: water moves from dilute (high water conc.) to concentrated (low water conc.).'},
+38:{c:'✅ Correct! TRUE — turgor pressure from water in the vacuole presses outward, keeping the cell rigid.',w:'❌ TRUE — in a turgid cell, water in the vacuole pushes the cytoplasm against the cell wall, creating turgor pressure.'},
+39:{c:'✅ Correct! FALSE — active transport moves substances AGAINST the concentration gradient.',w:'❌ FALSE — active transport moves substances AGAINST the gradient (low to high), which needs energy.'},
+40:{c:'✅ Correct! TRUE — as SA:V ratio falls, large organisms need adapted exchange surfaces and transport systems.',w:'❌ TRUE — large organisms have a low SA:V ratio, so they need specialised surfaces to exchange materials fast enough.'},
+41:{c:'✅ Correct! TRUE — mitosis produces two cells genetically identical to each other and the parent cell.',w:'❌ TRUE — mitosis always produces two genetically identical daughter cells.'},
+42:{c:'✅ Correct! FALSE — plant cells RETAIN the ability to differentiate throughout life; animal cells lose it early.',w:'❌ FALSE — it\'s the opposite. Plant cells keep the ability to differentiate; most animal cells lose it early.'},
+43:{c:'✅ Correct! TRUE — bone marrow stem cells are partly differentiated and can produce blood cells.',w:'❌ TRUE — adult stem cells in bone marrow are used to produce different types of blood cell.'},
+44:{c:'✅ Correct! FALSE — many come from spare embryos from fertility treatment that would otherwise be destroyed.',w:'❌ FALSE — most research embryos come from spare embryos created during fertility treatment, not abortions.'},
+45:{c:'✅ Correct! FALSE — the pancreas produces both digestive enzymes AND hormones like insulin.',w:'❌ FALSE — the pancreas has two roles: making digestive enzymes AND hormones (e.g. insulin).'},
+46:{c:'✅ Correct! TRUE — the duodenum, the first part of the small intestine, is where most chemical digestion happens.',w:'❌ TRUE — most chemical digestion takes place in the duodenum, with enzymes from the pancreas and bile from the liver.'},
+47:{c:'✅ Correct! TRUE — iodine solution changes from yellow-brown to blue-black when starch is present.',w:'❌ TRUE — the iodine test is a classic positive test for starch: yellow-brown → blue-black.'},
+48:{c:'✅ Correct! FALSE — like all catalysts, enzymes are unchanged and ready to be used again afterwards.',w:'❌ FALSE — enzymes are NOT used up. They are unchanged after the reaction and can be reused.'},
+49:{c:'✅ Correct! TRUE — 37°C is human body temperature, the optimum for most human enzymes.',w:'❌ TRUE — most human enzymes have an optimum temperature of around 37°C (body temperature).'},
+50:{c:'✅ Correct! FALSE — lipase is made by the pancreas and small intestine, not the stomach.',w:'❌ FALSE — lipase is produced by the PANCREAS and SMALL INTESTINE, not the stomach.'},
+51:{c:'✅ Correct! FALSE — bile is not an enzyme; it physically emulsifies fat into smaller droplets for lipase to act on.',w:'❌ FALSE — bile is NOT an enzyme. It only physically breaks fat into smaller droplets (emulsification).'},
+52:{c:'✅ Correct! FALSE — platelets are small cell fragments with no nucleus, not whole cells.',w:'❌ FALSE — platelets are cell FRAGMENTS, not whole cells, and have no nucleus.'},
+53:{c:'✅ Correct! TRUE — Arteries Away from heart. This applies even to the pulmonary artery.',w:'❌ TRUE — arteries always carry blood AWAY from the heart, including the pulmonary artery.'},
+54:{c:'✅ Correct! FALSE — the right atrium receives DEOXYGENATED blood from the body via the vena cava.',w:'❌ FALSE — the right atrium receives deoxygenated blood from the BODY. The left atrium receives oxygenated blood from the lungs.'},
+55:{c:'✅ Correct! FALSE — mechanical valves last much longer; biological valves need replacing after about 12–15 years.',w:'❌ FALSE — MECHANICAL valves last a very long time; biological valves usually need replacing after ~12–15 years.'},
+56:{c:'✅ Correct! TRUE — exhaled air is about 4% CO₂ (up from 0.04% inhaled).',w:'❌ TRUE — exhaled air contains about 4% CO₂, a big increase from the 0.04% we breathe in.'},
+57:{c:'✅ Correct! TRUE — meristems are the growing points where rapid cell division occurs.',w:'❌ TRUE — meristem tissue at root and shoot tips divides rapidly to produce new cells for growth.'},
+58:{c:'✅ Correct! FALSE — xylem transport is driven by transpiration (evaporation pulling water up), not active transport.',w:'❌ FALSE — water moves up the xylem because of the transpiration stream, not active transport. Phloem transport (translocation) does need energy.'},
+59:{c:'✅ Correct! TRUE — guard cells change shape (turgid or flaccid) to open or close each stoma.',w:'❌ TRUE — guard cells open stomata when turgid (full of water) and close them to limit water loss.'},
+60:{c:'✅ Correct! FALSE — higher humidity reduces the concentration gradient, so transpiration SLOWS down.',w:'❌ FALSE — higher humidity DECREASES the rate of transpiration, since the concentration gradient is smaller.'}
+};
+let score=0,answered=0;const total=60;
+function ans(q,chosen,correct){
+  const block=document.getElementById('q'+q);
+  if(block.classList.contains('correct')||block.classList.contains('wrong'))return;
+  const isOk=chosen===correct;
+  const feedEl=document.getElementById('fb'+q);
+  block.querySelectorAll('.opt-btn,.tf-btn').forEach(b=>{
+    b.disabled=true;
+    const m=b.getAttribute('onclick').match(/ans\(\d+,'([^']+)'/);
+    if(m&&m[1]===correct)b.classList.add('reveal-correct');
+  });
+  const clicked=[...block.querySelectorAll('.opt-btn,.tf-btn')].find(b=>{
+    const m=b.getAttribute('onclick').match(/ans\(\d+,'([^']+)'/);return m&&m[1]===chosen;
+  });
+  if(isOk){clicked?.classList.add('selected-correct');block.classList.add('correct');feedEl.className='feedback correct';feedEl.textContent=fb[q].c;score++;}
+  else{clicked?.classList.add('selected-wrong');block.classList.add('wrong');feedEl.className='feedback wrong';feedEl.textContent=fb[q].w;}
+  answered++;updateBar();
+  if(answered===total)setTimeout(showResult,600);
+}
+function updateBar(){
+  document.getElementById('scoreDisplay').textContent=score;
+  document.getElementById('answeredDisplay').textContent=answered;
+  document.getElementById('progressBar').style.width=(answered/total*100)+'%';
+}
+function showResult(){
+  const box=document.getElementById('resultBox');box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('resultScore').textContent=score+'/60';
+  document.getElementById('resultMum').textContent='Show this to mum — '+score+'/60';
+  let emoji,title,msg;
+  if(score>=54){emoji='🏆';title='Outstanding!';msg='Exceptional Biology knowledge — you are exam-ready!';}
+  else if(score>=42){emoji='🎉';title='Great work!';msg='Really solid across the board. Go back over any missed questions and you will be in great shape.';}
+  else if(score>=30){emoji='📚';title='Getting there!';msg='Good foundation — review the chapters where you lost marks and try again.';}
+  else{emoji='💪';title='Keep going!';msg='Needs more practice. Work through each revision page and try again.';}
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultMsg').textContent=msg;
+  try{localStorage.setItem(SCORE_KEY,score+'/60');}catch(e){}
+}
+function resetQuiz(){
+  score=0;answered=0;updateBar();
+  for(let i=1;i<=60;i++){
+    const b=document.getElementById('q'+i);
+    b.classList.remove('correct','wrong');
+    b.querySelectorAll('.opt-btn,.tf-btn').forEach(x=>{x.disabled=false;x.classList.remove('selected-correct','selected-wrong','reveal-correct');});
+    const f=document.getElementById('fb'+i);f.className='feedback';f.textContent='';
+  }
+  document.getElementById('resultBox').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

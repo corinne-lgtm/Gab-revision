@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology · Mega Quiz 2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0d2b45;--accent:#64b5f6;--bg:#e8f4fd;--paper:#fff;--ink:#1a1a2e;
+  --muted:#5a6a7a;--line:#dce8f2;--red:#e53935;--red2:#ffebee;
+  --green:#2e7d32;--green2:#e8f5e9;--orange:#ef6c00;--orange2:#fff3e0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;min-height:100vh;}
+.hero{background:linear-gradient(135deg,#0d3320 0%,#1b5e20 55%,#2e7d32 100%);color:white;padding:32px 20px 24px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(100,200,100,0.1);}
+.kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a5d6a7;margin-bottom:6px;}
+.badge{display:inline-block;background:#a5d6a7;color:#0d3320;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:900;line-height:1.1;margin-bottom:6px;}
+.hero p{font-size:13px;color:rgba(255,255,255,0.7);}
+nav{background:#0d3320;padding:0 16px;display:flex;overflow-x:auto;border-bottom:2px solid #a5d6a7;}
+nav a{color:#a5d6a7;text-decoration:none;font-size:12px;font-weight:600;padding:10px 14px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s;}
+nav a:hover{color:white;border-bottom-color:#a5d6a7;}
+.score-bar{background:#0d3320;color:white;padding:10px 20px;display:flex;align-items:center;gap:16px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(165,214,167,.2);}
+.score-pill{background:rgba(165,214,167,.15);border:1px solid rgba(165,214,167,.35);border-radius:20px;padding:3px 12px;white-space:nowrap;}
+.score-pill span{color:#a5d6a7;}
+.progress-wrap{flex:1;background:rgba(255,255,255,.1);border-radius:10px;height:7px;overflow:hidden;min-width:60px;}
+.progress-bar{height:100%;background:#a5d6a7;border-radius:10px;transition:width .4s ease;width:0%;}
+main{max-width:760px;margin:0 auto;padding:24px 16px 80px;}
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#0d3320;border-left:4px solid #a5d6a7;padding-left:10px;margin:28px 0 14px;}
+.q-block{background:var(--paper);border-radius:12px;padding:18px 18px 14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(13,51,32,.07);border:1.5px solid transparent;transition:border-color .3s;}
+.q-block.correct{border-color:var(--green);}
+.q-block.wrong{border-color:var(--red);}
+.q-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;color:var(--ink);margin-bottom:11px;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt-btn{background:#f0f8f1;border:1.5px solid var(--line);border-radius:8px;padding:8px 13px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s;line-height:1.4;}
+.opt-btn:hover:not(:disabled){background:#d0efd4;border-color:#81c784;}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green);font-weight:600;}
+.opt-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:var(--red);font-weight:600;}
+.opt-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green);font-weight:600;}
+.tf-options{display:flex;gap:10px;}
+.tf-btn{flex:1;padding:9px;border-radius:8px;border:1.5px solid var(--line);background:#f0f8f1;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:1px;cursor:pointer;transition:background .15s,border-color .15s;text-transform:uppercase;}
+.tf-btn:hover:not(:disabled){background:#d0efd4;border-color:#81c784;}
+.tf-btn:disabled{cursor:default;}
+.tf-btn.selected-correct{background:var(--green2);border-color:var(--green);color:var(--green);}
+.tf-btn.selected-wrong{background:var(--red2);border-color:var(--red);color:var(--red);}
+.tf-btn.reveal-correct{background:var(--green2);border-color:var(--green);color:var(--green);}
+.feedback{display:none;margin-top:9px;padding:8px 12px;border-radius:7px;font-size:13px;line-height:1.45;}
+.feedback.correct{background:var(--green2);color:#1b4d1e;display:block;}
+.feedback.wrong{background:var(--red2);color:#7a0000;display:block;}
+.result-box{display:none;background:var(--paper);border-radius:16px;padding:32px 24px;text-align:center;margin-top:28px;box-shadow:0 4px 20px rgba(13,51,32,.12);}
+.result-box.show{display:block;}
+.result-emoji{font-size:3rem;margin-bottom:10px;}
+.result-box h2{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;color:#0d3320;margin-bottom:8px;}
+.result-score{font-family:'Barlow Condensed',sans-serif;font-size:3.2rem;font-weight:900;color:#2e7d32;line-height:1;margin:10px 0 4px;}
+.result-mum{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.result-msg{font-size:14px;color:var(--ink);margin-bottom:22px;line-height:1.5;}
+.reset-btn{background:#0d3320;color:white;border:none;border-radius:24px;padding:12px 32px;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;cursor:pointer;}
+.reset-btn:hover{background:#1b5e20;}
+
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kicker">AQA GCSE Biology · B5–B9 · Mega Quiz 2 — Part B</div>
+  <div class="badge">🦠 Disease, Drugs, Photosynthesis & Respiration</div>
+  <h1>Biology Mega Quiz 2B</h1>
+  <p>60 questions · 30 MCQ + 30 True/False · Communicable & non-communicable disease, drugs, photosynthesis, respiration (B5–B9)</p>
+</div>
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="biology-index.html">🧬 Biology</a>
+  <a href="biology-quickcheck-cells-organisation.html">🧬 Quiz 2A</a>
+  <a href="biology-exam-paper1.html">📄 Paper 1</a>
+  <a href="biology-exam-paper2.html">📄 Paper 2</a>
+</nav>
+<div class="score-bar">
+  <div class="score-pill">Score <span id="scoreDisplay">0</span>/60</div>
+  <div class="score-pill">Answered <span id="answeredDisplay">0</span>/60</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+<main>
+
+<div class="section-label">Part 1 — Multiple Choice · 30 Questions</div>
+
+<!-- B5.1 Health and disease -->
+<div class="q-block" id="q1"><div class="q-num">Q1 · B5.1 Health and disease</div>
+<div class="q-text">Which of these is a non-communicable disease?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(1,'A','C')">A. Tuberculosis</button>
+<button class="opt-btn" onclick="ans(1,'B','C')">B. Malaria</button>
+<button class="opt-btn" onclick="ans(1,'C','C')">C. Type 2 diabetes</button>
+<button class="opt-btn" onclick="ans(1,'D','C')">D. Flu</button>
+</div>
+<div class="feedback" id="fb1"></div></div>
+
+<!-- B5.2 Pathogens and disease -->
+<div class="q-block" id="q2"><div class="q-num">Q2 · B5.2 Pathogens and disease</div>
+<div class="q-text">How do viruses cause cell damage?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(2,'A','B')">A. They produce digestive enzymes</button>
+<button class="opt-btn" onclick="ans(2,'B','B')">B. They replicate inside cells and burst out, destroying them</button>
+<button class="opt-btn" onclick="ans(2,'C','B')">C. They photosynthesise inside cells</button>
+<button class="opt-btn" onclick="ans(2,'D','B')">D. They form protective spores</button>
+</div>
+<div class="feedback" id="fb2"></div></div>
+
+<!-- B5.3 Preventing infections -->
+<div class="q-block" id="q3"><div class="q-num">Q3 · B5.3 Preventing infections</div>
+<div class="q-text">What did Ignaz Semmelweis discover?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(3,'A','B')">A. Penicillin kills bacteria</button>
+<button class="opt-btn" onclick="ans(3,'B','B')">B. Handwashing before delivering babies reduces childbed fever deaths</button>
+<button class="opt-btn" onclick="ans(3,'C','B')">C. Vaccines prevent rabies</button>
+<button class="opt-btn" onclick="ans(3,'D','B')">D. Microorganisms can be seen with microscopes</button>
+</div>
+<div class="feedback" id="fb3"></div></div>
+
+<!-- B5.4 Viral diseases -->
+<div class="q-block" id="q4"><div class="q-num">Q4 · B5.4 Viral diseases</div>
+<div class="q-text">Which statement about HIV/AIDS is correct?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(4,'A','B')">A. HIV can be cured with antibiotics</button>
+<button class="opt-btn" onclick="ans(4,'B','B')">B. Antiretroviral drugs can give a near-normal life expectancy but there is no cure</button>
+<button class="opt-btn" onclick="ans(4,'C','B')">C. HIV only affects plants</button>
+<button class="opt-btn" onclick="ans(4,'D','B')">D. Vaccination prevents HIV</button>
+</div>
+<div class="feedback" id="fb4"></div></div>
+
+<!-- B5.5 Bacterial diseases -->
+<div class="q-block" id="q5"><div class="q-num">Q5 · B5.5 Bacterial diseases</div>
+<div class="q-text">Why is gonorrhoea becoming harder to treat?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(5,'A','B')">A. It is caused by a virus, not bacteria</button>
+<button class="opt-btn" onclick="ans(5,'B','B')">B. Many strains have evolved resistance to antibiotics like penicillin</button>
+<button class="opt-btn" onclick="ans(5,'C','B')">C. It cannot be diagnosed</button>
+<button class="opt-btn" onclick="ans(5,'D','B')">D. It is spread by mosquitoes</button>
+</div>
+<div class="feedback" id="fb5"></div></div>
+
+<!-- B5.6 Diseases caused by fungi and protists -->
+<div class="q-block" id="q6"><div class="q-num">Q6 · B5.6 Diseases caused by fungi and protists</div>
+<div class="q-text">How is malaria spread?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(6,'A','B')">A. By droplet infection</button>
+<button class="opt-btn" onclick="ans(6,'B','B')">B. By the bite of the female Anopheles mosquito (a vector)</button>
+<button class="opt-btn" onclick="ans(6,'C','B')">C. Through contaminated water</button>
+<button class="opt-btn" onclick="ans(6,'D','B')">D. Through direct skin contact</button>
+</div>
+<div class="feedback" id="fb6"></div></div>
+
+<!-- B5.7 Human defence responses -->
+<div class="q-block" id="q7"><div class="q-num">Q7 · B5.7 Human defence responses</div>
+<div class="q-text">What is the role of antibodies?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(7,'A','B')">A. They digest pathogens directly</button>
+<button class="opt-btn" onclick="ans(7,'B','B')">B. They target specific antigens on pathogens</button>
+<button class="opt-btn" onclick="ans(7,'C','B')">C. They produce mucus</button>
+<button class="opt-btn" onclick="ans(7,'D','B')">D. They clot the blood</button>
+</div>
+<div class="feedback" id="fb7"></div></div>
+
+<!-- B5 extra — First line of defence -->
+<div class="q-block" id="q8"><div class="q-num">Q8 · B5 extra — First line of defence</div>
+<div class="q-text">Which is the body's FIRST line of defence against pathogens?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(8,'A','B')">A. Antibodies</button>
+<button class="opt-btn" onclick="ans(8,'B','B')">B. Skin, mucus and stomach acid</button>
+<button class="opt-btn" onclick="ans(8,'C','B')">C. Memory cells</button>
+<button class="opt-btn" onclick="ans(8,'D','B')">D. Antibiotics</button>
+</div>
+<div class="feedback" id="fb8"></div></div>
+
+<!-- B5 extra — Vectors -->
+<div class="q-block" id="q9"><div class="q-num">Q9 · B5 extra — Vectors</div>
+<div class="q-text">Why are vectors important in disease control?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(9,'A','B')">A. They cure diseases</button>
+<button class="opt-btn" onclick="ans(9,'B','B')">B. They carry pathogens between hosts, so controlling them reduces disease spread</button>
+<button class="opt-btn" onclick="ans(9,'C','B')">C. They produce antibodies</button>
+<button class="opt-btn" onclick="ans(9,'D','B')">D. They are a type of antibiotic</button>
+</div>
+<div class="feedback" id="fb9"></div></div>
+
+<!-- B6.1 Vaccination -->
+<div class="q-block" id="q10"><div class="q-num">Q10 · B6.1 Vaccination</div>
+<div class="q-text">What do memory cells do?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(10,'A','B')">A. Kill bacteria directly</button>
+<button class="opt-btn" onclick="ans(10,'B','B')">B. Remember how to make a specific antibody so the response is faster next time</button>
+<button class="opt-btn" onclick="ans(10,'C','B')">C. Produce antibiotics</button>
+<button class="opt-btn" onclick="ans(10,'D','B')">D. Form scabs</button>
+</div>
+<div class="feedback" id="fb10"></div></div>
+
+<!-- B6.2 Antibiotics and painkillers -->
+<div class="q-block" id="q11"><div class="q-num">Q11 · B6.2 Antibiotics and painkillers</div>
+<div class="q-text">Why can't antibiotics be used to treat viral infections?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(11,'A','B')">A. Viruses don't have antigens</button>
+<button class="opt-btn" onclick="ans(11,'B','B')">B. Viruses lack the cell structures (like cell walls) that antibiotics target, and reproduce inside body cells</button>
+<button class="opt-btn" onclick="ans(11,'C','B')">C. Viruses are too small</button>
+<button class="opt-btn" onclick="ans(11,'D','B')">D. Antibiotics only work on plants</button>
+</div>
+<div class="feedback" id="fb11"></div></div>
+
+<!-- B6.3 Discovering drugs -->
+<div class="q-block" id="q12"><div class="q-num">Q12 · B6.3 Discovering drugs</div>
+<div class="q-text">Who first noticed that a mould was killing bacteria on his culture plates?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(12,'A','B')">A. Louis Pasteur</button>
+<button class="opt-btn" onclick="ans(12,'B','B')">B. Alexander Fleming</button>
+<button class="opt-btn" onclick="ans(12,'C','B')">C. Joseph Lister</button>
+<button class="opt-btn" onclick="ans(12,'D','B')">D. Florey and Chain</button>
+</div>
+<div class="feedback" id="fb12"></div></div>
+
+<!-- B6.4 Developing drugs -->
+<div class="q-block" id="q13"><div class="q-num">Q13 · B6.4 Developing drugs</div>
+<div class="q-text">What is the purpose of a double-blind trial?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(13,'A','B')">A. To make the drug stronger</button>
+<button class="opt-btn" onclick="ans(13,'B','B')">B. To remove bias, since neither patient nor doctor knows who has the real drug</button>
+<button class="opt-btn" onclick="ans(13,'C','B')">C. To test on animals only</button>
+<button class="opt-btn" onclick="ans(13,'D','B')">D. To speed up drug licensing</button>
+</div>
+<div class="feedback" id="fb13"></div></div>
+
+<!-- B6 extra — Herd immunity -->
+<div class="q-block" id="q14"><div class="q-num">Q14 · B6 extra — Herd immunity</div>
+<div class="q-text">What is herd immunity?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(14,'A','B')">A. When everyone in a population is sick</button>
+<button class="opt-btn" onclick="ans(14,'B','B')">B. When enough people are immune that disease can't spread easily, protecting even non-immune people</button>
+<button class="opt-btn" onclick="ans(14,'C','B')">C. A type of vaccine</button>
+<button class="opt-btn" onclick="ans(14,'D','B')">D. Resistance to antibiotics</button>
+</div>
+<div class="feedback" id="fb14"></div></div>
+
+<!-- B7.1 Non-communicable diseases -->
+<div class="q-block" id="q15"><div class="q-num">Q15 · B7.1 Non-communicable diseases</div>
+<div class="q-text">What does a 'correlation' between two factors mean?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(15,'A','B')">A. One definitely causes the other</button>
+<button class="opt-btn" onclick="ans(15,'B','B')">B. There's a pattern/relationship between them, but this alone doesn't prove cause</button>
+<button class="opt-btn" onclick="ans(15,'C','B')">C. They are completely unrelated</button>
+<button class="opt-btn" onclick="ans(15,'D','B')">D. Neither factor ever changes</button>
+</div>
+<div class="feedback" id="fb15"></div></div>
+
+<!-- B7.2 Cancer -->
+<div class="q-block" id="q16"><div class="q-num">Q16 · B7.2 Cancer</div>
+<div class="q-text">What is the key difference between benign and malignant tumours?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(16,'A','B')">A. Benign tumours always grow faster</button>
+<button class="opt-btn" onclick="ans(16,'B','B')">B. Malignant tumours can spread to other parts of the body; benign tumours stay in one place</button>
+<button class="opt-btn" onclick="ans(16,'C','B')">C. Benign tumours are always more dangerous</button>
+<button class="opt-btn" onclick="ans(16,'D','B')">D. Malignant tumours never need treatment</button>
+</div>
+<div class="feedback" id="fb16"></div></div>
+
+<!-- B7.3 Smoking and the risk of disease -->
+<div class="q-block" id="q17"><div class="q-num">Q17 · B7.3 Smoking and the risk of disease</div>
+<div class="q-text">What does carbon monoxide in tobacco smoke do?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(17,'A','B')">A. Strengthens the heart</button>
+<button class="opt-btn" onclick="ans(17,'B','B')">B. Reduces the oxygen-carrying capacity of the blood</button>
+<button class="opt-btn" onclick="ans(17,'C','B')">C. Kills bacteria in the lungs</button>
+<button class="opt-btn" onclick="ans(17,'D','B')">D. Increases lung surface area</button>
+</div>
+<div class="feedback" id="fb17"></div></div>
+
+<!-- B7.4 Diet, exercise and disease -->
+<div class="q-block" id="q18"><div class="q-num">Q18 · B7.4 Diet, exercise and disease</div>
+<div class="q-text">How does regular exercise reduce cardiovascular disease risk?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(18,'A','B')">A. It raises blood cholesterol</button>
+<button class="opt-btn" onclick="ans(18,'B','B')">B. It strengthens the heart, lowers blood pressure and cholesterol</button>
+<button class="opt-btn" onclick="ans(18,'C','B')">C. It increases body fat</button>
+<button class="opt-btn" onclick="ans(18,'D','B')">D. It has no effect on the heart</button>
+</div>
+<div class="feedback" id="fb18"></div></div>
+
+<!-- B7 extra — Carcinogens -->
+<div class="q-block" id="q19"><div class="q-num">Q19 · B7 extra — Carcinogens</div>
+<div class="q-text">What can trigger cancer-causing mutations?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(19,'A','B')">A. Vitamins</button>
+<button class="opt-btn" onclick="ans(19,'B','B')">B. Carcinogens such as ionising radiation, UV light, tar and asbestos</button>
+<button class="opt-btn" onclick="ans(19,'C','B')">C. Antibodies</button>
+<button class="opt-btn" onclick="ans(19,'D','B')">D. Insulin</button>
+</div>
+<div class="feedback" id="fb19"></div></div>
+
+<!-- B7.5 Alcohol and other carcinogens -->
+<div class="q-block" id="q20"><div class="q-num">Q20 · B7.5 Alcohol and other carcinogens</div>
+<div class="q-text">What long-term liver damage can heavy alcohol use cause?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(20,'A','A')">A. Cirrhosis (scarring of the liver)</button>
+<button class="opt-btn" onclick="ans(20,'B','A')">B. Improved liver function</button>
+<button class="opt-btn" onclick="ans(20,'C','A')">C. Increased red blood cell production</button>
+<button class="opt-btn" onclick="ans(20,'D','A')">D. Stronger immune response</button>
+</div>
+<div class="feedback" id="fb20"></div></div>
+
+<!-- B8.1 Photosynthesis -->
+<div class="q-block" id="q21"><div class="q-num">Q21 · B8.1 Photosynthesis</div>
+<div class="q-text">What type of reaction is photosynthesis?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(21,'A','B')">A. Exothermic</button>
+<button class="opt-btn" onclick="ans(21,'B','B')">B. Endothermic</button>
+<button class="opt-btn" onclick="ans(21,'C','B')">C. Neutralisation</button>
+<button class="opt-btn" onclick="ans(21,'D','B')">D. Combustion</button>
+</div>
+<div class="feedback" id="fb21"></div></div>
+
+<!-- B8.2 The rate of photosynthesis -->
+<div class="q-block" id="q22"><div class="q-num">Q22 · B8.2 The rate of photosynthesis</div>
+<div class="q-text">What happens to the rate of photosynthesis at temperatures above about 45°C?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(22,'A','B')">A. It increases further</button>
+<button class="opt-btn" onclick="ans(22,'B','B')">B. It falls sharply as enzymes denature</button>
+<button class="opt-btn" onclick="ans(22,'C','B')">C. It stays the same</button>
+<button class="opt-btn" onclick="ans(22,'D','B')">D. Chlorophyll increases</button>
+</div>
+<div class="feedback" id="fb22"></div></div>
+
+<!-- B8.3 How plants use glucose -->
+<div class="q-block" id="q23"><div class="q-num">Q23 · B8.3 How plants use glucose</div>
+<div class="q-text">Why do plants store glucose as starch rather than as glucose itself?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(23,'A','B')">A. Starch is soluble and easy to move</button>
+<button class="opt-btn" onclick="ans(23,'B','B')">B. Starch is insoluble, so it doesn't affect the cell's water balance by osmosis</button>
+<button class="opt-btn" onclick="ans(23,'C','B')">C. Glucose cannot be made by plants</button>
+<button class="opt-btn" onclick="ans(23,'D','B')">D. Starch contains nitrate ions</button>
+</div>
+<div class="feedback" id="fb23"></div></div>
+
+<!-- B8.4 Making the most of photosynthesis -->
+<div class="q-block" id="q24"><div class="q-num">Q24 · B8.4 Making the most of photosynthesis</div>
+<div class="q-text">Why do greenhouse growers often add extra CO₂ and control temperature?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(24,'A','B')">A. To slow down photosynthesis</button>
+<button class="opt-btn" onclick="ans(24,'B','B')">B. To remove limiting factors and increase the rate of photosynthesis</button>
+<button class="opt-btn" onclick="ans(24,'C','B')">C. To kill pests</button>
+<button class="opt-btn" onclick="ans(24,'D','B')">D. To reduce crop yield</button>
+</div>
+<div class="feedback" id="fb24"></div></div>
+
+<!-- B9.1 Aerobic respiration -->
+<div class="q-block" id="q25"><div class="q-num">Q25 · B9.1 Aerobic respiration</div>
+<div class="q-text">Where does most aerobic respiration take place in a cell?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(25,'A','B')">A. Nucleus</button>
+<button class="opt-btn" onclick="ans(25,'B','B')">B. Mitochondria</button>
+<button class="opt-btn" onclick="ans(25,'C','B')">C. Cell wall</button>
+<button class="opt-btn" onclick="ans(25,'D','B')">D. Chloroplast</button>
+</div>
+<div class="feedback" id="fb25"></div></div>
+
+<!-- B9.2 The response to exercise -->
+<div class="q-block" id="q26"><div class="q-num">Q26 · B9.2 The response to exercise</div>
+<div class="q-text">Which THREE things happen during exercise to supply muscles with more energy?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(26,'A','A')">A. Heart rate, breathing rate/depth, and glycogen→glucose conversion all increase</button>
+<button class="opt-btn" onclick="ans(26,'B','A')">B. Only heart rate increases</button>
+<button class="opt-btn" onclick="ans(26,'C','A')">C. Breathing slows down</button>
+<button class="opt-btn" onclick="ans(26,'D','A')">D. Blood vessels narrow</button>
+</div>
+<div class="feedback" id="fb26"></div></div>
+
+<!-- B9.3 Anaerobic respiration -->
+<div class="q-block" id="q27"><div class="q-num">Q27 · B9.3 Anaerobic respiration</div>
+<div class="q-text">What does anaerobic respiration produce in human muscles?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(27,'A','B')">A. Ethanol and CO₂</button>
+<button class="opt-btn" onclick="ans(27,'B','B')">B. Lactic acid</button>
+<button class="opt-btn" onclick="ans(27,'C','B')">C. Glucose and oxygen</button>
+<button class="opt-btn" onclick="ans(27,'D','B')">D. Starch</button>
+</div>
+<div class="feedback" id="fb27"></div></div>
+
+<!-- B9 extra — Oxygen debt -->
+<div class="q-block" id="q28"><div class="q-num">Q28 · B9 extra — Oxygen debt</div>
+<div class="q-text">What is meant by 'oxygen debt'?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(28,'A','A')">A. The oxygen needed to convert lactic acid back to glucose after exercise</button>
+<button class="opt-btn" onclick="ans(28,'B','A')">B. The total oxygen breathed in during exercise</button>
+<button class="opt-btn" onclick="ans(28,'C','A')">C. A shortage of oxygen during sleep</button>
+<button class="opt-btn" onclick="ans(28,'D','A')">D. Oxygen produced by anaerobic respiration</button>
+</div>
+<div class="feedback" id="fb28"></div></div>
+
+<!-- B9 extra — Fermentation -->
+<div class="q-block" id="q29"><div class="q-num">Q29 · B9 extra — Fermentation</div>
+<div class="q-text">Yeast produces which two products during anaerobic respiration (fermentation)?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(29,'A','B')">A. Lactic acid and water</button>
+<button class="opt-btn" onclick="ans(29,'B','B')">B. Ethanol and carbon dioxide</button>
+<button class="opt-btn" onclick="ans(29,'C','B')">C. Oxygen and glucose</button>
+<button class="opt-btn" onclick="ans(29,'D','B')">D. Starch and nitrate</button>
+</div>
+<div class="feedback" id="fb29"></div></div>
+
+<!-- B9.4 Metabolism and the liver -->
+<div class="q-block" id="q30"><div class="q-num">Q30 · B9.4 Metabolism and the liver</div>
+<div class="q-text">What does the liver do with lactic acid after exercise?</div>
+<div class="options">
+<button class="opt-btn" onclick="ans(30,'A','B')">A. Excretes it directly in urine</button>
+<button class="opt-btn" onclick="ans(30,'B','B')">B. Converts it back to glucose, using oxygen to repay the oxygen debt</button>
+<button class="opt-btn" onclick="ans(30,'C','B')">C. Stores it as fat</button>
+<button class="opt-btn" onclick="ans(30,'D','B')">D. Converts it into bile</button>
+</div>
+<div class="feedback" id="fb30"></div></div>
+
+<div class="section-label">Part 2 — True or False · 30 Questions</div>
+
+<!-- B5.1 Health and disease -->
+<div class="q-block" id="q31"><div class="q-num">Q31 · B5.1 Health and disease</div>
+<div class="q-text">Health is simply the absence of disease.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(31,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(31,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb31"></div></div>
+
+<!-- B5.2 Pathogens and disease -->
+<div class="q-block" id="q32"><div class="q-num">Q32 · B5.2 Pathogens and disease</div>
+<div class="q-text">Bacteria reproduce by binary fission.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(32,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(32,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb32"></div></div>
+
+<!-- B5.3 Preventing infections -->
+<div class="q-block" id="q33"><div class="q-num">Q33 · B5.3 Preventing infections</div>
+<div class="q-text">Vaccination can be used to protect plants from disease in the same way as animals.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(33,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(33,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb33"></div></div>
+
+<!-- B5.4 Viral diseases -->
+<div class="q-block" id="q34"><div class="q-num">Q34 · B5.4 Viral diseases</div>
+<div class="q-text">Tobacco mosaic virus affects plants, causing a mosaic pattern on leaves.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(34,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(34,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb34"></div></div>
+
+<!-- B5.5 Bacterial diseases -->
+<div class="q-block" id="q35"><div class="q-num">Q35 · B5.5 Bacterial diseases</div>
+<div class="q-text">Salmonella food poisoning is usually treated with antibiotics in the UK.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(35,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(35,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb35"></div></div>
+
+<!-- B5.6 Diseases caused by fungi and protists -->
+<div class="q-block" id="q36"><div class="q-num">Q36 · B5.6 Diseases caused by fungi and protists</div>
+<div class="q-text">Rose black spot spreads by wind and water splashes.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(36,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(36,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb36"></div></div>
+
+<!-- B5.7 Human defence responses -->
+<div class="q-block" id="q37"><div class="q-num">Q37 · B5.7 Human defence responses</div>
+<div class="q-text">Phagocytes work by producing antitoxins.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(37,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(37,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb37"></div></div>
+
+<!-- B5 extra — Antibiotic resistance -->
+<div class="q-block" id="q38"><div class="q-num">Q38 · B5 extra — Antibiotic resistance</div>
+<div class="q-text">Antibiotic resistance in gonorrhoea means it's becoming harder to treat with penicillin.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(38,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(38,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb38"></div></div>
+
+<!-- B5 extra — Treating partners -->
+<div class="q-block" id="q39"><div class="q-num">Q39 · B5 extra — Treating partners</div>
+<div class="q-text">All sexual partners of someone infected with gonorrhoea should be treated, even without symptoms.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(39,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(39,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb39"></div></div>
+
+<!-- B6.1 Vaccination -->
+<div class="q-block" id="q40"><div class="q-num">Q40 · B6.1 Vaccination</div>
+<div class="q-text">A vaccine contains a large dose of the live, active pathogen.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(40,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(40,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb40"></div></div>
+
+<!-- B6.2 Antibiotics and painkillers -->
+<div class="q-block" id="q41"><div class="q-num">Q41 · B6.2 Antibiotics and painkillers</div>
+<div class="q-text">Painkillers like paracetamol kill the pathogens causing your illness.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(41,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(41,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb41"></div></div>
+
+<!-- B6.3 Discovering drugs -->
+<div class="q-block" id="q42"><div class="q-num">Q42 · B6.3 Discovering drugs</div>
+<div class="q-text">Aspirin was originally developed from a compound in willow bark.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(42,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(42,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb42"></div></div>
+
+<!-- B6.4 Developing drugs -->
+<div class="q-block" id="q43"><div class="q-num">Q43 · B6.4 Developing drugs</div>
+<div class="q-text">Thalidomide was thoroughly tested for safety in pregnancy before being prescribed.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(43,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(43,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb43"></div></div>
+
+<!-- B6 extra — Penicillin production -->
+<div class="q-block" id="q44"><div class="q-num">Q44 · B6 extra — Penicillin production</div>
+<div class="q-text">Penicillin was successfully mass-produced during World War II with help from the company Pfizer.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(44,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(44,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb44"></div></div>
+
+<!-- B6 extra — Antiseptics -->
+<div class="q-block" id="q45"><div class="q-num">Q45 · B6 extra — Antiseptics</div>
+<div class="q-text">Antiseptics can be safely used inside the human body in the same way as antibiotics.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(45,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(45,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb45"></div></div>
+
+<!-- B7.1 Non-communicable diseases -->
+<div class="q-block" id="q46"><div class="q-num">Q46 · B7.1 Non-communicable diseases</div>
+<div class="q-text">Coronary heart disease is a communicable disease.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(46,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(46,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb46"></div></div>
+
+<!-- B7.2 Cancer -->
+<div class="q-block" id="q47"><div class="q-num">Q47 · B7.2 Cancer</div>
+<div class="q-text">Benign tumours can spread to other organs of the body.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(47,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(47,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb47"></div></div>
+
+<!-- B7.3 Smoking and the risk of disease -->
+<div class="q-block" id="q48"><div class="q-num">Q48 · B7.3 Smoking and the risk of disease</div>
+<div class="q-text">Nicotine narrows blood vessels and increases heart rate.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(48,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(48,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb48"></div></div>
+
+<!-- B7.4 Diet, exercise and disease -->
+<div class="q-block" id="q49"><div class="q-num">Q49 · B7.4 Diet, exercise and disease</div>
+<div class="q-text">Obesity is a risk factor for type 2 diabetes.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(49,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(49,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb49"></div></div>
+
+<!-- B7.5 Alcohol and other carcinogens -->
+<div class="q-block" id="q50"><div class="q-num">Q50 · B7.5 Alcohol and other carcinogens</div>
+<div class="q-text">Alcohol can cross the placenta and affect a developing baby.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(50,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(50,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb50"></div></div>
+
+<!-- B7 extra — HPV and cancer -->
+<div class="q-block" id="q51"><div class="q-num">Q51 · B7 extra — HPV and cancer</div>
+<div class="q-text">HPV (human papilloma virus) can cause cervical cancer.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(51,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(51,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb51"></div></div>
+
+<!-- B7 extra — Chemotherapy -->
+<div class="q-block" id="q52"><div class="q-num">Q52 · B7 extra — Chemotherapy</div>
+<div class="q-text">Chemotherapy only affects cancer cells and never harms healthy tissue.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(52,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(52,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb52"></div></div>
+
+<!-- B8.1 Photosynthesis -->
+<div class="q-block" id="q53"><div class="q-num">Q53 · B8.1 Photosynthesis</div>
+<div class="q-text">The word equation for photosynthesis is glucose + oxygen → carbon dioxide + water.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(53,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(53,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb53"></div></div>
+
+<!-- B8.2 The rate of photosynthesis -->
+<div class="q-block" id="q54"><div class="q-num">Q54 · B8.2 The rate of photosynthesis</div>
+<div class="q-text">Light intensity, temperature, and CO₂ concentration can all act as limiting factors for photosynthesis.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(54,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(54,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb54"></div></div>
+
+<!-- B8.3 How plants use glucose -->
+<div class="q-block" id="q55"><div class="q-num">Q55 · B8.3 How plants use glucose</div>
+<div class="q-text">Plants need nitrate ions from the soil to make amino acids and proteins.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(55,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(55,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb55"></div></div>
+
+<!-- B8.4 Making the most of photosynthesis -->
+<div class="q-block" id="q56"><div class="q-num">Q56 · B8.4 Making the most of photosynthesis</div>
+<div class="q-text">Hydroponics allows growers to control the mineral content of the water plants grow in.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(56,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(56,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb56"></div></div>
+
+<!-- B9.1 Aerobic respiration -->
+<div class="q-block" id="q57"><div class="q-num">Q57 · B9.1 Aerobic respiration</div>
+<div class="q-text">Aerobic respiration is an exothermic reaction.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(57,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(57,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb57"></div></div>
+
+<!-- B9.2 The response to exercise -->
+<div class="q-block" id="q58"><div class="q-num">Q58 · B9.2 The response to exercise</div>
+<div class="q-text">During exercise, glycogen stored in muscles is converted to glucose.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(58,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(58,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb58"></div></div>
+
+<!-- B9.3 Anaerobic respiration -->
+<div class="q-block" id="q59"><div class="q-num">Q59 · B9.3 Anaerobic respiration</div>
+<div class="q-text">Anaerobic respiration releases more energy from glucose than aerobic respiration.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(59,'true','false')">True</button>
+<button class="tf-btn" onclick="ans(59,'false','false')">False</button>
+</div>
+<div class="feedback" id="fb59"></div></div>
+
+<!-- B9.4 Metabolism and the liver -->
+<div class="q-block" id="q60"><div class="q-num">Q60 · B9.4 Metabolism and the liver</div>
+<div class="q-text">The liver can convert lactic acid back into glucose.</div>
+<div class="tf-options">
+<button class="tf-btn" onclick="ans(60,'true','true')">True</button>
+<button class="tf-btn" onclick="ans(60,'false','true')">False</button>
+</div>
+<div class="feedback" id="fb60"></div></div>
+
+<div class="result-box" id="resultBox">
+  <div class="result-emoji" id="resultEmoji"></div>
+  <h2 id="resultTitle"></h2>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-mum" id="resultMum"></div>
+  <div class="result-msg" id="resultMsg"></div>
+  <button class="reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+</div>
+
+</main>
+
+<script>
+const SCORE_KEY='bio-megaquiz2b-score';
+const fb={
+1:{c:'✅ Correct! Type 2 diabetes is non-communicable — linked to lifestyle, genetics and environment, not a pathogen.',w:'❌ Type 2 diabetes is NON-COMMUNICABLE. TB, malaria and flu are all caused by pathogens (communicable).'},
+2:{c:'✅ Correct! Viruses take over host cells, replicate inside them, then burst out — destroying the cell.',w:'❌ Viruses replicate INSIDE cells and then burst out (lysis), destroying the cell in the process.'},
+3:{c:'✅ Correct! Semmelweis showed that doctors washing their hands before deliveries greatly reduced deaths from childbed fever.',w:'❌ Semmelweis showed handwashing before delivering babies reduced deaths from childbed fever — though germ theory wasn\'t established yet.'},
+4:{c:'✅ Correct! There is no cure or vaccine for HIV, but antiretroviral drugs can prevent AIDS developing.',w:'❌ There is NO cure for HIV, but antiretroviral drugs can give a near-normal life expectancy if started early.'},
+5:{c:'✅ Correct! Gonorrhoea bacteria have evolved resistance to penicillin and other antibiotics.',w:'❌ Gonorrhoea is bacterial, and many strains have evolved ANTIBIOTIC RESISTANCE, especially to penicillin.'},
+6:{c:'✅ Correct! Malaria is spread by the bite of the female Anopheles mosquito, which acts as a vector.',w:'❌ Malaria is a protist disease spread by the bite of the female ANOPHELES MOSQUITO (a vector).'},
+7:{c:'✅ Correct! Antibodies are produced by white blood cells to target the specific antigens on a pathogen\'s surface.',w:'❌ Antibodies bind to the specific ANTIGENS on a pathogen\'s surface, helping destroy it.'},
+8:{c:'✅ Correct! Skin, mucus (with cilia) and stomach acid are physical/chemical barriers that keep pathogens out.',w:'❌ The skin, mucus, cilia and stomach acid are the FIRST line of defence — keeping pathogens from getting in at all.'},
+9:{c:'✅ Correct! Vectors like mosquitoes carry pathogens between hosts — controlling them (e.g. bed nets) reduces disease spread.',w:'❌ A vector (e.g. mosquito) carries a pathogen between hosts — destroying or controlling vectors reduces spread.'},
+10:{c:'✅ Correct! Memory cells remember the right antibody, allowing a fast response if the pathogen returns.',w:'❌ Memory cells REMEMBER the correct antibody for a pathogen, so the body responds quickly if it returns.'},
+11:{c:'✅ Correct! Antibiotics target bacterial structures viruses don\'t have, and viruses replicate inside our own cells.',w:'❌ Antibiotics target structures like bacterial cell walls — viruses don\'t have these and replicate inside our cells.'},
+12:{c:'✅ Correct! Alexander Fleming noticed mould (Penicillium) killing bacteria on his plates in 1928.',w:'❌ ALEXANDER FLEMING discovered penicillin\'s effect in 1928. Florey and Chain later extracted and mass-produced it.'},
+13:{c:'✅ Correct! Double-blind trials remove bias because neither the patient nor doctor knows who has the real drug.',w:'❌ In a double-blind trial, NEITHER patient nor doctor knows who got the real drug — this removes bias.'},
+14:{c:'✅ Correct! Herd immunity occurs when so many people are immune that the disease struggles to spread at all.',w:'❌ Herd immunity = when a high proportion of people are immune, protecting even the non-immune from the disease.'},
+15:{c:'✅ Correct! A correlation is a pattern between two variables — it does NOT alone prove that one causes the other.',w:'❌ A correlation shows a pattern/link between variables, but does NOT prove cause on its own — you need a causal mechanism too.'},
+16:{c:'✅ Correct! Malignant (cancerous) tumours invade other tissues and form secondary tumours; benign ones stay put.',w:'❌ MALIGNANT tumours can spread around the body and form secondary tumours. Benign tumours stay contained in one place.'},
+17:{c:'✅ Correct! Carbon monoxide takes up some of the oxygen-carrying capacity of haemoglobin in the blood.',w:'❌ Carbon monoxide REDUCES the oxygen-carrying capacity of the blood — up to 10% of it after smoking.'},
+18:{c:'✅ Correct! Exercise gives a fitter heart, lower blood pressure, and lower cholesterol — all reducing CVD risk.',w:'❌ Regular exercise strengthens the heart, lowers blood pressure, and lowers cholesterol — all reducing cardiovascular disease risk.'},
+19:{c:'✅ Correct! Carcinogens like ionising radiation, UV light, tar, and asbestos can all cause DNA mutations leading to cancer.',w:'❌ CARCINOGENS — including ionising radiation, UV light, tar, and asbestos — cause mutations that can trigger cancer.'},
+20:{c:'✅ Correct! Cirrhosis is scar tissue replacing active liver cells — heavy drinkers also have a much higher liver cancer risk.',w:'❌ Heavy alcohol use can cause CIRRHOSIS — scar tissue replacing healthy liver cells, plus an increased risk of liver cancer.'},
+21:{c:'✅ Correct! Photosynthesis is endothermic — it takes in energy from light to build glucose.',w:'❌ Photosynthesis is ENDOTHERMIC — energy from light is taken in to make glucose and oxygen.'},
+22:{c:'✅ Correct! Photosynthesis is enzyme-controlled — above the optimum, enzymes denature and the rate falls sharply.',w:'❌ Above the optimum temperature, the enzymes controlling photosynthesis DENATURE and the rate falls sharply.'},
+23:{c:'✅ Correct! Starch is insoluble, so storing it doesn\'t disrupt water balance by osmosis — unlike soluble glucose.',w:'❌ Starch is INSOLUBLE, so storing large amounts doesn\'t affect osmosis. Soluble glucose would disturb the cell\'s water balance.'},
+24:{c:'✅ Correct! Controlling CO₂, temperature and light removes limiting factors, letting photosynthesis run faster — more yield.',w:'❌ Greenhouse growers control CO₂, temperature and light to remove LIMITING FACTORS and increase the rate of photosynthesis.'},
+25:{c:'✅ Correct! Most aerobic respiration reactions take place in the mitochondria.',w:'❌ Most aerobic respiration takes place in the MITOCHONDRIA — cells that are very active have many of them.'},
+26:{c:'✅ Correct! Heart rate, breathing rate AND depth, and converting glycogen to glucose all increase together during exercise.',w:'❌ All three increase together: heart rate, breathing rate/depth, AND conversion of stored glycogen to glucose.'},
+27:{c:'✅ Correct! In human (and other animal) muscles, anaerobic respiration produces lactic acid.',w:'❌ In human muscles, anaerobic respiration produces LACTIC ACID. Yeast and plants produce ethanol + CO₂ instead.'},
+28:{c:'✅ Correct! Oxygen debt is the extra oxygen needed after exercise to convert built-up lactic acid back to glucose.',w:'❌ Oxygen debt = the extra oxygen needed AFTER exercise to convert the lactic acid that built up back into glucose.'},
+29:{c:'✅ Correct! Yeast respiring anaerobically (fermentation) produces ethanol and carbon dioxide — used in brewing and baking.',w:'❌ Yeast produces ETHANOL and CARBON DIOXIDE during fermentation — used for alcoholic drinks and making bread rise.'},
+30:{c:'✅ Correct! The liver converts lactic acid back into glucose using oxygen — this is how the oxygen debt is repaid.',w:'❌ The liver converts lactic acid back to GLUCOSE using extra oxygen taken in after exercise — repaying the oxygen debt.'},
+31:{c:'✅ Correct! FALSE — health is a state of complete physical AND mental well-being, not just the absence of disease.',w:'❌ FALSE — health is physical and mental WELL-BEING, not merely the absence of disease.'},
+32:{c:'✅ Correct! TRUE — bacteria reproduce by binary fission, splitting in two.',w:'❌ TRUE — bacteria reproduce by BINARY FISSION (splitting in two).'},
+33:{c:'✅ Correct! FALSE — plants have no immune system, so vaccination cannot protect them.',w:'❌ FALSE — plants have NO immune system, so they cannot be vaccinated. Other prevention methods are needed.'},
+34:{c:'✅ Correct! TRUE — TMV causes a distinctive mosaic discolouration, reducing photosynthesis and stunting growth.',w:'❌ TRUE — tobacco mosaic virus causes a mosaic pattern on leaves, reducing photosynthesis.'},
+35:{c:'✅ Correct! FALSE — most cases resolve on their own in a few days without needing antibiotics.',w:'❌ FALSE — Salmonella usually needs NO antibiotics; most cases resolve with supportive care in a few days.'},
+36:{c:'✅ Correct! TRUE — fungal spores spread in the environment by wind, and by water splashing between leaves.',w:'❌ TRUE — rose black spot spores spread by wind and water splashes (rain bouncing from leaf to leaf).'},
+37:{c:'✅ Correct! FALSE — phagocytes engulf and digest pathogens. Antitoxins are produced by a different type of white blood cell.',w:'❌ FALSE — phagocytes ENGULF and digest pathogens (phagocytosis). Antitoxins are a separate white blood cell function.'},
+38:{c:'✅ Correct! TRUE — many gonorrhoea strains have evolved resistance to penicillin and other antibiotics.',w:'❌ TRUE — gonorrhoea bacteria have evolved resistance, making it increasingly difficult to treat.'},
+39:{c:'✅ Correct! TRUE — this stops the disease spreading back into the community, since many cases are symptomless.',w:'❌ TRUE — treating all partners (even symptomless ones) is essential to stop gonorrhoea spreading further.'},
+40:{c:'✅ Correct! FALSE — vaccines use a small amount of a dead or inactive (harmless) form of the pathogen.',w:'❌ FALSE — vaccines use a SMALL amount of a DEAD or INACTIVE pathogen, not a live, active dose.'},
+41:{c:'✅ Correct! FALSE — painkillers only relieve symptoms; your immune system still has to fight off the pathogen.',w:'❌ FALSE — painkillers have NO effect on pathogens. They only relieve symptoms like pain and fever.'},
+42:{c:'✅ Correct! TRUE — willow bark\'s pain-relieving compound led to the synthesis of aspirin in 1897.',w:'❌ TRUE — aspirin originated from a compound in willow bark, first synthesised by Felix Hoffmann in 1897.'},
+43:{c:'✅ Correct! FALSE — that\'s exactly why the disaster happened: it was NOT adequately tested for use in pregnancy.',w:'❌ FALSE — thalidomide was NOT adequately tested for safety in pregnancy, causing severe limb deformities in babies.'},
+44:{c:'✅ Correct! TRUE — Florey and Chain worked with Pfizer in the USA to produce penicillin on an industrial scale for WWII.',w:'❌ TRUE — Florey and Chain partnered with Pfizer to mass-produce penicillin for the war effort.'},
+45:{c:'✅ Correct! FALSE — antiseptics are too poisonous for internal use; they would kill your own cells too.',w:'❌ FALSE — antiseptics are far too poisonous to use INSIDE the body. They\'re only used on surfaces and skin.'},
+46:{c:'✅ Correct! FALSE — coronary heart disease is NON-communicable; it cannot be passed person to person.',w:'❌ FALSE — coronary heart disease is NON-COMMUNICABLE — linked to lifestyle, genetics and environment, not a pathogen.'},
+47:{c:'✅ Correct! FALSE — benign tumours stay contained in one place. Malignant tumours are the ones that spread.',w:'❌ FALSE — BENIGN tumours do NOT spread. It\'s malignant tumours that invade other tissues and organs.'},
+48:{c:'✅ Correct! TRUE — nicotine narrows blood vessels and speeds up the heart, increasing cardiovascular disease risk.',w:'❌ TRUE — nicotine narrows blood vessels and increases heart rate, raising the risk of heart disease.'},
+49:{c:'✅ Correct! TRUE — being overweight or obese is a strong risk factor for developing type 2 diabetes.',w:'❌ TRUE — obesity is strongly linked to a much higher risk of type 2 diabetes.'},
+50:{c:'✅ Correct! TRUE — alcohol crosses the placenta, and can cause Fetal Alcohol Syndrome in the developing baby.',w:'❌ TRUE — alcohol passes across the placenta and can severely affect a developing baby\'s brain and body.'},
+51:{c:'✅ Correct! TRUE — HPV is linked to cervical cancer, which is why teenagers in the UK are routinely vaccinated against it.',w:'❌ TRUE — HPV infection is linked to cervical cancer; UK teenagers are vaccinated against it as prevention.'},
+52:{c:'✅ Correct! FALSE — chemotherapy also affects other rapidly-dividing healthy cells, like hair, skin, blood and stomach lining.',w:'❌ FALSE — chemotherapy also damages healthy rapidly-dividing cells (hair, skin, blood, stomach lining), causing side effects.'},
+53:{c:'✅ Correct! FALSE — that\'s the equation for RESPIRATION. Photosynthesis is the reverse: CO₂ + water → glucose + oxygen.',w:'❌ FALSE — that\'s respiration! Photosynthesis is: carbon dioxide + water → glucose + oxygen (using light energy).'},
+54:{c:'✅ Correct! TRUE — whichever of these is in shortest supply limits the rate of photosynthesis.',w:'❌ TRUE — light, temperature, and CO₂ are all limiting factors — whichever is in shortest supply slows the rate.'},
+55:{c:'✅ Correct! TRUE — glucose plus nitrate ions (absorbed from soil) are combined to form amino acids, then proteins.',w:'❌ TRUE — plants combine glucose with nitrate ions from the soil to make amino acids and then proteins.'},
+56:{c:'✅ Correct! TRUE — in hydroponics, plants grow in water with a precisely controlled balance of minerals instead of soil.',w:'❌ TRUE — hydroponics grows plants in water with a carefully controlled mineral balance, removing soil-related limiting factors.'},
+57:{c:'✅ Correct! TRUE — aerobic respiration transfers energy TO the environment, making it exothermic.',w:'❌ TRUE — aerobic respiration is EXOTHERMIC, releasing energy to the environment (opposite of photosynthesis).'},
+58:{c:'✅ Correct! TRUE — stored glycogen is rapidly converted to glucose, providing extra fuel for aerobic respiration.',w:'❌ TRUE — glycogen stored in muscles converts to glucose to fuel increased respiration during exercise.'},
+59:{c:'✅ Correct! FALSE — anaerobic respiration releases LESS energy, since glucose is only incompletely broken down.',w:'❌ FALSE — anaerobic respiration releases LESS energy than aerobic respiration, due to incomplete glucose breakdown.'},
+60:{c:'✅ Correct! TRUE — the liver converts lactic acid back to glucose using oxygen, repaying the oxygen debt.',w:'❌ TRUE — the liver converts lactic acid back into glucose, which is part of repaying the oxygen debt after exercise.'}
+};
+let score=0,answered=0;const total=60;
+function ans(q,chosen,correct){
+  const block=document.getElementById('q'+q);
+  if(block.classList.contains('correct')||block.classList.contains('wrong'))return;
+  const isOk=chosen===correct;
+  const feedEl=document.getElementById('fb'+q);
+  block.querySelectorAll('.opt-btn,.tf-btn').forEach(b=>{
+    b.disabled=true;
+    const m=b.getAttribute('onclick').match(/ans\(\d+,'([^']+)'/);
+    if(m&&m[1]===correct)b.classList.add('reveal-correct');
+  });
+  const clicked=[...block.querySelectorAll('.opt-btn,.tf-btn')].find(b=>{
+    const m=b.getAttribute('onclick').match(/ans\(\d+,'([^']+)'/);return m&&m[1]===chosen;
+  });
+  if(isOk){clicked?.classList.add('selected-correct');block.classList.add('correct');feedEl.className='feedback correct';feedEl.textContent=fb[q].c;score++;}
+  else{clicked?.classList.add('selected-wrong');block.classList.add('wrong');feedEl.className='feedback wrong';feedEl.textContent=fb[q].w;}
+  answered++;updateBar();
+  if(answered===total)setTimeout(showResult,600);
+}
+function updateBar(){
+  document.getElementById('scoreDisplay').textContent=score;
+  document.getElementById('answeredDisplay').textContent=answered;
+  document.getElementById('progressBar').style.width=(answered/total*100)+'%';
+}
+function showResult(){
+  const box=document.getElementById('resultBox');box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('resultScore').textContent=score+'/60';
+  document.getElementById('resultMum').textContent='Show this to mum — '+score+'/60';
+  let emoji,title,msg;
+  if(score>=54){emoji='🏆';title='Outstanding!';msg='Exceptional Biology knowledge — you are exam-ready!';}
+  else if(score>=42){emoji='🎉';title='Great work!';msg='Really solid across the board. Go back over any missed questions and you will be in great shape.';}
+  else if(score>=30){emoji='📚';title='Getting there!';msg='Good foundation — review the chapters where you lost marks and try again.';}
+  else{emoji='💪';title='Keep going!';msg='Needs more practice. Work through each revision page and try again.';}
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultMsg').textContent=msg;
+  try{localStorage.setItem(SCORE_KEY,score+'/60');}catch(e){}
+}
+function resetQuiz(){
+  score=0;answered=0;updateBar();
+  for(let i=1;i<=60;i++){
+    const b=document.getElementById('q'+i);
+    b.classList.remove('correct','wrong');
+    b.querySelectorAll('.opt-btn,.tf-btn').forEach(x=>{x.disabled=false;x.classList.remove('selected-correct','selected-wrong','reveal-correct');});
+    const f=document.getElementById('fb'+i);f.className='feedback';f.textContent='';
+  }
+  document.getElementById('resultBox').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
