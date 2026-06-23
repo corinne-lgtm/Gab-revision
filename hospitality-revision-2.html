@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1.2 — Operations: Front &amp; Back of House | Gab Revision</title>
+<style>
+
+:root{
+  --navy:#5c1f2e;
+  --navy2:#7a2f3f;
+  --accent:#d98a3d;
+  --accent2:#f0a857;
+  --bg:#fbf2e9;
+  --card:#ffffff;
+  --text:#2c1a1a;
+  --good:#2e7d32;
+  --bad:#c0392b;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Verdana,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;
+  padding:36px 20px 30px;
+  text-align:center;
+}
+.kicker{
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-size:0.75rem;
+  opacity:0.85;
+  font-weight:700;
+}
+.hero h1{
+  margin:10px 0 14px;
+  font-size:1.9rem;
+}
+.badge{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  padding:6px 18px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:0.85rem;
+}
+.hero-tags{
+  margin-top:16px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.tag{
+  background:rgba(255,255,255,0.18);
+  padding:4px 13px;
+  border-radius:14px;
+  font-size:0.78rem;
+}
+.nav{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:12px 18px;
+  background:#3f1420;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.88rem;
+  opacity:0.92;
+}
+.nav a:hover{opacity:1;text-decoration:underline;}
+.wrap{
+  max-width:880px;
+  margin:0 auto;
+  padding:22px 16px 60px;
+}
+.checklist{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom:22px;
+}
+.checklist h2{margin-top:0;color:var(--navy);font-size:1.1rem;}
+.checklist ul{margin:0;padding-left:20px;}
+.checklist li{margin:5px 0;font-size:0.95rem;}
+.panel{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px 24px;
+  margin:18px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  border-left:6px solid var(--accent);
+}
+.panel.warning{border-left-color:var(--bad);background:#fff5f2;}
+.panel.tip{border-left-color:var(--good);background:#f3fbf0;}
+.panel h2{margin-top:0;color:var(--navy);font-size:1.25rem;}
+.panel h3{color:var(--navy);font-size:1.02rem;margin:14px 0 4px;}
+.panel p{margin:6px 0;font-size:0.96rem;}
+.panel ul{margin:6px 0;padding-left:20px;font-size:0.95rem;}
+.panel li{margin:3px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.9rem;}
+th,td{border:1px solid #e6d6c4;padding:7px 9px;text-align:left;vertical-align:top;}
+th{background:var(--navy);color:#fff;font-size:0.85rem;}
+tr:nth-child(even) td{background:#fdf8f1;}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
+.pill{background:var(--accent);color:#2c1a1a;padding:5px 13px;border-radius:20px;font-size:0.82rem;font-weight:700;}
+.exam-tip::before{content:"💡 Exam tip: ";font-weight:800;}
+.warning::before{content:"⚠️ ";}
+.cta{
+  text-align:center;
+  margin:30px 0 10px;
+}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  font-weight:800;
+  padding:13px 28px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:1rem;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  border:none;
+  cursor:pointer;
+}
+.btn.secondary{background:var(--navy);color:#fff;}
+.mark-read-wrap{text-align:center;margin:24px 0;}
+.read-confirm{
+  display:none;
+  margin-top:10px;
+  background:#f3fbf0;
+  border:2px solid var(--good);
+  color:#1b5e20;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  text-align:center;
+}
+footer{text-align:center;font-size:0.8rem;opacity:0.6;padding:20px;}
+
+/* Quiz specific */
+.score-bar{
+  background:var(--card);
+  border-radius:14px;
+  padding:14px 20px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.score-bar .row{display:flex;justify-content:space-between;font-weight:700;color:var(--navy);font-size:0.92rem;margin-bottom:8px;}
+.progress-track{background:#eee2d2;border-radius:10px;height:12px;overflow:hidden;}
+.progress-fill{background:var(--accent);height:100%;width:0%;transition:width .3s;}
+.question{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  margin:16px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.question .qnum{color:var(--accent);font-weight:800;font-size:0.8rem;letter-spacing:1px;}
+.question p.qtext{font-weight:700;margin:6px 0 12px;font-size:1rem;color:var(--text);}
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:#fdf8f1;
+  border:2px solid #eee2d2;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:0.92rem;
+  cursor:pointer;
+  font-family:inherit;
+  color:var(--text);
+}
+.opt:hover{border-color:var(--accent);}
+.opt.correct{background:#e3f4e2;border-color:var(--good);font-weight:700;}
+.opt.incorrect{background:#fbe4e1;border-color:var(--bad);}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:0.9rem;display:none;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:#e3f4e2;color:#1b5e20;}
+.feedback.incorrect-fb{background:#fbe4e1;color:#8c2c22;}
+.result-box{
+  display:none;
+  background:var(--navy);
+  color:#fff;
+  border-radius:16px;
+  padding:26px;
+  text-align:center;
+  margin:24px 0;
+}
+.result-box.show{display:block;}
+.result-box .big{font-size:2.4rem;font-weight:800;margin:8px 0;}
+.result-box .msg{font-size:1.05rem;margin-top:8px;}
+.reset-btn{margin-top:16px;}
+@media (max-width:600px){
+  .hero h1{font-size:1.5rem;}
+  .panel{padding:16px 18px;}
+}
+
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="hospitality-revision-1.html">🏨 Unit 1: Industry</a>
+  <a href="hospitality-revision-2.html">🍽️ Unit 1: Operations</a>
+  <a href="hospitality-revision-3.html">🧼 Unit 1: H&S and Law</a>
+  <a href="hospitality-quiz-1.html">📝 Quiz A</a>
+  <a href="hospitality-quiz-2.html">📝 Quiz B</a>
+</nav>
+
+<div class="hero">
+  <div class="kicker">GCSE Hospitality &amp; Catering · Unit 1</div>
+  <h1>1.2 Operations: Front &amp; Back of House</h1>
+  <span class="badge">AC1.2.1 – AC1.2.3</span>
+  <div class="hero-tags"><span class="tag">Kitchen layout</span><span class="tag">Equipment</span><span class="tag">Front of house</span><span class="tag">Customer needs</span><span class="tag">Specific requirements</span></div>
+</div>
+<div class="wrap">
+<div class="checklist">
+  <h2>📋 What you need to know</h2>
+  <ul><li>Back of house dress code and the kitchen workflow areas</li><li>Categories of kitchen equipment (large, mechanical, small, cleaning/safety)</li><li>Front of house workflow in restaurants and hotels, plus dress code</li><li>Customer types: business, leisure, local residents — and their needs</li><li>Customer rights and inclusion (anti-discrimination)</li><li>How provisions meet specific requirements: lifestyle, nutrition, diet, demographics, expectations</li></ul>
+</div>
+
+<div class="panel">
+  <h2>👨‍🍳 The operation of the kitchen</h2>
+  
+<h3>Back of house dress code ("chef's whites")</h3>
+<p>Double-breasted jacket, long trousers, head covering, apron, non-slip toe-protected shoes. Protects the wearer from injury and protects food from hair/sweat.</p>
+<h3>Kitchen workflow areas</h3>
+<table>
+<tr><th>Area</th><th>Purpose</th></tr>
+<tr><td>Delivery</td><td>At the entrance — deliveries checked against the order, temperature of high-risk food recorded</td></tr>
+<tr><td>Storage</td><td>Cool area (fridges/freezers, high-risk food, fruit/veg) + dry area (cans, dry goods)</td></tr>
+<tr><td>Staffing</td><td>Staff change into work clothes; toilets &amp; hand-washing; sometimes a break lounge</td></tr>
+<tr><td>Preparation</td><td>Separate areas for meat/poultry, fish, fruit/veg, pastries/desserts</td></tr>
+<tr><td>Cooking</td><td>Hot wet area (soups, sauces, steaming) + dry area (roasting, baking, grilling, frying)</td></tr>
+<tr><td>Serving</td><td>Plating hot/cold food; waiters collect orders from "the pass"</td></tr>
+<tr><td>Cleaning</td><td>Separate area; dirty crockery/cutlery/pans cleaned &amp; stored</td></tr>
+<tr><td>Waste</td><td>Separate area outside; food/recyclable/non-recyclable waste sorted into correct bins</td></tr>
+</table>
+
+</div>
+
+<div class="panel">
+  <h2>🔧 Kitchen equipment</h2>
+  
+<table>
+<tr><th>Category</th><th>Examples</th></tr>
+<tr><td>Large equipment</td><td>Walk-in fridge/freezer, blast chiller, floor-standing mixer, conventional oven, deep fat fryer, hot water urn, bain-marie, grill/salamander, pass-through dishwasher</td></tr>
+<tr><td>Mechanical/specialist</td><td>Weighing scales, electric whisk, food processor, blender, mincer, meat slicer, temperature probe, conveyor toaster, panini maker, pizza oven, sous vide, pasta maker</td></tr>
+<tr><td>Small equipment</td><td>Mixing bowls, jugs/spoons, whisks, sieves, knives, chopping boards, graters, pots/pans, baking trays, plates/glassware</td></tr>
+<tr><td>Cleaning &amp; safety</td><td>Detergents, scouring pads, mops, waste bags/bins, fire extinguisher/blanket, smoke/CO₂ alarm, first aid box, oven gloves</td></tr>
+</table>
+<p class="exam-tip">Good quality equipment costs more upfront but lasts longer and electrical items cost less to run — saving money long-term.</p>
+
+</div>
+
+<div class="panel">
+  <h2>🚪 Front of house operation</h2>
+  
+<h3>Restaurant workflow</h3>
+<p>Reception → seating/dining area (divided into stations) → counter service area → bar → equipment station (cutlery, condiments) → toilets → safety equipment (first aid, fire extinguisher easily accessed).</p>
+<h3>Hotel workflow</h3>
+<p>Reception (check-in, keys) → lobby/waiting area → stairs/lifts → toilets.</p>
+<h3>Administration</h3>
+<p>Admin staff track: staff employment/training records, stock orders/deliveries/invoices, health &amp; safety documents, financial info, customer feedback, advertising.</p>
+<h3>Front of house dress code</h3>
+<p>Clean &amp; ironed clothing/uniform, minimal jewellery/perfume/make-up, good personal hygiene, name badges.</p>
+
+</div>
+
+<div class="panel tip">
+  <h2>🙋 Customer requirements</h2>
+  
+<p>Customers fall into three groups: <strong>business</strong>, <strong>leisure</strong>, <strong>local residents</strong>.</p>
+<table>
+<tr><th>Customer type</th><th>Typical needs</th></tr>
+<tr><td>Business</td><td>Meeting catering, early breakfast, 24hr room service, conference facilities (Wi-Fi, projector), quiet work floor, express check-in/out, loyalty points</td></tr>
+<tr><td>Leisure</td><td>Mini bar, room service, restaurant/bar, dietary options, children's menu, en-suite, free Wi-Fi, concierge, cots/extra bedding</td></tr>
+<tr><td>Local residents</td><td>Use facilities (restaurant, bar, spa, golf) without overnight stay; provider must manage noise &amp; parking</td></tr>
+</table>
+<h3>Customer rights &amp; inclusion</h3>
+<p>By law, no business can discriminate based on: age, disability, sexual orientation, ethnicity, gender, race/culture, pregnancy &amp; maternity.</p>
+
+</div>
+
+<div class="panel">
+  <h2>🎯 Meeting specific requirements</h2>
+  
+<h3>What affects customer needs</h3>
+<ul>
+<li><strong>Lifestyle:</strong> budget, eating patterns, hobbies/interests</li>
+<li><strong>Nutritional needs:</strong> menus showing nutritional info to help choices</li>
+<li><strong>Dietary needs:</strong> coeliac, vegetarian, vegan, children's options</li>
+<li><strong>Time available:</strong> fast food vs leisurely meal</li>
+</ul>
+<h3>Customer demographics (used for marketing &amp; USP)</h3>
+<p>Age, location, accessibility (parking/mobility), money available, level of local competition.</p>
+<h3>Customer expectations</h3>
+<p>Polite efficient service, value for money, keeping up with trends (apps), awareness of competitors, matching media reviews, eco-friendliness, seasonal/local ingredients.</p>
+
+</div>
+
+<div class="cta">
+  <a class="btn" href="hospitality-quiz-1.html">📝 Test yourself — Quiz A (Industry &amp; Operations)</a>
+</div>
+
+<div class="mark-read-wrap">
+  <button class="btn secondary" onclick="markRead()">✅ Mark as Read</button>
+  <div class="read-confirm" id="readConfirm">Marked as read — Show this to mum!</div>
+</div>
+<script>
+function markRead(){
+  localStorage.setItem('hospitality_revision_2_read','true');
+  document.getElementById('readConfirm').classList.add('show');
+}
+window.onload = function(){
+  if(localStorage.getItem('hospitality_revision_2_read') === 'true'){
+    var c = document.getElementById('readConfirm');
+    if(c){ c.classList.add('show'); }
+  }
+};
+</script>
+<footer>Gab-revision · Hospitality &amp; Catering · Unit 1</footer></div>
+</body>
+</html>

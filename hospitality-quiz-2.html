@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz B — Hospitality &amp; Catering: Health, Safety &amp; Law | Gab Revision</title>
+<style>
+
+:root{
+  --navy:#5c1f2e;
+  --navy2:#7a2f3f;
+  --accent:#d98a3d;
+  --accent2:#f0a857;
+  --bg:#fbf2e9;
+  --card:#ffffff;
+  --text:#2c1a1a;
+  --good:#2e7d32;
+  --bad:#c0392b;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Verdana,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;
+  padding:36px 20px 30px;
+  text-align:center;
+}
+.kicker{
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-size:0.75rem;
+  opacity:0.85;
+  font-weight:700;
+}
+.hero h1{
+  margin:10px 0 14px;
+  font-size:1.9rem;
+}
+.badge{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  padding:6px 18px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:0.85rem;
+}
+.hero-tags{
+  margin-top:16px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.tag{
+  background:rgba(255,255,255,0.18);
+  padding:4px 13px;
+  border-radius:14px;
+  font-size:0.78rem;
+}
+.nav{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:12px 18px;
+  background:#3f1420;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.88rem;
+  opacity:0.92;
+}
+.nav a:hover{opacity:1;text-decoration:underline;}
+.wrap{
+  max-width:880px;
+  margin:0 auto;
+  padding:22px 16px 60px;
+}
+.checklist{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom:22px;
+}
+.checklist h2{margin-top:0;color:var(--navy);font-size:1.1rem;}
+.checklist ul{margin:0;padding-left:20px;}
+.checklist li{margin:5px 0;font-size:0.95rem;}
+.panel{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px 24px;
+  margin:18px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  border-left:6px solid var(--accent);
+}
+.panel.warning{border-left-color:var(--bad);background:#fff5f2;}
+.panel.tip{border-left-color:var(--good);background:#f3fbf0;}
+.panel h2{margin-top:0;color:var(--navy);font-size:1.25rem;}
+.panel h3{color:var(--navy);font-size:1.02rem;margin:14px 0 4px;}
+.panel p{margin:6px 0;font-size:0.96rem;}
+.panel ul{margin:6px 0;padding-left:20px;font-size:0.95rem;}
+.panel li{margin:3px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.9rem;}
+th,td{border:1px solid #e6d6c4;padding:7px 9px;text-align:left;vertical-align:top;}
+th{background:var(--navy);color:#fff;font-size:0.85rem;}
+tr:nth-child(even) td{background:#fdf8f1;}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
+.pill{background:var(--accent);color:#2c1a1a;padding:5px 13px;border-radius:20px;font-size:0.82rem;font-weight:700;}
+.exam-tip::before{content:"💡 Exam tip: ";font-weight:800;}
+.warning::before{content:"⚠️ ";}
+.cta{
+  text-align:center;
+  margin:30px 0 10px;
+}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  font-weight:800;
+  padding:13px 28px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:1rem;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  border:none;
+  cursor:pointer;
+}
+.btn.secondary{background:var(--navy);color:#fff;}
+.mark-read-wrap{text-align:center;margin:24px 0;}
+.read-confirm{
+  display:none;
+  margin-top:10px;
+  background:#f3fbf0;
+  border:2px solid var(--good);
+  color:#1b5e20;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  text-align:center;
+}
+footer{text-align:center;font-size:0.8rem;opacity:0.6;padding:20px;}
+
+/* Quiz specific */
+.score-bar{
+  background:var(--card);
+  border-radius:14px;
+  padding:14px 20px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.score-bar .row{display:flex;justify-content:space-between;font-weight:700;color:var(--navy);font-size:0.92rem;margin-bottom:8px;}
+.progress-track{background:#eee2d2;border-radius:10px;height:12px;overflow:hidden;}
+.progress-fill{background:var(--accent);height:100%;width:0%;transition:width .3s;}
+.question{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  margin:16px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.question .qnum{color:var(--accent);font-weight:800;font-size:0.8rem;letter-spacing:1px;}
+.question p.qtext{font-weight:700;margin:6px 0 12px;font-size:1rem;color:var(--text);}
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:#fdf8f1;
+  border:2px solid #eee2d2;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:0.92rem;
+  cursor:pointer;
+  font-family:inherit;
+  color:var(--text);
+}
+.opt:hover{border-color:var(--accent);}
+.opt.correct{background:#e3f4e2;border-color:var(--good);font-weight:700;}
+.opt.incorrect{background:#fbe4e1;border-color:var(--bad);}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:0.9rem;display:none;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:#e3f4e2;color:#1b5e20;}
+.feedback.incorrect-fb{background:#fbe4e1;color:#8c2c22;}
+.result-box{
+  display:none;
+  background:var(--navy);
+  color:#fff;
+  border-radius:16px;
+  padding:26px;
+  text-align:center;
+  margin:24px 0;
+}
+.result-box.show{display:block;}
+.result-box .big{font-size:2.4rem;font-weight:800;margin:8px 0;}
+.result-box .msg{font-size:1.05rem;margin-top:8px;}
+.reset-btn{margin-top:16px;}
+@media (max-width:600px){
+  .hero h1{font-size:1.5rem;}
+  .panel{padding:16px 18px;}
+}
+
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="hospitality-revision-1.html">🏨 Unit 1: Industry</a>
+  <a href="hospitality-revision-2.html">🍽️ Unit 1: Operations</a>
+  <a href="hospitality-revision-3.html">🧼 Unit 1: H&S and Law</a>
+  <a href="hospitality-quiz-1.html">📝 Quiz A</a>
+  <a href="hospitality-quiz-2.html">📝 Quiz B</a>
+</nav>
+
+<div class="hero">
+  <div class="kicker">GCSE Hospitality &amp; Catering · Mega Quiz B</div>
+  <h1>Quiz B: Health, Safety &amp; Food Law</h1>
+  <span class="badge">46 questions · Unit 1.3 + 1.4</span>
+  <div class="hero-tags"><span class="tag">Workplace law</span><span class="tag">HACCP</span><span class="tag">Bacteria</span><span class="tag">Allergens</span><span class="tag">Food law</span><span class="tag">EHO</span></div>
+</div>
+<div class="wrap">
+<div class="score-bar">
+  <div class="row"><span>Score: <span id="scoreVal">0</span>/46</span><span>Answered: <span id="answeredVal">0</span>/46</span></div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="question" id="q0" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 1 / 46</div>
+<p class="qtext">Which law requires employers to protect the health, wellbeing and safety of employees, customers and others in general?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q0',this,'A')">A. COSHH 2002</button>
+<button class="opt" data-val="B" onclick="answer('q0',this,'B')">B. HASAWA 1974</button>
+<button class="opt" data-val="C" onclick="answer('q0',this,'C')">C. RIDDOR 2013</button>
+<button class="opt" data-val="D" onclick="answer('q0',this,'D')">D. PPER 1992</button>
+</div>
+<div class="feedback" id="q0-fb" data-feedback="HASAWA (Health and Safety at Work Act) 1974 is the main general workplace safety law."></div>
+</div>
+<div class="question" id="q1" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 2 / 46</div>
+<p class="qtext">Which regulations specifically control dangerous substances like cleaning chemicals, gases and biological agents?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q1',this,'A')">A. COSHH 2002</button>
+<button class="opt" data-val="B" onclick="answer('q1',this,'B')">B. RIDDOR 2013</button>
+<button class="opt" data-val="C" onclick="answer('q1',this,'C')">C. Manual Handling Regs 1992</button>
+<button class="opt" data-val="D" onclick="answer('q1',this,'D')">D. HASAWA 1974</button>
+</div>
+<div class="feedback" id="q1-fb" data-feedback="COSHH (Control of Substances Hazardous to Health) 2002 covers hazardous substances."></div>
+</div>
+<div class="question" id="q2" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 3 / 46</div>
+<p class="qtext">Which regulations require employers to provide PPE such as gloves, masks and protective clothing?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q2',this,'A')">A. RIDDOR 2013</button>
+<button class="opt" data-val="B" onclick="answer('q2',this,'B')">B. PPER 1992</button>
+<button class="opt" data-val="C" onclick="answer('q2',this,'C')">C. COSHH 2002</button>
+<button class="opt" data-val="D" onclick="answer('q2',this,'D')">D. HASAWA 1974</button>
+</div>
+<div class="feedback" id="q2-fb" data-feedback="PPER (Personal Protective Equipment at Work Regulations) 1992."></div>
+</div>
+<div class="question" id="q3" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 4 / 46</div>
+<p class="qtext">Which law/regulations cover the correct technique for lifting and carrying heavy items?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q3',this,'A')">A. Manual Handling Operations Regulations 1992</button>
+<button class="opt" data-val="B" onclick="answer('q3',this,'B')">B. COSHH 2002</button>
+<button class="opt" data-val="C" onclick="answer('q3',this,'C')">C. RIDDOR 2013</button>
+<button class="opt" data-val="D" onclick="answer('q3',this,'D')">D. Food Safety Act 1990</button>
+</div>
+<div class="feedback" id="q3-fb" data-feedback="Manual Handling Operations Regulations 1992 — squat, keep back straight, item close to body."></div>
+</div>
+<div class="question" id="q4" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 5 / 46</div>
+<p class="qtext">Which regulations require employers to inform the HSE of accidents, injuries or dangerous occurrences?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q4',this,'A')">A. RIDDOR 2013</button>
+<button class="opt" data-val="B" onclick="answer('q4',this,'B')">B. PPER 1992</button>
+<button class="opt" data-val="C" onclick="answer('q4',this,'C')">C. COSHH 2002</button>
+<button class="opt" data-val="D" onclick="answer('q4',this,'D')">D. HASAWA 1974</button>
+</div>
+<div class="feedback" id="q4-fb" data-feedback="RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations) 2013."></div>
+</div>
+<div class="question" id="q5" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 6 / 46</div>
+<p class="qtext">COSHH stands for the 'Control of Substances Hazardous to Health' and dates from 2002.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q5',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q5',this,'false')">False</button>
+</div>
+<div class="feedback" id="q5-fb" data-feedback="Correct — COSHH 2002 (some resources mistakenly say 2022, but the real law is 2002)."></div>
+</div>
+<div class="question" id="q6" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 7 / 46</div>
+<p class="qtext">A chef lifting a heavy stock pot should...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q6',this,'A')">A. Bend at the waist with straight legs</button>
+<button class="opt" data-val="B" onclick="answer('q6',this,'B')">B. Squat, keep back straight, item close to body</button>
+<button class="opt" data-val="C" onclick="answer('q6',this,'C')">C. Twist while lifting to save time</button>
+<button class="opt" data-val="D" onclick="answer('q6',this,'D')">D. Lift quickly without checking the path</button>
+</div>
+<div class="feedback" id="q6-fb" data-feedback="Correct manual handling technique: squat, straight back, item close to the body."></div>
+</div>
+<div class="question" id="q7" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 8 / 46</div>
+<p class="qtext">In a risk assessment, what is a 'hazard'?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q7',this,'A')">A. The likelihood of harm happening</button>
+<button class="opt" data-val="B" onclick="answer('q7',this,'B')">B. An object or something that can cause harm</button>
+<button class="opt" data-val="C" onclick="answer('q7',this,'C')">C. An action taken to reduce risk</button>
+<button class="opt" data-val="D" onclick="answer('q7',this,'D')">D. A written record of an accident</button>
+</div>
+<div class="feedback" id="q7-fb" data-feedback="A hazard is something that can physically harm someone or harm health."></div>
+</div>
+<div class="question" id="q8" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 9 / 46</div>
+<p class="qtext">In a risk assessment, what is a 'control measure'?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q8',this,'A')">A. The object that could cause harm</button>
+<button class="opt" data-val="B" onclick="answer('q8',this,'B')">B. The likelihood of an accident</button>
+<button class="opt" data-val="C" onclick="answer('q8',this,'C')">C. Steps taken to avoid/reduce the hazard</button>
+<button class="opt" data-val="D" onclick="answer('q8',this,'D')">D. The name of the person assessing risk</button>
+</div>
+<div class="feedback" id="q8-fb" data-feedback="A control measure is the action taken to reduce or remove the hazard."></div>
+</div>
+<div class="question" id="q9" data-correct="false" data-type="tf">
+<div class="qnum">QUESTION 10 / 46</div>
+<p class="qtext">A risk assessment only needs to be completed once and never reviewed again.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q9',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q9',this,'false')">False</button>
+</div>
+<div class="feedback" id="q9-fb" data-feedback="Risk assessments must be reviewed and updated regularly."></div>
+</div>
+<div class="question" id="q10" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 11 / 46</div>
+<p class="qtext">By law, what must be completed after a workplace accident?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q10',this,'A')">A. A menu review</button>
+<button class="opt" data-val="B" onclick="answer('q10',this,'B')">B. An accident form</button>
+<button class="opt" data-val="C" onclick="answer('q10',this,'C')">C. A marketing plan</button>
+<button class="opt" data-val="D" onclick="answer('q10',this,'D')">D. A food label</button>
+</div>
+<div class="feedback" id="q10-fb" data-feedback="An accident form must be completed by law after any workplace accident."></div>
+</div>
+<div class="question" id="q11" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 12 / 46</div>
+<p class="qtext">What does HACCP stand for?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q11',this,'A')">A. Hazard Analysis Critical Control Point</button>
+<button class="opt" data-val="B" onclick="answer('q11',this,'B')">B. Hospitality and Catering Control Plan</button>
+<button class="opt" data-val="C" onclick="answer('q11',this,'C')">C. Health and Care Certification Process</button>
+<button class="opt" data-val="D" onclick="answer('q11',this,'D')">D. High Allergen Cooking Control Procedure</button>
+</div>
+<div class="feedback" id="q11-fb" data-feedback="HACCP = Hazard Analysis Critical Control Point, the food safety management system."></div>
+</div>
+<div class="question" id="q12" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 13 / 46</div>
+<p class="qtext">At what temperature should high-risk chilled food be delivered and stored?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q12',this,'A')">A. 0–5°C</button>
+<button class="opt" data-val="B" onclick="answer('q12',this,'B')">B. 6–10°C</button>
+<button class="opt" data-val="C" onclick="answer('q12',this,'C')">C. −5 to 0°C</button>
+<button class="opt" data-val="D" onclick="answer('q12',this,'D')">D. 10–15°C</button>
+</div>
+<div class="feedback" id="q12-fb" data-feedback="High-risk chilled/refrigerated food should be 0–5°C."></div>
+</div>
+<div class="question" id="q13" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 14 / 46</div>
+<p class="qtext">What is the safe temperature range for frozen food storage?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q13',this,'A')">A. 0°C to 5°C</button>
+<button class="opt" data-val="B" onclick="answer('q13',this,'B')">B. −5°C to −10°C</button>
+<button class="opt" data-val="C" onclick="answer('q13',this,'C')">C. −18°C to −22°C</button>
+<button class="opt" data-val="D" onclick="answer('q13',this,'D')">D. −30°C to −40°C</button>
+</div>
+<div class="feedback" id="q13-fb" data-feedback="Frozen food should be stored between −18°C and −22°C."></div>
+</div>
+<div class="question" id="q14" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 15 / 46</div>
+<p class="qtext">What core temperature must high-risk food reach during cooking?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q14',this,'A')">A. 50°C</button>
+<button class="opt" data-val="B" onclick="answer('q14',this,'B')">B. 63°C</button>
+<button class="opt" data-val="C" onclick="answer('q14',this,'C')">C. 70–75°C</button>
+<button class="opt" data-val="D" onclick="answer('q14',this,'D')">D. 90°C</button>
+</div>
+<div class="feedback" id="q14-fb" data-feedback="Food should reach a core temperature of 70–75°C, held for 2 minutes."></div>
+</div>
+<div class="question" id="q15" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 16 / 46</div>
+<p class="qtext">Hot food being held for service must be kept at a minimum of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q15',this,'A')">A. 50°C for up to 4 hours</button>
+<button class="opt" data-val="B" onclick="answer('q15',this,'B')">B. 63°C for up to 2 hours</button>
+<button class="opt" data-val="C" onclick="answer('q15',this,'C')">C. 75°C for up to 1 hour</button>
+<button class="opt" data-val="D" onclick="answer('q15',this,'D')">D. 100°C indefinitely</button>
+</div>
+<div class="feedback" id="q15-fb" data-feedback="Hot holding: minimum 63°C, for no more than 2 hours."></div>
+</div>
+<div class="question" id="q16" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 17 / 46</div>
+<p class="qtext">FIFO (First In, First Out) stock rotation helps prevent food from being stored beyond its use-by date.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q16',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q16',this,'false')">False</button>
+</div>
+<div class="feedback" id="q16-fb" data-feedback="Correct — FIFO ensures older stock is used before newer stock."></div>
+</div>
+<div class="question" id="q17" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 18 / 46</div>
+<p class="qtext">Colour-coded chopping boards are mainly used to prevent...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q17',this,'A')">A. Cross-contamination</button>
+<button class="opt" data-val="B" onclick="answer('q17',this,'B')">B. Burns</button>
+<button class="opt" data-val="C" onclick="answer('q17',this,'C')">C. Allergic reactions to media</button>
+<button class="opt" data-val="D" onclick="answer('q17',this,'D')">D. Slips and trips</button>
+</div>
+<div class="feedback" id="q17-fb" data-feedback="Colour-coded boards keep raw and ready-to-eat foods separate, preventing cross-contamination."></div>
+</div>
+<div class="question" id="q18" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 19 / 46</div>
+<p class="qtext">Which bacteria is commonly found in reheated rice and other starchy foods?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q18',this,'A')">A. Salmonella</button>
+<button class="opt" data-val="B" onclick="answer('q18',this,'B')">B. Bacillus cereus</button>
+<button class="opt" data-val="C" onclick="answer('q18',this,'C')">C. E-coli</button>
+<button class="opt" data-val="D" onclick="answer('q18',this,'D')">D. Listeria</button>
+</div>
+<div class="feedback" id="q18-fb" data-feedback="Bacillus cereus is associated with reheated rice/starchy foods."></div>
+</div>
+<div class="question" id="q19" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 20 / 46</div>
+<p class="qtext">Which bacteria is commonly found in raw and undercooked poultry and unpasteurised milk?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q19',this,'A')">A. Campylobacter</button>
+<button class="opt" data-val="B" onclick="answer('q19',this,'B')">B. Staphylococcus aureus</button>
+<button class="opt" data-val="C" onclick="answer('q19',this,'C')">C. Listeria</button>
+<button class="opt" data-val="D" onclick="answer('q19',this,'D')">D. Clostridium perfringens</button>
+</div>
+<div class="feedback" id="q19-fb" data-feedback="Campylobacter is linked to undercooked poultry and unpasteurised milk."></div>
+</div>
+<div class="question" id="q20" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 21 / 46</div>
+<p class="qtext">Which bacteria is found in the human nose and mouth?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q20',this,'A')">A. E-coli</button>
+<button class="opt" data-val="B" onclick="answer('q20',this,'B')">B. Salmonella</button>
+<button class="opt" data-val="C" onclick="answer('q20',this,'C')">C. Staphylococcus aureus</button>
+<button class="opt" data-val="D" onclick="answer('q20',this,'D')">D. Listeria</button>
+</div>
+<div class="feedback" id="q20-fb" data-feedback="Staphylococcus aureus is found in the human nose and mouth."></div>
+</div>
+<div class="question" id="q21" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 22 / 46</div>
+<p class="qtext">Which bacteria is commonly linked to polluted water and unwashed fruit/vegetables?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q21',this,'A')">A. Listeria</button>
+<button class="opt" data-val="B" onclick="answer('q21',this,'B')">B. Salmonella</button>
+<button class="opt" data-val="C" onclick="answer('q21',this,'C')">C. Campylobacter</button>
+<button class="opt" data-val="D" onclick="answer('q21',this,'D')">D. Bacillus cereus</button>
+</div>
+<div class="feedback" id="q21-fb" data-feedback="Listeria is associated with polluted water and unwashed produce."></div>
+</div>
+<div class="question" id="q22" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 23 / 46</div>
+<p class="qtext">Salmonella is commonly found in raw meat, poultry and eggs.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q22',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q22',this,'false')">False</button>
+</div>
+<div class="feedback" id="q22-fb" data-feedback="Correct — Salmonella is strongly linked to raw meat, poultry and eggs."></div>
+</div>
+<div class="question" id="q23" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 24 / 46</div>
+<p class="qtext">How many allergens must be legally highlighted on UK food labels?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q23',this,'A')">A. 7</button>
+<button class="opt" data-val="B" onclick="answer('q23',this,'B')">B. 10</button>
+<button class="opt" data-val="C" onclick="answer('q23',this,'C')">C. 14</button>
+<button class="opt" data-val="D" onclick="answer('q23',this,'D')">D. 20</button>
+</div>
+<div class="feedback" id="q23-fb" data-feedback="There are 14 legally recognised allergens that must be highlighted in bold."></div>
+</div>
+<div class="question" id="q24" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 25 / 46</div>
+<p class="qtext">Which of these is NOT one of the 14 legally recognised allergens?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q24',this,'A')">A. Celery</button>
+<button class="opt" data-val="B" onclick="answer('q24',this,'B')">B. Mustard</button>
+<button class="opt" data-val="C" onclick="answer('q24',this,'C')">C. Tomato</button>
+<button class="opt" data-val="D" onclick="answer('q24',this,'D')">D. Sesame</button>
+</div>
+<div class="feedback" id="q24-fb" data-feedback="Tomato is not one of the 14 legal allergens; celery, mustard and sesame are."></div>
+</div>
+<div class="question" id="q25" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 26 / 46</div>
+<p class="qtext">Lactose intolerance is linked to which food group?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q25',this,'A')">A. Milk/dairy</button>
+<button class="opt" data-val="B" onclick="answer('q25',this,'B')">B. Wheat/gluten</button>
+<button class="opt" data-val="C" onclick="answer('q25',this,'C')">C. Artificial sweeteners</button>
+<button class="opt" data-val="D" onclick="answer('q25',this,'D')">D. Flavour enhancers</button>
+</div>
+<div class="feedback" id="q25-fb" data-feedback="Lactose intolerance relates to milk and dairy products."></div>
+</div>
+<div class="question" id="q26" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 27 / 46</div>
+<p class="qtext">Coeliac disease is a reaction to which substance?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q26',this,'A')">A. Lactose</button>
+<button class="opt" data-val="B" onclick="answer('q26',this,'B')">B. Gluten</button>
+<button class="opt" data-val="C" onclick="answer('q26',this,'C')">C. MSG</button>
+<button class="opt" data-val="D" onclick="answer('q26',this,'D')">D. Aspartame</button>
+</div>
+<div class="feedback" id="q26-fb" data-feedback="Coeliac disease is an intolerance/reaction to gluten."></div>
+</div>
+<div class="question" id="q27" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 28 / 46</div>
+<p class="qtext">Which law ensures food sold is safe to eat, fit for consumption, and labelled truthfully?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q27',this,'A')">A. Food Safety Act 1990</button>
+<button class="opt" data-val="B" onclick="answer('q27',this,'B')">B. RIDDOR 2013</button>
+<button class="opt" data-val="C" onclick="answer('q27',this,'C')">C. Manual Handling Regs 1992</button>
+<button class="opt" data-val="D" onclick="answer('q27',this,'D')">D. PPER 1992</button>
+</div>
+<div class="feedback" id="q27-fb" data-feedback="The Food Safety Act 1990 covers these core food safety requirements."></div>
+</div>
+<div class="question" id="q28" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 29 / 46</div>
+<p class="qtext">Which regulations specifically ensure food is handled hygienically 'from field to plate'?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q28',this,'A')">A. Food Safety (General Food Hygiene) Regulations 1995</button>
+<button class="opt" data-val="B" onclick="answer('q28',this,'B')">B. COSHH 2002</button>
+<button class="opt" data-val="C" onclick="answer('q28',this,'C')">C. HASAWA 1974</button>
+<button class="opt" data-val="D" onclick="answer('q28',this,'D')">D. PPER 1992</button>
+</div>
+<div class="feedback" id="q28-fb" data-feedback="These regulations cover hygienic handling throughout the whole food chain."></div>
+</div>
+<div class="question" id="q29" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 30 / 46</div>
+<p class="qtext">Food labels must show allergen information clearly and in bold.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q29',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q29',this,'false')">False</button>
+</div>
+<div class="feedback" id="q29-fb" data-feedback="Correct — by law, allergens must stand out clearly on the label, often in bold."></div>
+</div>
+<div class="question" id="q30" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 31 / 46</div>
+<p class="qtext">Which of these must legally appear on a food label?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q30',this,'A')">A. Chef's name</button>
+<button class="opt" data-val="B" onclick="answer('q30',this,'B')">B. Use-by or best-before date</button>
+<button class="opt" data-val="C" onclick="answer('q30',this,'C')">C. Customer reviews</button>
+<button class="opt" data-val="D" onclick="answer('q30',this,'D')">D. Star rating of the restaurant</button>
+</div>
+<div class="feedback" id="q30-fb" data-feedback="A use-by or best-before date is a legal labelling requirement."></div>
+</div>
+<div class="question" id="q31" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 32 / 46</div>
+<p class="qtext">Diarrhoea and vomiting are examples of which type of food-poisoning symptom?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q31',this,'A')">A. Non-visible symptoms</button>
+<button class="opt" data-val="B" onclick="answer('q31',this,'B')">B. Visible symptoms</button>
+<button class="opt" data-val="C" onclick="answer('q31',this,'C')">C. Allergic-only symptoms</button>
+<button class="opt" data-val="D" onclick="answer('q31',this,'D')">D. Chronic symptoms</button>
+</div>
+<div class="feedback" id="q31-fb" data-feedback="Diarrhoea and vomiting are visible symptoms of food poisoning."></div>
+</div>
+<div class="question" id="q32" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 33 / 46</div>
+<p class="qtext">Nausea and stomach cramps are examples of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q32',this,'A')">A. Visible symptoms</button>
+<button class="opt" data-val="B" onclick="answer('q32',this,'B')">B. Non-visible symptoms</button>
+<button class="opt" data-val="C" onclick="answer('q32',this,'C')">C. Anaphylaxis only</button>
+<button class="opt" data-val="D" onclick="answer('q32',this,'D')">D. Chemical contamination only</button>
+</div>
+<div class="feedback" id="q32-fb" data-feedback="These are non-visible (internal/felt, not seen) symptoms."></div>
+</div>
+<div class="question" id="q33" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 34 / 46</div>
+<p class="qtext">A severe, potentially fatal allergic reaction is called...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q33',this,'A')">A. Intolerance</button>
+<button class="opt" data-val="B" onclick="answer('q33',this,'B')">B. Anaphylaxis</button>
+<button class="opt" data-val="C" onclick="answer('q33',this,'C')">C. Cross-contamination</button>
+<button class="opt" data-val="D" onclick="answer('q33',this,'D')">D. HACCP</button>
+</div>
+<div class="feedback" id="q33-fb" data-feedback="Anaphylaxis is the severe, life-threatening allergic reaction."></div>
+</div>
+<div class="question" id="q34" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 35 / 46</div>
+<p class="qtext">What is the standard emergency treatment for an anaphylactic reaction?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q34',this,'A')">A. Antibiotics</button>
+<button class="opt" data-val="B" onclick="answer('q34',this,'B')">B. An adrenaline injection (EpiPen)</button>
+<button class="opt" data-val="C" onclick="answer('q34',this,'C')">C. Paracetamol</button>
+<button class="opt" data-val="D" onclick="answer('q34',this,'D')">D. Drinking water</button>
+</div>
+<div class="feedback" id="q34-fb" data-feedback="An adrenaline injection (EpiPen) is the standard emergency treatment."></div>
+</div>
+<div class="question" id="q35" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 36 / 46</div>
+<p class="qtext">Weight loss can be a symptom of gluten intolerance (coeliac disease).</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q35',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q35',this,'false')">False</button>
+</div>
+<div class="feedback" id="q35-fb" data-feedback="Correct — weight loss is a recognised symptom of coeliac disease."></div>
+</div>
+<div class="question" id="q36" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 37 / 46</div>
+<p class="qtext">Hair, plasters and broken glass found in food are examples of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q36',this,'A')">A. Chemical contamination</button>
+<button class="opt" data-val="B" onclick="answer('q36',this,'B')">B. Microbiological contamination</button>
+<button class="opt" data-val="C" onclick="answer('q36',this,'C')">C. Physical contamination</button>
+<button class="opt" data-val="D" onclick="answer('q36',this,'D')">D. Cross-contamination only</button>
+</div>
+<div class="feedback" id="q36-fb" data-feedback="These are physical contaminants — objects that shouldn't be in food."></div>
+</div>
+<div class="question" id="q37" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 38 / 46</div>
+<p class="qtext">Cleaning products accidentally getting into food is an example of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q37',this,'A')">A. Physical contamination</button>
+<button class="opt" data-val="B" onclick="answer('q37',this,'B')">B. Chemical contamination</button>
+<button class="opt" data-val="C" onclick="answer('q37',this,'C')">C. Microbiological contamination</button>
+<button class="opt" data-val="D" onclick="answer('q37',this,'D')">D. Allergic reaction</button>
+</div>
+<div class="feedback" id="q37-fb" data-feedback="Chemical contamination involves substances like cleaning products."></div>
+</div>
+<div class="question" id="q38" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 39 / 46</div>
+<p class="qtext">Harmful bacteria such as Salmonella causing illness is an example of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q38',this,'A')">A. Physical contamination</button>
+<button class="opt" data-val="B" onclick="answer('q38',this,'B')">B. Chemical contamination</button>
+<button class="opt" data-val="C" onclick="answer('q38',this,'C')">C. Microbiological contamination</button>
+<button class="opt" data-val="D" onclick="answer('q38',this,'D')">D. Intolerance</button>
+</div>
+<div class="feedback" id="q38-fb" data-feedback="Bacteria-related illness is microbiological contamination."></div>
+</div>
+<div class="question" id="q39" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 40 / 46</div>
+<p class="qtext">Washing hands after using the toilet, sneezing or handling rubbish helps prevent cross-contamination.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q39',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q39',this,'false')">False</button>
+</div>
+<div class="feedback" id="q39-fb" data-feedback="Correct — handwashing at these times is essential to prevent cross-contamination."></div>
+</div>
+<div class="question" id="q40" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 41 / 46</div>
+<p class="qtext">Who is responsible for enforcing food safety law and inspecting hospitality premises?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q40',this,'A')">A. The Environmental Health Officer (EHO)</button>
+<button class="opt" data-val="B" onclick="answer('q40',this,'B')">B. The Executive Chef</button>
+<button class="opt" data-val="C" onclick="answer('q40',this,'C')">C. The Front of House Manager</button>
+<button class="opt" data-val="D" onclick="answer('q40',this,'D')">D. HMRC</button>
+</div>
+<div class="feedback" id="q40-fb" data-feedback="The EHO enforces food safety law and inspects premises."></div>
+</div>
+<div class="question" id="q41" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 42 / 46</div>
+<p class="qtext">Can an EHO inspect a premises without making an appointment first?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q41',this,'A')">A. No, they must always book in advance</button>
+<button class="opt" data-val="B" onclick="answer('q41',this,'B')">B. Yes, they can inspect at any time during business hours</button>
+<button class="opt" data-val="C" onclick="answer('q41',this,'C')">C. Only with police presence</button>
+<button class="opt" data-val="D" onclick="answer('q41',this,'D')">D. Only once a year</button>
+</div>
+<div class="feedback" id="q41-fb" data-feedback="EHOs can inspect at any time during business hours, unannounced."></div>
+</div>
+<div class="question" id="q42" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 43 / 46</div>
+<p class="qtext">What is the highest food hygiene rating an EHO can award?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q42',this,'A')">A. 3 - Good</button>
+<button class="opt" data-val="B" onclick="answer('q42',this,'B')">B. 5 - Very good</button>
+<button class="opt" data-val="C" onclick="answer('q42',this,'C')">C. 10 - Excellent</button>
+<button class="opt" data-val="D" onclick="answer('q42',this,'D')">D. Pass/Fail only</button>
+</div>
+<div class="feedback" id="q42-fb" data-feedback="Food hygiene ratings go up to 5, which represents 'very good'."></div>
+</div>
+<div class="question" id="q43" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 44 / 46</div>
+<p class="qtext">If an EHO finds a serious risk to public health, what can they legally do?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q43',this,'A')">A. Only give verbal advice</button>
+<button class="opt" data-val="B" onclick="answer('q43',this,'B')">B. Close the premises</button>
+<button class="opt" data-val="C" onclick="answer('q43',this,'C')">C. Increase the menu prices</button>
+<button class="opt" data-val="D" onclick="answer('q43',this,'D')">D. Hire new staff</button>
+</div>
+<div class="feedback" id="q43-fb" data-feedback="An EHO can close a premises if there is a risk to public health."></div>
+</div>
+<div class="question" id="q44" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 45 / 46</div>
+<p class="qtext">An EHO is allowed to take food samples for analysis during an inspection.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q44',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q44',this,'false')">False</button>
+</div>
+<div class="feedback" id="q44-fb" data-feedback="Correct — EHOs can take photographs and food samples during inspections."></div>
+</div>
+<div class="question" id="q45" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 46 / 46</div>
+<p class="qtext">A HACCP plan checking food at delivery, storage, preparation, cooking and serving is used to...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q45',this,'A')">A. Increase profit only</button>
+<button class="opt" data-val="B" onclick="answer('q45',this,'B')">B. Control food safety risks at each stage</button>
+<button class="opt" data-val="C" onclick="answer('q45',this,'C')">C. Plan staff rotas</button>
+<button class="opt" data-val="D" onclick="answer('q45',this,'D')">D. Advertise the business</button>
+</div>
+<div class="feedback" id="q45-fb" data-feedback="HACCP identifies and controls risks at every stage of food handling."></div>
+</div>
+
+<div class="result-box" id="resultBox">
+  <div>🎉 Quiz complete!</div>
+  <div class="big" id="finalScore"></div>
+  <div class="msg" id="finalMsg"></div>
+  <div class="reset-btn"><button class="btn secondary" onclick="resetQuiz()">🔄 Try again</button></div>
+</div>
+<div class="cta"><a class="btn secondary" href="hospitality-revision-3.html" style="margin:6px;">🧼 Back to Unit 1.3-1.4 revision</a><a class="btn secondary" href="hospitality-quiz-1.html" style="margin:6px;">📝 Try Quiz A</a></div><footer>Gab-revision · Hospitality &amp; Catering · Unit 1</footer></div>
+<script>
+const TOTAL = 46;
+const SCORE_KEY = 'hospitality_quiz_b_score';
+let answered = {};
+let score = 0;
+
+function answer(qid, btn, val){
+  if(answered[qid] !== undefined) return;
+  const qdiv = document.getElementById(qid);
+  const correct = qdiv.getAttribute('data-correct');
+  const opts = qdiv.querySelectorAll('.opt');
+  opts.forEach(o => o.disabled = true);
+  const isCorrect = (val === correct);
+  if(isCorrect){
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    opts.forEach(o => { if(o.getAttribute('data-val') === correct) o.classList.add('correct'); });
+  }
+  answered[qid] = isCorrect;
+  const fb = document.getElementById(qid + '-fb');
+  fb.textContent = (isCorrect ? '✅ Correct! ' : '❌ Not quite. ') + fb.getAttribute('data-feedback');
+  fb.classList.add('show');
+  fb.classList.add(isCorrect ? 'correct-fb' : 'incorrect-fb');
+  updateBar();
+  if(Object.keys(answered).length === TOTAL){ finish(); }
+}
+
+function updateBar(){
+  const ansCount = Object.keys(answered).length;
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('answeredVal').textContent = ansCount;
+  document.getElementById('progressFill').style.width = (ansCount/TOTAL*100) + '%';
+}
+
+function finish(){
+  localStorage.setItem(SCORE_KEY, score + '/' + TOTAL);
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  document.getElementById('finalScore').textContent = score + ' / ' + TOTAL;
+  let emoji = '💪';
+  if(score >= 41) emoji = '🏆';
+  else if(score >= 32) emoji = '🎉';
+  else if(score >= 23) emoji = '📚';
+  document.getElementById('finalMsg').textContent = emoji + ' Show this to mum — ' + score + '/' + TOTAL;
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  location.reload();
+}
+</script>
+
+</body>
+</html>

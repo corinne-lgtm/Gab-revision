@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1.1 — The Hospitality & Catering Industry | Gab Revision</title>
+<style>
+
+:root{
+  --navy:#5c1f2e;
+  --navy2:#7a2f3f;
+  --accent:#d98a3d;
+  --accent2:#f0a857;
+  --bg:#fbf2e9;
+  --card:#ffffff;
+  --text:#2c1a1a;
+  --good:#2e7d32;
+  --bad:#c0392b;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Verdana,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;
+  padding:36px 20px 30px;
+  text-align:center;
+}
+.kicker{
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-size:0.75rem;
+  opacity:0.85;
+  font-weight:700;
+}
+.hero h1{
+  margin:10px 0 14px;
+  font-size:1.9rem;
+}
+.badge{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  padding:6px 18px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:0.85rem;
+}
+.hero-tags{
+  margin-top:16px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.tag{
+  background:rgba(255,255,255,0.18);
+  padding:4px 13px;
+  border-radius:14px;
+  font-size:0.78rem;
+}
+.nav{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:12px 18px;
+  background:#3f1420;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.88rem;
+  opacity:0.92;
+}
+.nav a:hover{opacity:1;text-decoration:underline;}
+.wrap{
+  max-width:880px;
+  margin:0 auto;
+  padding:22px 16px 60px;
+}
+.checklist{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom:22px;
+}
+.checklist h2{margin-top:0;color:var(--navy);font-size:1.1rem;}
+.checklist ul{margin:0;padding-left:20px;}
+.checklist li{margin:5px 0;font-size:0.95rem;}
+.panel{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px 24px;
+  margin:18px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  border-left:6px solid var(--accent);
+}
+.panel.warning{border-left-color:var(--bad);background:#fff5f2;}
+.panel.tip{border-left-color:var(--good);background:#f3fbf0;}
+.panel h2{margin-top:0;color:var(--navy);font-size:1.25rem;}
+.panel h3{color:var(--navy);font-size:1.02rem;margin:14px 0 4px;}
+.panel p{margin:6px 0;font-size:0.96rem;}
+.panel ul{margin:6px 0;padding-left:20px;font-size:0.95rem;}
+.panel li{margin:3px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.9rem;}
+th,td{border:1px solid #e6d6c4;padding:7px 9px;text-align:left;vertical-align:top;}
+th{background:var(--navy);color:#fff;font-size:0.85rem;}
+tr:nth-child(even) td{background:#fdf8f1;}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
+.pill{background:var(--accent);color:#2c1a1a;padding:5px 13px;border-radius:20px;font-size:0.82rem;font-weight:700;}
+.exam-tip::before{content:"💡 Exam tip: ";font-weight:800;}
+.warning::before{content:"⚠️ ";}
+.cta{
+  text-align:center;
+  margin:30px 0 10px;
+}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  font-weight:800;
+  padding:13px 28px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:1rem;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  border:none;
+  cursor:pointer;
+}
+.btn.secondary{background:var(--navy);color:#fff;}
+.mark-read-wrap{text-align:center;margin:24px 0;}
+.read-confirm{
+  display:none;
+  margin-top:10px;
+  background:#f3fbf0;
+  border:2px solid var(--good);
+  color:#1b5e20;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  text-align:center;
+}
+footer{text-align:center;font-size:0.8rem;opacity:0.6;padding:20px;}
+
+/* Quiz specific */
+.score-bar{
+  background:var(--card);
+  border-radius:14px;
+  padding:14px 20px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.score-bar .row{display:flex;justify-content:space-between;font-weight:700;color:var(--navy);font-size:0.92rem;margin-bottom:8px;}
+.progress-track{background:#eee2d2;border-radius:10px;height:12px;overflow:hidden;}
+.progress-fill{background:var(--accent);height:100%;width:0%;transition:width .3s;}
+.question{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  margin:16px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.question .qnum{color:var(--accent);font-weight:800;font-size:0.8rem;letter-spacing:1px;}
+.question p.qtext{font-weight:700;margin:6px 0 12px;font-size:1rem;color:var(--text);}
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:#fdf8f1;
+  border:2px solid #eee2d2;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:0.92rem;
+  cursor:pointer;
+  font-family:inherit;
+  color:var(--text);
+}
+.opt:hover{border-color:var(--accent);}
+.opt.correct{background:#e3f4e2;border-color:var(--good);font-weight:700;}
+.opt.incorrect{background:#fbe4e1;border-color:var(--bad);}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:0.9rem;display:none;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:#e3f4e2;color:#1b5e20;}
+.feedback.incorrect-fb{background:#fbe4e1;color:#8c2c22;}
+.result-box{
+  display:none;
+  background:var(--navy);
+  color:#fff;
+  border-radius:16px;
+  padding:26px;
+  text-align:center;
+  margin:24px 0;
+}
+.result-box.show{display:block;}
+.result-box .big{font-size:2.4rem;font-weight:800;margin:8px 0;}
+.result-box .msg{font-size:1.05rem;margin-top:8px;}
+.reset-btn{margin-top:16px;}
+@media (max-width:600px){
+  .hero h1{font-size:1.5rem;}
+  .panel{padding:16px 18px;}
+}
+
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="hospitality-revision-1.html">🏨 Unit 1: Industry</a>
+  <a href="hospitality-revision-2.html">🍽️ Unit 1: Operations</a>
+  <a href="hospitality-revision-3.html">🧼 Unit 1: H&S and Law</a>
+  <a href="hospitality-quiz-1.html">📝 Quiz A</a>
+  <a href="hospitality-quiz-2.html">📝 Quiz B</a>
+</nav>
+
+<div class="hero">
+  <div class="kicker">GCSE Hospitality &amp; Catering · Unit 1</div>
+  <h1>1.1 The Hospitality &amp; Catering Industry</h1>
+  <span class="badge">AC1.1.1 – AC1.1.4</span>
+  <div class="hero-tags"><span class="tag">Standards &amp; ratings</span><span class="tag">Provision types</span><span class="tag">Service types</span><span class="tag">Jobs</span><span class="tag">Working conditions</span><span class="tag">Success factors</span><span class="tag">Media</span></div>
+</div>
+<div class="wrap">
+<div class="checklist">
+  <h2>📋 What you need to know</h2>
+  <ul><li>Hotel star ratings (1–5) and restaurant award schemes (Michelin, AA Rosette, Good Food Guide)</li><li>Commercial vs non-commercial, residential vs non-residential provision — with examples</li><li>Types of food service (table, counter, personal) and residential service</li><li>Employment roles: front of house, kitchen brigade, housekeeping, management</li><li>Personal attributes, qualifications and experience needed for jobs in the sector</li><li>Employment contracts, pay/benefits and working hours rules</li><li>Factors affecting business success: economy, environment, costs, media, technology, profit</li><li>Positive and negative uses of media in the industry</li></ul>
+</div>
+
+<div class="panel">
+  <h2>⭐ Standards and ratings</h2>
+  
+<h3>Hotel &amp; guest house star ratings</h3>
+<table>
+<tr><th>Stars</th><th>Standard</th></tr>
+<tr><td>1</td><td>Basic, acceptable rooms — no room service</td></tr>
+<tr><td>2</td><td>Average, small establishment — no restaurant or room service</td></tr>
+<tr><td>3</td><td>Good — one restaurant, room service some hours, Wi-Fi in some areas, maybe pool/gym</td></tr>
+<tr><td>4</td><td>Very good — large reception, room service some hours, pool, valet parking</td></tr>
+<tr><td>5</td><td>Excellent — 24hr room service, spa, pool, gym, concierge, valet parking</td></tr>
+</table>
+<h3>Restaurant award schemes</h3>
+<table>
+<tr><th>Award</th><th>Scale</th><th>Based on</th></tr>
+<tr><td>Michelin star</td><td>1–3</td><td>Ingredient quality, cooking &amp; presentation, taste, standard of cuisine, value for money</td></tr>
+<tr><td>AA Rosette</td><td>1–5</td><td>Variety of food, ingredient quality/sourcing, cooking/presentation, chef's skill &amp; creativity</td></tr>
+<tr><td>Good Food Guide</td><td>1–10</td><td>Cooking skills, ingredient quality, technique</td></tr>
+</table>
+<p class="exam-tip">Be able to match a description ("24hr room service and a spa") to the correct star rating, and name all three restaurant award schemes.</p>
+
+</div>
+
+<div class="panel">
+  <h2>🏢 Types of hospitality &amp; catering provision</h2>
+  
+<p>Provision is split by whether it makes a <strong>profit</strong> (commercial) or not, and whether it offers <strong>accommodation</strong> (residential).</p>
+<table>
+<tr><th></th><th>Residential (offers accommodation)</th><th>Non-residential (no accommodation)</th></tr>
+<tr><td><strong>Commercial</strong> (aims to profit)</td><td>Hotels, motels, hostels, B&amp;Bs, Airbnb, holiday parks, campsites</td><td>Restaurants, cafés, takeaways, fast food, pubs/bars, airlines, mobile food vans, vending machines</td></tr>
+<tr><td><strong>Non-commercial</strong> (no profit aim)</td><td>Hospitals, hospices, care homes, armed forces, prisons, boarding schools</td><td>School/college canteens, meals on wheels, subsidised workplace canteens, charity food providers</td></tr>
+</table>
+
+</div>
+
+<div class="panel">
+  <h2>🍽️ Types of service</h2>
+  
+<h3>Table service</h3>
+<ul>
+<li><strong>Plate:</strong> food plated in the kitchen, served by waiting staff</li>
+<li><strong>Silver:</strong> waiter transfers food from a serving dish to the customer's plate at the table</li>
+<li><strong>Banquet:</strong> large catered events (weddings, awards)</li>
+<li><strong>Family style:</strong> serving bowls placed on the table to share</li>
+<li><strong>Gueridon:</strong> food finished/cooked on a trolley in front of the customer</li>
+</ul>
+<h3>Counter service</h3>
+<ul>
+<li><strong>Cafeteria:</strong> customers move along a counter with a tray</li>
+<li><strong>Fast food:</strong> menu behind the counter, quick, disposable packaging</li>
+<li><strong>Buffet:</strong> customers help themselves from a serving table</li>
+</ul>
+<h3>Personal &amp; residential service</h3>
+<ul>
+<li><strong>Tray/trolley</strong>, <strong>home delivery</strong>, <strong>takeaway</strong></li>
+<li>Residential: room types (single/double/family/suite), refreshments, leisure facilities, conference facilities</li>
+</ul>
+
+</div>
+
+<div class="panel">
+  <h2>👩‍🍳 Employment roles and responsibilities</h2>
+  
+<table>
+<tr><th>Area</th><th>Key roles</th></tr>
+<tr><td>Front of house</td><td>Front of house manager, head waiter, waiting staff, concierge, receptionist, maître d'hôte</td></tr>
+<tr><td>Kitchen brigade</td><td>Executive chef, sous-chef, chef de partie, commis chef, pastry chef, kitchen assistant, apprentice, kitchen porter/plongeur</td></tr>
+<tr><td>Housekeeping</td><td>Chambermaid, cleaner, maintenance, caretaker</td></tr>
+<tr><td>Management</td><td>Food &amp; beverage manager, housekeeping manager, marketing manager</td></tr>
+</table>
+<p class="exam-tip">Know what each role <em>does</em> — exam questions often give a job description and ask you to name the role.</p>
+
+</div>
+
+<div class="panel">
+  <h2>🎓 Personal attributes, qualifications &amp; experience</h2>
+  
+<h3>Qualifications (examples)</h3>
+<p>Hospitality: Level 1/2 Certificates/Diplomas in Reception/Front of House, GCSE English/Maths/Business/IT.<br>
+Catering: NVQ Food Preparation &amp; Cooking, City &amp; Guilds Professional Cookery, GCSE Food &amp; Nutrition, Food hygiene certificate, First Aid.</p>
+<h3>Personal attributes employers look for</h3>
+<div class="pills">
+<span class="pill">Team player</span><span class="pill">Organised</span><span class="pill">Flexible</span>
+<span class="pill">Good communicator</span><span class="pill">Calm under pressure</span><span class="pill">Hygienic</span>
+<span class="pill">Punctual</span><span class="pill">Reliable</span><span class="pill">Attention to detail</span>
+<span class="pill">Leadership</span><span class="pill">Smart appearance</span>
+</div>
+
+</div>
+
+<div class="panel">
+  <h2>📑 Working conditions</h2>
+  
+<h3>Contract types</h3>
+<table>
+<tr><th>Contract</th><th>Key feature</th></tr>
+<tr><td>Casual</td><td>Covers absent staff, no sick pay/holiday entitlement</td></tr>
+<tr><td>Full-time (permanent)</td><td>Fixed hours, sick pay &amp; holiday entitlement</td></tr>
+<tr><td>Part-time (permanent)</td><td>Fixed days/hours, sick pay &amp; holiday entitlement</td></tr>
+<tr><td>Seasonal</td><td>Set time-frame only (e.g. Christmas), no expectation of further work</td></tr>
+<tr><td>Zero hours</td><td>No fixed hours either way; no sick pay/holiday entitlement</td></tr>
+</table>
+<h3>Pay &amp; benefits</h3>
+<p>Salary, holiday entitlement (28 days/year, pro-rata for part-time), pension, sickness pay, national minimum wage, tips, bonuses/rewards.</p>
+<h3>Working hours rules</h3>
+<ul>
+<li>Average max 48 hrs/week (over 17 weeks) — employees can opt out</li>
+<li>Under-18s: max 8 hrs/day, 40 hrs/week</li>
+<li>6+ hour shift = right to a 20 minute break, plus at least 1 day off per week</li>
+</ul>
+
+</div>
+
+<div class="panel tip">
+  <h2>📈 Factors affecting business success</h2>
+  
+<table>
+<tr><th>Factor</th><th>Key points</th></tr>
+<tr><td>Economy</td><td>Strong economy → more spending; recession → people cut back on eating out/holidays. VAT is added to prices and goes to the government.</td></tr>
+<tr><td>Environment</td><td>Reduce/reuse/recycle, energy-efficient equipment, local &amp; seasonal ingredients lower CO2, waste sorted/composted.</td></tr>
+<tr><td>Costs</td><td><strong>Labour</strong> (wages, NI, pension), <strong>Material</strong> (ingredients, equipment, furnishings), <strong>Overheads</strong> (rent, rates, gas/electricity, insurance, training).</td></tr>
+<tr><td>Media</td><td>Print, broadcast, social media for advertising; customers increasingly book/order/pay/review via smartphone.</td></tr>
+<tr><td>New technology</td><td>Cashless/contactless payment, online booking, key cards, stock ordering software.</td></tr>
+</table>
+<h3>Profit formula (exam favourite!)</h3>
+<p><strong>Gross Profit</strong> = Selling price − Ingredient cost. Ingredient cost should be no more than 30% of selling price.</p>
+<p>Example: brownie costs £1.50 to make, sells for £4.50 → Gross profit = £3.00 → Gross Profit % = (3.00 ÷ 4.50) × 100 = <strong>66.6%</strong></p>
+<p><strong>Net Profit</strong> = what's left of gross profit once labour, material and overhead costs are all paid.</p>
+
+</div>
+
+<div class="panel">
+  <h2>📱 Positive and negative uses of media</h2>
+  
+<table>
+<tr><th>Positive</th><th>Negative</th></tr>
+<tr><td>Free/cheap (social media), reaches a wide audience fast, attracts new customers, builds loyalty &amp; personal connection, can target specific groups</td>
+<td>Print/broadcast advertising is expensive, a bad review can spread fast and damage reputation, can lead to loss of customers/closure</td></tr>
+</table>
+<h3>Types of media</h3>
+<ul>
+<li><strong>Printed:</strong> magazines, newspapers, billboards, flyers, business cards</li>
+<li><strong>Broadcast:</strong> TV, radio</li>
+<li><strong>Internet:</strong> social media, websites (e.g. TripAdvisor), blogs, email</li>
+<li><strong>Competitive:</strong> competitions, deals, special offers, themed events</li>
+</ul>
+
+</div>
+
+<div class="cta">
+  <a class="btn" href="hospitality-quiz-1.html">📝 Test yourself — Quiz A (Industry &amp; Operations)</a>
+</div>
+
+<div class="mark-read-wrap">
+  <button class="btn secondary" onclick="markRead()">✅ Mark as Read</button>
+  <div class="read-confirm" id="readConfirm">Marked as read — Show this to mum!</div>
+</div>
+<script>
+function markRead(){
+  localStorage.setItem('hospitality_revision_1_read','true');
+  document.getElementById('readConfirm').classList.add('show');
+}
+window.onload = function(){
+  if(localStorage.getItem('hospitality_revision_1_read') === 'true'){
+    var c = document.getElementById('readConfirm');
+    if(c){ c.classList.add('show'); }
+  }
+};
+</script>
+<footer>Gab-revision · Hospitality &amp; Catering · Unit 1</footer></div>
+</body>
+</html>

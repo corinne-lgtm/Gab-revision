@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz A — Hospitality &amp; Catering: Industry &amp; Operations | Gab Revision</title>
+<style>
+
+:root{
+  --navy:#5c1f2e;
+  --navy2:#7a2f3f;
+  --accent:#d98a3d;
+  --accent2:#f0a857;
+  --bg:#fbf2e9;
+  --card:#ffffff;
+  --text:#2c1a1a;
+  --good:#2e7d32;
+  --bad:#c0392b;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Segoe UI',Verdana,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
+.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;
+  padding:36px 20px 30px;
+  text-align:center;
+}
+.kicker{
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-size:0.75rem;
+  opacity:0.85;
+  font-weight:700;
+}
+.hero h1{
+  margin:10px 0 14px;
+  font-size:1.9rem;
+}
+.badge{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  padding:6px 18px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:0.85rem;
+}
+.hero-tags{
+  margin-top:16px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.tag{
+  background:rgba(255,255,255,0.18);
+  padding:4px 13px;
+  border-radius:14px;
+  font-size:0.78rem;
+}
+.nav{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:12px 18px;
+  background:#3f1420;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.88rem;
+  opacity:0.92;
+}
+.nav a:hover{opacity:1;text-decoration:underline;}
+.wrap{
+  max-width:880px;
+  margin:0 auto;
+  padding:22px 16px 60px;
+}
+.checklist{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom:22px;
+}
+.checklist h2{margin-top:0;color:var(--navy);font-size:1.1rem;}
+.checklist ul{margin:0;padding-left:20px;}
+.checklist li{margin:5px 0;font-size:0.95rem;}
+.panel{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px 24px;
+  margin:18px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  border-left:6px solid var(--accent);
+}
+.panel.warning{border-left-color:var(--bad);background:#fff5f2;}
+.panel.tip{border-left-color:var(--good);background:#f3fbf0;}
+.panel h2{margin-top:0;color:var(--navy);font-size:1.25rem;}
+.panel h3{color:var(--navy);font-size:1.02rem;margin:14px 0 4px;}
+.panel p{margin:6px 0;font-size:0.96rem;}
+.panel ul{margin:6px 0;padding-left:20px;font-size:0.95rem;}
+.panel li{margin:3px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.9rem;}
+th,td{border:1px solid #e6d6c4;padding:7px 9px;text-align:left;vertical-align:top;}
+th{background:var(--navy);color:#fff;font-size:0.85rem;}
+tr:nth-child(even) td{background:#fdf8f1;}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
+.pill{background:var(--accent);color:#2c1a1a;padding:5px 13px;border-radius:20px;font-size:0.82rem;font-weight:700;}
+.exam-tip::before{content:"💡 Exam tip: ";font-weight:800;}
+.warning::before{content:"⚠️ ";}
+.cta{
+  text-align:center;
+  margin:30px 0 10px;
+}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#2c1a1a;
+  font-weight:800;
+  padding:13px 28px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:1rem;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  border:none;
+  cursor:pointer;
+}
+.btn.secondary{background:var(--navy);color:#fff;}
+.mark-read-wrap{text-align:center;margin:24px 0;}
+.read-confirm{
+  display:none;
+  margin-top:10px;
+  background:#f3fbf0;
+  border:2px solid var(--good);
+  color:#1b5e20;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  text-align:center;
+}
+footer{text-align:center;font-size:0.8rem;opacity:0.6;padding:20px;}
+
+/* Quiz specific */
+.score-bar{
+  background:var(--card);
+  border-radius:14px;
+  padding:14px 20px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.score-bar .row{display:flex;justify-content:space-between;font-weight:700;color:var(--navy);font-size:0.92rem;margin-bottom:8px;}
+.progress-track{background:#eee2d2;border-radius:10px;height:12px;overflow:hidden;}
+.progress-fill{background:var(--accent);height:100%;width:0%;transition:width .3s;}
+.question{
+  background:var(--card);
+  border-radius:14px;
+  padding:18px 22px;
+  margin:16px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.question .qnum{color:var(--accent);font-weight:800;font-size:0.8rem;letter-spacing:1px;}
+.question p.qtext{font-weight:700;margin:6px 0 12px;font-size:1rem;color:var(--text);}
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:#fdf8f1;
+  border:2px solid #eee2d2;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:0.92rem;
+  cursor:pointer;
+  font-family:inherit;
+  color:var(--text);
+}
+.opt:hover{border-color:var(--accent);}
+.opt.correct{background:#e3f4e2;border-color:var(--good);font-weight:700;}
+.opt.incorrect{background:#fbe4e1;border-color:var(--bad);}
+.feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:0.9rem;display:none;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:#e3f4e2;color:#1b5e20;}
+.feedback.incorrect-fb{background:#fbe4e1;color:#8c2c22;}
+.result-box{
+  display:none;
+  background:var(--navy);
+  color:#fff;
+  border-radius:16px;
+  padding:26px;
+  text-align:center;
+  margin:24px 0;
+}
+.result-box.show{display:block;}
+.result-box .big{font-size:2.4rem;font-weight:800;margin:8px 0;}
+.result-box .msg{font-size:1.05rem;margin-top:8px;}
+.reset-btn{margin-top:16px;}
+@media (max-width:600px){
+  .hero h1{font-size:1.5rem;}
+  .panel{padding:16px 18px;}
+}
+
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="hospitality-revision-1.html">🏨 Unit 1: Industry</a>
+  <a href="hospitality-revision-2.html">🍽️ Unit 1: Operations</a>
+  <a href="hospitality-revision-3.html">🧼 Unit 1: H&S and Law</a>
+  <a href="hospitality-quiz-1.html">📝 Quiz A</a>
+  <a href="hospitality-quiz-2.html">📝 Quiz B</a>
+</nav>
+
+<div class="hero">
+  <div class="kicker">GCSE Hospitality &amp; Catering · Mega Quiz A</div>
+  <h1>Quiz A: The Industry &amp; Operations</h1>
+  <span class="badge">44 questions · Unit 1.1 + 1.2</span>
+  <div class="hero-tags"><span class="tag">Standards</span><span class="tag">Provision</span><span class="tag">Service</span><span class="tag">Jobs</span><span class="tag">Costs &amp; profit</span><span class="tag">Front/back of house</span><span class="tag">Customers</span></div>
+</div>
+<div class="wrap">
+<div class="score-bar">
+  <div class="row"><span>Score: <span id="scoreVal">0</span>/44</span><span>Answered: <span id="answeredVal">0</span>/44</span></div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="question" id="q0" data-correct="D" data-type="mcq">
+<div class="qnum">QUESTION 1 / 44</div>
+<p class="qtext">A hotel offers 24hr room service, a spa, a swimming pool and a concierge service. What star rating is this?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q0',this,'A')">A. 2 star</button>
+<button class="opt" data-val="B" onclick="answer('q0',this,'B')">B. 3 star</button>
+<button class="opt" data-val="C" onclick="answer('q0',this,'C')">C. 4 star</button>
+<button class="opt" data-val="D" onclick="answer('q0',this,'D')">D. 5 star</button>
+</div>
+<div class="feedback" id="q0-fb" data-feedback="5-star = excellent standard, with 24hr room service, spa, pool, gym and concierge."></div>
+</div>
+<div class="question" id="q1" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 2 / 44</div>
+<p class="qtext">Which restaurant award is given on a scale of 1 to 3?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q1',this,'A')">A. AA Rosette</button>
+<button class="opt" data-val="B" onclick="answer('q1',this,'B')">B. Michelin star</button>
+<button class="opt" data-val="C" onclick="answer('q1',this,'C')">C. Good Food Guide</button>
+<button class="opt" data-val="D" onclick="answer('q1',this,'D')">D. Food Hygiene rating</button>
+</div>
+<div class="feedback" id="q1-fb" data-feedback="Michelin stars are awarded 1–3 based on ingredients, technique, taste, cuisine standard and value."></div>
+</div>
+<div class="question" id="q2" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 3 / 44</div>
+<p class="qtext">The AA Rosette award is given on a scale of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q2',this,'A')">A. 1 to 3</button>
+<button class="opt" data-val="B" onclick="answer('q2',this,'B')">B. 1 to 5</button>
+<button class="opt" data-val="C" onclick="answer('q2',this,'C')">C. 1 to 10</button>
+<button class="opt" data-val="D" onclick="answer('q2',this,'D')">D. 1 to 100</button>
+</div>
+<div class="feedback" id="q2-fb" data-feedback="AA Rosettes go from 1 to 5."></div>
+</div>
+<div class="question" id="q3" data-correct="false" data-type="tf">
+<div class="qnum">QUESTION 4 / 44</div>
+<p class="qtext">A 2-star hotel would normally offer 24-hour room service.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q3',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q3',this,'false')">False</button>
+</div>
+<div class="feedback" id="q3-fb" data-feedback="A 2-star hotel is small/average and would not offer room service or a restaurant."></div>
+</div>
+<div class="question" id="q4" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 5 / 44</div>
+<p class="qtext">A hospice is an example of which type of provision?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q4',this,'A')">A. Commercial residential</button>
+<button class="opt" data-val="B" onclick="answer('q4',this,'B')">B. Non-commercial residential</button>
+<button class="opt" data-val="C" onclick="answer('q4',this,'C')">C. Commercial non-residential</button>
+<button class="opt" data-val="D" onclick="answer('q4',this,'D')">D. Non-commercial non-residential</button>
+</div>
+<div class="feedback" id="q4-fb" data-feedback="Hospices offer accommodation but don't aim to make a profit — non-commercial residential."></div>
+</div>
+<div class="question" id="q5" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 6 / 44</div>
+<p class="qtext">A mobile street food van is an example of which type of provision?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q5',this,'A')">A. Commercial residential</button>
+<button class="opt" data-val="B" onclick="answer('q5',this,'B')">B. Non-commercial residential</button>
+<button class="opt" data-val="C" onclick="answer('q5',this,'C')">C. Commercial non-residential</button>
+<button class="opt" data-val="D" onclick="answer('q5',this,'D')">D. Non-commercial non-residential</button>
+</div>
+<div class="feedback" id="q5-fb" data-feedback="It aims to make a profit but offers no accommodation — commercial non-residential."></div>
+</div>
+<div class="question" id="q6" data-correct="D" data-type="mcq">
+<div class="qnum">QUESTION 7 / 44</div>
+<p class="qtext">School canteens and meals on wheels are examples of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q6',this,'A')">A. Commercial residential</button>
+<button class="opt" data-val="B" onclick="answer('q6',this,'B')">B. Non-commercial residential</button>
+<button class="opt" data-val="C" onclick="answer('q6',this,'C')">C. Commercial non-residential</button>
+<button class="opt" data-val="D" onclick="answer('q6',this,'D')">D. Non-commercial non-residential</button>
+</div>
+<div class="feedback" id="q6-fb" data-feedback="No accommodation, no profit aim — non-commercial non-residential."></div>
+</div>
+<div class="question" id="q7" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 8 / 44</div>
+<p class="qtext">A B&B is an example of commercial residential provision.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q7',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q7',this,'false')">False</button>
+</div>
+<div class="feedback" id="q7-fb" data-feedback="B&Bs aim to make a profit and offer accommodation."></div>
+</div>
+<div class="question" id="q8" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 9 / 44</div>
+<p class="qtext">A waiter transfers food from a serving dish to a customer's plate at their table using a spoon and fork. What service type is this?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q8',this,'A')">A. Plate service</button>
+<button class="opt" data-val="B" onclick="answer('q8',this,'B')">B. Silver service</button>
+<button class="opt" data-val="C" onclick="answer('q8',this,'C')">C. Gueridon service</button>
+<button class="opt" data-val="D" onclick="answer('q8',this,'D')">D. Family style</button>
+</div>
+<div class="feedback" id="q8-fb" data-feedback="Silver service: transferring from a serving dish to the plate at the table."></div>
+</div>
+<div class="question" id="q9" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 10 / 44</div>
+<p class="qtext">Food is cooked or finished in front of the customer from a trolley. This is...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q9',this,'A')">A. Banquet service</button>
+<button class="opt" data-val="B" onclick="answer('q9',this,'B')">B. Gueridon service</button>
+<button class="opt" data-val="C" onclick="answer('q9',this,'C')">C. Cafeteria service</button>
+<button class="opt" data-val="D" onclick="answer('q9',this,'D')">D. Buffet service</button>
+</div>
+<div class="feedback" id="q9-fb" data-feedback="Gueridon service creates a sophisticated, theatrical experience tableside."></div>
+</div>
+<div class="question" id="q10" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 11 / 44</div>
+<p class="qtext">Customers move along a long counter with a tray, choosing food as they go. This is...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q10',this,'A')">A. Cafeteria service</button>
+<button class="opt" data-val="B" onclick="answer('q10',this,'B')">B. Fast food service</button>
+<button class="opt" data-val="C" onclick="answer('q10',this,'C')">C. Family style service</button>
+<button class="opt" data-val="D" onclick="answer('q10',this,'D')">D. Plate service</button>
+</div>
+<div class="feedback" id="q10-fb" data-feedback="Cafeteria service: food displayed on a long counter, tray-based."></div>
+</div>
+<div class="question" id="q11" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 12 / 44</div>
+<p class="qtext">Buffet service means food is collected by customers from a serving table, which can be served hot or cold.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q11',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q11',this,'false')">False</button>
+</div>
+<div class="feedback" id="q11-fb" data-feedback="Correct — buffet allows self-service of hot and cold food."></div>
+</div>
+<div class="question" id="q12" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 13 / 44</div>
+<p class="qtext">Which role oversees the whole kitchen and develops the menu?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q12',this,'A')">A. Sous-chef</button>
+<button class="opt" data-val="B" onclick="answer('q12',this,'B')">B. Executive chef</button>
+<button class="opt" data-val="C" onclick="answer('q12',this,'C')">C. Chef de partie</button>
+<button class="opt" data-val="D" onclick="answer('q12',this,'D')">D. Commis chef</button>
+</div>
+<div class="feedback" id="q12-fb" data-feedback="The executive chef is in charge of the whole kitchen and menu development."></div>
+</div>
+<div class="question" id="q13" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 14 / 44</div>
+<p class="qtext">Which kitchen brigade role is in charge of a specific section of the kitchen?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q13',this,'A')">A. Chef de partie</button>
+<button class="opt" data-val="B" onclick="answer('q13',this,'B')">B. Pastry chef</button>
+<button class="opt" data-val="C" onclick="answer('q13',this,'C')">C. Kitchen porter</button>
+<button class="opt" data-val="D" onclick="answer('q13',this,'D')">D. Apprentice</button>
+</div>
+<div class="feedback" id="q13-fb" data-feedback="Chef de partie runs a specific section/area of the kitchen."></div>
+</div>
+<div class="question" id="q14" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 15 / 44</div>
+<p class="qtext">Who greets customers, checks bookings and supervises waiting staff?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q14',this,'A')">A. Concierge</button>
+<button class="opt" data-val="B" onclick="answer('q14',this,'B')">B. Receptionist</button>
+<button class="opt" data-val="C" onclick="answer('q14',this,'C')">C. Maître d'hôte</button>
+<button class="opt" data-val="D" onclick="answer('q14',this,'D')">D. Head waiter</button>
+</div>
+<div class="feedback" id="q14-fb" data-feedback="The Maître d'hôte oversees food/drink service and supervises waiting staff."></div>
+</div>
+<div class="question" id="q15" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 16 / 44</div>
+<p class="qtext">Who advises customers on trips/attractions and books taxis?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q15',this,'A')">A. Receptionist</button>
+<button class="opt" data-val="B" onclick="answer('q15',this,'B')">B. Concierge</button>
+<button class="opt" data-val="C" onclick="answer('q15',this,'C')">C. Front of house manager</button>
+<button class="opt" data-val="D" onclick="answer('q15',this,'D')">D. Chambermaid</button>
+</div>
+<div class="feedback" id="q15-fb" data-feedback="The concierge helps with trips, attractions and transport."></div>
+</div>
+<div class="question" id="q16" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 17 / 44</div>
+<p class="qtext">A kitchen porter (plongeur) is responsible for washing dishes and other cleaning duties.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q16',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q16',this,'false')">False</button>
+</div>
+<div class="feedback" id="q16-fb" data-feedback="Correct, that's the kitchen porter's main role."></div>
+</div>
+<div class="question" id="q17" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 18 / 44</div>
+<p class="qtext">Which qualification would best suit someone wanting to be a chef?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q17',this,'A')">A. Level 2 Certificate in Front of House Reception</button>
+<button class="opt" data-val="B" onclick="answer('q17',this,'B')">B. NVQ Food Preparation and Cooking</button>
+<button class="opt" data-val="C" onclick="answer('q17',this,'C')">C. Level 1 Certificate in Business and Administration</button>
+<button class="opt" data-val="D" onclick="answer('q17',this,'D')">D. BTEC in Travel and Tourism</button>
+</div>
+<div class="feedback" id="q17-fb" data-feedback="NVQ Food Preparation and Cooking is a catering-specific qualification."></div>
+</div>
+<div class="question" id="q18" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 19 / 44</div>
+<p class="qtext">Which of these is a personal attribute, not a qualification?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q18',this,'A')">A. GCSE Food and Nutrition</button>
+<button class="opt" data-val="B" onclick="answer('q18',this,'B')">B. First Aid certificate</button>
+<button class="opt" data-val="C" onclick="answer('q18',this,'C')">C. Calm under pressure</button>
+<button class="opt" data-val="D" onclick="answer('q18',this,'D')">D. City & Guilds diploma</button>
+</div>
+<div class="feedback" id="q18-fb" data-feedback="Being calm under pressure is a personal attribute, not a formal qualification."></div>
+</div>
+<div class="question" id="q19" data-correct="D" data-type="mcq">
+<div class="qnum">QUESTION 20 / 44</div>
+<p class="qtext">Which contract type has no sick pay or holiday entitlement and no guarantee of work either way?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q19',this,'A')">A. Full-time permanent</button>
+<button class="opt" data-val="B" onclick="answer('q19',this,'B')">B. Part-time permanent</button>
+<button class="opt" data-val="C" onclick="answer('q19',this,'C')">C. Seasonal</button>
+<button class="opt" data-val="D" onclick="answer('q19',this,'D')">D. Zero hours</button>
+</div>
+<div class="feedback" id="q19-fb" data-feedback="Zero hours contracts have no obligation on either side and no sick pay/holiday."></div>
+</div>
+<div class="question" id="q20" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 21 / 44</div>
+<p class="qtext">A contract used to cover staff absence, often through an agency, with no sick pay or holiday entitlement is called...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q20',this,'A')">A. Casual</button>
+<button class="opt" data-val="B" onclick="answer('q20',this,'B')">B. Seasonal</button>
+<button class="opt" data-val="C" onclick="answer('q20',this,'C')">C. Permanent</button>
+<button class="opt" data-val="D" onclick="answer('q20',this,'D')">D. Zero hours</button>
+</div>
+<div class="feedback" id="q20-fb" data-feedback="A casual contract covers absence and gives no sick pay/holiday."></div>
+</div>
+<div class="question" id="q21" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 22 / 44</div>
+<p class="qtext">Under-18s cannot legally work more than 8 hours a day or 40 hours a week.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q21',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q21',this,'false')">False</button>
+</div>
+<div class="feedback" id="q21-fb" data-feedback="Correct — this is the legal limit for under-18 workers."></div>
+</div>
+<div class="question" id="q22" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 23 / 44</div>
+<p class="qtext">Employees who work 6 or more hours in a day are entitled to a break of at least...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q22',this,'A')">A. 10 minutes</button>
+<button class="opt" data-val="B" onclick="answer('q22',this,'B')">B. 20 minutes</button>
+<button class="opt" data-val="C" onclick="answer('q22',this,'C')">C. 30 minutes</button>
+<button class="opt" data-val="D" onclick="answer('q22',this,'D')">D. 1 hour</button>
+</div>
+<div class="feedback" id="q22-fb" data-feedback="A minimum 20-minute break is required for shifts of 6+ hours."></div>
+</div>
+<div class="question" id="q23" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 24 / 44</div>
+<p class="qtext">The Working Time Directive states employees cannot work more than an average of 48 hours a week (over 17 weeks), although they can opt out.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q23',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q23',this,'false')">False</button>
+</div>
+<div class="feedback" id="q23-fb" data-feedback="Correct — 48 hours is the average max, with an opt-out available."></div>
+</div>
+<div class="question" id="q24" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 25 / 44</div>
+<p class="qtext">Money given by a customer as a 'thank you' for good service is called...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q24',this,'A')">A. A bonus</button>
+<button class="opt" data-val="B" onclick="answer('q24',this,'B')">B. A salary</button>
+<button class="opt" data-val="C" onclick="answer('q24',this,'C')">C. A tip</button>
+<button class="opt" data-val="D" onclick="answer('q24',this,'D')">D. Sickness pay</button>
+</div>
+<div class="feedback" id="q24-fb" data-feedback="Tips are given directly by customers as a thank you."></div>
+</div>
+<div class="question" id="q25" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 26 / 44</div>
+<p class="qtext">A chocolate brownie costs £1.50 to make and sells for £4.50. What is the gross profit?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q25',this,'A')">A. £1.50</button>
+<button class="opt" data-val="B" onclick="answer('q25',this,'B')">B. £3.00</button>
+<button class="opt" data-val="C" onclick="answer('q25',this,'C')">C. £4.50</button>
+<button class="opt" data-val="D" onclick="answer('q25',this,'D')">D. £6.00</button>
+</div>
+<div class="feedback" id="q25-fb" data-feedback="Gross profit = selling price − ingredient cost = £4.50 − £1.50 = £3.00."></div>
+</div>
+<div class="question" id="q26" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 27 / 44</div>
+<p class="qtext">Using the same brownie example (cost £1.50, sells £4.50), what is the gross profit percentage?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q26',this,'A')">A. 33.3%</button>
+<button class="opt" data-val="B" onclick="answer('q26',this,'B')">B. 50%</button>
+<button class="opt" data-val="C" onclick="answer('q26',this,'C')">C. 66.6%</button>
+<button class="opt" data-val="D" onclick="answer('q26',this,'D')">D. 75%</button>
+</div>
+<div class="feedback" id="q26-fb" data-feedback="Gross profit % = (3.00 ÷ 4.50) × 100 = 66.6%."></div>
+</div>
+<div class="question" id="q27" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 28 / 44</div>
+<p class="qtext">Ingredient cost should generally not be more than 30% of the gross profit/selling price.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q27',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q27',this,'false')">False</button>
+</div>
+<div class="feedback" id="q27-fb" data-feedback="Correct — keeping ingredient costs below 30% is the general rule."></div>
+</div>
+<div class="question" id="q28" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 29 / 44</div>
+<p class="qtext">Wages, National Insurance and pension contributions are examples of which type of cost?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q28',this,'A')">A. Material costs</button>
+<button class="opt" data-val="B" onclick="answer('q28',this,'B')">B. Overheads</button>
+<button class="opt" data-val="C" onclick="answer('q28',this,'C')">C. Labour costs</button>
+<button class="opt" data-val="D" onclick="answer('q28',this,'D')">D. Net profit</button>
+</div>
+<div class="feedback" id="q28-fb" data-feedback="Labour costs cover wages, NI and pension contributions."></div>
+</div>
+<div class="question" id="q29" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 30 / 44</div>
+<p class="qtext">Rent, business rates, gas, electricity and insurance are examples of...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q29',this,'A')">A. Labour costs</button>
+<button class="opt" data-val="B" onclick="answer('q29',this,'B')">B. Material costs</button>
+<button class="opt" data-val="C" onclick="answer('q29',this,'C')">C. Overheads</button>
+<button class="opt" data-val="D" onclick="answer('q29',this,'D')">D. Gross profit</button>
+</div>
+<div class="feedback" id="q29-fb" data-feedback="These ongoing running costs are overheads."></div>
+</div>
+<div class="question" id="q30" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 31 / 44</div>
+<p class="qtext">Using local and seasonal ingredients can reduce a business's CO2 emissions from transport.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q30',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q30',this,'false')">False</button>
+</div>
+<div class="feedback" id="q30-fb" data-feedback="Correct — less transport distance means lower CO2 emissions."></div>
+</div>
+<div class="question" id="q31" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 32 / 44</div>
+<p class="qtext">Which is an example of broadcast media?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q31',this,'A')">A. A flyer</button>
+<button class="opt" data-val="B" onclick="answer('q31',this,'B')">B. A TV advert</button>
+<button class="opt" data-val="C" onclick="answer('q31',this,'C')">C. A blog post</button>
+<button class="opt" data-val="D" onclick="answer('q31',this,'D')">D. A business card</button>
+</div>
+<div class="feedback" id="q31-fb" data-feedback="TV and radio adverts are broadcast media."></div>
+</div>
+<div class="question" id="q32" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 33 / 44</div>
+<p class="qtext">A negative review going viral on social media can seriously damage a hospitality business's reputation very quickly.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q32',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q32',this,'false')">False</button>
+</div>
+<div class="feedback" id="q32-fb" data-feedback="Correct — negative reviews can spread fast and harm reputation/loyalty."></div>
+</div>
+<div class="question" id="q33" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 34 / 44</div>
+<p class="qtext">Which of these is a POSITIVE impact of social media for a hospitality business?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q33',this,'A')">A. Expensive advertising costs</button>
+<button class="opt" data-val="B" onclick="answer('q33',this,'B')">B. Rapid spread of bad reviews</button>
+<button class="opt" data-val="C" onclick="answer('q33',this,'C')">C. Builds customer loyalty</button>
+<button class="opt" data-val="D" onclick="answer('q33',this,'D')">D. Decreases reputation quickly</button>
+</div>
+<div class="feedback" id="q33-fb" data-feedback="Social media can build a personal connection and customer loyalty."></div>
+</div>
+<div class="question" id="q34" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 35 / 44</div>
+<p class="qtext">The traditional double-breasted chef's jacket protects the wearer mainly from...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q34',this,'A')">A. Cold temperatures</button>
+<button class="opt" data-val="B" onclick="answer('q34',this,'B')">B. Injury (e.g. burns/spills)</button>
+<button class="opt" data-val="C" onclick="answer('q34',this,'C')">C. Noise</button>
+<button class="opt" data-val="D" onclick="answer('q34',this,'D')">D. Hair in food</button>
+</div>
+<div class="feedback" id="q34-fb" data-feedback="The jacket protects the chef from injury; the head covering protects food from hair."></div>
+</div>
+<div class="question" id="q35" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 36 / 44</div>
+<p class="qtext">In the kitchen workflow, where would high-risk food temperatures be checked and recorded first?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q35',this,'A')">A. Storage area</button>
+<button class="opt" data-val="B" onclick="answer('q35',this,'B')">B. Delivery area</button>
+<button class="opt" data-val="C" onclick="answer('q35',this,'C')">C. Preparation area</button>
+<button class="opt" data-val="D" onclick="answer('q35',this,'D')">D. Serving area</button>
+</div>
+<div class="feedback" id="q35-fb" data-feedback="Deliveries are checked against the order and temperatures recorded at the delivery area."></div>
+</div>
+<div class="question" id="q36" data-correct="false" data-type="tf">
+<div class="qnum">QUESTION 37 / 44</div>
+<p class="qtext">The waste area of a kitchen should be located inside the main kitchen for convenience.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q36',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q36',this,'false')">False</button>
+</div>
+<div class="feedback" id="q36-fb" data-feedback="The waste area should be separate from the main kitchen, usually located outside."></div>
+</div>
+<div class="question" id="q37" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 38 / 44</div>
+<p class="qtext">A blast chiller would be found in which equipment category?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q37',this,'A')">A. Small equipment</button>
+<button class="opt" data-val="B" onclick="answer('q37',this,'B')">B. Large equipment</button>
+<button class="opt" data-val="C" onclick="answer('q37',this,'C')">C. Cleaning equipment</button>
+<button class="opt" data-val="D" onclick="answer('q37',this,'D')">D. Serving equipment</button>
+</div>
+<div class="feedback" id="q37-fb" data-feedback="A blast chiller is large storage/preparation equipment."></div>
+</div>
+<div class="question" id="q38" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 39 / 44</div>
+<p class="qtext">A temperature probe is used to...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q38',this,'A')">A. Clean surfaces</button>
+<button class="opt" data-val="B" onclick="answer('q38',this,'B')">B. Check core cooking temperature</button>
+<button class="opt" data-val="C" onclick="answer('q38',this,'C')">C. Whisk ingredients</button>
+<button class="opt" data-val="D" onclick="answer('q38',this,'D')">D. Store dry goods</button>
+</div>
+<div class="feedback" id="q38-fb" data-feedback="A temperature probe checks that food has reached a safe core temperature."></div>
+</div>
+<div class="question" id="q39" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 40 / 44</div>
+<p class="qtext">In a restaurant's front of house workflow, where are guests first greeted and shown to a table?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q39',this,'A')">A. The bar</button>
+<button class="opt" data-val="B" onclick="answer('q39',this,'B')">B. The reception</button>
+<button class="opt" data-val="C" onclick="answer('q39',this,'C')">C. The equipment station</button>
+<button class="opt" data-val="D" onclick="answer('q39',this,'D')">D. The kitchen</button>
+</div>
+<div class="feedback" id="q39-fb" data-feedback="Reception is where guests are greeted before being shown to the dining area."></div>
+</div>
+<div class="question" id="q40" data-correct="true" data-type="tf">
+<div class="qnum">QUESTION 41 / 44</div>
+<p class="qtext">By law, a hospitality and catering business cannot discriminate against a customer because of their age, disability or gender.</p>
+<div class="options">
+<button class="opt" data-val="true" onclick="answer('q40',this,'true')">True</button>
+<button class="opt" data-val="false" onclick="answer('q40',this,'false')">False</button>
+</div>
+<div class="feedback" id="q40-fb" data-feedback="Correct — these are protected characteristics under anti-discrimination law."></div>
+</div>
+<div class="question" id="q41" data-correct="B" data-type="mcq">
+<div class="qnum">QUESTION 42 / 44</div>
+<p class="qtext">A business customer using a hotel for a conference is most likely to need...</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q41',this,'A')">A. A children's menu</button>
+<button class="opt" data-val="B" onclick="answer('q41',this,'B')">B. Wi-Fi, projector and flip charts</button>
+<button class="opt" data-val="C" onclick="answer('q41',this,'C')">C. A swimming pool</button>
+<button class="opt" data-val="D" onclick="answer('q41',this,'D')">D. A mini-bar</button>
+</div>
+<div class="feedback" id="q41-fb" data-feedback="Conference facilities like Wi-Fi and projectors meet business customer needs."></div>
+</div>
+<div class="question" id="q42" data-correct="C" data-type="mcq">
+<div class="qnum">QUESTION 43 / 44</div>
+<p class="qtext">Local residents using a hotel's spa without staying overnight is an example of which customer group?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q42',this,'A')">A. Business customers</button>
+<button class="opt" data-val="B" onclick="answer('q42',this,'B')">B. Leisure customers</button>
+<button class="opt" data-val="C" onclick="answer('q42',this,'C')">C. Local residents</button>
+<button class="opt" data-val="D" onclick="answer('q42',this,'D')">D. Non-commercial customers</button>
+</div>
+<div class="feedback" id="q42-fb" data-feedback="Local residents use facilities without using overnight accommodation."></div>
+</div>
+<div class="question" id="q43" data-correct="A" data-type="mcq">
+<div class="qnum">QUESTION 44 / 44</div>
+<p class="qtext">What does 'USP' stand for, used when analysing customer demographics?</p>
+<div class="options">
+<button class="opt" data-val="A" onclick="answer('q43',this,'A')">A. Unique Selling Point</button>
+<button class="opt" data-val="B" onclick="answer('q43',this,'B')">B. Universal Service Provider</button>
+<button class="opt" data-val="C" onclick="answer('q43',this,'C')">C. Useful Sales Plan</button>
+<button class="opt" data-val="D" onclick="answer('q43',this,'D')">D. Unit Service Price</button>
+</div>
+<div class="feedback" id="q43-fb" data-feedback="USP = Unique Selling Point, what makes a business stand out to its target customers."></div>
+</div>
+
+<div class="result-box" id="resultBox">
+  <div>🎉 Quiz complete!</div>
+  <div class="big" id="finalScore"></div>
+  <div class="msg" id="finalMsg"></div>
+  <div class="reset-btn"><button class="btn secondary" onclick="resetQuiz()">🔄 Try again</button></div>
+</div>
+<div class="cta"><a class="btn secondary" href="hospitality-revision-1.html" style="margin:6px;">🏨 Back to Unit 1.1 revision</a><a class="btn secondary" href="hospitality-revision-2.html" style="margin:6px;">🍽️ Back to Unit 1.2 revision</a><a class="btn secondary" href="hospitality-quiz-2.html" style="margin:6px;">📝 Try Quiz B</a></div><footer>Gab-revision · Hospitality &amp; Catering · Unit 1</footer></div>
+<script>
+const TOTAL = 44;
+const SCORE_KEY = 'hospitality_quiz_a_score';
+let answered = {};
+let score = 0;
+
+function answer(qid, btn, val){
+  if(answered[qid] !== undefined) return;
+  const qdiv = document.getElementById(qid);
+  const correct = qdiv.getAttribute('data-correct');
+  const opts = qdiv.querySelectorAll('.opt');
+  opts.forEach(o => o.disabled = true);
+  const isCorrect = (val === correct);
+  if(isCorrect){
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    opts.forEach(o => { if(o.getAttribute('data-val') === correct) o.classList.add('correct'); });
+  }
+  answered[qid] = isCorrect;
+  const fb = document.getElementById(qid + '-fb');
+  fb.textContent = (isCorrect ? '✅ Correct! ' : '❌ Not quite. ') + fb.getAttribute('data-feedback');
+  fb.classList.add('show');
+  fb.classList.add(isCorrect ? 'correct-fb' : 'incorrect-fb');
+  updateBar();
+  if(Object.keys(answered).length === TOTAL){ finish(); }
+}
+
+function updateBar(){
+  const ansCount = Object.keys(answered).length;
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('answeredVal').textContent = ansCount;
+  document.getElementById('progressFill').style.width = (ansCount/TOTAL*100) + '%';
+}
+
+function finish(){
+  localStorage.setItem(SCORE_KEY, score + '/' + TOTAL);
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  document.getElementById('finalScore').textContent = score + ' / ' + TOTAL;
+  let emoji = '💪';
+  if(score >= 40) emoji = '🏆';
+  else if(score >= 31) emoji = '🎉';
+  else if(score >= 22) emoji = '📚';
+  document.getElementById('finalMsg').textContent = emoji + ' Show this to mum — ' + score + '/' + TOTAL;
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  location.reload();
+}
+</script>
+
+</body>
+</html>
