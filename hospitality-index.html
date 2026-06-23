@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospitality &amp; Catering – GCSE Revision</title>
+<style>
+  :root {
+    --navy: #5c1f2e;
+    --accent: #d98a3d;
+    --bg: #fbf2e9;
+    --card-bg: #ffffff;
+    --done-border: #d98a3d;
+    --todo-border: #cdbdab;
+    --todo-bg: #f5f0e8;
+    --todo-text: #a3927e;
+    --green: #43a047;
+    --gold: #f9a825;
+    --red: #e53935;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: #2c1a1a;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #7a2f3f 100%);
+    color: white;
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .hero .kicker {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-bottom: 22px;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-tags span {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: rgba(63,20,32,0.96);
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.82rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(217,138,61,0.3);
+    transition: background 0.2s;
+  }
+  nav a:hover { background: rgba(217,138,61,0.15); }
+
+  /* ── OVERALL PROGRESS ── */
+  .overall-progress {
+    background: white;
+    margin: 24px auto;
+    max-width: 900px;
+    border-radius: 14px;
+    padding: 20px 28px;
+    box-shadow: 0 2px 12px rgba(92,31,46,0.08);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .overall-progress h2 {
+    font-size: 0.9rem;
+    color: var(--navy);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    min-width: 180px;
+    background: #f0e2d2;
+    border-radius: 8px;
+    height: 12px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #b8691f);
+    border-radius: 8px;
+    transition: width 0.5s;
+  }
+  .progress-stats {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat .num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .stat .lbl {
+    font-size: 0.7rem;
+    color: #9a8672;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── UNIT LABEL ── */
+  .paper-label {
+    max-width: 900px;
+    margin: 0 auto 10px;
+    padding: 0 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity: 0.65;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+    gap: 18px;
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 16px;
+  }
+
+  /* ── TOPIC CARD ── */
+  .card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    border: 2px solid var(--done-border);
+    box-shadow: 0 2px 10px rgba(92,31,46,0.07);
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(92,31,46,0.13); }
+  .card.todo {
+    background: var(--todo-bg);
+    border-color: var(--todo-border);
+    opacity: 0.72;
+  }
+  .card.todo:hover { transform: none; box-shadow: none; cursor: default; }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #7a2f3f 100%);
+    padding: 14px 18px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card.todo .card-header {
+    background: linear-gradient(135deg, #a3927e 0%, #cdbdab 100%);
+  }
+  .section-badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 4px 9px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .card-title {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .paper-tag {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .card-body { padding: 14px 18px; }
+  .subtopics { list-style: none; margin-bottom: 12px; }
+  .subtopics li {
+    font-size: 0.78rem;
+    color: #6e5847;
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .subtopics li::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .card.todo .subtopics li { color: var(--todo-text); }
+  .card.todo .subtopics li::before { background: #cdbdab; }
+
+  /* ── LINKS ROW ── */
+  .links-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-revision { background: #fbe9d8; color: #b8691f; }
+  .btn-revision:hover { background: #f6dab8; }
+  .btn-quiz { background: #fde4df; color: #a83226; }
+  .btn-quiz:hover { background: #fbcec5; }
+  .btn-todo {
+    background: #eee5da;
+    color: #a3927e;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── PROGRESS INDICATORS ── */
+  .progress-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+  .badge-read {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+    background: #efe3d3; color: #8a5a1f; border: 1.5px solid #d9b27e;
+  }
+  .badge-read.not-read { background: #fafafa; color: #cdbdab; border-color: #e0e0e0; }
+  .quiz-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+  }
+  .quiz-badge.score-high { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #81c784; }
+  .quiz-badge.score-mid  { background: #fffde7; color: #f57f17; border: 1.5px solid #ffd54f; }
+  .quiz-badge.score-low  { background: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a; }
+  .quiz-badge.no-score   { background: #fafafa; color: #cdbdab; border: 1.5px solid #e0e0e0; }
+
+  .coming-soon { font-size: 0.72rem; color: #a3927e; font-style: italic; margin-top: 2px; }
+
+  footer { text-align: center; padding: 28px; color: #a3927e; font-size: 0.78rem; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.7rem; }
+    .grid { grid-template-columns: 1fr; }
+    .overall-progress { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">WJEC Level 1/2 · Gab's Revision</div>
+  <h1>🍽️ <span>Hospitality</span> &amp; Catering</h1>
+  <p>Unit 1 · The Hospitality &amp; Catering Industry</p>
+  <div class="hero-tags">
+    <span>🏨 Unit 1 · Industry &amp; Operations</span>
+    <span>🍲 Unit 2 · Nutrition &amp; Menu Planning</span>
+    <span>3 sections ready</span>
+    <span>WJEC Level 1/2</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="hospitality-index.html">🍽️ Hospitality</a>
+  <a href="#industry">1.1 Industry</a>
+  <a href="#operations">1.2 Operations</a>
+  <a href="#health-safety">1.3-1.4 H&amp;S / Law</a>
+  <a href="#nutrition">2.1 Nutrition</a>
+  <a href="#menu-planning">2.2 Menu Planning</a>
+  <a href="#practical">2.3-2.4 Practical &amp; Review</a>
+</nav>
+
+<!-- OVERALL PROGRESS -->
+<div class="overall-progress">
+  <h2>📊 Overall Progress</h2>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="overall-bar" style="width:0%"></div>
+  </div>
+  <div class="progress-stats">
+    <div class="stat"><div class="num" id="stat-read">0</div><div class="lbl">Read ✓</div></div>
+    <div class="stat"><div class="num" id="stat-quizzes">0</div><div class="lbl">Quizzes done</div></div>
+    <div class="stat"><div class="num" id="stat-best">—</div><div class="lbl">Best score</div></div>
+  </div>
+</div>
+
+<!-- ════════════ UNIT 1 ════════════ -->
+<div class="paper-label">📄 Unit 1 · The Hospitality &amp; Catering Industry</div>
+<div class="grid">
+
+  <!-- 1.1 INDUSTRY – DONE -->
+  <div class="card" id="industry">
+    <div class="card-header">
+      <div class="section-badge">1.1</div>
+      <div class="card-title">The Hospitality &amp; Catering Industry</div>
+      <div class="paper-tag">Unit 1</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Standards &amp; ratings (stars, Michelin, AA Rosette)</li>
+        <li>Types of provision &amp; service</li>
+        <li>Employment roles &amp; working conditions</li>
+        <li>Factors affecting business success &amp; media</li>
+      </ul>
+      <div class="links-row">
+        <a href="hospitality-revision-1.html" class="btn btn-revision">📖 Revision</a>
+        <a href="hospitality-quiz-1.html" class="btn btn-quiz">✅ Quiz</a>
+      </div>
+      <div class="progress-row" id="progress-industry"></div>
+    </div>
+  </div>
+
+  <!-- 1.2 OPERATIONS – DONE -->
+  <div class="card" id="operations">
+    <div class="card-header">
+      <div class="section-badge">1.2</div>
+      <div class="card-title">Operations: Front &amp; Back of House</div>
+      <div class="paper-tag">Unit 1</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Kitchen layout &amp; equipment</li>
+        <li>Front of house workflow &amp; dress code</li>
+        <li>Customer requirements &amp; rights</li>
+        <li>Meeting specific customer needs</li>
+      </ul>
+      <div class="links-row">
+        <a href="hospitality-revision-2.html" class="btn btn-revision">📖 Revision</a>
+        <a href="hospitality-quiz-1.html" class="btn btn-quiz">✅ Quiz</a>
+      </div>
+      <div class="progress-row" id="progress-operations"></div>
+    </div>
+  </div>
+
+  <!-- 1.3-1.4 HEALTH, SAFETY & LAW – DONE -->
+  <div class="card" id="health-safety">
+    <div class="card-header">
+      <div class="section-badge">1.3-1.4</div>
+      <div class="card-title">Health, Safety &amp; Food Law</div>
+      <div class="paper-tag">Unit 1</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Workplace law &amp; risk assessments</li>
+        <li>HACCP &amp; food safety control points</li>
+        <li>Bacteria, allergens &amp; intolerances</li>
+        <li>Food law &amp; the Environmental Health Officer</li>
+      </ul>
+      <div class="links-row">
+        <a href="hospitality-revision-3.html" class="btn btn-revision">📖 Revision</a>
+        <a href="hospitality-quiz-2.html" class="btn btn-quiz">✅ Quiz</a>
+      </div>
+      <div class="progress-row" id="progress-health-safety"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ UNIT 2 ════════════ -->
+<div class="paper-label">📄 Unit 2 · Nutrition, Menu Planning &amp; Production (coming soon)</div>
+<div class="grid">
+
+  <!-- 2.1 NUTRITION – TODO -->
+  <div class="card todo" id="nutrition">
+    <div class="card-header">
+      <div class="section-badge">2.1</div>
+      <div class="card-title">Nutrition &amp; Cooking Methods</div>
+      <div class="paper-tag">Unit 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Importance of nutrition &amp; nutrients</li>
+        <li>Nutrition at different life stages</li>
+        <li>Special dietary needs</li>
+        <li>How cooking methods affect nutritional value</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+  <!-- 2.2 MENU PLANNING – TODO -->
+  <div class="card todo" id="menu-planning">
+    <div class="card-header">
+      <div class="section-badge">2.2</div>
+      <div class="card-title">Menu Planning &amp; Production</div>
+      <div class="paper-tag">Unit 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Factors affecting menu planning</li>
+        <li>Environmental issues</li>
+        <li>How to plan production</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+  <!-- 2.3-2.4 PRACTICAL & REVIEW – TODO -->
+  <div class="card todo" id="practical">
+    <div class="card-header">
+      <div class="section-badge">2.3-2.4</div>
+      <div class="card-title">Practical Skills &amp; Reviewing Dishes</div>
+      <div class="paper-tag">Unit 2</div>
+    </div>
+    <div class="card-body">
+      <ul class="subtopics">
+        <li>Practical skills &amp; techniques</li>
+        <li>Presentation techniques &amp; food safety practices</li>
+        <li>Reviewing dishes &amp; own performance</li>
+      </ul>
+      <div class="links-row">
+        <span class="btn btn-todo">📖 Revision</span>
+        <span class="btn btn-todo">✅ Quiz</span>
+      </div>
+      <div class="coming-soon">🚧 Coming soon</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  WJEC Hospitality &amp; Catering Level 1/2 · Gab's Revision Site · 🍽️
+</footer>
+
+<script>
+const TOPICS = [
+  {
+    id: 'industry',
+    label: '1.1 Industry',
+    readKey: 'hospitality_revision_1_read',
+    quizKey: 'hospitality_quiz_a_score'
+  },
+  {
+    id: 'operations',
+    label: '1.2 Operations',
+    readKey: 'hospitality_revision_2_read',
+    quizKey: 'hospitality_quiz_a_score'
+  },
+  {
+    id: 'health-safety',
+    label: '1.3-1.4 Health, Safety & Law',
+    readKey: 'hospitality_revision_3_read',
+    quizKey: 'hospitality_quiz_b_score'
+  }
+];
+
+const TOTAL_AVAILABLE = TOPICS.length;
+
+function getScore(key) {
+  const direct = localStorage.getItem(key);
+  if (direct !== null) return direct;
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.toLowerCase().includes(key.toLowerCase().replace('score_',''))) {
+      const v = localStorage.getItem(k);
+      if (v && /\d/.test(v)) return v;
+    }
+  }
+  return null;
+}
+
+function renderProgress() {
+  let readCount = 0;
+  let quizCount = 0;
+  let bestScore = -1;
+  let bestTotal = 0;
+
+  TOPICS.forEach(topic => {
+    const container = document.getElementById('progress-' + topic.id);
+    if (!container) return;
+
+    const readVal = localStorage.getItem(topic.readKey);
+    const read = readVal && readVal !== 'false' && readVal !== '0';
+
+    const readBadge = document.createElement('span');
+    readBadge.className = 'badge-read' + (read ? '' : ' not-read');
+    readBadge.innerHTML = read ? '✅ Marked as read' : '📖 Not read yet';
+    container.appendChild(readBadge);
+    if (read) readCount++;
+
+    const scoreRaw = getScore(topic.quizKey);
+    const quizBadge = document.createElement('span');
+
+    if (scoreRaw !== null) {
+      const parts = String(scoreRaw).split('/');
+      const num = parseInt(parts[0], 10);
+      const total = parts[1] ? parseInt(parts[1], 10) : null;
+
+      quizCount++;
+      const pct = total ? (num / total) : 0;
+      if (total && pct > (bestScore / (bestTotal || 1)) ) {
+        bestScore = num; bestTotal = total;
+      } else if (bestScore === -1) {
+        bestScore = num; bestTotal = total || 0;
+      }
+
+      let cls = 'no-score';
+      if (total) {
+        if (pct >= 0.9) cls = 'score-high';
+        else if (pct >= 0.7) cls = 'score-mid';
+        else cls = 'score-low';
+      }
+      const emoji = pct >= 0.9 ? '🏆' : pct >= 0.7 ? '🎉' : pct >= 0.5 ? '📚' : '💪';
+      quizBadge.className = 'quiz-badge ' + cls;
+      quizBadge.innerHTML = emoji + ' Quiz: ' + scoreRaw;
+    } else {
+      quizBadge.className = 'quiz-badge no-score';
+      quizBadge.innerHTML = '❓ Quiz not done';
+    }
+    container.appendChild(quizBadge);
+  });
+
+  const pct = TOTAL_AVAILABLE > 0 ? Math.round((readCount / TOTAL_AVAILABLE) * 100) : 0;
+  document.getElementById('overall-bar').style.width = pct + '%';
+  document.getElementById('stat-read').textContent = readCount + '/' + TOTAL_AVAILABLE;
+  document.getElementById('stat-quizzes').textContent = quizCount + '/' + TOTAL_AVAILABLE;
+  document.getElementById('stat-best').textContent = bestScore >= 0 ? (bestScore + '/' + (bestTotal || '?')) : '—';
+}
+
+renderProgress();
+</script>
+
+</body>
+</html>
