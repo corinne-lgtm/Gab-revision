@@ -1,0 +1,243 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B1.1 The World of the Microscope</title><style>
+:root{
+  --ink:#18323A; --muted:#66777B; --paper:#FBFCF8; --card:#FFFFFF;
+  --bio:#1F8A70; --bio2:#DDF3EA; --lime:#DDF0A5; --yellow:#F6D365;
+  --blue:#DCEEF8; --blueInk:#347799; --violet:#E8DDF6; --violetInk:#6C4D8B;
+  --coral:#F8D8CF; --line:#DDE6E2; --danger:#B8574B; --success:#13775E;
+  --shadow:0 12px 35px rgba(24,50,58,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+.shell{max-width:1180px;margin:auto;padding:0 22px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(251,252,248,.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(221,230,226,.85)}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-weight:900;letter-spacing:-.03em}.brand span{color:var(--bio)}
+.navlinks{display:flex;gap:9px;flex-wrap:wrap}
+.pill,.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:800;cursor:pointer;transition:.2s}
+.btn:hover,.pill:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(24,50,58,.08)}
+.btn.primary{background:var(--ink);color:white;border-color:var(--ink)}
+.btn.bio{background:var(--bio);color:#fff;border-color:var(--bio)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--bio)}
+.hero{padding:68px 0 34px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+h1{font-size:clamp(2.7rem,7vw,5.7rem);line-height:.92;letter-spacing:-.065em;margin:14px 0 20px}
+h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.045em;margin:.2em 0}
+h3{margin:.25em 0 .5em;font-size:1.25rem}
+.lead{font-size:1.18rem;line-height:1.65;color:var(--muted);max-width:720px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.stat{padding:18px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+.stat strong{display:block;font-size:2rem;letter-spacing:-.04em}
+.muted{color:var(--muted)}
+.section{padding:42px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+.progress{height:10px;border-radius:99px;background:#E8EEEA;overflow:hidden}
+.progress>span{display:block;height:100%;background:var(--bio);width:0}
+.subject-card{min-height:170px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.subject-card .emoji{font-size:2.3rem}
+.subject-card.bio-card{background:linear-gradient(135deg,#E4F6EE,#F9FCF8)}
+.subject-card.disabled{opacity:.58}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.between{justify-content:space-between}
+.badge{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:.76rem;font-weight:900;background:var(--bio2);color:var(--success)}
+.small{font-size:.88rem}
+footer{padding:52px 0;color:var(--muted);font-size:.9rem}
+@media(max-width:820px){
+  .hero-grid,.grid-3,.grid-2{grid-template-columns:1fr}
+  .nav{height:auto;padding:13px 0;align-items:flex-start}
+  .navlinks{justify-content:flex-end}
+}
+
+.lesson-hero{padding:48px 0 20px}
+.lesson-title{font-size:clamp(2.6rem,6vw,5rem)}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;padding:14px 0}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 16px;font-weight:900;cursor:pointer}
+.tab.active{background:var(--ink);color:white}
+.panel{display:none}.panel.active{display:block}
+.infographic{background:#fff;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+.info-block{padding:28px;border-bottom:1px solid var(--line)}
+.info-block:last-child{border-bottom:0}
+.timeline{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
+.timeline .era{padding:22px;border-radius:22px;background:#F4F8F5}
+.arrow{font-size:2rem;color:var(--bio)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.compare>div{padding:20px;border-radius:22px}
+.light{background:#FFF7DB}.electron{background:#EAE1F5}
+.microscope-stage{display:grid;grid-template-columns:1fr .9fr;gap:24px;align-items:center}
+.viewer{min-height:300px;border-radius:28px;background:#102E34;display:grid;place-items:center;overflow:hidden;position:relative}
+.cell{width:92px;height:92px;border:7px solid #A9E3D0;border-radius:45% 55% 52% 48%;position:relative;transform:scale(var(--mag,1));transition:.2s}
+.cell:before,.cell:after{content:"";position:absolute;border-radius:50%;background:#F6D365}
+.cell:before{width:27px;height:27px;left:25px;top:25px}
+.cell:after{width:9px;height:9px;right:12px;top:16px;box-shadow:-45px 36px 0 #F6D365,10px 43px 0 #F6D365}
+.blur-layer{position:absolute;inset:0;backdrop-filter:blur(var(--blur,0px));pointer-events:none}
+.control{margin:18px 0}.control label{display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--bio)}
+.zoom-tunnel{display:flex;align-items:center;gap:8px;overflow:auto;padding:10px 0}
+.unit{min-width:125px;padding:18px;text-align:center;border-radius:20px;background:#F2F7F4;border:1px solid var(--line)}
+.unit strong{font-size:1.4rem;display:block}
+.formula{display:grid;place-items:center;min-height:240px;background:var(--blue);border-radius:24px;text-align:center;padding:18px}
+.formula strong{font-size:clamp(2rem,5vw,4rem);letter-spacing:-.05em}
+.question{padding:20px;border:1px solid var(--line);border-radius:22px;background:#fff;margin-bottom:14px}
+.options{display:grid;gap:8px;margin-top:13px}
+.option{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;text-align:left;cursor:pointer}
+.option.correct{background:#E5F5EC;border-color:#8CC7AE}.option.wrong{background:#FDEBE6;border-color:#D99888}
+.feedback{margin-top:10px;font-weight:800;min-height:20px}
+.gcse-card{padding:22px;border:1px solid var(--line);border-radius:22px;background:#fff;margin-bottom:16px}
+textarea{width:100%;min-height:120px;padding:14px;border-radius:16px;border:1px solid var(--line);resize:vertical}
+.markguide{display:none;margin-top:14px;padding:16px;border-radius:16px;background:#F4F7F5}
+.markguide.show{display:block}
+.scorebox{position:sticky;bottom:14px;background:var(--ink);color:white;padding:14px 18px;border-radius:18px;box-shadow:var(--shadow);display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:18px}
+.note{padding:16px;border-left:5px solid var(--bio);background:var(--bio2);border-radius:0 16px 16px 0}
+@media(max-width:820px){.timeline,.compare,.microscope-stage{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+</style></head>
+<body><header class="topbar"><div class="shell nav"><a class="brand" href="index.html">My GCSE <span>Revision</span></a>
+<div class="navlinks"><a class="pill" href="biology.html">← Biology</a><button id="readBtn" class="pill" onclick="toggleRead()">✓ Mark as learnt</button></div></div></header>
+<main>
+<section class="lesson-hero"><div class="shell"><span class="kicker">Biology · B1.1</span><h1 class="lesson-title">The world of<br><span style="color:var(--bio)">the microscope</span></h1>
+<p class="lead">See why magnification and resolution are not the same thing, travel from millimetres to nanometres, then practise the maths examiners expect.</p>
+<div class="tabs" role="tablist"><button class="tab active" data-tab="learn">① Learn</button><button class="tab" data-tab="quiz">② Quiz</button><button class="tab" data-tab="gcse">③ GCSE Practice</button></div></div></section>
+
+<section class="section"><div class="shell">
+<div id="learn" class="panel active">
+<div class="infographic">
+<div class="info-block"><span class="kicker">01 · A tiny history</span><h2>From light to electrons</h2>
+<div class="timeline"><div class="era"><strong>Mid-17th century</strong><h3>Light microscopes</h3><p class="muted">Visible light and lenses made cells accessible. Modern school light microscopes are relatively cheap and can be used to view living specimens.</p></div>
+<div class="arrow">→</div><div class="era" style="background:#EEE6F7"><strong>1930s onwards</strong><h3>Electron microscopes</h3><p class="muted">Electron microscopes brought much higher magnification and resolving power, revealing finer sub-cellular detail.</p></div></div>
+</div>
+
+<div class="info-block"><span class="kicker">02 · Interactive idea</span><h2>Magnification ≠ resolution</h2>
+<p class="lead">Make the image bigger with one slider. Make nearby details easier to distinguish with the other.</p>
+<div class="microscope-stage">
+<div class="viewer"><div class="cell" id="cell"></div><div class="blur-layer" id="blurLayer"></div></div>
+<div>
+<div class="control"><label><span>Magnification</span><span id="magLabel">×1</span></label><input id="mag" type="range" min="1" max="28" value="7"></div>
+<p class="small muted">Magnification tells you how many times larger the image is than the real object.</p>
+<div class="control"><label><span>Resolution</span><span id="resLabel">low</span></label><input id="res" type="range" min="1" max="100" value="35"></div>
+<p class="small muted">Resolution is the ability to distinguish two close points as separate.</p>
+<div class="note"><strong>Exam distinction:</strong> making a blurry image bigger does not create extra detail. Better resolution does.</div>
+</div></div></div>
+
+<div class="info-block"><span class="kicker">03 · Compare</span><h2>Light vs electron microscope</h2>
+<div class="compare"><div class="light"><h3>🔆 Light microscope</h3><p><strong>Magnification:</strong> lower</p><p><strong>Resolution:</strong> lower</p><p><strong>Useful because:</strong> relatively cheap and living specimens can be viewed.</p></div>
+<div class="electron"><h3>⚡ Electron microscope</h3><p><strong>Magnification:</strong> much higher</p><p><strong>Resolution:</strong> much higher</p><p><strong>Result:</strong> finer detail and more sub-cellular structures can be seen.</p></div></div>
+<p class="small muted" style="margin-top:14px">Textbook reference values can be useful for scale, but AQA’s core requirement is the difference in magnification and resolving power rather than memorising every numerical microscope limit.</p>
+</div>
+
+<div class="info-block"><span class="kicker">04 · Zoom tunnel</span><h2>Get the units under control</h2>
+<div class="zoom-tunnel"><div class="unit"><strong>1 m</strong>metre</div><div>→ ×100</div><div class="unit"><strong>1 cm</strong>centimetre</div><div>→ ×10</div><div class="unit"><strong>1 mm</strong>millimetre</div><div>→ ×1000</div><div class="unit"><strong>1 μm</strong>micrometre</div><div>→ ×1000</div><div class="unit"><strong>1 nm</strong>nanometre</div></div>
+<div class="note" style="margin-top:16px">Going to a smaller unit makes the number bigger. Example: <strong>0.025 mm = 25 μm</strong>.</div></div>
+
+<div class="info-block"><span class="kicker">05 · The maths</span><h2>One equation, three jobs</h2>
+<div class="grid-2"><div class="formula"><div><div class="small">MAGNIFICATION</div><strong>M = I ÷ A</strong><p>image size ÷ actual size</p></div></div>
+<div><h3>Worked example</h3><p>An image is <strong>1 mm</strong> long at <strong>×40</strong>.</p><p><strong>Actual size = image size ÷ magnification</strong></p><p>1 mm ÷ 40 = 0.025 mm = <strong>25 μm</strong></p>
+<div class="note"><strong>Before calculating:</strong> make sure image size and actual size use compatible units.</div></div></div></div>
+
+<div class="info-block"><span class="kicker">06 · Light microscope practical</span><h2>What you must be able to do</h2>
+<div class="grid-3"><div><h3>1. Prepare</h3><p class="muted">Place the specimen on a slide, add a coverslip where appropriate and use a suitable stain if needed.</p></div>
+<div><h3>2. Observe</h3><p class="muted">Start with a low-power objective, focus carefully, then increase magnification if useful.</p></div>
+<div><h3>3. Record</h3><p class="muted">Produce a clear biological drawing, label visible structures and include magnification or a scale.</p></div></div></div>
+</div>
+<div class="scorebox"><span><strong>Finished learning?</strong> Mark the lesson so it appears on your Biology dashboard.</span><button class="btn bio" onclick="toggleRead()" id="readBtn2">Mark as learnt</button></div>
+</div>
+
+<div id="quiz" class="panel">
+<div class="section-head"><div><span class="kicker">Retrieval practice</span><h2>Core knowledge quiz</h2></div><span class="badge" id="quizScoreBadge">0 / 10</span></div>
+<div id="quizQuestions"></div>
+<div class="scorebox"><span id="quizSummary">Answer all 10 questions. Your best score will be saved.</span><button class="btn bio" onclick="finishQuiz()">Save score</button></div>
+</div>
+
+<div id="gcse" class="panel">
+<div class="section-head"><div><span class="kicker">Exam technique</span><h2>GCSE Practice</h2></div><span class="badge">9 marks available</span></div>
+<div class="note" style="margin-bottom:18px"><strong>How to answer:</strong> underline the command word, identify the scientific idea being tested, use precise vocabulary, and for calculations show your working and units.</div>
+
+<div class="gcse-card"><div class="row between"><h3>Q1 · Explain · 3 marks</h3><span class="badge">3 marks</span></div>
+<p>Explain why an electron microscope can reveal more detail in a cell than a light microscope.</p><textarea id="a1" placeholder="Write your answer here..."></textarea>
+<button class="btn" onclick="toggleGuide('g1')">Show marking guidance</button><div class="markguide" id="g1"><strong>A strong answer should include:</strong><p>Electron microscopes have a much higher resolving power and much higher magnification. This allows smaller structures or two very close points to be distinguished, so finer sub-cellular detail can be seen.</p><p class="small muted">This is revision guidance based on the specification, not a claim that this wording is an official AQA mark scheme.</p></div>
+<label class="small">Self-mark: <input id="m1" type="number" min="0" max="3" value="0"> / 3</label></div>
+
+<div class="gcse-card"><div class="row between"><h3>Q2 · Calculate · 2 marks</h3><span class="badge">2 marks</span></div>
+<p>A capillary appears 5 mm wide in an image magnified ×1000. Calculate its actual width in micrometres.</p><textarea id="a2" placeholder="Show your working and unit..."></textarea>
+<button class="btn" onclick="toggleGuide('g2')">Show marking guidance</button><div class="markguide" id="g2"><p>Actual size = 5 mm ÷ 1000 = 0.005 mm = <strong>5 μm</strong>.</p></div>
+<label class="small">Self-mark: <input id="m2" type="number" min="0" max="2" value="0"> / 2</label></div>
+
+<div class="gcse-card"><div class="row between"><h3>Q3 · Compare · 4 marks</h3><span class="badge">4 marks</span></div>
+<p>Compare the use of light microscopes and electron microscopes for studying cells.</p><textarea id="a3" placeholder="Aim for linked similarities/differences, not a list of random facts..."></textarea>
+<button class="btn" onclick="toggleGuide('g3')">Show marking guidance</button><div class="markguide" id="g3"><p>Useful comparison points include: electron microscopes have much greater magnification and resolving power, so they reveal finer detail; light microscopes are cheaper and can be used to view living specimens. Electron microscopes are large, expensive and require specialised conditions/preparation.</p><p class="small muted">Use comparative language such as “whereas”, “in contrast” and “both”.</p></div>
+<label class="small">Self-mark: <input id="m3" type="number" min="0" max="4" value="0"> / 4</label></div>
+
+<div class="card" style="background:#F2F7F4"><div class="row between"><div><h3>Save GCSE practice</h3><p class="small muted">Your answers and self-marked score stay on this computer.</p></div><button class="btn bio" onclick="saveGcse()">Save practice</button></div><div id="gcseSaved" class="feedback"></div></div>
+<div class="card" style="margin-top:18px"><span class="kicker">Space for later</span><h3>More practice sets</h3><p class="muted">This page is ready to hold extra calculation sets, 6-mark questions, practical questions and mixed exam practice without changing the Learn section.</p></div>
+</div>
+</div></section></main>
+<footer><div class="shell">B1.1 · AQA GCSE Combined Science: Trilogy · Higher tier</div></footer>
+
+<script>
+const STORE_KEY='gabRevisionV2';
+function loadStore(){
+  try{return JSON.parse(localStorage.getItem(STORE_KEY))||{}}catch(e){return{}}
+}
+function saveStore(s){localStorage.setItem(STORE_KEY,JSON.stringify(s))}
+function getLesson(id){
+  const s=loadStore(); s.lessons=s.lessons||{}; s.lessons[id]=s.lessons[id]||{};
+  return s.lessons[id];
+}
+function setLesson(id,patch){
+  const s=loadStore(); s.lessons=s.lessons||{}; s.lessons[id]={...(s.lessons[id]||{}),...patch}; saveStore(s); return s.lessons[id];
+}
+function exportProgress(){
+  const data=JSON.stringify(loadStore(),null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gab-revision-progress.json';a.click();URL.revokeObjectURL(a.href);
+}
+function importProgress(file){
+  const r=new FileReader();
+  r.onload=()=>{try{const data=JSON.parse(r.result);saveStore(data);location.reload()}catch(e){alert('That file is not a valid progress backup.')}};
+  r.readAsText(file);
+}
+
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));t.classList.add('active');document.getElementById(t.dataset.tab).classList.add('active');window.scrollTo({top:130,behavior:'smooth'})}));
+
+function refreshRead(){
+ const l=getLesson('B1.1'); const text=l.read?'✓ Learnt':'✓ Mark as learnt';
+ document.getElementById('readBtn').textContent=text;document.getElementById('readBtn2').textContent=text;
+}
+function toggleRead(){const l=getLesson('B1.1');setLesson('B1.1',{read:!l.read,readDate:new Date().toISOString()});refreshRead()} refreshRead();
+
+const mag=document.getElementById('mag'),res=document.getElementById('res'),cell=document.getElementById('cell'),blur=document.getElementById('blurLayer');
+function updateScope(){
+ const m=+mag.value; cell.style.setProperty('--mag',(0.7+m/8).toFixed(2)); document.getElementById('magLabel').textContent='×'+m;
+ const r=+res.value; blur.style.setProperty('--blur',((100-r)/18).toFixed(1)+'px'); document.getElementById('resLabel').textContent=r<34?'low':r<67?'medium':'high';
+} mag.oninput=res.oninput=updateScope; updateScope();
+
+const quiz=[
+['What does magnification describe?',['How much larger the image is than the real object','How bright the image is','How many cells are present','How sharp the stain is'],0,'Magnification compares image size with actual size.'],
+['What is resolution?',['The ability to make an image larger','The ability to distinguish two close points as separate','The brightness of an image','The number of lenses used'],1,'Resolution is about distinguishing close detail.'],
+['Which microscope has the greater resolving power?',['Light microscope','Electron microscope','They are the same','A hand lens'],1,'Electron microscopes have much greater resolving power.'],
+['Which can be used to observe living cells?',['A light microscope','An electron microscope only','Neither type','Only a TEM'],0,'Living specimens can be viewed with a light microscope.'],
+['1 mm is equal to…',['10 μm','100 μm','1000 μm','10,000 μm'],2,'1 mm = 1000 μm.'],
+['1 μm is equal to…',['1000 nm','100 nm','10 nm','0.1 nm'],0,'1 μm = 1000 nm.'],
+['Which equation is correct?',['M = actual ÷ image','M = image ÷ actual','M = image × actual','M = image + actual'],1,'Magnification = image size ÷ actual size.'],
+['An image is 800 μm wide and the real object is 20 μm wide. Magnification?',['×20','×40','×80','×400'],1,'800 ÷ 20 = 40.'],
+['Why did electron microscopy improve our understanding of cells?',['It made cells grow','It revealed finer sub-cellular detail','It removed the need for calculations','It made all specimens living'],1,'Higher resolving power allows finer detail to be distinguished.'],
+['For total light-microscope magnification, multiply…',['eyepiece × objective','eyepiece + objective','objective ÷ eyepiece','image size × real size'],0,'Total magnification is eyepiece magnification × objective magnification.']
+];
+const qwrap=document.getElementById('quizQuestions'); let answers={};
+quiz.forEach((q,i)=>{const d=document.createElement('div');d.className='question';d.innerHTML=`<strong>${i+1}. ${q[0]}</strong><div class="options">${q[1].map((o,j)=>`<button class="option" data-i="${i}" data-j="${j}">${o}</button>`).join('')}</div><div class="feedback" id="f${i}"></div>`;qwrap.appendChild(d)});
+qwrap.addEventListener('click',e=>{if(!e.target.classList.contains('option'))return;const i=+e.target.dataset.i,j=+e.target.dataset.j;answers[i]=j;const box=e.target.parentElement;[...box.children].forEach(b=>b.classList.remove('correct','wrong'));e.target.classList.add(j===quiz[i][2]?'correct':'wrong');document.getElementById('f'+i).textContent=j===quiz[i][2]?'Correct ✓':quiz[i][3];updateQuizBadge()});
+function updateQuizBadge(){const score=Object.entries(answers).filter(([i,a])=>+a===quiz[+i][2]).length;document.getElementById('quizScoreBadge').textContent=score+' / 10'}
+function finishQuiz(){const score=Object.entries(answers).filter(([i,a])=>+a===quiz[+i][2]).length;const pct=Math.round(score/10*100),l=getLesson('B1.1'),best=Math.max(l.quizBest||0,pct);setLesson('B1.1',{quizBest:best,quizLast:pct,quizDate:new Date().toISOString()});document.getElementById('quizSummary').textContent=`Saved: ${pct}% · Best: ${best}%`}
+
+function toggleGuide(id){document.getElementById(id).classList.toggle('show')}
+function saveGcse(){
+ const m1=Math.max(0,Math.min(3,+document.getElementById('m1').value||0)),m2=Math.max(0,Math.min(2,+document.getElementById('m2').value||0)),m3=Math.max(0,Math.min(4,+document.getElementById('m3').value||0)),total=m1+m2+m3,l=getLesson('B1.1');
+ setLesson('B1.1',{gcseBest:Math.max(l.gcseBest||0,total),gcseLast:total,gcseDate:new Date().toISOString(),gcseAnswers:[document.getElementById('a1').value,document.getElementById('a2').value,document.getElementById('a3').value]});
+ document.getElementById('gcseSaved').textContent=`Saved: ${total} / 9 · Best: ${Math.max(l.gcseBest||0,total)} / 9`;
+}
+const saved=getLesson('B1.1'); if(saved.gcseAnswers){['a1','a2','a3'].forEach((id,i)=>document.getElementById(id).value=saved.gcseAnswers[i]||'')}
+</script></body></html>
