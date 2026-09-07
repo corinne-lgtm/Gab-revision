@@ -194,7 +194,7 @@ textarea{display:block;width:100%;min-height:140px;border:1px solid var(--line);
 <div class="note"><strong>Coverage:</strong> this chapter combines the ten textbook subtopics B1.1–B1.10 and the AQA Combined Science: Trilogy content on cell structure, microscopy, cell specialisation, transport in cells and exchange surfaces. Textbook extension material is not treated as required exam content.</div>
 </div>
 
-<div id="quiz" class="panel"><div class="quiz-head"><div><span class="kicker">B1 question bank</span><h2>Quiz</h2><p class="muted">48 questions across the whole chapter. Choose a 10-question set or focus on a subtopic.</p></div><span class="badge" id="quizScoreBadge">—</span></div>
+<div id="quiz" class="panel"><div class="quiz-head"><div><span class="kicker">B1 question bank</span><h2>Quiz</h2><p class="muted">48 questions across the whole chapter. Mixed sets contain 10 questions; subtopic sets contain only questions from the selected subtopic.</p></div><span class="badge" id="quizScoreBadge">—</span></div>
 <div class="mini-tabs" id="quizFilters"></div><div id="quizQuestions"></div><div class="row" style="margin-top:20px"><button class="btn bio" id="finishQuiz">Submit quiz</button><button class="btn" id="newQuiz">New set</button></div><div id="quizSummary" class="feedback"></div></div>
 
 <div id="gcse" class="panel"><div class="section-head"><div><span class="kicker">Whole-chapter exam practice</span><h2>GCSE Practice</h2><p class="muted">Original revision questions. Write first, submit, then reveal the revision marking guidance.</p></div><span class="badge">38 marks available</span></div>
@@ -238,15 +238,19 @@ cubeSide.oninput=()=>{const s=+cubeSide.value,sa=6*s*s,v=s*s*s,r=sa/v;cubeSideLa
 let filter='Mixed',current=[],answers={},submitted=false;
 const topics=['Mixed','B1.1','B1.2','B1.3','B1.4','B1.5','B1.6','B1.7','B1.8','B1.9','B1.10'];
 function shuffled(a){return [...a].sort(()=>Math.random()-.5)}
-function buildSet(){let pool=filter==='Mixed'?QUIZ:QUIZ.filter(q=>q[4]===filter);if(pool.length<10) pool=[...pool,...shuffled(QUIZ.filter(q=>q[4]!==filter))];current=shuffled(pool).slice(0,10);answers={};submitted=false;renderQuiz()}
+function buildSet(){
+ const pool=filter==='Mixed'?QUIZ:QUIZ.filter(q=>q[4]===filter);
+ current=shuffled(pool).slice(0,Math.min(10,pool.length));
+ answers={};submitted=false;renderQuiz();
+}
 function renderQuiz(){
  quizFilters.innerHTML=topics.map(t=>`<button class="btn" data-filter="${t}" aria-pressed="${t===filter}">${t}</button>`).join('');
  document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;buildSet()});
  quizQuestions.innerHTML=current.map((q,i)=>`<div class="question"><div class="row between"><strong>${i+1}. ${q[0]}</strong><span class="badge">${q[4]}</span></div><div class="options">${q[1].map((o,j)=>`<button class="option" data-q="${i}" data-a="${j}">${o}</button>`).join('')}</div><div class="feedback" id="qf${i}"></div></div>`).join('');
- quizScoreBadge.textContent='0 / 10';quizSummary.textContent='Answer all 10 questions before submitting.';
+ quizScoreBadge.textContent='0 / '+current.length;quizSummary.textContent='Answer all '+current.length+' questions before submitting.';
 }
 quizQuestions.addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(!b||submitted)return;const i=+b.dataset.q;answers[i]=+b.dataset.a;b.parentElement.querySelectorAll('.option').forEach(x=>x.classList.toggle('selected',x===b))});
-finishQuiz.onclick=()=>{if(Object.keys(answers).length<10){quizSummary.textContent='Please answer all 10 questions first.';return}submitted=true;let score=0,errors=[];current.forEach((q,i)=>{const ok=answers[i]===q[2];if(ok)score++;else errors.push({topic:q[4],question:q[0]});const f=document.getElementById('qf'+i);f.textContent=(ok?'Correct. ':'Not quite. ')+q[3];f.style.color=ok?'#13775e':'#b8574b';f.previousElementSibling.querySelectorAll('.option').forEach(b=>{b.disabled=true;if(+b.dataset.a===q[2])b.classList.add('correct');else if(+b.dataset.a===answers[i])b.classList.add('wrong')})});const pct=score*10,l=getLesson(LESSON),hist=l.quizHistory||[];hist.push({filter,score,total:10,percent:pct,errors,date:new Date().toISOString()});setLesson(LESSON,{quizHistory:hist,quizBest:Math.max(l.quizBest||0,pct),quizLast:pct,quizDate:new Date().toISOString()});quizScoreBadge.textContent=score+' / 10';quizSummary.textContent=`Saved: ${score}/10 (${pct}%). Best score: ${Math.max(l.quizBest||0,pct)}%.`};
+finishQuiz.onclick=()=>{if(Object.keys(answers).length<current.length){quizSummary.textContent='Please answer all questions first.';return}submitted=true;let score=0,errors=[];current.forEach((q,i)=>{const ok=answers[i]===q[2];if(ok)score++;else errors.push({topic:q[4],question:q[0]});const f=document.getElementById('qf'+i);f.textContent=(ok?'Correct. ':'Not quite. ')+q[3];f.style.color=ok?'#13775e':'#b8574b';f.previousElementSibling.querySelectorAll('.option').forEach(b=>{b.disabled=true;if(+b.dataset.a===q[2])b.classList.add('correct');else if(+b.dataset.a===answers[i])b.classList.add('wrong')})});const pct=Math.round(score/current.length*100),l=getLesson(LESSON),hist=l.quizHistory||[];hist.push({filter,score,total:current.length,percent:pct,errors,date:new Date().toISOString()});setLesson(LESSON,{quizHistory:hist,quizBest:Math.max(l.quizBest||0,pct),quizLast:pct,quizDate:new Date().toISOString()});quizScoreBadge.textContent=score+' / '+current.length;quizSummary.textContent=`Saved: ${score}/${current.length} (${pct}%). Best score: ${Math.max(l.quizBest||0,pct)}%.`};
 newQuiz.onclick=buildSet;buildSet();
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
