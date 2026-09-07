@@ -146,33 +146,110 @@ textarea{width:100%;min-height:120px;padding:14px;border-radius:16px;border:1px 
 </div>
 
 <div id="quiz" class="panel">
-<div class="section-head"><div><span class="kicker">Retrieval practice</span><h2>Core knowledge quiz</h2></div><span class="badge" id="quizScoreBadge">0 / 10</span></div>
+<div class="section-head"><div><span class="kicker">Retrieval practice</span><h2>Core knowledge quiz</h2><p class="muted">20 questions · knowledge, units, application and calculations</p></div><span class="badge" id="quizScoreBadge">0 / 20</span></div>
 <div id="quizQuestions"></div>
-<div class="scorebox"><span id="quizSummary">Answer all 10 questions. Your best score will be saved.</span><button class="btn bio" onclick="finishQuiz()">Save score</button></div>
+<div class="scorebox"><span id="quizSummary">Answer all 20 questions. Your best score will be saved.</span><button class="btn bio" onclick="finishQuiz()">Save score</button></div>
 </div>
 
 <div id="gcse" class="panel">
-<div class="section-head"><div><span class="kicker">Exam technique</span><h2>GCSE Practice</h2></div><span class="badge">9 marks available</span></div>
-<div class="note" style="margin-bottom:18px"><strong>How to answer:</strong> underline the command word, identify the scientific idea being tested, use precise vocabulary, and for calculations show your working and units.</div>
+<div class="section-head"><div><span class="kicker">Exam technique</span><h2>GCSE Practice</h2>
+<p class="muted">Write first. Submit. Then the answer is locked and the marking guidance can be revealed.</p></div><span class="badge">9 marks available</span></div>
 
-<div class="gcse-card"><div class="row between"><h3>Q1 · Explain · 3 marks</h3><span class="badge">3 marks</span></div>
-<p>Explain why an electron microscope can reveal more detail in a cell than a light microscope.</p><textarea id="a1" placeholder="Write your answer here..."></textarea>
-<button class="btn" onclick="toggleGuide('g1')">Show marking guidance</button><div class="markguide" id="g1"><strong>A strong answer should include:</strong><p>Electron microscopes have a much higher resolving power and much higher magnification. This allows smaller structures or two very close points to be distinguished, so finer sub-cellular detail can be seen.</p><p class="small muted">This is revision guidance based on the specification, not a claim that this wording is an official AQA mark scheme.</p></div>
-<label class="small">Self-mark: <input id="m1" type="number" min="0" max="3" value="0"> / 3</label></div>
+<div class="note" style="margin-bottom:18px"><strong>How to build a GCSE answer:</strong>
+read the command word, identify the science you need, make each sentence earn a mark, and link ideas clearly. 
+The hints below help with structure only — they do not give away the scientific answer.</div>
 
-<div class="gcse-card"><div class="row between"><h3>Q2 · Calculate · 2 marks</h3><span class="badge">2 marks</span></div>
-<p>A capillary appears 5 mm wide in an image magnified ×1000. Calculate its actual width in micrometres.</p><textarea id="a2" placeholder="Show your working and unit..."></textarea>
-<button class="btn" onclick="toggleGuide('g2')">Show marking guidance</button><div class="markguide" id="g2"><p>Actual size = 5 mm ÷ 1000 = 0.005 mm = <strong>5 μm</strong>.</p></div>
-<label class="small">Self-mark: <input id="m2" type="number" min="0" max="2" value="0"> / 2</label></div>
-
-<div class="gcse-card"><div class="row between"><h3>Q3 · Compare · 4 marks</h3><span class="badge">4 marks</span></div>
-<p>Compare the use of light microscopes and electron microscopes for studying cells.</p><textarea id="a3" placeholder="Aim for linked similarities/differences, not a list of random facts..."></textarea>
-<button class="btn" onclick="toggleGuide('g3')">Show marking guidance</button><div class="markguide" id="g3"><p>Useful comparison points include: electron microscopes have much greater magnification and resolving power, so they reveal finer detail; light microscopes are cheaper and can be used to view living specimens. Electron microscopes are large, expensive and require specialised conditions/preparation.</p><p class="small muted">Use comparative language such as “whereas”, “in contrast” and “both”.</p></div>
-<label class="small">Self-mark: <input id="m3" type="number" min="0" max="4" value="0"> / 4</label></div>
-
-<div class="card" style="background:#F2F7F4"><div class="row between"><div><h3>Save GCSE practice</h3><p class="small muted">Your answers and self-marked score stay on this computer.</p></div><button class="btn bio" onclick="saveGcse()">Save practice</button></div><div id="gcseSaved" class="feedback"></div></div>
-<div class="card" style="margin-top:18px"><span class="kicker">Space for later</span><h3>More practice sets</h3><p class="muted">This page is ready to hold extra calculation sets, 6-mark questions, practical questions and mixed exam practice without changing the Learn section.</p></div>
+<div class="gcse-card" id="qcard1">
+<div class="row between"><h3>Q1 · Explain · 3 marks</h3><span class="badge">3 marks</span></div>
+<p><strong>Explain why an electron microscope can reveal more detail in a cell than a light microscope.</strong></p>
+<div class="markguide show" style="background:#EEF7F3">
+<strong>Writing guidance — no answer given</strong>
+<ol class="small">
+<li>Start by identifying the two microscope properties that affect what can be seen.</li>
+<li>Use a cause-and-effect sentence: because ___ is greater, the microscope can ___.</li>
+<li>Finish by linking the science back to <em>more detail in a cell</em>.</li>
+</ol>
+<p class="small muted"><strong>Command word:</strong> Explain = give scientific reasons, not just a description.</p>
 </div>
+<textarea id="a1" placeholder="Write your answer here..."></textarea>
+<div class="row">
+<button class="btn bio" id="submit1" onclick="submitGcse(1)">Submit this answer</button>
+<button class="btn" id="reveal1" onclick="toggleGuide('g1')" disabled>Reveal marking guidance</button>
+</div>
+<div class="markguide" id="g1"><strong>Revision marking guidance</strong>
+<p>Look for these scientific ideas in the submitted answer: much higher resolving power; much higher magnification; finer/smaller sub-cellular detail can therefore be distinguished.</p>
+<p class="small muted">This is revision guidance based on the specification. It is not presented as an official AQA mark scheme.</p>
+</div>
+<label class="small" id="markwrap1" style="display:none">Parent/teacher mark: <input id="m1" type="number" min="0" max="3" value="0"> / 3</label>
+</div>
+
+<div class="gcse-card" id="qcard2">
+<div class="row between"><h3>Q2 · Calculate · 2 marks</h3><span class="badge">2 marks</span></div>
+<p><strong>A capillary appears 5 mm wide in an image magnified ×1000. Calculate its actual width in micrometres.</strong></p>
+<div class="markguide show" style="background:#EEF7F3">
+<strong>Writing guidance — no answer given</strong>
+<ol class="small">
+<li>Write the equation you need before inserting numbers.</li>
+<li>Substitute the values and show the calculation.</li>
+<li>Convert to the requested unit and include the unit in the final answer.</li>
+</ol>
+<p class="small muted"><strong>Calculation routine:</strong> equation → substitute → calculate → convert → unit.</p>
+</div>
+<textarea id="a2" placeholder="Show your working and final unit..."></textarea>
+<div class="row">
+<button class="btn bio" id="submit2" onclick="submitGcse(2)">Submit this answer</button>
+<button class="btn" id="reveal2" onclick="toggleGuide('g2')" disabled>Reveal marking guidance</button>
+</div>
+<div class="markguide" id="g2"><strong>Revision marking guidance</strong>
+<p>Expected method: actual size = image size ÷ magnification. Correct result: 5 μm, with working and unit.</p>
+</div>
+<label class="small" id="markwrap2" style="display:none">Parent/teacher mark: <input id="m2" type="number" min="0" max="2" value="0"> / 2</label>
+</div>
+
+<div class="gcse-card" id="qcard3">
+<div class="row between"><h3>Q3 · Compare · 4 marks</h3><span class="badge">4 marks</span></div>
+<p><strong>Compare the use of light microscopes and electron microscopes for studying cells.</strong></p>
+<div class="markguide show" style="background:#EEF7F3">
+<strong>Writing guidance — no answer given</strong>
+<ol class="small">
+<li>Organise the answer as comparisons, not two unrelated lists.</li>
+<li>Include at least one point about what each microscope can reveal.</li>
+<li>Include at least one practical/use point.</li>
+<li>Use linking words such as <em>whereas</em>, <em>in contrast</em> or <em>both</em>.</li>
+</ol>
+<p class="small muted"><strong>Command word:</strong> Compare = refer to both items and make the relationship explicit.</p>
+</div>
+<textarea id="a3" placeholder="Write a linked comparison here..."></textarea>
+<div class="row">
+<button class="btn bio" id="submit3" onclick="submitGcse(3)">Submit this answer</button>
+<button class="btn" id="reveal3" onclick="toggleGuide('g3')" disabled>Reveal marking guidance</button>
+</div>
+<div class="markguide" id="g3"><strong>Revision marking guidance</strong>
+<p>Useful comparison points include: electron microscopes have much greater magnification and resolving power and reveal finer detail; light microscopes are cheaper and can be used to view living specimens; electron microscopes are expensive and require specialised conditions/preparation.</p>
+<p class="small muted">This is revision marking guidance for this revision question, not an official AQA mark scheme.</p>
+</div>
+<label class="small" id="markwrap3" style="display:none">Parent/teacher mark: <input id="m3" type="number" min="0" max="4" value="0"> / 4</label>
+</div>
+
+<div class="card" style="background:#F2F7F4">
+<span class="kicker">Send for correction</span><h3>Create a correction report</h3>
+<p class="muted">Once answers have been submitted, create a clean printable report containing the questions and Gabriel's locked answers. In the print window choose <strong>Save as PDF</strong>, then send that PDF for marking.</p>
+<div class="row">
+<button class="btn bio" onclick="printCorrectionReport()">Create / print correction report</button>
+<button class="btn" onclick="exportGcseJson()">Export answers (.json)</button>
+</div>
+<div id="exportStatus" class="feedback"></div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<span class="kicker">After correction</span><h3>Record the marks</h3>
+<p class="muted">After a parent/teacher/AI-assisted correction, enter the marks beside each question and save them. The Biology dashboard will show the total as an externally marked practice score rather than a self-marked score.</p>
+<button class="btn bio" onclick="saveExternalMarks()">Save corrected marks</button>
+<div id="gcseSaved" class="feedback"></div>
+</div>
+
+<div class="card" style="margin-top:18px"><span class="kicker">Space for later</span><h3>More practice sets</h3><p class="muted">Extra 3-, 4- and 6-mark questions, practical questions, calculation sets and trial exams can be added here without changing the Learn section.</p></div>
+</div></div>
 </div></section></main>
 <footer><div class="shell">B1.1 · AQA GCSE Combined Science: Trilogy · Higher tier</div></footer>
 
@@ -225,19 +302,94 @@ const quiz=[
 ['Which equation is correct?',['M = actual ÷ image','M = image ÷ actual','M = image × actual','M = image + actual'],1,'Magnification = image size ÷ actual size.'],
 ['An image is 800 μm wide and the real object is 20 μm wide. Magnification?',['×20','×40','×80','×400'],1,'800 ÷ 20 = 40.'],
 ['Why did electron microscopy improve our understanding of cells?',['It made cells grow','It revealed finer sub-cellular detail','It removed the need for calculations','It made all specimens living'],1,'Higher resolving power allows finer detail to be distinguished.'],
-['For total light-microscope magnification, multiply…',['eyepiece × objective','eyepiece + objective','objective ÷ eyepiece','image size × real size'],0,'Total magnification is eyepiece magnification × objective magnification.']
+['For total light-microscope magnification, multiply…',['eyepiece × objective','eyepiece + objective','objective ÷ eyepiece','image size × real size'],0,'Total magnification is eyepiece magnification × objective magnification.'],
+['A ×10 eyepiece and ×40 objective give a total magnification of…',['×50','×400','×4','×4000'],1,'10 × 40 = 400.'],
+['An object is 30 μm wide and viewed at ×200. How wide is the image?',['0.15 μm','6 μm','6000 μm','230 μm'],2,'Image size = actual size × magnification = 30 × 200 = 6000 μm.'],
+['6000 μm is equal to…',['0.6 mm','6 mm','60 mm','600 mm'],1,'Divide micrometres by 1000 to convert to millimetres.'],
+['Which change improves the ability to see two very close points separately?',['Higher resolution','Higher brightness only','A larger slide','Lower magnification'],0,'That is exactly what resolution describes.'],
+['A bigger image that stays blurry demonstrates that…',['magnification and resolution are different','resolution always increases with image size','light microscopes have no lenses','units do not matter'],0,'Magnification alone does not create extra detail.'],
+['Which statement about electron microscopes is correct?',['They have lower magnification than light microscopes','They can routinely view living specimens','They have much higher resolving power','They are cheaper than light microscopes'],2,'Electron microscopes have much higher resolving power.'],
+['0.025 mm is equal to…',['2.5 μm','25 μm','250 μm','2500 μm'],1,'Multiply millimetres by 1000 to get micrometres.'],
+['An image is 12 mm long and the real object is 0.03 mm long. Magnification?',['×40','×400','×4','×0.4'],1,'12 ÷ 0.03 = 400.'],
+['Which sequence goes from larger to smaller units?',['nm → μm → mm','mm → μm → nm','μm → mm → nm','nm → mm → μm'],1,'Millimetres are larger than micrometres, which are larger than nanometres.'],
+['What should you check before using the magnification equation?',['That image and actual size use compatible units','That the specimen is alive','That the microscope is electron-only','That the answer is always in mm'],0,'Unit consistency prevents calculation errors.']
 ];
 const qwrap=document.getElementById('quizQuestions'); let answers={};
 quiz.forEach((q,i)=>{const d=document.createElement('div');d.className='question';d.innerHTML=`<strong>${i+1}. ${q[0]}</strong><div class="options">${q[1].map((o,j)=>`<button class="option" data-i="${i}" data-j="${j}">${o}</button>`).join('')}</div><div class="feedback" id="f${i}"></div>`;qwrap.appendChild(d)});
 qwrap.addEventListener('click',e=>{if(!e.target.classList.contains('option'))return;const i=+e.target.dataset.i,j=+e.target.dataset.j;answers[i]=j;const box=e.target.parentElement;[...box.children].forEach(b=>b.classList.remove('correct','wrong'));e.target.classList.add(j===quiz[i][2]?'correct':'wrong');document.getElementById('f'+i).textContent=j===quiz[i][2]?'Correct ✓':quiz[i][3];updateQuizBadge()});
-function updateQuizBadge(){const score=Object.entries(answers).filter(([i,a])=>+a===quiz[+i][2]).length;document.getElementById('quizScoreBadge').textContent=score+' / 10'}
-function finishQuiz(){const score=Object.entries(answers).filter(([i,a])=>+a===quiz[+i][2]).length;const pct=Math.round(score/10*100),l=getLesson('B1.1'),best=Math.max(l.quizBest||0,pct);setLesson('B1.1',{quizBest:best,quizLast:pct,quizDate:new Date().toISOString()});document.getElementById('quizSummary').textContent=`Saved: ${pct}% · Best: ${best}%`}
+function updateQuizBadge(){const score=Object.entries(answers).filter(([i,a])=>+a===quiz[+i][2]).length;document.getElementById('quizScoreBadge').textContent=score+' / 20'}
+function finishQuiz(){const score=Object.entries(answers).filter(([i,a])=>+a===quiz[+i][2]).length;const pct=Math.round(score/20*100),l=getLesson('B1.1'),best=Math.max(l.quizBest||0,pct);setLesson('B1.1',{quizBest:best,quizLast:pct,quizDate:new Date().toISOString(),quizAnswered:Object.keys(answers).length});document.getElementById('quizSummary').textContent=`Saved: ${pct}% · Best: ${best}% · ${Object.keys(answers).length}/20 answered`}
 
 function toggleGuide(id){document.getElementById(id).classList.toggle('show')}
-function saveGcse(){
- const m1=Math.max(0,Math.min(3,+document.getElementById('m1').value||0)),m2=Math.max(0,Math.min(2,+document.getElementById('m2').value||0)),m3=Math.max(0,Math.min(4,+document.getElementById('m3').value||0)),total=m1+m2+m3,l=getLesson('B1.1');
- setLesson('B1.1',{gcseBest:Math.max(l.gcseBest||0,total),gcseLast:total,gcseDate:new Date().toISOString(),gcseAnswers:[document.getElementById('a1').value,document.getElementById('a2').value,document.getElementById('a3').value]});
- document.getElementById('gcseSaved').textContent=`Saved: ${total} / 9 · Best: ${Math.max(l.gcseBest||0,total)} / 9`;
+
+function submitGcse(n){
+  const ta=document.getElementById('a'+n);
+  const answer=ta.value.trim();
+  if(!answer){alert('Write an answer before submitting.');return;}
+  const l=getLesson('B1.1'), submissions=l.gcseSubmissions||{};
+  submissions[n]={answer,submittedAt:new Date().toISOString()};
+  setLesson('B1.1',{gcseSubmissions:submissions});
+  lockQuestion(n);
 }
-const saved=getLesson('B1.1'); if(saved.gcseAnswers){['a1','a2','a3'].forEach((id,i)=>document.getElementById(id).value=saved.gcseAnswers[i]||'')}
+function lockQuestion(n){
+  const l=getLesson('B1.1'), sub=(l.gcseSubmissions||{})[n];
+  if(!sub)return;
+  const ta=document.getElementById('a'+n);
+  ta.value=sub.answer; ta.readOnly=true; ta.style.background='#F2F5F3';
+  document.getElementById('submit'+n).disabled=true;
+  document.getElementById('submit'+n).textContent='Submitted ✓';
+  document.getElementById('reveal'+n).disabled=false;
+  document.getElementById('markwrap'+n).style.display='inline-block';
+}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function allSubmitted(){
+  const s=getLesson('B1.1').gcseSubmissions||{};
+  return [1,2,3].every(n=>s[n]&&s[n].answer);
+}
+function printCorrectionReport(){
+  if(!allSubmitted()){alert('Submit all three GCSE answers first.');return;}
+  const s=getLesson('B1.1').gcseSubmissions;
+  const w=window.open('','_blank');
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>B1.1 GCSE correction report</title>
+  <style>body{font-family:Arial,sans-serif;color:#182f35;max-width:850px;margin:40px auto;line-height:1.5}h1{font-size:30px}h2{margin-top:32px}.meta{color:#66777b}.box{border:1px solid #ccd8d3;border-radius:12px;padding:18px;margin:12px 0 28px;white-space:pre-wrap}.marks{border-top:2px solid #182f35;padding-top:18px;margin-top:30px}@media print{button{display:none}body{margin:20px}}</style></head><body>
+  <h1>B1.1 · The World of the Microscope</h1><p class="meta">GCSE Practice correction report · Generated ${new Date().toLocaleString()}</p>
+  <h2>Q1 · Explain · 3 marks</h2><p>Explain why an electron microscope can reveal more detail in a cell than a light microscope.</p><div class="box">${esc(s[1].answer)}</div>
+  <h2>Q2 · Calculate · 2 marks</h2><p>A capillary appears 5 mm wide in an image magnified ×1000. Calculate its actual width in micrometres.</p><div class="box">${esc(s[2].answer)}</div>
+  <h2>Q3 · Compare · 4 marks</h2><p>Compare the use of light microscopes and electron microscopes for studying cells.</p><div class="box">${esc(s[3].answer)}</div>
+  <div class="marks"><h2>For marker</h2><p>Q1: ___ / 3 &nbsp;&nbsp; Q2: ___ / 2 &nbsp;&nbsp; Q3: ___ / 4 &nbsp;&nbsp; Total: ___ / 9</p><p>Feedback:</p><div class="box" style="min-height:120px"></div></div>
+  <button onclick="window.print()">Print / Save as PDF</button>
+  </body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+}
+function exportGcseJson(){
+  if(!allSubmitted()){alert('Submit all three GCSE answers first.');return;}
+  const l=getLesson('B1.1');
+  const payload={
+    student:'Gabriel',
+    lesson:'B1.1 The World of the Microscope',
+    generatedAt:new Date().toISOString(),
+    questions:[
+      {id:'Q1',command:'Explain',marks:3,question:'Explain why an electron microscope can reveal more detail in a cell than a light microscope.',answer:l.gcseSubmissions[1].answer},
+      {id:'Q2',command:'Calculate',marks:2,question:'A capillary appears 5 mm wide in an image magnified ×1000. Calculate its actual width in micrometres.',answer:l.gcseSubmissions[2].answer},
+      {id:'Q3',command:'Compare',marks:4,question:'Compare the use of light microscopes and electron microscopes for studying cells.',answer:l.gcseSubmissions[3].answer}
+    ]
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='B1-1-GCSE-answers.json';a.click();URL.revokeObjectURL(a.href);
+  document.getElementById('exportStatus').textContent='Answers exported.';
+}
+function saveExternalMarks(){
+  const m1=Math.max(0,Math.min(3,+document.getElementById('m1').value||0));
+  const m2=Math.max(0,Math.min(2,+document.getElementById('m2').value||0));
+  const m3=Math.max(0,Math.min(4,+document.getElementById('m3').value||0));
+  const total=m1+m2+m3,l=getLesson('B1.1');
+  setLesson('B1.1',{gcseBest:Math.max(l.gcseBest||0,total),gcseLast:total,gcseDate:new Date().toISOString(),gcseMarkedBy:'external',gcseMarks:{1:m1,2:m2,3:m3}});
+  document.getElementById('gcseSaved').textContent=`Corrected score saved: ${total} / 9 · Best: ${Math.max(l.gcseBest||0,total)} / 9`;
+}
+const saved=getLesson('B1.1');
+if(saved.gcseSubmissions){
+  [1,2,3].forEach(n=>{if(saved.gcseSubmissions[n])lockQuestion(n)});
+}
+if(saved.gcseMarks){
+  [1,2,3].forEach(n=>{if(saved.gcseMarks[n]!==undefined)document.getElementById('m'+n).value=saved.gcseMarks[n]});
+}
 </script></body></html>
