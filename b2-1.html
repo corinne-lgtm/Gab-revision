@@ -1,0 +1,222 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>B2.1 Cell division</title><style>
+:root{
+  --ink:#18323A; --muted:#66777B; --paper:#FBFCF8; --card:#FFFFFF;
+  --bio:#1F8A70; --bio2:#DDF3EA; --lime:#DDF0A5; --yellow:#F6D365;
+  --blue:#DCEEF8; --blueInk:#347799; --violet:#E8DDF6; --violetInk:#6C4D8B;
+  --coral:#F8D8CF; --line:#DDE6E2; --danger:#B8574B; --success:#13775E;
+  --shadow:0 12px 35px rgba(24,50,58,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+.shell{max-width:1180px;margin:auto;padding:0 22px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(251,252,248,.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(221,230,226,.85)}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-weight:900;letter-spacing:-.03em}.brand span{color:var(--bio)}
+.navlinks{display:flex;gap:9px;flex-wrap:wrap}
+.pill,.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:800;cursor:pointer;transition:.2s}
+.btn:hover,.pill:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(24,50,58,.08)}
+.btn.primary{background:var(--ink);color:white;border-color:var(--ink)}
+.btn.bio{background:var(--bio);color:#fff;border-color:var(--bio)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--bio)}
+.hero{padding:68px 0 34px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+h1{font-size:clamp(2.7rem,7vw,5.7rem);line-height:.92;letter-spacing:-.065em;margin:14px 0 20px}
+h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.045em;margin:.2em 0}
+h3{margin:.25em 0 .5em;font-size:1.25rem}
+.lead{font-size:1.18rem;line-height:1.65;color:var(--muted);max-width:720px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.stat{padding:18px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+.stat strong{display:block;font-size:2rem;letter-spacing:-.04em}
+.muted{color:var(--muted)}
+.section{padding:42px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+.progress{height:10px;border-radius:99px;background:#E8EEEA;overflow:hidden}
+.progress>span{display:block;height:100%;background:var(--bio);width:0}
+.subject-card{min-height:170px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.subject-card .emoji{font-size:2.3rem}
+.subject-card.bio-card{background:linear-gradient(135deg,#E4F6EE,#F9FCF8)}
+.subject-card.disabled{opacity:.58}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.between{justify-content:space-between}
+.badge{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:.76rem;font-weight:900;background:var(--bio2);color:var(--success)}
+.small{font-size:.88rem}
+footer{padding:52px 0;color:var(--muted);font-size:.9rem}
+@media(max-width:820px){
+  .hero-grid,.grid-3,.grid-2{grid-template-columns:1fr}
+  .nav{height:auto;padding:13px 0;align-items:flex-start}
+  .navlinks{justify-content:flex-end}
+}
+
+.lesson-hero{padding:48px 0 20px}
+.lesson-title{font-size:clamp(2.6rem,6vw,5rem)}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;padding:14px 0}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 16px;font-weight:900;cursor:pointer}
+.tab.active{background:var(--ink);color:white}
+.panel{display:none}.panel.active{display:block}
+.infographic{background:#fff;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+.info-block{padding:28px;border-bottom:1px solid var(--line)}
+.info-block:last-child{border-bottom:0}
+.timeline{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
+.timeline .era{padding:22px;border-radius:22px;background:#F4F8F5}
+.arrow{font-size:2rem;color:var(--bio)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.compare>div{padding:20px;border-radius:22px}
+.light{background:#FFF7DB}.electron{background:#EAE1F5}
+.microscope-stage{display:grid;grid-template-columns:1fr .9fr;gap:24px;align-items:center}
+.viewer{min-height:300px;border-radius:28px;background:#102E34;display:grid;place-items:center;overflow:hidden;position:relative}
+.cell{width:92px;height:92px;border:7px solid #A9E3D0;border-radius:45% 55% 52% 48%;position:relative;transform:scale(var(--mag,1));transition:.2s}
+.cell:before,.cell:after{content:"";position:absolute;border-radius:50%;background:#F6D365}
+.cell:before{width:27px;height:27px;left:25px;top:25px}
+.cell:after{width:9px;height:9px;right:12px;top:16px;box-shadow:-45px 36px 0 #F6D365,10px 43px 0 #F6D365}
+.blur-layer{position:absolute;inset:0;backdrop-filter:blur(var(--blur,0px));pointer-events:none}
+.control{margin:18px 0}.control label{display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--bio)}
+.zoom-tunnel{display:flex;align-items:center;gap:8px;overflow:auto;padding:10px 0}
+.unit{min-width:125px;padding:18px;text-align:center;border-radius:20px;background:#F2F7F4;border:1px solid var(--line)}
+.unit strong{font-size:1.4rem;display:block}
+.formula{display:grid;place-items:center;min-height:240px;background:var(--blue);border-radius:24px;text-align:center;padding:18px}
+.formula strong{font-size:clamp(2rem,5vw,4rem);letter-spacing:-.05em}
+.question{padding:20px;border:1px solid var(--line);border-radius:22px;background:#fff;margin-bottom:14px}
+.options{display:grid;gap:8px;margin-top:13px}
+.option{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;text-align:left;cursor:pointer}
+.option.correct{background:#E5F5EC;border-color:#8CC7AE}.option.wrong{background:#FDEBE6;border-color:#D99888}
+.feedback{margin-top:10px;font-weight:800;min-height:20px}
+.gcse-card{padding:22px;border:1px solid var(--line);border-radius:22px;background:#fff;margin-bottom:16px}
+textarea{width:100%;min-height:120px;padding:14px;border-radius:16px;border:1px solid var(--line);resize:vertical}
+.markguide{display:none;margin-top:14px;padding:16px;border-radius:16px;background:#F4F7F5}
+.markguide.show{display:block}
+.scorebox{position:sticky;bottom:14px;background:var(--ink);color:white;padding:14px 18px;border-radius:18px;box-shadow:var(--shadow);display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:18px}
+.note{padding:16px;border-left:5px solid var(--bio);background:var(--bio2);border-radius:0 16px 16px 0}
+@media(max-width:820px){.timeline,.compare,.microscope-stage{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+
+.cell-stage{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.visual{background:#f0f7f3;border:1px solid var(--line);border-radius:24px;padding:18px;text-align:center}
+.visual svg{width:100%;max-width:440px;height:auto}
+.stage-controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.stage-controls button[aria-pressed=true]{background:var(--bio);color:white}
+.stage-note{min-height:90px}
+.fact{border-left:4px solid var(--bio);padding:10px 16px;background:#f3f8f4;margin:12px 0;border-radius:0 12px 12px 0}
+.question{padding:20px 0;border-bottom:1px solid var(--line)}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.option{border:1px solid var(--line);background:white;border-radius:12px;padding:12px;text-align:left;cursor:pointer}
+.option.correct{background:#d9f2e5;border-color:#16845d}.option.wrong{background:#fbe5df;border-color:#b8574b}
+.feedback{margin-top:10px;font-size:.9rem}.gcse-card{border:1px solid var(--line);border-radius:22px;padding:22px;margin:18px 0;background:white}
+textarea{display:block;width:100%;min-height:140px;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;resize:vertical}
+.markguide{display:none;background:#f3f6f3;border-radius:14px;padding:16px;margin:12px 0}.markguide.show{display:block}
+.note{background:#f0f7f3;padding:18px;border-radius:16px}
+.panel{display:none}.panel.active{display:block}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}.tab{border:1px solid var(--line);background:white;border-radius:99px;padding:12px 20px;font-weight:800;cursor:pointer}.tab.active{background:var(--ink);color:white}
+.lesson-hero{padding:55px 0 25px}.lesson-title{font-size:clamp(2.6rem,6vw,5rem);line-height:1;letter-spacing:-.05em}
+.info-block{padding:30px 0;border-bottom:1px solid var(--line)}
+@media(max-width:700px){.cell-stage,.options{grid-template-columns:1fr}}
+</style></head><body>
+<header class="topbar"><div class="shell nav"><a class="brand" href="index.html">GAB<span> / REVISION</span></a><nav class="navlinks"><a class="pill" href="biology.html">← Biology</a><a class="pill" href="b1-1.html">B1.1</a></nav></div></header>
+<main><section class="lesson-hero"><div class="shell"><span class="kicker">Biology · B2.1</span><h1 class="lesson-title">Cell <span style="color:var(--bio)">division</span></h1><p class="lead">Follow a cell as it grows, copies its DNA and divides. Discover how two daughter cells receive the same genetic information.</p><div class="tabs"><button class="tab active" data-tab="learn">① Learn</button><button class="tab" data-tab="quiz">② Quiz</button><button class="tab" data-tab="gcse">③ GCSE Practice</button></div></div></section><section class="section"><div class="shell"><div id="learn" class="panel active">
+<div class="info-block"><span class="kicker">01 · The information inside cells</span><h2>DNA → chromosomes → genes</h2><p class="lead">The nucleus contains chromosomes made of DNA. Each chromosome carries many genes, which are sections of DNA.</p>
+<div class="grid-3"><div class="card"><h3>DNA</h3><p>The molecule that carries genetic information.</p></div><div class="card"><h3>Chromosome</h3><p>A structure made of DNA that carries many genes.</p></div><div class="card"><h3>Gene</h3><p>A section of DNA that contains instructions for a particular characteristic or protein.</p></div></div>
+<div class="fact"><strong>Human body cells:</strong> 46 chromosomes, normally arranged in 23 pairs. The chromosome number is maintained during mitosis.</div></div>
+<div class="info-block"><span class="kicker">02 · Interactive cell cycle</span><h2>One cell. Three overall stages.</h2><p class="lead">Select a stage to follow the genetic material. This is a simplified teaching model, not a microscope recording.</p>
+<div class="cell-stage"><div class="visual"><svg id="cellVisual" viewBox="0 0 420 300" role="img" aria-label="Simplified cell cycle diagram"><rect width="420" height="300" rx="20" fill="#f0f7f3"/><g id="cellDrawing"></g></svg><p class="small muted" id="visualCaption"></p></div><div><span class="kicker" id="stageKicker"></span><h3 id="stageTitle"></h3><p class="stage-note" id="stageText"></p><div class="stage-controls"><button class="btn" data-stage="0">1 · Prepare</button><button class="btn" data-stage="1">2 · Mitosis</button><button class="btn" data-stage="2">3 · Divide</button></div><button class="btn bio" id="nextStage">Next stage →</button></div></div>
+<div class="note"><strong>Exam boundary:</strong> AQA requires the three overall stages of the cell cycle. You do not need to memorise the individual phases of mitosis for Combined Science: Trilogy.</div></div>
+<div class="info-block"><span class="kicker">03 · Follow the chromosomes</span><h2>Copy, separate, divide</h2><div class="grid-3"><div class="card"><span class="badge">Stage 1</span><h3>Growth &amp; replication</h3><p>The cell grows and increases structures such as mitochondria and ribosomes. DNA replicates to form two copies of each chromosome.</p></div><div class="card"><span class="badge">Stage 2</span><h3>Mitosis</h3><p>One set of chromosomes is pulled to each end of the cell. The nucleus divides.</p></div><div class="card"><span class="badge">Stage 3</span><h3>Two daughter cells</h3><p>The cytoplasm and cell membrane divide, forming two genetically identical cells.</p></div></div><div class="fact"><strong>Remember:</strong> DNA replication happens before mitosis. Mitosis is nuclear division; the final division of cytoplasm and membrane produces the two cells.</div></div>
+<div class="info-block"><span class="kicker">04 · Why does it matter?</span><h2>Growth, repair and replacement</h2><div class="grid-3"><div class="card"><h3>Growth</h3><p>More cells allow a multicellular organism to grow and develop.</p></div><div class="card"><h3>Repair</h3><p>New cells replace damaged cells and help tissues repair.</p></div><div class="card"><h3>Replacement</h3><p>Many tissues continually replace worn-out cells, such as cells in the skin and digestive lining.</p></div></div><p class="muted">Cell cycles vary in length between cell types and conditions. Some specialised cells divide rarely or not at all. Mitosis also produces genetically identical cells in asexual reproduction.</p></div>
+<div class="info-block"><span class="kicker">05 · Maths lab</span><h2>How long is each stage?</h2><p class="lead">A sample of 200 cells is observed. Change the percentage in Stage 1 to see how the estimated number of cells changes.</p><label for="stagePercent">Percentage in Stage 1: <strong id="pctLabel">80%</strong></label><input type="range" id="stagePercent" min="10" max="95" value="80" style="width:100%;margin:20px 0"><div class="grid-2"><div class="card"><span class="kicker">Cells in Stage 1</span><h2 id="cellCount">160</h2><p class="muted">200 × percentage ÷ 100</p></div><div class="card"><span class="kicker">If the cycle lasts 20 hours</span><h2 id="timeCount">16 h</h2><p class="muted">Illustrative estimate assuming the sampled cells represent the cycle.</p></div></div><div class="fact"><strong>Percentage = part ÷ total × 100.</strong> To find the total from a percentage, divide the part by the percentage written as a decimal.</div></div>
+<div class="info-block"><span class="kicker">06 · Check your understanding</span><h2>Can you explain it?</h2><p>Make sure you can describe all three stages, explain why DNA replication is necessary, and state why mitosis matters for growth and repair.</p><button class="btn bio" id="readBtn" onclick="toggleRead()">✓ Mark as learnt</button><p class="small muted">Completion records that you have studied the lesson. Quiz and practice scores measure understanding separately.</p></div>
+<div class="note"><strong>Source and scope:</strong> Oxford AQA Biology for GCSE Combined Science: Trilogy, third edition, pp. 26–27; AQA 8464, sections 4.1.2.1–4.1.2.2. The cell-cycle illustration is simplified. Individual mitosis phases are not required.</div></div>
+<div id="quiz" class="panel"><div class="section-head"><div><span class="kicker">Retrieval practice</span><h2>Knowledge &amp; application</h2><p class="muted">24 questions in three short sets. Your attempts and errors are saved.</p></div><span class="badge" id="quizScoreBadge">—</span></div><div class="stage-controls" id="quizSets"></div><div id="quizQuestions"></div><div class="row" style="margin-top:20px"><button class="btn bio" id="finishQuiz">Submit quiz</button><button class="btn" id="retryQuiz">New attempt</button></div><div id="quizSummary" class="feedback" aria-live="polite"></div></div>
+<div id="gcse" class="panel"><div class="section-head"><div><span class="kicker">Exam technique</span><h2>GCSE Practice</h2><p class="muted">Use the writing guidance, submit your answer, then reveal the revision marking guidance.</p></div></div><div class="note"><strong>Writing routine:</strong> Read the command word → plan the scientific points → write a precise answer → check that every sentence answers the question. Hints do not reveal the answer.</div><div id="gcseQuestions"></div><div class="card"><h3>Correction report</h3><p class="muted">Export submitted answers for a parent or teacher to mark. Use Print / Save as PDF in your browser. The report does not contain model answers.</p><button class="btn bio" id="printReport">Print / Save as PDF</button> <button class="btn" id="exportAnswers">Export answers (.json)</button><p id="exportMessage" class="feedback"></p></div><div class="card" style="margin-top:18px"><h3>Record corrected marks</h3><p class="muted">Enter marks after external correction. The score is labelled as externally recorded, not automatically marked by AI.</p><button class="btn bio" id="saveMarks">Save corrected marks</button><p id="markMessage" class="feedback"></p></div></div></div></section></main><footer><div class="shell">Biology · AQA Combined Science: Trilogy · Higher tier · B2.1</div></footer>
+<script>
+const STORE_KEY='gabRevisionV2';
+function loadStore(){
+  try{return JSON.parse(localStorage.getItem(STORE_KEY))||{}}catch(e){return{}}
+}
+function saveStore(s){localStorage.setItem(STORE_KEY,JSON.stringify(s))}
+function getLesson(id){
+  const s=loadStore(); s.lessons=s.lessons||{}; s.lessons[id]=s.lessons[id]||{};
+  return s.lessons[id];
+}
+function setLesson(id,patch){
+  const s=loadStore(); s.lessons=s.lessons||{}; s.lessons[id]={...(s.lessons[id]||{}),...patch}; saveStore(s); return s.lessons[id];
+}
+function exportProgress(){
+  const data=JSON.stringify(loadStore(),null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gab-revision-progress.json';a.click();URL.revokeObjectURL(a.href);
+}
+function importProgress(file){
+  const r=new FileReader();
+  r.onload=()=>{try{const data=JSON.parse(r.result);saveStore(data);location.reload()}catch(e){alert('That file is not a valid progress backup.')}};
+  r.readAsText(file);
+}
+
+
+const LESSON='B2.1';
+const tabs=[...document.querySelectorAll('.tab')];tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById(t.dataset.tab).classList.add('active');window.scrollTo({top:130,behavior:'smooth'})}));
+function refreshRead(){document.getElementById('readBtn').textContent=getLesson(LESSON).read?'✓ Learnt':'✓ Mark as learnt'}
+function toggleRead(){const l=getLesson(LESSON);setLesson(LESSON,{read:!l.read,readDate:new Date().toISOString()});refreshRead()}refreshRead();
+
+const stageData=[
+{title:'Prepare for division',kicker:'Stage 1 · Growth and DNA replication',text:'The cell grows, increases its sub-cellular structures and replicates its DNA. Two copies of each chromosome are formed.',caption:'One cell, with duplicated genetic material ready for division.'},
+{title:'Separate the chromosomes',kicker:'Stage 2 · Mitosis',text:'One set of chromosomes is pulled to each end of the cell. The nucleus divides.',caption:'The two sets of genetic material are separated.'},
+{title:'Form two daughter cells',kicker:'Stage 3 · Cytoplasm and membrane division',text:'The cytoplasm and cell membrane divide. Two genetically identical daughter cells are formed.',caption:'Two cells, each with the same genetic information.'}
+];
+let stage=0;
+function chromosome(x,y,scale=1){return `<g transform="translate(${x} ${y}) scale(${scale})"><path d="M-7 -13 L7 13 M7 -13 L-7 13" stroke="#6c4d8b" stroke-width="6" stroke-linecap="round"/><circle r="3" fill="#18323a"/></g>`}
+function drawStage(n){
+ stage=n;const d=stageData[n];document.getElementById('stageKicker').textContent=d.kicker;document.getElementById('stageTitle').textContent=d.title;document.getElementById('stageText').textContent=d.text;document.getElementById('visualCaption').textContent=d.caption;
+ document.querySelectorAll('[data-stage]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.stage===n)));
+ let drawing='';
+ if(n===0){drawing=`<circle cx="210" cy="150" r="108" fill="#fff" stroke="#1f8a70" stroke-width="4"/><circle cx="210" cy="150" r="68" fill="#e8ddf6" stroke="#6c4d8b" stroke-width="2"/>${chromosome(185,125)}${chromosome(235,125)}${chromosome(185,175)}${chromosome(235,175)}<text x="210" y="275" text-anchor="middle" font-size="12" fill="#66777b">Illustrative chromosomes — not to scale</text>`}
+ if(n===1){drawing=`<ellipse cx="210" cy="150" rx="145" ry="105" fill="#fff" stroke="#1f8a70" stroke-width="4"/><path d="M210 55 Q165 150 210 245" fill="none" stroke="#d8e7df" stroke-width="2" stroke-dasharray="5 5"/><ellipse cx="125" cy="150" rx="48" ry="62" fill="#e8ddf6" stroke="#6c4d8b" stroke-width="2"/><ellipse cx="295" cy="150" rx="48" ry="62" fill="#e8ddf6" stroke="#6c4d8b" stroke-width="2"/>${chromosome(110,135,.65)}${chromosome(140,135,.65)}${chromosome(110,165,.65)}${chromosome(140,165,.65)}${chromosome(280,135,.65)}${chromosome(310,135,.65)}${chromosome(280,165,.65)}${chromosome(310,165,.65)}<path d="M180 150h-28m0 0 8-6m-8 6 8 6M240 150h28m0 0-8-6m8 6-8 6" stroke="#1f8a70" fill="none" stroke-width="2"/>`}
+ if(n===2){drawing=`<circle cx="115" cy="150" r="82" fill="#fff" stroke="#1f8a70" stroke-width="4"/><circle cx="305" cy="150" r="82" fill="#fff" stroke="#1f8a70" stroke-width="4"/><circle cx="115" cy="150" r="49" fill="#e8ddf6" stroke="#6c4d8b" stroke-width="2"/><circle cx="305" cy="150" r="49" fill="#e8ddf6" stroke="#6c4d8b" stroke-width="2"/>${chromosome(100,135,.55)}${chromosome(130,135,.55)}${chromosome(100,165,.55)}${chromosome(130,165,.55)}${chromosome(290,135,.55)}${chromosome(320,135,.55)}${chromosome(290,165,.55)}${chromosome(320,165,.55)}<text x="210" y="275" text-anchor="middle" font-size="12" fill="#66777b">Two genetically identical daughter cells</text>`}
+ document.getElementById('cellDrawing').innerHTML=drawing;
+}
+document.querySelectorAll('[data-stage]').forEach(b=>b.addEventListener('click',()=>drawStage(+b.dataset.stage)));
+document.getElementById('nextStage').addEventListener('click',()=>drawStage((stage+1)%3));drawStage(0);
+document.getElementById('stagePercent').addEventListener('input',e=>{const v=+e.target.value;document.getElementById('pctLabel').textContent=v+'%';document.getElementById('cellCount').textContent=200*v/100;document.getElementById('timeCount').textContent=(20*v/100).toFixed(1)+' h'});
+const quiz=[["What is a chromosome made of?", ["DNA", "Protein only", "Cytoplasm", "Cellulose"], 0, "Chromosomes are made of DNA molecules."], ["Where are chromosomes found in a human body cell?", ["Cell membrane", "Nucleus", "Ribosome", "Cell wall"], 1, "The nucleus contains chromosomes."], ["What is a gene?", ["A whole cell", "A section of DNA", "A type of organelle", "A cell membrane"], 1, "A gene is a section of DNA."], ["How are chromosomes normally arranged in body cells?", ["In pairs", "In groups of three", "As a single chromosome", "Outside the nucleus"], 0, "Body-cell chromosomes are normally found in pairs."], ["How many chromosomes are in a typical human body cell?", ["23", "46", "92", "12"], 1, "There are 46 chromosomes, arranged in 23 pairs."], ["What happens to DNA before mitosis?", ["It is destroyed", "It replicates", "It leaves the cell", "It becomes cytoplasm"], 1, "DNA replicates to form two copies of each chromosome."], ["What else happens before a cell divides?", ["The cell grows and increases sub-cellular structures", "The nucleus disappears permanently", "All mitochondria are destroyed", "The cell loses its membrane"], 0, "The cell grows and increases structures such as mitochondria and ribosomes."], ["What happens during mitosis?", ["The cell wall divides", "One set of chromosomes moves to each end and the nucleus divides", "DNA is first created", "The cell becomes a gamete"], 1, "Mitosis is the division of the nucleus."], ["What divides after mitosis?", ["Only the chromosomes", "The cytoplasm and cell membrane", "Only the ribosomes", "The DNA molecules"], 1, "The cytoplasm and cell membrane divide to form two cells."], ["How many daughter cells are produced by one mitotic division?", ["One", "Two", "Three", "Four"], 1, "One cell divides to form two daughter cells."], ["The daughter cells produced by mitosis are normally…", ["Genetically identical", "Genetically unrelated", "Half the size of the original DNA", "Missing chromosomes"], 0, "They contain the same genetic information."], ["Why is mitosis important in multicellular organisms?", ["Growth and repair", "Producing energy directly", "Digestion only", "Making oxygen"], 0, "Mitosis produces cells for growth and repair."], ["Which stage is normally the longest?", ["Stage 1: growth and DNA replication", "Stage 2: mitosis", "Stage 3: cytoplasm division", "All stages are always equal"], 0, "Stage 1 is normally the longest."], ["A cell has 12 chromosomes before DNA replication. How many chromosomes will each daughter cell have?", ["6", "12", "24", "48"], 1, "Mitosis maintains the chromosome number."], ["A cell divides by mitosis four times. How many cells are produced, starting from one?", ["4", "8", "16", "32"], 2, "Each division doubles the number: 2⁴ = 16."], ["A cell cycle lasts 20 hours. Stage 1 takes 17 hours. What percentage is Stage 1?", ["17%", "80%", "85%", "95%"], 2, "17 ÷ 20 × 100 = 85%."], ["A student counts 12 cells in Stage 3 out of 80. What percentage are in Stage 3?", ["12%", "15%", "18%", "20%"], 1, "12 ÷ 80 × 100 = 15%."], ["If 15% of cells are in Stage 3 and 9 cells are in that stage, what is the total number counted?", ["45", "54", "60", "90"], 2, "9 ÷ 0.15 = 60."], ["Which statement about mitosis is correct?", ["It always produces gametes", "It produces genetically identical nuclei", "It halves the chromosome number", "It only occurs in embryos"], 1, "Mitosis produces genetically identical nuclei."], ["Which sequence is correct?", ["Mitosis → DNA replication → growth", "Growth and DNA replication → mitosis → cytoplasm division", "Cytoplasm division → growth → DNA replication", "DNA replication → cytoplasm division → mitosis"], 1, "The three overall stages occur in this order."], ["Why must DNA be replicated before the nucleus divides?", ["So each daughter cell receives the same genetic information", "To make the cell larger only", "To remove all genes", "To halve the chromosome number"], 0, "Each daughter cell needs a complete set of genetic information."], ["Which statement about mitosis in adults is correct?", ["It stops completely", "It occurs in tissues needing replacement or repair", "It only occurs in nerve cells", "It always produces four cells"], 1, "Many adult tissues continue to replace worn-out or damaged cells."], ["A cell cycle lasts 24 hours and mitosis takes 2 hours. What fraction of the cycle is mitosis?", ["1/2", "1/6", "1/12", "1/24"], 2, "2/24 = 1/12."], ["What does genetically identical mean?", ["The cells have the same genetic information", "The cells have different genes", "The cells are always the same size", "The cells have no DNA"], 0, "The daughter cells contain the same genetic information."]];
+let quizSet=0,answers={},quizSubmitted=false;
+function renderQuiz(){
+ const sets=['Core knowledge','Application','Calculations & review'];
+ document.getElementById('quizSets').innerHTML=sets.map((s,i)=>`<button class="btn" data-set="${i}" aria-pressed="${i===quizSet}">${s}</button>`).join('');
+ document.querySelectorAll('[data-set]').forEach(b=>b.addEventListener('click',()=>{quizSet=+b.dataset.set;answers={};quizSubmitted=false;renderQuiz()}));
+ const start=quizSet*8;document.getElementById('quizQuestions').innerHTML=quiz.slice(start,start+8).map((q,i)=>`<div class="question"><strong>${i+1}. ${q[0]}</strong><div class="options">${q[1].map((o,j)=>`<button class="option" data-q="${i}" data-a="${j}">${o}</button>`).join('')}</div><div class="feedback" id="f${i}"></div></div>`).join('');
+ document.getElementById('quizScoreBadge').textContent='0 / 8';document.getElementById('quizSummary').textContent='Answer all eight questions before submitting.';
+}
+document.getElementById('quizQuestions').addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(!b||quizSubmitted)return;const i=+b.dataset.q;answers[i]=+b.dataset.a;b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x===b));b.parentElement.querySelectorAll('button').forEach(x=>x.style.borderColor=x===b?'#1f8a70':'');});
+document.getElementById('finishQuiz').addEventListener('click',()=>{
+ if(Object.keys(answers).length<8){document.getElementById('quizSummary').textContent='Please answer all eight questions first.';return}
+ quizSubmitted=true;let score=0;quiz.slice(quizSet*8,quizSet*8+8).forEach((q,i)=>{const correct=answers[i]===q[2];if(correct)score++;const box=document.getElementById('f'+i);box.textContent=(correct?'Correct. ':'Not quite. ')+q[3];box.style.color=correct?'#13775e':'#b8574b';box.previousElementSibling.querySelectorAll('button').forEach(b=>{b.disabled=true;if(+b.dataset.a===q[2])b.classList.add('correct');else if(+b.dataset.a===answers[i])b.classList.add('wrong')})});
+ const pct=score/8*100,l=getLesson(LESSON),history=l.quizHistory||[];history.push({set:quizSet+1,score,total:8,percent:pct,answers:{...answers},date:new Date().toISOString()});setLesson(LESSON,{quizHistory:history,quizBest:Math.max(l.quizBest||0,pct),quizLast:pct,quizDate:new Date().toISOString()});document.getElementById('quizScoreBadge').textContent=score+' / 8';document.getElementById('quizSummary').textContent=`Saved: ${score}/8 (${pct}%). Best: ${Math.max(l.quizBest||0,pct)}%. Review the explanations below.`;
+});
+document.getElementById('retryQuiz').addEventListener('click',()=>{answers={};quizSubmitted=false;renderQuiz()});renderQuiz();
+const practice=[{"id": "Q1", "marks": 3, "command": "Explain", "question": "Explain why DNA must replicate before a body cell divides by mitosis.", "guidance": ["Identify what must happen before division.", "Explain what each new cell needs to receive.", "Link your explanation to the genetic information in the daughter cells."], "criteria": ["DNA replicates before division.", "Two copies of each chromosome are formed.", "Each daughter cell receives the same genetic information."], "model": "Before division, DNA replicates to form two copies of each chromosome. During mitosis, one set of chromosomes is moved to each end of the cell. This ensures that both daughter cells receive the same genetic information."}, {"id": "Q2", "marks": 6, "command": "Describe", "question": "Describe the three overall stages of the cell cycle, including mitosis.", "guidance": ["Organise your answer into three stages in the correct order.", "Describe what happens to the cell and its genetic material before division.", "Explain what happens during nuclear division and then how two cells are formed.", "Use precise scientific vocabulary. You do not need to name the individual phases of mitosis."], "criteria": ["The cell grows and increases its sub-cellular structures.", "DNA replicates to form two copies of each chromosome.", "One set of chromosomes is pulled to each end of the cell.", "The nucleus divides.", "The cytoplasm divides.", "The cell membrane divides to form two genetically identical daughter cells."], "model": "In Stage 1, the cell grows, increases its sub-cellular structures and replicates its DNA to form two copies of each chromosome. In Stage 2, mitosis occurs: one set of chromosomes is pulled to each end of the cell and the nucleus divides. In Stage 3, the cytoplasm and cell membrane divide to form two genetically identical daughter cells."}, {"id": "Q3", "marks": 3, "command": "Calculate", "question": "A student counts 120 cells. Of these, 18 are in Stage 3 of the cell cycle. Calculate the percentage of cells in Stage 3.", "guidance": ["Write the percentage equation.", "Substitute the values from the question.", "Calculate and include the correct unit."], "criteria": ["Uses the number in Stage 3 divided by the total number of cells.", "Multiplies by 100.", "Obtains 15%."], "model": "Percentage = (18 ÷ 120) × 100 = 15%."}, {"id": "Q4", "marks": 2, "command": "Explain", "question": "Explain why mitosis is important in an adult human.", "guidance": ["Identify two relevant purposes of cell division in an adult.", "Link each purpose to the production of new cells."], "criteria": ["Produces new cells to replace worn-out or damaged cells.", "Enables tissue repair or replacement."], "model": "Mitosis produces new cells to replace worn-out or damaged cells. This allows tissues to repair and maintain themselves."}, {"id": "Q5", "marks": 4, "command": "Apply", "question": "A body cell of an animal contains 18 chromosomes. The cell divides by mitosis. State the number of daughter cells produced and the number of chromosomes in each. Explain your answer.", "guidance": ["State the number of new cells.", "State the chromosome number in each new cell.", "Explain how the genetic material is prepared and distributed."], "criteria": ["Two daughter cells are produced.", "Each daughter cell contains 18 chromosomes.", "DNA replicates before division.", "One set of chromosomes is distributed to each daughter cell, maintaining the chromosome number."], "model": "Two daughter cells are produced, each containing 18 chromosomes. Before division, the DNA replicates to form two copies of each chromosome. During mitosis, one set is pulled to each end, so each daughter cell receives the same chromosome number as the original cell."}];
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function download(name,content,type='application/json'){const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function getAttempts(){return getLesson(LESSON).gcseAttempts||{}}
+function renderGcse(){
+ const attempts=getAttempts();
+ document.getElementById('gcseQuestions').innerHTML=practice.map((q,i)=>{const a=attempts[q.id]||[],last=a[a.length-1],submitted=last?.status==='submitted';return `<div class="gcse-card" id="card${i}"><div class="row between"><h3>${q.id} · ${q.command}</h3><span class="badge">${q.marks} marks</span></div><p><strong>${esc(q.question)}</strong></p><div class="markguide show" style="background:#eef7f3"><strong>Writing guidance — no answer given</strong><ol class="small">${q.guidance.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div><textarea id="answer${i}" ${submitted?'readonly':''} placeholder="Write your answer here...">${esc(last?.answer||'')}</textarea><div class="row"><button class="btn bio" data-submit="${i}" ${submitted?'disabled':''}>${submitted?'Submitted ✓':'Submit answer'}</button><button class="btn" data-reveal="${i}" ${submitted?'':'disabled'}>Reveal marking guidance</button><button class="btn" data-new="${i}">New attempt</button></div><div class="markguide" id="guide${i}"><strong>Revision marking guidance</strong><p class="small muted">Original revision question, not an official AQA mark scheme. Equivalent scientifically correct wording may be credited.</p><ol>${q.criteria.map(c=>`<li>${esc(c)}</li>`).join('')}</ol><strong>Example model answer</strong><p>${esc(q.model)}</p></div><div class="feedback" id="status${i}">${submitted?'Submitted '+new Date(last.submittedAt).toLocaleString():last?.answer?'Draft saved locally.':''}</div><label class="small" ${submitted?'':'hidden'}>Externally corrected mark: <input id="mark${i}" type="number" min="0" max="${q.marks}" value="${last?.mark??''}" style="width:70px"> / ${q.marks}</label></div>`}).join('');
+}
+document.getElementById('gcseQuestions').addEventListener('input',e=>{if(!e.target.matches('textarea'))return;const i=+e.target.id.replace('answer',''),q=practice[i],all=getAttempts(),a=all[q.id]||[],last=a[a.length-1];if(last?.status==='submitted')return;if(last?.status==='draft'){last.answer=e.target.value;last.savedAt=new Date().toISOString()}else a.push({status:'draft',answer:e.target.value,savedAt:new Date().toISOString()});all[q.id]=a;setLesson(LESSON,{gcseAttempts:all})});
+document.getElementById('gcseQuestions').addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;const i=+(b.dataset.submit??b.dataset.reveal??b.dataset.new);if(!Number.isInteger(i))return;const q=practice[i],all=getAttempts(),a=all[q.id]||[],last=a[a.length-1];
+ if(b.dataset.submit!==undefined){const answer=document.getElementById('answer'+i).value.trim();if(!answer){document.getElementById('status'+i).textContent='Write an answer before submitting.';return}if(last?.status==='draft'){last.answer=answer;last.status='submitted';last.submittedAt=new Date().toISOString()}else a.push({status:'submitted',answer,submittedAt:new Date().toISOString()});all[q.id]=a;setLesson(LESSON,{gcseAttempts:all});renderGcse()}
+ if(b.dataset.reveal!==undefined){document.getElementById('guide'+i).classList.toggle('show')}
+ if(b.dataset.new!==undefined){if(!confirm('Start a new attempt? Your previous attempt will be kept in the history.'))return;a.push({status:'draft',answer:'',savedAt:new Date().toISOString()});all[q.id]=a;setLesson(LESSON,{gcseAttempts:all});renderGcse()}
+});
+function reportData(){const all=getAttempts();return practice.flatMap(q=>(all[q.id]||[]).filter(a=>a.status==='submitted').map((a,i)=>({questionId:q.id,attempt:i+1,question:q.question,marksAvailable:q.marks,answer:a.answer,submittedAt:a.submittedAt,mark:a.mark??null})))}
+document.getElementById('printReport').addEventListener('click',()=>{
+ const rows=reportData();if(!rows.length){document.getElementById('exportMessage').textContent='Submit at least one answer first.';return}
+ const w=window.open('','_blank');if(!w){document.getElementById('exportMessage').textContent='Please allow pop-ups to open the print report.';return}
+ w.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>B2.1 correction report</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:35px auto;line-height:1.5;color:#18323a}section{page-break-inside:avoid;border-bottom:1px solid #ccc;padding:18px 0}.answer{white-space:pre-wrap;border:1px solid #ccc;padding:16px;border-radius:8px}button{padding:10px}@media print{button{display:none}body{margin:15px}}</style></head><body><h1>B2.1 · Cell division</h1><p>AQA Combined Science: Trilogy · Higher tier</p><p>Student: Gabriel · Generated ${new Date().toLocaleString()}</p><p>Original revision questions. Please assess against the available revision criteria; marks are estimates unless an official mark scheme is supplied.</p>${rows.map(r=>`<section><h2>${esc(r.questionId)} · Attempt ${r.attempt} · ${r.marksAvailable} marks</h2><p>${esc(r.question)}</p><div class="answer">${esc(r.answer)}</div><p>Submitted: ${esc(r.submittedAt)} · Mark: ____ / ${r.marksAvailable}</p><p>Feedback: __________________________________________</p></section>`).join('')}<button onclick="window.print()">Print / Save as PDF</button></body></html>`);w.document.close();w.focus();
+});
+document.getElementById('exportAnswers').addEventListener('click',()=>{const rows=reportData();if(!rows.length){document.getElementById('exportMessage').textContent='Submit at least one answer first.';return}download('B2-1-GCSE-answers.json',JSON.stringify({schemaVersion:1,student:'Gabriel',lesson:LESSON,generatedAt:new Date().toISOString(),answers:rows},null,2));document.getElementById('exportMessage').textContent='Answers exported.'});
+document.getElementById('saveMarks').addEventListener('click',()=>{const all=getAttempts();let total=0,available=0,count=0;let invalid=false;practice.forEach((q,i)=>{const a=all[q.id]||[],last=a[a.length-1];if(last?.status!=='submitted')return;const raw=document.getElementById('mark'+i).value;if(raw==='')return;const n=Number(raw);if(!Number.isInteger(n)||n<0||n>q.marks){invalid=true;return}last.mark=n;last.markedAt=new Date().toISOString();last.markedBy='external';total+=n;available+=q.marks;count++});if(invalid){document.getElementById('markMessage').textContent='Enter whole-number marks within the allowed range.';return}if(!count){document.getElementById('markMessage').textContent='No corrected marks entered.';return}const l=getLesson(LESSON),pct=total/available*100;setLesson(LESSON,{gcseAttempts:all,gcseLast:total,gcseAvailable:available,gcseBest:Math.max(l.gcseBest||0,total),gcseBestPercent:Math.max(l.gcseBestPercent||0,pct),gcseDate:new Date().toISOString(),gcseMarkedBy:'external'});document.getElementById('markMessage').textContent=`Recorded ${total}/${available} (${Math.round(pct)}%). ${count} question(s) marked.`});
+renderGcse();
+</script></body></html>

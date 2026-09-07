@@ -108,7 +108,7 @@ footer{padding:52px 0;color:var(--muted);font-size:.9rem}
 <div class="card"><h3>Export progress backup</h3><p class="muted">Download the local progress data from this browser. This includes completed lessons, quiz scores and recorded GCSE marks.</p><button class="btn" onclick="exportProgress()">Export progress</button></div>
 <div class="card"><h3>GCSE written answers</h3><p class="muted">Written answers are exported from inside each lesson after Gabriel submits them. The printable report can be saved as a PDF and sent for correction.</p><a class="btn bio" href="b1-1.html#gcse">Open B1.1 practice →</a></div>
 </div></div></section>
-<section class="section" id="trial"><div class="shell"><div class="section-head"><div><span class="kicker">Exam zone</span><h2>Trial exams</h2></div><span class="badge">Space reserved</span></div>
+<section class="section"><div class="shell"><div class="section-head"><div><span class="kicker">B2 · Cell division</span><h2>New chapter</h2></div><span class="badge">1 of 4 lessons available</span></div><div class="grid-2"><a class="card" href="b2-1.html"><span class="kicker">B2.1 · Available</span><h3>Cell division →</h3><p class="muted">Explore the cell cycle, then practise with 24 quiz questions and five GCSE questions.</p><p id="b21progress" class="small"></p></a><div class="card"><span class="kicker">Coming later</span><h3>B2.2–B2.4</h3><p class="muted">Growth and differentiation · Stem cells · Stem cell dilemmas</p></div></div></div></section><section class="section" id="trial"><div class="shell"><div class="section-head"><div><span class="kicker">Exam zone</span><h2>Trial exams</h2></div><span class="badge">Space reserved</span></div>
 <div class="grid-3"><div class="card"><h3>Chapter trial · B1</h3><p class="muted">A future mixed paper covering the whole chapter.</p><button class="btn" disabled>Coming later</button></div>
 <div class="card"><h3>Paper 1 trial</h3><p class="muted">B1–B5, timed and scored.</p><button class="btn" disabled>Coming later</button></div>
 <div class="card"><h3>Extra practice sets</h3><p class="muted">New quizzes and GCSE question sets can be added here without redesigning the site.</p></div></div>
@@ -137,6 +137,7 @@ function importProgress(file){
   r.readAsText(file);
 }
 
+const b21=getLesson('B2.1');document.getElementById('b21progress').textContent=(b21.read?'✓ Learnt · ':'')+(Number.isFinite(b21.quizBest)?'Best quiz: '+b21.quizBest+'%':'Not started');
 const l=getLesson('B1.1'); document.getElementById('bioRead').textContent=l.read?1:0;
 document.getElementById('readBar').style.width=(l.read?10:0)+'%'; if(l.read)document.getElementById('b11dot').classList.add('done');
 document.getElementById('bioQuiz').textContent=Number.isFinite(l.quizBest)?l.quizBest+'%':'—';
