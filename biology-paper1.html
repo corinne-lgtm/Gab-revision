@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Biology Paper 1 Practice · Gab Revision</title>
+<style>
+
+:root{--ink:#18323A;--muted:#66777B;--paper:#FBFCF8;--card:#fff;--bio:#1F8A70;--bio2:#DDF3EA;--lime:#DDF0A5;--yellow:#F6D365;--blue:#DCEEF8;--violet:#E8DDF6;--line:#DDE6E2;--danger:#B8574B;--shadow:0 12px 35px rgba(24,50,58,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}
+.shell{max-width:1180px;margin:auto;padding:0 22px}.topbar{position:sticky;top:0;z-index:20;background:rgba(251,252,248,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:950}.brand span{color:var(--bio)}.navlinks{display:flex;gap:8px;flex-wrap:wrap}
+.btn,.pill,.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:850;cursor:pointer}.btn.bio,.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.btn:hover{transform:translateY(-1px)}.lesson-hero{padding:52px 0 22px}.kicker{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--bio)}h1{font-size:clamp(2.8rem,7vw,5.4rem);line-height:.94;letter-spacing:-.06em;margin:12px 0 18px}h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.045em}h3{margin:.25em 0 .55em}.lead{font-size:1.16rem;line-height:1.65;color:var(--muted);max-width:760px}.muted{color:var(--muted)}.small{font-size:.9rem}
+.chapter-nav{position:sticky;top:70px;z-index:12;background:rgba(251,252,248,.96);border-bottom:1px solid var(--line);padding:10px 0}.chapter-links{display:flex;gap:7px;overflow-x:auto}.chapter-links a{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:.78rem;font-weight:850}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.panel{display:none}.panel.active{display:block}.topic{scroll-margin-top:150px;padding:44px 0;border-bottom:1px solid var(--line)}.topic-head{display:grid;grid-template-columns:110px 1fr;gap:20px;align-items:start;margin-bottom:22px}.topic-code{font-size:1.55rem;font-weight:950;color:var(--bio);background:var(--bio2);border-radius:18px;padding:15px;text-align:center}.topic h2{margin:0 0 8px}.card,.interactive,.practical,.gcse-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow)}.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:15px 0}.interactive{margin-top:18px;background:#f8fbf9}.interactive-step{margin-top:14px;background:#f1f7f4;border:1px solid var(--line);border-radius:20px;padding:16px}.interactive-step svg{width:100%;height:auto;max-height:360px}.badge{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:.78rem;font-weight:900;background:var(--bio2);color:#13775E}.mini-tabs,.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.mini-tabs button[aria-pressed=true]{background:var(--ink);color:#fff}.fact{border-left:4px solid var(--bio);background:#f1f7f4;padding:14px 16px;border-radius:0 14px 14px 0;margin:16px 0}.fact.warn{border-left-color:#B7791F;background:#fff7e8}
+.compare-table{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:10px}table{width:100%;border-collapse:collapse}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.process{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.process>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}.process strong{font-size:2rem;color:var(--bio)}.practical{margin-top:18px;background:#f5f0fa;border-color:#ded3e9;box-shadow:none}.practical .kicker{color:#6c4d8b}.formula{display:inline-block;background:var(--ink);color:#fff;border-radius:12px;padding:9px 13px;font-weight:850}
+.slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.control label{display:flex;justify-content:space-between;font-weight:800;margin-bottom:7px}input[type=range]{width:100%;accent-color:var(--bio)}input[type=number]{padding:11px;border:1px solid var(--line);border-radius:12px;min-width:180px}.sim-card{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;margin-top:18px}.gauge{height:24px;background:#e6ede9;border-radius:999px;overflow:hidden}.gauge span{display:block;height:100%;width:35%;background:var(--bio);transition:.2s}.sim-result{font-size:1.8rem;font-weight:950}
+.quiz-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}.question{padding:20px 0;border-bottom:1px solid var(--line)}.options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.option{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;cursor:pointer}.option.correct{background:#d9f2e5;border-color:#16845d}.option.wrong{background:#fbe5df;border-color:#b8574b}.feedback{margin-top:10px;font-weight:800;min-height:20px}.scorebox{position:sticky;bottom:12px;background:var(--ink);color:#fff;border-radius:18px;padding:14px 18px;margin-top:18px;display:flex;justify-content:space-between;align-items:center}textarea{width:100%;min-height:140px;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;resize:vertical}.markguide{display:none;background:#f3f6f3;border-radius:14px;padding:16px;margin-top:12px}.markguide.show{display:block}.answer-guide{margin:14px 0;padding:14px 16px;border-radius:16px;background:#eef7f2}.answer-locked{background:#f1f5f2}.note{background:#f0f7f3;padding:18px;border-radius:16px;margin:18px 0}
+@media(max-width:820px){.concept-grid,.process,.slider-grid,.sim-card{grid-template-columns:1fr}.topic-head{grid-template-columns:1fr}.chapter-nav{top:0}.options{grid-template-columns:1fr}}
+@media print{.topbar,.chapter-nav,.tabs,.btn,.no-print{display:none!important}.panel{display:block!important}}
+.sim-card{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin:22px 0;padding:18px;border:1px solid var(--line);border-radius:18px;background:#f6faf7}.visual{min-width:0}.visual svg{width:100%;height:auto;display:block}.sim-controls{min-width:0}.step-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.step-buttons .btn{font-size:13px;padding:9px 12px}.step-buttons .selected{background:#176c59;color:white}.concept{padding:18px;border:1px solid var(--line);border-radius:16px;background:white}.concept p{line-height:1.65}.concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.topic{padding:28px 0;border-bottom:1px solid var(--line)}.topic-head{display:flex;justify-content:space-between;gap:16px;align-items:center}.topic-head h2{margin:6px 0 18px}.answer-guide{display:block}.answer-guide ul{margin-bottom:0}.gcse-card{padding:24px 0;border-bottom:1px solid var(--line)}.gcse-card textarea{min-height:160px}.markguide{display:none}.markguide.show{display:block}.answer-locked{background:#f1f5f2}.quiz-option{display:block;width:100%;text-align:left;margin:8px 0}.quiz-option.correct{background:#d9f2e5}.quiz-option.wrong{background:#fbe5df}@media(max-width:820px){.concept-grid,.sim-card{grid-template-columns:1fr}.topic-head{align-items:start}.chapter-nav{top:0}}.gcse-export{background:#fff;border:1px solid #dce6e2;border-radius:14px;padding:20px;margin:20px 0}.gcse-export h3{margin-top:0}.export-check{display:flex;gap:8px;align-items:center;margin:10px 0}.export-check input{width:18px;height:18px}.export-print{display:none}@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;position:static!important;background:white;color:black;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint h1{font-size:22pt}body.exporting #exportPrint article{break-inside:avoid;margin:0 0 20px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}body.exporting #exportPrint .criteria{display:none}} 
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}
+.export-check input{width:18px;height:18px}
+.export-print{display:none}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint article{break-inside:avoid;margin-bottom:22px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}
+.export-check input{width:18px;height:18px}
+.export-print{display:none}
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.factor-grid label{font-weight:800}
+.factor-grid input[type=range]{width:100%}
+.eq{font-size:1.15rem;font-weight:850;text-align:center;padding:14px;border-radius:14px;background:#eef7f2}
+@media(max-width:820px){.factor-grid{grid-template-columns:1fr}}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint article{break-inside:avoid;margin-bottom:22px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}
+.export-check input{width:18px;height:18px}
+.export-print{display:none}
+.eq{font-size:1.15rem;font-weight:850;text-align:center;padding:14px;border-radius:14px;background:#eef7f2;margin:12px 0}
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px} .factor-grid label{font-weight:800} .factor-grid input[type=range]{width:100%}
+@media(max-width:820px){.factor-grid{grid-template-columns:1fr}}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint article{break-inside:avoid;margin-bottom:22px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}
+.export-check input{width:18px;height:18px}
+.export-print{display:none}
+.eq{font-size:1.05rem;font-weight:850;text-align:center;padding:14px;border-radius:14px;background:#eef7f2;margin:12px 0}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint article{break-inside:avoid;margin-bottom:22px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}.export-check input{width:18px;height:18px}.export-print{display:none}.exact-figure{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin:18px 0;text-align:center}.exact-figure img{max-width:100%;height:auto;border-radius:10px}@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700} .export-check input{width:18px;height:18px} .export-print{display:none}
+.punnett{border-collapse:collapse;margin:18px auto;font-size:20px}.punnett th,.punnett td{border:2px solid #237a64;padding:12px 18px;text-align:center;min-width:62px}.ratio{font-weight:800;text-align:center;margin-top:10px}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}.export-check input{width:18px;height:18px}.export-print{display:none}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}.export-check input{width:18px;height:18px}.export-print{display:none}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}.export-check input{width:18px;height:18px}.export-print{display:none}
+.sim-controls label{display:block;margin:12px 0;font-weight:800}.sim-controls input[type=range]{width:100%;margin-top:7px}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}.export-check input{width:18px;height:18px}.export-print{display:none}.sim-controls label{display:block;margin:12px 0;font-weight:800}.sim-controls input[type=range]{width:100%;margin-top:7px}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}.export-check{display:flex;gap:9px;align-items:center;margin:10px 0;font-weight:700}.export-check input{width:18px;height:18px}.export-print{display:none}.sim-controls label{display:block;margin:12px 0;font-weight:800}.sim-controls input[type=range]{width:100%;margin-top:7px}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}}
+.paper-grid{display:grid;gap:18px}
+.exam-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+.exam-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}
+.marks{white-space:nowrap;font-weight:900;background:#eef6e8;padding:7px 11px;border-radius:999px}
+.sourcebox{background:#f7fafb;border:1px solid var(--line);border-radius:14px;padding:15px;margin:12px 0}
+.answerbox{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;box-sizing:border-box}
+.guidance{background:#fff8df;border-left:5px solid #e0b742;padding:12px 14px;border-radius:10px;margin:12px 0}
+.skill{font-size:.86rem;font-weight:800;color:#48616a}
+.progressline{height:10px;background:#e7ecee;border-radius:999px;overflow:hidden;margin:12px 0}
+.progressline>span{display:block;height:100%;background:#7cad43;width:0}
+.locked{opacity:.78}
+@media(max-width:700px){.exam-head{display:block}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="shell nav"><div class="brand">Gab <span>Revision</span></div>
+<nav class="navlinks"><a class="pill" href="biology.html">← Biology</a><a class="pill" href="index.html">Home</a></nav></div></header>
+<main class="shell">
+<section class="lesson-hero">
+<span class="kicker">AQA Combined Science: Trilogy · Higher · Biology Paper 1</span>
+<h1>Paper 1 Practice</h1>
+<p class="lead">Mixed exam practice from the end-of-book Paper 1 section. These questions deliberately mix B1–B9, so you must decide which biology to use.</p>
+<div class="progressline"><span id="bar"></span></div><p class="muted" id="progressText">0 / 9 question groups completed</p>
+</section>
+
+<section class="panel active">
+<div class="paper-grid" id="paper"></div>
+</section>
+</main>
+
+<script>
+const STORE='gabPaper1PracticeV1';
+const Q=[
+{id:'01',title:'Cells and cell structures',marks:7,skill:'Recall + cell structure',
+prompt:`<b>01.1</b> Match animal, plant and bacterial cells to the correct drawings from the book.<br><br><b>01.2</b> Choose the correct cell structure for each description: contains chromosomes; controls what enters and leaves a cell; site of aerobic respiration; site of photosynthesis.`,
+guide:'For each structure, think about its function first. Do not confuse the cell membrane with the cell wall.'},
+{id:'02',title:'Bacterial cell division',marks:4,skill:'Recall + calculation',
+prompt:`Some bacteria can divide every 20 minutes in optimum conditions.<br><br><b>02.1</b> Name the type of cell division in bacterial cells. [1]<br><b>02.2</b> Give two factors that affect the rate of bacterial cell division. [2]<br><b>02.3</b> If the mean division time is 20 minutes, calculate how many divisions occur in 7 hours. [1]`,
+guide:'For the calculation, convert hours to minutes before dividing by the mean division time.'},
+{id:'03',title:'Root hair cells and transport',marks:4,skill:'Application',
+prompt:`A root hair cell absorbs water and mineral ions from soil.<br><br><b>03.1</b> Describe one adaptation of a root hair cell for absorbing substances. [1]<br><b>03.2</b> State whether water molecules, magnesium ions and nitrate ions move into the root hair cell by active transport, diffusion or osmosis. [3]`,
+guide:'Ask: is it water crossing a partially permeable membrane, movement down a concentration gradient, or movement against a gradient using energy?'},
+{id:'04',title:'Gonorrhoea and antibiotic resistance',marks:3,skill:'Communicable disease',
+prompt:`Some strains of the pathogen that causes gonorrhoea are resistant to antibiotics.<br><br><b>04.1</b> What type of pathogen causes gonorrhoea? [1]<br><b>04.2</b> Give one other way to reduce the spread of gonorrhoea. [1]<br><b>04.3</b> Suggest one way to reduce the rate at which antibiotic-resistant strains develop. [1]`,
+guide:'Keep each answer specific. For resistance, think about reducing unnecessary selection pressure from antibiotics.'},
+{id:'05',title:'Protease investigation',marks:11,skill:'Required-practical thinking + data',
+prompt:`A student investigates protease digestion of egg-white protein using four tubes at 37 °C. Tube A contains egg white + protease + hydrochloric acid; B egg white + protease + water; C egg white + boiled protease + hydrochloric acid; D egg white + water + hydrochloric acid. A and B eventually become clear; C and D remain cloudy.<br><br><b>05.1</b> Give two variables that should be controlled. [2]<br><b>05.2</b> Explain why a tube turns from cloudy to clear when the protein is digested. [3]<br><b>05.3</b> Analyse the results and explain each tube. [6]`,
+guide:'Compare one variable at a time. Refer to enzyme activity, pH, denaturation and the control tubes.'},
+{id:'06',title:'Drug testing and cholesterol treatments',marks:10,skill:'Evaluation',
+prompt:`<b>06.1</b> What is a drug tested on in laboratory trials before clinical trials on people? [1]<br><b>06.2</b> Give three reasons drugs must be trialled before use on patients. [3]<br><br>Statins reduce cholesterol production in the liver but may cause side effects. Cholesterol blockers reduce absorption of cholesterol from the intestine and may interact with other drugs.<br><b>06.3</b> Evaluate the use of the two types of drug for a person with high cholesterol. [6]`,
+guide:'For an evaluation, give advantages and disadvantages of both options, then make a reasoned judgement. For drug trials, think efficacy, toxicity and dose.'},
+{id:'07',title:'Exercise and respiration',marks:8,skill:'Explain',
+prompt:`An athlete's heart rate rises from 67 bpm at rest to 138 bpm while jogging. After running faster, the athlete remains out of breath for several minutes after stopping.<br><br><b>07.1</b> Explain why heart rate needs to increase when jogging. [4]<br><b>07.2</b> Explain why the athlete remains out of breath after stopping. [4]`,
+guide:'Build a chain of reasoning: muscles → respiration → oxygen/glucose demand and carbon dioxide removal. For recovery, include anaerobic respiration and lactic acid/oxygen debt.'},
+{id:'08',title:'Photosynthesis investigation',marks:17,skill:'Practical + graph interpretation',
+prompt:`Students measure photosynthesis in pondweed by counting bubbles per minute at different lamp distances while monitoring temperature.<br><br><b>08.1</b> Complete the word equation for photosynthesis. [2]<br><b>08.2</b> Explain why a thermometer is important. [3]<br><b>08.3</b> At 40 cm the four bubble counts are 30, 10, 9 and 11. Calculate the correct mean. [2]<br><b>08.4</b> Describe how you would plot the results on a graph. [4]<br><b>08.5</b> Does the data support the claim that photosynthesis rate is inversely proportional to lamp distance? Explain. [2]<br><b>08.6</b> A greenhouse receives >30,000 lux daylight. Suggest why 20 °C, 0.1% CO₂ and no extra lighting could be commercially sensible. [4]`,
+guide:'Use data where possible. Distinguish correlation from an exact inverse relationship. For the greenhouse question, consider limiting factors and cost.'},
+{id:'09',title:'Osmosis in potato tissue',marks:12,skill:'Calculation + graph + osmosis',
+prompt:`Potato pieces are weighed, placed for one hour in sugar solutions, blotted and reweighed. Results include: 0.2 mol dm⁻³: 8.3 g → 8.5 g (+2.4%); 0.4: 8.3 g → 8.2 g; 0.6: 8.2 g → 8.0 g (−2.4%); 0.8: 8.1 g → 7.8 g (−3.7%); 1.0: 8.3 g → 7.9 g (−4.8%).<br><br><b>09.1</b> Why blot each potato piece before weighing? [1]<br><b>09.2</b> Calculate the percentage change for 0.4 mol dm⁻³. [2]<br><b>09.3</b> Plot percentage change in mass against sugar concentration and draw a line of best fit. [5]<br><b>09.4</b> Use the graph to estimate the concentration of sugar solution inside the potato cells. [1]<br><b>09.5</b> Explain why this concentration is chosen. [3]`,
+guide:'Percentage change = (final − initial) ÷ initial × 100. The internal concentration is estimated where percentage mass change is zero.'}
+];
+
+function load(){try{return JSON.parse(localStorage.getItem(STORE)||'{}')}catch(e){return {}}}
+function save(s){localStorage.setItem(STORE,JSON.stringify(s));updateProgress()}
+function render(){
+ const s=load(), box=document.getElementById('paper');
+ box.innerHTML=Q.map(q=>`<article class="exam-card ${s[q.id]?.submitted?'locked':''}" id="q${q.id}">
+ <div class="exam-head"><div><span class="kicker">Question ${q.id}</span><h2>${q.title}</h2><div class="skill">${q.skill}</div></div><span class="marks">${q.marks} marks</span></div>
+ <div class="sourcebox">${q.prompt}</div>
+ <div class="guidance"><b>Writing guidance</b><br>${q.guide}</div>
+ <textarea class="answerbox" id="a${q.id}" ${s[q.id]?.submitted?'disabled':''} placeholder="Write your exam answer here...">${s[q.id]?.answer||''}</textarea>
+ <div class="row" style="margin-top:12px"><button class="btn bio" onclick="submitQ('${q.id}')" ${s[q.id]?.submitted?'disabled':''}>Submit answer</button>
+ <button class="btn" onclick="newAttempt('${q.id}')">New attempt</button></div>
+ ${s[q.id]?.submitted?'<p class="feedback good">Answer submitted and locked. It is saved on this device.</p>':''}
+ </article>`).join('');
+ updateProgress();
+}
+function submitQ(id){let s=load(),a=document.getElementById('a'+id).value.trim();if(!a){alert('Write an answer first.');return}s[id]={answer:a,submitted:true,submittedAt:new Date().toISOString()};save(s);render()}
+function newAttempt(id){let s=load();s[id]={answer:'',submitted:false};save(s);render();document.getElementById('q'+id).scrollIntoView({behavior:'smooth'})}
+function updateProgress(){let s=load(),n=Q.filter(q=>s[q.id]?.submitted).length;document.getElementById('progressText').textContent=`${n} / ${Q.length} question groups completed`;document.getElementById('bar').style.width=(100*n/Q.length)+'%'}
+render();
+</script>
+</body></html>
