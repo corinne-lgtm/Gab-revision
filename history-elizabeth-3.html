@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elizabethan England · Chapter 3 · GAB / REVISION</title>
+<style>
+:root{
+  --ink:#18323A;--muted:#66777B;--paper:#FBFCF8;--card:#fff;--hist:#8B4A62;--hist2:#F3E5EA;
+  --gold:#D6A84B;--gold2:#FFF4D8;--violet:#72578B;--blue:#4E7896;--line:#D8E1DE;
+  --danger:#B8574B;--success:#1F8A70;--shadow:0 12px 30px rgba(24,50,58,.09)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+a{color:inherit;text-decoration:none}.shell{width:min(1180px,92vw);margin:auto}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(251,252,248,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}.navlinks,.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:950;letter-spacing:.04em}.brand span{color:var(--hist)}
+.pill,.btn{border:1px solid var(--line);background:white;border-radius:999px;padding:10px 14px;font:inherit;font-weight:850;cursor:pointer}
+.btn:hover,.pill:hover{transform:translateY(-1px)}.btn.hist{background:var(--hist);border-color:var(--hist);color:white}
+.chapter-nav{position:sticky;top:68px;z-index:35;background:white;border-bottom:1px solid var(--line);overflow:auto}
+.chapter-links{display:flex;gap:8px;padding:10px 0;white-space:nowrap}.chapter-links a{font-size:.84rem;font-weight:850;padding:7px 11px;border-radius:999px}.chapter-links a:hover{background:var(--hist2);color:var(--hist)}
+.lesson-hero{padding:44px 0 24px;background:linear-gradient(180deg,#fff 0%,var(--paper) 100%)}
+.kicker{text-transform:uppercase;letter-spacing:.09em;font-size:.76rem;font-weight:950;color:var(--hist)}
+.lesson-title{font-size:clamp(2.5rem,6vw,5rem);line-height:.95;margin:10px 0 16px;letter-spacing:-.04em}
+.lead{font-size:1.06rem;color:var(--muted);max-width:820px}.badge{display:inline-flex;padding:7px 10px;border-radius:999px;background:white;border:1px solid var(--line);font-size:.8rem;font-weight:850}
+.tabs{display:flex;gap:8px;margin:24px 0 14px;flex-wrap:wrap}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:11px 16px;font:inherit;font-weight:900;cursor:pointer}.tab.active{background:var(--ink);color:white}
+.section{padding:18px 0 70px}.panel{display:none}.panel.active{display:block}
+.topic{padding:34px 0 54px;border-bottom:1px solid var(--line)}.topic:last-child{border-bottom:0}
+.topic-head{display:grid;grid-template-columns:90px 1fr;gap:20px;align-items:start;margin-bottom:22px}.topic-code{width:72px;height:72px;border-radius:22px;background:var(--hist);color:white;display:grid;place-items:center;font-size:1.15rem;font-weight:950}
+h2{font-size:clamp(1.7rem,3.5vw,2.7rem);line-height:1.08;margin:4px 0 8px}h3{margin:0 0 8px;font-size:1.08rem}h4{margin:0 0 6px}
+.card,.visual,.gcse-card,.info-block{background:white;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 5px 18px rgba(24,50,58,.04)}
+.concept-grid,.grid-2,.grid-3{display:grid;gap:14px}.concept-grid,.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}
+.note{background:#F0F7F3;border-radius:17px;padding:16px 18px}.warn{background:var(--gold2);border:1px solid #EAD79E;border-radius:17px;padding:16px 18px}
+.small,.muted{color:var(--muted)}.small{font-size:.88rem}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:18px 0}.timebtn{border:1px solid var(--line);background:white;border-radius:16px;padding:13px 8px;cursor:pointer;font-weight:900}.timebtn.active{background:var(--hist);color:white;border-color:var(--hist)}
+.reveal{min-height:132px;background:var(--hist2);border-radius:20px;padding:20px;margin-top:10px}.reveal b{color:var(--hist)}
+.tree{overflow:auto;padding:8px 0}.tree-grid{min-width:760px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;align-items:center}.person{border:1px solid var(--line);background:white;border-radius:16px;padding:12px;text-align:center;font-weight:850}.person.king{background:var(--ink);color:white}.person.eliz{background:var(--hist);color:white}.arrow{text-align:center;color:var(--muted);font-weight:900}
+.challenge{background:#F7F3F8;border:1px solid #E1D6E8;border-radius:22px;padding:20px;margin-top:16px}.choice-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.choice{border:1px solid var(--line);background:white;border-radius:13px;padding:10px 12px;font-weight:800;cursor:pointer}.choice.correct{background:#DFF2E8;border-color:var(--success)}.choice.wrong{background:#F8E5E1;border-color:var(--danger)}
+.power-map{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:12px;align-items:stretch}.power-centre{background:var(--hist);color:white;border-radius:24px;padding:24px;display:grid;place-items:center;text-align:center}.power-option{border:1px solid var(--line);background:white;border-radius:18px;padding:16px;cursor:pointer;text-align:left}.power-option.active{border-color:var(--hist);box-shadow:0 0 0 2px rgba(139,74,98,.13)}
+.power-detail{margin-top:14px;background:var(--hist2);border-radius:20px;padding:20px}
+.chain{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0}.chain span{background:white;border:1px solid var(--line);padding:12px 14px;border-radius:14px;font-weight:900}.chain i{font-style:normal;color:var(--hist);font-weight:950}
+.profile{border-top:6px solid var(--hist)}.profile.wals{border-color:var(--violet)}
+.quiz-head,.section-head{display:flex;justify-content:space-between;gap:16px;align-items:end;flex-wrap:wrap}.question{padding:20px 0;border-bottom:1px solid var(--line)}.options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.option{border:1px solid var(--line);background:white;border-radius:13px;padding:12px;text-align:left;cursor:pointer}.option.selected{border-color:var(--hist)}.option.correct{background:#DFF2E8;border-color:var(--success)}.option.wrong{background:#F8E5E1;border-color:var(--danger)}.feedback{margin-top:10px;font-size:.92rem}
+.gcse-card{margin:18px 0}.marks{background:var(--gold2);border-radius:999px;padding:6px 10px;font-weight:950;font-size:.82rem}
+.answer-guide{margin:14px 0 16px;padding:16px 18px;border-radius:18px;background:#FFF7DB;border:1px solid #EADCA0}.answer-guide ul{margin:8px 0 0;padding-left:20px}.starter{margin-top:10px;padding:10px 12px;border-radius:12px;background:white;border:1px dashed #D9C875}
+textarea{display:block;width:100%;min-height:170px;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;font:inherit;resize:vertical}.answer-locked{background:#F1F5F2}
+.markguide{display:none;background:#F3F6F3;border-radius:14px;padding:16px;margin:12px 0}.markguide.show{display:block}
+.exam-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.badexample,.goodexample{border-radius:16px;padding:14px}.badexample{background:#F8E5E1}.goodexample{background:#DFF2E8}
+button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--hist);outline-offset:3px}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted)}
+@media(max-width:850px){.topic-head{grid-template-columns:1fr}.concept-grid,.grid-3{grid-template-columns:1fr 1fr}.power-map{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.chapter-nav{top:68px}.concept-grid,.grid-2,.grid-3,.options,.exam-compare{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(2,1fr)}.lesson-title{font-size:2.6rem}}
+@media print{.topbar,.chapter-nav,.tabs,.btn{display:none!important}.panel{display:block!important}.card,.gcse-card{break-inside:avoid}}
+
+.problem-map{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0}
+.problem{border:1px solid var(--line);background:white;border-radius:18px;padding:15px;cursor:pointer;text-align:left;font-weight:850}
+.problem.active{background:var(--hist);color:white;border-color:var(--hist)}
+.problem-detail{background:var(--hist2);border-radius:20px;padding:20px;min-height:128px}
+.marriage-board{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.argument{border-radius:20px;padding:18px;border:1px solid var(--line);background:white}
+.argument.for{border-top:6px solid var(--success)}.argument.against{border-top:6px solid var(--danger)}
+.suitor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.suitor{border:1px solid var(--line);background:white;border-radius:18px;padding:16px;cursor:pointer;text-align:left}
+.suitor.active{border-color:var(--hist);box-shadow:0 0 0 2px rgba(139,74,98,.13)}
+.suitor-detail{margin-top:12px;background:var(--hist2);border-radius:18px;padding:18px}
+.parliament-stage{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+.parliament-side{border-radius:20px;padding:20px;background:white;border:1px solid var(--line)}
+.vs{font-weight:950;color:var(--hist);font-size:1.3rem}
+.rebellion-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.flow-step{border:1px solid var(--line);border-radius:18px;background:white;padding:15px;min-height:135px}
+.flow-step b{display:block;color:var(--hist);margin-bottom:6px}
+.compare-rebels{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.reason-rank{display:grid;gap:9px}.rank-item{border:1px solid var(--line);background:white;border-radius:15px;padding:12px 14px;cursor:pointer}
+.rank-item.active{background:var(--gold2);border-color:#E2C96C}
+.exam-frame{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.exam-frame div{background:white;border:1px solid #EADCA0;border-radius:14px;padding:12px}
+@media(max-width:850px){.problem-map{grid-template-columns:1fr 1fr}.suitor-grid{grid-template-columns:1fr 1fr}.rebellion-flow{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.problem-map,.marriage-board,.suitor-grid,.parliament-stage,.rebellion-flow,.compare-rebels,.exam-frame{grid-template-columns:1fr}.vs{text-align:center}}
+
+.social-ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.social-card{border:1px solid var(--line);background:white;border-radius:20px;padding:18px;cursor:pointer;text-align:left}
+.social-card.active{background:var(--hist);color:white;border-color:var(--hist)}
+.detail-box{background:var(--hist2);border-radius:20px;padding:20px;margin-top:12px;min-height:120px}
+.chain-big{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:16px 0}
+.chain-big span{padding:13px 15px;background:white;border:1px solid var(--line);border-radius:15px;font-weight:900}
+.chain-big i{font-style:normal;color:var(--hist);font-weight:950}
+.house-grid,.theatre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:14px}
+.feature-btn{border:1px solid var(--line);background:white;border-radius:17px;padding:15px;text-align:left;cursor:pointer;font-weight:850}
+.feature-btn.active{background:var(--gold2);border-color:#DFC777}
+.globe{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:12px;align-items:stretch;margin-top:14px}
+.globe-centre{border-radius:24px;background:var(--hist);color:white;padding:22px;display:grid;place-items:center;text-align:center}
+.globe-centre{position:relative;overflow:hidden;min-height:360px;background:#f7efe4;color:var(--ink);padding:12px}
+.globe-diagram{position:relative;width:100%;max-width:430px;aspect-ratio:1.18/1;margin:auto;border-radius:22px;overflow:hidden;background:linear-gradient(#dcebf2 0 34%,#e9d6ad 34% 100%);border:1px solid var(--line)}
+.globe-building{position:absolute;left:7%;right:7%;bottom:7%;height:76%;border:5px solid #6f4b37;border-radius:48% 48% 13% 13%/20% 20% 8% 8%;background:#c98d60;box-shadow:inset 0 0 0 10px #e7bd89}
+.globe-building:before{content:"";position:absolute;left:5%;right:5%;top:10%;height:17%;border-top:9px solid #77513b;border-bottom:7px solid #77513b;background:repeating-linear-gradient(90deg,#f2d4a5 0 9%,#6f4b37 9% 11%)}
+.globe-building:after{content:"";position:absolute;left:5%;right:5%;top:35%;height:16%;border-top:7px solid #77513b;border-bottom:7px solid #77513b;background:repeating-linear-gradient(90deg,#f2d4a5 0 9%,#6f4b37 9% 11%)}
+.stage-shape{position:absolute;left:31%;bottom:22%;width:38%;height:17%;background:#9a603d;border:4px solid #62402e;border-radius:4px;z-index:4}
+.stage-shape:after{content:"STAGE";position:absolute;inset:0;display:grid;place-items:center;font-size:.72rem;font-weight:950;color:white;letter-spacing:.08em}
+.pit-shape{position:absolute;left:24%;right:24%;bottom:8%;height:15%;background:#d6b26f;border:3px dashed #866637;border-radius:50%;z-index:3}
+.tiring-shape{position:absolute;left:39%;bottom:38%;width:22%;height:22%;background:#814c3b;border:4px solid #5f392e;z-index:3}
+.balcony-shape{position:absolute;left:36%;bottom:57%;width:28%;height:9%;background:#d9a06d;border:4px solid #684331;z-index:4}
+.heavens-shape{position:absolute;left:27%;bottom:62%;width:46%;height:8%;background:#7b4557;border:4px solid #5f3544;z-index:5;border-radius:50% 50% 8px 8px}
+.globe-hotspot{position:absolute;z-index:9;border:2px solid white;background:var(--hist);color:white;border-radius:999px;width:31px;height:31px;font-weight:950;box-shadow:0 2px 8px #0003;cursor:pointer}
+.globe-hotspot:hover,.globe-hotspot.active{transform:scale(1.12);background:var(--gold);color:var(--ink);border-color:var(--ink)}
+.globe-label{position:absolute;z-index:8;font-size:.72rem;font-weight:900;background:#fffef8dd;border:1px solid #c9b9a4;border-radius:8px;padding:4px 6px;pointer-events:none}
+.globe-hint{text-align:center;margin:8px 0 0;font-size:.84rem;color:var(--muted)}
+
+.attitudes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.attitude{border-radius:20px;padding:18px;border:1px solid var(--line);background:white}
+.attitude.love{border-top:6px solid var(--success)}.attitude.hate{border-top:6px solid var(--danger)}
+.sort-board{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.sort-col{border:1px solid var(--line);border-radius:20px;padding:16px;background:white;min-height:180px}
+.evidence-bank{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.evidence{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 12px;font-weight:800;cursor:pointer}
+.evidence.for{background:#DFF2E8;border-color:var(--success)}.evidence.against{background:#F8E5E1;border-color:var(--danger)}
+.judge-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.judge{border:1px solid var(--line);background:white;border-radius:14px;padding:11px 8px;cursor:pointer;font-weight:850}
+.judge.active{background:var(--hist);color:white;border-color:var(--hist)}
+.quiz-input{width:100%;max-width:520px;border:1px solid var(--line);border-radius:13px;padding:12px;font:inherit;margin-top:10px}
+.quiz-select{border:1px solid var(--line);border-radius:13px;padding:11px;background:white;font:inherit;margin-top:10px;max-width:100%}
+.mini-feedback{margin-top:8px;font-size:.92rem}
+@media(max-width:850px){.social-ladder,.house-grid,.theatre-grid{grid-template-columns:1fr 1fr}.globe{grid-template-columns:1fr}}
+@media(max-width:620px){.social-ladder,.house-grid,.theatre-grid,.attitudes,.sort-board,.judge-scale{grid-template-columns:1fr}}
+
+/* 2026-10 consistency patch: History quiz + GCSE answer export */
+#quiz .quiz-q,#quiz .qcard,#quiz .question{padding:22px 0;border-bottom:1px solid var(--line);display:block}
+#quiz .quiz-q h3,#quiz .qcard>b{display:block;margin:0 0 14px;font-size:1.08rem;line-height:1.45}
+#quiz .quiz-q .option,#quiz .qcard .option{display:block;width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px 14px;margin:8px 0;text-align:left;cursor:pointer;line-height:1.4}
+#quiz .quiz-q .option input,#quiz .qcard .option input{margin-right:9px}
+#quiz .quiz-input,#quiz .short-answer{display:block;width:100%;max-width:520px;border:1px solid var(--line);border-radius:13px;padding:13px 14px;font:inherit;margin-top:12px;background:#fff}
+#quiz .mini-feedback,#quiz .feedback{margin-top:10px;line-height:1.45}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0 24px}
+.gcse-export h3{margin:0 0 6px}.gcse-export .row{margin-top:12px}
+.export-print{display:none}
+@media(max-width:820px){#quiz .quiz-q .option,#quiz .qcard .option{width:100%}}
+@media print{body.exporting>*{display:none!important}body.exporting #historyExportPrint{display:block!important;background:#fff;color:#000;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #historyExportPrint article{break-inside:avoid;margin-bottom:22px}body.exporting #historyExportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="shell nav"><a class="brand" href="index.html">GAB<span> / REVISION</span></a><nav class="navlinks"><a class="pill" href="history.html">← History</a><a class="pill" href="index.html">Home</a></nav></div></header>
+<div class="chapter-nav"><div class="shell chapter-links">
+<a href="#E3.1">3.1 · Wealth & fashion</a><a href="#E3.2">3.2 · Country houses</a><a href="#E3.3">3.3 · Theatre</a><a href="#E3.4">3.4 · The Globe</a><a href="#E3.5">3.5 · A Golden Age?</a>
+</div></div>
+<main>
+<section class="lesson-hero"><div class="shell">
+<span class="kicker">AQA GCSE History · Elizabethan England, c1568–1603</span>
+<h1 class="lesson-title">Chapter 3 · A<br><span style="color:var(--hist)">‘Golden Age’?</span></h1>
+<p class="lead">Prosperity, fashion, country houses and theatre can make Elizabeth's reign look dazzling. But who benefited — and how far was it really a golden age?</p>
+<div class="row"><span class="badge">5 subtopics</span><span class="badge">Interactive society + house + Globe</span><span class="badge">16 mixed recall questions</span><span class="badge">4 GCSE practice questions</span></div>
+<div class="tabs"><button class="tab active" data-panel="learn">① Learn</button><button class="tab" data-panel="quiz">② Quiz</button><button class="tab" data-panel="gcse">③ GCSE Practice</button></div>
+<div class="row"><button class="btn" id="markRead">Mark chapter as learnt</button><span id="readStatus" class="small"></span></div>
+</div></section>
+
+<section class="section"><div class="shell">
+<div id="learn" class="panel active">
+
+<section class="topic" id="E3.1">
+<div class="topic-head"><div class="topic-code">3.1</div><div><span class="kicker">Prosperity and status</span><h2>Wealth and fashion in Elizabethan England</h2><p class="lead">Elizabethan society was hierarchical. Nobility remained at the top, but a growing gentry used land, trade, education and display to increase their status.</p></div></div>
+<div class="warn"><strong>Population pressure:</strong> England's population rose from about <strong>2.8 million in 1538</strong> to about <strong>4 million by 1603</strong>. Growth helped create opportunity, but also pressure on food, work and living standards.</div>
+<div class="visual" style="margin-top:16px"><h3>Who had power and wealth?</h3><p class="small">Select a group.</p><div class="social-ladder" id="socialLadder"></div><div class="detail-box" id="socialDetail"></div></div>
+<div class="grid-2" style="margin-top:14px">
+<div class="card"><h3>The rise of the gentry</h3><p>Gentry were wealthy landowners below the nobility. Some also held important local offices such as <strong>Justice of the Peace</strong>. Their numbers and influence grew during Elizabeth's reign.</p><div class="chain-big"><span>Trade / income</span><i>→</i><span>Buy land</span><i>→</i><span>Higher status</span><i>→</i><span>Local power</span></div></div>
+<div class="card"><h3>Fashion = a status signal</h3><p>Wealthy Elizabethans displayed status through expensive clothes, elaborate <strong>ruffs</strong>, jewellery and fine fabrics. Clothing made hierarchy visible.</p><p class="small">Key idea: prosperity did not mean equality. The richest could display wealth in ways ordinary people could not.</p></div>
+</div>
+<div class="challenge"><h3>Quick judgement</h3><p>Which statement is strongest?</p><div class="choice-row" id="wealthChoices"></div><p id="wealthFeedback" class="feedback"></p></div>
+</section>
+
+<section class="topic" id="E3.2">
+<div class="topic-head"><div class="topic-code">3.2</div><div><span class="kicker">Architecture as evidence</span><h2>Elizabethan country houses</h2><p class="lead">The grand houses of the gentry and nobility were designed for comfort, privacy and display. Their architecture is evidence of growing wealth and changing fashions.</p></div></div>
+<div class="note"><strong>Study example:</strong> Hardwick Hall helps us understand Elizabethan wealth and architecture. The official AQA Historic Environment is a separately specified site that changes by exam series.</div>
+<div class="visual" style="margin-top:16px"><h3>Hardwick Hall — spot the evidence</h3><p>Bess of Hardwick rebuilt the house in Derbyshire in the 1590s. Select a feature to see what it reveals.</p><div class="house-grid" id="houseGrid"></div><div class="detail-box" id="houseDetail"></div></div>
+<div class="grid-3" style="margin-top:14px">
+<div class="card"><h3>Comfort</h3><p>Rooms became more specialised and private. Wealthy households could afford spaces designed for particular purposes rather than one hall doing almost everything.</p></div>
+<div class="card"><h3>Renaissance style</h3><p>Classical ideas influenced design: symmetry, columns, decorative plasterwork and carefully planned façades showed fashionable taste.</p></div>
+<div class="card"><h3>Status</h3><p>A spectacular house advertised wealth, family importance and connections. Architecture was a way of showing that the owner belonged among the elite.</p></div>
+</div>
+</section>
+
+<section class="topic" id="E3.3">
+<div class="topic-head"><div class="topic-code">3.3</div><div><span class="kicker">A new mass entertainment</span><h2>The role of theatre</h2><p class="lead">Theatre moved from court and travelling performances towards professional companies and permanent playhouses. It became entertainment for a remarkably broad audience.</p></div></div>
+<div class="visual"><h3>How theatre changed</h3><div class="rebellion-flow">
+<div class="flow-step"><b>1 · Court & travelling players</b>Plays had long been performed at court, in halls, inns and by travelling companies.</div>
+<div class="flow-step"><b>2 · Professional companies</b>Successful actors and writers increasingly worked in organised companies under noble patronage.</div>
+<div class="flow-step"><b>3 · Permanent theatres</b>Purpose-built theatres created regular venues and much larger audiences.</div>
+<div class="flow-step"><b>4 · Cultural achievement</b>Writers such as William Shakespeare and performers such as Richard Burbage became famous.</div>
+</div></div>
+<div class="grid-2" style="margin-top:14px">
+<div class="profile card"><h3>William Shakespeare (1564–1616)</h3><p>Playwright, actor and shareholder. His plays included histories, comedies and tragedies. They were written to entertain audiences, not as modern history textbooks.</p></div>
+<div class="profile wals card"><h3>Richard Burbage (1568–1619)</h3><p>A leading actor and member of the Lord Chamberlain's Men. He played major roles including Hamlet and King Lear and was also a theatre owner.</p></div>
+</div>
+<div class="attitudes" style="margin-top:14px">
+<div class="attitude love"><h3>Why people loved theatre</h3><p>It was exciting, relatively affordable and offered drama, comedy, music, costumes and spectacle. Different social groups could attend, although they paid for different places.</p></div>
+<div class="attitude hate"><h3>Why some opposed it</h3><p>Critics linked theatres with disorder, drunkenness, crime and disease. Puritans could also object to plays as immoral distractions and disliked men playing female roles.</p></div>
+</div>
+</section>
+
+<section class="topic" id="E3.4">
+<div class="topic-head"><div class="topic-code">3.4</div><div><span class="kicker">Inside an Elizabethan playhouse</span><h2>The Globe Theatre</h2><p class="lead">The Globe opened in Southwark in 1599. Its design shows why theatre could entertain thousands while still reflecting social differences.</p></div></div>
+<div class="note"><strong>Study example:</strong> the Globe is useful contextual evidence for Elizabethan theatre. Treat it as the official Historic Environment only if AQA specifies it for Gabriel's exam series.</div>
+<div class="visual" style="margin-top:16px"><h3>Explore the Globe</h3><p>Click a label or a numbered point on the theatre. The matching part is highlighted and explained below.</p><div class="globe"><div id="globeLeft"></div><div class="globe-centre"><div><div class="globe-diagram" aria-label="Interactive simplified cutaway diagram of the Globe Theatre"><div class="globe-building"></div><div class="pit-shape"></div><div class="stage-shape"></div><div class="tiring-shape"></div><div class="balcony-shape"></div><div class="heavens-shape"></div>
+<button class="globe-hotspot" data-globe="galleries" style="left:10%;top:31%">1</button><span class="globe-label" style="left:4%;top:22%">Galleries</span>
+<button class="globe-hotspot" data-globe="balcony" style="left:47%;top:25%">2</button><span class="globe-label" style="left:56%;top:19%">Upper stage</span>
+<button class="globe-hotspot" data-globe="tiring" style="left:47%;top:47%">3</button><span class="globe-label" style="left:56%;top:43%">Tiring rooms</span>
+<button class="globe-hotspot" data-globe="stage" style="left:47%;top:66%">4</button><span class="globe-label" style="left:57%;top:65%">Stage</span>
+<button class="globe-hotspot" data-globe="pit" style="left:47%;top:84%">5</button><span class="globe-label" style="left:58%;top:83%">Pit / yard</span>
+<button class="globe-hotspot" data-globe="effects" style="left:73%;top:35%">6</button><span class="globe-label" style="left:75%;top:26%">Effects</span></div><p class="globe-hint">Simplified reconstruction for revision — use the hotspots to connect each feature to its function.</p></div></div><div id="globeRight"></div></div><div class="detail-box" id="globeDetail"></div></div>
+<div class="grid-3" style="margin-top:14px">
+<div class="card"><h3>The pit / yard</h3><p>Cheapest standing area. Ordinary spectators — often called groundlings — stood close to the stage.</p></div>
+<div class="card"><h3>Galleries</h3><p>Covered seating cost more. Wealthier spectators could pay for greater comfort and a better position.</p></div>
+<div class="card"><h3>Stagecraft</h3><p>The stage, balcony, trapdoor, tiring rooms, costumes and simple special effects helped create different settings without modern scenery.</p></div>
+</div>
+</section>
+
+<section class="topic" id="E3.5">
+<div class="topic-head"><div class="topic-code">3.5</div><div><span class="kicker">Make a historical judgement</span><h2>Was it really a ‘Golden Age’?</h2><p class="lead">The phrase fits real achievements — but it can hide inequality. A strong historian asks: golden for whom?</p></div></div>
+<div class="concept-grid">
+<div class="card"><h3>Art & literature</h3><p>Portraiture, decorative arts and writers such as Shakespeare flourished.</p></div>
+<div class="card"><h3>Exploration & technology</h3><p>Navigation, astronomy, printing and overseas voyages expanded knowledge and ambition.</p></div>
+<div class="card"><h3>Education</h3><p>Education mattered increasingly, especially for wealthier boys, but access remained unequal.</p></div>
+<div class="card"><h3>Theatre</h3><p>Professional theatre became hugely popular and created a lasting cultural legacy.</p></div>
+<div class="card"><h3>Buildings</h3><p>Elite country houses reflected wealth, comfort and Renaissance fashions.</p></div>
+<div class="card"><h3>The problem</h3><p>Many ordinary people remained poor and insecure. Population growth and inequality mean the label cannot describe everyone's experience.</p></div>
+</div>
+<div class="visual" style="margin-top:16px"><h3>Build the judgement</h3><p>Classify each piece of evidence, then choose where you would place the reign on the scale.</p><div class="evidence-bank" id="evidenceBank"></div><div class="sort-board"><div class="sort-col"><h3>Evidence FOR a Golden Age</h3><div id="forCol" class="small">Select evidence above.</div></div><div class="sort-col"><h3>Evidence AGAINST</h3><div id="againstCol" class="small">Select evidence above.</div></div></div><div class="judge-scale" id="judgeScale"></div><p id="judgeFeedback" class="feedback"></p></div>
+</section>
+</div>
+
+<div id="quiz" class="panel">
+<div class="quiz-head"><div><span class="kicker">Active recall</span><h2>Chapter 3 mixed quiz</h2><p class="lead">Not just multiple choice: missing words, true/false, ordering and typed recall.</p></div><div><strong id="quizScore">0 / 16</strong><div id="bestScore" class="small"></div></div></div>
+<div id="quizWrap"></div>
+<div class="row" style="margin-top:18px"><button class="btn hist" id="checkQuiz">Check answers</button><button class="btn" id="resetQuiz">Reset</button></div>
+</div>
+
+<div id="gcse" class="panel">
+<div class="section-head"><div><span class="kicker">Exam practice</span><h2>GCSE Practice</h2><p class="lead">Original revision questions based on AQA skills — not official past-paper questions. Write first, submit, then reveal revision marking points.</p></div></div>
+
+<div class="gcse-export" id="gcseExport"><h3>Send your answers for marking</h3><p class="muted">Submit your GCSE Practice answers first, then export them so they can be checked in ChatGPT. No screenshots needed.</p><div class="row"><button class="btn hist" id="historyExportJSON">Export answers for ChatGPT</button><button class="btn" id="historyExportPDF">Print / Save as PDF</button></div><p class="small muted" id="historyExportStatus"></p></div><div class="gcse-card" data-q="q1"><div class="row" style="justify-content:space-between"><h3>1 · Explain what was important about the rise of the gentry in Elizabethan England.</h3><span class="marks">8 marks</span></div>
+<div class="answer-guide"><h4>How to make an 8-mark explanation strong</h4><ul><li>Choose two or three ways the gentry mattered.</li><li>Use precise knowledge: land, wealth, trade, local office and JPs.</li><li>After each fact, explain the consequence for Elizabethan society or government.</li></ul><div class="starter"><strong>Useful frame:</strong> “The rise of the gentry was important because… This meant… Therefore…”</div></div>
+<textarea placeholder="Write your answer here…"></textarea><div class="row"><button class="btn hist submitAnswer">Submit answer</button><button class="btn revealGuide" disabled>Reveal revision marking points</button><button class="btn retryAnswer" style="display:none">Retry</button></div>
+<div class="markguide"><strong>Revision marking points — original revision question</strong><p>Relevant ideas include growing numbers of wealthy landowners below the nobility; wealth from land and trade; purchase of land as a route to status; local influence; service as JPs and other offices; and the way growing prosperity changed the social hierarchy without removing inequality.</p></div></div>
+
+<div class="gcse-card" data-q="q2"><div class="row" style="justify-content:space-between"><h3>2 · How convincing is the view that Elizabethan theatre was “entertainment for all”?</h3><span class="marks">8 marks</span></div>
+<div class="answer-guide"><h4>Interpretation-style answer</h4><ul><li>Test the claim using contextual knowledge — do not just describe theatre.</li><li>Support it with cheap standing places and mixed audiences.</li><li>Qualify it: different groups occupied different spaces, and theatre also faced opposition.</li><li>Keep judging: “This makes the view convincing because…”</li></ul><div class="starter"><strong>Best structure:</strong> claim → evidence → explanation → judgement; then test a limitation.</div></div>
+<textarea placeholder="Write your answer here…"></textarea><div class="row"><button class="btn hist submitAnswer">Submit answer</button><button class="btn revealGuide" disabled>Reveal revision marking points</button><button class="btn retryAnswer" style="display:none">Retry</button></div>
+<div class="markguide"><strong>Revision marking points — original revision question</strong><p>Useful knowledge includes low-cost standing entry, audiences from different social groups, purpose-built theatres and large crowds, noble patronage, the Queen's interest in drama, social differences between pit and galleries, and Puritan/public-order objections.</p></div></div>
+
+<div class="gcse-card" data-q="q3"><div class="row" style="justify-content:space-between"><h3>3 · Explain what Elizabethan country houses can tell us about the growing prosperity of the elite.</h3><span class="marks">8 marks</span></div>
+<div class="answer-guide"><h4>Turn features into historical evidence</h4><ul><li>Do not simply list windows, galleries and decoration.</li><li>For each feature, explain what it reveals about money, comfort, privacy or status.</li><li>Use Hardwick Hall as an example, not as proof that every house was identical.</li></ul><div class="starter"><strong>Example move:</strong> “Large areas of expensive glass suggest… This mattered because…”</div></div>
+<textarea placeholder="Write your answer here…"></textarea><div class="row"><button class="btn hist submitAnswer">Submit answer</button><button class="btn revealGuide" disabled>Reveal revision marking points</button><button class="btn retryAnswer" style="display:none">Retry</button></div>
+<div class="markguide"><strong>Revision marking points — original revision question</strong><p>Possible evidence: expensive glass and many windows; symmetry and Renaissance/classical design; decorative plasterwork; long galleries; more specialised/private rooms; fireplaces/chimneys; and the use of architecture to advertise elite wealth and family status.</p></div></div>
+
+<div class="gcse-card" data-q="q4"><div class="row" style="justify-content:space-between"><h3>4 · “Elizabeth's reign deserves to be called a Golden Age.” How far do you agree?</h3><span class="marks">Extended judgement</span></div>
+<div class="answer-guide"><h4>How to build a judgement</h4><ul><li>Define what “Golden Age” means before judging it.</li><li>Use achievements: theatre, literature, art, exploration, technology, education or elite prosperity.</li><li>Balance them against inequality and the experience of poorer people.</li><li>Finish with a clear answer to <strong>golden for whom?</strong></li></ul><div class="starter"><strong>Avoid:</strong> “Yes because Shakespeare was famous.” <strong>Aim for:</strong> a criterion-based judgement about how widely prosperity and cultural achievement were experienced.</div></div>
+<textarea placeholder="Write your answer here…"></textarea><div class="row"><button class="btn hist submitAnswer">Submit answer</button><button class="btn revealGuide" disabled>Reveal revision marking points</button><button class="btn retryAnswer" style="display:none">Retry</button></div>
+<div class="markguide"><strong>Revision marking points — original revision question</strong><p>A strong answer can recognise genuine cultural and technological achievements while questioning how representative they were of the whole population. The conclusion should weigh breadth of benefit, not merely count achievements.</p></div></div>
+</div>
+</div></section></main>
+<footer><div class="shell">History · AQA GCSE · Elizabethan England, c1568–1603 · Chapter 3</div></footer>
+
+<div id="historyExportPrint" class="export-print"></div>
+<script>
+const STORE_KEY='gabRevisionV2',LESSON='H-ELIZ-3';
+function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){return{}}}
+function saveStore(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s));return true}catch(e){return false}}
+function getLesson(){const s=loadStore();return(s.lessons||{})[LESSON]||{}}
+function setLesson(patch){const s=loadStore();s.lessons=s.lessons||{};s.lessons[LESSON]={...(s.lessons[LESSON]||{}),...patch};saveStore(s)}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.panel).classList.add('active');window.scrollTo({top:document.querySelector('.lesson-hero').offsetTop,behavior:'smooth'})}));
+const readBtn=document.getElementById('markRead'),readStatus=document.getElementById('readStatus');
+function showRead(){const r=getLesson().read;readStatus.textContent=r?'✓ Chapter marked as learnt':'';readBtn.textContent=r?'Marked as learnt ✓':'Mark chapter as learnt'}
+readBtn.onclick=()=>{setLesson({read:true,readDate:new Date().toISOString()});showRead()};showRead();
+
+const social={
+nobility:['Nobility','The highest social group below the queen. Nobles held large estates, titles and major political influence. Their status was inherited and they were expected to serve the monarch.'],
+gentry:['Gentry','Wealthy landowners below the nobility. Their numbers and wealth grew. Some became JPs or held other local offices, so economic success could translate into political influence.'],
+peasants:['Peasantry','The largest and least powerful group. Living standards varied, but many had little security. Population growth and rising prices could make life harder even while richer groups prospered.']
+};
+Object.entries(social).forEach(([k,v],i)=>{let b=document.createElement('button');b.className='social-card'+(i===0?' active':'');b.dataset.k=k;b.innerHTML='<h3>'+v[0]+'</h3>';b.onclick=()=>showSocial(k);socialLadder.appendChild(b)});
+function showSocial(k){document.querySelectorAll('.social-card').forEach(x=>x.classList.toggle('active',x.dataset.k===k));socialDetail.innerHTML='<h3>'+social[k][0]+'</h3><p>'+social[k][1]+'</p>'}showSocial('nobility');
+
+[['Prosperity benefited everyone equally.',false],['The gentry could gain wealth and influence, but Elizabethan society remained highly unequal.',true],['The nobility disappeared during Elizabeth’s reign.',false]].forEach(([t,ok])=>{let b=document.createElement('button');b.className='choice';b.textContent=t;b.onclick=()=>{document.querySelectorAll('#wealthChoices .choice').forEach(x=>x.disabled=true);b.classList.add(ok?'correct':'wrong');wealthFeedback.textContent=ok?'✓ Exactly. Growth and opportunity existed alongside sharp inequality.':'Not quite. Separate growing prosperity from the idea that everyone benefited equally.'};wealthChoices.appendChild(b)});
+
+const house={
+glass:['Large glass windows','Glass was expensive. Many large windows advertised wealth and also made rooms lighter and more comfortable. Hardwick Hall became famous for its amount of glass.'],
+symmetry:['Symmetry & classical design','Regular, balanced façades and classical details reflected Renaissance fashions and showed that the owner was sophisticated and up to date.'],
+gallery:['Long gallery','A long gallery provided space for walking, exercise and display. It was a luxury that required a very large house.'],
+privacy:['Specialised rooms','More rooms allowed greater privacy and different spaces for family, guests and servants — a move away from medieval hall-centred living.'],
+chimneys:['Fireplaces & chimneys','More fireplaces meant rooms could be heated separately, improving comfort. Decorative chimneys could also become a visible status feature.'],
+plaster:['Decorative interiors','Elaborate plasterwork, portraits and decoration demonstrated money, taste, family identity and social ambition.']
+};
+Object.entries(house).forEach(([k,v],i)=>{let b=document.createElement('button');b.className='feature-btn'+(i===0?' active':'');b.dataset.k=k;b.textContent=v[0];b.onclick=()=>showHouse(k);houseGrid.appendChild(b)});
+function showHouse(k){document.querySelectorAll('#houseGrid .feature-btn').forEach(x=>x.classList.toggle('active',x.dataset.k===k));houseDetail.innerHTML='<h3>'+house[k][0]+'</h3><p>'+house[k][1]+'</p>'}showHouse('glass');
+
+const globe={
+stage:['Stage','Projected into the yard so spectators could surround it on three sides. A roof or “heavens” covered part of the stage.'],
+pit:['Pit / yard','The cheapest area. Spectators stood close to the action, making theatre accessible to people with less money.'],
+galleries:['Galleries','Covered seating around the theatre. Better places cost more, so the building brought classes together without erasing status differences.'],
+tiring:['Tiring rooms','Backstage spaces where actors changed costumes and prepared. Entrances from the rear of the stage helped performances flow.'],
+balcony:['Upper stage / balcony','Could be used for scenes needing height — for example windows, walls or balconies — and for musicians or dramatic entrances.'],
+effects:['Effects & costumes','Costumes were crucial for identity and status. Sound, trapdoors and simple effects helped create spectacle without modern scenery.']
+};
+const entries=Object.entries(globe);
+entries.forEach(([k,v],i)=>{let b=document.createElement('button');b.className='feature-btn';b.dataset.k=k;b.textContent=v[0];b.onclick=()=>showGlobe(k);(i<3?globeLeft:globeRight).appendChild(b)});
+document.querySelectorAll('.globe-hotspot').forEach(b=>b.onclick=()=>showGlobe(b.dataset.globe));
+function showGlobe(k){document.querySelectorAll('.globe .feature-btn').forEach(x=>x.classList.toggle('active',x.dataset.k===k));document.querySelectorAll('.globe-hotspot').forEach(x=>x.classList.toggle('active',x.dataset.globe===k));globeDetail.innerHTML='<h3>'+globe[k][0]+'</h3><p>'+globe[k][1]+'</p>'}showGlobe('stage');
+
+const ev=[['Shakespeare and popular theatre','for'],['Renaissance country houses','for'],['Advances in navigation and printing','for'],['Growing gentry prosperity','for'],['Many people remained poor','against'],['Education was still unequal','against'],['Population growth increased pressure','against'],['Prosperity was not shared equally','against']];
+ev.forEach(([t,c])=>{let b=document.createElement('button');b.className='evidence';b.textContent=t;b.onclick=()=>{b.classList.add(c);b.disabled=true;let target=document.getElementById(c==='for'?'forCol':'againstCol');if(target.textContent==='Select evidence above.')target.textContent='';let p=document.createElement('p');p.textContent='• '+t;target.appendChild(p)};evidenceBank.appendChild(b)});
+['Not golden','Mostly not','Mixed','Mostly golden','Definitely golden'].forEach((t,i)=>{let b=document.createElement('button');b.className='judge';b.textContent=t;b.onclick=()=>{document.querySelectorAll('.judge').forEach(x=>x.classList.remove('active'));b.classList.add('active');judgeFeedback.textContent=i===2?'Good historical position: now explain which achievements mattered and why the benefits were uneven.':'A defensible judgement — but it needs evidence and a criterion. Ask “golden for whom, and in what ways?”';setLesson({goldenJudgement:i})};judgeScale.appendChild(b)});
+
+const quiz=[
+{type:'mcq',q:'Which social group grew in wealth and influence below the nobility?',opts:['Gentry','Monks','Serfs','Clergy only'],a:0,e:'The gentry were wealthy landowners below the nobility.'},
+{type:'text',q:'Missing word: Wealthy local landowners could serve as Justices of the ______.',a:['peace','the peace'],e:'Justice of the Peace (JP) was an important local office.'},
+{type:'tf',q:'True or false: growing prosperity meant all Elizabethans became wealthy.',a:false,e:'Prosperity was uneven and many ordinary people remained poor.'},
+{type:'mcq',q:'Why were large glass windows a status symbol?',opts:['Glass was expensive','Glass was illegal','Only theatres used glass','They reduced privacy'],a:0,e:'Large quantities of expensive glass advertised wealth.'},
+{type:'text',q:'Name the wealthy woman associated with rebuilding Hardwick Hall.',a:['bess of hardwick','elizabeth hardwick','bess hardwick'],e:'Bess of Hardwick became one of the wealthiest women in Elizabethan England.'},
+{type:'mcq',q:'Which design influence is linked to symmetry and classical features?',opts:['Renaissance','Viking','Gothic revival','Industrial'],a:0,e:'Renaissance ideas influenced elite Elizabethan architecture.'},
+{type:'order',q:'Put the development of theatre in the best order.',items:['Permanent purpose-built theatres','Court / travelling performances','Professional acting companies'],a:'Court / travelling performances|Professional acting companies|Permanent purpose-built theatres',e:'Theatre developed from older court/travelling traditions towards companies and permanent playhouses.'},
+{type:'text',q:'Which playwright was born in 1564 and became the best-known Elizabethan dramatist?',a:['william shakespeare','shakespeare'],e:'William Shakespeare.'},
+{type:'tf',q:'True or false: women normally performed female roles on the public Elizabethan stage.',a:false,e:'Female roles were performed by male actors or boys.'},
+{type:'mcq',q:'Which group was especially associated with moral opposition to theatre?',opts:['Puritans','Gentry as a whole','Spanish sailors','JPs as a whole'],a:0,e:'Puritans could condemn theatre as immoral or disorderly.'},
+{type:'text',q:'What was the cheapest standing area at the Globe commonly called?',a:['pit','yard','the pit','the yard'],e:'The pit or yard was the cheap standing area.'},
+{type:'mcq',q:'What did galleries at the Globe show?',opts:['All spectators had identical experiences','Different social groups could attend but pay for different levels of comfort','Only nobles attended','The theatre was private'],a:1,e:'Theatre mixed audiences while preserving visible social differences.'},
+{type:'tf',q:'True or false: the Globe opened in 1599.',a:true,e:'The Globe opened in Southwark in 1599.'},
+{type:'mcq',q:'Which is the strongest evidence AGAINST calling the whole reign a Golden Age?',opts:['Shakespeare wrote plays','Elite houses became grander','Prosperity and education were not shared equally','Navigation improved'],a:2,e:'The label becomes less convincing when we consider who did not share in prosperity.'},
+{type:'text',q:'Complete the historian’s question: “Golden for ______?”',a:['whom','who'],e:'“Golden for whom?” forces a judgement about how widely benefits were shared.'},
+{type:'mcq',q:'Which conclusion best fits the chapter?',opts:['There were no major achievements','It was golden for every person','There were real cultural and economic achievements, but benefits were unequal','Only theatre changed'],a:2,e:'That balanced conclusion reflects both achievement and inequality.'}
+];
+const quizWrap=document.getElementById('quizWrap');let ans={};
+function renderQuiz(){quizWrap.innerHTML='';quiz.forEach((x,i)=>{let d=document.createElement('div');d.className='question';let input='';if(x.type==='mcq'||x.type==='tf'){let opts=x.type==='tf'?['True','False']:x.opts;input='<div class="options">'+opts.map((o,j)=>'<button class="option" data-i="'+i+'" data-v="'+j+'">'+o+'</button>').join('')+'</div>'}else if(x.type==='text')input='<input class="quiz-input" data-i="'+i+'" placeholder="Type your answer…">';else input='<select class="quiz-select" data-i="'+i+'"><option value="">Choose the correct order…</option><option>'+x.items.join(' → ')+'</option><option>'+[x.items[1],x.items[0],x.items[2]].join(' → ')+'</option><option>'+[x.items[2],x.items[1],x.items[0]].join(' → ')+'</option></select>';d.innerHTML='<h3>'+(i+1)+' · '+x.q+'</h3>'+input+'<div class="mini-feedback" id="fb'+i+'"></div>';quizWrap.appendChild(d)});quizWrap.querySelectorAll('.option').forEach(b=>b.onclick=()=>{ans[+b.dataset.i]=+b.dataset.v;b.parentElement.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});quizWrap.querySelectorAll('input,select').forEach(el=>el.oninput=()=>ans[+el.dataset.i]=el.value)}
+function correct(x,v){if(x.type==='mcq')return v===x.a;if(x.type==='tf')return v===(x.a?0:1);if(x.type==='text')return x.a.includes(String(v||'').trim().toLowerCase());if(x.type==='order')return String(v||'').split(' → ').join('|')===x.a;return false}
+checkQuiz.onclick=()=>{let score=0;quiz.forEach((x,i)=>{let ok=correct(x,ans[i]);if(ok)score++;document.getElementById('fb'+i).textContent=(ok?'✓ Correct. ':'Not quite. ')+x.e;let q=quizWrap.children[i];q.querySelectorAll('button.option').forEach(b=>b.disabled=true);q.querySelectorAll('input,select').forEach(el=>el.disabled=true)});quizScore.textContent=score+' / '+quiz.length;let l=getLesson(),best=Math.max(score,l.bestQuiz||0);setLesson({bestQuiz:best,lastQuiz:score});bestScore.textContent='Best: '+best+' / '+quiz.length};
+resetQuiz.onclick=()=>{ans={};renderQuiz();quizScore.textContent='0 / '+quiz.length;bestScore.textContent=getLesson().bestQuiz!=null?'Best: '+getLesson().bestQuiz+' / '+quiz.length:''};renderQuiz();if(getLesson().bestQuiz!=null)bestScore.textContent='Best: '+getLesson().bestQuiz+' / '+quiz.length;
+
+document.querySelectorAll('.gcse-card').forEach(card=>{const ta=card.querySelector('textarea'),submit=card.querySelector('.submitAnswer'),reveal=card.querySelector('.revealGuide'),retry=card.querySelector('.retryAnswer'),guide=card.querySelector('.markguide'),qid=card.dataset.q;const saved=(getLesson().gcse||{})[qid];if(saved){ta.value=saved;ta.disabled=true;ta.classList.add('answer-locked');submit.disabled=true;reveal.disabled=false;retry.style.display='inline-block'}submit.onclick=()=>{if(!ta.value.trim())return;const l=getLesson(),g={...(l.gcse||{}),[qid]:ta.value.trim()};setLesson({gcse:g});ta.disabled=true;ta.classList.add('answer-locked');submit.disabled=true;reveal.disabled=false;retry.style.display='inline-block'};reveal.onclick=()=>guide.classList.toggle('show');retry.onclick=()=>{const l=getLesson(),g={...(l.gcse||{})};delete g[qid];setLesson({gcse:g});ta.disabled=false;ta.classList.remove('answer-locked');submit.disabled=false;reveal.disabled=true;retry.style.display='none';guide.classList.remove('show');ta.focus()}});
+
+// Export submitted GCSE Practice answers for marking in ChatGPT.
+function historyCollectSubmitted(){
+  const root=document.getElementById('gcse'); if(!root)return [];
+  const cards=[...root.querySelectorAll('.gcse-card,.practice')];
+  return cards.map((card,i)=>{
+    const ta=card.querySelector('textarea'); if(!ta||!ta.value.trim())return null;
+    const locked=ta.disabled||ta.readOnly||card.querySelector('.revealGuide:not([disabled]), .markguide.show');
+    if(!locked)return null;
+    const q=(card.querySelector('h3')?.textContent||('Question '+(i+1))).trim();
+    const marks=(card.querySelector('.marks')?.textContent||'').trim();
+    return {question:q,marks:marks,answer:ta.value.trim()};
+  }).filter(Boolean);
+}
+function historyDownload(name,content,type){const u=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+const hxj=document.getElementById('historyExportJSON'),hxp=document.getElementById('historyExportPDF'),hxs=document.getElementById('historyExportStatus');
+if(hxj)hxj.onclick=()=>{const answers=historyCollectSubmitted();if(!answers.length){hxs.textContent='Submit at least one answer first.';return}historyDownload('gab-history-elizabeth-CHAPTER-answers.json'.replace('CHAPTER',String(LESSON||'chapter').replace(/[^0-9]/g,'')),JSON.stringify({lesson:LESSON,answers},null,2),'application/json');hxs.textContent='Ready — send this JSON file in ChatGPT for marking.'};
+if(hxp)hxp.onclick=()=>{const answers=historyCollectSubmitted();if(!answers.length){hxs.textContent='Submit at least one answer first.';return}const box=document.getElementById('historyExportPrint');box.innerHTML='<h1>Gabriel · History GCSE Practice</h1>'+answers.map(a=>'<article><h2>'+String(a.question).replace(/</g,'&lt;')+'</h2>'+(a.marks?'<p><b>'+a.marks+'</b></p>':'')+'<pre>'+String(a.answer).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre></article>').join('');document.body.classList.add('exporting');window.print()};
+addEventListener('afterprint',()=>document.body.classList.remove('exporting'));
+
+</script></body></html>
