@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C3 Structure and bonding | GCSE Chemistry</title>
+<style>
+:root{--navy:#123a56;--blue:#0e83a8;--cyan:#e8f8fc;--orange:#ef8b19;--gold:#f6bd18;--ink:#243746;--muted:#657985;--paper:#fff;--bg:#f4f8fa;--green:#3d8d72;--purple:#7a58a6;--red:#c94f55}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.48}
+header{background:linear-gradient(120deg,#103a56,#0d7899);color:white;padding:18px 5vw 22px}
+header .top{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
+header a{color:white;text-decoration:none;font-weight:700}.crumb{opacity:.9;font-size:.92rem}.hero h1{font-size:clamp(2rem,5vw,3.8rem);margin:18px 0 5px}.hero p{max-width:820px;margin:0;opacity:.95}
+.chapter-nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #d9e3e8;display:flex;gap:7px;overflow:auto;padding:9px 4vw;box-shadow:0 3px 10px #16384c14}
+.chapter-nav button,.tabs button,.quiz-filter button{border:0;border-radius:999px;padding:9px 13px;background:#edf3f6;color:var(--navy);font-weight:800;cursor:pointer;white-space:nowrap}
+.chapter-nav button:hover,.tabs button.active,.quiz-filter button.active{background:var(--navy);color:#fff}
+main{max-width:1180px;margin:auto;padding:24px 18px 70px}.tabs{display:flex;gap:8px;margin-bottom:22px}.panel{display:none}.panel.active{display:block}
+.topic{scroll-margin-top:75px;background:#fff;border-radius:20px;padding:24px;margin:0 0 22px;box-shadow:0 8px 28px #14364a12;border:1px solid #e5edf0}
+.topic h2{color:var(--navy);margin:0 0 6px;font-size:1.75rem}.kicker{color:var(--orange);font-weight:900;text-transform:uppercase;letter-spacing:.06em;font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px;margin:16px 0}.card{border-radius:15px;padding:16px;background:#f7fafb;border:1px solid #dfe9ed}.card h3{margin:0 0 8px;color:var(--blue)}
+.visual{background:linear-gradient(145deg,#f1fbfe,#fff);border:2px solid #ccecf4;border-radius:17px;padding:16px;margin:16px 0;overflow:auto}.visual-title{font-weight:900;color:var(--navy);margin-bottom:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;background:white}th,td{padding:10px;border:1px solid #d8e2e6;text-align:left}th{background:#edf7fa;color:var(--navy)}
+.tip,.trap,.higher{padding:13px 15px;border-radius:12px;margin:13px 0}.tip{background:#eaf8f2;border-left:5px solid var(--green)}.trap{background:#fff2ee;border-left:5px solid var(--red)}.higher{background:#f4effb;border-left:5px solid var(--purple)}
+.particles{height:170px;position:relative;border-radius:14px;background:#f8fbfc;border:1px solid #dce8ed;overflow:hidden}.dot{position:absolute;width:20px;height:20px;border-radius:50%;background:#21a6c7;border:2px solid #0c728e}
+.state-buttons,.interact-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.action{border:0;background:var(--orange);color:white;border-radius:9px;padding:9px 13px;font-weight:800;cursor:pointer}.action.secondary{background:var(--navy)}
+.atom{display:inline-grid;place-items:center;width:82px;height:82px;border:3px solid #5fc1d7;border-radius:50%;position:relative;margin:12px;font-weight:900}.electron{position:absolute;width:11px;height:11px;background:#1689ad;border-radius:50%}.ion{border:2px solid #8398a3;padding:7px 11px;border-radius:7px;font-weight:900;background:white}
+.arrow{font-size:2rem;color:var(--orange);font-weight:900}.bond-demo{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;min-height:130px}.sphere{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#e7f6fa;border:3px solid #59bcd4;font-weight:900}.bond{height:6px;width:60px;background:#e66d62;border-radius:5px}.bond.double{box-shadow:0 12px 0 #e66d62}.bond.triple{box-shadow:0 12px 0 #e66d62,0 -12px 0 #e66d62}
+.lattice{display:grid;grid-template-columns:repeat(6,42px);gap:4px;justify-content:center}.lattice span{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:900;border:2px solid}.plus{background:#eef8ff;border-color:#68a9d1!important}.minus{background:#eef9ef;border-color:#65aa72!important}
+.layers{display:grid;gap:9px}.layer{display:flex;justify-content:center;gap:5px;transition:.35s}.layer span{width:31px;height:31px;border-radius:50%;background:#69777e;border:2px solid #39464c}.layers.slide .layer:nth-child(2){transform:translateX(45px)}
+.metal{display:grid;grid-template-columns:repeat(7,40px);gap:4px;justify-content:center;position:relative;padding:15px}.metal span{height:40px;border-radius:50%;display:grid;place-items:center;background:#dff1f6;border:2px solid #6cb2c5;font-weight:900}.sea{position:absolute;inset:0;pointer-events:none}.sea i{position:absolute;font-style:normal;color:#704ea0;font-weight:900}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}.compare>div{border-radius:14px;padding:15px;background:#f8fbfc;border:1px solid #dce8ed}
+.quiz-filter{display:flex;gap:6px;overflow:auto;padding-bottom:10px}.qcard{background:white;border:1px solid #dfe9ed;border-radius:16px;padding:18px;margin:12px 0}.qcard label{display:block;padding:7px 9px;margin:6px 0;border-radius:8px;background:#f5f8fa;cursor:pointer}.feedback{font-weight:800;margin-top:8px}.good{color:#27805e}.bad{color:#b33d44}
+.scorebox{background:var(--navy);color:#fff;border-radius:15px;padding:16px;margin:15px 0}.gcse{background:white;border:1px solid #dfe9ed;border-radius:16px;padding:18px;margin:14px 0}.marks{float:right;background:#edf3f6;border-radius:999px;padding:4px 9px;font-weight:900}.gcse textarea{width:100%;min-height:110px;border:1px solid #bdcdd5;border-radius:9px;padding:10px;font:inherit}.guidance{font-size:.92rem;color:#536a77;background:#f4f8fa;padding:10px;border-radius:9px;margin:8px 0}.scheme{display:none;background:#eaf8f2;padding:12px;border-radius:9px;margin-top:10px}.scheme.show{display:block}
+.footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.small{font-size:.9rem;color:var(--muted)}.pill{display:inline-block;background:#eaf4f8;color:#176582;border-radius:999px;padding:3px 8px;font-weight:800;font-size:.8rem}
+@media(max-width:650px){.compare{grid-template-columns:1fr}.topic{padding:17px}.lattice{grid-template-columns:repeat(6,34px)}.lattice span{width:34px;height:34px}}
+@media print{header,.chapter-nav,.tabs,.quiz-filter,.action{display:none!important}.panel{display:block!important}.topic,.gcse{box-shadow:none;break-inside:avoid}}
+
+/* --- C1/C2 shared visual system --- */
+:root{
+  --paper:#fbfcf8;--ink:#18323a;--muted:#65777d;--line:#dce5e2;
+  --chem:#26738e;--chem2:#dff1f6;--shadow:0 10px 28px rgba(24,50,58,.055);
+}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+.shell{max-width:1180px;margin:auto;padding:0 22px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(251,252,248,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-weight:950}.brand span{color:var(--chem)}
+.navlinks,.tabs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill,.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:850;cursor:pointer}
+.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.lesson-hero{padding:52px 0 22px}
+.kicker{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:var(--chem)}
+.lesson-hero h1{font-size:clamp(2.8rem,7vw,5.4rem);line-height:.94;letter-spacing:-.06em;margin:12px 0 18px;color:var(--ink)}
+.lead{font-size:1.16rem;line-height:1.65;color:var(--muted);max-width:800px}
+.chapter-nav{position:sticky;top:70px;z-index:12;background:rgba(251,252,248,.96);border-bottom:1px solid var(--line);padding:10px 0;box-shadow:none}
+.chapter-links{display:flex;gap:7px;overflow-x:auto}
+.chapter-links button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 11px;font-size:.78rem;font-weight:850;cursor:pointer}
+main{max-width:none;margin:auto;padding-top:0;padding-bottom:70px}
+.panel{display:none}.panel.active{display:block}
+.topic{scroll-margin-top:150px;background:transparent;border-radius:0;padding:44px 0;margin:0;border:0;border-bottom:1px solid var(--line);box-shadow:none}
+.topic h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.045em;margin:.15em 0 .4em;color:var(--ink)}
+.topic>.kicker{color:var(--chem)}
+.grid,.concept-grid{gap:14px}
+.card,.visual,.qcard,.gcse{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.card{border-radius:22px;padding:20px}
+.card h3{color:var(--chem)}
+.visual{border-radius:22px;padding:20px;margin:18px 0}
+.visual-title{color:var(--ink)}
+.tip{background:#eef6f9;border-left:4px solid var(--chem);border-radius:0 14px 14px 0}
+.trap{background:#fff7e8;border-left:4px solid #b7791f;border-radius:0 14px 14px 0}
+.higher{background:#f2eef8;border-left:4px solid #7555a5;border-radius:0 14px 14px 0}
+.action{background:var(--ink);border-radius:999px;padding:10px 15px}
+.action.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+table{border-collapse:collapse}th{background:#f7faf9;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.quiz-filter{display:flex;gap:8px;flex-wrap:wrap;overflow:visible;padding:0 0 16px}
+.quiz-filter button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:850;color:var(--ink)}
+.quiz-filter button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qcard{border-radius:0;box-shadow:none;border-width:0 0 1px;padding:20px 0;background:transparent}
+.qcard label{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px}
+.scorebox{background:var(--chem2);color:var(--ink);border-radius:999px;padding:8px 13px;display:inline-block}
+.gcse{border-radius:22px;padding:20px}
+.gcse textarea{min-height:160px;border:1px solid var(--line);border-radius:14px;padding:14px}
+.guidance{background:#eef6f9;border-radius:16px;padding:14px 16px}
+.scheme{background:#f3f6f3;border-radius:14px;padding:16px}
+#quiz>h2,#practice>h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.045em;margin:.15em 0 .25em}
+@media(max-width:820px){
+  .chapter-nav{top:0}
+  .lesson-hero{padding-top:36px}
+}
+
+</style>
+<style>
+.learn-do{margin:22px 0;background:#f7fbfc;border:1px solid var(--line);border-radius:22px;padding:20px}
+.learn-do .do-label{font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;font-weight:950;color:var(--chem)}
+.learn-do .choices{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+.learn-do button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:11px 13px;font-weight:800;cursor:pointer}
+.learn-do button.good{background:#dff2e8;border-color:#21855b}.learn-do button.bad{background:#fbe5df;border-color:#b8574b}
+.feedback2{min-height:42px;margin-top:10px;padding:11px 13px;border-radius:12px;background:#fff;border:1px dashed var(--line);line-height:1.45}
+.feedback2.ok{background:#edf8f2;border-style:solid}.feedback2.nope{background:#fff4ef;border-style:solid}
+.micro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.micro-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px}
+.order-box{display:flex;gap:8px;flex-wrap:wrap;padding:12px;border:1px dashed #9ebbc5;border-radius:14px;background:#fff;min-height:54px}
+.bondline{font-size:1.35rem;font-weight:900;text-align:center;padding:15px;background:#fff;border-radius:14px;margin:10px 0}
+@media(max-width:700px){.micro-grid{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="topbar">
+  <div class="shell nav">
+    <div class="brand">Gab <span>Revision</span></div>
+    <nav class="navlinks">
+      <a class="pill" href="chemistry.html">← Chemistry</a>
+      <a class="pill" href="index.html">Home</a>
+    </nav>
+  </div>
+</header>
+
+<div class="chapter-nav">
+  <div class="shell chapter-links" id="chapterNav"></div>
+</div>
+
+<main class="shell">
+  <section class="lesson-hero">
+    <span class="kicker">AQA Combined Science: Trilogy · Higher · Paper 1</span>
+    <h1>C3 Structure and bonding</h1>
+    <p class="lead">See what particles are doing, then connect structure → bonding → properties.</p>
+    <div class="tabs">
+      <button class="tab active" data-panel="learn">Learn</button>
+      <button class="tab" data-panel="quiz">Quiz</button>
+      <button class="tab" data-panel="practice">GCSE Practice</button>
+    </div>
+  </section>
+<section id="learn" class="panel active">
+
+<article class="topic" id="c31"><div class="kicker">C3.1</div><h2>States of matter</h2>
+<div class="grid"><div class="card"><h3>Solid</h3><b>Fixed shape + fixed volume.</b><p>Particles are closely packed in fixed positions and <b>vibrate</b>.</p></div><div class="card"><h3>Liquid</h3><b>No fixed shape + fixed volume.</b><p>Particles remain close but can <b>slide past one another</b>.</p></div><div class="card"><h3>Gas</h3><b>No fixed shape or volume.</b><p>Particles are far apart and move rapidly and randomly. Gases can be compressed.</p></div></div>
+<div class="visual"><div class="visual-title">Particle model — change the state</div><div class="state-buttons"><button class="action" onclick="drawState('solid')">Solid</button><button class="action" onclick="drawState('liquid')">Liquid</button><button class="action" onclick="drawState('gas')">Gas</button></div><div id="particleBox" class="particles"></div><p id="stateExplain" class="small"></p></div>
+<table><tr><th>Change</th><th>Name</th><th>Energy transfer</th></tr><tr><td>solid → liquid</td><td>melting</td><td>energy transferred to substance</td></tr><tr><td>liquid → gas</td><td>boiling / evaporation</td><td>energy transferred to substance</td></tr><tr><td>gas → liquid</td><td>condensing</td><td>energy transferred from substance</td></tr><tr><td>liquid → solid</td><td>freezing</td><td>energy transferred from substance</td></tr><tr><td>solid → gas</td><td>sublimation</td><td>direct change</td></tr></table>
+<div class="visual"><div class="visual-title">Heating curve</div><svg viewBox="0 0 620 210" style="width:100%;max-width:720px"><line x1="55" y1="180" x2="590" y2="180" stroke="#526975" stroke-width="2"/><line x1="55" y1="180" x2="55" y2="20" stroke="#526975" stroke-width="2"/><polyline points="60,165 180,95 340,95 500,35 580,35" fill="none" stroke="#ef8b19" stroke-width="7"/><text x="200" y="84">melting: temperature stays constant</text><text x="355" y="190">time →</text><text x="8" y="45" transform="rotate(-90 15 45)">temperature</text></svg><p>During melting, added energy is used to overcome forces between particles, so the temperature does not rise until melting is complete.</p></div>
+<div class="higher"><b>Higher — limitation of the particle model:</b> simple diagrams treat particles as solid spheres and often omit forces. Real atoms, molecules and ions differ in size and shape, interact with neighbours, and atoms are mostly empty space.</div>
+<div class="trap"><b>GCSE trap:</b> a change of state does <em>not</em> create a new substance. The particles themselves remain the same.</div>
+<div class="learn-do"><div class="do-label">Try it · Particle model</div><h3>Identify the state from the particles</h3><p>Particles are close together but irregular and can move past each other. Which state?</p><div class="choices" data-answer="liquid"><button data-v="solid">Solid</button><button data-v="liquid">Liquid</button><button data-v="gas">Gas</button></div><div class="feedback2"></div></div><div class="learn-do"><div class="do-label">Try it · Heating curve</div><h3>During the flat part of a melting graph, where does the energy go?</h3><div class="choices" data-answer="forces"><button data-v="temp">It keeps raising temperature</button><button data-v="forces">It overcomes forces between particles</button><button data-v="atoms">It makes new atoms</button></div><div class="feedback2"></div></div></article>
+
+<article class="topic" id="c32"><div class="kicker">C3.2</div><h2>Atoms into ions</h2>
+<p>A <b>compound</b> contains two or more elements chemically combined. Atoms become stable by transferring or sharing electrons.</p>
+<div class="compare"><div><h3>Metal</h3><p>Usually <b>loses</b> electrons → positive ion.</p></div><div><h3>Non-metal</h3><p>Usually <b>gains</b> electrons → negative ion.</p></div></div>
+<div class="visual"><div class="visual-title">Electron transfer: sodium + chlorine</div><div class="bond-demo"><div class="atom">Na<span class="electron" style="right:-7px;top:32px"></span></div><span class="arrow">e⁻ →</span><div class="atom">Cl</div><span class="arrow">→</span><span class="ion">[Na]⁺</span><span class="ion">[Cl]⁻</span></div><p><b>Na: 2,8,1 → Na⁺: 2,8.</b> Sodium loses one electron. <b>Cl: 2,8,7 → Cl⁻: 2,8,8.</b> Chlorine gains it.</p></div>
+<div class="tip"><b>Remember:</b> Group 1 + Group 7 is a perfect electron-transfer match: one loses one, the other gains one.</div>
+<div class="learn-do"><div class="do-label">Try it · Make an ion</div><h3>Sodium is 2,8,1. What should it do to become stable?</h3><div class="choices" data-answer="lose"><button data-v="lose">Lose 1 electron → Na⁺</button><button data-v="gain">Gain 1 electron → Na⁻</button><button data-v="lose2">Lose 2 electrons → Na²⁺</button></div><div class="feedback2"></div></div><div class="learn-do"><div class="do-label">Try it · Electron transfer</div><h3>Chlorine is 2,8,7. Complete the story.</h3><div class="choices" data-answer="gain"><button data-v="gain">Gains 1 electron → Cl⁻</button><button data-v="lose">Loses 1 electron → Cl⁺</button></div><div class="feedback2"></div></div></article>
+
+<article class="topic" id="c33"><div class="kicker">C3.3</div><h2>Ionic bonding</h2>
+<p>Ionic compounds usually form when <b>metals react with non-metals</b>. Positive and negative ions are held together by strong <b>electrostatic forces of attraction in all directions</b>.</p>
+<table><tr><th>Group</th><th>Typical ion</th><th>Why?</th></tr><tr><td>1</td><td>1+</td><td>loses 1 e⁻</td></tr><tr><td>2</td><td>2+</td><td>loses 2 e⁻</td></tr><tr><td>3</td><td>3+</td><td>loses 3 e⁻</td></tr><tr><td>5</td><td>3−</td><td>gains 3 e⁻</td></tr><tr><td>6</td><td>2−</td><td>gains 2 e⁻</td></tr><tr><td>7</td><td>1−</td><td>gains 1 e⁻</td></tr><tr><td>0</td><td>does not normally form ions</td><td>stable outer shell</td></tr></table>
+<div class="visual"><div class="visual-title">Balance the charges</div><div class="interact-row"><button class="action" onclick="showFormula('MgO')">Mg²⁺ + O²⁻</button><button class="action" onclick="showFormula('CaCl2')">Ca²⁺ + Cl⁻</button><button class="action" onclick="showFormula('Al2O3')">Al³⁺ + O²⁻</button></div><div id="formulaDemo" style="font-size:1.5rem;font-weight:900;padding:10px"></div></div>
+<div class="trap"><b>Formula rule:</b> the total positive charge and total negative charge must cancel. Ionic compounds have no overall charge.</div>
+<div class="learn-do"><div class="do-label">Try it · Build the formula</div><h3>Which formula balances Al³⁺ and O²⁻?</h3><div class="choices" data-answer="Al2O3"><button data-v="AlO">AlO</button><button data-v="Al2O3">Al₂O₃</button><button data-v="Al3O2">Al₃O₂</button></div><div class="feedback2"></div></div><div class="learn-do"><div class="do-label">Try it · Charge check</div><h3>Why is CaCl₂ neutral?</h3><div class="choices" data-answer="balance"><button data-v="balance">+2 + 2(−1) = 0</button><button data-v="same">All ions have charge +1</button><button data-v="none">The charges disappear</button></div><div class="feedback2"></div></div></article>
+
+<article class="topic" id="c34"><div class="kicker">C3.4</div><h2>Giant ionic structures</h2>
+<div class="visual"><div class="visual-title">A tiny part of a giant ionic lattice</div><div class="lattice" id="ionicLattice"></div><p>Each ion attracts oppositely charged ions around it. The attraction acts in <b>all directions</b>.</p></div>
+<div class="grid"><div class="card"><h3>High melting & boiling points</h3><p>Many strong ionic attractions must be overcome → lots of energy needed.</p></div><div class="card"><h3>Solid</h3><p>Ions are fixed in place → <b>does not conduct</b>.</p></div><div class="card"><h3>Molten / dissolved</h3><p>Ions become mobile → they can carry charge → <b>conducts electricity</b>.</p></div></div>
+<div class="visual"><div class="visual-title">Conductivity switch</div><button class="action" onclick="conduct('solid')">Solid NaCl</button> <button class="action" onclick="conduct('molten')">Molten NaCl</button> <button class="action" onclick="conduct('aq')">NaCl(aq)</button><p id="conductResult"></p></div>
+<div class="learn-do"><div class="do-label">Try it · Conductivity</div><h3>When will sodium chloride conduct electricity?</h3><div class="micro-grid"><div class="micro-card"><b>Solid NaCl</b><div class="choices" data-answer="off"><button data-v="on">Conducts</button><button data-v="off">Does not conduct</button></div><div class="feedback2"></div></div><div class="micro-card"><b>Molten NaCl</b><div class="choices" data-answer="on"><button data-v="on">Conducts</button><button data-v="off">Does not conduct</button></div><div class="feedback2"></div></div></div></div></article>
+
+<article class="topic" id="c35"><div class="kicker">C3.5</div><h2>Covalent bonding</h2>
+<p>When <b>non-metal atoms</b> react, they can share pairs of electrons. Each shared pair is a <b>covalent bond</b>.</p>
+<div class="visual"><div class="visual-title">Single, double and triple bonds</div><div class="bond-demo"><div class="sphere">H</div><div class="bond"></div><div class="sphere">H</div><div style="width:25px"></div><div class="sphere">O</div><div class="bond double"></div><div class="sphere">O</div><div style="width:25px"></div><div class="sphere">N</div><div class="bond triple"></div><div class="sphere">N</div></div></div>
+<table><tr><th>Molecule</th><th>Bonding to recognise</th></tr><tr><td>H₂ / Cl₂ / HCl</td><td>single covalent bond</td></tr><tr><td>O₂</td><td>double bond</td></tr><tr><td>N₂</td><td>triple bond</td></tr><tr><td>H₂O</td><td>two O–H bonds</td></tr><tr><td>NH₃</td><td>three N–H bonds</td></tr><tr><td>CH₄</td><td>four C–H bonds</td></tr></table>
+<div class="tip"><b>Dot-and-cross diagrams:</b> the dots and crosses show where the bonding electrons originally came from. Once bonded, electrons are identical.</div>
+<div class="learn-do"><div class="do-label">Try it · Covalent bond builder</div><h3>How many shared pairs?</h3><div class="micro-grid"><div class="micro-card"><b>O₂</b><div class="choices" data-answer="2"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div><div class="feedback2"></div></div><div class="micro-card"><b>N₂</b><div class="choices" data-answer="3"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div><div class="feedback2"></div></div></div><div class="bondline">H—H &nbsp; O=O &nbsp; N≡N</div></div></article>
+
+<article class="topic" id="c36"><div class="kicker">C3.6</div><h2>Structure of simple molecules</h2>
+<div class="compare"><div><h3>Inside each molecule</h3><p><b>Strong covalent bonds</b> hold atoms together.</p></div><div><h3>Between molecules</h3><p><b>Weak intermolecular forces</b>. These are overcome when a simple molecular substance melts or boils.</p></div></div>
+<div class="visual"><div class="visual-title">What breaks when chlorine boils?</div><div class="bond-demo"><div class="sphere">Cl</div><div class="bond"></div><div class="sphere">Cl</div><span style="font-size:2rem;color:#aaa">⋯ ⋯</span><div class="sphere">Cl</div><div class="bond"></div><div class="sphere">Cl</div></div><p>The <b>intermolecular forces</b> are overcome. The Cl—Cl covalent bonds are <b>not</b> broken.</p></div>
+<div class="grid"><div class="card"><h3>Low melting/boiling points</h3><p>Only weak intermolecular forces need to be overcome.</p></div><div class="card"><h3>No electrical conduction</h3><p>Simple molecules have no overall charge and no mobile charged particles.</p></div><div class="card"><h3>Larger molecules</h3><p>Intermolecular forces increase with molecular size, so melting/boiling points generally rise.</p></div></div>
+<div class="higher"><b>Models have limitations.</b> 2D drawings can show connections but not accurate 3D shape; ball-and-stick models exaggerate gaps and bond sizes; giant structures cannot be shown in full.</div>
+<div class="learn-do"><div class="do-label">Try it · GCSE trap</div><h3>Water boils. What is actually overcome?</h3><div class="choices" data-answer="inter"><button data-v="covalent">Covalent O–H bonds</button><button data-v="inter">Intermolecular forces between molecules</button><button data-v="nuclei">Forces inside nuclei</button></div><div class="feedback2"></div></div><div class="learn-do"><div class="do-label">Try it · Predict</div><h3>Molecules get larger. What generally happens to boiling point?</h3><div class="choices" data-answer="higher"><button data-v="lower">Lower</button><button data-v="higher">Higher</button><button data-v="same">Always identical</button></div><div class="feedback2"></div></div></article>
+
+<article class="topic" id="c37"><div class="kicker">C3.7</div><h2>Giant covalent structures</h2>
+<p>Huge networks of atoms are joined by strong covalent bonds throughout the structure. This gives very high melting and boiling points.</p>
+<div class="compare"><div><h3>Diamond</h3><p>Each carbon forms <b>4 covalent bonds</b>. Rigid 3D lattice → extremely hard. No delocalised electrons → does not conduct electricity.</p></div><div><h3>Graphite</h3><p>Each carbon forms <b>3 covalent bonds</b> in hexagonal layers. One electron per carbon is delocalised → conducts. Weak forces between layers → layers slide.</p></div></div>
+<div class="visual"><div class="visual-title">Graphite: slide the layers</div><div class="layers" id="graphite"><div class="layer"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="layer"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="layer"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><button class="action" onclick="document.getElementById('graphite').classList.toggle('slide')">Apply a force</button><p>There are no covalent bonds between layers, so the weak forces allow layers to move over each other.</p></div>
+<table><tr><th>Structure</th><th>Key structure</th><th>Property explained</th></tr><tr><td>Diamond</td><td>4 bonds per C, giant rigid lattice</td><td>hard, very high mp</td></tr><tr><td>Graphite</td><td>3 bonds per C, layers + delocalised e⁻</td><td>soft/slippery, conducts</td></tr><tr><td>Silicon dioxide</td><td>giant covalent network</td><td>high mp, hard</td></tr></table>
+<div class="learn-do"><div class="do-label">Try it · Structure → property</div><h3>Diamond vs graphite</h3><div class="micro-grid"><div class="micro-card"><b>Why is diamond hard?</b><div class="choices" data-answer="network"><button data-v="network">Rigid 3D giant covalent network</button><button data-v="layers">Weak layers</button></div><div class="feedback2"></div></div><div class="micro-card"><b>Why does graphite conduct?</b><div class="choices" data-answer="electrons"><button data-v="ions">Moving carbon ions</button><button data-v="electrons">Delocalised electrons</button></div><div class="feedback2"></div></div></div></div></article>
+
+<article class="topic" id="c38"><div class="kicker">C3.8</div><h2>Fullerenes and graphene</h2>
+<div class="grid"><div class="card"><h3>Fullerenes</h3><p>Carbon molecules shaped as hollow cages or tubes, based mainly on hexagonal rings but sometimes pentagons/heptagons.</p></div><div class="card"><h3>Carbon nanotubes</h3><p>Very high tensile strength, high electrical and thermal conductivity. Useful for reinforcing composites and electronics.</p></div><div class="card"><h3>Graphene</h3><p>A single layer of graphite — one atom thick. Excellent conductor, low density and extremely strong for its mass.</p></div></div>
+<div class="visual"><div class="visual-title">Recognise the carbon structures</div><svg viewBox="0 0 760 220" style="width:100%"><g fill="none" stroke="#596b74" stroke-width="3"><circle cx="130" cy="110" r="75"/><path d="M65 90 L105 55 L155 58 L195 95 L175 145 L125 170 L78 145 Z"/><path d="M105 55 L125 170 M65 90 L175 145 M195 95 L78 145"/></g><text x="85" y="210">fullerene cage</text><g transform="translate(300,35)" stroke="#596b74" stroke-width="2" fill="none"><path d="M30 0 l25 14 0 28-25 14-25-14 0-28z"/><path d="M80 0 l25 14 0 28-25 14-25-14 0-28z"/><path d="M130 0 l25 14 0 28-25 14-25-14 0-28z"/><path d="M180 0 l25 14 0 28-25 14-25-14 0-28z"/><path d="M230 0 l25 14 0 28-25 14-25-14 0-28z"/><path d="M280 0 l25 14 0 28-25 14-25-14 0-28z"/></g><text x="400" y="125">graphene: one carbon layer</text></svg></div>
+<div class="tip"><b>Uses follow properties:</b> fullerene cages can carry molecules; nanoparticles have large surface area; nanotubes are strong; graphene combines strength with excellent conductivity.</div>
+<div class="learn-do"><div class="do-label">Try it · Choose the carbon structure</div><h3>Match property to structure</h3><div class="micro-grid"><div class="micro-card"><b>One atom-thick conducting sheet</b><div class="choices" data-answer="graphene"><button data-v="graphene">Graphene</button><button data-v="c60">C₆₀</button></div><div class="feedback2"></div></div><div class="micro-card"><b>Hollow cage useful for drug delivery</b><div class="choices" data-answer="c60"><button data-v="graphene">Graphene</button><button data-v="c60">Fullerene</button></div><div class="feedback2"></div></div></div></div></article>
+
+<article class="topic" id="c39"><div class="kicker">C3.9</div><h2>Bonding in metals</h2>
+<p>Metals have a <b>giant metallic lattice</b>: positively charged metal ions surrounded by a “sea” of <b>delocalised electrons</b>. Strong electrostatic attraction between them is metallic bonding.</p>
+<div class="visual"><div class="visual-title">Metallic bonding model</div><div class="metal" id="metalModel"><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><div class="sea"><i style="left:13%;top:22%">e⁻</i><i style="left:36%;top:50%">e⁻</i><i style="left:64%;top:20%">e⁻</i><i style="left:80%;top:65%">e⁻</i><i style="left:23%;top:78%">e⁻</i></div></div><p>The electrons are not linked to one particular ion: they can move through the giant structure.</p></div>
+<div class="tip">Metallic bonding is the strong attraction between <b>positive metal ions</b> and <b>delocalised electrons</b> — not simply “metal atoms stuck together”.</div>
+<div class="learn-do"><div class="do-label">Try it · Metallic bonding</div><h3>What holds a metal together?</h3><div class="choices" data-answer="attraction"><button data-v="attraction">Attraction between positive ions and delocalised electrons</button><button data-v="molecules">Weak forces between molecules</button><button data-v="ions">Attraction between positive and negative ions</button></div><div class="feedback2"></div></div></article>
+
+<article class="topic" id="c310"><div class="kicker">C3.10</div><h2>Giant metallic structures</h2>
+<div class="grid"><div class="card"><h3>Malleable + ductile</h3><p>Regular layers can slide over each other without breaking the metallic bonding.</p></div><div class="card"><h3>Conduct electricity</h3><p>Delocalised electrons move through the lattice and transfer charge.</p></div><div class="card"><h3>Conduct thermal energy</h3><p>Mobile delocalised electrons transfer energy rapidly through the metal.</p></div><div class="card"><h3>High melting points</h3><p>Strong electrostatic attractions extend throughout the giant structure.</p></div></div>
+<div class="visual"><div class="visual-title">Pure metal vs alloy</div><div class="compare"><div><b>Pure metal</b><div class="metal"><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span></div><p>Regular layers slide relatively easily.</p></div><div><b>Alloy</b><div class="metal"><span style="">+</span><span style="">+</span><span style="">+</span><span style="transform:scale(1.35);background:#f7e3bd">+</span><span style="">+</span><span style="">+</span><span style="">+</span><span style="">+</span><span style="">+</span><span style="transform:scale(1.35);background:#f7e3bd">+</span><span style="">+</span><span style="">+</span><span style="">+</span><span style="">+</span></div><p>Different-sized atoms distort the layers → harder for them to slide.</p></div></div></div>
+<div class="trap"><b>GCSE chain of reasoning:</b> structure → particles/electrons → what can move or what must be overcome → observed property.</div>
+</article>
+<div class="learn-do"><div class="do-label">Try it · Explain a property</div><h3>Why are alloys usually harder than pure metals?</h3><div class="choices" data-answer="distort"><button data-v="distort">Different-sized atoms distort layers and hinder sliding</button><button data-v="electrons">They have no electrons</button><button data-v="weak">Their bonds are weaker</button></div><div class="feedback2"></div></div><div class="learn-do"><div class="do-label">Try it · Conduction</div><h3>What carries charge through a metal?</h3><div class="choices" data-answer="deloc"><button data-v="ions">Positive ions moving through the lattice</button><button data-v="deloc">Delocalised electrons</button><button data-v="neutrons">Neutrons</button></div><div class="feedback2"></div></div></section>
+
+<section id="quiz" class="panel"><h2>Chapter quiz</h2><p>Choose one topic or <b>Mixed</b>. Mixed selects 10 questions from across C3.</p><div class="quiz-filter" id="quizFilters"></div><div id="quizArea"></div></section>
+
+<section id="practice" class="panel"><h2>GCSE Practice</h2><p>Answer first. The revision marking points stay hidden until you submit the attempt.</p><div class="scorebox">C3 Practice • <b>48 marks</b> total <span id="attemptInfo"></span></div><div id="gcseArea"></div><div class="footer-actions"><button class="action" onclick="submitPractice()">Submit attempt & reveal marking points</button><button class="action secondary" onclick="newAttempt()">New attempt</button><button class="action secondary" onclick="exportJSON()">Export JSON</button><button class="action secondary" onclick="emailAnswers()">Email answers</button><button class="action secondary" onclick="window.print()">Print / PDF</button></div></section>
+</main>
+
+<script>
+const STORE_KEY='gabRevisionV2', CHAPTER='C3';
+const topics=['C3.1','C3.2','C3.3','C3.4','C3.5','C3.6','C3.7','C3.8','C3.9','C3.10'];
+const labels=['States of matter','Atoms into ions','Ionic bonding','Giant ionic structures','Covalent bonding','Simple molecules','Giant covalent','Fullerenes & graphene','Bonding in metals','Giant metallic'];
+document.getElementById('chapterNav').innerHTML=topics.map((t,i)=>`<button onclick="goTopic('c3${i+1}')">${t} ${labels[i]}</button>`).join('');
+function goTopic(id){document.querySelector('[data-panel="learn"]').click();setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:'smooth'}),30)}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById(b.dataset.panel).classList.add('active')});
+
+function drawState(state){const box=document.getElementById('particleBox');box.innerHTML='';let pts=[];if(state==='solid'){for(let r=0;r<4;r++)for(let c=0;c<9;c++)pts.push([40+c*29,35+r*29])}else if(state==='liquid'){for(let i=0;i<28;i++)pts.push([25+(i%9)*31+((i%3)*4),70+Math.floor(i/9)*28+(i%2)*5])}else{for(let i=0;i<14;i++)pts.push([15+((i*83)%500),15+((i*47)%125)])}pts.forEach(p=>{let d=document.createElement('span');d.className='dot';d.style.left=p[0]+'px';d.style.top=p[1]+'px';box.appendChild(d)});document.getElementById('stateExplain').textContent=state==='solid'?'Close together, ordered, fixed positions: particles vibrate.':state==='liquid'?'Close together but irregular: particles move and slide past each other.':'Far apart: particles move quickly and randomly in all directions.'}
+drawState('solid');
+function showFormula(x){let txt={MgO:'Mg²⁺ + O²⁻ → MgO  ✓  (+2) + (−2) = 0',CaCl2:'Ca²⁺ + 2Cl⁻ → CaCl₂  ✓  (+2) + 2(−1) = 0',Al2O3:'2Al³⁺ + 3O²⁻ → Al₂O₃  ✓  2(+3) + 3(−2) = 0'}[x];document.getElementById('formulaDemo').textContent=txt}
+let lat='';for(let r=0;r<5;r++)for(let c=0;c<6;c++){let pos=(r+c)%2===0;lat+=`<span class="${pos?'plus':'minus'}">${pos?'Na⁺':'Cl⁻'}</span>`}document.getElementById('ionicLattice').innerHTML=lat;
+function conduct(x){document.getElementById('conductResult').innerHTML=x==='solid'?'<b>Bulb OFF.</b> The ions are charged but fixed in the lattice.':x==='molten'?'<b>Bulb ON.</b> The lattice has broken and the ions can move and carry charge.':'<b>Bulb ON.</b> Water separates the ions; mobile ions carry charge through the solution.'}
+
+const Q=[
+['C3.1','Which state has a fixed volume but no fixed shape?',['Solid','Liquid','Gas','All three'],1,'Liquid particles remain close together but can move past each other.'],
+['C3.1','What happens to particles as a solid melts?',['They become different particles','They gain energy and leave fixed positions','They lose all forces','They become ions'],1,'Energy allows particles to break from fixed positions.'],
+['C3.1','During melting, why can temperature remain constant?',['No energy enters','Energy breaks intermolecular/particle attractions rather than increasing temperature','Particles stop moving','Mass decreases'],1,'The energy is used in the change of state.'],
+['C3.1','Solid → gas directly is called…',['condensation','freezing','sublimation','evaporation'],2,'Sublimation bypasses the liquid state.'],
+['C3.2','A sodium atom forms Na⁺ by…',['gaining 1 e⁻','losing 1 e⁻','gaining 2 e⁻','losing a proton'],1,'Na 2,8,1 loses its outer electron.'],
+['C3.2','A chlorine atom becomes Cl⁻ because it…',['loses an electron','gains an electron','gains a proton','shares no electrons'],1,'Cl gains one electron to achieve a full outer shell.'],
+['C3.2','Which statement defines a compound?',['Elements physically mixed','Two or more elements chemically combined','Only ionic particles','A single element'],1,'A compound contains chemically combined elements.'],
+['C3.2','Group 1 reacts readily with Group 7 because…',['both lose one electron','one can lose one and the other gain one','both are noble gases','they have identical nuclei'],1,'Electron transfer gives both stable outer shells.'],
+['C3.3','What holds ions together in an ionic compound?',['Weak intermolecular forces','Electrostatic attraction between opposite charges','Shared proton pairs','Gravity'],1,'Strong electrostatic attraction acts between oppositely charged ions.'],
+['C3.3','What ion does magnesium normally form?',['Mg⁺','Mg²⁺','Mg²⁻','Mg³⁺'],1,'Group 2 atoms lose two electrons.'],
+['C3.3','Formula for calcium chloride?',['CaCl','CaCl₂','Ca₂Cl','Ca₂Cl₂'],1,'Ca²⁺ needs two Cl⁻ ions.'],
+['C3.3','Formula for aluminium oxide?',['AlO','Al₂O','AlO₃','Al₂O₃'],3,'2×Al³⁺ balances 3×O²⁻.'],
+['C3.4','Why does solid NaCl not conduct electricity?',['No charged particles exist','Ions cannot move','Electrons are destroyed','It has low melting point'],1,'The ions are fixed in the lattice.'],
+['C3.4','Why does molten NaCl conduct?',['Molecules move','Ions are free to move','Atoms become electrons','Covalent bonds conduct'],1,'Mobile ions carry charge.'],
+['C3.4','Why do ionic compounds generally have high melting points?',['They contain gases','Many strong electrostatic attractions must be overcome','They have weak bonds','Their ions are neutral'],1,'A lot of energy is needed to overcome the giant lattice attractions.'],
+['C3.4','An ionic lattice is described as giant because…',['each ion is huge','a repeating network contains very many ions','it is always visible','it contains giant molecules'],1,'It is an extended repeating ionic structure.'],
+['C3.5','A covalent bond is…',['a transferred proton','a shared pair of electrons','a mobile ion','a neutron pair'],1,'Covalent bonds are shared pairs of electrons.'],
+['C3.5','Which pair is most likely to form covalent bonds?',['Na and Cl','Mg and O','H and Cl','K and Br'],2,'Two non-metals usually bond covalently.'],
+['C3.5','How many shared pairs are in N₂?',['1','2','3','4'],2,'N₂ has a triple covalent bond.'],
+['C3.5','How many C–H bonds are in methane, CH₄?',['1','2','3','4'],3,'Carbon shares one pair with each of four H atoms.'],
+['C3.6','What is overcome when a simple molecular substance boils?',['Covalent bonds inside molecules','Intermolecular forces','Nuclear forces','Protons'],1,'The molecules separate; their internal covalent bonds remain.'],
+['C3.6','Why do simple molecular substances usually have low boiling points?',['Covalent bonds are weak','Intermolecular forces are weak','They are ionic','They contain free electrons'],1,'Only weak forces between molecules need to be overcome.'],
+['C3.6','Why do simple molecules not normally conduct electricity?',['They are always solid','They have no mobile charged particles','Their atoms have no electrons','They have strong ionic bonds'],1,'Neutral molecules provide no mobile charge carriers.'],
+['C3.6','As molecular size increases, intermolecular forces generally…',['decrease','stay exactly constant','increase','vanish'],2,'Larger molecules generally have stronger intermolecular forces.'],
+['C3.7','How many covalent bonds does each carbon form in diamond?',['2','3','4','6'],2,'Each carbon is bonded to four others.'],
+['C3.7','Why is diamond hard?',['It has layers','It has a rigid giant covalent lattice','It contains mobile ions','It melts easily'],1,'Strong covalent bonds extend throughout the structure.'],
+['C3.7','Why can graphite conduct electricity?',['Its layers are ionic','It contains delocalised electrons','It contains water','Carbon ions move'],1,'One electron per carbon is delocalised.'],
+['C3.7','Why is graphite soft/slippery?',['Covalent bonds are weak','Weak forces between layers allow them to slide','It contains metal','Its atoms evaporate'],1,'The layers can move over one another.'],
+['C3.8','Graphene is…',['a giant ionic lattice','one layer of graphite','a metal alloy','a noble gas'],1,'Graphene is a single carbon layer, one atom thick.'],
+['C3.8','A key property of carbon nanotubes is…',['low tensile strength','high tensile strength','no carbon atoms','ionic conduction'],1,'Their structure gives very high tensile strength.'],
+['C3.8','Fullerenes are best described as…',['hollow carbon cages/tubes','metal crystals','simple ionic salts','water molecules'],0,'They are hollow carbon structures.'],
+['C3.8','Why can fullerene nanoparticles be useful as catalysts?',['large surface area to volume ratio','they are all gases','they have no surface','they dissolve every metal'],0,'A large surface area is useful for catalytic applications.'],
+['C3.9','Metallic bonding is attraction between…',['neutral molecules','positive metal ions and delocalised electrons','negative metal ions only','covalent molecules'],1,'That electrostatic attraction holds the metallic lattice together.'],
+['C3.9','Delocalised electrons are…',['fixed to one atom','free to move through the giant structure','inside nuclei','positive ions'],1,'They are not associated with one particular metal ion.'],
+['C3.9','The particles arranged in a metallic lattice can be modelled as…',['positive ions surrounded by mobile electrons','negative ions only','molecules with weak forces','isolated atoms with no attraction'],0,'This is the metallic bonding model.'],
+['C3.9','Why is metallic bonding strong?',['Opposite charges attract','All particles are neutral','Electrons are absent','The ions repel electrons'],0,'Positive ions attract negatively charged delocalised electrons.'],
+['C3.10','Why are pure metals malleable?',['Layers can slide while metallic bonding is maintained','All bonds break instantly','They are simple molecules','Ions evaporate'],0,'Regular layers can slide past each other.'],
+['C3.10','Why are alloys usually harder than pure metals?',['They contain no atoms','Different-sized atoms distort layers and hinder sliding','They have weaker bonding','They are always ionic'],1,'The distorted layers cannot slide as easily.'],
+['C3.10','What carries electrical charge through a metal?',['fixed positive ions','delocalised electrons','neutrons','molecules'],1,'Mobile delocalised electrons transfer charge.'],
+['C3.10','Why do many metals have high melting points?',['Strong electrostatic attractions in a giant metallic lattice','Weak intermolecular forces','No bonding','They are gases'],0,'A lot of energy is needed to overcome metallic bonding.']
+];
+let currentQuiz='Mixed';
+const filters=document.getElementById('quizFilters');
+filters.innerHTML=['Mixed',...topics].map(x=>`<button class="${x==='Mixed'?'active':''}" onclick="setQuiz('${x}',this)">${x}</button>`).join('');
+function setQuiz(t,btn){currentQuiz=t;document.querySelectorAll('.quiz-filter button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderQuiz()}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function renderQuiz(){let arr=currentQuiz==='Mixed'?shuffle(Q).slice(0,10):Q.filter(q=>q[0]===currentQuiz);document.getElementById('quizArea').innerHTML=`<div class="scorebox">Questions: ${arr.length} <span id="quizScore"></span></div>`+arr.map((q,i)=>`<div class="qcard" data-correct="${q[3]}"><span class="pill">${q[0]}</span><p><b>${i+1}. ${q[1]}</b></p>${q[2].map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}<div class="feedback"></div></div>`).join('')+`<button class="action" onclick="markQuiz()">Check answers</button>`}
+function markQuiz(){let cards=[...document.querySelectorAll('.qcard')],score=0;cards.forEach(c=>{let pick=c.querySelector('input:checked'),correct=+c.dataset.correct,fb=c.querySelector('.feedback'),idx=cards.indexOf(c),source=currentQuiz==='Mixed'?null:null;if(pick&&+pick.value===correct){score++;fb.className='feedback good';fb.textContent='✓ Correct'}else{fb.className='feedback bad';let labels=c.querySelectorAll('label');fb.textContent='✗ Correct answer: '+labels[correct].innerText.trim()}});document.getElementById('quizScore').textContent=` • Score ${score}/${cards.length}`;saveQuiz(score,cards.length)}
+function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){return {}}}
+function saveStore(s){localStorage.setItem(STORE_KEY,JSON.stringify(s))}
+function saveQuiz(score,total){let s=loadStore();s[CHAPTER]=s[CHAPTER]||{};s[CHAPTER].quizHistory=s[CHAPTER].quizHistory||[];s[CHAPTER].quizHistory.push({date:new Date().toISOString(),topic:currentQuiz,score,total});s[CHAPTER].best=Math.max(s[CHAPTER].best||0,Math.round(score/total*100));saveStore(s)}
+
+const G=[
+{m:5,q:'A substance is heated from solid until it becomes a liquid. Explain, using the particle model and energy transfers, what happens during melting.',g:'Build the answer: particles before → energy transferred → forces/positions → what happens to temperature during the change.',s:['Particles in a solid vibrate about fixed positions.','Energy is transferred from the surroundings to the substance.','Particles gain enough energy to overcome forces holding them in fixed positions.','They can then move past each other as a liquid.','During melting, temperature remains constant until the solid has melted.']},
+{m:4,q:'Explain how a sodium atom and a chlorine atom form sodium chloride by ionic bonding.',g:'Include electron transfer, both ion charges, and the force holding the ions together.',s:['Sodium loses one electron to form Na⁺.','Chlorine gains one electron to form Cl⁻.','Both obtain stable outer electron arrangements.','Oppositely charged ions attract by strong electrostatic forces.']},
+{m:5,q:'Magnesium reacts with chlorine to form magnesium chloride. Explain why the formula is MgCl₂.',g:'Start from the electron structures / ion charges, then balance the overall charge.',s:['Magnesium loses two electrons and forms Mg²⁺.','Each chlorine atom gains one electron and forms Cl⁻.','Two chloride ions are therefore needed for each magnesium ion.','+2 and 2 × −1 cancel to zero.','Formula MgCl₂.']},
+{m:5,q:'Explain why sodium chloride has a high melting point, does not conduct electricity when solid, but does conduct when molten.',g:'Treat melting point and conduction separately. Use lattice, electrostatic attraction and ion mobility.',s:['NaCl has a giant ionic lattice.','There are strong electrostatic attractions between oppositely charged ions in all directions.','Much energy is needed to overcome these attractions, giving a high melting point.','In the solid the ions are fixed and cannot carry charge through the substance.','When molten the ions are mobile and can carry electrical charge.']},
+{m:5,q:'Compare bonding in H₂, O₂ and N₂ and explain what a covalent bond is.',g:'State what is shared and how many shared pairs each molecule contains.',s:['A covalent bond is a shared pair of electrons.','H₂ contains one shared pair / single bond.','O₂ contains two shared pairs / double bond.','N₂ contains three shared pairs / triple bond.','The shared electrons attract both nuclei and hold the atoms together.']},
+{m:4,q:'Hydrogen chloride has a much lower boiling point than sodium chloride. Explain why.',g:'Do not say “covalent bonds are weak”. Compare the structures and the forces overcome on boiling.',s:['HCl is made of simple molecules.','Only weak intermolecular forces between HCl molecules are overcome during boiling.','NaCl has a giant ionic lattice with strong electrostatic attractions between ions.','Much more energy is needed to overcome the ionic attractions, so NaCl has a much higher boiling point.']},
+{m:6,q:'Diamond and graphite are both forms of carbon. Explain why diamond is hard and does not conduct electricity, whereas graphite is soft and conducts electricity.',g:'Structure first. For each material connect bonding/electrons to the property.',s:['Diamond has a giant covalent structure.','Each carbon forms four strong covalent bonds, producing a rigid 3D lattice.','Diamond has no delocalised/mobile electrons, so it does not conduct.','In graphite each carbon forms three covalent bonds in layers.','Weak forces between layers allow them to slide, making graphite soft/slippery.','Graphite has delocalised electrons that can move along the layers and carry charge.']},
+{m:4,q:'Explain two properties of graphene that could make it useful in electronic devices.',g:'Give a property and then explicitly link it to the use.',s:['Graphene has delocalised electrons and is an excellent electrical conductor.','It also conducts thermal energy well.','It is one atom thick / very low density.','It is extremely strong for its mass, so thin durable components are possible.']},
+{m:5,q:'Use metallic bonding to explain why copper conducts electricity and can be drawn into wires.',g:'Name the particles in the structure and explain both conduction and ductility.',s:['Copper has a giant metallic lattice of positive ions and delocalised electrons.','The delocalised electrons can move through the structure and transfer electrical charge.','Strong attraction between positive ions and delocalised electrons holds the lattice together.','Layers of ions can slide past one another while metallic bonding is maintained.','Therefore copper is ductile and can be drawn into wires.']},
+{m:5,q:'An alloy is harder than the pure metal from which it is made. Explain this and compare the particle arrangement in the two materials.',g:'Describe pure metal layers, then what different-sized atoms do in an alloy.',s:['A pure metal has atoms/ions arranged in regular layers.','These layers can slide over one another relatively easily.','An alloy contains atoms of different elements / different sizes.','These atoms distort the regular layers.','The distorted layers cannot slide past one another as easily, making the alloy harder.']}
+];
+let submitted=false;
+function renderPractice(){let s=loadStore(),d=s[CHAPTER]?.drafts||{};document.getElementById('gcseArea').innerHTML=G.map((x,i)=>`<div class="gcse"><span class="marks">[${x.m} marks]</span><p><b>${i+1}. ${x.q}</b></p><div class="guidance">Writing help: ${x.g}</div><textarea id="g${i}" oninput="saveDraft(${i},this.value)">${escapeHTML(d[i]||'')}</textarea><div class="scheme ${submitted?'show':''}" id="s${i}"><b>Revision marking points</b><ul>${x.s.map(y=>`<li>${y}</li>`).join('')}</ul><label>External mark: <input type="number" min="0" max="${x.m}" id="mark${i}" style="width:55px"> / ${x.m}</label></div></div>`).join('')}
+function escapeHTML(x){return x.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function saveDraft(i,v){let s=loadStore();s[CHAPTER]=s[CHAPTER]||{};s[CHAPTER].drafts=s[CHAPTER].drafts||{};s[CHAPTER].drafts[i]=v;saveStore(s)}
+function submitPractice(){submitted=true;document.querySelectorAll('.scheme').forEach(x=>x.classList.add('show'));let s=loadStore();s[CHAPTER]=s[CHAPTER]||{};s[CHAPTER].practiceSubmitted=new Date().toISOString();saveStore(s);document.getElementById('attemptInfo').textContent=' • submitted'}
+function newAttempt(){if(!confirm('Start a new C3 attempt? This clears the current written answers.'))return;let s=loadStore();s[CHAPTER]=s[CHAPTER]||{};s[CHAPTER].drafts={};saveStore(s);submitted=false;renderPractice();document.getElementById('attemptInfo').textContent=''}
+function exportJSON(){let s=loadStore();let data={chapter:CHAPTER,date:new Date().toISOString(),answers:G.map((x,i)=>({question:x.q,answer:document.getElementById('g'+i)?.value||'',mark:document.getElementById('mark'+i)?.value||''})),progress:s[CHAPTER]||{}};let b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='chemistry-c3-attempt.json';a.click()}
+function emailAnswers(){let body=G.map((x,i)=>`${i+1}. ${x.q}\n\n${document.getElementById('g'+i)?.value||'(no answer)'}\n`).join('\n');location.href='mailto:?subject='+encodeURIComponent('GCSE Chemistry C3 Practice')+'&body='+encodeURIComponent(body)}
+renderQuiz();renderPractice();
+</script>
+<script>
+(()=>{const msg={liquid:"Correct. Liquid particles stay close but are irregular and can slide past each other.",forces:"Correct. During melting, energy is used to overcome attractions; temperature stays constant.",lose:"Correct. Sodium loses its one outer electron to form Na⁺ with a stable 2,8 structure.",gain:"Correct. Chlorine gains one electron to form Cl⁻ with a full outer shell.",Al2O3:"Correct. 2 Al³⁺ gives +6 and 3 O²⁻ gives −6, so Al₂O₃ is neutral.",balance:"Correct. One Ca²⁺ balances two Cl⁻ ions.",off:"Correct for the solid: its ions are fixed in the lattice and cannot carry charge.",on:"Correct when molten: ions are free to move and carry charge.","2":"Correct. O₂ has a double bond: two shared pairs.","3":"Correct. N₂ has a triple bond: three shared pairs.",inter:"Correct. Boiling separates molecules; it does not break their covalent bonds.",higher:"Correct. Larger molecules generally have stronger intermolecular forces, so more energy is needed.",network:"Correct. Strong covalent bonds extend throughout diamond's rigid 3D structure.",electrons:"Correct. Graphite has delocalised electrons that can move and carry charge.",graphene:"Correct. Graphene is a single layer of graphite, one atom thick.",c60:"Correct. Fullerenes are hollow carbon cages/tubes; cages can carry molecules.",attraction:"Correct. Metallic bonding is strong electrostatic attraction between positive metal ions and delocalised electrons.",distort:"Correct. Different-sized atoms disrupt regular layers, so they cannot slide as easily.",deloc:"Correct. Mobile delocalised electrons transfer electrical charge."};
+document.querySelectorAll(".learn-do .choices[data-answer]").forEach(g=>g.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const v=b.dataset.v||b.textContent.trim(),ok=v===g.dataset.answer,fb=g.parentElement.querySelector(".feedback2");g.querySelectorAll("button").forEach(x=>x.classList.remove("good","bad"));b.classList.add(ok?"good":"bad");fb.className="feedback2 "+(ok?"ok":"nope");fb.textContent=ok?(msg[g.dataset.answer]||"Correct."):"Not quite. Go back to the particle/bonding model just above, then retry."; })));
+})();
+</script></body></html>
