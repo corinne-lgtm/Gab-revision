@@ -17,16 +17,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0}th,td{padding:10px;borde
 .gcse{margin:14px 0}.marks{float:right;background:var(--chem2);border-radius:999px;padding:6px 10px;font-weight:900}.guidance{background:#eef6f9;padding:13px 15px;border-radius:14px;margin:10px 0}.scheme{display:none;background:#f3f6f3;border-radius:14px;padding:14px;margin-top:12px}.scheme.show{display:block}
 @media(max-width:780px){.grid,.grid3,.options{grid-template-columns:1fr}.chapter-nav{top:0}.calc{grid-template-columns:1fr}.hero{padding-top:35px}}
 </style>
-<style>
-.learn-do{margin:22px 0;background:#f7fbfc;border:1px solid var(--line);border-radius:22px;padding:20px}
-.learn-do .do-label{font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;font-weight:950;color:var(--chem)}
-.learn-do .choices{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.learn-do button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:11px 13px;font-weight:800;cursor:pointer}
-.learn-do button.good{background:#dff2e8;border-color:#21855b}.learn-do button.bad{background:#fbe5df;border-color:#b8574b}
-.feedback2{min-height:42px;margin-top:10px;padding:11px 13px;border-radius:12px;background:#fff;border:1px dashed var(--line);line-height:1.45}.feedback2.ok{background:#edf8f2;border-style:solid}.feedback2.nope{background:#fff4ef;border-style:solid}
-.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;font-weight:800}.step.on{outline:3px solid #b8dce8}
-.learn-do input{border:1px solid var(--line);border-radius:12px;padding:11px;font:inherit;max-width:160px}.micro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.micro-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px}
-@media(max-width:700px){.stepper,.micro-grid{grid-template-columns:1fr}}
-</style></head><body>
+<style id="gab-print-fix">.gcse textarea,textarea{overflow-y:hidden;resize:vertical}@media print{.gab-print-answer{display:block!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important;height:auto!important;max-height:none!important;overflow:visible!important;border:1px solid #dce5e2;border-radius:8px;padding:12px;margin:10px 0;font:inherit;color:#18323a;background:#fff}.gcse,.practice-question{break-inside:auto;page-break-inside:auto}.gcse h3,.gcse .help{break-after:avoid-page}.panel:not(.active){display:none!important}.panel.active{display:block!important}}</style></head><body>
 <header class="topbar"><div class="shell nav"><div class="brand">Gab <span>Revision</span></div><div class="navlinks"><a class="pill" href="chemistry.html">← Chemistry</a><a class="pill" href="index.html">Home</a></div></div></header>
 <div class="chapter-nav"><div class="shell chapter-links"><a href="#c41">C4.1 Relative masses and moles</a><a href="#c42">C4.2 Equations and calculations</a><a href="#c43">C4.3 From masses to balanced equations</a><a href="#c44">C4.4 Expressing concentrations</a></div></div>
 <main class="shell">
@@ -47,8 +38,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0}th,td{padding:10px;borde
 </div>
 <div class="visual"><h3>AQA extra: apparent mass changes in open systems</h3><div class="grid"><div><div class="particles" id="massParticles"></div><p><b>Metal + oxygen:</b> oxygen from the air enters the measured solid → mass increases.</p></div><div><p><b>Metal carbonate → metal oxide + CO₂:</b> gas can escape → measured solid mass decreases.</p><div class="tip"><b>Conservation of mass still holds.</b> The apparent change happens because the whole system is not enclosed/measured.</div></div></div></div>
 <div class="visual"><h3>AQA extra: measurement uncertainty</h3><p>Every measurement has uncertainty. AQA expects you to represent a distribution of results and use the <b>range around the mean</b> as a measure/estimate of uncertainty.</p><div class="formula">range = highest result − lowest result</div><div class="calc"><input id="repeats" placeholder="e.g. 10.2, 10.4, 10.3, 10.5"><button class="action" onclick="uncertainty()">Mean + range</button><span id="uncResult" class="result"></span></div></div>
-<div class="learn-do"><div class="do-label">Try it · Weighted mean</div><h3>Calculate A<sub>r</sub> from isotopes</h3><p>Copper is 69% Cu-63 and 31% Cu-65. Enter A<sub>r</sub>:</p><input id="arTry" inputmode="decimal"><button id="arCheck">Check</button><div id="arFb" class="feedback2"></div></div>
-<div class="learn-do"><div class="do-label">Try it · Mole route</div><h3>12 g of magnesium, A<sub>r</sub> = 24. How many moles?</h3><div class="choices" data-answer="0.5"><button data-v="288">288 mol</button><button data-v="2">2 mol</button><button data-v="0.5">0.50 mol</button></div><div class="feedback2"></div></div></section>
+</section>
 
 <section class="topic" id="c42"><div class="kicker">C4.2 · Higher tier</div><h2>Equations and calculations</h2>
 <div class="grid">
@@ -57,8 +47,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0}th,td{padding:10px;borde
 </div>
 <div class="visual"><h3>Worked visual: 2Mg + O₂ → 2MgO</h3><table><tr><th></th><th>Mg</th><th>O₂</th><th>MgO</th></tr><tr><td>Mole ratio</td><td>2</td><td>1</td><td>2</td></tr><tr><td>Mass for ratio</td><td>2×24 = 48 g</td><td>1×32 = 32 g</td><td>2×40 = 80 g</td></tr></table><p>So 12 g Mg needs 8 g O₂ and can form 20 g MgO.</p></div>
 <div class="tip"><b>Significant figures:</b> give a final answer appropriate to the data in the question. Avoid rounding too early during the calculation.</div>
-<div class="learn-do"><div class="do-label">Try it · Choose the next step</div><h3>Reacting mass calculation</h3><p>For <b>2Mg + O₂ → 2MgO</b>, you are given 6.0 g Mg. What should you do first?</p><div class="choices" data-answer="moles"><button data-v="ratio">Use the 2:1:2 ratio immediately on grams</button><button data-v="moles">Convert 6.0 g Mg to moles using Aᵣ</button><button data-v="add">Add all formula masses</button></div><div class="feedback2"></div><div class="stepper"><div class="step">mass</div><div class="step">÷ Mᵣ → moles</div><div class="step">mole ratio</div><div class="step">× Mᵣ → mass</div></div></div>
-<div class="learn-do"><div class="do-label">Try it · Balance before calculating</div><h3>H₂ + Cl₂ → ? HCl</h3><div class="choices" data-answer="2"><button data-v="1">1HCl</button><button data-v="2">2HCl</button><button data-v="3">3HCl</button></div><div class="feedback2"></div></div></section>
+</section>
 
 <section class="topic" id="c43"><div class="kicker">C4.3 · Higher tier</div><h2>From masses to balanced equations</h2>
 <div class="grid">
@@ -66,9 +55,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0}th,td{padding:10px;borde
 <div class="card"><h3>Example: sodium nitrate</h3><table><tr><th></th><th>NaNO₃</th><th>NaNO₂</th><th>O₂</th></tr><tr><td>mass / g</td><td>8.5</td><td>6.9</td><td>1.6</td></tr><tr><td>Mr</td><td>85</td><td>69</td><td>32</td></tr><tr><td>moles</td><td>0.10</td><td>0.10</td><td>0.05</td></tr><tr><td>÷0.05</td><td>2</td><td>2</td><td>1</td></tr></table><div class="formula">2NaNO₃ → 2NaNO₂ + O₂</div></div>
 </div>
 <div class="visual"><h3>Limiting reactants</h3><p>The <b>limiting reactant</b> is used up first, so it fixes the maximum amount of product. Another reactant may be in excess.</p><div class="grid"><div class="card"><div class="formula">Mg + 2HCl → MgCl₂ + H₂</div><p>0.20 mol Mg needs <b>0.40 mol HCl</b>.</p></div><div class="card"><p>If you only have <b>0.20 mol HCl</b>, HCl runs out first.</p><div class="bar"><i style="width:50%"></i></div><p><b>HCl = limiting</b><br>Mg = excess</p></div></div><div class="trap"><b>Common trap:</b> the limiting reactant is not simply the one with the smallest mass or fewest moles. Compare the amounts using the <b>equation ratio</b>.</div></div>
-<div class="learn-do"><div class="do-label">Try it · Masses → equation</div><h3>Find the simplest mole ratio</h3><p>Moles calculated are 0.10 : 0.10 : 0.05. What ratio should go into the equation?</p><div class="choices" data-answer="221"><button data-v="1105">1 : 1 : 0.5</button><button data-v="221">2 : 2 : 1</button><button data-v="10105">10 : 10 : 5</button></div><div class="feedback2"></div></div>
-<div class="learn-do"><div class="do-label">Try it · Limiting reactant</div><h3>Mg + 2HCl → MgCl₂ + H₂</h3><p>You have 0.20 mol Mg and 0.20 mol HCl. Which runs out first?</p><div class="choices" data-answer="HCl"><button data-v="Mg">Mg</button><button data-v="HCl">HCl</button><button data-v="neither">Neither</button></div><div class="feedback2"></div></div>
-<div class="learn-do"><div class="do-label">Try it · Open system</div><h3>A carbonate loses mass while heated. Best explanation?</h3><div class="choices" data-answer="gas"><button data-v="destroyed">Mass was destroyed</button><button data-v="gas">A gaseous product escaped</button><button data-v="balance">The equation was unbalanced</button></div><div class="feedback2"></div></div></section>
+</section>
 
 <section class="topic" id="c44"><div class="kicker">C4.4</div><h2>Expressing concentrations</h2>
 <div class="grid">
@@ -79,9 +66,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0}th,td{padding:10px;borde
 </div>
 <div class="visual"><h3>Interactive concentration calculator</h3><div class="calc"><input id="cmass" type="number" placeholder="solute mass / g"><b>÷</b><input id="cvol" type="number" placeholder="solution volume / cm³"></div><button class="action" onclick="concCalc()">Calculate g/dm³</button><p id="concResult" class="result"></p></div>
 </section>
-<div class="learn-do"><div class="do-label">Try it · Concentration</div><h3>50 g solute in 200 cm³ solution</h3><p>First convert 200 cm³ to dm³, then calculate g/dm³.</p><div class="choices" data-answer="250"><button data-v="0.25">0.25 g/dm³</button><button data-v="10">10 g/dm³</button><button data-v="250">250 g/dm³</button></div><div class="feedback2"></div></div>
-<div class="learn-do"><div class="do-label">Try it · Reverse calculation</div><h3>Concentration = 20 g/dm³, volume = 0.50 dm³. Mass?</h3><div class="choices" data-answer="10"><button data-v="40">40 g</button><button data-v="10">10 g</button><button data-v="0.025">0.025 g</button></div><div class="feedback2"></div></div>
-<div class="learn-do"><div class="do-label">Try it · Uncertainty</div><h3>Repeats: 24.8, 25.0, 25.2</h3><p>What is the range?</p><div class="choices" data-answer="0.4"><button data-v="25">25.0</button><button data-v="0.2">0.2</button><button data-v="0.4">0.4</button></div><div class="feedback2"></div></div></section>
+</section>
 
 <section id="quiz" class="panel"><div class="quizhead"><div class="kicker">C4 question bank</div><h2>Quiz</h2><p class="lead">Choose one subtopic, or Mixed for 10 questions from the whole chapter.</p><div class="filters" id="filters"></div><span id="score" class="score">0 / 0</span></div><div id="quizbox"></div></section>
 
@@ -108,9 +93,4 @@ function restoreDrafts(){let d={};try{d=JSON.parse(localStorage.getItem(STORE+'-
 function newAttempt(){localStorage.removeItem(STORE+'-'+CHAPTER+'-practice');renderPractice()}
 function printPage(){window.print()}
 makeFilters();loadQuiz('Mixed');renderPractice();
-</script><script>
-(()=>{const msg={"0.5":"Correct: moles = mass ÷ Mᵣ = 12 ÷ 24 = 0.50 mol.",moles:"Correct. Never apply the equation ratio directly to grams: convert mass → moles first.","2":"Correct. H₂ + Cl₂ → 2HCl, so atoms are conserved.",221:"Correct. Divide every value by 0.05: 2 : 2 : 1.",HCl:"Correct. 0.20 mol Mg would require 0.40 mol HCl, but only 0.20 mol HCl is available.",gas:"Correct. Mass is conserved overall, but an open system can appear to lose mass when gas escapes.","250":"Correct. 200 cm³ = 0.200 dm³; 50 ÷ 0.200 = 250 g/dm³.","10":"Correct. mass = concentration × volume = 20 × 0.50 = 10 g.","0.4":"Correct. Range = highest − lowest = 25.2 − 24.8 = 0.4."};
-document.querySelectorAll(".learn-do .choices[data-answer]").forEach(g=>g.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const v=b.dataset.v||b.textContent.trim(),ok=v===g.dataset.answer,fb=g.parentElement.querySelector(".feedback2");g.querySelectorAll("button").forEach(x=>x.classList.remove("good","bad"));b.classList.add(ok?"good":"bad");fb.className="feedback2 "+(ok?"ok":"nope");fb.textContent=ok?(msg[g.dataset.answer]||"Correct."):"Not quite. Follow the calculation route shown above and try again."; })));
-arCheck?.addEventListener("click",()=>{const v=Number(arTry.value),ok=Math.abs(v-63.62)<0.02;arFb.className="feedback2 "+(ok?"ok":"nope");arFb.innerHTML=ok?"Correct: (69×63 + 31×65) ÷ 100 = <b>63.62</b>.":"Not quite. Multiply each isotope mass by its abundance, add the results, then divide by 100.";});
-})();
-</script></body></html>
+</script><script id="gab-print-fix-script">(function(){let clones=[];function grow(el){if(!el||el.tagName!=='TEXTAREA')return;el.style.height='auto';el.style.height=Math.max(125,el.scrollHeight+4)+'px'}document.addEventListener('input',e=>{if(e.target.matches('textarea'))grow(e.target)});function growAll(){document.querySelectorAll('textarea').forEach(grow)}document.addEventListener('click',()=>setTimeout(growAll,30));window.addEventListener('load',growAll);window.addEventListener('beforeprint',()=>{growAll();document.querySelectorAll('textarea').forEach(t=>{let d=document.createElement('div');d.className='gab-print-answer';d.textContent=t.value||' ';t.insertAdjacentElement('afterend',d);t.style.setProperty('display','none','important');clones.push([t,d])})});window.addEventListener('afterprint',()=>{clones.forEach(([t,d])=>{d.remove();t.style.removeProperty('display')});clones=[];growAll()})})();</script></body></html>
