@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Physics P8 · Forces in balance · Gab Revision</title><style>
+:root{--ink:#17323b;--muted:#687a80;--paper:#fbfcfe;--card:#ffffff;--phy:#118ab2;--phy-dark:#0c6686;--phy-soft:#dff3fb;--yellow:#fff4c7;--violet:#eee7fb;--mint:#e8f7f2;--line:#dbe7eb;--shadow:0 12px 35px rgba(18,54,63,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}
+a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}
+.shell{max-width:1180px;margin:auto;padding:0 22px}.topbar{position:sticky;top:0;z-index:20;background:rgba(251,252,254,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:950;letter-spacing:-.03em}.brand span{color:var(--phy)}.navlinks{display:flex;gap:8px;flex-wrap:wrap}.navtab.phy{background:var(--ink);color:white}.navtab{font-size:.88rem;padding:9px 13px}
+.btn,.pill,.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:850;cursor:pointer}.btn.phy,.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.btn:hover,.tab:hover{transform:translateY(-1px)}
+.hero{padding:35px 0 24px}.lesson-heading h1{font-size:clamp(2.6rem,6vw,5rem);line-height:1;letter-spacing:-.055em;margin:10px 0 16px}.hero-grid{margin-top:12px}.hero-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:18px;align-items:stretch}.hero-card,.hero-side{background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow)}.hero-card{background:linear-gradient(135deg,#0e5370,#118ab2 58%,#1aa8d8);color:#fff;overflow:hidden;position:relative}.hero-card:after{content:"";position:absolute;inset:auto -30px -30px auto;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.10)}.kicker{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;font-weight:900;color:var(--phy)}.hero-card .kicker{color:#dff4ff}.hero-num{font-size:clamp(4rem,11vw,7.5rem);line-height:.9;font-weight:980;opacity:.28;position:absolute;right:18px;top:22px}.hero h1{font-size:clamp(2.8rem,7vw,5.3rem);line-height:.94;letter-spacing:-.06em;margin:8px 0 18px}.lead{font-size:1.08rem;line-height:1.7;max-width:760px}.lead-small{font-size:1.03rem;line-height:1.7;color:var(--muted);max-width:760px}.hero-card .lead{color:#f5fdff}.chip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}.chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);padding:12px 14px;border-radius:16px;font-weight:700}.hero-side h3{margin-top:0}.checklist{padding-left:18px;margin:10px 0 0}.checklist li{margin:7px 0}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.panel{display:none}.panel.active{display:block}
+.chapter-nav{position:sticky;top:70px;z-index:12;background:rgba(251,252,254,.97);border-bottom:1px solid var(--line);padding:10px 0}.chapter-links{display:flex;gap:7px;overflow-x:auto}.chapter-links a{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:.78rem;font-weight:850}
+.topic{scroll-margin-top:150px;padding:30px 0;border-bottom:1px solid var(--line)}.topic-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.topic-head h2{margin:.2em 0}.badge{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:.78rem;font-weight:900;background:var(--phy-soft);color:#0a6787}.topic-grid{display:grid;grid-template-columns:330px 1fr;gap:15px;align-items:start}.card,.concept,.tool,.gcse-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow)}.spotlight{background:linear-gradient(180deg,#ffffff,#f6fbfd)}.spotlight ul{padding-left:18px}.spotlight li{margin:8px 0}.tip{background:var(--yellow);padding:14px 16px;border-radius:16px;margin-top:14px}.concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.concept{padding:18px;border-radius:18px;background:#fff}.concept h3{margin:.2em 0 .4em}.muted{color:var(--muted)}
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.tool h3{margin-top:0}.control{margin:12px 0}.control label{display:flex;justify-content:space-between;gap:8px;font-weight:800;margin-bottom:6px}.control input,.control select, .match-row select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:#fff}input[type=range]{padding:0;accent-color:var(--phy);height:28px}.resultbox{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f4fafc;border:1px solid var(--line);padding:14px 16px;border-radius:16px;font-weight:900;font-size:1.08rem}.flow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:16px 0}.flow-step{background:#f4fbfe;border:1px solid var(--line);padding:10px 12px;border-radius:16px;font-weight:800}.arrow{font-weight:900;color:var(--phy)}.feedback{min-height:22px;font-weight:800;margin-top:10px}.feedback.ok{color:#0b7a55}.feedback.no{color:#b5534e}.step-buttons{display:flex;flex-wrap:wrap;gap:8px}.step-buttons .selected{background:var(--ink);color:#fff}.gauge{height:18px;background:#e7eef1;border-radius:999px;overflow:hidden;margin:12px 0}.gauge span{display:block;height:100%;width:30%;background:linear-gradient(90deg,#1db954,#1aa8d8)}.match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin:10px 0}
+.quiz-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}.mini-tabs,.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.question{padding:20px 0;border-bottom:1px solid var(--line)}.options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.option{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;cursor:pointer}.option.correct{background:#d9f2e5;border-color:#16845d}.option.wrong{background:#fbe5df;border-color:#b8574b}.scorebox{position:sticky;bottom:12px;background:var(--ink);color:#fff;border-radius:18px;padding:14px 18px;margin-top:18px;display:flex;justify-content:space-between;align-items:center}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin:20px 0}.gcse-card{padding:24px 0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;border-left:none;border-right:none}.gcse-card:last-child{border-bottom:none}.answer-guide{display:block;background:#eef7fb;padding:14px 16px;border-radius:16px}.answer-guide ul{margin-bottom:0}.markguide{display:none;background:#f4f7f5;border-radius:16px;padding:16px;margin-top:12px}.markguide.show{display:block}.answer-locked{background:#f1f5f2}.export-check{display:flex;gap:8px;align-items:center;margin:12px 0;font-weight:700}.export-check input{width:18px;height:18px}textarea{width:100%;min-height:160px;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;resize:vertical}.answer-print{display:none}.export-print{display:none}
+.footer{padding:28px 0 44px;color:var(--muted);font-size:.92rem}.pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#fff}
+@media(max-width:980px){.hero-grid,.topic-grid,.tool-grid{grid-template-columns:1fr}.concept-grid{grid-template-columns:1fr}.hero-side{order:2}.hero-card{order:1}}
+@media(max-width:820px){.options{grid-template-columns:1fr}.chapter-nav{top:0}.match-row{grid-template-columns:1fr}.shell{padding:0 16px}}
+@media print{.topbar,.chapter-nav,.tabs,.btn,.mini-tabs,.row,.no-print,.scorebox,.export-check,.gcse-export{display:none!important}.panel{display:block!important}.gcse-card textarea{display:none!important}.markguide{display:block!important}.answer-print{display:block!important}.badge{border:1px solid #999}.card,.concept,.tool,.gcse-card{box-shadow:none}}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;position:static!important;background:white;color:black;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint h1{font-size:22pt}body.exporting #exportPrint article{break-inside:avoid;margin:0 0 20px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+.tabs .tab{font-weight:850}.panel{display:none}.panel.active{display:block}.hero{padding:48px 0 20px}.spotlight{margin:16px 0;background:#f8fbfe}.spotlight li{margin:6px 0}.tool-grid{margin-top:18px}.tool select,.tool input[type=number]{width:100%;padding:10px;border:1px solid var(--line);border-radius:12px}.tool .gauge span{max-width:100%;background:#1696bf}.pick.selected{border:2px solid var(--phy)}.option[aria-pressed=true]{outline:3px solid #91c8de}.answer-print{display:none} @media print{.gcse-card{break-inside:auto}.gcse-card h3{break-after:avoid-page}.answer-print{display:block;white-space:pre-wrap;overflow-wrap:anywhere}} 
+.flowdiagram{display:flex;align-items:center;gap:9px;flex-wrap:wrap;min-height:66px;padding:15px 0}.flowbox{background:#e2f4fb;border:1px solid #b3dfe9;border-radius:12px;padding:14px;font-weight:850;flex:1;min-width:105px;text-align:center}.flowarrow{color:#137798;font-weight:900}.illustration{margin:14px 0;background:#f6fbfe;border-radius:15px;padding:12px}.illustration svg{width:100%;height:auto}.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}.data-table{border-collapse:collapse;width:100%;font-size:12px}.data-table td,.data-table th{border:1px solid #cfe3eb;text-align:center;padding:7px}.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.tool{background:white;border:1px solid var(--line);border-radius:20px;padding:19px}.control{display:block;margin:12px 0}.control input,.control select{display:block;width:100%;margin-top:8px}.step-buttons{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.step-buttons .btn{padding:9px 12px}@media(max-width:840px){.tool-grid,.two-cols{grid-template-columns:1fr}}
+
+.answer-print{display:none}@media print{.answer-print{display:block;white-space:pre-wrap;overflow-wrap:anywhere}}
+</style><style>.visual{width:100%;max-width:760px;background:#f4fbfe;border:1px solid #d6eaf0;border-radius:16px;margin:12px 0}.topic .card{margin-top:16px}.topic .card input{display:block;padding:10px;max-width:240px;width:100%;border-radius:9px;border:1px solid #cadce1;margin:7px 0 16px}.topic{scroll-margin-top:100px} .answer-print{display:none} @media print{.answer-print{display:block;white-space:pre-wrap;overflow-wrap:anywhere}} .iso-step{margin:18px 0;padding:16px;border:1px solid #d6eaf0;border-radius:15px}.iso-inputs{display:flex;flex-wrap:wrap;gap:20px}.iso-inputs label{flex:1;min-width:190px}.iso-inputs input{max-width:210px} </style></head><body><header class="topbar"><div class="shell nav"><div class="brand">GAB <span>/ REVISION</span></div><nav class="navlinks"><a class="btn" href="physics.html">← Physics</a><a class="btn" href="index.html">Home</a></nav></div></header><main class="shell"><section class="hero"><span class="kicker">AQA Combined Science: Trilogy · Higher · Physics Paper 1</span><h1 style="font-size:clamp(2.8rem,7vw,5rem)">P8 Forces in balance</h1><p class="lead-small">Six textbook sections · force diagrams · 26 quiz questions · 6 GCSE Practice questions · interactive vector and force tools.</p><div class="tabs"><button class="tab active" data-panel="learn">Learn</button><button class="tab" data-panel="quiz">Quiz</button><button class="tab" data-panel="gcse">GCSE Practice</button></div></section><section class="panel active" id="learn"><section class="topic" id="p8-1"><span class="kicker">P8.1 · textbook pages 98–99</span><h2>Vectors and scalars</h2><p class="lead-small">A scalar has magnitude only. A vector has magnitude and direction. Displacement is distance in a given direction. Vectors can be shown as arrows: arrow length = magnitude, arrow direction = direction.</p><div class="concept-grid">
+<div class="concept"><h3>Common scalars</h3><p>Distance, speed, time, mass, energy, temperature, power.</p></div>
+<div class="concept"><h3>Common vectors</h3><p>Displacement, velocity, acceleration, force, weight, momentum.</p></div>
+<div class="concept"><h3>Scale diagrams</h3><p>Choose a scale first, then draw arrows in the correct directions and with lengths in proportion to the sizes.</p></div>
+</div><div class="card" style="margin-top:18px"><h3>GCSE diagram · Vectors and scalars</h3><svg aria-label="A curving route compared with straight-line displacement" class="diagram" role="img" viewbox="0 0 720 230"><path d="M85 155 C210 10 240 220 365 70 S540 190 635 75" fill="none" stroke="#f1a34a" stroke-dasharray="12 8" stroke-width="7"></path><path d="M85 155L635 75" stroke="#118ab2" stroke-width="5"></path><polygon fill="#118ab2" points="635,75 609,66 614,92"></polygon><circle cx="85" cy="155" fill="#17323b" r="9"></circle><circle cx="635" cy="75" fill="#17323b" r="9"></circle><text fill="#17323b" font-size="19" x="75" y="187">Home</text><text fill="#17323b" font-size="19" x="605" y="53">School</text><text fill="#bd7821" font-size="18" x="295" y="33">Distance: route travelled</text><text fill="#0b6787" font-size="18" x="313" y="145">Displacement: straight line + direction</text></svg></div><div class="card"><h3>Exam technique</h3><div class="tip"><strong>Exam tip:</strong> distance is scalar, displacement is vector.</div></div></section><section class="topic" id="p8-2"><span class="kicker">P8.2 · textbook pages 100–101</span><h2>Forces between objects</h2><p class="lead-small">A force is a push or a pull caused by an interaction. Contact forces need touching: friction, air resistance, tension, normal contact force. Non-contact forces act at a distance: gravity, electrostatic force, magnetic force. When two objects interact, they exert equal and opposite forces on each other.</p><div class="concept-grid">
+<div class="concept"><h3>Action–reaction pair</h3><p>If skater A pulls skater B, skater B pulls skater A with an equal and opposite force.</p></div>
+<div class="concept"><h3>Driving force</h3><p>The tyre pushes the road backwards, and the road pushes the tyre forwards.</p></div>
+<div class="concept"><h3>Braking</h3><p>When brakes act, the resultant force is opposite the motion, so the vehicle slows down.</p></div>
+</div><div class="card" style="margin-top:18px"><h3>GCSE diagram · Forces between objects</h3><svg aria-label="Two skaters pulling each other: equal and opposite interaction forces" class="diagram" role="img" viewbox="0 0 720 210"><circle cx="170" cy="95" fill="#f4be62" r="32"></circle><circle cx="550" cy="95" fill="#89cce9" r="32"></circle><path d="M212 95H500" stroke="#7f9a9f" stroke-width="9"></path><path d="M260 62H455" stroke="#188bba" stroke-width="7"></path><polygon fill="#188bba" points="260,62 280,50 280,74"></polygon><polygon fill="#188bba" points="455,62 435,50 435,74"></polygon><text fill="#17323b" font-size="18" x="90" y="165">Object A</text><text fill="#17323b" font-size="18" x="500" y="165">Object B</text><text fill="#17323b" font-size="18" x="190" y="37">equal magnitude · opposite direction</text></svg></div><div class="card"><h3>Exam technique</h3><div class="tip"><strong>Do not say:</strong> “the bigger object exerts the bigger force”. The pair of forces are equal in size.</div></div></section><section class="topic" id="p8-3"><span class="kicker">P8.3 · textbook pages 102–103</span><h2>Resultant forces</h2><p class="lead-small">Same direction → add the forces. Opposite directions → subtract the smaller from the larger. The resultant force acts in the direction of the larger force. If the resultant force is zero, the object is at rest or continues at constant speed in a straight line.</p><div class="concept-grid">
+<div class="concept"><h3>Balanced forces</h3><p>Resultant force = 0. No change in velocity.</p></div>
+<div class="concept"><h3>Unbalanced forces</h3><p>Resultant force ≠ 0. The object accelerates.</p></div>
+<div class="concept"><h3>Free-body diagram</h3><p>Show only the forces acting on one object, usually as arrows from the object.</p></div>
+</div><div class="card" style="margin-top:18px"><h3>GCSE diagram · Resultant forces</h3><svg aria-label="A box with 120 newtons right and 80 newtons left giving a 40 newton right resultant" class="diagram" role="img" viewbox="0 0 720 220"><rect fill="#dff3fb" height="75" rx="12" stroke="#118ab2" stroke-width="3" width="125" x="290" y="75"></rect><path d="M290 113H90" stroke="#e16f6a" stroke-width="7"></path><polygon fill="#e16f6a" points="90,113 110,100 110,126"></polygon><path d="M415 113H660" stroke="#118ab2" stroke-width="7"></path><polygon fill="#118ab2" points="660,113 640,100 640,126"></polygon><text fill="#17323b" font-size="20" x="100" y="83">80 N left</text><text fill="#17323b" font-size="20" x="490" y="82">120 N right</text><text fill="#17323b" font-size="20" x="258" y="189">Resultant = 40 N right</text></svg></div><div class="card"><h3>Exam technique</h3><div class="tip"><strong>Common mistake:</strong> zero resultant does <em>not</em> always mean stationary.</div></div></section><section class="topic" id="p8-4"><span class="kicker">P8.4 · textbook pages 104–105</span><h2>Centre of mass</h2><p class="lead-small">The centre of mass is the point where the mass of an object can be thought of as being concentrated. For a uniform ruler, it is at the midpoint. For a freely suspended object, the centre of mass comes to rest directly below the point of suspension. For a symmetrical object, the centre of mass lies on the axis of symmetry.</p><div class="concept-grid">
+<div class="concept"><h3>Stable or unstable?</h3><p>An object is more stable when its centre of mass is low and remains above its base.</p></div>
+<div class="concept"><h3>Finding centre of mass</h3><p>Suspend the shape from two points and draw vertical lines with a plumb line. Where the lines cross is the centre of mass.</p></div>
+<div class="concept"><h3>Why it matters</h3><p>Designers want racing cars, chairs, and cranes to remain stable and not topple easily.</p></div>
+</div><div class="card" style="margin-top:18px"><h3>GCSE diagram · Centre of mass</h3><svg aria-label="Centre of mass directly below point of suspension" class="diagram" role="img" viewbox="0 0 720 220"><path d="M160 25V92" stroke="#17323b" stroke-width="5"></path><path d="M90 91L250 114L205 200L105 181Z" fill="#e9f2fc" stroke="#118ab2" stroke-width="3"></path><path d="M160 25V205" stroke="#e76d68" stroke-dasharray="9 6" stroke-width="3"></path><circle cx="160" cy="135" fill="#e76d68" r="9"></circle><text fill="#17323b" font-size="19" x="190" y="29">Suspension point</text><text fill="#17323b" font-size="19" x="190" y="143">Centre of mass</text><text fill="#17323b" font-size="21" x="380" y="122">Vertical lines from two suspension points intersect at the centre of mass.</text></svg></div></section><section class="topic" id="p8-5"><span class="kicker">P8.5 · textbook pages 106–107</span><h2>The parallelogram of forces</h2><p class="lead-small">Use it when two forces act on an object at an angle . Draw the two force vectors to scale from a common point. Complete the parallelogram. The diagonal from the common point is the resultant force .</p><div class="card" style="margin-top:18px"><h3>GCSE diagram · The parallelogram of forces</h3><svg aria-label="Parallelogram of forces and diagonal resultant" class="diagram" role="img" viewbox="0 0 720 240"><path d="M125 188L480 188L595 45L240 45Z" fill="#f0f9fd" stroke="#91c7da" stroke-dasharray="10 6" stroke-width="3"></path><path d="M125 188L480 188" stroke="#e47d68" stroke-width="6"></path><polygon fill="#e47d68" points="480,188 460,177 460,199"></polygon><path d="M125 188L240 45" stroke="#438fcb" stroke-width="6"></path><polygon fill="#438fcb" points="240,45 218,55 232,70"></polygon><path d="M125 188L595 45" stroke="#1d986d" stroke-width="7"></path><polygon fill="#1d986d" points="595,45 572,42 580,65"></polygon><text fill="#17323b" font-size="19" x="255" y="219">Force 1</text><text fill="#17323b" font-size="19" x="86" y="83">Force 2</text><text fill="#117b57" font-size="20" x="408" y="93">Resultant = diagonal</text></svg></div><div class="card"><h3>Exam technique</h3><div class="tip"><strong>Need to remember:</strong> this is a scale-diagram method, so careful drawing matters.</div></div></section><section class="topic" id="p8-6"><span class="kicker">P8.6 · textbook pages 108–109</span><h2>Resolution of forces</h2><p class="lead-small">Resolving a force means splitting it into two perpendicular components. On a slope, one component acts parallel to the slope and one acts perpendicular (normal) to the slope. For weight W on a slope angle θ to the horizontal:</p><div class="concept-grid">
+<div class="concept"><h3>Parallel component</h3><p>This tries to pull the object down the slope.</p></div>
+<div class="concept"><h3>Perpendicular component</h3><p>This presses the object into the slope.</p></div>
+<div class="concept"><h3>Equilibrium on a slope</h3><p>Friction or another force must balance the component parallel to the slope.</p></div>
+</div><div class="card" style="margin-top:18px"><h3>GCSE diagram · Resolution of forces</h3><svg aria-label="A block on a slope with weight resolved parallel and perpendicular to the incline" class="diagram" role="img" viewbox="0 0 720 240"><path d="M60 199L640 199L640 40Z" fill="#e3f4fa" stroke="#118ab2" stroke-width="3"></path><rect fill="#f6ce83" height="57" rx="8" stroke="#ad762d" stroke-width="3" transform="rotate(-15 405 132)" width="90" x="360" y="103"></rect><path d="M405 132V218" stroke="#e36f6c" stroke-width="6"></path><polygon fill="#e36f6c" points="405,218 392,197 418,197"></polygon><path d="M405 132L302 160" stroke="#118ab2" stroke-width="6"></path><polygon fill="#118ab2" points="302,160 324,144 329,169"></polygon><path d="M405 132L427 55" stroke="#1b9b74" stroke-width="6"></path><polygon fill="#1b9b74" points="427,55 409,73 434,80"></polygon><g fill="#17323b" font-size="17"><text x="415" y="227">Weight W</text><text x="170" y="174">Parallel = W sin θ</text><text x="437" y="38">Perpendicular = W cos θ</text></g></svg></div><div class="card"><h3>Exam technique</h3><div class="tip"><strong>Why do this?</strong> It helps you work out whether an object will move or stay in equilibrium on a slope.</div></div></section><section class="topic" id="p8-tools"><span class="kicker">Try it yourself</span><h2>Interactive force lab</h2><p class="lead-small">Change the values, check your predictions, and connect the diagrams with the GCSE rules.</p><div class="tool-grid">
+<div class="tool">
+<h3>1) Vector or scalar sorter</h3>
+<p class="muted">Choose whether each quantity is a vector or a scalar, then check.</p>
+<div id="vsRows"></div>
+<div class="step-buttons"><button class="btn phy" id="checkVS">Check answers</button><button class="btn" id="resetVS">Reset</button></div>
+<div class="feedback" id="vsFeedback"></div>
+</div>
+<div class="tool">
+<h3>2) Resultant force calculator</h3>
+<p class="muted">For two forces acting along the same line.</p>
+<div class="control"><label for="f1">Force 1 (N)</label><input id="f1" min="0" type="number" value="12"/></div>
+<div class="control"><label for="d1">Direction of force 1</label><select id="d1"><option value="right">Right</option><option value="left">Left</option></select></div>
+<div class="control"><label for="f2">Force 2 (N)</label><input id="f2" min="0" type="number" value="7"/></div>
+<div class="control"><label for="d2">Direction of force 2</label><select id="d2"><option value="left">Left</option><option value="right">Right</option></select></div>
+<div class="resultbox" id="resultantOut">Resultant force: 5 N to the right.</div>
+<div class="illustration">
+<svg aria-hidden="true" viewbox="0 0 540 120">
+<line stroke="#dbe7eb" stroke-width="4" x1="30" x2="510" y1="60" y2="60"></line>
+<g id="resArrows"></g>
+</svg>
+</div>
+</div>
+<div class="tool">
+<h3>3) Equilibrium checker</h3>
+<p class="muted">Enter the forces on an object and see whether it is in equilibrium.</p>
+<div class="control"><label>Left force (N)</label><input id="eqLeft" min="0" type="number" value="20"/></div>
+<div class="control"><label>Right force (N)</label><input id="eqRight" min="0" type="number" value="20"/></div>
+<div class="control"><label>Upward force (N)</label><input id="eqUp" min="0" type="number" value="50"/></div>
+<div class="control"><label>Downward force (N)</label><input id="eqDown" min="0" type="number" value="50"/></div>
+<div class="resultbox" id="eqOut">The object is in equilibrium.</div>
+<div class="illustration">
+<svg aria-hidden="true" viewbox="0 0 300 220">
+<rect fill="#dff3fb" height="50" rx="12" stroke="#118ab2" width="50" x="125" y="95"></rect>
+<g id="eqSvg"></g>
+</svg>
+</div>
+</div>
+<div class="tool">
+<h3>4) Resolve weight on a slope</h3>
+<p class="muted">Higher tier. Move the sliders to see the weight components.</p>
+<div class="control"><label>Weight, W <span id="weightVal">50 N</span></label><input id="weightRange" max="300" min="10" step="10" type="range" value="50"/></div>
+<div class="control"><label>Angle of slope, θ <span id="angleVal">30°</span></label><input id="angleRange" max="60" min="5" step="1" type="range" value="30"/></div>
+<div class="resultbox" id="resolveOut">Parallel = 25.0 N, Perpendicular = 43.3 N</div>
+<div class="gauge"><span id="resolveBar"></span></div>
+<p class="tiny"><strong>Reminder:</strong> parallel = W sin θ, perpendicular = W cos θ.</p>
+</div>
+</div></section></section><section class="panel" id="quiz"><div class="quiz-head"><div><span class="kicker">P8 question bank</span><h2>Quiz</h2><p class="lead-small">Eight questions per subchapter and ten in Mixed mode.</p></div><span class="badge" id="quizScoreBadge">—</span></div><div class="mini-tabs" id="quizFilters"></div><div id="quizQuestions"></div><div class="row" style="margin-top:20px"><button class="btn phy" id="finishQuiz">Submit quiz</button><button class="btn" id="newQuiz">New set</button></div><p class="feedback" id="quizSummary"></p></section><section class="panel" id="gcse"><span class="kicker">Independent exam practice · P8</span><h2>GCSE Practice</h2><p class="lead-small">Answer independently, submit to reveal marking points, select answers to export. Original GCSE-style practice questions, not official past papers.</p><div class="gcse-export"><h3>Send or save answers</h3><div class="step-buttons"><button class="btn phy" id="exportPDF">Print / Save PDF</button><button class="btn" id="exportEmail">Prepare email</button><button class="btn" id="exportJSON">Export JSON</button></div><p class="muted" id="exportStatus"></p></div><div id="gcseArea"></div></section><div class="footer">Gab Revision · Physics P8 · Radioactivity</div></main><div class="export-print" id="exportPrint"></div><script>const QUIZ_TOPICS={Mixed:'Mixed revision','P8.1':'Vectors and scalars','P8.2':'Forces between objects','P8.3':'Resultant forces','P8.4':'Centre of mass','P8.5':'Parallelogram of forces','P8.6':'Resolution of forces'};
+const QUIZ=[
+['Which of these is a vector quantity?',['mass','energy','force','time'],2,'Force has magnitude and direction.','P8.1'],
+['Which statement about displacement is correct?',['It is distance without units','It is distance in a given direction','It is the same as speed','It has magnitude only'],1,'Displacement is distance in a particular direction.','P8.1'],
+['Which of these is a scalar?',['velocity','acceleration','weight','speed'],3,'Speed has magnitude only.','P8.1'],
+['When drawing a vector, the arrow length represents the…',['colour','magnitude','mass','time'],1,'Arrow length shows the size of the vector.','P8.1'],
+['Which pair are both vectors?',['distance and speed','mass and weight','force and velocity','energy and momentum'],2,'Force and velocity both have magnitude and direction.','P8.1'],
+
+['Which of these is a contact force?',['gravity','magnetic force','electrostatic force','friction'],3,'Friction acts where surfaces touch.','P8.2'],
+['Which of these is a non-contact force?',['tension','normal contact force','gravity','air resistance'],2,'Gravity acts at a distance.','P8.2'],
+['When two objects interact, the forces they exert on each other are…',['equal and opposite','equal and in the same direction','usually different','only present if they move'],0,'This is Newton’s third law.','P8.2'],
+['A tyre pushes backwards on the road. The road pushes…',['backwards on the tyre','forwards on the tyre','upwards on the tyre only','with a smaller force'],1,'The road pushes forwards with an equal and opposite force.','P8.2'],
+['Tension in a rope is best described as a…',['contact force','non-contact force','scalar','speed'],0,'Tension is a contact force.','P8.2'],
+
+['Two forces of 6 N and 4 N act in the same direction. The resultant is…',['2 N','10 N','6 N','24 N'],1,'Forces in the same direction add.','P8.3'],
+['Two forces of 15 N right and 9 N left act on an object. The resultant is…',['24 N right','6 N right','6 N left','0 N'],1,'Subtract and keep the direction of the larger force.','P8.3'],
+['If the resultant force on an object is zero, the object must…',['be stationary','accelerate','be at rest or move at constant velocity','move in a circle'],2,'Zero resultant means no change in velocity.','P8.3'],
+['A free-body diagram shows…',['every object in the scene','only the object and the forces on it','only the motion','only contact forces'],1,'It isolates one object and the forces acting on it.','P8.3'],
+['Balanced forces mean…',['no forces are present','the forces are equal and opposite so the resultant is zero','the object must stop','the masses are equal'],1,'Balanced forces give zero resultant.','P8.3'],
+
+['The centre of mass of a uniform metre ruler is…',['at one end','at the midpoint','near the heavier-looking end','outside the ruler'],1,'For a uniform ruler it is at the middle.','P8.4'],
+['When an object is freely suspended, its centre of mass comes to rest…',['above the support','directly below the support','at the side','at the top'],1,'It hangs with its centre of mass vertically below the pivot.','P8.4'],
+['A lower centre of mass generally makes an object…',['less stable','more stable','faster','lighter'],1,'A lower centre of mass helps stability.','P8.4'],
+['For a symmetrical object, the centre of mass lies…',['on the axis of symmetry','at the lowest point only','outside the object','at the top'],0,'It lies on the axis of symmetry.','P8.4'],
+
+['The parallelogram of forces is used when…',['two forces act along the same line','two forces act at an angle','no forces act','the object is falling vertically'],1,'It is for two forces that are not along the same line.','P8.5'],
+['In a parallelogram of forces, the resultant is the…',['shortest side','longest side','diagonal from the common point','sum of the angles'],2,'The resultant is the diagonal.','P8.5'],
+['The parallelogram method is a…',['word equation only','scale-diagram method','chemical test','type of graph'],1,'It relies on accurate scale drawing.','P8.5'],
+
+['Resolving a force means…',['doubling it','splitting it into perpendicular components','adding forces','making the force zero'],1,'Resolution splits a force into components.','P8.6'],
+['For an object on a slope, the component of weight parallel to the slope tends to…',['pull it down the slope','push it into the slope','lift it up vertically','be zero'],0,'The parallel component acts down the slope.','P8.6'],
+['For weight W on a slope angle θ, the component perpendicular to the slope is…',['W sin θ','W cos θ','W tan θ','W / cos θ'],1,'Perpendicular component = W cos θ.','P8.6'],
+['If a box on a slope is in equilibrium, then the component of weight down the slope is balanced by…',['friction or another equal force up the slope','its mass','the perpendicular component','air pressure only'],0,'Equilibrium needs zero resultant along the slope.','P8.6']
+];;const GCSE=[
+{id:'q1',topic:'P8.1',command:'Explain',marks:4,q:'Explain the difference between a scalar quantity and a vector quantity. Give two examples of each.',guidance:['Define scalar clearly.','Define vector clearly.','Choose valid examples.','Keep the comparison direct and precise.'],criteria:['A scalar has magnitude only.','A vector has magnitude and direction.','Examples of scalars: distance, speed, mass, energy, time, power.','Examples of vectors: displacement, velocity, acceleration, force, weight, momentum.']},
+{id:'q2',topic:'P8.2',command:'Explain',marks:3,q:'A car tyre pushes backwards on the road. Explain why the road pushes the tyre forwards.',guidance:['Mention interaction between two objects.','Use Newton’s third law language.','State that the forces are equal and opposite.'],criteria:['When two objects interact, they exert forces on each other.','This is Newton’s third law.','The road exerts a forward force on the tyre equal in size and opposite in direction to the tyre’s backward force on the road.']},
+{id:'q3',topic:'P8.3',command:'Describe and explain',marks:4,q:'A box is pushed across the floor at constant speed. Describe what this tells you about the forces on the box and explain why.',guidance:['State what constant speed means for acceleration.','Comment on resultant force.','Mention the push force and friction.'],criteria:['Constant speed means no acceleration.','Therefore the resultant force is zero.','The forces are balanced.','The push force is equal in size and opposite in direction to friction (or other resistive forces).']},
+{id:'q4',topic:'P8.4',command:'Describe',marks:4,q:'Describe how you could find the centre of mass of an irregular flat card.',guidance:['Explain the suspension method in order.','Mention a plumb line or vertical line.','Say what to do from a second point.'],criteria:['Make a hole near the edge and suspend the card from a point.','Hang a plumb line from the same point and mark the vertical line on the card.','Repeat from a different suspension point.','The point where the lines cross is the centre of mass.']},
+{id:'q5',topic:'P8.5',command:'Explain',marks:3,q:'Explain when the parallelogram of forces should be used and what the diagonal of the parallelogram represents.',guidance:['Say it is for forces at an angle.','Describe what is drawn.','State what the diagonal means.'],criteria:['It is used when two forces act at a point and are not along the same line / act at an angle.','The two force vectors are drawn to scale from a common point and the parallelogram is completed.','The diagonal from the common point represents the resultant force.']},
+{id:'q6',topic:'P8.6',command:'Explain',marks:4,q:'A box rests on a slope. Explain what is meant by resolving the weight of the box, and name the two components of the weight.',guidance:['Define resolving.','Mention perpendicular components.','Name the components using the slope.'],criteria:['Resolving means splitting a force into two perpendicular components.','The weight is resolved relative to the slope.','One component acts parallel to the slope.','The other component acts perpendicular (normal) to the slope.']}
+];;const STORE='gabRevisionV3-physics-p8';document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.panel).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});});
+const byId=id=>document.getElementById(id);
+// Vector/scalar sorter
+const VS_ITEMS=[['distance','scalar'],['displacement','vector'],['speed','scalar'],['velocity','vector'],['force','vector'],['mass','scalar'],['weight','vector'],['energy','scalar']];
+function renderVS(){
+  byId('vsRows').innerHTML=VS_ITEMS.map(([name])=>`<div class="match-row"><div><strong>${name}</strong></div><select><option value="">Choose…</option><option value="vector">Vector</option><option value="scalar">Scalar</option></select></div>`).join('');
+  byId('vsFeedback').textContent='';
+}
+renderVS();
+byId('checkVS').addEventListener('click',()=>{
+  const rows=[...byId('vsRows').querySelectorAll('.match-row')];
+  let score=0;
+  rows.forEach((row,i)=>{
+    const sel=row.querySelector('select');
+    const correct=VS_ITEMS[i][1];
+    sel.style.borderColor = sel.value===correct ? '#16845d' : '#b8574b';
+    if(sel.value===correct) score++;
+  });
+  const fb=byId('vsFeedback');
+  fb.textContent=`${score} / ${VS_ITEMS.length} correct.`+(score===VS_ITEMS.length?' Great job.':' Check the ones you missed.');
+  fb.className='feedback '+(score===VS_ITEMS.length?'ok':'no');
+});
+byId('resetVS').addEventListener('click',renderVS);
+
+// Resultant force calculator
+function arrow(x1,y1,x2,y2,color,label){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="7" stroke-linecap="round"/><polygon points="${x2},${y2} ${x2-(x2>x1?18:-18)},${y2-8} ${x2-(x2>x1?18:-18)},${y2+8}" fill="${color}"/><text x="${(x1+x2)/2}" y="${y1-14}" text-anchor="middle" font-size="14" fill="#17323b" font-weight="700">${label}</text>`;
+}
+function updateResultant(){
+  const f1=Math.max(0,Number(byId('f1').value)||0), f2=Math.max(0,Number(byId('f2').value)||0);
+  const d1=byId('d1').value, d2=byId('d2').value;
+  const signed1=d1==='right'?f1:-f1, signed2=d2==='right'?f2:-f2;
+  const res=signed1+signed2;
+  const mag=Math.abs(res), dir=res===0?'no overall direction':(res>0?'to the right':'to the left');
+  byId('resultantOut').textContent = mag===0 ? 'Resultant force: 0 N. The forces are balanced.' : `Resultant force: ${mag} N ${dir}.`;
+  const scale=12;
+  const start=270;
+  const svg=[
+    arrow(start,35,start+(signed1*scale),35,'#118ab2',`F1 = ${f1} N`),
+    arrow(start,90,start+(signed2*scale),90,'#e86b6b',`F2 = ${f2} N`)
+  ];
+  if(res!==0) svg.push(arrow(start,60,start+(res*scale),60,'#1db954',`R = ${mag} N`));
+  byId('resArrows').innerHTML=svg.join('');
+}
+['f1','f2','d1','d2'].forEach(id=>byId(id).addEventListener('input',updateResultant));
+['d1','d2'].forEach(id=>byId(id).addEventListener('change',updateResultant));
+updateResultant();
+
+// Equilibrium checker
+function updateEq(){
+  const L=Math.max(0,Number(byId('eqLeft').value)||0), R=Math.max(0,Number(byId('eqRight').value)||0), U=Math.max(0,Number(byId('eqUp').value)||0), D=Math.max(0,Number(byId('eqDown').value)||0);
+  const h=R-L, v=U-D;
+  let msg='';
+  if(h===0 && v===0) msg='The object is in equilibrium.';
+  else msg=`Not in equilibrium. Horizontal resultant = ${Math.abs(h)} N ${h>0?'to the right':'to the left'}; vertical resultant = ${Math.abs(v)} N ${v>0?'upwards':'downwards'}.`;
+  byId('eqOut').textContent=msg;
+  const scale=1.6, cx=150, cy=120;
+  const parts=[];
+  const draw=(x1,y1,x2,y2,color,label)=>{parts.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="6" stroke-linecap="round"/><polygon points="${x2},${y2} ${x2+(x2===x1? -8:(x2>x1?-12:12))},${y2+(y2===y1?(x2>x1?-8:8):-8)} ${x2+(x2===x1? 8:(x2>x1?-12:12))},${y2+(y2===y1?(x2>x1?8:-8):8)}" fill="${color}"/><text x="${(x1+x2)/2}" y="${(y1+y2)/2-10}" text-anchor="middle" font-size="12" font-weight="700" fill="#17323b">${label}</text>`)};
+  draw(cx,cy,cx-L*scale,cy,'#e86b6b',L+' N');
+  draw(cx,cy,cx+R*scale,cy,'#1aa8d8',R+' N');
+  draw(cx,cy,cx,cy-U*scale,'#1db954',U+' N');
+  draw(cx,cy,cx,cy+D*scale,'#ffae42',D+' N');
+  byId('eqSvg').innerHTML=parts.join('');
+}
+['eqLeft','eqRight','eqUp','eqDown'].forEach(id=>byId(id).addEventListener('input',updateEq));
+updateEq();
+
+// Resolution calculator
+function updateResolve(){
+  const W=Number(byId('weightRange').value), angle=Number(byId('angleRange').value);
+  byId('weightVal').textContent=W+' N';
+  byId('angleVal').textContent=angle+'°';
+  const radians=angle*Math.PI/180;
+  const parallel=W*Math.sin(radians);
+  const perpendicular=W*Math.cos(radians);
+  byId('resolveOut').textContent=`Parallel = ${parallel.toFixed(1)} N, Perpendicular = ${perpendicular.toFixed(1)} N`;
+  byId('resolveBar').style.width=Math.min(100,(parallel/W)*100)+'%';
+}
+['weightRange','angleRange'].forEach(id=>byId(id).addEventListener('input',updateResolve));
+updateResolve();
+
+
+let quizFilter='Mixed', currentQuiz=[], quizAnswers={}, quizSubmitted=false;
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function buildQuiz(){const pool=quizFilter==='Mixed'?QUIZ:QUIZ.filter(q=>q[4]===quizFilter);currentQuiz=(quizFilter==='Mixed'?shuffle(pool).slice(0,10):pool).map(q=>({q,order:shuffle([0,1,2,3])}));quizAnswers={};quizSubmitted=false;renderQuiz();}
+function renderQuiz(){quizFilters.innerHTML=Object.entries(QUIZ_TOPICS).map(([k,v])=>`<button class="btn ${k===quizFilter?'phy':''}" data-filter="${k}">${k==='Mixed'?v:k+' · '+v}</button>`).join('');quizFilters.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{quizFilter=b.dataset.filter;buildQuiz();});quizQuestions.innerHTML=currentQuiz.map((it,i)=>`<div class="question"><strong>${i+1}. ${it.q[0]}</strong><div class="options">${it.order.map(a=>`<button class="option" data-q="${i}" data-a="${a}">${it.q[1][a]}</button>`).join('')}</div><div class="feedback" id="fb${i}"></div></div>`).join('');document.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{if(quizSubmitted)return;let i=+b.dataset.q;quizAnswers[i]=+b.dataset.a;document.querySelectorAll('[data-q="'+i+'"]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});quizScoreBadge.textContent='0 / '+currentQuiz.length;quizSummary.textContent='';}
+finishQuiz.onclick=()=>{if(Object.keys(quizAnswers).length<currentQuiz.length){quizSummary.textContent='Please answer all questions first.';return;}quizSubmitted=true;let score=0;currentQuiz.forEach((it,i)=>{let ok=quizAnswers[i]===it.q[2];if(ok)score++;document.getElementById('fb'+i).textContent=(ok?'Correct. ':'Not quite. ')+it.q[3];document.querySelectorAll('[data-q="'+i+'"]').forEach(btn=>{const chosen=+btn.dataset.a; if(chosen===it.q[2]) btn.classList.add('correct'); else if(chosen===quizAnswers[i]) btn.classList.add('wrong');});});quizScoreBadge.textContent=score+' / '+currentQuiz.length;quizSummary.textContent='Score: '+score+' / '+currentQuiz.length; safeSaveQuiz(STORE+'-lastQuiz', JSON.stringify({filter:quizFilter,score,total:currentQuiz.length}));};
+newQuiz.onclick=buildQuiz; buildQuiz();
+
+function safeSaveQuiz(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+// GCSE practice with submit/export
+function getState(){try{return JSON.parse(localStorage.getItem(STORE)||'{}')}catch(e){return memoryFallback||{}}}
+let memoryFallback={};function setState(v){memoryFallback=v;try{localStorage.setItem(STORE, JSON.stringify(v))}catch(e){}}
+function attempts(){return getState().gcseAttempts||{}}
+function saveAttempts(a){const s=getState();s.gcseAttempts=a;setState(s)}
+function latest(id){const a=attempts()[id]||[];return a[a.length-1]}
+function saveDraft(id,text){const all=attempts(),arr=all[id]||[]; if(!arr.length||arr[arr.length-1].status==='submitted') arr.push({id:String(Date.now()),status:'draft',answer:text}); else arr[arr.length-1].answer=text; all[id]=arr; saveAttempts(all)}
+function submitAnswer(id){const el=document.getElementById('answer'+id),text=el.value.trim(); if(!text){alert('Write an answer first.');return;} const all=attempts(),arr=all[id]||[]; if(!arr.length||arr[arr.length-1].status==='submitted') arr.push({id:String(Date.now()),status:'draft',answer:text}); arr[arr.length-1].answer=text; arr[arr.length-1].status='submitted'; arr[arr.length-1].submitted=new Date().toISOString(); all[id]=arr; saveAttempts(all); renderGCSE();}
+function newAttempt(id){const all=attempts(),arr=all[id]||[]; arr.push({id:String(Date.now()),status:'draft',answer:''}); all[id]=arr; saveAttempts(all); renderGCSE();}
+function renderGCSE(){gcseArea.innerHTML=GCSE.map(q=>{const a=latest(q.id),locked=a&&a.status==='submitted';return `<article class="gcse-card"><span class="kicker">${q.topic} · ${q.command} · ${q.marks} marks</span><h3>${q.q}</h3><div class="answer-guide"><strong>Writing guidance</strong><ul>${q.guidance.map(x=>'<li>'+x+'</li>').join('')}</ul></div><textarea id="answer${q.id}" ${locked?'readonly class="answer-locked"':''}>${(a?.answer||'').replace(/</g,'&lt;')}</textarea><div class="answer-print">${(a?.answer||'').replace(/</g,'&lt;').split('\n').join('<br>')}</div><div class="step-buttons">${locked?`<button class="btn phy" onclick="newAttempt('${q.id}')">New attempt</button>`:`<button class="btn phy" onclick="submitAnswer('${q.id}')">Submit answer</button>`}</div>${locked?`<label class="export-check"><input type="checkbox" class="export-select" value="${q.id}" checked> Include this answer in the export</label><div class="markguide show"><strong>Revision marking points</strong><ul>${q.criteria.map(x=>'<li>'+x+'</li>').join('')}</ul></div>`:''}</article>`;}).join(''); GCSE.forEach(q=>{const a=latest(q.id);if(!a||a.status==='draft'){const ta=document.getElementById('answer'+q.id); ta.addEventListener('input',e=>{saveDraft(q.id,e.target.value); ta.style.height='auto'; ta.style.height=Math.max(160, ta.scrollHeight+4)+'px';}); ta.style.height='auto'; ta.style.height=Math.max(160, ta.scrollHeight+4)+'px';}});}
+renderGCSE();
+function selectedAnswers(){const ids=[...document.querySelectorAll('.export-select:checked')].map(x=>x.value); return GCSE.filter(q=>ids.includes(q.id)).map(q=>({topic:q.topic,question:q.q,marks:q.marks,answer:latest(q.id)?.answer||''}));}
+function payload(){const answers=selectedAnswers(); if(!answers.length){exportStatus.textContent='Select at least one submitted answer first.'; return null;} exportStatus.textContent=''; return {chapter:'P7',answers};}
+function download(name,content,type){const u=URL.createObjectURL(new Blob([content],{type})); const a=document.createElement('a'); a.href=u; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1000);}
+exportJSON.onclick=()=>{const d=payload(); if(d) download('gab-physics-p7-answers.json', JSON.stringify(d,null,2), 'application/json');};
+exportEmail.onclick=()=>{const d=payload(); if(!d)return; const t=d.answers.map(q=>q.topic+' · '+q.marks+' marks\n'+q.question+'\n\n'+q.answer).join('\n\n-----\n\n'); location.href='mailto:?subject='+encodeURIComponent('Gabriel – Physics P7 GCSE Practice answers')+'&body='+encodeURIComponent(t);};
+exportPDF.onclick=()=>{const d=payload(); if(!d)return; exportPrint.innerHTML='<h1>Gabriel · Physics P7 GCSE Practice</h1>'+d.answers.map(q=>'<article><h2>'+q.topic+' · '+q.marks+' marks</h2><p>'+q.question+'</p><pre>'+q.answer.replace(/</g,'&lt;')+'</pre></article>').join(''); document.body.classList.add('exporting'); window.print();};
+addEventListener('afterprint',()=>document.body.classList.remove('exporting'));
+
+</script></body></html>

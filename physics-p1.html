@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P1 Conservation and dissipation of energy · Gab Revision</title>
+<style>
+:root{--ink:#17323b;--muted:#687a80;--paper:#fbfcfe;--card:#ffffff;--phy:#118ab2;--phy-dark:#0c6686;--phy-soft:#dff3fb;--yellow:#fff4c7;--violet:#eee7fb;--mint:#e8f7f2;--line:#dbe7eb;--shadow:0 12px 35px rgba(18,54,63,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink)}
+a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}
+.shell{max-width:1180px;margin:auto;padding:0 22px}.topbar{position:sticky;top:0;z-index:20;background:rgba(251,252,254,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:950;letter-spacing:-.03em}.brand span{color:var(--phy)}.navlinks{display:flex;gap:8px;flex-wrap:wrap}.navtab.phy{background:var(--ink);color:white}.navtab{font-size:.88rem;padding:9px 13px}
+.btn,.pill,.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;font-weight:850;cursor:pointer}.btn.phy,.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.btn:hover,.tab:hover{transform:translateY(-1px)}
+.hero{padding:35px 0 24px}.lesson-heading h1{font-size:clamp(2.6rem,6vw,5rem);line-height:1;letter-spacing:-.055em;margin:10px 0 16px}.hero-grid{margin-top:12px}.hero-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:18px;align-items:stretch}.hero-card,.hero-side{background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow)}.hero-card{background:linear-gradient(135deg,#0e5370,#118ab2 58%,#1aa8d8);color:#fff;overflow:hidden;position:relative}.hero-card:after{content:"";position:absolute;inset:auto -30px -30px auto;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.10)}.kicker{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;font-weight:900;color:var(--phy)}.hero-card .kicker{color:#dff4ff}.hero-num{font-size:clamp(4rem,11vw,7.5rem);line-height:.9;font-weight:980;opacity:.28;position:absolute;right:18px;top:22px}.hero h1{font-size:clamp(2.8rem,7vw,5.3rem);line-height:.94;letter-spacing:-.06em;margin:8px 0 18px}.lead{font-size:1.08rem;line-height:1.7;max-width:760px}.lead-small{font-size:1.03rem;line-height:1.7;color:var(--muted);max-width:760px}.hero-card .lead{color:#f5fdff}.chip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}.chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);padding:12px 14px;border-radius:16px;font-weight:700}.hero-side h3{margin-top:0}.checklist{padding-left:18px;margin:10px 0 0}.checklist li{margin:7px 0}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.panel{display:none}.panel.active{display:block}
+.chapter-nav{position:sticky;top:70px;z-index:12;background:rgba(251,252,254,.97);border-bottom:1px solid var(--line);padding:10px 0}.chapter-links{display:flex;gap:7px;overflow-x:auto}.chapter-links a{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:.78rem;font-weight:850}
+.topic{scroll-margin-top:150px;padding:30px 0;border-bottom:1px solid var(--line)}.topic-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.topic-head h2{margin:.2em 0}.badge{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:.78rem;font-weight:900;background:var(--phy-soft);color:#0a6787}.topic-grid{display:grid;grid-template-columns:330px 1fr;gap:15px;align-items:start}.card,.concept,.tool,.gcse-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow)}.spotlight{background:linear-gradient(180deg,#ffffff,#f6fbfd)}.spotlight ul{padding-left:18px}.spotlight li{margin:8px 0}.tip{background:var(--yellow);padding:14px 16px;border-radius:16px;margin-top:14px}.concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.concept{padding:18px;border-radius:18px;background:#fff}.concept h3{margin:.2em 0 .4em}.muted{color:var(--muted)}
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.tool h3{margin-top:0}.control{margin:12px 0}.control label{display:flex;justify-content:space-between;gap:8px;font-weight:800;margin-bottom:6px}.control input,.control select, .match-row select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:#fff}input[type=range]{padding:0;accent-color:var(--phy);height:28px}.resultbox{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f4fafc;border:1px solid var(--line);padding:14px 16px;border-radius:16px;font-weight:900;font-size:1.08rem}.flow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:16px 0}.flow-step{background:#f4fbfe;border:1px solid var(--line);padding:10px 12px;border-radius:16px;font-weight:800}.arrow{font-weight:900;color:var(--phy)}.feedback{min-height:22px;font-weight:800;margin-top:10px}.feedback.ok{color:#0b7a55}.feedback.no{color:#b5534e}.step-buttons{display:flex;flex-wrap:wrap;gap:8px}.step-buttons .selected{background:var(--ink);color:#fff}.gauge{height:18px;background:#e7eef1;border-radius:999px;overflow:hidden;margin:12px 0}.gauge span{display:block;height:100%;width:30%;background:linear-gradient(90deg,#1db954,#1aa8d8)}.match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin:10px 0}
+.quiz-head{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap}.mini-tabs,.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.question{padding:20px 0;border-bottom:1px solid var(--line)}.options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.option{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;cursor:pointer}.option.correct{background:#d9f2e5;border-color:#16845d}.option.wrong{background:#fbe5df;border-color:#b8574b}.scorebox{position:sticky;bottom:12px;background:var(--ink);color:#fff;border-radius:18px;padding:14px 18px;margin-top:18px;display:flex;justify-content:space-between;align-items:center}
+.gcse-export{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin:20px 0}.gcse-card{padding:24px 0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;border-left:none;border-right:none}.gcse-card:last-child{border-bottom:none}.answer-guide{display:block;background:#eef7fb;padding:14px 16px;border-radius:16px}.answer-guide ul{margin-bottom:0}.markguide{display:none;background:#f4f7f5;border-radius:16px;padding:16px;margin-top:12px}.markguide.show{display:block}.answer-locked{background:#f1f5f2}.export-check{display:flex;gap:8px;align-items:center;margin:12px 0;font-weight:700}.export-check input{width:18px;height:18px}textarea{width:100%;min-height:160px;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;resize:vertical}.answer-print{display:none}.export-print{display:none}
+.footer{padding:28px 0 44px;color:var(--muted);font-size:.92rem}.pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#fff}
+@media(max-width:980px){.hero-grid,.topic-grid,.tool-grid{grid-template-columns:1fr}.concept-grid{grid-template-columns:1fr}.hero-side{order:2}.hero-card{order:1}}
+@media(max-width:820px){.options{grid-template-columns:1fr}.chapter-nav{top:0}.match-row{grid-template-columns:1fr}.shell{padding:0 16px}}
+@media print{.topbar,.chapter-nav,.tabs,.btn,.mini-tabs,.row,.no-print,.scorebox,.export-check,.gcse-export{display:none!important}.panel{display:block!important}.gcse-card textarea{display:none!important}.markguide{display:block!important}.answer-print{display:block!important}.badge{border:1px solid #999}.card,.concept,.tool,.gcse-card{box-shadow:none}}
+@media print{body.exporting>*{display:none!important}body.exporting #exportPrint{display:block!important;position:static!important;background:white;color:black;font:12pt/1.5 Arial,sans-serif;padding:15mm}body.exporting #exportPrint h1{font-size:22pt}body.exporting #exportPrint article{break-inside:avoid;margin:0 0 20px}body.exporting #exportPrint pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="shell nav"><div class="brand">GAB <span>/ REVISION</span></div><nav class="navlinks"><a class="btn" href="index.html">Home</a><a class="btn" href="physics.html">← Physics</a></nav></div></header>
+<div class="chapter-nav"><div class="shell"><div class="chapter-links"><a href="#p1-1">P1.1</a><a href="#p1-2">P1.2</a><a href="#p1-3">P1.3</a><a href="#p1-4">P1.4</a><a href="#p1-5">P1.5</a><a href="#p1-6">P1.6</a><a href="#p1-7">P1.7</a><a href="#p1-8">P1.8</a><a href="#p1-9">P1.9</a><a href="#physics-tools">Tools</a></div></div></div>
+<main class="shell">
+<section class="hero">
+  <div class="lesson-heading"><span class="kicker">AQA Combined Science: Trilogy · Higher</span><h1>P1 Conservation and dissipation of energy</h1><p class="lead-small">Energy stores, energy transfers, work, power and efficiency — P1.1–P1.9.</p></div>
+  <div class="tabs"><button class="tab active" data-panel="learn">Learn</button><button class="tab" data-panel="quiz">Quiz</button><button class="tab" data-panel="gcse">GCSE Practice</button></div>
+  <div class="hero-grid">
+    <div class="hero-card">
+      <div class="hero-num">1</div>
+      <span class="kicker">AQA Combined Science: Trilogy · Higher</span>
+      <h1>Energy and energy resources<br><span style="font-size:.64em;opacity:.98">P1 Conservation and dissipation of energy</span></h1>
+      <p class="lead">Learn all nine textbook subchapters, explore energy transfers and practise the calculations before testing your knowledge with topic quizzes and written GCSE-style answers.</p>
+      <div class="pillrow"><span class="pill">9 subchapters</span><span class="pill">36 quiz questions</span><span class="pill">12 GCSE-style questions</span></div>
+      <div class="chip-grid">
+        <div class="chip">Formulas: W = F × s, ΔEₚ = mgh, Eₖ = ½mv², Eₑ = ½ke², P = E/t</div>
+        <div class="chip">Core ideas: stores, conservation, dissipation, efficiency, appliances, power</div>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <span class="kicker">Learning route</span>
+      <h3>What this chapter now includes</h3>
+      <ul class="checklist">
+        <li>a complete section for each textbook topic, P1.1 to P1.9</li>
+        <li>four multiple-choice questions per subchapter, plus a Mixed quiz</li>
+        <li>interactive calculators and energy-flow infographics</li>
+        <li>12 GCSE-style written questions, with answer submission and export</li>
+      </ul>
+      <div class="tip"><strong>Target:</strong> if Gabriel is aiming for grade 8–9, he needs both calculation accuracy and precise scientific explanations.</div>
+    </aside>
+  </div>
+</section>
+
+<section id="learn" class="panel active">
+  
+<section class="topic" id="p1-1">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.1 · textbook pages 4–5</span>
+      <h2>Changes in energy stores</h2>
+      <p class="lead-small">Energy is stored in different ways and transferred by heating, by waves, by an electric current or when a force does work. GCSE answers should name the starting store, the transfer pathway and the final store.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>know the main energy stores</li><li>identify transfer pathways</li><li>describe changes for falling objects, torches and trains</li><li>avoid saying energy is “used up”</li></ul>
+      <div class="tip"><strong>Study tip:</strong> Always write store → transfer → store. Do not just say “energy changed”.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Energy stores</h3><p>Chemical, kinetic, gravitational potential, elastic potential, thermal/internal, magnetic, electrostatic and nuclear.</p></div><div class="concept"><h3>Transfer pathways</h3><p>By heating, by waves, by an electric current, or mechanically when a force acts through a distance.</p></div><div class="concept"><h3>Typical examples</h3><p>Torch: chemical → electrical → light + heating. Falling object: gravitational potential → kinetic → heating/sound on impact.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-2">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.2 · textbook pages 6–7</span>
+      <h2>Conservation of energy</h2>
+      <p class="lead-small">Energy cannot be created or destroyed. In a closed system the total energy remains constant, although energy can be transferred to less useful stores.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>state the conservation principle</li><li>apply it to a rollercoaster, pendulum or bungee jumper</li><li>describe closed systems</li><li>explain why total energy stays constant</li></ul>
+      <div class="tip"><strong>Study tip:</strong> “Conserved” does not mean “all useful”; it means total energy stays the same.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Closed system</h3><p>No energy is transferred into or out of the system, so the total energy before and after is the same.</p></div><div class="concept"><h3>Pendulum idea</h3><p>As a pendulum falls, gravitational potential energy decreases and kinetic energy increases. On the way back up the reverse happens.</p></div><div class="concept"><h3>Bungee idea</h3><p>GPE transfers to KE, then to elastic potential energy of the rope, with some energy dissipated to the surroundings.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-3">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.3 · textbook pages 8–9</span>
+      <h2>Energy and work</h2>
+      <p class="lead-small">When a force makes an object move through a distance in the direction of the force, work is done. Work done equals energy transferred.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>define work done</li><li>use W = F × s</li><li>recognise that one joule equals one newton metre</li><li>explain the effect of friction</li></ul>
+      <div class="tip"><strong>Study tip:</strong> Use the distance moved in the direction of the force, not just any distance in the question.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Equation</h3><p>W = F × s where W is in joules, F in newtons and s in metres.</p></div><div class="concept"><h3>Meaning</h3><p>A force transfers energy to an object when it causes movement in the direction of the force.</p></div><div class="concept"><h3>Friction</h3><p>Work against friction transfers energy to thermal stores of the surfaces rubbing and the surroundings.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-4">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.4 · textbook pages 10–11</span>
+      <h2>Gravitational potential energy stores</h2>
+      <p class="lead-small">Lifting an object transfers energy to its gravitational potential energy store. The change depends on mass, gravitational field strength and vertical height change.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>use ΔEₚ = m g Δh</li><li>use mass in kg and height in metres</li><li>know g ≈ 9.8 N/kg on Earth</li><li>relate lifting work to GPE gain</li></ul>
+      <div class="tip"><strong>Study tip:</strong> A heavier object or a bigger vertical height change gives a bigger GPE increase.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Equation</h3><p>ΔEₚ = m g Δh</p></div><div class="concept"><h3>Variables</h3><p>m in kg, g in N/kg, Δh is vertical change in height in metres.</p></div><div class="concept"><h3>Common trap</h3><p>On a slope, use the vertical height gained, not the distance moved along the slope.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-5">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.5 · textbook pages 12–13</span>
+      <h2>Kinetic energy and elastic energy stores</h2>
+      <p class="lead-small">Moving objects store kinetic energy. Stretched springs and elastic bands store elastic potential energy.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>use Eₖ = ½mv²</li><li>understand speed is squared</li><li>use Eₑ = ½ke² for a spring</li><li>link catapult and spring examples to energy stores</li></ul>
+      <div class="tip"><strong>Study tip:</strong> Units matter: mass in kilograms, speed in m/s, extension in metres.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Kinetic energy</h3><p>Eₖ = ½mv². If speed doubles, kinetic energy becomes four times greater.</p></div><div class="concept"><h3>Elastic energy</h3><p>Eₑ = ½ke² where k is the spring constant and e is the extension.</p></div><div class="concept"><h3>Catapult idea</h3><p>As a stretched elastic band is released, elastic energy transfers to kinetic energy.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-6">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.6 · textbook pages 14–15</span>
+      <h2>Energy dissipation</h2>
+      <p class="lead-small">Useful energy is transferred to the place we want it and in the form we want it. Dissipated energy spreads to the surroundings and becomes less useful.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>define useful and wasted energy</li><li>explain dissipation</li><li>describe friction examples</li><li>link heating and sound to less useful transfers</li></ul>
+      <div class="tip"><strong>Study tip:</strong> Energy is not lost; it is transferred to less useful stores.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Useful energy</h3><p>The intended transfer, for example heating water in a kettle or moving the blades of a fan.</p></div><div class="concept"><h3>Wasted energy</h3><p>Energy transferred by an unwanted pathway, often to thermal stores of the surroundings or by sound.</p></div><div class="concept"><h3>Examples</h3><p>Bike brakes, drills, running machines and gearboxes all dissipate energy due to friction.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-7">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.7 · textbook pages 16–17</span>
+      <h2>Energy and efficiency</h2>
+      <p class="lead-small">Efficiency compares useful output with total input. No device can be more than 100% efficient.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>calculate efficiency as a number or percentage</li><li>use useful output ÷ total input</li><li>calculate wasted energy</li><li>suggest ways to reduce unwanted transfers</li></ul>
+      <div class="tip"><strong>Study tip:</strong> If your percentage is over 100, the calculation is wrong.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Equation</h3><p>Efficiency = useful energy output ÷ total energy input</p></div><div class="concept"><h3>Percentage form</h3><p>Efficiency (%) = useful output ÷ total input × 100</p></div><div class="concept"><h3>Improving efficiency</h3><p>Lubrication, insulation, reduced electrical resistance and streamlined shapes can reduce energy waste.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-8">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.8 · textbook pages 18–19</span>
+      <h2>Electrical appliances</h2>
+      <p class="lead-small">Appliances are designed for a particular purpose. Identify the useful energy transfer and the unwanted transfers for each device.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>compare useful and wasted outputs</li><li>choose an appliance for a job</li><li>use examples such as drill, bell, mixer and clockwork radio</li><li>describe clockwork radio energy changes</li></ul>
+      <div class="tip"><strong>Study tip:</strong> State the output in terms of energy, not just “it works”.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Choosing an appliance</h3><p>The best appliance provides the desired output with as little wasted energy as possible.</p></div><div class="concept"><h3>Clockwork radio</h3><p>Winding it transfers energy to an elastic potential store in the spring, which later drives the generator.</p></div><div class="concept"><h3>Typical outputs</h3><p>Drill → kinetic, bell → sound, kettle → heating water, lamp → light.</p></div></div>
+  </div>
+</section>
+
+<section class="topic" id="p1-9">
+  <div class="topic-head">
+    <div>
+      <span class="kicker">P1.9 · textbook pages 20–21</span>
+      <h2>Energy and power</h2>
+      <p class="lead-small">Power is the rate of energy transfer. A more powerful device transfers the same amount of energy in less time.</p>
+    </div>
+    <span class="badge">Subtopic</span>
+  </div>
+  <div class="topic-grid">
+    <div class="card spotlight">
+      <h3>What Gabriel needs to know</h3>
+      <ul><li>use P = E ÷ t</li><li>know 1 W = 1 J/s and 1 kW = 1000 W</li><li>compare appliances by power rating</li><li>calculate wasted power</li></ul>
+      <div class="tip"><strong>Study tip:</strong> Convert kilowatts to watts before calculations unless the question allows kW.</div>
+    </div>
+    <div class="concept-grid"><div class="concept"><h3>Equation</h3><p>P = E ÷ t</p></div><div class="concept"><h3>Meaning</h3><p>Power tells you how fast energy is transferred.</p></div><div class="concept"><h3>Efficiency and power</h3><p>Efficiency = useful power out ÷ total power in × 100, and wasted power = total power in − useful power out.</p></div></div>
+  </div>
+</section>
+<section class="topic" id="physics-tools">
+  <div class="topic-head"><div><span class="kicker">Interactive revision tools</span><h2>Infographic & calculator zone</h2><p class="lead-small">These are here on purpose: this chapter should feel interactive, not just like plain notes.</p></div><span class="badge">Interactive</span></div>
+  <div class="tool-grid">
+    <article class="tool card">
+      <h3>Energy transfer pathways</h3>
+      <p class="muted">Choose a scenario to display a GCSE-style energy flow.</p>
+      <div class="step-buttons">
+        <button class="btn phy scenario selected" data-s="torch">Torch</button>
+        <button class="btn scenario" data-s="falling">Falling ball</button>
+        <button class="btn scenario" data-s="brakes">Car brakes</button>
+        <button class="btn scenario" data-s="kettle">Kettle</button>
+      </div>
+      <div class="flow" id="scenarioFlow"></div>
+      <p class="feedback ok" id="scenarioExplain"></p>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.3 Work done calculator</h3>
+      <div class="control"><label>Force, F (N)<span id="forceVal">50</span></label><input id="forceRange" type="range" min="1" max="200" value="50"></div>
+      <div class="control"><label>Distance, s (m)<span id="distanceVal">5.0</span></label><input id="distanceRange" type="range" min="1" max="100" value="50"></div>
+      <div class="resultbox"><div>W = F × s</div><div id="workResult">250 J</div></div>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.4 GPE calculator</h3>
+      <div class="control"><label>Mass (kg)</label><input id="gpeMass" type="number" value="2.0" step="0.1"></div>
+      <div class="control"><label>Height gain (m)</label><input id="gpeHeight" type="number" value="0.4" step="0.1"></div>
+      <div class="control"><label>g (N/kg)</label><input id="gpeG" type="number" value="9.8" step="0.1"></div>
+      <div class="resultbox"><div>ΔEₚ = mgh</div><div id="gpeResult">7.84 J</div></div>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.5 Kinetic energy calculator</h3>
+      <div class="control"><label>Mass (kg)</label><input id="keMass" type="number" value="500" step="10"></div>
+      <div class="control"><label>Speed (m/s)</label><input id="keSpeed" type="number" value="12" step="1"></div>
+      <div class="resultbox"><div>Eₖ = ½mv²</div><div id="keResult">36 000 J</div></div>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.5 Elastic potential energy</h3>
+      <div class="control"><label>Spring constant, k (N/m)</label><input id="springK" type="number" value="250" step="10"></div>
+      <div class="control"><label>Extension, e (m)</label><input id="springE" type="number" value="0.21" step="0.01"></div>
+      <div class="resultbox"><div>Eₑ = ½ke²</div><div id="springResult">5.51 J</div></div>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.7 Efficiency gauge</h3>
+      <div class="control"><label>Useful output</label><input id="effUseful" type="number" value="60" step="1"></div>
+      <div class="control"><label>Total input</label><input id="effTotal" type="number" value="200" step="1"></div>
+      <div class="gauge"><span id="effBar"></span></div>
+      <div class="resultbox"><div>Efficiency = useful output ÷ total input</div><div id="effResult">30%</div></div>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.8 Appliance matcher</h3>
+      <p>Choose the best useful output for each appliance.</p>
+      <div class="match-row"><label>Electric drill</label><select data-match="drill"><option value="">Choose…</option><option value="kinetic">Kinetic energy</option><option value="sound">Sound</option><option value="light">Light</option></select></div>
+      <div class="match-row"><label>Electric bell</label><select data-match="bell"><option value="">Choose…</option><option value="sound">Sound</option><option value="heating">Heating water</option><option value="kinetic">Kinetic energy</option></select></div>
+      <div class="match-row"><label>Food mixer</label><select data-match="mixer"><option value="">Choose…</option><option value="kinetic">Kinetic energy</option><option value="light">Light</option><option value="nuclear">Nuclear energy</option></select></div>
+      <button class="btn phy" id="checkMatch">Check answers</button>
+      <p class="feedback" id="matchFeedback"></p>
+    </article>
+
+    <article class="tool card">
+      <h3>P1.9 Power calculator</h3>
+      <div class="control"><label>Energy transferred (J)</label><input id="powerEnergy" type="number" value="10000" step="100"></div>
+      <div class="control"><label>Time (s)</label><input id="powerTime" type="number" value="25" step="1"></div>
+      <div class="resultbox"><div>P = E ÷ t</div><div id="powerResult">400 W</div></div>
+    </article>
+  </div>
+</section>
+
+</section>
+
+<section id="quiz" class="panel">
+  <div class="quiz-head"><div><span class="kicker">P1 question bank</span><h2>Quiz</h2><p class="lead-small">Choose a subtopic for all its questions, or choose Mixed for 10 random questions from across the chapter.</p></div><span class="badge" id="quizScoreBadge">—</span></div>
+  <div class="mini-tabs" id="quizFilters"></div>
+  <div id="quizQuestions"></div>
+  <div class="row" style="margin-top:20px"><button class="btn phy" id="finishQuiz">Submit quiz</button><button class="btn" id="newQuiz">New set</button></div>
+  <p id="quizSummary" class="feedback"></p>
+</section>
+
+<section id="gcse" class="panel">
+  <span class="kicker">Original revision questions</span>
+  <h2>GCSE Practice</h2>
+  <p class="lead-small">This keeps the GCSE Practice change you asked for: answer first, then submit, then reveal revision marking points. Submitted answers can be selected for PDF, email or JSON export.</p>
+  <div class="gcse-export"><h3>Send or save Gabriel’s answers</h3><p>After submitting, tick the answers you want to include.</p><div class="step-buttons"><button class="btn phy" id="exportPDF">Print / Save as PDF</button><button class="btn" id="exportEmail">Prepare email</button><button class="btn" id="exportJSON">Export JSON</button></div><p class="muted" id="exportStatus"></p></div>
+  <div id="gcseArea"></div>
+</section>
+
+<div class="footer">Gab Revision · Physics P1 · AQA Combined Science Higher</div>
+</main>
+<div id="exportPrint" class="export-print"></div>
+<script>
+const QUIZ_TOPICS = {"P1.1": "Changes in energy stores", "P1.2": "Conservation of energy", "P1.3": "Energy and work", "P1.4": "Gravitational potential energy stores", "P1.5": "Kinetic energy and elastic energy stores", "P1.6": "Energy dissipation", "P1.7": "Energy and efficiency", "P1.8": "Electrical appliances", "P1.9": "Energy and power", "Mixed": "Mixed"};
+const QUIZ = [["Which is an energy store rather than a transfer pathway?", ["Heating", "Kinetic energy", "Electrical work", "Waves"], 1, "Kinetic energy is a store.", "P1.1"], ["In a torch, energy is first stored in the battery as…", ["chemical energy", "thermal energy", "kinetic energy", "gravitational potential energy"], 0, "Batteries store energy chemically.", "P1.1"], ["A falling object speeds up because energy is transferred from its…", ["kinetic store to its gravitational store", "gravitational store to its kinetic store", "thermal store to its chemical store", "nuclear store to its kinetic store"], 1, "GPE decreases and kinetic energy increases.", "P1.1"], ["When a moving object hits the ground and stops, a lot of its energy is transferred by…", ["heating and sound", "magnetism only", "nuclear decay", "electrostatic repulsion"], 0, "Impact often transfers energy to heating and sound.", "P1.1"], ["Conservation of energy means that energy…", ["is created during useful transfers", "is destroyed by friction", "cannot be created or destroyed", "always stays kinetic"], 2, "Total energy is conserved.", "P1.2"], ["In a closed system, the total energy…", ["always decreases", "always becomes useful", "stays constant", "must become thermal"], 2, "Closed systems conserve total energy.", "P1.2"], ["As a pendulum swings down towards the middle, its kinetic energy store usually…", ["increases", "decreases", "stays zero", "becomes elastic only"], 0, "Speed increases, so kinetic energy increases.", "P1.2"], ["A bungee jumper slows near the bottom because energy is transferred into the rope’s…", ["chemical store", "elastic potential store", "nuclear store", "magnetic store"], 1, "The rope stretches and stores elastic energy.", "P1.2"], ["The correct equation for work done is…", ["W = F ÷ s", "W = F × s", "W = mgh", "W = E ÷ t"], 1, "Work done equals force times distance moved in the direction of the force.", "P1.3"], ["A 30 N force moves a box 4 m in the direction of the force. Work done = …", ["7.5 J", "34 J", "120 J", "12 J"], 2, "30 × 4 = 120 J.", "P1.3"], ["One joule is the work done when a force of…", ["1 N moves an object 1 m", "1 kg falls 1 m", "1 W acts for 1 s", "1 N acts for 1 s"], 0, "1 J = 1 N m.", "P1.3"], ["Work done against friction mainly transfers energy to…", ["thermal stores", "nuclear stores", "magnetic fields only", "gravitational stores only"], 0, "Friction heats the surfaces and surroundings.", "P1.3"], ["The equation for change in gravitational potential energy is…", ["ΔE = ½mv²", "ΔEₚ = m g Δh", "P = E/t", "W = F/s"], 1, "Use mass × g × vertical height change.", "P1.4"], ["What value is usually used for gravitational field strength on Earth?", ["9.8 N/kg", "98 N/kg", "0.98 N/kg", "10 kg/N"], 0, "Use about 9.8 N/kg.", "P1.4"], ["A 2 kg mass is raised by 5 m. Using g = 10 N/kg, the GPE gain is…", ["25 J", "50 J", "100 J", "17 J"], 2, "2 × 10 × 5 = 100 J.", "P1.4"], ["When calculating ΔEₚ on a slope, Δh means…", ["distance along the slope", "vertical height change", "total journey length", "horizontal distance"], 1, "Use the vertical height change.", "P1.4"], ["The kinetic energy equation is…", ["Eₖ = mv", "Eₖ = ½mv²", "Eₖ = 2mv²", "Eₖ = mgh"], 1, "Kinetic energy depends on mass and speed squared.", "P1.5"], ["If the speed of an object doubles and its mass stays the same, its kinetic energy becomes…", ["twice as large", "four times as large", "half as large", "unchanged"], 1, "Because speed is squared.", "P1.5"], ["Elastic potential energy in a spring is given by…", ["Eₑ = ke", "Eₑ = ½ke²", "Eₑ = 2ke²", "Eₑ = ½mv²"], 1, "Use spring constant × extension squared, then divide by 2.", "P1.5"], ["A 500 kg car moving at 12 m/s has kinetic energy of…", ["36 000 J", "3 000 J", "72 000 J", "6 000 J"], 0, "½ × 500 × 12² = 36 000 J.", "P1.5"], ["Dissipated energy is energy that…", ["has been destroyed", "has spread to the surroundings and become less useful", "is always light energy", "must stay in the object"], 1, "Dissipation means spreading out to less useful stores.", "P1.6"], ["Which is usually a wasted output of a TV?", ["sound and light", "heating of the surroundings", "useful pictures", "useful sound"], 1, "The TV also warms the surroundings unintentionally.", "P1.6"], ["Friction in machine parts often causes energy to be transferred to…", ["kinetic stores only", "thermal stores", "gravitational stores only", "nuclear stores"], 1, "Friction heats objects and surroundings.", "P1.6"], ["Why does dissipated energy become less useful?", ["it disappears", "it is spread out and harder to use for doing useful work", "it changes into matter", "it always becomes sound"], 1, "Spread-out energy is harder to transfer usefully.", "P1.6"], ["Efficiency = …", ["useful output ÷ total input", "total input ÷ useful output", "useful output − total input", "total input + wasted output"], 0, "Efficiency compares useful output with total input.", "P1.7"], ["A machine receives 200 J and transfers 60 J usefully. Its efficiency is…", ["30%", "70%", "140%", "3%"], 0, "60/200 × 100 = 30%.", "P1.7"], ["Which change would usually improve efficiency?", ["increase friction", "lubricate moving parts", "add extra resistance", "make more sound"], 1, "Lubrication reduces wasted energy.", "P1.7"], ["A device can never be more than…", ["10% efficient", "50% efficient", "100% efficient", "1000% efficient"], 2, "Efficiency above 100% is impossible.", "P1.7"], ["The useful output of an electric drill is mainly…", ["sound", "kinetic energy of the drill bit", "light", "heating the air"], 1, "A drill is designed to rotate the bit.", "P1.8"], ["The useful output of an electric bell is mainly…", ["kinetic energy", "gravitational potential energy", "sound", "heating water"], 2, "A bell is designed to make sound.", "P1.8"], ["Winding a clockwork radio stores energy in the spring as…", ["chemical energy", "elastic potential energy", "nuclear energy", "thermal energy"], 1, "The wound spring stores elastic energy.", "P1.8"], ["A good electrical appliance should…", ["waste as much energy as possible", "transfer as much useful energy as possible for its purpose", "always produce sound", "always produce heat"], 1, "Choose the appliance that best delivers the useful output.", "P1.8"], ["Power is the rate of…", ["mass increase", "energy transfer", "change in force", "change in voltage"], 1, "Power tells you how quickly energy is transferred.", "P1.9"], ["The equation linking power, energy and time is…", ["P = E × t", "P = E ÷ t", "P = t ÷ E", "P = F × s"], 1, "Power equals energy transferred per second.", "P1.9"], ["10 000 J transferred in 25 s gives a power of…", ["250 W", "400 W", "40 W", "4 W"], 1, "10 000 ÷ 25 = 400 W.", "P1.9"], ["If total input power is 80 W and useful output power is 20 W, wasted power is…", ["100 W", "60 W", "25 W", "4 W"], 1, "Wasted power = 80 − 20 = 60 W.", "P1.9"]];
+const GCSE = [{"id": "P1Q1", "topic": "P1.1", "command": "Describe", "marks": 4, "q": "A battery-powered torch is switched on. Describe the changes in energy stores and the transfer pathways.", "guidance": ["Start with the battery store.", "Name the transfer pathway through the circuit.", "Identify the useful output.", "Include one wasted transfer."], "criteria": ["Energy is initially stored chemically in the battery.", "Energy is transferred electrically through the circuit.", "Useful energy is transferred by light waves / to light.", "Some energy is transferred by heating to the thermal store of the surroundings."]}, {"id": "P1Q2", "topic": "P1.2", "command": "Explain", "marks": 5, "q": "Explain how conservation of energy applies to a rollercoaster moving down a slope and then slowing down.", "guidance": ["Describe what happens to GPE and KE.", "Then explain the effect of friction/air resistance.", "Finish with a statement about total energy."], "criteria": ["Gravitational potential energy decreases as the coaster moves down.", "Kinetic energy increases as speed increases.", "Some energy is transferred by friction/air resistance to thermal stores of the surroundings.", "Some energy may also be transferred by sound waves.", "Total energy is conserved / not created or destroyed."]}, {"id": "P1Q3", "topic": "P1.3", "command": "Calculate", "marks": 4, "q": "A student pushes a box with a force of 45 N for a distance of 6.0 m. Calculate the work done and explain what happens to some of the energy if the floor is rough.", "guidance": ["Write the correct equation.", "Substitute values with units.", "Give the answer in joules.", "Then explain friction."], "criteria": ["Uses W = F × s.", "Substitutes 45 × 6.0.", "Obtains 270 J.", "Explains that some energy is transferred to thermal stores of the box/floor/surroundings because of friction."]}, {"id": "P1Q4", "topic": "P1.4", "command": "Calculate", "marks": 4, "q": "A 3.0 kg backpack is lifted vertically by 1.8 m. Calculate the increase in gravitational potential energy. Use g = 9.8 N/kg.", "guidance": ["State the equation.", "Substitute all values.", "Show units clearly."], "criteria": ["Uses ΔEₚ = m g Δh.", "Substitutes 3.0 × 9.8 × 1.8.", "Answer of 52.92 J or 53 J.", "Correct unit J."]}, {"id": "P1Q5", "topic": "P1.5", "command": "Calculate", "marks": 5, "q": "A 900 kg car travels at 20 m/s. Calculate its kinetic energy. The car then travels at 40 m/s. Calculate the new kinetic energy and explain the relationship between the two answers.", "guidance": ["Use Eₖ = ½mv² twice.", "Show substitutions.", "Compare the two energies."], "criteria": ["First energy: 0.5 × 900 × 20² = 180 000 J.", "Second energy: 0.5 × 900 × 40² = 720 000 J.", "Second answer is four times larger.", "Explains that speed is squared in the equation.", "Correct units used."]}, {"id": "P1Q6", "topic": "P1.5", "command": "Calculate", "marks": 4, "q": "A spring with spring constant 250 N/m is stretched by 0.21 m. Calculate the elastic potential energy stored.", "guidance": ["Use Eₑ = ½ke².", "Square the extension carefully.", "Give the final answer in joules."], "criteria": ["Uses Eₑ = ½ke².", "Substitutes 0.5 × 250 × 0.21².", "Answer approximately 5.51 J.", "Correct unit J."]}, {"id": "P1Q7", "topic": "P1.6", "command": "Explain", "marks": 5, "q": "Explain why the metal wheel discs of a car become hot when the brakes are applied.", "guidance": ["Mention friction.", "State which store decreases.", "State where the energy goes.", "Use scientific vocabulary."], "criteria": ["Friction acts between brake pads and wheel discs.", "The kinetic energy store of the car decreases.", "Energy is transferred to the thermal/internal energy stores of the brake pads and discs.", "The temperature of these parts rises / they become hot.", "Some energy is also transferred to the thermal store of the surrounding air / by sound."]}, {"id": "P1Q8", "topic": "P1.7", "command": "Calculate", "marks": 5, "q": "A winch is supplied with 500 J of energy and transfers 175 J usefully. Calculate the efficiency as a percentage and the energy wasted.", "guidance": ["Calculate efficiency first.", "Then find wasted energy.", "Include units or % where appropriate."], "criteria": ["Uses efficiency = useful output ÷ total input × 100.", "Calculates 175/500 × 100 = 35%.", "States efficiency = 35%.", "Calculates wasted energy = 500 − 175 = 325 J.", "Correct unit for wasted energy."]}, {"id": "P1Q9", "topic": "P1.8", "command": "Compare", "marks": 5, "q": "Compare the useful and wasted energy transfers in an electric kettle and an electric bell.", "guidance": ["Do both appliances.", "State the useful transfer for each.", "State at least one unwanted transfer for each.", "Use “useful” and “wasted” clearly."], "criteria": ["Kettle useful output is heating the water / increasing the water’s thermal store.", "Kettle also wastes some energy heating the kettle case/air and may produce sound.", "Bell useful output is sound.", "Bell wastes some energy by heating its components and surroundings.", "Clear comparison using useful vs wasted transfers."]}, {"id": "P1Q10", "topic": "P1.9", "command": "Calculate", "marks": 5, "q": "A motor transfers 12 000 J of energy in 30 s. Calculate its input power. If its useful output power is 300 W, calculate its efficiency and its wasted power.", "guidance": ["Use P = E ÷ t first.", "Then use the efficiency equation with power.", "Finally calculate wasted power."], "criteria": ["Input power = 12 000 ÷ 30 = 400 W.", "Uses efficiency = useful power out ÷ total power in × 100.", "Calculates efficiency = 300/400 × 100 = 75%.", "Wasted power = 400 − 300 = 100 W.", "Correct units / percentage."]}, {"id": "P1Q11", "topic": "P1.2/P1.6", "command": "Explain", "marks": 6, "q": "A pendulum eventually comes to rest even though energy is conserved. Explain why.", "guidance": ["Describe the repeating energy changes at first.", "Then explain air resistance and friction.", "Explain why it stops without saying energy is destroyed."], "criteria": ["As it swings, gravitational potential energy and kinetic energy transfer between each other.", "Air resistance and friction do work on the pendulum.", "Energy is transferred to thermal stores of the pendulum and surroundings.", "Some energy is transferred by sound.", "This energy is dissipated / becomes less useful.", "The pendulum stops because less energy remains in the swinging motion, but total energy is still conserved."]}, {"id": "P1Q12", "topic": "P1.7/P1.9", "command": "Explain", "marks": 4, "q": "Why can a less powerful appliance sometimes still transfer the same total energy as a more powerful one?", "guidance": ["Define power in words.", "Compare time taken.", "Link to total energy transferred."], "criteria": ["Power is the rate of energy transfer.", "A less powerful appliance transfers energy more slowly.", "If it operates for longer, it can still transfer the same total energy.", "Uses the idea that E = P × t (or rearrangement from P = E ÷ t)."]}];
+const STORE = 'gabRevisionV3-physics-p1';
+
+function openPanel(panel){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.panel===panel));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===panel));window.scrollTo({top:0,behavior:'auto'});}document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>openPanel(btn.dataset.panel)));
+
+// Scenario flow
+const scenarioData = {
+  torch: {flow:['chemical store in battery','transferred electrically','light waves + heating'], text:'GCSE wording: chemical store in the battery → transferred electrically → light, with some energy transferred by heating to the surroundings.'},
+  falling: {flow:['gravitational potential store','kinetic store','heating + sound on impact'], text:'As the ball falls, GPE decreases and KE increases. On impact, energy is transferred to thermal stores and by sound.'},
+  brakes: {flow:['kinetic store of car','friction does work','thermal stores of pads/discs + surroundings'], text:'Braking transfers energy mechanically by friction from the car’s kinetic store to thermal stores.'},
+  kettle: {flow:['electrical energy transfer','thermal store of element','thermal store of water + wasted heating'], text:'The current heats the element, which transfers energy by heating to the water. Some also heats the kettle and air.'}
+};
+function renderScenario(key){const box=document.getElementById('scenarioFlow');const info=scenarioData[key];box.innerHTML=info.flow.map((x,i)=>`<span class="flow-step">${x}</span>${i<info.flow.length-1?'<span class="arrow">→</span>':''}`).join('');document.getElementById('scenarioExplain').textContent=info.text;document.querySelectorAll('.scenario').forEach(b=>b.classList.toggle('selected',b.dataset.s===key));}
+document.querySelectorAll('.scenario').forEach(b=>b.addEventListener('click',()=>renderScenario(b.dataset.s)));renderScenario('torch');
+
+function fmt(n){return Number(n).toLocaleString('en-GB',{maximumFractionDigits:2})}
+function updateWork(){const F=+forceRange.value,s=+distanceRange.value/10;forceVal.textContent=F;distanceVal.textContent=s.toFixed(1);workResult.textContent=fmt(F*s)+' J';} forceRange.oninput=distanceRange.oninput=updateWork; updateWork();
+function updateGPE(){const m=+gpeMass.value,h=+gpeHeight.value,g=+gpeG.value; gpeResult.textContent=(isFinite(m*h*g)?fmt(m*h*g)+' J':'—');} [gpeMass,gpeHeight,gpeG].forEach(x=>x.addEventListener('input',updateGPE)); updateGPE();
+function updateKE(){const m=+keMass.value,v=+keSpeed.value; keResult.textContent=(isFinite(0.5*m*v*v)?fmt(0.5*m*v*v)+' J':'—');} [keMass,keSpeed].forEach(x=>x.addEventListener('input',updateKE)); updateKE();
+function updateSpring(){const k=+springK.value,e=+springE.value; springResult.textContent=(isFinite(0.5*k*e*e)?fmt(0.5*k*e*e)+' J':'—');} [springK,springE].forEach(x=>x.addEventListener('input',updateSpring)); updateSpring();
+function updateEff(){const u=+effUseful.value,t=+effTotal.value; const pct=(t>0)?(u/t*100):0; effBar.style.width=Math.max(0,Math.min(100,pct))+'%'; effResult.textContent=(isFinite(pct)?pct.toFixed(1).replace('.0',''):'0')+'%';} [effUseful,effTotal].forEach(x=>x.addEventListener('input',updateEff)); updateEff();
+function updatePower(){const e=+powerEnergy.value,t=+powerTime.value; const p=t>0?e/t:0; powerResult.textContent=(isFinite(p)?fmt(p):'—')+' W';} [powerEnergy,powerTime].forEach(x=>x.addEventListener('input',updatePower)); updatePower();
+checkMatch.onclick=()=>{const a=[...document.querySelectorAll('[data-match]')].reduce((o,s)=>(o[s.dataset.match]=s.value,o),{});const ok=a.drill==='kinetic'&&a.bell==='sound'&&a.mixer==='kinetic';matchFeedback.className='feedback '+(ok?'ok':'no');matchFeedback.textContent=ok?'Correct: drill → kinetic, bell → sound, mixer → kinetic.' :'Try again. Think about the main intended useful output of each appliance.';};
+
+// Quiz
+let quizFilter='Mixed', currentQuiz=[], quizAnswers={}, quizSubmitted=false;
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function buildQuiz(){const pool=quizFilter==='Mixed'?QUIZ:QUIZ.filter(q=>q[4]===quizFilter);currentQuiz=(quizFilter==='Mixed'?shuffle(pool).slice(0,10):pool).map(q=>({q,order:shuffle([0,1,2,3])}));quizAnswers={};quizSubmitted=false;renderQuiz();}
+function renderQuiz(){quizFilters.innerHTML=Object.entries(QUIZ_TOPICS).map(([k,v])=>`<button class="btn ${k===quizFilter?'phy':''}" data-filter="${k}">${k==='Mixed'?v:k+' · '+v}</button>`).join('');quizFilters.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{quizFilter=b.dataset.filter;buildQuiz();});quizQuestions.innerHTML=currentQuiz.map((it,i)=>`<div class="question"><strong>${i+1}. ${it.q[0]}</strong><div class="options">${it.order.map(a=>`<button class="option" data-q="${i}" data-a="${a}">${it.q[1][a]}</button>`).join('')}</div><div class="feedback" id="fb${i}"></div></div>`).join('');document.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{if(quizSubmitted)return;let i=+b.dataset.q;quizAnswers[i]=+b.dataset.a;document.querySelectorAll('[data-q="'+i+'"]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});quizScoreBadge.textContent='0 / '+currentQuiz.length;quizSummary.textContent='';}
+finishQuiz.onclick=()=>{if(Object.keys(quizAnswers).length<currentQuiz.length){quizSummary.textContent='Please answer all questions first.';return;}quizSubmitted=true;let score=0;currentQuiz.forEach((it,i)=>{let ok=quizAnswers[i]===it.q[2];if(ok)score++;document.getElementById('fb'+i).textContent=(ok?'Correct. ':'Not quite. ')+it.q[3];document.querySelectorAll('[data-q="'+i+'"]').forEach(btn=>{const chosen=+btn.dataset.a; if(chosen===it.q[2]) btn.classList.add('correct'); else if(chosen===quizAnswers[i]) btn.classList.add('wrong');});});quizScoreBadge.textContent=score+' / '+currentQuiz.length;quizSummary.textContent='Score: '+score+' / '+currentQuiz.length; localStorage.setItem(STORE+'-lastQuiz', JSON.stringify({filter:quizFilter,score,total:currentQuiz.length}));};
+newQuiz.onclick=buildQuiz; buildQuiz();
+
+// GCSE practice with submit/export
+function getState(){try{return JSON.parse(localStorage.getItem(STORE)||'{}')}catch(e){return {}}}
+function setState(v){localStorage.setItem(STORE, JSON.stringify(v));}
+function attempts(){return getState().gcseAttempts||{}}
+function saveAttempts(a){const s=getState();s.gcseAttempts=a;setState(s)}
+function latest(id){const a=attempts()[id]||[];return a[a.length-1]}
+function saveDraft(id,text){const all=attempts(),arr=all[id]||[]; if(!arr.length||arr[arr.length-1].status==='submitted') arr.push({id:String(Date.now()),status:'draft',answer:text}); else arr[arr.length-1].answer=text; all[id]=arr; saveAttempts(all)}
+function submitAnswer(id){const el=document.getElementById('answer'+id),text=el.value.trim(); if(!text){alert('Write an answer first.');return;} const all=attempts(),arr=all[id]||[]; if(!arr.length||arr[arr.length-1].status==='submitted') arr.push({id:String(Date.now()),status:'draft',answer:text}); arr[arr.length-1].answer=text; arr[arr.length-1].status='submitted'; arr[arr.length-1].submitted=new Date().toISOString(); all[id]=arr; saveAttempts(all); renderGCSE();}
+function newAttempt(id){const all=attempts(),arr=all[id]||[]; arr.push({id:String(Date.now()),status:'draft',answer:''}); all[id]=arr; saveAttempts(all); renderGCSE();}
+function renderGCSE(){gcseArea.innerHTML=GCSE.map(q=>{const a=latest(q.id),locked=a&&a.status==='submitted';return `<article class="gcse-card"><span class="kicker">${q.topic} · ${q.command} · ${q.marks} marks</span><h3>${q.q}</h3><div class="answer-guide"><strong>Writing guidance</strong><ul>${q.guidance.map(x=>'<li>'+x+'</li>').join('')}</ul></div><textarea id="answer${q.id}" ${locked?'readonly class="answer-locked"':''}>${(a?.answer||'').replace(/</g,'&lt;')}</textarea><div class="answer-print">${(a?.answer||'').replace(/</g,'&lt;').split('\n').join('<br>')}</div><div class="step-buttons">${locked?`<button class="btn phy" onclick="newAttempt('${q.id}')">New attempt</button>`:`<button class="btn phy" onclick="submitAnswer('${q.id}')">Submit answer</button>`}</div>${locked?`<label class="export-check"><input type="checkbox" class="export-select" value="${q.id}" checked> Include this answer in the export</label><div class="markguide show"><strong>Revision marking points</strong><ul>${q.criteria.map(x=>'<li>'+x+'</li>').join('')}</ul></div>`:''}</article>`;}).join(''); GCSE.forEach(q=>{const a=latest(q.id);if(!a||a.status==='draft'){const ta=document.getElementById('answer'+q.id); ta.addEventListener('input',e=>{saveDraft(q.id,e.target.value); ta.style.height='auto'; ta.style.height=Math.max(160, ta.scrollHeight+4)+'px';}); ta.style.height='auto'; ta.style.height=Math.max(160, ta.scrollHeight+4)+'px';}});}
+renderGCSE();
+function selectedAnswers(){const ids=[...document.querySelectorAll('.export-select:checked')].map(x=>x.value); return GCSE.filter(q=>ids.includes(q.id)).map(q=>({topic:q.topic,question:q.q,marks:q.marks,answer:latest(q.id)?.answer||''}));}
+function payload(){const answers=selectedAnswers(); if(!answers.length){exportStatus.textContent='Select at least one submitted answer first.'; return null;} exportStatus.textContent=''; return {chapter:'P1',answers};}
+function download(name,content,type){const u=URL.createObjectURL(new Blob([content],{type})); const a=document.createElement('a'); a.href=u; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1000);}
+exportJSON.onclick=()=>{const d=payload(); if(d) download('gab-physics-p1-answers.json', JSON.stringify(d,null,2), 'application/json');};
+exportEmail.onclick=()=>{const d=payload(); if(!d)return; const t=d.answers.map(q=>q.topic+' · '+q.marks+' marks\n'+q.question+'\n\n'+q.answer).join('\n\n-----\n\n'); location.href='mailto:?subject='+encodeURIComponent('Gabriel – Physics P1 GCSE Practice answers')+'&body='+encodeURIComponent(t);};
+exportPDF.onclick=()=>{const d=payload(); if(!d)return; exportPrint.innerHTML='<h1>Gabriel · Physics P1 GCSE Practice</h1>'+d.answers.map(q=>'<article><h2>'+q.topic+' · '+q.marks+' marks</h2><p>'+q.question+'</p><pre>'+q.answer.replace(/</g,'&lt;')+'</pre></article>').join(''); document.body.classList.add('exporting'); window.print();};
+addEventListener('afterprint',()=>document.body.classList.remove('exporting'));
+</script>
+</body>
+</html>
